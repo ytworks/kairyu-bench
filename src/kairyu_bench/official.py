@@ -185,7 +185,7 @@ def _livecodebench(path: Path) -> OfficialObservation:
     if not metrics_rows:
         raise OfficialNormalizationError("LiveCodeBench metrics are empty")
     metrics = _object(metrics_rows[0], "LiveCodeBench metrics[0]")
-    primary = _number(metrics.get("pass@1"), "LiveCodeBench pass@1")
+    primary = 100.0 * _number(metrics.get("pass@1"), "LiveCodeBench pass@1")
     records = _array(payload.get("records"), "LiveCodeBench records")
     problem_ids = _ids(
         (
@@ -208,7 +208,7 @@ def _livecodebench_pro(path: Path) -> OfficialObservation:
     rows = _array(_load_json(path), "LiveCodeBench Pro results")
     objects = [_object(row, "LiveCodeBench Pro result") for row in rows]
     problem_ids = _ids((row.get("problem_id") for row in objects), "problem_id")
-    final = [row for row in objects if row.get("judge_result") not in {None, "Judging", "Judge Failed"}]
+    final = [row for row in objects if row.get("judge_result") not in {None, "Judging"}]
     accepted = sum(row.get("judge_result") == "Accepted" for row in final)
     primary = 100.0 * accepted / len(problem_ids)
     return OfficialObservation(
@@ -231,12 +231,12 @@ def _charxiv(path: Path) -> OfficialObservation:
     stats = _object(payload.get("stats"), "CharXiv stats")
     valid = _integer(stats.get("N_valid"), "CharXiv N_valid")
     invalid = _integer(stats.get("N_invalid"), "CharXiv N_invalid")
-    if valid + invalid != len(problem_ids):
+    if valid != len(problem_ids) or invalid > valid:
         raise OfficialNormalizationError("CharXiv valid/invalid counts differ from score rows")
     primary = _number(stats.get("Overall Score"), "CharXiv Overall Score")
     return OfficialObservation(
         problem_ids,
-        valid,
+        valid - invalid,
         primary,
         {"overall_score": primary, "valid": valid, "invalid": invalid},
         None if invalid == 0 else "one or more CharXiv judge results were invalid",
@@ -267,7 +267,17 @@ def _tau(path: Path) -> OfficialObservation:
     else:
         rows = _array(payload, "tau2 results")
     objects = [_object(row, "tau2 simulation") for row in rows]
-    problem_ids = _ids((row.get("task_id") for row in objects), "tau2 task_id")
+    problem_ids = _ids(
+        (
+            (
+                f"{row.get('task_id')}#trial-{row.get('trial')}"
+                if row.get("trial") is not None
+                else row.get("task_id")
+            )
+            for row in objects
+        ),
+        "tau2 task_id/trial",
+    )
     rewards: list[float] = []
     for row in objects:
         reward_info = row.get("reward_info")

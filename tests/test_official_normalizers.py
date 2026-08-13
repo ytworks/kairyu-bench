@@ -127,7 +127,7 @@ class OfficialNormalizerTest(unittest.TestCase):
                 Path(directory),
                 "summary.json",
                 {
-                    "metrics": [{"pass@1": 25.0}],
+                    "metrics": [{"pass@1": 0.25}],
                     "records": [
                         {"question_id": "lcb-1"},
                         {"question_id": "lcb-2"},

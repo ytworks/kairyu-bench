@@ -46,7 +46,7 @@
     },
     "dataset": {
       "id": "terminal-bench/terminal-bench-2-1",
-      "revision": "ea2fee78517f2e591bad69fcf1e6731f9c23ec99"
+      "revision": "2.1"
     },
     "adapter": "adapters/terminal-bench/run.sh",
     "scoring": {"method": "harbor-official-task-reward", "unit": "percent"},
@@ -82,6 +82,10 @@
       {
         "id": "QAQAQAQAQ/LiveCodeBench-Pro-Testcase",
         "revision": "5257736c0a4e30ba0949d41c56a257c323d9c600"
+      },
+      {
+        "id": "https://github.com/YanagiOrigami/LightCPVerifier",
+        "revision": "021d121c882e70856b66113142495e31b9fe1d80"
       }
     ],
     "adapter": "adapters/livecodebench-pro/run.sh",

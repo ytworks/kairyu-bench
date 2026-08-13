@@ -186,6 +186,7 @@ def run_benchmarks(
             "model_id": model_id,
             "limit": config.limit,
             "source": entry["source"],
+            "generator": entry.get("generator"),
             "dataset": entry["dataset"],
             "secondary_sources": entry.get("secondary_sources", []),
             "scoring": entry["scoring"],
