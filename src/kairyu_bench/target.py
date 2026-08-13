@@ -62,13 +62,13 @@ class TargetClient:
         if not isinstance(data, list):
             raise PreflightError("models response does not contain a data list")
 
-        model_ids = [
-            entry.get("id")
-            for entry in data
-            if isinstance(entry, dict)
-            and isinstance(entry.get("id"), str)
-            and entry["id"]
-        ]
+        model_ids: list[str] = []
+        for entry in data:
+            if not isinstance(entry, dict):
+                continue
+            model_id = entry.get("id")
+            if isinstance(model_id, str) and model_id:
+                model_ids.append(model_id)
         if not model_ids:
             raise PreflightError("models response contains no model IDs")
 

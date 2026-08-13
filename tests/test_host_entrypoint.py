@@ -14,11 +14,13 @@ class HostEntrypointTest(unittest.TestCase):
     def test_image_copies_a_versioned_static_docker_client(self) -> None:
         dockerfile = (ROOT / "Dockerfile").read_text(encoding="utf-8")
 
-        self.assertIn("FROM docker:27.5.1-cli AS docker_cli", dockerfile)
+        self.assertIn("FROM docker:27.5.1-cli@sha256:", dockerfile)
+        self.assertIn("FROM python:3.12-slim@sha256:", dockerfile)
         self.assertIn(
             "COPY --from=docker_cli /usr/local/bin/docker /usr/local/bin/docker",
             dockerfile,
         )
+        self.assertIn("# hadolint ignore=DL3008", dockerfile)
         self.assertNotIn("    docker.io \\\n", dockerfile)
 
     def test_list_builds_current_source_then_runs_command_in_container(self) -> None:

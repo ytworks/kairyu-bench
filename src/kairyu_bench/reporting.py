@@ -45,7 +45,7 @@ def load_run_results(run_dir: Path) -> tuple[dict[str, Any], dict[str, Benchmark
     return metadata, results
 
 
-def _score_text(score: object) -> str:
+def _score_text(score: float | int | None) -> str:
     return "—" if score is None else f"{float(score):.2f}"
 
 
@@ -177,20 +177,27 @@ def compare_runs(baseline_dir: Path, candidate_dir: Path) -> dict[str, Any]:
     for name in selected_names:
         baseline = baseline_results.get(name)
         candidate = candidate_results.get(name)
+        compatible: bool
+        reason: str | None
         if baseline is None or candidate is None:
             compatible, reason = False, "benchmark is missing from one run"
         else:
             compatible, reason = _compatibility(baseline, candidate)
         left_score = baseline.data["score"]["primary"] if baseline else None
         right_score = candidate.data["score"]["primary"] if candidate else None
+        delta: float | None = None
+        if compatible:
+            if not isinstance(left_score, (int, float)) or not isinstance(
+                right_score, (int, float)
+            ):
+                raise ValueError("compatible results must contain numeric scores")
+            delta = float(right_score) - float(left_score)
         rows.append(
             {
                 "benchmark": name,
                 "baseline_score": left_score,
                 "candidate_score": right_score,
-                "delta": (
-                    float(right_score) - float(left_score) if compatible else None
-                ),
+                "delta": delta,
                 "compatible": compatible,
                 "reason": reason,
             }
