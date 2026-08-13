@@ -38,6 +38,18 @@ jobs:
       - name: Lint Dockerfile
         run: docker run --rm -i hadolint/hadolint:v2.12.0 < Dockerfile
       - run: docker build -t kairyu-bench:ci .
+      - name: Smoke-test cached venv entrypoints
+        run: |
+          docker run --rm --entrypoint sh kairyu-bench:ci -c '
+            set -eu
+            . /app/scripts/lib/official.sh
+            KAIRYU_BENCH_CACHE_DIR=/tmp/kairyu-bench-cache
+            first=$(ensure_venv smoke revision --help 2>/dev/null)
+            "$first/bin/pip" --version
+            second=$(ensure_venv smoke revision --help 2>/dev/null)
+            test "$first" = "$second"
+            "$second/bin/pip" --version
+          '
       - run: docker run --rm kairyu-bench:ci list
       - run: docker run --rm kairyu-bench:ci run https://example.test/v1 --only gpqa-diamond --limit 1 --dry-run
       - name: Check nested Docker access
