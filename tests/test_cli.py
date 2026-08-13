@@ -50,7 +50,41 @@ class CliContractTest(unittest.TestCase):
 
         self.assertEqual(result.returncode, 0, result.stderr)
         self.assertIn("endpoint: https://example.test/v1", result.stdout)
+        self.assertIn("benchmarks: 12", result.stdout)
         self.assertNotIn("model", result.stderr.lower())
+
+    def test_dry_run_validates_only_and_positive_limit_without_api_access(self) -> None:
+        result = self.run_cli(
+            "run",
+            "https://example.test",
+            "--only",
+            "mrcr-v2,gpqa-diamond",
+            "--limit",
+            "3",
+            "--dry-run",
+        )
+
+        self.assertEqual(result.returncode, 0, result.stderr)
+        self.assertIn("selected: gpqa-diamond,mrcr-v2", result.stdout)
+        self.assertIn("limit: 3", result.stdout)
+
+        invalid = self.run_cli(
+            "run", "https://example.test", "--limit", "0", "--dry-run"
+        )
+        self.assertEqual(invalid.returncode, 2)
+        self.assertIn("positive integer", invalid.stderr)
+
+    def test_unknown_benchmark_fails_before_contacting_endpoint(self) -> None:
+        result = self.run_cli(
+            "run",
+            "https://example.test",
+            "--only",
+            "not-a-benchmark",
+            "--dry-run",
+        )
+
+        self.assertEqual(result.returncode, 2)
+        self.assertIn("unknown benchmark", result.stderr)
 
 
 if __name__ == "__main__":
