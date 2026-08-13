@@ -80,8 +80,11 @@ checkout_source() {
 }
 
 venv_ready() {
-    [ -f "$1/.kairyu-bench-ready" ] &&
-        [ "$(sed -n '1p' "$1/.kairyu-bench-ready")" = "$2" ]
+    marker="$1/.kairyu-bench-ready"
+    [ -f "$marker" ] || return 1
+    [ "$(sed -n '1p' "$marker")" = "$2" ] || return 1
+    physical_path=$(CDPATH= cd -P -- "$1" 2>/dev/null && pwd -P) || return 1
+    [ "$(sed -n '2p' "$marker")" = "$physical_path" ]
 }
 
 ensure_venv() {
@@ -114,7 +117,9 @@ ensure_venv() {
     trap cleanup_venv EXIT HUP INT TERM
     python -m venv "$environment"
     "$environment/bin/python" -m pip install --disable-pip-version-check "$@" >&2
-    printf '%s\n' "$environment_revision" >"$environment/.kairyu-bench-ready"
+    physical_environment=$(CDPATH= cd -P -- "$environment" && pwd -P)
+    printf '%s\n%s\n' "$environment_revision" "$physical_environment" \
+        >"$environment/.kairyu-bench-ready"
 
     relative_target="$(basename "$backing")/environment"
     if ln -s "$relative_target" "$destination" 2>/dev/null; then

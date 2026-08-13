@@ -62,7 +62,7 @@ def build_parser() -> argparse.ArgumentParser:
     run.add_argument(
         "--results-dir",
         type=Path,
-        default=Path("/work/results"),
+        default=Path(os.environ.get("KAIRYU_BENCH_RESULTS_DIR", "/work/results")),
         help=argparse.SUPPRESS,
     )
     run.add_argument("--run-id", type=_run_id, default=None, help=argparse.SUPPRESS)

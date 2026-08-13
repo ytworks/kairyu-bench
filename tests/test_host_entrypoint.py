@@ -61,9 +61,17 @@ class HostEntrypointTest(unittest.TestCase):
             )
             self.assertIn("run --rm --privileged", calls[1])
             self.assertIn(
-                f"-v {ROOT / 'results'}:/work/results", calls[1]
+                f"-v {ROOT / 'results'}:{ROOT / 'results'}", calls[1]
             )
-            self.assertIn(f"-v {ROOT / '.cache'}:/work/cache", calls[1])
+            self.assertIn(
+                f"-v {ROOT / '.cache'}:{ROOT / '.cache'}", calls[1]
+            )
+            self.assertIn(
+                f"-e KAIRYU_BENCH_RESULTS_DIR={ROOT / 'results'}", calls[1]
+            )
+            self.assertIn(
+                f"-e KAIRYU_BENCH_CACHE_DIR={ROOT / '.cache'}", calls[1]
+            )
             self.assertIn("-e HF_TOKEN", calls[1])
             self.assertTrue(calls[1].endswith("kairyu-bench:local list"))
 

@@ -56,10 +56,13 @@ class OfficialShellSupportTest(unittest.TestCase):
             ).strip()
             self.assertEqual(actual, revision)
 
-    def test_ensure_venv_preserves_console_scripts_after_publish_and_reuse(self) -> None:
+    def test_ensure_venv_preserves_console_scripts_after_publish_reuse_and_relocation(
+        self,
+    ) -> None:
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
             cache = root / "cache"
+            relocated_cache = root / "relocated-cache"
             executable_dir = root / "bin"
             executable_dir.mkdir()
             (executable_dir / "python").symlink_to(sys.executable)
@@ -72,7 +75,12 @@ class OfficialShellSupportTest(unittest.TestCase):
                 '"$first/bin/pip" --version; '
                 'second=$(ensure_venv demo revision --help); '
                 'test "$first" = "$second"; '
-                '"$second/bin/pip" --version'
+                '"$second/bin/pip" --version; '
+                f'mv "{cache}" "{relocated_cache}"; '
+                f'KAIRYU_BENCH_CACHE_DIR="{relocated_cache}"; '
+                'third=$(ensure_venv demo revision --help); '
+                'test "$second" != "$third"; '
+                '"$third/bin/pip" --version'
             )
 
             completed = subprocess.run(
@@ -86,7 +94,7 @@ class OfficialShellSupportTest(unittest.TestCase):
 
         self.assertEqual(completed.returncode, 0, completed.stderr)
         version_lines = completed.stdout.splitlines()
-        self.assertEqual(len(version_lines), 2, completed.stdout)
+        self.assertEqual(len(version_lines), 3, completed.stdout)
         self.assertTrue(all(line.startswith("pip ") for line in version_lines))
 
     def test_context_get_reads_only_the_adapter_context(self) -> None:
