@@ -143,7 +143,7 @@
     },
     "adapter": "adapters/gpqa-diamond/run.sh",
     "scoring": {"method": "gpqa-diamond-exact-choice-match", "unit": "percent"},
-    "requirements": []
+    "requirements": ["hf_token", "gated-dataset-acceptance"]
   },
   {
     "name": "scicode",

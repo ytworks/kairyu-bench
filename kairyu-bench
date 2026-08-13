@@ -11,9 +11,7 @@ command -v docker >/dev/null 2>&1 || {
 
 mkdir -p "$ROOT/results" "$ROOT/.cache"
 
-if ! docker image inspect "$IMAGE" >/dev/null 2>&1; then
-    docker build -t "$IMAGE" "$ROOT"
-fi
+docker build -t "$IMAGE" "$ROOT"
 
 exec docker run --rm --privileged \
     --add-host host.docker.internal:host-gateway \
@@ -21,4 +19,5 @@ exec docker run --rm --privileged \
     -v "$ROOT/results:/work/results" \
     -v "$ROOT/.cache:/work/cache" \
     -e KAIRYU_API_KEY \
+    -e HF_TOKEN \
     "$IMAGE" "$@"

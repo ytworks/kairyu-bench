@@ -31,6 +31,15 @@ class OfficialSourceManifestTest(unittest.TestCase):
         with self.assertRaisesRegex(ManifestError, "duplicate benchmark"):
             select_benchmarks("hle,hle")
 
+    def test_gated_dataset_requirements_match_their_adapters(self) -> None:
+        manifest = load_manifest()
+
+        self.assertEqual(manifest["livecodebench"]["requirements"], [])
+        self.assertEqual(
+            manifest["gpqa-diamond"]["requirements"],
+            ["hf_token", "gated-dataset-acceptance"],
+        )
+
 
 if __name__ == "__main__":
     unittest.main()
