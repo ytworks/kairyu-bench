@@ -20,6 +20,12 @@ class HostEntrypointTest(unittest.TestCase):
             "COPY --from=docker_cli /usr/local/bin/docker /usr/local/bin/docker",
             dockerfile,
         )
+        self.assertIn(
+            "COPY --from=docker_cli "
+            "/usr/local/libexec/docker/cli-plugins/docker-compose "
+            "/usr/local/libexec/docker/cli-plugins/docker-compose",
+            dockerfile,
+        )
         self.assertIn("# hadolint ignore=DL3008", dockerfile)
         self.assertNotIn("    docker.io \\\n", dockerfile)
 

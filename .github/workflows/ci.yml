@@ -52,5 +52,7 @@ jobs:
           '
       - run: docker run --rm kairyu-bench:ci list
       - run: docker run --rm kairyu-bench:ci run https://example.test/v1 --only gpqa-diamond --limit 1 --dry-run
+      - name: Check Docker Compose availability
+        run: docker run --rm --entrypoint docker kairyu-bench:ci compose --project-name kairyu-bench-ci version
       - name: Check nested Docker access
         run: docker run --rm -v /var/run/docker.sock:/var/run/docker.sock --entrypoint docker kairyu-bench:ci version --format '{{.Server.Version}}'
