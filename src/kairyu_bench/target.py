@@ -101,6 +101,35 @@ class TargetClient:
         detail = "; ".join(failures)
         raise PreflightError(f"no advertised model accepted chat requests ({detail})")
 
+    def chat(
+        self,
+        model_id: str,
+        messages: list[dict[str, Any]],
+        *,
+        max_tokens: int,
+        temperature: float = 0,
+    ) -> str:
+        response = self._request_json(
+            "POST",
+            self.endpoint.chat_url,
+            {
+                "model": model_id,
+                "messages": messages,
+                "max_tokens": max_tokens,
+                "temperature": temperature,
+            },
+        )
+        choices = response.get("choices")
+        if not isinstance(choices, list) or not choices:
+            raise PreflightError("chat response contains no choices")
+        first = choices[0]
+        if not isinstance(first, dict) or not isinstance(first.get("message"), dict):
+            raise PreflightError("chat response contains no assistant message")
+        content = first["message"].get("content")
+        if not isinstance(content, str):
+            raise PreflightError("chat response assistant content is not text")
+        return content
+
     def _request_json(
         self,
         method: str,

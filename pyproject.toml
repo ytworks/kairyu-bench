@@ -7,6 +7,10 @@ name = "kairyu-bench"
 version = "0.1.0"
 description = "Standalone official benchmark runner for Kairyu-compatible APIs"
 requires-python = ">=3.9"
+dependencies = [
+  "datasets==5.0.0",
+  "tiktoken==0.13.0",
+]
 
 [project.scripts]
 kairyu-bench-internal = "kairyu_bench.cli:main"

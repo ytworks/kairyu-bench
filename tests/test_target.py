@@ -138,6 +138,24 @@ class TargetClientContractTest(unittest.TestCase):
         with self.assertRaisesRegex(PreflightError, "no model IDs"):
             client.discover_chat_model()
 
+    def test_chat_returns_assistant_text_from_real_api_response(self) -> None:
+        client = TargetClient(Endpoint.parse(self.root), api_key="secret", timeout=2)
+
+        response = client.chat(
+            "chat-capable",
+            [{"role": "user", "content": "Question"}],
+            max_tokens=32,
+        )
+
+        self.assertEqual(response, "OK")
+        request = _KairyuHandler.requests[-1]
+        self.assertEqual(request["payload"]["model"], "chat-capable")
+        self.assertEqual(request["payload"]["max_tokens"], 32)
+        self.assertEqual(
+            request["payload"]["messages"],
+            [{"role": "user", "content": "Question"}],
+        )
+
 
 if __name__ == "__main__":
     unittest.main()
