@@ -3,6 +3,7 @@ from __future__ import annotations
 import json
 import os
 import subprocess
+import sys
 import tempfile
 import unittest
 from pathlib import Path
@@ -54,6 +55,47 @@ class OfficialShellSupportTest(unittest.TestCase):
                 ["git", "-C", first, "rev-parse", "HEAD"], text=True
             ).strip()
             self.assertEqual(actual, revision)
+
+    def test_ensure_venv_preserves_console_scripts_after_publish_reuse_and_relocation(
+        self,
+    ) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            cache = root / "cache"
+            relocated_cache = root / "relocated-cache"
+            executable_dir = root / "bin"
+            executable_dir.mkdir()
+            (executable_dir / "python").symlink_to(sys.executable)
+            environment = os.environ.copy()
+            environment["PATH"] = f"{executable_dir}{os.pathsep}{environment['PATH']}"
+            command = (
+                '. "scripts/lib/official.sh"; '
+                f'KAIRYU_BENCH_CACHE_DIR="{cache}"; '
+                'first=$(ensure_venv demo revision --help); '
+                '"$first/bin/pip" --version; '
+                'second=$(ensure_venv demo revision --help); '
+                'test "$first" = "$second"; '
+                '"$second/bin/pip" --version; '
+                f'mv "{cache}" "{relocated_cache}"; '
+                f'KAIRYU_BENCH_CACHE_DIR="{relocated_cache}"; '
+                'third=$(ensure_venv demo revision --help); '
+                'test "$second" != "$third"; '
+                '"$third/bin/pip" --version'
+            )
+
+            completed = subprocess.run(
+                ["sh", "-c", command],
+                cwd=ROOT,
+                env=environment,
+                text=True,
+                capture_output=True,
+                check=False,
+            )
+
+        self.assertEqual(completed.returncode, 0, completed.stderr)
+        version_lines = completed.stdout.splitlines()
+        self.assertEqual(len(version_lines), 3, completed.stdout)
+        self.assertTrue(all(line.startswith("pip ") for line in version_lines))
 
     def test_context_get_reads_only_the_adapter_context(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
