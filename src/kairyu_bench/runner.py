@@ -10,6 +10,7 @@ from pathlib import Path
 from typing import Any, Protocol
 
 from kairyu_bench.results import BenchmarkResult, ResultValidationError
+from kairyu_bench.reporting import write_score_report
 from kairyu_bench.target import Endpoint
 
 
@@ -275,6 +276,7 @@ def run_benchmarks(
     metadata["status"] = "completed" if all_completed else "incomplete"
     metadata["finished_at"] = _utc_now()
     _write_json(run_dir / "run.json", metadata)
+    write_score_report(run_dir)
     return RunOutcome(
         run_dir=run_dir,
         model_id=model_id,

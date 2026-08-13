@@ -12,6 +12,7 @@ from pathlib import Path
 from kairyu_bench.benchmarks import BENCHMARK_NAMES
 from kairyu_bench.manifest import ManifestError, load_manifest, select_benchmarks
 from kairyu_bench.runner import RunConfig, run_benchmarks
+from kairyu_bench.reporting import compare_runs, comparison_markdown
 from kairyu_bench.target import Endpoint, PreflightError, TargetClient
 
 
@@ -124,4 +125,12 @@ def main(argv: Sequence[str] | None = None) -> int:
         print(f"model: {outcome.model_id}")
         print(f"results: {outcome.run_dir}")
         return outcome.exit_code
-    raise SystemExit("comparison is not implemented yet")
+    if args.command == "compare":
+        try:
+            comparison = compare_runs(Path(args.baseline), Path(args.candidate))
+        except (OSError, ValueError) as error:
+            print(f"kairyu-bench: {error}", file=sys.stderr)
+            return 2
+        print(comparison_markdown(comparison), end="")
+        return 0
+    raise AssertionError(f"unknown command: {args.command}")
