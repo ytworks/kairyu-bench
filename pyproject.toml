@@ -1,0 +1,15 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "kairyu-bench"
+version = "0.1.0"
+description = "Standalone official benchmark runner for Kairyu-compatible APIs"
+requires-python = ">=3.9"
+
+[project.scripts]
+kairyu-bench-internal = "kairyu_bench.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]

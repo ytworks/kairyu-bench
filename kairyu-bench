@@ -1,0 +1,24 @@
+#!/bin/sh
+set -eu
+
+ROOT=$(CDPATH= cd -- "$(dirname -- "$0")" && pwd)
+IMAGE=${KAIRYU_BENCH_IMAGE:-kairyu-bench:local}
+
+command -v docker >/dev/null 2>&1 || {
+    echo "kairyu-bench: Docker is required" >&2
+    exit 2
+}
+
+mkdir -p "$ROOT/results" "$ROOT/.cache"
+
+if ! docker image inspect "$IMAGE" >/dev/null 2>&1; then
+    docker build -t "$IMAGE" "$ROOT"
+fi
+
+exec docker run --rm --privileged \
+    --add-host host.docker.internal:host-gateway \
+    -v /var/run/docker.sock:/var/run/docker.sock \
+    -v "$ROOT/results:/work/results" \
+    -v "$ROOT/.cache:/work/cache" \
+    -e KAIRYU_API_KEY \
+    "$IMAGE" "$@"
