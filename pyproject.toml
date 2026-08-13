@@ -13,3 +13,6 @@ kairyu-bench-internal = "kairyu_bench.cli:main"
 
 [tool.setuptools.packages.find]
 where = ["src"]
+
+[tool.setuptools.package-data]
+kairyu_bench = ["data/*.json"]
