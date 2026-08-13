@@ -1,0 +1,212 @@
+[
+  {
+    "name": "swe-bench-pro",
+    "kind": "agentic-official-harness",
+    "source": {
+      "repository": "https://github.com/SWE-bench/SWE-bench",
+      "revision": "c7fd5abffe0b2086a8bb9389d23c47d930ef571f"
+    },
+    "generator": {
+      "repository": "https://github.com/SWE-agent/mini-swe-agent",
+      "revision": "a83fcae82d2a08f0ee0c688f9d137b3566c097f8"
+    },
+    "dataset": {
+      "id": "ScaleAI/SWE-bench_Pro",
+      "revision": "7ab5114912baf22bb098818e604c02fe7ad2c11f"
+    },
+    "adapter": "adapters/swe-bench-pro/run.sh",
+    "scoring": {"method": "swebench-official-resolved-percent", "unit": "percent"},
+    "requirements": ["docker", "x86_64-recommended"]
+  },
+  {
+    "name": "swe-bench-verified",
+    "kind": "agentic-official-harness",
+    "source": {
+      "repository": "https://github.com/SWE-bench/SWE-bench",
+      "revision": "c7fd5abffe0b2086a8bb9389d23c47d930ef571f"
+    },
+    "generator": {
+      "repository": "https://github.com/SWE-agent/mini-swe-agent",
+      "revision": "a83fcae82d2a08f0ee0c688f9d137b3566c097f8"
+    },
+    "dataset": {
+      "id": "SWE-bench/SWE-bench_Verified",
+      "revision": "03e151cf5560b1af6a4363c6a9d766deaaea6b56"
+    },
+    "adapter": "adapters/swe-bench-verified/run.sh",
+    "scoring": {"method": "swebench-official-resolved-percent", "unit": "percent"},
+    "requirements": ["docker", "x86_64-recommended"]
+  },
+  {
+    "name": "terminal-bench",
+    "kind": "agentic-official-harness",
+    "source": {
+      "repository": "https://github.com/harbor-framework/harbor",
+      "revision": "ea2fee78517f2e591bad69fcf1e6731f9c23ec99"
+    },
+    "dataset": {
+      "id": "terminal-bench/terminal-bench-2-1",
+      "revision": "2.1"
+    },
+    "adapter": "adapters/terminal-bench/run.sh",
+    "scoring": {"method": "harbor-official-task-reward", "unit": "percent"},
+    "requirements": ["docker"]
+  },
+  {
+    "name": "livecodebench",
+    "kind": "official-harness",
+    "source": {
+      "repository": "https://github.com/LiveCodeBench/LiveCodeBench",
+      "revision": "28fef95ea8c9f7a547c8329f2cd3d32b92c1fa24"
+    },
+    "dataset": {
+      "id": "livecodebench/code_generation_lite",
+      "revision": "0fe84c3912ea0c4d4a78037083943e8f0c4dd505"
+    },
+    "adapter": "adapters/livecodebench/run.sh",
+    "scoring": {"method": "livecodebench-official-pass-at-1", "unit": "percent"},
+    "requirements": []
+  },
+  {
+    "name": "livecodebench-pro",
+    "kind": "official-harness",
+    "source": {
+      "repository": "https://github.com/GavinZhengOI/LiveCodeBench-Pro",
+      "revision": "d614eef4f95b3654bf0758c64e1194b2575850b8"
+    },
+    "dataset": {
+      "id": "QAQAQAQAQ/LiveCodeBench-Pro",
+      "revision": "adebffce047dddb7768a86bace6aea4f7425e3bc"
+    },
+    "secondary_sources": [
+      {
+        "id": "QAQAQAQAQ/LiveCodeBench-Pro-Testcase",
+        "revision": "5257736c0a4e30ba0949d41c56a257c323d9c600"
+      },
+      {
+        "id": "https://github.com/YanagiOrigami/LightCPVerifier",
+        "revision": "021d121c882e70856b66113142495e31b9fe1d80"
+      }
+    ],
+    "adapter": "adapters/livecodebench-pro/run.sh",
+    "scoring": {"method": "livecodebench-pro-lightcpverifier-pass-at-1", "unit": "percent"},
+    "requirements": ["docker", "hf_token", "gated-dataset-acceptance"]
+  },
+  {
+    "name": "hle",
+    "kind": "official-harness",
+    "source": {
+      "repository": "https://github.com/centerforaisafety/simple-evals",
+      "revision": "8e53435ff2985b0f32ea7ceb7e92c3a175f2c0f3"
+    },
+    "dataset": {
+      "id": "cais/hle",
+      "revision": "5a81a4c7271a2a2a312b9a690f0c2fde837e4c29"
+    },
+    "adapter": "adapters/hle/run.sh",
+    "scoring": {
+      "method": "hle-official-llm-judge-self",
+      "unit": "percent",
+      "self_judged": true
+    },
+    "requirements": ["hf_token"]
+  },
+  {
+    "name": "charxiv-reasoning",
+    "kind": "official-harness",
+    "source": {
+      "repository": "https://github.com/princeton-nlp/CharXiv",
+      "revision": "7ebe88f78dee387691551f071abcb2b9e1a8025b"
+    },
+    "dataset": {
+      "id": "princeton-nlp/CharXiv",
+      "revision": "f441eb632fc62f6f777830a0f47619e6e86459b0"
+    },
+    "adapter": "adapters/charxiv-reasoning/run.sh",
+    "scoring": {
+      "method": "charxiv-official-reasoning-judge-self",
+      "unit": "percent",
+      "self_judged": true
+    },
+    "requirements": ["vision"]
+  },
+  {
+    "name": "gpqa-diamond",
+    "kind": "official-data-direct-score",
+    "source": {
+      "repository": "https://github.com/idavidrein/gpqa",
+      "revision": "56686c06f5e19865c153de0fdb11be3890014df7"
+    },
+    "dataset": {
+      "id": "Idavidrein/gpqa",
+      "revision": "633f5ee89ab8ad4522a9f850766b73f62147ffdd"
+    },
+    "adapter": "adapters/gpqa-diamond/run.sh",
+    "scoring": {"method": "gpqa-diamond-exact-choice-match", "unit": "percent"},
+    "requirements": ["hf_token", "gated-dataset-acceptance"]
+  },
+  {
+    "name": "scicode",
+    "kind": "official-harness",
+    "source": {
+      "repository": "https://github.com/scicode-bench/SciCode",
+      "revision": "e3158ea011d4235245a547460d3688d7ccbf9900"
+    },
+    "dataset": {
+      "id": "SciCode1/SciCode",
+      "revision": "4510f6a6aa27c43fad7b43da2c59602a86e88480"
+    },
+    "adapter": "adapters/scicode/run.sh",
+    "scoring": {"method": "scicode-official-inspect-tests", "unit": "percent"},
+    "requirements": ["scicode-test-data"]
+  },
+  {
+    "name": "tau-bench-banking",
+    "kind": "agentic-official-harness",
+    "source": {
+      "repository": "https://github.com/sierra-research/tau2-bench",
+      "revision": "79975ac5741e23fbb1d2ac44262d62398a6d87bd"
+    },
+    "dataset": {
+      "id": "tau2/banking_knowledge/alltools",
+      "revision": "79975ac5741e23fbb1d2ac44262d62398a6d87bd"
+    },
+    "adapter": "adapters/tau-bench-banking/run.sh",
+    "scoring": {
+      "method": "tau2-official-average-reward-self-simulated",
+      "unit": "percent",
+      "self_simulated": true
+    },
+    "requirements": ["docker", "sandbox-runtime"]
+  },
+  {
+    "name": "long-context-reasoning",
+    "kind": "official-harness",
+    "source": {
+      "repository": "https://github.com/THUDM/LongBench",
+      "revision": "2e00731f8d0bff23dc4325161044d0ed8af94c1e"
+    },
+    "dataset": {
+      "id": "THUDM/LongBench-v2",
+      "revision": "2b48e494f2c7a2f0af81aae178e05c7e1dde0fe9"
+    },
+    "adapter": "adapters/long-context-reasoning/run.sh",
+    "scoring": {"method": "longbench-v2-official-choice-accuracy", "unit": "percent"},
+    "requirements": ["long-context"]
+  },
+  {
+    "name": "mrcr-v2",
+    "kind": "official-data-direct-score",
+    "source": {
+      "repository": "https://huggingface.co/datasets/openai/mrcr",
+      "revision": "f4c69fae7cf81f7ca26b9fee34b392a50f6b8a1d"
+    },
+    "dataset": {
+      "id": "openai/mrcr",
+      "revision": "f4c69fae7cf81f7ca26b9fee34b392a50f6b8a1d"
+    },
+    "adapter": "adapters/mrcr-v2/run.sh",
+    "scoring": {"method": "openai-mrcr-sequencematcher-ratio", "unit": "percent"},
+    "requirements": ["long-context"]
+  }
+]
