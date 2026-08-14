@@ -28,6 +28,14 @@ class TauBenchBankingShimTest(unittest.TestCase):
         self.assertIn("KAIRYU_EMBEDDING_MODEL", harness)
         self.assertIn("scripts/shims/tau_bench_banking.py", harness)
         self.assertNotIn('"$environment/bin/tau2"', harness)
+        self.assertIn("require_command srt", harness)
+
+    def test_image_pins_tau_sandbox_runtime(self) -> None:
+        dockerfile = (ROOT / "Dockerfile").read_text(encoding="utf-8")
+
+        self.assertIn("nodejs", dockerfile)
+        self.assertIn("npm", dockerfile)
+        self.assertIn("@anthropic-ai/sandbox-runtime@0.0.23", dockerfile)
 
     def test_main_reads_environment_and_preserves_official_cli_arguments(self) -> None:
         seen_arguments: list[str] = []
