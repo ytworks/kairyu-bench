@@ -8,6 +8,7 @@ require_command git
 require_command bwrap
 require_command rg
 require_command socat
+require_command srt
 
 source_repository=$(context_get source.repository)
 source_revision=$(context_get source.revision)
