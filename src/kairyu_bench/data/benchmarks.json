@@ -177,7 +177,7 @@
       "unit": "percent",
       "self_simulated": true
     },
-    "requirements": ["docker", "sandbox-runtime"]
+    "requirements": ["docker", "sandbox-runtime", "embeddings"]
   },
   {
     "name": "long-context-reasoning",

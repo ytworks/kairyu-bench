@@ -18,6 +18,9 @@ class ModelDiscovery(Protocol):
     def discover_chat_model(self) -> str:
         ...
 
+    def discover_embedding_model(self) -> str:
+        ...
+
 
 def _utc_now() -> str:
     return datetime.now(timezone.utc).isoformat().replace("+00:00", "Z")
@@ -43,6 +46,7 @@ class RunConfig:
 class RunOutcome:
     run_dir: Path
     model_id: str
+    embedding_model_id: str | None
     exit_code: int
     statuses: dict[str, str]
 
@@ -65,42 +69,44 @@ def _failure_result(
     entry: dict[str, Any],
     started_at: str,
     error: str,
+    conditions: dict[str, Any],
 ) -> BenchmarkResult:
     scoring = entry["scoring"]
-    return BenchmarkResult.from_dict(
-        {
-            "schema_version": 1,
-            "run_id": config.run_id,
-            "benchmark": name,
-            "status": "failed",
-            "endpoint": {"fingerprint": endpoint_fingerprint(config.endpoint)},
-            "model_id": model_id,
-            "source": {
-                "repository": entry["source"]["repository"],
-                "revision": entry["source"]["revision"],
-                "dataset": entry["dataset"]["id"],
-                "dataset_revision": entry["dataset"]["revision"],
-            },
-            "selection": {
-                "requested_limit": config.limit,
-                "problem_ids": [],
-            },
-            "counts": {"requested": 0, "evaluated": 0},
-            "score": {
-                "primary": None,
-                "unit": scoring["unit"],
-                "metrics": {},
-            },
-            "scoring": {
-                "method": scoring["method"],
-                "self_judged": bool(scoring.get("self_judged", False)),
-                "self_simulated": bool(scoring.get("self_simulated", False)),
-            },
-            "artifacts": {"raw": [], "logs": [f"logs/{name}.log"]},
-            "timestamps": {"started_at": started_at, "finished_at": _utc_now()},
-            "error": error,
-        }
-    )
+    payload: dict[str, Any] = {
+        "schema_version": 1,
+        "run_id": config.run_id,
+        "benchmark": name,
+        "status": "failed",
+        "endpoint": {"fingerprint": endpoint_fingerprint(config.endpoint)},
+        "model_id": model_id,
+        "source": {
+            "repository": entry["source"]["repository"],
+            "revision": entry["source"]["revision"],
+            "dataset": entry["dataset"]["id"],
+            "dataset_revision": entry["dataset"]["revision"],
+        },
+        "selection": {
+            "requested_limit": config.limit,
+            "problem_ids": [],
+        },
+        "counts": {"requested": 0, "evaluated": 0},
+        "score": {
+            "primary": None,
+            "unit": scoring["unit"],
+            "metrics": {},
+        },
+        "scoring": {
+            "method": scoring["method"],
+            "self_judged": bool(scoring.get("self_judged", False)),
+            "self_simulated": bool(scoring.get("self_simulated", False)),
+        },
+        "artifacts": {"raw": [], "logs": [f"logs/{name}.log"]},
+        "timestamps": {"started_at": started_at, "finished_at": _utc_now()},
+        "error": error,
+    }
+    if conditions:
+        payload["conditions"] = conditions
+    return BenchmarkResult.from_dict(payload)
 
 
 def _validate_identity(
@@ -109,6 +115,7 @@ def _validate_identity(
     model_id: str,
     name: str,
     entry: dict[str, Any],
+    conditions: dict[str, Any],
 ) -> None:
     data = result.data
     expected = {
@@ -139,6 +146,8 @@ def _validate_identity(
     }
     if data["scoring"] != expected_scoring:
         raise ResultValidationError("adapter result scoring method differs from manifest")
+    if data.get("conditions", {}) != conditions:
+        raise ResultValidationError("adapter result benchmark conditions changed")
 
 
 def run_benchmarks(
@@ -151,6 +160,13 @@ def run_benchmarks(
         raise FileExistsError(f"run directory already exists: {config.run_id}")
 
     model_id = client.discover_chat_model()
+    requires_embeddings = any(
+        "embeddings" in manifest[name].get("requirements", [])
+        for name in config.selected
+    )
+    embedding_model_id = (
+        client.discover_embedding_model() if requires_embeddings else None
+    )
     run_dir.mkdir(parents=True)
     for child in ("context", "logs", "normalized", "raw"):
         (run_dir / child).mkdir()
@@ -163,6 +179,7 @@ def run_benchmarks(
         "status": "running",
         "endpoint": {"fingerprint": fingerprint},
         "model_id": model_id,
+        "embedding_model_id": embedding_model_id,
         "benchmarks": list(config.selected),
         "limit": config.limit,
         "started_at": started_at,
@@ -178,6 +195,11 @@ def run_benchmarks(
         result_path = run_dir / "normalized" / f"{name}.json"
         log_path = run_dir / "logs" / f"{name}.log"
         context_path = run_dir / "context" / f"{name}.json"
+        conditions = (
+            {"embedding_model_id": embedding_model_id}
+            if "embeddings" in entry.get("requirements", [])
+            else {}
+        )
         context = {
             "schema_version": 1,
             "run_id": config.run_id,
@@ -194,6 +216,8 @@ def run_benchmarks(
             "run_dir": str(run_dir),
             "result_path": str(result_path),
         }
+        if conditions:
+            context["conditions"] = conditions
         _write_json(context_path, context)
         adapter_path = config.app_root / entry["adapter"]
         error: str | None = None
@@ -205,6 +229,7 @@ def run_benchmarks(
         else:
             env = os.environ.copy()
             api_key = env.get("KAIRYU_API_KEY", "")
+            env.pop("KAIRYU_EMBEDDING_MODEL", None)
             env.update(
                 {
                     "KAIRYU_BENCH_CONTEXT": str(context_path),
@@ -221,6 +246,8 @@ def run_benchmarks(
                     "OPENAI_API_KEY": api_key or "not-required",
                 }
             )
+            if conditions and embedding_model_id is not None:
+                env["KAIRYU_EMBEDDING_MODEL"] = embedding_model_id
             try:
                 with log_path.open("w", encoding="utf-8") as log:
                     completed = subprocess.run(
@@ -243,7 +270,14 @@ def run_benchmarks(
             try:
                 decoded = json.loads(result_path.read_text(encoding="utf-8"))
                 result = BenchmarkResult.from_dict(decoded)
-                _validate_identity(result, config, model_id, name, entry)
+                _validate_identity(
+                    result,
+                    config,
+                    model_id,
+                    name,
+                    entry,
+                    conditions,
+                )
                 if return_code and result.status == "completed":
                     raise ResultValidationError(
                         f"adapter exited {return_code} but claimed completion"
@@ -266,6 +300,7 @@ def run_benchmarks(
                 entry=entry,
                 started_at=adapter_started_at,
                 error=error or f"adapter exited {return_code}",
+                conditions=conditions,
             )
             result.write(result_path)
         statuses[name] = result.status
@@ -280,6 +315,7 @@ def run_benchmarks(
     return RunOutcome(
         run_dir=run_dir,
         model_id=model_id,
+        embedding_model_id=embedding_model_id,
         exit_code=0 if all_completed else 3,
         statuses=statuses,
     )

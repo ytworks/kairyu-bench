@@ -140,6 +140,8 @@ def _compatibility(
         return False, "selected problem IDs differ"
     if left["scoring"] != right["scoring"]:
         return False, "scoring method or self-scoring policy differs"
+    if left.get("conditions", {}) != right.get("conditions", {}):
+        return False, "benchmark conditions differ"
     if left["score"]["unit"] != right["score"]["unit"]:
         return False, "score unit differs"
     if left["score"]["primary"] is None or right["score"]["primary"] is None:
