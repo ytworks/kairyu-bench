@@ -43,6 +43,10 @@ class Endpoint:
     def chat_url(self) -> str:
         return f"{self.base_url}/chat/completions"
 
+    @property
+    def embeddings_url(self) -> str:
+        return f"{self.base_url}/embeddings"
+
 
 class TargetClient:
     def __init__(
@@ -57,20 +61,7 @@ class TargetClient:
         self.timeout = timeout
 
     def discover_chat_model(self) -> str:
-        payload = self._request_json("GET", self.endpoint.models_url)
-        data = payload.get("data")
-        if not isinstance(data, list):
-            raise PreflightError("models response does not contain a data list")
-
-        model_ids: list[str] = []
-        for entry in data:
-            if not isinstance(entry, dict):
-                continue
-            model_id = entry.get("id")
-            if isinstance(model_id, str) and model_id:
-                model_ids.append(model_id)
-        if not model_ids:
-            raise PreflightError("models response contains no model IDs")
+        model_ids = self._advertised_model_ids()
 
         failures: list[str] = []
         for model_id in model_ids:
@@ -100,6 +91,62 @@ class TargetClient:
 
         detail = "; ".join(failures)
         raise PreflightError(f"no advertised model accepted chat requests ({detail})")
+
+    def discover_embedding_model(self) -> str:
+        model_ids = self._advertised_model_ids()
+
+        failures: list[str] = []
+        for model_id in model_ids:
+            try:
+                response = self._request_json(
+                    "POST",
+                    self.endpoint.embeddings_url,
+                    {
+                        "model": model_id,
+                        "input": ["kairyu-bench embedding capability probe"],
+                    },
+                )
+            except PreflightError as error:
+                failures.append(f"{model_id}: {error}")
+                continue
+            data = response.get("data")
+            if isinstance(data, list) and data:
+                first = data[0]
+                if isinstance(first, dict):
+                    embedding = first.get("embedding")
+                    if (
+                        isinstance(embedding, list)
+                        and embedding
+                        and all(
+                            not isinstance(value, bool)
+                            and isinstance(value, (int, float))
+                            for value in embedding
+                        )
+                    ):
+                        return model_id
+            failures.append(f"{model_id}: response contains no numeric embedding")
+
+        detail = "; ".join(failures)
+        raise PreflightError(
+            f"no advertised model accepted embedding requests ({detail})"
+        )
+
+    def _advertised_model_ids(self) -> list[str]:
+        payload = self._request_json("GET", self.endpoint.models_url)
+        data = payload.get("data")
+        if not isinstance(data, list):
+            raise PreflightError("models response does not contain a data list")
+
+        model_ids: list[str] = []
+        for entry in data:
+            if not isinstance(entry, dict):
+                continue
+            model_id = entry.get("id")
+            if isinstance(model_id, str) and model_id:
+                model_ids.append(model_id)
+        if not model_ids:
+            raise PreflightError("models response contains no model IDs")
+        return model_ids
 
     def chat(
         self,

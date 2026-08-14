@@ -39,6 +39,7 @@ class OfficialSourceManifestTest(unittest.TestCase):
             manifest["gpqa-diamond"]["requirements"],
             ["hf_token", "gated-dataset-acceptance"],
         )
+        self.assertIn("embeddings", manifest["tau-bench-banking"]["requirements"])
 
 
 if __name__ == "__main__":

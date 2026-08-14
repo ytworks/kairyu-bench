@@ -96,6 +96,23 @@ class BenchmarkResultContractTest(unittest.TestCase):
         self.assertEqual(result.data["counts"]["evaluated"], 1)
         self.assertEqual(result.data["error"], "second problem timed out")
 
+    def test_embedding_condition_requires_a_non_empty_model_id(self) -> None:
+        payload = completed_payload()
+        payload["conditions"] = {"embedding_model_id": ""}
+
+        with self.assertRaisesRegex(
+            ResultValidationError,
+            "conditions.embedding_model_id",
+        ):
+            BenchmarkResult.from_dict(payload)
+
+    def test_conditions_must_be_an_object(self) -> None:
+        payload = completed_payload()
+        payload["conditions"] = ["embed-small"]
+
+        with self.assertRaisesRegex(ResultValidationError, "conditions must be an object"):
+            BenchmarkResult.from_dict(payload)
+
 
 if __name__ == "__main__":
     unittest.main()

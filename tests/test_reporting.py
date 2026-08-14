@@ -16,38 +16,40 @@ def _result(
     *,
     problem_ids: list[str] | None = None,
     source_revision: str = "source-pin",
+    conditions: dict[str, str] | None = None,
 ) -> BenchmarkResult:
     ids = problem_ids or ["one", "two"]
-    return BenchmarkResult.from_dict(
-        {
-            "schema_version": 1,
-            "run_id": run_id,
-            "benchmark": benchmark,
-            "status": "completed",
-            "endpoint": {"fingerprint": "sha256:0123456789abcdef"},
-            "model_id": f"model-{run_id}",
-            "source": {
-                "repository": "https://example.test/official",
-                "revision": source_revision,
-                "dataset": "owner/data",
-                "dataset_revision": "dataset-pin",
-            },
-            "selection": {"requested_limit": 2, "problem_ids": ids},
-            "counts": {"requested": len(ids), "evaluated": len(ids)},
-            "score": {"primary": score, "unit": "percent", "metrics": {}},
-            "scoring": {
-                "method": "official-method",
-                "self_judged": False,
-                "self_simulated": False,
-            },
-            "artifacts": {"raw": ["raw/output.json"], "logs": ["logs/run.log"]},
-            "timestamps": {
-                "started_at": "2026-08-13T00:00:00Z",
-                "finished_at": "2026-08-13T00:01:00Z",
-            },
-            "error": None,
-        }
-    )
+    payload = {
+        "schema_version": 1,
+        "run_id": run_id,
+        "benchmark": benchmark,
+        "status": "completed",
+        "endpoint": {"fingerprint": "sha256:0123456789abcdef"},
+        "model_id": f"model-{run_id}",
+        "source": {
+            "repository": "https://example.test/official",
+            "revision": source_revision,
+            "dataset": "owner/data",
+            "dataset_revision": "dataset-pin",
+        },
+        "selection": {"requested_limit": 2, "problem_ids": ids},
+        "counts": {"requested": len(ids), "evaluated": len(ids)},
+        "score": {"primary": score, "unit": "percent", "metrics": {}},
+        "scoring": {
+            "method": "official-method",
+            "self_judged": False,
+            "self_simulated": False,
+        },
+        "artifacts": {"raw": ["raw/output.json"], "logs": ["logs/run.log"]},
+        "timestamps": {
+            "started_at": "2026-08-13T00:00:00Z",
+            "finished_at": "2026-08-13T00:01:00Z",
+        },
+        "error": None,
+    }
+    if conditions is not None:
+        payload["conditions"] = conditions
+    return BenchmarkResult.from_dict(payload)
 
 
 def _run(root: Path, run_id: str, results: list[BenchmarkResult]) -> Path:
@@ -139,6 +141,70 @@ class ReportingTest(unittest.TestCase):
         self.assertFalse(row["compatible"])
         self.assertIsNone(row["delta"])
         self.assertIn("source lock differs", row["reason"])
+
+    def test_compare_rejects_embedding_model_condition_mismatch(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            baseline = _run(
+                root,
+                "run-a",
+                [
+                    _result(
+                        "run-a",
+                        "tau-bench-banking",
+                        40.0,
+                        conditions={"embedding_model_id": "embed-small"},
+                    )
+                ],
+            )
+            candidate = _run(
+                root,
+                "run-b",
+                [
+                    _result(
+                        "run-b",
+                        "tau-bench-banking",
+                        60.0,
+                        conditions={"embedding_model_id": "embed-large"},
+                    )
+                ],
+            )
+
+            comparison = compare_runs(baseline, candidate)
+
+        row = comparison["rows"][0]
+        self.assertFalse(row["compatible"])
+        self.assertIsNone(row["delta"])
+        self.assertEqual(row["reason"], "benchmark conditions differ")
+
+    def test_compare_rejects_legacy_tau_result_without_embedding_condition(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            baseline = _run(
+                root,
+                "run-a",
+                [_result("run-a", "tau-bench-banking", 40.0)],
+            )
+            candidate = _run(
+                root,
+                "run-b",
+                [
+                    _result(
+                        "run-b",
+                        "tau-bench-banking",
+                        60.0,
+                        conditions={"embedding_model_id": "embed-small"},
+                    )
+                ],
+            )
+
+            comparison = compare_runs(baseline, candidate)
+
+        self.assertFalse(comparison["rows"][0]["compatible"])
+        self.assertEqual(
+            comparison["rows"][0]["reason"],
+            "benchmark conditions differ",
+        )
 
 
 if __name__ == "__main__":

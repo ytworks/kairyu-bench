@@ -109,6 +109,15 @@ class BenchmarkResult:
             if not isinstance(scoring.get(field), bool):
                 raise ResultValidationError(f"scoring.{field} must be a boolean")
 
+        if "conditions" in payload:
+            conditions = _mapping(payload.get("conditions"), "conditions")
+            embedding_model_id = conditions.get("embedding_model_id")
+            if embedding_model_id is not None:
+                _non_empty_string(
+                    embedding_model_id,
+                    "conditions.embedding_model_id",
+                )
+
         artifacts = _mapping(payload.get("artifacts"), "artifacts")
         for field in ("raw", "logs"):
             paths = artifacts.get(field)

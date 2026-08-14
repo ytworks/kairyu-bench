@@ -329,43 +329,45 @@ def _result(
     error: str | None,
 ) -> BenchmarkResult:
     scoring = context["scoring"]
-    return BenchmarkResult.from_dict(
-        {
-            "schema_version": 1,
-            "run_id": context["run_id"],
-            "benchmark": context["benchmark"],
-            "status": status,
-            "endpoint": {"fingerprint": context["endpoint_fingerprint"]},
-            "model_id": context["model_id"],
-            "source": {
-                "repository": context["source"]["repository"],
-                "revision": context["source"]["revision"],
-                "dataset": context["dataset"]["id"],
-                "dataset_revision": context["dataset"]["revision"],
-            },
-            "selection": {
-                "requested_limit": context.get("limit"),
-                "problem_ids": problem_ids,
-            },
-            "counts": {"requested": len(problem_ids), "evaluated": evaluated},
-            "score": {
-                "primary": primary,
-                "unit": scoring["unit"],
-                "metrics": metrics,
-            },
-            "scoring": {
-                "method": scoring["method"],
-                "self_judged": bool(scoring.get("self_judged", False)),
-                "self_simulated": bool(scoring.get("self_simulated", False)),
-            },
-            "artifacts": {
-                "raw": raw,
-                "logs": [f"logs/{context['benchmark']}.log"],
-            },
-            "timestamps": {"started_at": _utc_now(), "finished_at": _utc_now()},
-            "error": error,
-        }
-    )
+    payload: dict[str, Any] = {
+        "schema_version": 1,
+        "run_id": context["run_id"],
+        "benchmark": context["benchmark"],
+        "status": status,
+        "endpoint": {"fingerprint": context["endpoint_fingerprint"]},
+        "model_id": context["model_id"],
+        "source": {
+            "repository": context["source"]["repository"],
+            "revision": context["source"]["revision"],
+            "dataset": context["dataset"]["id"],
+            "dataset_revision": context["dataset"]["revision"],
+        },
+        "selection": {
+            "requested_limit": context.get("limit"),
+            "problem_ids": problem_ids,
+        },
+        "counts": {"requested": len(problem_ids), "evaluated": evaluated},
+        "score": {
+            "primary": primary,
+            "unit": scoring["unit"],
+            "metrics": metrics,
+        },
+        "scoring": {
+            "method": scoring["method"],
+            "self_judged": bool(scoring.get("self_judged", False)),
+            "self_simulated": bool(scoring.get("self_simulated", False)),
+        },
+        "artifacts": {
+            "raw": raw,
+            "logs": [f"logs/{context['benchmark']}.log"],
+        },
+        "timestamps": {"started_at": _utc_now(), "finished_at": _utc_now()},
+        "error": error,
+    }
+    conditions = context.get("conditions")
+    if conditions is not None:
+        payload["conditions"] = conditions
+    return BenchmarkResult.from_dict(payload)
 
 
 def normalize_official(context: dict[str, Any], raw_path: Path) -> BenchmarkResult:
