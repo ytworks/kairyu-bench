@@ -38,6 +38,7 @@ set -- \
     --model "$agent_model" \
     --jobs-dir "$raw/jobs" \
     --job-name "$run_id-terminal-bench" \
+    --extra-docker-compose "$ROOT/scripts/harnesses/harbor-host-gateway.yaml" \
     --n-concurrent 1 \
     --n-attempts 1
 if [ "$harbor_agent" = "terminus-2" ]; then

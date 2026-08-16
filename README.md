@@ -54,7 +54,7 @@ Terminus-2とCodexには `OPENAI_BASE_URL=<endpoint>/v1`、Claude Codeには `AN
 
 agent本体はHarborがtask container内へ導入して起動するため、ホストのClaude Code/Codexのログイン状態や設定は引き継ぎません。
 
-`localhost` 上のAPIをDocker Desktop/Linuxから評価する場合は、URLのhostに `host.docker.internal` を指定してください。runnerはそのhost aliasを自動設定します。
+`localhost` 上のAPIをDocker Desktop/Linuxから評価する場合は、URLのhostに `host.docker.internal` を指定してください。runnerとHarborのnested task containerは、そのhost aliasを自動設定します。
 
 ## ベンチマーク
 

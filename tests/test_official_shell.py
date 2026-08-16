@@ -88,6 +88,7 @@ import sys
 from pathlib import Path
 
 args = sys.argv[1:]
+agent = args[args.index("--agent") + 1]
 capture = {
     "args": args,
     "openai_base_url": os.environ.get("OPENAI_BASE_URL"),
@@ -99,6 +100,7 @@ trial = jobs / "task-a"
 trial.mkdir(parents=True)
 (trial / "result.json").write_text(json.dumps({
     "task_name": "task-a",
+    "agent_info": {"name": agent, "version": "1.0"},
     "verifier_result": {"rewards": {"reward": 1}},
 }))
 """,
@@ -154,6 +156,16 @@ trial.mkdir(parents=True)
                     if argument == "--agent-env"
                 ]
                 self.assertEqual(actual_agent_env, expected_agent_env)
+                overlay = Path(
+                    arguments[arguments.index("--extra-docker-compose") + 1]
+                )
+                self.assertEqual(
+                    overlay, ROOT / "scripts/harnesses/harbor-host-gateway.yaml"
+                )
+                self.assertIn(
+                    "host.docker.internal:host-gateway",
+                    overlay.read_text(encoding="utf-8"),
+                )
                 self.assertNotIn("super-secret", arguments)
                 self.assertEqual(capture["openai_base_url"], "https://example.test/v1")
                 self.assertEqual(capture["anthropic_base_url"], "https://example.test")

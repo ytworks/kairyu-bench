@@ -5,7 +5,11 @@ import tempfile
 import unittest
 from pathlib import Path
 
-from kairyu_bench.official import normalize_official, unsupported_result
+from kairyu_bench.official import (
+    OfficialNormalizationError,
+    normalize_official,
+    unsupported_result,
+)
 
 
 def _context(name: str, *, limit: int | None = 2) -> dict[str, object]:
@@ -84,12 +88,20 @@ class OfficialNormalizerTest(unittest.TestCase):
             self._write_json(
                 root,
                 "task-a/result.json",
-                {"task_name": "task-a", "verifier_result": {"rewards": {"reward": 1}}},
+                {
+                    "task_name": "task-a",
+                    "agent_info": {"name": "claude-code", "version": "1.0"},
+                    "verifier_result": {"rewards": {"reward": 1}},
+                },
             )
             self._write_json(
                 root,
                 "task-b/result.json",
-                {"task_name": "task-b", "verifier_result": {"rewards": {"reward": 0}}},
+                {
+                    "task_name": "task-b",
+                    "agent_info": {"name": "claude-code", "version": "1.0"},
+                    "verifier_result": {"rewards": {"reward": 0}},
+                },
             )
 
             result = normalize_official(_context("terminal-bench"), root)
@@ -98,6 +110,27 @@ class OfficialNormalizerTest(unittest.TestCase):
         self.assertEqual(result.data["agent"], "claude-code")
         self.assertEqual(result.data["score"]["primary"], 50.0)
         self.assertEqual(result.data["counts"], {"requested": 2, "evaluated": 2})
+
+    def test_harbor_rejects_missing_mixed_or_unexpected_observed_agents(self) -> None:
+        cases = {
+            "missing": ([None, None], "agent_info.name is missing"),
+            "mixed": (["claude-code", "codex"], "mixed agents"),
+            "unexpected": (["codex", "codex"], "expected 'claude-code'"),
+        }
+        for case, (agents, message) in cases.items():
+            with self.subTest(case=case), tempfile.TemporaryDirectory() as directory:
+                root = Path(directory)
+                for index, agent in enumerate(agents):
+                    payload = {
+                        "task_name": f"task-{index}",
+                        "verifier_result": {"rewards": {"reward": 1}},
+                    }
+                    if agent is not None:
+                        payload["agent_info"] = {"name": agent, "version": "1.0"}
+                    self._write_json(root, f"task-{index}/result.json", payload)
+
+                with self.assertRaisesRegex(OfficialNormalizationError, message):
+                    normalize_official(_context("terminal-bench"), root)
 
     def test_hle_takes_official_metrics_summary(self) -> None:
         with tempfile.TemporaryDirectory() as directory:

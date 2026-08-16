@@ -71,6 +71,7 @@ class OfficialObservation:
     primary: float
     metrics: dict[str, Any]
     error: str | None = None
+    agent: str | None = None
 
 
 def _load_json(path: Path) -> Any:
@@ -115,12 +116,18 @@ def _swebench(path: Path) -> OfficialObservation:
 
 def _harbor(path: Path) -> OfficialObservation:
     candidates = sorted(path.rglob("result.json")) if path.is_dir() else [path]
-    rows: list[tuple[str, float | None]] = []
+    rows: list[tuple[str, float | None, str]] = []
     for candidate in candidates:
         payload = _load_json(candidate)
         if not isinstance(payload, dict) or "task_name" not in payload:
             continue
         task_id = str(payload["task_name"])
+        agent_info = payload.get("agent_info")
+        agent = agent_info.get("name") if isinstance(agent_info, dict) else None
+        if not isinstance(agent, str) or not agent:
+            raise OfficialNormalizationError(
+                f"{candidate}.agent_info.name is missing or invalid"
+            )
         verifier = payload.get("verifier_result")
         reward: float | None = None
         if isinstance(verifier, dict):
@@ -131,9 +138,13 @@ def _harbor(path: Path) -> OfficialObservation:
                     raw_reward = next(iter(rewards.values()))
                 if raw_reward is not None:
                     reward = _number(raw_reward, f"{candidate}.verifier_result.rewards")
-        rows.append((task_id, reward))
-    problem_ids = _ids((task_id for task_id, _ in rows), "Harbor task_name")
-    rewards = [reward for _, reward in rows if reward is not None]
+        rows.append((task_id, reward, agent))
+    problem_ids = _ids((task_id for task_id, _, _ in rows), "Harbor task_name")
+    observed_agents = {agent for _, _, agent in rows}
+    if len(observed_agents) != 1:
+        raise OfficialNormalizationError("Harbor produced results from mixed agents")
+    observed_agent = next(iter(observed_agents))
+    rewards = [reward for _, reward, _ in rows if reward is not None]
     if not rewards:
         raise OfficialNormalizationError("Harbor produced no verifier rewards")
     primary = 100.0 * sum(rewards) / len(problem_ids)
@@ -145,6 +156,7 @@ def _harbor(path: Path) -> OfficialObservation:
         None
         if len(rewards) == len(problem_ids)
         else "one or more Harbor trials have no verifier reward",
+        observed_agent,
     )
 
 
@@ -396,6 +408,11 @@ def normalize_official(context: dict[str, Any], raw_path: Path) -> BenchmarkResu
             f"no official normalizer for {name}"
         ) from error
     observation = normalizer(raw_path)
+    expected_agent = context.get("agent")
+    if expected_agent is not None and observation.agent != expected_agent:
+        raise OfficialNormalizationError(
+            f"Harbor observed agent {observation.agent!r}, expected {expected_agent!r}"
+        )
     if not 0 <= observation.primary <= 100:
         raise OfficialNormalizationError("official primary score is outside 0..100")
     if observation.evaluated > len(observation.problem_ids):
@@ -408,8 +425,13 @@ def normalize_official(context: dict[str, Any], raw_path: Path) -> BenchmarkResu
         and observation.error is None
         else "partial"
     )
+    result_context = (
+        {**context, "agent": observation.agent}
+        if observation.agent is not None
+        else context
+    )
     return _result(
-        context,
+        result_context,
         status=status,
         problem_ids=observation.problem_ids,
         evaluated=observation.evaluated,
