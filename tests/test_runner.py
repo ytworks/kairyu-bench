@@ -71,7 +71,6 @@ payload = {
     "status": "completed",
     "endpoint": {"fingerprint": context["endpoint_fingerprint"]},
     "model_id": context["model_id"],
-    "agent": os.environ.get("KAIRYU_TEST_RESULT_AGENT", context["agent"]),
     "source": {
         "repository": context["source"]["repository"],
         "revision": context["source"]["revision"],
@@ -86,6 +85,8 @@ payload = {
     "timestamps": {"started_at": now, "finished_at": now},
     "error": None,
 }
+if os.environ.get("KAIRYU_TEST_OMIT_AGENT") != "1":
+    payload["agent"] = os.environ.get("KAIRYU_TEST_RESULT_AGENT", context["agent"])
 Path(os.environ["KAIRYU_BENCH_RESULT_PATH"]).write_text(json.dumps(payload))
 """
 
@@ -255,6 +256,42 @@ class BenchmarkRunnerTest(unittest.TestCase):
             failed = json.loads(
                 (
                     root / "results/run-agent-mismatch/normalized/terminal-bench.json"
+                ).read_text(encoding="utf-8")
+            )
+            self.assertEqual(outcome.exit_code, 3)
+            self.assertEqual(failed["status"], "failed")
+            self.assertEqual(failed["agent"], "claude-code")
+            self.assertIn("adapter result agent", failed["error"])
+
+    def test_run_rejects_a_harbor_result_that_omits_agent_provenance(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            adapter = root / "adapters/terminal-bench/run.sh"
+            adapter.parent.mkdir(parents=True)
+            adapter.write_text(CAPTURE_AGENT_ADAPTER, encoding="utf-8")
+            adapter.chmod(0o755)
+            config = RunConfig(
+                endpoint=Endpoint.parse("https://example.test/v1"),
+                selected=("terminal-bench",),
+                limit=1,
+                results_root=root / "results",
+                run_id="run-agent-missing",
+                app_root=root,
+                harbor_agent="claude-code",
+            )
+
+            with mock.patch.dict(
+                os.environ,
+                {
+                    "KAIRYU_TEST_CAPTURE": str(root / "capture.json"),
+                    "KAIRYU_TEST_OMIT_AGENT": "1",
+                },
+            ):
+                outcome = run_benchmarks(config, _DiscoveredClient(), load_manifest())
+
+            failed = json.loads(
+                (
+                    root / "results/run-agent-missing/normalized/terminal-bench.json"
                 ).read_text(encoding="utf-8")
             )
             self.assertEqual(outcome.exit_code, 3)

@@ -121,9 +121,10 @@ def _validate_identity(
     if name in HARBOR_BENCHMARK_NAMES:
         expected["agent"] = config.harbor_agent
     for field, value in expected.items():
-        if data[field] != value:
+        actual = data.get(field)
+        if actual != value:
             raise ResultValidationError(
-                f"adapter result {field} is {data[field]!r}, expected {value!r}"
+                f"adapter result {field} is {actual!r}, expected {value!r}"
             )
     if data["endpoint"]["fingerprint"] != endpoint_fingerprint(config.endpoint):
         raise ResultValidationError("adapter result endpoint fingerprint changed")
