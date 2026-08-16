@@ -56,19 +56,35 @@ class _KairyuHandler(BaseHTTPRequestHandler):
                 "payload": payload,
             }
         )
-        if payload["model"] == "embedding-only":
-            self._json(400, {"error": {"message": "not a chat model"}})
+        if self.path == "/v1/chat/completions":
+            if payload["model"] == "embedding-only":
+                self._json(400, {"error": {"message": "not a chat model"}})
+                return
+            self._json(
+                200,
+                {
+                    "id": "probe",
+                    "object": "chat.completion",
+                    "choices": [
+                        {"index": 0, "message": {"role": "assistant", "content": "OK"}}
+                    ],
+                },
+            )
             return
-        self._json(
-            200,
-            {
-                "id": "probe",
-                "object": "chat.completion",
-                "choices": [
-                    {"index": 0, "message": {"role": "assistant", "content": "OK"}}
-                ],
-            },
-        )
+        if self.path == "/v1/embeddings":
+            if payload["model"] == "embedding-only":
+                self._json(
+                    200,
+                    {
+                        "object": "list",
+                        "model": "embedding-only",
+                        "data": [{"index": 0, "embedding": [0.25, -0.5]}],
+                    },
+                )
+                return
+            self._json(400, {"error": {"message": "not an embedding model"}})
+            return
+        self._json(404, {"error": "not found"})
 
 
 class TargetClientContractTest(unittest.TestCase):
@@ -141,6 +157,56 @@ class TargetClientContractTest(unittest.TestCase):
             [request["auth"] for request in _KairyuHandler.requests],
             ["Bearer secret", "Bearer secret", "Bearer secret"],
         )
+
+    def test_embedding_discovery_is_independent_and_authenticates_its_probe(self) -> None:
+        client = TargetClient(Endpoint.parse(self.root), api_key="secret", timeout=2)
+
+        model = client.discover_embedding_model()
+
+        self.assertEqual(model, "embedding-only")
+        self.assertEqual(
+            [(request["method"], request["path"]) for request in _KairyuHandler.requests],
+            [("GET", "/v1/models"), ("POST", "/v1/embeddings")],
+        )
+        self.assertEqual(
+            [request["auth"] for request in _KairyuHandler.requests],
+            ["Bearer secret", "Bearer secret"],
+        )
+        self.assertEqual(
+            _KairyuHandler.requests[-1]["payload"]["input"],
+            ["kairyu-bench embedding capability probe"],
+        )
+
+    def test_embedding_discovery_reports_each_rejected_advertised_model(self) -> None:
+        class ChatOnlyHandler(_KairyuHandler):
+            def do_POST(self) -> None:
+                length = int(self.headers.get("Content-Length", "0"))
+                payload = json.loads(self.rfile.read(length))
+                type(self).requests.append(
+                    {
+                        "method": "POST",
+                        "path": self.path,
+                        "auth": self.headers.get("Authorization"),
+                        "payload": payload,
+                    }
+                )
+                self._json(400, {"error": {"message": "chat only"}})
+
+        self.server.shutdown()
+        self.server.server_close()
+        self.thread.join()
+        ChatOnlyHandler.requests = []
+        self.server = ThreadingHTTPServer(("127.0.0.1", 0), ChatOnlyHandler)
+        self.thread = threading.Thread(target=self.server.serve_forever, daemon=True)
+        self.thread.start()
+
+        client = TargetClient(Endpoint.parse(self.root), timeout=2)
+
+        with self.assertRaisesRegex(
+            PreflightError,
+            r"no advertised model accepted embedding requests .*embedding-only: HTTP 400.*chat-capable: HTTP 400",
+        ):
+            client.discover_embedding_model()
 
     def test_discovery_fails_when_models_response_has_no_ids(self) -> None:
         class EmptyModelsHandler(_KairyuHandler):

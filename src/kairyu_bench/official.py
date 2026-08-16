@@ -115,7 +115,16 @@ def _swebench(path: Path) -> OfficialObservation:
 
 
 def _harbor(path: Path) -> OfficialObservation:
-    candidates = sorted(path.rglob("result.json")) if path.is_dir() else [path]
+    candidates = (
+        sorted(
+            candidate
+            for candidate in path.rglob("result.json")
+            if (candidate.parent / "config.json").is_file()
+            or (candidate.parent / "lock.json").is_file()
+        )
+        if path.is_dir()
+        else [path]
+    )
     rows: list[tuple[str, float | None, str]] = []
     for candidate in candidates:
         payload = _load_json(candidate)
@@ -350,6 +359,7 @@ def _artifact_path(context: dict[str, Any], raw_path: Path) -> str:
 def _result(
     context: dict[str, Any],
     *,
+    agent: str | None,
     status: str,
     problem_ids: list[str],
     evaluated: int,
@@ -359,7 +369,7 @@ def _result(
     error: str | None,
 ) -> BenchmarkResult:
     scoring = context["scoring"]
-    payload = {
+    payload: dict[str, Any] = {
         "schema_version": 1,
         "run_id": context["run_id"],
         "benchmark": context["benchmark"],
@@ -394,8 +404,11 @@ def _result(
         "timestamps": {"started_at": _utc_now(), "finished_at": _utc_now()},
         "error": error,
     }
-    if context.get("agent") is not None:
-        payload["agent"] = context["agent"]
+    if agent is not None:
+        payload["agent"] = agent
+    conditions = context.get("conditions")
+    if conditions is not None:
+        payload["conditions"] = conditions
     return BenchmarkResult.from_dict(payload)
 
 
@@ -425,13 +438,9 @@ def normalize_official(context: dict[str, Any], raw_path: Path) -> BenchmarkResu
         and observation.error is None
         else "partial"
     )
-    result_context = (
-        {**context, "agent": observation.agent}
-        if observation.agent is not None
-        else context
-    )
     return _result(
-        result_context,
+        context,
+        agent=observation.agent,
         status=status,
         problem_ids=observation.problem_ids,
         evaluated=observation.evaluated,
@@ -447,6 +456,7 @@ def unsupported_result(context: dict[str, Any], message: str) -> BenchmarkResult
         raise ValueError("unsupported reason must not be empty")
     return _result(
         context,
+        agent=context.get("agent"),
         status="unsupported",
         problem_ids=[],
         evaluated=0,

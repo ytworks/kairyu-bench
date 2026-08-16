@@ -3,6 +3,7 @@ from __future__ import annotations
 import json
 import os
 import subprocess
+import sys
 import tempfile
 import unittest
 from pathlib import Path
@@ -74,10 +75,10 @@ class OfficialShellSupportTest(unittest.TestCase):
                 (source / ".kairyu-bench-revision").write_text(
                     revision + "\n", encoding="utf-8"
                 )
-                environment = cache / "venvs" / f"harbor-{revision}"
+                environment = cache / "venvs" / f"v2-harbor-{revision}"
                 (environment / "bin").mkdir(parents=True)
                 (environment / ".kairyu-bench-ready").write_text(
-                    revision + "\n", encoding="utf-8"
+                    f"{revision}\n{environment.resolve()}\n", encoding="utf-8"
                 )
                 harbor = environment / "bin" / "harbor"
                 harbor.write_text(
@@ -98,6 +99,7 @@ Path(os.environ["HARBOR_ARGS_PATH"]).write_text(json.dumps(capture))
 jobs = Path(args[args.index("--jobs-dir") + 1])
 trial = jobs / "task-a"
 trial.mkdir(parents=True)
+(trial / "config.json").write_text("{}")
 (trial / "result.json").write_text(json.dumps({
     "task_name": "task-a",
     "agent_info": {"name": agent, "version": "1.0"},
@@ -173,6 +175,58 @@ trial.mkdir(parents=True)
                     json.loads(result_path.read_text(encoding="utf-8"))["agent"], agent
                 )
 
+    def test_terminal_bench_rejects_codex_model_ids_with_a_slash(self) -> None:
+        entry = load_manifest()["terminal-bench"]
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            run_dir = root / "run"
+            result_path = run_dir / "normalized/terminal-bench.json"
+            context_path = root / "context.json"
+            context_path.write_text(
+                json.dumps(
+                    {
+                        "schema_version": 1,
+                        "run_id": "run-slash-model",
+                        "benchmark": "terminal-bench",
+                        "endpoint_fingerprint": "sha256:test",
+                        "model_id": "organization/chat-capable",
+                        "agent": "codex",
+                        "limit": 1,
+                        "source": entry["source"],
+                        "dataset": entry["dataset"],
+                        "scoring": entry["scoring"],
+                        "run_dir": str(run_dir),
+                        "result_path": str(result_path),
+                    }
+                ),
+                encoding="utf-8",
+            )
+            process = subprocess.run(
+                [str(ROOT / "scripts/harnesses/terminal-bench.sh")],
+                cwd=ROOT,
+                env={
+                    **os.environ,
+                    "PYTHONPATH": str(ROOT / "src"),
+                    "KAIRYU_BENCH_CONTEXT": str(context_path),
+                    "KAIRYU_BENCH_RESULT_PATH": str(result_path),
+                    "KAIRYU_BENCH_RUN_DIR": str(run_dir),
+                    "KAIRYU_BENCH_CACHE_DIR": str(root / "cache"),
+                    "KAIRYU_ENDPOINT": "https://example.test/v1",
+                    "KAIRYU_MODEL": "organization/chat-capable",
+                    "KAIRYU_HARBOR_AGENT": "codex",
+                },
+                text=True,
+                capture_output=True,
+                check=False,
+            )
+
+            result = json.loads(result_path.read_text(encoding="utf-8"))
+
+        self.assertEqual(process.returncode, 3)
+        self.assertEqual(result["status"], "unsupported")
+        self.assertEqual(result["agent"], "codex")
+        self.assertIn("cannot preserve model IDs containing '/'", result["error"])
+
     def test_checkout_source_resolves_and_reuses_exact_revision(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
@@ -223,6 +277,47 @@ trial.mkdir(parents=True)
                 ["git", "-C", first, "rev-parse", "HEAD"], text=True
             ).strip()
             self.assertEqual(actual, revision)
+
+    def test_ensure_venv_preserves_console_scripts_after_publish_reuse_and_relocation(
+        self,
+    ) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            cache = root / "cache"
+            relocated_cache = root / "relocated-cache"
+            executable_dir = root / "bin"
+            executable_dir.mkdir()
+            (executable_dir / "python").symlink_to(sys.executable)
+            environment = os.environ.copy()
+            environment["PATH"] = f"{executable_dir}{os.pathsep}{environment['PATH']}"
+            command = (
+                '. "scripts/lib/official.sh"; '
+                f'KAIRYU_BENCH_CACHE_DIR="{cache}"; '
+                'first=$(ensure_venv demo revision --help); '
+                '"$first/bin/pip" --version; '
+                'second=$(ensure_venv demo revision --help); '
+                'test "$first" = "$second"; '
+                '"$second/bin/pip" --version; '
+                f'mv "{cache}" "{relocated_cache}"; '
+                f'KAIRYU_BENCH_CACHE_DIR="{relocated_cache}"; '
+                'third=$(ensure_venv demo revision --help); '
+                'test "$second" != "$third"; '
+                '"$third/bin/pip" --version'
+            )
+
+            completed = subprocess.run(
+                ["sh", "-c", command],
+                cwd=ROOT,
+                env=environment,
+                text=True,
+                capture_output=True,
+                check=False,
+            )
+
+        self.assertEqual(completed.returncode, 0, completed.stderr)
+        version_lines = completed.stdout.splitlines()
+        self.assertEqual(len(version_lines), 3, completed.stdout)
+        self.assertTrue(all(line.startswith("pip ") for line in version_lines))
 
     def test_context_get_reads_only_the_adapter_context(self) -> None:
         with tempfile.TemporaryDirectory() as directory:

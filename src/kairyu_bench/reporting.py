@@ -141,7 +141,12 @@ def _compatibility(
     right = candidate.data
     if left["status"] != "completed" or right["status"] != "completed":
         return False, "one or both results are not completed"
-    if left.get("agent") != right.get("agent"):
+    left_agent = left.get("agent")
+    right_agent = right.get("agent")
+    if baseline.benchmark == "terminal-bench":
+        left_agent = left_agent or "terminus-2"
+        right_agent = right_agent or "terminus-2"
+    if left_agent != right_agent:
         return False, "agent differs"
     if left["source"] != right["source"]:
         return False, "source lock differs"
@@ -149,6 +154,8 @@ def _compatibility(
         return False, "selected problem IDs differ"
     if left["scoring"] != right["scoring"]:
         return False, "scoring method or self-scoring policy differs"
+    if left.get("conditions", {}) != right.get("conditions", {}):
+        return False, "benchmark conditions differ"
     if left["score"]["unit"] != right["score"]["unit"]:
         return False, "score unit differs"
     if left["score"]["primary"] is None or right["score"]["primary"] is None:

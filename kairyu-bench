@@ -3,21 +3,25 @@ set -eu
 
 ROOT=$(CDPATH= cd -- "$(dirname -- "$0")" && pwd)
 IMAGE=${KAIRYU_BENCH_IMAGE:-kairyu-bench:local}
+RESULTS_DIR=$ROOT/results
+CACHE_DIR=$ROOT/.cache
 
 command -v docker >/dev/null 2>&1 || {
     echo "kairyu-bench: Docker is required" >&2
     exit 2
 }
 
-mkdir -p "$ROOT/results" "$ROOT/.cache"
+mkdir -p "$RESULTS_DIR" "$CACHE_DIR"
 
 docker build -t "$IMAGE" "$ROOT"
 
 exec docker run --rm --privileged \
     --add-host host.docker.internal:host-gateway \
     -v /var/run/docker.sock:/var/run/docker.sock \
-    -v "$ROOT/results:/work/results" \
-    -v "$ROOT/.cache:/work/cache" \
+    -v "$RESULTS_DIR:$RESULTS_DIR" \
+    -v "$CACHE_DIR:$CACHE_DIR" \
+    -e "KAIRYU_BENCH_RESULTS_DIR=$RESULTS_DIR" \
+    -e "KAIRYU_BENCH_CACHE_DIR=$CACHE_DIR" \
     -e KAIRYU_API_KEY \
     -e HF_TOKEN \
     "$IMAGE" "$@"

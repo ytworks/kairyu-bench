@@ -79,37 +79,64 @@ checkout_source() {
     printf '%s\n' "$destination"
 }
 
+venv_ready() {
+    marker="$1/.kairyu-bench-ready"
+    [ -f "$marker" ] || return 1
+    [ "$(sed -n '1p' "$marker")" = "$2" ] || return 1
+    physical_path=$(CDPATH= cd -P -- "$1" 2>/dev/null && pwd -P) || return 1
+    [ "$(sed -n '2p' "$marker")" = "$physical_path" ]
+}
+
 ensure_venv() {
     environment_name=$1
     environment_revision=$2
     shift 2
     cache_root=${KAIRYU_BENCH_CACHE_DIR:-/work/cache}
     environments_root="$cache_root/venvs"
-    destination="$environments_root/$environment_name-$environment_revision"
-    mkdir -p "$environments_root" "$cache_root/tmp"
+    cache_key="v2-$environment_name-$environment_revision"
+    destination="$environments_root/$cache_key"
+    mkdir -p "$environments_root"
 
-    if [ -f "$destination/.kairyu-bench-ready" ] &&
-        [ "$(sed -n '1p' "$destination/.kairyu-bench-ready")" = "$environment_revision" ]; then
+    if venv_ready "$destination" "$environment_revision"; then
         printf '%s\n' "$destination"
         return 0
     fi
 
-    temporary=$(mktemp -d "$cache_root/tmp/venv.XXXXXX")
+    if [ -L "$destination" ]; then
+        rm -f "$destination"
+    elif [ -e "$destination" ]; then
+        echo "kairyu-bench: invalid environment cache entry $destination" >&2
+        exit 2
+    fi
+
+    backing=$(mktemp -d "$environments_root/.$cache_key.XXXXXX")
+    environment="$backing/environment"
     cleanup_venv() {
-        rm -rf "$temporary"
+        rm -rf "$backing"
     }
     trap cleanup_venv EXIT HUP INT TERM
-    python -m venv "$temporary/environment"
-    "$temporary/environment/bin/pip" install --disable-pip-version-check "$@" >&2
-    printf '%s\n' "$environment_revision" >"$temporary/environment/.kairyu-bench-ready"
-    if ! mv "$temporary/environment" "$destination" 2>/dev/null; then
-        if [ ! -f "$destination/.kairyu-bench-ready" ]; then
-            echo "kairyu-bench: could not publish environment $environment_name" >&2
-            exit 2
-        fi
+    python -m venv "$environment"
+    "$environment/bin/python" -m pip install --disable-pip-version-check "$@" >&2
+    physical_environment=$(CDPATH= cd -P -- "$environment" && pwd -P)
+    printf '%s\n%s\n' "$environment_revision" "$physical_environment" \
+        >"$environment/.kairyu-bench-ready"
+
+    relative_target="$(basename "$backing")/environment"
+    if ln -s "$relative_target" "$destination" 2>/dev/null; then
+        trap - EXIT HUP INT TERM
+        printf '%s\n' "$destination"
+        return 0
     fi
-    trap - EXIT HUP INT TERM
-    printf '%s\n' "$destination"
+
+    if venv_ready "$destination" "$environment_revision"; then
+        cleanup_venv
+        trap - EXIT HUP INT TERM
+        printf '%s\n' "$destination"
+        return 0
+    fi
+
+    echo "kairyu-bench: could not publish environment $environment_name" >&2
+    exit 2
 }
 
 raw_directory() {

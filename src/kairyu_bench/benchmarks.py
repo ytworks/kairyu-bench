@@ -14,4 +14,3 @@ BENCHMARK_NAMES = (
 )
 
 HARBOR_AGENT_NAMES = ("terminus-2", "claude-code", "codex")
-HARBOR_BENCHMARK_NAMES = frozenset({"terminal-bench"})

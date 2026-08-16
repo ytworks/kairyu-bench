@@ -9,7 +9,6 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any, Protocol
 
-from kairyu_bench.benchmarks import HARBOR_BENCHMARK_NAMES
 from kairyu_bench.results import BenchmarkResult, ResultValidationError
 from kairyu_bench.reporting import write_score_report
 from kairyu_bench.target import Endpoint
@@ -17,6 +16,9 @@ from kairyu_bench.target import Endpoint
 
 class ModelDiscovery(Protocol):
     def discover_chat_model(self) -> str: ...
+
+    def discover_embedding_model(self) -> str:
+        ...
 
 
 def _utc_now() -> str:
@@ -44,6 +46,7 @@ class RunConfig:
 class RunOutcome:
     run_dir: Path
     model_id: str
+    embedding_model_id: str | None
     exit_code: int
     statuses: dict[str, str]
 
@@ -66,9 +69,11 @@ def _failure_result(
     entry: dict[str, Any],
     started_at: str,
     error: str,
+    agent: str | None,
+    conditions: dict[str, Any],
 ) -> BenchmarkResult:
     scoring = entry["scoring"]
-    payload = {
+    payload: dict[str, Any] = {
         "schema_version": 1,
         "run_id": config.run_id,
         "benchmark": name,
@@ -100,8 +105,10 @@ def _failure_result(
         "timestamps": {"started_at": started_at, "finished_at": _utc_now()},
         "error": error,
     }
-    if name in HARBOR_BENCHMARK_NAMES:
-        payload["agent"] = config.harbor_agent
+    if agent is not None:
+        payload["agent"] = agent
+    if conditions:
+        payload["conditions"] = conditions
     return BenchmarkResult.from_dict(payload)
 
 
@@ -111,15 +118,16 @@ def _validate_identity(
     model_id: str,
     name: str,
     entry: dict[str, Any],
+    agent: str | None,
+    conditions: dict[str, Any],
 ) -> None:
     data = result.data
     expected = {
         "run_id": config.run_id,
         "benchmark": name,
         "model_id": model_id,
+        "agent": agent,
     }
-    if name in HARBOR_BENCHMARK_NAMES:
-        expected["agent"] = config.harbor_agent
     for field, value in expected.items():
         actual = data.get(field)
         if actual != value:
@@ -143,9 +151,15 @@ def _validate_identity(
         "self_simulated": bool(scoring.get("self_simulated", False)),
     }
     if data["scoring"] != expected_scoring:
-        raise ResultValidationError(
-            "adapter result scoring method differs from manifest"
-        )
+        raise ResultValidationError("adapter result scoring method differs from manifest")
+    if data.get("conditions", {}) != conditions:
+        raise ResultValidationError("adapter result benchmark conditions changed")
+
+
+def _selected_agent(entry: dict[str, Any], configured_agent: str) -> str | None:
+    if entry["scoring"]["method"] == "harbor-official-task-reward":
+        return configured_agent
+    return None
 
 
 def run_benchmarks(
@@ -158,6 +172,13 @@ def run_benchmarks(
         raise FileExistsError(f"run directory already exists: {config.run_id}")
 
     model_id = client.discover_chat_model()
+    requires_embeddings = any(
+        "embeddings" in manifest[name].get("requirements", [])
+        for name in config.selected
+    )
+    embedding_model_id = (
+        client.discover_embedding_model() if requires_embeddings else None
+    )
     run_dir.mkdir(parents=True)
     for child in ("context", "logs", "normalized", "raw"):
         (run_dir / child).mkdir()
@@ -171,6 +192,7 @@ def run_benchmarks(
         "endpoint": {"fingerprint": fingerprint},
         "model_id": model_id,
         "harbor_agent": config.harbor_agent,
+        "embedding_model_id": embedding_model_id,
         "benchmarks": list(config.selected),
         "limit": config.limit,
         "started_at": started_at,
@@ -182,11 +204,16 @@ def run_benchmarks(
     statuses: dict[str, str] = {}
     for name in config.selected:
         entry = manifest[name]
-        agent = config.harbor_agent if name in HARBOR_BENCHMARK_NAMES else None
+        agent = _selected_agent(entry, config.harbor_agent)
         adapter_started_at = _utc_now()
         result_path = run_dir / "normalized" / f"{name}.json"
         log_path = run_dir / "logs" / f"{name}.log"
         context_path = run_dir / "context" / f"{name}.json"
+        conditions = (
+            {"embedding_model_id": embedding_model_id}
+            if "embeddings" in entry.get("requirements", [])
+            else {}
+        )
         context = {
             "schema_version": 1,
             "run_id": config.run_id,
@@ -204,6 +231,8 @@ def run_benchmarks(
             "run_dir": str(run_dir),
             "result_path": str(result_path),
         }
+        if conditions:
+            context["conditions"] = conditions
         _write_json(context_path, context)
         adapter_path = config.app_root / entry["adapter"]
         error: str | None = None
@@ -215,6 +244,7 @@ def run_benchmarks(
         else:
             env = os.environ.copy()
             api_key = env.get("KAIRYU_API_KEY", "")
+            env.pop("KAIRYU_EMBEDDING_MODEL", None)
             env.update(
                 {
                     "KAIRYU_BENCH_CONTEXT": str(context_path),
@@ -236,6 +266,8 @@ def run_benchmarks(
                     "ANTHROPIC_API_KEY": api_key or "not-required",
                 }
             )
+            if conditions and embedding_model_id is not None:
+                env["KAIRYU_EMBEDDING_MODEL"] = embedding_model_id
             try:
                 with log_path.open("w", encoding="utf-8") as log:
                     completed = subprocess.run(
@@ -258,7 +290,15 @@ def run_benchmarks(
             try:
                 decoded = json.loads(result_path.read_text(encoding="utf-8"))
                 result = BenchmarkResult.from_dict(decoded)
-                _validate_identity(result, config, model_id, name, entry)
+                _validate_identity(
+                    result,
+                    config,
+                    model_id,
+                    name,
+                    entry,
+                    agent,
+                    conditions,
+                )
                 if return_code and result.status == "completed":
                     raise ResultValidationError(
                         f"adapter exited {return_code} but claimed completion"
@@ -281,6 +321,8 @@ def run_benchmarks(
                 entry=entry,
                 started_at=adapter_started_at,
                 error=error or f"adapter exited {return_code}",
+                agent=agent,
+                conditions=conditions,
             )
             result.write(result_path)
         statuses[name] = result.status
@@ -295,6 +337,7 @@ def run_benchmarks(
     return RunOutcome(
         run_dir=run_dir,
         model_id=model_id,
+        embedding_model_id=embedding_model_id,
         exit_code=0 if all_completed else 3,
         statuses=statuses,
     )

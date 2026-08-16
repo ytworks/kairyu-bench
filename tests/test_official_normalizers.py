@@ -47,6 +47,8 @@ def _context(name: str, *, limit: int | None = 2) -> dict[str, object]:
     }
     if name == "terminal-bench":
         context["agent"] = "claude-code"
+    if name == "tau-bench-banking":
+        context["conditions"] = {"embedding_model_id": "embed-small"}
     return context
 
 
@@ -85,6 +87,7 @@ class OfficialNormalizerTest(unittest.TestCase):
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
             self._write_json(root, "result.json", {"stats": {"n_trials": 2}})
+            self._write_json(root, "task-a/config.json", {})
             self._write_json(
                 root,
                 "task-a/result.json",
@@ -94,6 +97,15 @@ class OfficialNormalizerTest(unittest.TestCase):
                     "verifier_result": {"rewards": {"reward": 1}},
                 },
             )
+            self._write_json(
+                root,
+                "task-a/agent/result.json",
+                {
+                    "task_name": "artifact-without-agent-info",
+                    "verifier_result": {"rewards": {"reward": 0}},
+                },
+            )
+            self._write_json(root, "task-b/config.json", {})
             self._write_json(
                 root,
                 "task-b/result.json",
@@ -121,6 +133,7 @@ class OfficialNormalizerTest(unittest.TestCase):
             with self.subTest(case=case), tempfile.TemporaryDirectory() as directory:
                 root = Path(directory)
                 for index, agent in enumerate(agents):
+                    self._write_json(root, f"task-{index}/config.json", {})
                     payload = {
                         "task_name": f"task-{index}",
                         "verifier_result": {"rewards": {"reward": 1}},
@@ -247,6 +260,10 @@ class OfficialNormalizerTest(unittest.TestCase):
         self.assertEqual(result.status, "completed")
         self.assertEqual(result.data["score"]["primary"], 50.0)
         self.assertTrue(result.data["scoring"]["self_simulated"])
+        self.assertEqual(
+            result.data["conditions"],
+            {"embedding_model_id": "embed-small"},
+        )
 
     def test_missing_official_rows_are_partial_not_a_fabricated_complete_score(
         self,
