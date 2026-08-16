@@ -86,6 +86,30 @@ class CliContractTest(unittest.TestCase):
         self.assertEqual(result.returncode, 2)
         self.assertIn("unknown benchmark", result.stderr)
 
+    def test_run_accepts_only_supported_harbor_agents(self) -> None:
+        result = self.run_cli(
+            "run",
+            "https://example.test/v1",
+            "--only",
+            "terminal-bench",
+            "--harbor-agent",
+            "claude-code",
+            "--dry-run",
+        )
+
+        self.assertEqual(result.returncode, 0, result.stderr)
+        self.assertIn("harbor agent: claude-code", result.stdout)
+
+        invalid = self.run_cli(
+            "run",
+            "https://example.test/v1",
+            "--harbor-agent",
+            "unsupported-agent",
+            "--dry-run",
+        )
+        self.assertEqual(invalid.returncode, 2)
+        self.assertIn("invalid choice", invalid.stderr)
+
 
 if __name__ == "__main__":
     unittest.main()

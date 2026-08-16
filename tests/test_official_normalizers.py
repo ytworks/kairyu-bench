@@ -20,7 +20,7 @@ def _context(name: str, *, limit: int | None = 2) -> dict[str, object]:
         "scicode": "scicode-official-inspect-tests",
         "tau-bench-banking": "tau2-official-average-reward-self-simulated",
     }[name]
-    return {
+    context: dict[str, object] = {
         "schema_version": 1,
         "run_id": "run-1",
         "benchmark": name,
@@ -41,6 +41,9 @@ def _context(name: str, *, limit: int | None = 2) -> dict[str, object]:
         "run_dir": "/work/results/run-1",
         "result_path": f"/work/results/run-1/normalized/{name}.json",
     }
+    if name == "terminal-bench":
+        context["agent"] = "claude-code"
+    return context
 
 
 class OfficialNormalizerTest(unittest.TestCase):
@@ -92,6 +95,7 @@ class OfficialNormalizerTest(unittest.TestCase):
             result = normalize_official(_context("terminal-bench"), root)
 
         self.assertEqual(result.status, "completed")
+        self.assertEqual(result.data["agent"], "claude-code")
         self.assertEqual(result.data["score"]["primary"], 50.0)
         self.assertEqual(result.data["counts"], {"requested": 2, "evaluated": 2})
 
@@ -211,7 +215,9 @@ class OfficialNormalizerTest(unittest.TestCase):
         self.assertEqual(result.data["score"]["primary"], 50.0)
         self.assertTrue(result.data["scoring"]["self_simulated"])
 
-    def test_missing_official_rows_are_partial_not_a_fabricated_complete_score(self) -> None:
+    def test_missing_official_rows_are_partial_not_a_fabricated_complete_score(
+        self,
+    ) -> None:
         with tempfile.TemporaryDirectory() as directory:
             raw = self._write_json(
                 Path(directory),

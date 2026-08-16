@@ -9,7 +9,7 @@ from collections.abc import Sequence
 from datetime import datetime, timezone
 from pathlib import Path
 
-from kairyu_bench.benchmarks import BENCHMARK_NAMES
+from kairyu_bench.benchmarks import BENCHMARK_NAMES, HARBOR_AGENT_NAMES
 from kairyu_bench.manifest import ManifestError, load_manifest, select_benchmarks
 from kairyu_bench.runner import RunConfig, run_benchmarks
 from kairyu_bench.reporting import compare_runs, comparison_markdown
@@ -60,6 +60,12 @@ def build_parser() -> argparse.ArgumentParser:
         "--limit", type=_positive_integer, help="maximum problems per benchmark"
     )
     run.add_argument(
+        "--harbor-agent",
+        choices=HARBOR_AGENT_NAMES,
+        default="terminus-2",
+        help="agent for Harbor benchmarks (default: terminus-2)",
+    )
+    run.add_argument(
         "--results-dir",
         type=Path,
         default=Path("/work/results"),
@@ -101,6 +107,7 @@ def main(argv: Sequence[str] | None = None) -> int:
             print(f"benchmarks: {len(selected)}")
             print("selected: " + ",".join(selected))
             print(f"limit: {args.limit if args.limit is not None else 'all'}")
+            print(f"harbor agent: {args.harbor_agent}")
             return 0
 
         client = TargetClient(
@@ -114,6 +121,7 @@ def main(argv: Sequence[str] | None = None) -> int:
             results_root=args.results_dir,
             run_id=args.run_id or _new_run_id(),
             app_root=_default_app_root(),
+            harbor_agent=args.harbor_agent,
             adapter_timeout=args.adapter_timeout,
         )
         try:

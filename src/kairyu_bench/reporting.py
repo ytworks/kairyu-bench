@@ -27,10 +27,14 @@ def _write_json(path: Path, payload: dict[str, Any]) -> None:
     temporary.replace(path)
 
 
-def load_run_results(run_dir: Path) -> tuple[dict[str, Any], dict[str, BenchmarkResult]]:
+def load_run_results(
+    run_dir: Path,
+) -> tuple[dict[str, Any], dict[str, BenchmarkResult]]:
     metadata = _read_object(run_dir / "run.json")
     selected = metadata.get("benchmarks")
-    if not isinstance(selected, list) or not all(isinstance(name, str) for name in selected):
+    if not isinstance(selected, list) or not all(
+        isinstance(name, str) for name in selected
+    ):
         raise ValueError(f"{run_dir}/run.json has no benchmark list")
     results: dict[str, BenchmarkResult] = {}
     for name in selected:
@@ -64,8 +68,8 @@ def score_report_markdown(report: dict[str, Any]) -> str:
     lines.extend(
         [
             "",
-            "| Benchmark | Status | Score (%) | Evaluated | Scoring | Labels |",
-            "| --- | --- | ---: | ---: | --- | --- |",
+            "| Benchmark | Status | Score (%) | Evaluated | Scoring | Labels | Agent |",
+            "| --- | --- | ---: | ---: | --- | --- | --- |",
         ]
     )
     for row in report["benchmarks"]:
@@ -75,9 +79,11 @@ def score_report_markdown(report: dict[str, Any]) -> str:
         if row["self_simulated"]:
             labels.append("self-simulated")
         label = ", ".join(labels) or "—"
+        agent = row["agent"] or "—"
         lines.append(
             f"| {row['benchmark']} | {row['status']} | {_score_text(row['score'])} | "
-            f"{row['evaluated']}/{row['requested']} | {row['method']} | {label} |"
+            f"{row['evaluated']}/{row['requested']} | {row['method']} | {label} | "
+            f"{agent} |"
         )
     lines.append("")
     return "\n".join(lines)
@@ -103,6 +109,7 @@ def write_score_report(run_dir: Path) -> dict[str, Any]:
                 "method": result["scoring"]["method"],
                 "self_judged": result["scoring"]["self_judged"],
                 "self_simulated": result["scoring"]["self_simulated"],
+                "agent": result.get("agent"),
                 "error": result["error"],
             }
         )
@@ -134,6 +141,8 @@ def _compatibility(
     right = candidate.data
     if left["status"] != "completed" or right["status"] != "completed":
         return False, "one or both results are not completed"
+    if left.get("agent") != right.get("agent"):
+        return False, "agent differs"
     if left["source"] != right["source"]:
         return False, "source lock differs"
     if left["selection"]["problem_ids"] != right["selection"]["problem_ids"]:

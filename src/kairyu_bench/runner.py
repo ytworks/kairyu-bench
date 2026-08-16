@@ -9,14 +9,14 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any, Protocol
 
+from kairyu_bench.benchmarks import HARBOR_BENCHMARK_NAMES
 from kairyu_bench.results import BenchmarkResult, ResultValidationError
 from kairyu_bench.reporting import write_score_report
 from kairyu_bench.target import Endpoint
 
 
 class ModelDiscovery(Protocol):
-    def discover_chat_model(self) -> str:
-        ...
+    def discover_chat_model(self) -> str: ...
 
 
 def _utc_now() -> str:
@@ -36,6 +36,7 @@ class RunConfig:
     results_root: Path
     run_id: str
     app_root: Path
+    harbor_agent: str = "terminus-2"
     adapter_timeout: float | None = None
 
 
@@ -67,40 +68,41 @@ def _failure_result(
     error: str,
 ) -> BenchmarkResult:
     scoring = entry["scoring"]
-    return BenchmarkResult.from_dict(
-        {
-            "schema_version": 1,
-            "run_id": config.run_id,
-            "benchmark": name,
-            "status": "failed",
-            "endpoint": {"fingerprint": endpoint_fingerprint(config.endpoint)},
-            "model_id": model_id,
-            "source": {
-                "repository": entry["source"]["repository"],
-                "revision": entry["source"]["revision"],
-                "dataset": entry["dataset"]["id"],
-                "dataset_revision": entry["dataset"]["revision"],
-            },
-            "selection": {
-                "requested_limit": config.limit,
-                "problem_ids": [],
-            },
-            "counts": {"requested": 0, "evaluated": 0},
-            "score": {
-                "primary": None,
-                "unit": scoring["unit"],
-                "metrics": {},
-            },
-            "scoring": {
-                "method": scoring["method"],
-                "self_judged": bool(scoring.get("self_judged", False)),
-                "self_simulated": bool(scoring.get("self_simulated", False)),
-            },
-            "artifacts": {"raw": [], "logs": [f"logs/{name}.log"]},
-            "timestamps": {"started_at": started_at, "finished_at": _utc_now()},
-            "error": error,
-        }
-    )
+    payload = {
+        "schema_version": 1,
+        "run_id": config.run_id,
+        "benchmark": name,
+        "status": "failed",
+        "endpoint": {"fingerprint": endpoint_fingerprint(config.endpoint)},
+        "model_id": model_id,
+        "source": {
+            "repository": entry["source"]["repository"],
+            "revision": entry["source"]["revision"],
+            "dataset": entry["dataset"]["id"],
+            "dataset_revision": entry["dataset"]["revision"],
+        },
+        "selection": {
+            "requested_limit": config.limit,
+            "problem_ids": [],
+        },
+        "counts": {"requested": 0, "evaluated": 0},
+        "score": {
+            "primary": None,
+            "unit": scoring["unit"],
+            "metrics": {},
+        },
+        "scoring": {
+            "method": scoring["method"],
+            "self_judged": bool(scoring.get("self_judged", False)),
+            "self_simulated": bool(scoring.get("self_simulated", False)),
+        },
+        "artifacts": {"raw": [], "logs": [f"logs/{name}.log"]},
+        "timestamps": {"started_at": started_at, "finished_at": _utc_now()},
+        "error": error,
+    }
+    if name in HARBOR_BENCHMARK_NAMES:
+        payload["agent"] = config.harbor_agent
+    return BenchmarkResult.from_dict(payload)
 
 
 def _validate_identity(
@@ -116,6 +118,8 @@ def _validate_identity(
         "benchmark": name,
         "model_id": model_id,
     }
+    if name in HARBOR_BENCHMARK_NAMES:
+        expected["agent"] = config.harbor_agent
     for field, value in expected.items():
         if data[field] != value:
             raise ResultValidationError(
@@ -138,7 +142,9 @@ def _validate_identity(
         "self_simulated": bool(scoring.get("self_simulated", False)),
     }
     if data["scoring"] != expected_scoring:
-        raise ResultValidationError("adapter result scoring method differs from manifest")
+        raise ResultValidationError(
+            "adapter result scoring method differs from manifest"
+        )
 
 
 def run_benchmarks(
@@ -163,6 +169,7 @@ def run_benchmarks(
         "status": "running",
         "endpoint": {"fingerprint": fingerprint},
         "model_id": model_id,
+        "harbor_agent": config.harbor_agent,
         "benchmarks": list(config.selected),
         "limit": config.limit,
         "started_at": started_at,
@@ -174,6 +181,7 @@ def run_benchmarks(
     statuses: dict[str, str] = {}
     for name in config.selected:
         entry = manifest[name]
+        agent = config.harbor_agent if name in HARBOR_BENCHMARK_NAMES else None
         adapter_started_at = _utc_now()
         result_path = run_dir / "normalized" / f"{name}.json"
         log_path = run_dir / "logs" / f"{name}.log"
@@ -185,6 +193,7 @@ def run_benchmarks(
             "endpoint": config.endpoint.base_url,
             "endpoint_fingerprint": fingerprint,
             "model_id": model_id,
+            "agent": agent,
             "limit": config.limit,
             "source": entry["source"],
             "generator": entry.get("generator"),
@@ -215,10 +224,15 @@ def run_benchmarks(
                     ),
                     "KAIRYU_ENDPOINT": config.endpoint.base_url,
                     "KAIRYU_MODEL": model_id,
-                    "KAIRYU_BENCH_LIMIT": "" if config.limit is None else str(config.limit),
+                    "KAIRYU_HARBOR_AGENT": config.harbor_agent,
+                    "KAIRYU_BENCH_LIMIT": ""
+                    if config.limit is None
+                    else str(config.limit),
                     "OPENAI_BASE_URL": config.endpoint.base_url,
                     "OPENAI_API_BASE": config.endpoint.base_url,
                     "OPENAI_API_KEY": api_key or "not-required",
+                    "ANTHROPIC_BASE_URL": config.endpoint.anthropic_base_url,
+                    "ANTHROPIC_API_KEY": api_key or "not-required",
                 }
             )
             try:

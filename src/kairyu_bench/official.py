@@ -55,7 +55,9 @@ def _ids(values: Iterable[object], field: str) -> list[str]:
             raise OfficialNormalizationError(f"{field} contains an invalid ID")
         item_id = str(value)
         if not item_id or item_id in result:
-            raise OfficialNormalizationError(f"{field} contains an empty or duplicate ID")
+            raise OfficialNormalizationError(
+                f"{field} contains an empty or duplicate ID"
+            )
         result.append(item_id)
     if not result:
         raise OfficialNormalizationError(f"{field} contains no problem IDs")
@@ -75,12 +77,16 @@ def _load_json(path: Path) -> Any:
     try:
         return json.loads(path.read_text(encoding="utf-8"))
     except (OSError, json.JSONDecodeError) as error:
-        raise OfficialNormalizationError(f"cannot read official JSON {path}: {error}") from error
+        raise OfficialNormalizationError(
+            f"cannot read official JSON {path}: {error}"
+        ) from error
 
 
 def _swebench(path: Path) -> OfficialObservation:
     report = _object(_load_json(path), "SWE-bench report")
-    problem_ids = _ids(_array(report.get("submitted_ids"), "submitted_ids"), "submitted_ids")
+    problem_ids = _ids(
+        _array(report.get("submitted_ids"), "submitted_ids"), "submitted_ids"
+    )
     total = _integer(report.get("total_instances"), "total_instances")
     completed = _integer(report.get("completed_instances"), "completed_instances")
     resolved = _integer(report.get("resolved_instances"), "resolved_instances")
@@ -101,7 +107,9 @@ def _swebench(path: Path) -> OfficialObservation:
             "completed_instances": completed,
             "total_instances": total,
         },
-        None if completed == total else "official harness did not complete every selected instance",
+        None
+        if completed == total
+        else "official harness did not complete every selected instance",
     )
 
 
@@ -134,7 +142,9 @@ def _harbor(path: Path) -> OfficialObservation:
         len(rewards),
         primary,
         {"mean_reward_percent": primary, "rewarded_tasks": len(rewards)},
-        None if len(rewards) == len(problem_ids) else "one or more Harbor trials have no verifier reward",
+        None
+        if len(rewards) == len(problem_ids)
+        else "one or more Harbor trials have no verifier reward",
     )
 
 
@@ -142,7 +152,9 @@ def _hle(path: Path) -> OfficialObservation:
     rows: list[dict[str, Any]] = []
     summary: dict[str, Any] | None = None
     try:
-        for line_number, line in enumerate(path.read_text(encoding="utf-8").splitlines(), 1):
+        for line_number, line in enumerate(
+            path.read_text(encoding="utf-8").splitlines(), 1
+        ):
             if not line.strip():
                 continue
             row = _object(json.loads(line), f"HLE line {line_number}")
@@ -220,7 +232,9 @@ def _livecodebench_pro(path: Path) -> OfficialObservation:
             "accepted": accepted,
             "final_judgements": len(final),
         },
-        None if len(final) == len(problem_ids) else "official checker did not return a final result for every problem",
+        None
+        if len(final) == len(problem_ids)
+        else "official checker did not return a final result for every problem",
     )
 
 
@@ -232,7 +246,9 @@ def _charxiv(path: Path) -> OfficialObservation:
     valid = _integer(stats.get("N_valid"), "CharXiv N_valid")
     invalid = _integer(stats.get("N_invalid"), "CharXiv N_invalid")
     if valid != len(problem_ids) or invalid > valid:
-        raise OfficialNormalizationError("CharXiv valid/invalid counts differ from score rows")
+        raise OfficialNormalizationError(
+            "CharXiv valid/invalid counts differ from score rows"
+        )
     primary = _number(stats.get("Overall Score"), "CharXiv Overall Score")
     return OfficialObservation(
         problem_ids,
@@ -293,7 +309,9 @@ def _tau(path: Path) -> OfficialObservation:
         len(rewards),
         primary,
         {"average_reward_percent": primary, "rewarded_simulations": len(rewards)},
-        None if len(rewards) == len(problem_ids) else "one or more tau2 simulations have no reward",
+        None
+        if len(rewards) == len(problem_ids)
+        else "one or more tau2 simulations have no reward",
     )
 
 
@@ -329,43 +347,44 @@ def _result(
     error: str | None,
 ) -> BenchmarkResult:
     scoring = context["scoring"]
-    return BenchmarkResult.from_dict(
-        {
-            "schema_version": 1,
-            "run_id": context["run_id"],
-            "benchmark": context["benchmark"],
-            "status": status,
-            "endpoint": {"fingerprint": context["endpoint_fingerprint"]},
-            "model_id": context["model_id"],
-            "source": {
-                "repository": context["source"]["repository"],
-                "revision": context["source"]["revision"],
-                "dataset": context["dataset"]["id"],
-                "dataset_revision": context["dataset"]["revision"],
-            },
-            "selection": {
-                "requested_limit": context.get("limit"),
-                "problem_ids": problem_ids,
-            },
-            "counts": {"requested": len(problem_ids), "evaluated": evaluated},
-            "score": {
-                "primary": primary,
-                "unit": scoring["unit"],
-                "metrics": metrics,
-            },
-            "scoring": {
-                "method": scoring["method"],
-                "self_judged": bool(scoring.get("self_judged", False)),
-                "self_simulated": bool(scoring.get("self_simulated", False)),
-            },
-            "artifacts": {
-                "raw": raw,
-                "logs": [f"logs/{context['benchmark']}.log"],
-            },
-            "timestamps": {"started_at": _utc_now(), "finished_at": _utc_now()},
-            "error": error,
-        }
-    )
+    payload = {
+        "schema_version": 1,
+        "run_id": context["run_id"],
+        "benchmark": context["benchmark"],
+        "status": status,
+        "endpoint": {"fingerprint": context["endpoint_fingerprint"]},
+        "model_id": context["model_id"],
+        "source": {
+            "repository": context["source"]["repository"],
+            "revision": context["source"]["revision"],
+            "dataset": context["dataset"]["id"],
+            "dataset_revision": context["dataset"]["revision"],
+        },
+        "selection": {
+            "requested_limit": context.get("limit"),
+            "problem_ids": problem_ids,
+        },
+        "counts": {"requested": len(problem_ids), "evaluated": evaluated},
+        "score": {
+            "primary": primary,
+            "unit": scoring["unit"],
+            "metrics": metrics,
+        },
+        "scoring": {
+            "method": scoring["method"],
+            "self_judged": bool(scoring.get("self_judged", False)),
+            "self_simulated": bool(scoring.get("self_simulated", False)),
+        },
+        "artifacts": {
+            "raw": raw,
+            "logs": [f"logs/{context['benchmark']}.log"],
+        },
+        "timestamps": {"started_at": _utc_now(), "finished_at": _utc_now()},
+        "error": error,
+    }
+    if context.get("agent") is not None:
+        payload["agent"] = context["agent"]
+    return BenchmarkResult.from_dict(payload)
 
 
 def normalize_official(context: dict[str, Any], raw_path: Path) -> BenchmarkResult:
@@ -373,15 +392,20 @@ def normalize_official(context: dict[str, Any], raw_path: Path) -> BenchmarkResu
     try:
         normalizer = NORMALIZERS[name]
     except KeyError as error:
-        raise OfficialNormalizationError(f"no official normalizer for {name}") from error
+        raise OfficialNormalizationError(
+            f"no official normalizer for {name}"
+        ) from error
     observation = normalizer(raw_path)
     if not 0 <= observation.primary <= 100:
         raise OfficialNormalizationError("official primary score is outside 0..100")
     if observation.evaluated > len(observation.problem_ids):
-        raise OfficialNormalizationError("official evaluated count exceeds selected problems")
+        raise OfficialNormalizationError(
+            "official evaluated count exceeds selected problems"
+        )
     status = (
         "completed"
-        if observation.evaluated == len(observation.problem_ids) and observation.error is None
+        if observation.evaluated == len(observation.problem_ids)
+        and observation.error is None
         else "partial"
     )
     return _result(
@@ -417,9 +441,13 @@ def _environment() -> tuple[dict[str, Any], Path]:
     if not context_path or not result_path:
         raise OfficialNormalizationError("adapter environment is incomplete")
     try:
-        context = _object(json.loads(Path(context_path).read_text(encoding="utf-8")), "context")
+        context = _object(
+            json.loads(Path(context_path).read_text(encoding="utf-8")), "context"
+        )
     except (OSError, json.JSONDecodeError) as error:
-        raise OfficialNormalizationError(f"cannot read adapter context: {error}") from error
+        raise OfficialNormalizationError(
+            f"cannot read adapter context: {error}"
+        ) from error
     return context, Path(result_path)
 
 
