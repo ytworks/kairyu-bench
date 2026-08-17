@@ -79,7 +79,9 @@ class BenchmarkResultContractTest(unittest.TestCase):
         with self.assertRaisesRegex(ResultValidationError, "between 0 and 100"):
             BenchmarkResult.from_dict(payload)
 
-    def test_partial_result_preserves_score_and_error_without_claiming_completion(self) -> None:
+    def test_partial_result_preserves_score_and_error_without_claiming_completion(
+        self,
+    ) -> None:
         payload = completed_payload()
         payload["status"] = "partial"
         payload["counts"] = {"requested": 2, "evaluated": 1}
@@ -95,6 +97,13 @@ class BenchmarkResultContractTest(unittest.TestCase):
         self.assertEqual(result.status, "partial")
         self.assertEqual(result.data["counts"]["evaluated"], 1)
         self.assertEqual(result.data["error"], "second problem timed out")
+
+    def test_result_rejects_an_empty_agent_name(self) -> None:
+        payload = completed_payload()
+        payload["agent"] = ""
+
+        with self.assertRaisesRegex(ResultValidationError, "agent"):
+            BenchmarkResult.from_dict(payload)
 
     def test_embedding_condition_requires_a_non_empty_model_id(self) -> None:
         payload = completed_payload()

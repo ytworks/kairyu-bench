@@ -25,7 +25,11 @@ class _KairyuHandler(BaseHTTPRequestHandler):
 
     def do_GET(self) -> None:
         type(self).requests.append(
-            {"method": "GET", "path": self.path, "auth": self.headers.get("Authorization")}
+            {
+                "method": "GET",
+                "path": self.path,
+                "auth": self.headers.get("Authorization"),
+            }
         )
         if self.path == "/v1/models":
             self._json(
@@ -102,19 +106,33 @@ class TargetClientContractTest(unittest.TestCase):
 
     def test_endpoint_accepts_server_root_v1_or_chat_completion_url(self) -> None:
         cases = [
-            ("https://api.example.test", "https://api.example.test/v1"),
-            ("https://api.example.test/v1/", "https://api.example.test/v1"),
+            (
+                "https://api.example.test",
+                "https://api.example.test/v1",
+                "https://api.example.test",
+            ),
+            (
+                "https://api.example.test/v1/",
+                "https://api.example.test/v1",
+                "https://api.example.test",
+            ),
             (
                 "https://api.example.test/v1/chat/completions",
                 "https://api.example.test/v1",
+                "https://api.example.test",
             ),
-            ("https://api.example.test/prefix/v1", "https://api.example.test/prefix/v1"),
+            (
+                "https://api.example.test/prefix/v1",
+                "https://api.example.test/prefix/v1",
+                "https://api.example.test/prefix",
+            ),
         ]
 
-        for supplied, expected in cases:
+        for supplied, expected, anthropic_base in cases:
             with self.subTest(supplied=supplied):
                 endpoint = Endpoint.parse(supplied)
                 self.assertEqual(endpoint.base_url, expected)
+                self.assertEqual(endpoint.anthropic_base_url, anthropic_base)
                 self.assertEqual(endpoint.models_url, f"{expected}/models")
                 self.assertEqual(endpoint.chat_url, f"{expected}/chat/completions")
 
@@ -125,7 +143,10 @@ class TargetClientContractTest(unittest.TestCase):
 
         self.assertEqual(model, "chat-capable")
         self.assertEqual(
-            [(request["method"], request["path"]) for request in _KairyuHandler.requests],
+            [
+                (request["method"], request["path"])
+                for request in _KairyuHandler.requests
+            ],
             [
                 ("GET", "/v1/models"),
                 ("POST", "/v1/chat/completions"),

@@ -5,7 +5,11 @@ import tempfile
 import unittest
 from pathlib import Path
 
-from kairyu_bench.official import normalize_official, unsupported_result
+from kairyu_bench.official import (
+    OfficialNormalizationError,
+    normalize_official,
+    unsupported_result,
+)
 
 
 def _context(name: str, *, limit: int | None = 2) -> dict[str, object]:
@@ -20,7 +24,7 @@ def _context(name: str, *, limit: int | None = 2) -> dict[str, object]:
         "scicode": "scicode-official-inspect-tests",
         "tau-bench-banking": "tau2-official-average-reward-self-simulated",
     }[name]
-    context = {
+    context: dict[str, object] = {
         "schema_version": 1,
         "run_id": "run-1",
         "benchmark": name,
@@ -41,6 +45,8 @@ def _context(name: str, *, limit: int | None = 2) -> dict[str, object]:
         "run_dir": "/work/results/run-1",
         "result_path": f"/work/results/run-1/normalized/{name}.json",
     }
+    if name == "terminal-bench":
+        context["agent"] = "claude-code"
     if name == "tau-bench-banking":
         context["conditions"] = {"embedding_model_id": "embed-small"}
     return context
@@ -81,22 +87,63 @@ class OfficialNormalizerTest(unittest.TestCase):
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
             self._write_json(root, "result.json", {"stats": {"n_trials": 2}})
+            self._write_json(root, "task-a/config.json", {})
             self._write_json(
                 root,
                 "task-a/result.json",
-                {"task_name": "task-a", "verifier_result": {"rewards": {"reward": 1}}},
+                {
+                    "task_name": "task-a",
+                    "agent_info": {"name": "claude-code", "version": "1.0"},
+                    "verifier_result": {"rewards": {"reward": 1}},
+                },
             )
             self._write_json(
                 root,
+                "task-a/agent/result.json",
+                {
+                    "task_name": "artifact-without-agent-info",
+                    "verifier_result": {"rewards": {"reward": 0}},
+                },
+            )
+            self._write_json(root, "task-b/config.json", {})
+            self._write_json(
+                root,
                 "task-b/result.json",
-                {"task_name": "task-b", "verifier_result": {"rewards": {"reward": 0}}},
+                {
+                    "task_name": "task-b",
+                    "agent_info": {"name": "claude-code", "version": "1.0"},
+                    "verifier_result": {"rewards": {"reward": 0}},
+                },
             )
 
             result = normalize_official(_context("terminal-bench"), root)
 
         self.assertEqual(result.status, "completed")
+        self.assertEqual(result.data["agent"], "claude-code")
         self.assertEqual(result.data["score"]["primary"], 50.0)
         self.assertEqual(result.data["counts"], {"requested": 2, "evaluated": 2})
+
+    def test_harbor_rejects_missing_mixed_or_unexpected_observed_agents(self) -> None:
+        cases = {
+            "missing": ([None, None], "agent_info.name is missing"),
+            "mixed": (["claude-code", "codex"], "mixed agents"),
+            "unexpected": (["codex", "codex"], "expected 'claude-code'"),
+        }
+        for case, (agents, message) in cases.items():
+            with self.subTest(case=case), tempfile.TemporaryDirectory() as directory:
+                root = Path(directory)
+                for index, agent in enumerate(agents):
+                    self._write_json(root, f"task-{index}/config.json", {})
+                    payload = {
+                        "task_name": f"task-{index}",
+                        "verifier_result": {"rewards": {"reward": 1}},
+                    }
+                    if agent is not None:
+                        payload["agent_info"] = {"name": agent, "version": "1.0"}
+                    self._write_json(root, f"task-{index}/result.json", payload)
+
+                with self.assertRaisesRegex(OfficialNormalizationError, message):
+                    normalize_official(_context("terminal-bench"), root)
 
     def test_hle_takes_official_metrics_summary(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
@@ -218,7 +265,9 @@ class OfficialNormalizerTest(unittest.TestCase):
             {"embedding_model_id": "embed-small"},
         )
 
-    def test_missing_official_rows_are_partial_not_a_fabricated_complete_score(self) -> None:
+    def test_missing_official_rows_are_partial_not_a_fabricated_complete_score(
+        self,
+    ) -> None:
         with tempfile.TemporaryDirectory() as directory:
             raw = self._write_json(
                 Path(directory),

@@ -40,6 +40,10 @@ class Endpoint:
         return f"{self.base_url}/models"
 
     @property
+    def anthropic_base_url(self) -> str:
+        return self.base_url.removesuffix("/v1")
+
+    @property
     def chat_url(self) -> str:
         return f"{self.base_url}/chat/completions"
 

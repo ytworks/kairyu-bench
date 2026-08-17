@@ -12,3 +12,5 @@ BENCHMARK_NAMES = (
     "long-context-reasoning",
     "mrcr-v2",
 )
+
+HARBOR_AGENT_NAMES = ("terminus-2", "claude-code", "codex")

@@ -51,6 +51,8 @@ class BenchmarkResult:
         if status not in STATUSES:
             raise ResultValidationError(f"unknown status: {status}")
         _non_empty_string(payload.get("model_id"), "model_id")
+        if payload.get("agent") is not None:
+            _non_empty_string(payload.get("agent"), "agent")
 
         endpoint = _mapping(payload.get("endpoint"), "endpoint")
         _non_empty_string(endpoint.get("fingerprint"), "endpoint.fingerprint")
@@ -88,7 +90,9 @@ class BenchmarkResult:
                 "counts.requested must equal the number of selected problem IDs"
             )
         if evaluated > requested:
-            raise ResultValidationError("counts.evaluated cannot exceed counts.requested")
+            raise ResultValidationError(
+                "counts.evaluated cannot exceed counts.requested"
+            )
 
         score = _mapping(payload.get("score"), "score")
         primary = score.get("primary")
@@ -99,9 +103,13 @@ class BenchmarkResult:
         unit = _non_empty_string(score.get("unit"), "score.unit")
         _mapping(score.get("metrics"), "score.metrics")
         if unit == "percent" and primary is not None and not 0 <= primary <= 100:
-            raise ResultValidationError("percent primary score must be between 0 and 100")
+            raise ResultValidationError(
+                "percent primary score must be between 0 and 100"
+            )
         if unit == "proportion" and primary is not None and not 0 <= primary <= 1:
-            raise ResultValidationError("proportion primary score must be between 0 and 1")
+            raise ResultValidationError(
+                "proportion primary score must be between 0 and 1"
+            )
 
         scoring = _mapping(payload.get("scoring"), "scoring")
         _non_empty_string(scoring.get("method"), "scoring.method")

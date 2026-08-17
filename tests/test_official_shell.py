@@ -18,6 +18,215 @@ ROOT = Path(__file__).resolve().parents[1]
 
 
 class OfficialShellSupportTest(unittest.TestCase):
+    def test_terminal_bench_selects_each_supported_harbor_agent(self) -> None:
+        entry = load_manifest()["terminal-bench"]
+        revision = entry["source"]["revision"]
+        cases = {
+            "terminus-2": (
+                "openai/chat-capable",
+                "api_base=https://example.test/v1",
+                [],
+            ),
+            "claude-code": (
+                "chat-capable",
+                None,
+                [
+                    "CLAUDE_CODE_DISABLE_ADAPTIVE_THINKING=1",
+                    "CLAUDE_CODE_DISABLE_EXPERIMENTAL_BETAS=1",
+                    "CLAUDE_CODE_ATTRIBUTION_HEADER=0",
+                ],
+            ),
+            "codex": ("chat-capable", None, []),
+        }
+        for agent, (
+            expected_model,
+            expected_kwarg,
+            expected_agent_env,
+        ) in cases.items():
+            with self.subTest(agent=agent), tempfile.TemporaryDirectory() as directory:
+                root = Path(directory)
+                cache = root / "cache"
+                run_dir = root / "run"
+                result_path = run_dir / "normalized" / "terminal-bench.json"
+                capture_path = root / "harbor.json"
+                context_path = root / "context.json"
+                context_path.write_text(
+                    json.dumps(
+                        {
+                            "schema_version": 1,
+                            "run_id": "run-1",
+                            "benchmark": "terminal-bench",
+                            "endpoint_fingerprint": "sha256:test",
+                            "model_id": "chat-capable",
+                            "agent": agent,
+                            "limit": 1,
+                            "source": entry["source"],
+                            "dataset": entry["dataset"],
+                            "scoring": entry["scoring"],
+                            "run_dir": str(run_dir),
+                            "result_path": str(result_path),
+                        }
+                    ),
+                    encoding="utf-8",
+                )
+
+                source = cache / "sources" / f"harbor-{revision}"
+                source.mkdir(parents=True)
+                (source / ".kairyu-bench-revision").write_text(
+                    revision + "\n", encoding="utf-8"
+                )
+                environment = cache / "venvs" / f"v2-harbor-{revision}"
+                (environment / "bin").mkdir(parents=True)
+                (environment / ".kairyu-bench-ready").write_text(
+                    f"{revision}\n{environment.resolve()}\n", encoding="utf-8"
+                )
+                harbor = environment / "bin" / "harbor"
+                harbor.write_text(
+                    """#!/usr/bin/env python3
+import json
+import os
+import sys
+from pathlib import Path
+
+args = sys.argv[1:]
+agent = args[args.index("--agent") + 1]
+capture = {
+    "args": args,
+    "openai_base_url": os.environ.get("OPENAI_BASE_URL"),
+    "anthropic_base_url": os.environ.get("ANTHROPIC_BASE_URL"),
+}
+Path(os.environ["HARBOR_ARGS_PATH"]).write_text(json.dumps(capture))
+jobs = Path(args[args.index("--jobs-dir") + 1])
+trial = jobs / "task-a"
+trial.mkdir(parents=True)
+(trial / "config.json").write_text("{}")
+(trial / "result.json").write_text(json.dumps({
+    "task_name": "task-a",
+    "agent_info": {"name": agent, "version": "1.0"},
+    "verifier_result": {"rewards": {"reward": 1}},
+}))
+""",
+                    encoding="utf-8",
+                )
+                harbor.chmod(0o755)
+                fake_bin = root / "bin"
+                fake_bin.mkdir()
+                docker = fake_bin / "docker"
+                docker.write_text("#!/bin/sh\nexit 0\n", encoding="utf-8")
+                docker.chmod(0o755)
+
+                process_environment = {
+                    **os.environ,
+                    "PATH": f"{fake_bin}:{os.environ['PATH']}",
+                    "PYTHONPATH": str(ROOT / "src"),
+                    "KAIRYU_BENCH_CONTEXT": str(context_path),
+                    "KAIRYU_BENCH_RESULT_PATH": str(result_path),
+                    "KAIRYU_BENCH_RUN_DIR": str(run_dir),
+                    "KAIRYU_BENCH_CACHE_DIR": str(cache),
+                    "KAIRYU_ENDPOINT": "https://example.test/v1",
+                    "KAIRYU_MODEL": "chat-capable",
+                    "KAIRYU_HARBOR_AGENT": agent,
+                    "OPENAI_BASE_URL": "https://example.test/v1",
+                    "OPENAI_API_KEY": "super-secret",
+                    "ANTHROPIC_BASE_URL": "https://example.test",
+                    "ANTHROPIC_API_KEY": "super-secret",
+                    "HARBOR_ARGS_PATH": str(capture_path),
+                }
+                subprocess.run(
+                    [str(ROOT / "scripts/harnesses/terminal-bench.sh")],
+                    cwd=ROOT,
+                    env=process_environment,
+                    check=True,
+                )
+
+                capture = json.loads(capture_path.read_text(encoding="utf-8"))
+                arguments = capture["args"]
+                self.assertEqual(arguments[arguments.index("--agent") + 1], agent)
+                self.assertEqual(
+                    arguments[arguments.index("--model") + 1], expected_model
+                )
+                if expected_kwarg is None:
+                    self.assertNotIn("--agent-kwarg", arguments)
+                else:
+                    self.assertEqual(
+                        arguments[arguments.index("--agent-kwarg") + 1],
+                        expected_kwarg,
+                    )
+                actual_agent_env = [
+                    arguments[index + 1]
+                    for index, argument in enumerate(arguments)
+                    if argument == "--agent-env"
+                ]
+                self.assertEqual(actual_agent_env, expected_agent_env)
+                overlay = Path(
+                    arguments[arguments.index("--extra-docker-compose") + 1]
+                )
+                self.assertEqual(
+                    overlay, ROOT / "scripts/harnesses/harbor-host-gateway.yaml"
+                )
+                self.assertIn(
+                    "host.docker.internal:host-gateway",
+                    overlay.read_text(encoding="utf-8"),
+                )
+                self.assertNotIn("super-secret", arguments)
+                self.assertEqual(capture["openai_base_url"], "https://example.test/v1")
+                self.assertEqual(capture["anthropic_base_url"], "https://example.test")
+                self.assertEqual(
+                    json.loads(result_path.read_text(encoding="utf-8"))["agent"], agent
+                )
+
+    def test_terminal_bench_rejects_codex_model_ids_with_a_slash(self) -> None:
+        entry = load_manifest()["terminal-bench"]
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            run_dir = root / "run"
+            result_path = run_dir / "normalized/terminal-bench.json"
+            context_path = root / "context.json"
+            context_path.write_text(
+                json.dumps(
+                    {
+                        "schema_version": 1,
+                        "run_id": "run-slash-model",
+                        "benchmark": "terminal-bench",
+                        "endpoint_fingerprint": "sha256:test",
+                        "model_id": "organization/chat-capable",
+                        "agent": "codex",
+                        "limit": 1,
+                        "source": entry["source"],
+                        "dataset": entry["dataset"],
+                        "scoring": entry["scoring"],
+                        "run_dir": str(run_dir),
+                        "result_path": str(result_path),
+                    }
+                ),
+                encoding="utf-8",
+            )
+            process = subprocess.run(
+                [str(ROOT / "scripts/harnesses/terminal-bench.sh")],
+                cwd=ROOT,
+                env={
+                    **os.environ,
+                    "PYTHONPATH": str(ROOT / "src"),
+                    "KAIRYU_BENCH_CONTEXT": str(context_path),
+                    "KAIRYU_BENCH_RESULT_PATH": str(result_path),
+                    "KAIRYU_BENCH_RUN_DIR": str(run_dir),
+                    "KAIRYU_BENCH_CACHE_DIR": str(root / "cache"),
+                    "KAIRYU_ENDPOINT": "https://example.test/v1",
+                    "KAIRYU_MODEL": "organization/chat-capable",
+                    "KAIRYU_HARBOR_AGENT": "codex",
+                },
+                text=True,
+                capture_output=True,
+                check=False,
+            )
+
+            result = json.loads(result_path.read_text(encoding="utf-8"))
+
+        self.assertEqual(process.returncode, 3)
+        self.assertEqual(result["status"], "unsupported")
+        self.assertEqual(result["agent"], "codex")
+        self.assertIn("cannot preserve model IDs containing '/'", result["error"])
+
     def test_checkout_source_resolves_and_reuses_exact_revision(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
@@ -25,14 +234,23 @@ class OfficialShellSupportTest(unittest.TestCase):
             upstream.mkdir()
             subprocess.run(["git", "init", "-q", str(upstream)], check=True)
             subprocess.run(
-                ["git", "-C", str(upstream), "config", "user.email", "test@example.test"],
+                [
+                    "git",
+                    "-C",
+                    str(upstream),
+                    "config",
+                    "user.email",
+                    "test@example.test",
+                ],
                 check=True,
             )
             subprocess.run(
                 ["git", "-C", str(upstream), "config", "user.name", "Test"], check=True
             )
             (upstream / "version.txt").write_text("pinned\n", encoding="utf-8")
-            subprocess.run(["git", "-C", str(upstream), "add", "version.txt"], check=True)
+            subprocess.run(
+                ["git", "-C", str(upstream), "add", "version.txt"], check=True
+            )
             subprocess.run(
                 ["git", "-C", str(upstream), "commit", "-q", "-m", "pinned"], check=True
             )
@@ -46,8 +264,12 @@ class OfficialShellSupportTest(unittest.TestCase):
                 f'checkout_source demo "{upstream}" "{revision}"'
             )
 
-            first = subprocess.check_output(["sh", "-c", command], cwd=ROOT, text=True).strip()
-            second = subprocess.check_output(["sh", "-c", command], cwd=ROOT, text=True).strip()
+            first = subprocess.check_output(
+                ["sh", "-c", command], cwd=ROOT, text=True
+            ).strip()
+            second = subprocess.check_output(
+                ["sh", "-c", command], cwd=ROOT, text=True
+            ).strip()
 
             self.assertEqual(first, second)
             self.assertEqual((Path(first) / "version.txt").read_text(), "pinned\n")
@@ -137,13 +359,18 @@ class OfficialShellSupportTest(unittest.TestCase):
         with tempfile.TemporaryDirectory() as directory:
             output = Path(directory) / "selected.jsonl"
             ids = Path(directory) / "ids.txt"
-            with mock.patch("kairyu_bench.harness_data._load_dataset", return_value=rows) as load:
+            with mock.patch(
+                "kairyu_bench.harness_data._load_dataset", return_value=rows
+            ) as load:
                 export_selected_rows(context, "test", "instance_id", output, ids)
 
             load.assert_called_once_with("owner/data", "deadbeef", "test", None)
             self.assertEqual(ids.read_text().splitlines(), ["one", "two"])
             self.assertEqual(
-                [json.loads(line)["instance_id"] for line in output.read_text().splitlines()],
+                [
+                    json.loads(line)["instance_id"]
+                    for line in output.read_text().splitlines()
+                ],
                 ["one", "two"],
             )
 

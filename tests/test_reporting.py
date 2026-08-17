@@ -16,6 +16,7 @@ def _result(
     *,
     problem_ids: list[str] | None = None,
     source_revision: str = "source-pin",
+    agent: str | None = None,
     conditions: dict[str, str] | None = None,
 ) -> BenchmarkResult:
     ids = problem_ids or ["one", "two"]
@@ -47,6 +48,8 @@ def _result(
         },
         "error": None,
     }
+    if agent is not None:
+        payload["agent"] = agent
     if conditions is not None:
         payload["conditions"] = conditions
     return BenchmarkResult.from_dict(payload)
@@ -141,6 +144,62 @@ class ReportingTest(unittest.TestCase):
         self.assertFalse(row["compatible"])
         self.assertIsNone(row["delta"])
         self.assertIn("source lock differs", row["reason"])
+
+    def test_score_report_includes_the_harbor_agent(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            run = _run(
+                Path(directory),
+                "run-a",
+                [_result("run-a", "terminal-bench", 75.0, agent="claude-code")],
+            )
+
+            report = write_score_report(run)
+            markdown = (run / "report.md").read_text(encoding="utf-8")
+
+        self.assertEqual(report["benchmarks"][0]["agent"], "claude-code")
+        self.assertIn("| terminal-bench | completed | 75.00 |", markdown)
+        self.assertIn("| claude-code |", markdown)
+
+    def test_compare_rejects_different_harbor_agents(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            baseline = _run(
+                root,
+                "run-a",
+                [_result("run-a", "terminal-bench", 40.0, agent="terminus-2")],
+            )
+            candidate = _run(
+                root,
+                "run-b",
+                [_result("run-b", "terminal-bench", 60.0, agent="codex")],
+            )
+
+            comparison = compare_runs(baseline, candidate)
+
+        row = comparison["rows"][0]
+        self.assertFalse(row["compatible"])
+        self.assertIsNone(row["delta"])
+        self.assertIn("agent differs", row["reason"])
+
+    def test_compare_defaults_legacy_terminal_agent_to_terminus(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            baseline = _run(
+                root,
+                "run-a",
+                [_result("run-a", "terminal-bench", 40.0)],
+            )
+            candidate = _run(
+                root,
+                "run-b",
+                [_result("run-b", "terminal-bench", 60.0, agent="terminus-2")],
+            )
+
+            comparison = compare_runs(baseline, candidate)
+
+        row = comparison["rows"][0]
+        self.assertTrue(row["compatible"])
+        self.assertEqual(row["delta"], 20.0)
 
     def test_compare_rejects_embedding_model_condition_mismatch(self) -> None:
         with tempfile.TemporaryDirectory() as directory:

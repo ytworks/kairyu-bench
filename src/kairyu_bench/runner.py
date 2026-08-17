@@ -15,8 +15,7 @@ from kairyu_bench.target import Endpoint
 
 
 class ModelDiscovery(Protocol):
-    def discover_chat_model(self) -> str:
-        ...
+    def discover_chat_model(self) -> str: ...
 
     def discover_embedding_model(self) -> str:
         ...
@@ -39,6 +38,7 @@ class RunConfig:
     results_root: Path
     run_id: str
     app_root: Path
+    harbor_agent: str = "terminus-2"
     adapter_timeout: float | None = None
 
 
@@ -69,6 +69,7 @@ def _failure_result(
     entry: dict[str, Any],
     started_at: str,
     error: str,
+    agent: str | None,
     conditions: dict[str, Any],
 ) -> BenchmarkResult:
     scoring = entry["scoring"]
@@ -104,6 +105,8 @@ def _failure_result(
         "timestamps": {"started_at": started_at, "finished_at": _utc_now()},
         "error": error,
     }
+    if agent is not None:
+        payload["agent"] = agent
     if conditions:
         payload["conditions"] = conditions
     return BenchmarkResult.from_dict(payload)
@@ -115,6 +118,7 @@ def _validate_identity(
     model_id: str,
     name: str,
     entry: dict[str, Any],
+    agent: str | None,
     conditions: dict[str, Any],
 ) -> None:
     data = result.data
@@ -122,11 +126,13 @@ def _validate_identity(
         "run_id": config.run_id,
         "benchmark": name,
         "model_id": model_id,
+        "agent": agent,
     }
     for field, value in expected.items():
-        if data[field] != value:
+        actual = data.get(field)
+        if actual != value:
             raise ResultValidationError(
-                f"adapter result {field} is {data[field]!r}, expected {value!r}"
+                f"adapter result {field} is {actual!r}, expected {value!r}"
             )
     if data["endpoint"]["fingerprint"] != endpoint_fingerprint(config.endpoint):
         raise ResultValidationError("adapter result endpoint fingerprint changed")
@@ -148,6 +154,12 @@ def _validate_identity(
         raise ResultValidationError("adapter result scoring method differs from manifest")
     if data.get("conditions", {}) != conditions:
         raise ResultValidationError("adapter result benchmark conditions changed")
+
+
+def _selected_agent(entry: dict[str, Any], configured_agent: str) -> str | None:
+    if entry["scoring"]["method"] == "harbor-official-task-reward":
+        return configured_agent
+    return None
 
 
 def run_benchmarks(
@@ -179,6 +191,7 @@ def run_benchmarks(
         "status": "running",
         "endpoint": {"fingerprint": fingerprint},
         "model_id": model_id,
+        "harbor_agent": config.harbor_agent,
         "embedding_model_id": embedding_model_id,
         "benchmarks": list(config.selected),
         "limit": config.limit,
@@ -191,6 +204,7 @@ def run_benchmarks(
     statuses: dict[str, str] = {}
     for name in config.selected:
         entry = manifest[name]
+        agent = _selected_agent(entry, config.harbor_agent)
         adapter_started_at = _utc_now()
         result_path = run_dir / "normalized" / f"{name}.json"
         log_path = run_dir / "logs" / f"{name}.log"
@@ -207,6 +221,7 @@ def run_benchmarks(
             "endpoint": config.endpoint.base_url,
             "endpoint_fingerprint": fingerprint,
             "model_id": model_id,
+            "agent": agent,
             "limit": config.limit,
             "source": entry["source"],
             "generator": entry.get("generator"),
@@ -240,10 +255,15 @@ def run_benchmarks(
                     ),
                     "KAIRYU_ENDPOINT": config.endpoint.base_url,
                     "KAIRYU_MODEL": model_id,
-                    "KAIRYU_BENCH_LIMIT": "" if config.limit is None else str(config.limit),
+                    "KAIRYU_HARBOR_AGENT": config.harbor_agent,
+                    "KAIRYU_BENCH_LIMIT": ""
+                    if config.limit is None
+                    else str(config.limit),
                     "OPENAI_BASE_URL": config.endpoint.base_url,
                     "OPENAI_API_BASE": config.endpoint.base_url,
                     "OPENAI_API_KEY": api_key or "not-required",
+                    "ANTHROPIC_BASE_URL": config.endpoint.anthropic_base_url,
+                    "ANTHROPIC_API_KEY": api_key or "not-required",
                 }
             )
             if conditions and embedding_model_id is not None:
@@ -276,6 +296,7 @@ def run_benchmarks(
                     model_id,
                     name,
                     entry,
+                    agent,
                     conditions,
                 )
                 if return_code and result.status == "completed":
@@ -300,6 +321,7 @@ def run_benchmarks(
                 entry=entry,
                 started_at=adapter_started_at,
                 error=error or f"adapter exited {return_code}",
+                agent=agent,
                 conditions=conditions,
             )
             result.write(result_path)

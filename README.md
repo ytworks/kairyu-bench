@@ -36,7 +36,25 @@ Kairyu互換APIを、公式実装に基づく12種類のベンチマークで評
 KAIRYU_API_KEY=secret ./kairyu-bench run https://kairyu.example/v1
 ```
 
-`localhost` 上のAPIをDocker Desktop/Linuxから評価する場合は、URLのhostに `host.docker.internal` を指定してください。runnerはそのhost aliasを自動設定します。
+### Terminal-Benchのagent
+
+Harborで実行する `terminal-bench` は `terminus-2`（既定）、`claude-code`、`codex` からagentを選べます。
+
+```sh
+# Claude Code + KairyuのAnthropic Messages互換API
+KAIRYU_API_KEY=secret ./kairyu-bench run https://kairyu.example/v1 \
+  --only terminal-bench --harbor-agent claude-code --limit 1
+
+# Codex + KairyuのOpenAI互換API
+KAIRYU_API_KEY=secret ./kairyu-bench run https://kairyu.example/v1 \
+  --only terminal-bench --harbor-agent codex --limit 1
+```
+
+Terminus-2とCodexには `OPENAI_BASE_URL=<endpoint>/v1`、Claude Codeには `ANTHROPIC_BASE_URL=<endpoint>` を設定し、自動検出した同じmodel IDを渡します。Claude Codeでは初期互換範囲を安定させるためadaptive thinking、experimental beta、attribution headerを無効化します。API keyは対応するagent環境へ渡しますが、Harborのコマンドラインや結果には保存しません。Claude Codeを使うKairyuサーバーには `POST /v1/messages` が必要です（実装要件は [kairyu#508](https://github.com/ytworks/kairyu/issues/508)）。
+
+agent本体はHarborがtask container内へ導入して起動するため、ホストのClaude Code/Codexのログイン状態や設定は引き継ぎません。
+
+`localhost` 上のAPIをDocker Desktop/Linuxから評価する場合は、URLのhostに `host.docker.internal` を指定してください。runnerとHarborのnested task containerは、そのhost aliasを自動設定します。
 
 ## ベンチマーク
 
@@ -79,7 +97,7 @@ SciCodeの数値test artifactは公式repositoryの案内に従って取得し�
 各実行は `results/<run-id>/` に保存されます。
 
 ```text
-run.json                 実行状態と自動検出したmodel ID
+run.json                 実行状態、自動検出したmodel ID、Harbor agent
 report.json              機械可読スコアレポート
 report.md                表形式スコアレポート
 normalized/<name>.json   共通schemaへ正規化した結果
@@ -90,7 +108,7 @@ context/<name>.json      adapterへ渡した固定条件
 
 `report.md` のmacro averageは、完了したpercent指標の単純平均です。公式leaderboardの総合指標ではありません。HLE/CharXivは `self_judged`、tauは `self_simulated` として常に表示されます。
 
-比較でdeltaを出す条件は、benchmark名、source/dataset revision、問題ID、採点法、自己採点方針、score unitがすべて一致し、両方が `completed` であることです。それ以外は理由を表示しますが数値差は出しません。
+比較でdeltaを出す条件は、benchmark名、agent、source/dataset revision、問題ID、採点法、自己採点方針、score unitがすべて一致し、両方が `completed` であることです。それ以外は理由を表示しますが数値差は出しません。
 
 ## API契約
 
@@ -100,6 +118,7 @@ context/<name>.json      adapterへ渡した固定条件
 - `POST /v1/chat/completions`
 - OpenAI互換の `model`、`messages`、`max_tokens`、`temperature`
 - CharXivでは `image_url` のdata URL入力
+- Claude Codeを使う場合はAnthropic互換の `POST /v1/messages`
 
 公開レポートにはendpointのSHA-256 fingerprintだけを記録します。API URLはローカルのadapter contextに保存され、API keyは保存しません。
 
