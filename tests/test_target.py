@@ -158,6 +158,18 @@ class TargetClientContractTest(unittest.TestCase):
             ["Bearer secret", "Bearer secret", "Bearer secret"],
         )
 
+    def test_discovery_chat_probe_uses_minimal_completion_budget(self) -> None:
+        client = TargetClient(Endpoint.parse(self.root), timeout=2)
+
+        client.discover_chat_model()
+
+        chat_probes = [
+            request["payload"]
+            for request in _KairyuHandler.requests
+            if request["path"] == "/v1/chat/completions"
+        ]
+        self.assertEqual([probe["max_tokens"] for probe in chat_probes], [1, 1])
+
     def test_embedding_discovery_is_independent_and_authenticates_its_probe(self) -> None:
         client = TargetClient(Endpoint.parse(self.root), api_key="secret", timeout=2)
 
