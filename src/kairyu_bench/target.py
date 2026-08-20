@@ -8,6 +8,9 @@ from urllib.parse import urlsplit, urlunsplit
 from urllib.request import Request, urlopen
 
 
+_CHAT_CAPABILITY_PROBE_MAX_TOKENS = 1
+
+
 class PreflightError(RuntimeError):
     """The supplied endpoint cannot satisfy the benchmark API contract."""
 
@@ -81,7 +84,10 @@ class TargetClient:
                                 "content": "Reply with exactly OK.",
                             }
                         ],
-                        "max_tokens": 8,
+                        # Kairyu propagates the caller's public cap into its
+                        # orchestration budgets. Discovery only needs the
+                        # response envelope, so request the API minimum.
+                        "max_tokens": _CHAT_CAPABILITY_PROBE_MAX_TOKENS,
                         "temperature": 0,
                     },
                 )
