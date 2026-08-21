@@ -147,6 +147,7 @@ if [ "$benchmark" = "swe-bench-pro" ]; then
             --config swebench.yaml \
             --config model.model_kwargs.max_tokens=8192 \
             --config environment.cwd=/app \
+            --config environment.container_timeout=12h \
             --config environment.pull_timeout=1800 \
             --config 'environment.run_args=["--rm","--entrypoint",""]' \
             --config 'run.env_startup_command=test -e /testbed || ln -s /app /testbed'
