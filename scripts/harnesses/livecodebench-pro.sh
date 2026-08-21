@@ -17,6 +17,11 @@ verifier_revision=$(context_get secondary_sources.1.revision)
 dataset_revision=$(context_get dataset.revision)
 source_path=$(checkout_source livecodebench-pro "$source_repository" "$source_revision")
 verifier_path=$(checkout_source lightcpverifier "$verifier_repository" "$verifier_revision")
+verifier_image="lightcpverifier:${verifier_revision}-kairyu"
+docker build \
+    --file "$ROOT/scripts/harnesses/livecodebench-pro.Dockerfile" \
+    --tag "$verifier_image" \
+    "$verifier_path"
 environment=$(ensure_venv \
     livecodebench-pro \
     "$source_revision" \
@@ -29,6 +34,7 @@ ln -s "$verifier_path" "$work/LightCPVerifier"
 export HF_HOME="$hf_home"
 export HF_HUB_DISABLE_TELEMETRY=1
 export KAIRYU_BENCH_RAW_DIR="$raw"
+export KAIRYU_LIGHTCPVERIFIER_IMAGE="$verifier_image"
 export PYTHONPATH="$ROOT/src:$source_path"
 
 (cd "$work" && "$environment/bin/python" "$ROOT/scripts/shims/livecodebench_pro.py")
