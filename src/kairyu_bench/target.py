@@ -165,17 +165,18 @@ class TargetClient:
         *,
         max_tokens: int,
         temperature: float = 0,
+        stream: bool = False,
     ) -> str:
-        response = self._request_json(
-            "POST",
-            self.endpoint.chat_url,
-            {
-                "model": model_id,
-                "messages": messages,
-                "max_tokens": max_tokens,
-                "temperature": temperature,
-            },
-        )
+        payload: dict[str, Any] = {
+            "model": model_id,
+            "messages": messages,
+            "max_tokens": max_tokens,
+            "temperature": temperature,
+        }
+        if stream:
+            payload["stream"] = True
+            return self._request_stream_text(self.endpoint.chat_url, payload)
+        response = self._request_json("POST", self.endpoint.chat_url, payload)
         choices = response.get("choices")
         if not isinstance(choices, list) or not choices:
             raise PreflightError("chat response contains no choices")
@@ -186,6 +187,68 @@ class TargetClient:
         if not isinstance(content, str):
             raise PreflightError("chat response assistant content is not text")
         return content
+
+    def _request_stream_text(
+        self,
+        url: str,
+        payload: dict[str, Any],
+    ) -> str:
+        headers = {
+            "Accept": "text/event-stream",
+            "Content-Type": "application/json",
+        }
+        if self.api_key:
+            headers["Authorization"] = f"Bearer {self.api_key}"
+        request = Request(
+            url,
+            data=json.dumps(payload).encode("utf-8"),
+            headers=headers,
+            method="POST",
+        )
+        content: list[str] = []
+        content_finished = False
+        try:
+            with urlopen(request, timeout=self.timeout) as response:
+                for raw_line in response:
+                    line = raw_line.decode("utf-8").strip()
+                    if (
+                        not line
+                        or line.startswith(":")
+                        or not line.startswith("data:")
+                    ):
+                        continue
+                    data = line.removeprefix("data:").strip()
+                    if data == "[DONE]":
+                        break
+                    chunk = json.loads(data)
+                    if not isinstance(chunk, dict):
+                        raise PreflightError(
+                            "chat stream returned a non-object chunk"
+                        )
+                    choices = chunk.get("choices")
+                    if not isinstance(choices, list) or not choices:
+                        continue
+                    first = choices[0]
+                    if not isinstance(first, dict):
+                        continue
+                    delta = first.get("delta")
+                    if not isinstance(delta, dict):
+                        continue
+                    reasoning = delta.get("reasoning_content")
+                    if content and isinstance(reasoning, str) and reasoning:
+                        content_finished = True
+                    text = delta.get("content")
+                    if isinstance(text, str) and not content_finished:
+                        content.append(text)
+        except HTTPError as error:
+            raise PreflightError(f"HTTP {error.code}") from error
+        except URLError as error:
+            raise PreflightError(f"connection failed: {error.reason}") from error
+        except (json.JSONDecodeError, UnicodeDecodeError) as error:
+            raise PreflightError("endpoint returned invalid chat stream") from error
+        if not content:
+            raise PreflightError("chat stream contains no assistant text")
+        return "".join(content)
 
     def _request_json(
         self,
