@@ -163,16 +163,18 @@ class TargetClient:
         model_id: str,
         messages: list[dict[str, Any]],
         *,
-        max_tokens: int,
-        temperature: float = 0,
+        max_tokens: int | None,
+        temperature: float | None = 0,
         stream: bool = False,
     ) -> str:
         payload: dict[str, Any] = {
             "model": model_id,
             "messages": messages,
-            "max_tokens": max_tokens,
-            "temperature": temperature,
         }
+        if max_tokens is not None:
+            payload["max_tokens"] = max_tokens
+        if temperature is not None:
+            payload["temperature"] = temperature
         if stream:
             payload["stream"] = True
             return self._request_stream_text(self.endpoint.chat_url, payload)
@@ -206,7 +208,6 @@ class TargetClient:
             method="POST",
         )
         content: list[str] = []
-        content_finished = False
         try:
             with urlopen(request, timeout=self.timeout) as response:
                 for raw_line in response:
@@ -225,6 +226,15 @@ class TargetClient:
                         raise PreflightError(
                             "chat stream returned a non-object chunk"
                         )
+                    error_payload = chunk.get("error")
+                    if isinstance(error_payload, dict):
+                        message = error_payload.get("message")
+                        detail = (
+                            message
+                            if isinstance(message, str)
+                            else "unknown endpoint error"
+                        )
+                        raise PreflightError(f"chat stream error: {detail}")
                     choices = chunk.get("choices")
                     if not isinstance(choices, list) or not choices:
                         continue
@@ -232,14 +242,12 @@ class TargetClient:
                     if not isinstance(first, dict):
                         continue
                     delta = first.get("delta")
-                    if not isinstance(delta, dict):
-                        continue
-                    reasoning = delta.get("reasoning_content")
-                    if content and isinstance(reasoning, str) and reasoning:
-                        content_finished = True
-                    text = delta.get("content")
-                    if isinstance(text, str) and not content_finished:
-                        content.append(text)
+                    if isinstance(delta, dict):
+                        text = delta.get("content")
+                        if isinstance(text, str):
+                            content.append(text)
+                    if first.get("finish_reason") is not None:
+                        break
         except HTTPError as error:
             raise PreflightError(f"HTTP {error.code}") from error
         except URLError as error:

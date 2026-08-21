@@ -69,22 +69,27 @@ def main() -> int:
         api_key=os.environ.get("KAIRYU_API_KEY"),
         timeout=300,
     )
-    system_prompt = (
-        "You are a competitive programmer. You will be given a problem statement, "
-        "please implement a solution in C++. Respect the execution time and memory "
-        "limit. Wrap the code in ```cpp and ```."
-    )
-    with RoutedLightCPVerifierJudge(worker=1) as verifier:
-        for problem in problems:
+    official_prompt = """
+        You are a competitive programmer. You will be given a problem statement, please implement solution in C++. The execution time and memory limit are also stated in the statement so be aware of the complexity of the program. Please wrap the code in ```cpp and ``` so that it is properly formatted.
+        """
+    output = Path(raw_directory) / "benchmark_result.json"
+    completed_problems = []
+    with RoutedLightCPVerifierJudge(worker=8) as verifier:
+        for index, problem in enumerate(problems, start=1):
+            print(
+                f"Generating solution {index}/{len(problems)}: {problem.problem_id}",
+                flush=True,
+            )
             response = client.chat(
                 context["model_id"],
                 [
                     {
                         "role": "user",
-                        "content": system_prompt + "\n\n" + problem.problem_statement,
+                        "content": official_prompt + problem.problem_statement,
                     }
                 ],
-                max_tokens=8192,
+                max_tokens=None,
+                temperature=None,
                 stream=True,
             )
             problem.text_response = response
@@ -94,25 +99,32 @@ def main() -> int:
                 problem.submission_id = verifier.submit(
                     problem.problem_id, SupportedLanguage.CPP, problem.code
                 )
-            else:
-                problem.judge_result = "No Code"
-        for problem in problems:
-            if problem.judge_result == "No Code":
-                continue
             if problem.submission_id is None:
-                raise RuntimeError(f"no verifier submission for {problem.problem_id}")
-            while True:
-                problem.judge_result = verifier.get_result(problem.submission_id)
-                if problem.judge_result != "Judging":
-                    break
-                time.sleep(1)
-            if problem.judge_result == "Judge Failed":
-                raise RuntimeError(f"official verifier failed for {problem.problem_id}")
+                problem.judge_result = "Judge Failed"
+            else:
+                while problem.judge_result == "Judging":
+                    problem.judge_result = verifier.get_result(problem.submission_id)
+                    if problem.judge_result == "Judging":
+                        time.sleep(1)
+            print(
+                f"Judged solution {index}/{len(problems)}: "
+                f"{problem.problem_id}: {problem.judge_result}",
+                flush=True,
+            )
+            completed_problems.append(problem)
+            partial_results = [
+                BenchmarkResult(**item.model_dump()).model_dump()
+                for item in completed_problems
+            ]
+            output.write_text(
+                json.dumps(partial_results, indent=4, ensure_ascii=False, allow_nan=False)
+                + "\n",
+                encoding="utf-8",
+            )
 
     results = [BenchmarkResult(**problem.model_dump()).model_dump() for problem in problems]
-    output = Path(raw_directory) / "benchmark_result.json"
     output.write_text(
-        json.dumps(results, indent=2, ensure_ascii=False, allow_nan=False) + "\n",
+        json.dumps(results, indent=4, ensure_ascii=False, allow_nan=False) + "\n",
         encoding="utf-8",
     )
     return 0
