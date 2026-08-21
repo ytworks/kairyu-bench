@@ -85,6 +85,7 @@ def main() -> int:
                     }
                 ],
                 max_tokens=8192,
+                stream=True,
             )
             problem.text_response = response
             problem.code = extract_longest_cpp_code(response)

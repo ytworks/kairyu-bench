@@ -23,6 +23,20 @@ class _KairyuHandler(BaseHTTPRequestHandler):
         self.end_headers()
         self.wfile.write(body)
 
+    def _sse(self, chunks: list[dict[str, Any]]) -> None:
+        events = [": status routing"]
+        events.extend(
+            f"data: {json.dumps(chunk)}"
+            for chunk in chunks
+        )
+        events.append("data: [DONE]")
+        body = ("\n\n".join(events) + "\n\n").encode("utf-8")
+        self.send_response(200)
+        self.send_header("Content-Type", "text/event-stream")
+        self.send_header("Content-Length", str(len(body)))
+        self.end_headers()
+        self.wfile.write(body)
+
     def do_GET(self) -> None:
         type(self).requests.append(
             {
@@ -59,6 +73,20 @@ class _KairyuHandler(BaseHTTPRequestHandler):
         if self.path == "/v1/chat/completions":
             if payload["model"] == "embedding-only":
                 self._json(400, {"error": {"message": "not a chat model"}})
+                return
+            if payload.get("stream"):
+                self._sse(
+                    [
+                        {"choices": [{"delta": {"content": "O"}}]},
+                        {"choices": [{"delta": {"content": "K"}}]},
+                        {
+                            "choices": [
+                                {"delta": {"reasoning_content": "ignored"}}
+                            ]
+                        },
+                        {"choices": [{"delta": {"content": "internal"}}]},
+                    ]
+                )
                 return
             self._json(
                 200,
@@ -254,6 +282,21 @@ class TargetClientContractTest(unittest.TestCase):
             request["payload"]["messages"],
             [{"role": "user", "content": "Question"}],
         )
+
+    def test_streaming_chat_accumulates_only_assistant_content(self) -> None:
+        client = TargetClient(Endpoint.parse(self.root), api_key="secret", timeout=2)
+
+        response = client.chat(
+            "chat-capable",
+            [{"role": "user", "content": "Question"}],
+            max_tokens=32,
+            stream=True,
+        )
+
+        self.assertEqual(response, "OK")
+        request = _KairyuHandler.requests[-1]
+        self.assertTrue(request["payload"]["stream"])
+        self.assertEqual(request["auth"], "Bearer secret")
 
 
 if __name__ == "__main__":
