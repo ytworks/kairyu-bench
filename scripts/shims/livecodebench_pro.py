@@ -10,6 +10,19 @@ from kairyu_bench.adapter_context import read_context
 from kairyu_bench.target import Endpoint, TargetClient
 
 
+def verifier_container_base_url(container) -> str:
+    """Return the verifier address on the Docker network shared by both containers."""
+    container.reload()
+    networks = container.attrs.get("NetworkSettings", {}).get("Networks", {})
+    for network in networks.values():
+        address = network.get("IPAddress")
+        if address:
+            return f"http://{address}:8081"
+    raise RuntimeError(
+        "LightCPVerifier container has no reachable Docker network address"
+    )
+
+
 def main() -> int:
     context_path = os.environ.get("KAIRYU_BENCH_CONTEXT")
     raw_directory = os.environ.get("KAIRYU_BENCH_RAW_DIR")
@@ -32,7 +45,9 @@ def main() -> int:
     class RoutedLightCPVerifierJudge(LightCPVerifierJudge):
         def _start_container(self) -> None:
             super()._start_container()
-            if verifier_host:
+            if verifier_host == "container":
+                self.base_url = verifier_container_base_url(self.container)
+            elif verifier_host:
                 port = self.container.ports["8081/tcp"][0]["HostPort"]
                 self.base_url = f"http://{verifier_host}:{port}"
 
