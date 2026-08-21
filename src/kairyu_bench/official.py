@@ -114,6 +114,26 @@ def _swebench(path: Path) -> OfficialObservation:
     )
 
 
+def _swebench_pro(path: Path) -> OfficialObservation:
+    report = _object(_load_json(path), "SWE-bench Pro report")
+    problem_ids = _ids(report.keys(), "SWE-bench Pro instance IDs")
+    if not all(isinstance(report[problem_id], bool) for problem_id in problem_ids):
+        raise OfficialNormalizationError("SWE-bench Pro outcomes must be boolean")
+    resolved = sum(report[problem_id] for problem_id in problem_ids)
+    primary = 100.0 * resolved / len(problem_ids)
+    return OfficialObservation(
+        problem_ids,
+        len(problem_ids),
+        primary,
+        {
+            "resolved_percent": primary,
+            "resolved_instances": resolved,
+            "completed_instances": len(problem_ids),
+            "total_instances": len(problem_ids),
+        },
+    )
+
+
 def _harbor(path: Path) -> OfficialObservation:
     candidates = (
         sorted(
@@ -337,7 +357,7 @@ def _tau(path: Path) -> OfficialObservation:
 
 
 NORMALIZERS: dict[str, Callable[[Path], OfficialObservation]] = {
-    "swe-bench-pro": _swebench,
+    "swe-bench-pro": _swebench_pro,
     "swe-bench-verified": _swebench,
     "terminal-bench": _harbor,
     "livecodebench": _livecodebench,

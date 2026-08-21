@@ -124,4 +124,4 @@ context/<name>.json      adapterへ渡した固定条件
 
 ## 注意
 
-SWE-bench、Terminal-Bench、LiveCodeBench Proはtask containerを作るため、runnerを `--privileged` で起動しDocker socketをmountします。信頼できるホスト上で実行してください。全件実行は長時間・大容量・高コストになるため、疎通確認にはまず `--only ... --limit 1` を推奨します。
+SWE-bench、Terminal-Bench、LiveCodeBench Proはtask containerを作るため、runnerを `--privileged` で起動しDocker socketをmountします。信頼できるホスト上で実行してください。`KAIRYU_BENCH_DOCKER_SOCKET`を指定すると、nested task用に別のDocker daemonを使用できます。SWE-bench Proを専用daemonで実行する場合は、`KAIRYU_BENCH_CLEAN_TASK_IMAGES=1`で公式評価済みtaskのcontainerとimageを1問ごとに削除できます。全件実行は長時間・大容量・高コストになるため、疎通確認にはまず `--only ... --limit 1` を推奨します。

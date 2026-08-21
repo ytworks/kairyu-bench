@@ -18,6 +18,18 @@ ROOT = Path(__file__).resolve().parents[1]
 
 
 class OfficialShellSupportTest(unittest.TestCase):
+    def test_swebench_pro_uses_its_official_harness_and_image_layout(self) -> None:
+        harness = (ROOT / "scripts/harnesses/swebench.sh").read_text(
+            encoding="utf-8"
+        )
+
+        self.assertIn("environment.cwd=/app", harness)
+        self.assertIn("swe_bench_pro_eval.py", harness)
+        self.assertIn("--use_local_docker", harness)
+        self.assertIn('--expected-ids "$raw/instance-ids.txt"', harness)
+        self.assertIn("SWE-bench Pro completed $index/$total", harness)
+        self.assertIn('docker image rm -f "$image"', harness)
+
     def test_terminal_bench_selects_each_supported_harbor_agent(self) -> None:
         entry = load_manifest()["terminal-bench"]
         revision = entry["source"]["revision"]

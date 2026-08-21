@@ -72,3 +72,53 @@ evaluated counts. Preserve the complete result directory. After successful
 report generation, the dedicated NVMe cache may be removed only after
 rechecking its exact path and confirming it is not shared with another run.
 
+## SWE-bench Pro full run
+
+Use `./kairyu-bench` with `--only swe-bench-pro`. The pinned public test split
+contains 731 problems, so a full public run means 731 generated patches and 731
+official evaluations with no `--limit`. The official evaluator is the pinned
+`scaleapi/SWE-bench_Pro-os` source and its `jefzda/sweap-images` task images.
+
+Run nested task containers through a dedicated privileged Docker-in-Docker
+daemon whose data root and Unix socket are both beneath `/mnt/nvme/kairyu/`.
+Export that socket as `KAIRYU_BENCH_DOCKER_SOCKET`, and export
+`KAIRYU_BENCH_CLEAN_TASK_IMAGES=1`. The Pro harness generates and officially
+evaluates one problem at a time, then removes that completed problem's task
+container and image. This keeps only the current task image live and avoids
+using or pruning the host Docker daemon that serves the Kairyu API and Open
+WebUI. Obtain explicit user approval before using the privileged runner,
+privileged Docker-in-Docker daemon, and shared Docker socket.
+
+Keep the benchmark cache on NVMe, preserve `results/`, and mount both the
+results directory and cache into the dedicated daemon at their identical host
+paths so the official evaluator's workspace bind mounts resolve correctly.
+
+Run from an interactive Bash so `.bashrc` supplies `HF_TOKEN`, using unique
+paths and a unique run ID:
+
+```bash
+/bin/bash -ic '
+set -eu
+test -n "${HF_TOKEN:-}"
+export KAIRYU_BENCH_CACHE_DIR=/mnt/nvme/kairyu/bench-cache/swe-bench-pro-full
+export KAIRYU_BENCH_DOCKER_SOCKET=/mnt/nvme/kairyu/docker/swe-bench-pro-full/run/docker.sock
+export KAIRYU_BENCH_CLEAN_TASK_IMAGES=1
+exec ./kairyu-bench run http://host.docker.internal:8003/v1 \
+  --only swe-bench-pro \
+  --run-id swe-bench-pro-full
+'
+```
+
+Immediately verify `run.json` is `running`, its `model_id` matches the local
+API, and `selected.jsonl` and `instance-ids.txt` both contain 731 problems.
+Count progress from `SWE-bench Pro completed N/731` log lines and cross-check
+against the number of keys in `evaluation/eval_results.json`. Report resolved
+count, current instance, elapsed time, API/Docker health, and root/NVMe free
+space at least once per minute while monitoring. Report cleanup failures
+immediately. Do not stop a healthy full run merely because it is slow.
+
+On completion, require all 731 prediction IDs and official boolean outcomes,
+`run.json` and the normalized result to say `completed`, and report the
+official resolved percentage from `report.md` with resolved/evaluated counts.
+Preserve the full result directory. Only then may the dedicated cache and
+Docker data root be removed after their exact paths are rechecked.
