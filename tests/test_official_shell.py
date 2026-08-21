@@ -32,6 +32,8 @@ class OfficialShellSupportTest(unittest.TestCase):
         self.assertIn('environment.run_args=["--rm","--entrypoint",""]', harness)
         self.assertIn("ln -s /app /testbed", harness)
         self.assertIn("KAIRYU_BENCH_SWEBENCH_PRO_WORKERS", harness)
+        self.assertIn("worker_pool_run", harness)
+        self.assertNotIn("wait_pro_batch", harness)
         self.assertIn('--output "$item_generation"', harness)
         self.assertIn("aggregate-items", harness)
 

@@ -82,10 +82,11 @@ official evaluations with no `--limit`. The official evaluator is the pinned
 Run nested task containers through a dedicated privileged Docker-in-Docker
 daemon whose data root and Unix socket are both beneath `/mnt/nvme/kairyu/`.
 Export that socket as `KAIRYU_BENCH_DOCKER_SOCKET`, and export
-`KAIRYU_BENCH_CLEAN_TASK_IMAGES=1`. The Pro harness generates and officially
-evaluates at most `KAIRYU_BENCH_SWEBENCH_PRO_WORKERS` problems concurrently,
-then removes each completed problem's task container and image. Set it to the
-API's tested concurrency (four for the current four-replica local API). This
+`KAIRYU_BENCH_CLEAN_TASK_IMAGES=1`. The Pro harness keeps up to
+`KAIRYU_BENCH_SWEBENCH_PRO_WORKERS` problems active concurrently, immediately
+claims the next problem whenever one worker finishes, then removes each
+completed problem's task container and image. Set it to the API's tested
+concurrency (four for the current four-replica local API). This
 keeps no more than the worker count of task images live and avoids
 using or pruning the host Docker daemon that serves the Kairyu API and Open
 WebUI. Obtain explicit user approval before using the privileged runner,

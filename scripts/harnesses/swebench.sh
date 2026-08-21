@@ -4,6 +4,7 @@ set -eu
 benchmark=$1
 ROOT=$(CDPATH= cd -- "$(dirname -- "$0")/../.." && pwd)
 . "$ROOT/scripts/lib/official.sh"
+. "$ROOT/scripts/lib/worker-pool.sh"
 require_adapter "$benchmark"
 require_command docker
 require_command git
@@ -105,15 +106,9 @@ if [ "$benchmark" = "swe-bench-pro" ]; then
             done
     }
 
-    pids=
     stop_pro_workers() {
         trap - EXIT HUP INT TERM
-        for worker_pid in $pids; do
-            kill "$worker_pid" >/dev/null 2>&1 || true
-        done
-        for worker_pid in $pids; do
-            wait "$worker_pid" >/dev/null 2>&1 || true
-        done
+        worker_pool_stop
         cleanup_all_task_objects
     }
     trap 'stop_pro_workers' EXIT
@@ -182,37 +177,11 @@ if [ "$benchmark" = "swe-bench-pro" ]; then
         echo "SWE-bench Pro completed $index/$total: resolved=$resolved instance=$instance_id"
     )
 
-    wait_pro_batch() {
-        batch_failed=0
-        for worker_pid in $pids; do
-            wait "$worker_pid" || batch_failed=1
-        done
-        pids=
-        batch=0
-        [ "$batch_failed" -eq 0 ]
-    }
-
-    index=0
-    batch=0
-    while IFS= read -r instance_id; do
-        [ -n "$instance_id" ] || continue
-        index=$((index + 1))
-        run_pro_item "$index" "$instance_id" &
-        pids="$pids $!"
-        batch=$((batch + 1))
-        if [ "$batch" -eq "$workers" ]; then
-            if ! wait_pro_batch; then
-                echo "kairyu-bench: one or more SWE-bench Pro workers failed" >&2
-                exit 2
-            fi
-        fi
-    done <"$raw/instance-ids.txt"
-    if [ "$batch" -gt 0 ]; then
-        if ! wait_pro_batch; then
-            echo "kairyu-bench: one or more SWE-bench Pro workers failed" >&2
-            exit 2
-        fi
-    fi
+    worker_pool_run \
+        "$workers" \
+        "$raw/.worker-queue" \
+        "$raw/instance-ids.txt" \
+        run_pro_item
 
     python -m kairyu_bench.swebench_pro aggregate-items \
         "$items" \
