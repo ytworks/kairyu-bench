@@ -85,6 +85,9 @@ class _KairyuHandler(BaseHTTPRequestHandler):
                             ]
                         },
                         {"choices": [{"delta": {"content": "internal"}}]},
+                        {
+                            "choices": [{"delta": {}, "finish_reason": "stop"}]
+                        },
                     ]
                 )
                 return
@@ -283,7 +286,22 @@ class TargetClientContractTest(unittest.TestCase):
             [{"role": "user", "content": "Question"}],
         )
 
-    def test_streaming_chat_accumulates_only_assistant_content(self) -> None:
+    def test_chat_omits_unspecified_generation_parameters(self) -> None:
+        client = TargetClient(Endpoint.parse(self.root), timeout=2)
+
+        response = client.chat(
+            "chat-capable",
+            [{"role": "user", "content": "Question"}],
+            max_tokens=None,
+            temperature=None,
+        )
+
+        self.assertEqual(response, "OK")
+        request = _KairyuHandler.requests[-1]
+        self.assertNotIn("max_tokens", request["payload"])
+        self.assertNotIn("temperature", request["payload"])
+
+    def test_streaming_chat_accumulates_content_and_ignores_reasoning(self) -> None:
         client = TargetClient(Endpoint.parse(self.root), api_key="secret", timeout=2)
 
         response = client.chat(
@@ -293,7 +311,7 @@ class TargetClientContractTest(unittest.TestCase):
             stream=True,
         )
 
-        self.assertEqual(response, "OK")
+        self.assertEqual(response, "OKinternal")
         request = _KairyuHandler.requests[-1]
         self.assertTrue(request["payload"]["stream"])
         self.assertEqual(request["auth"], "Bearer secret")
