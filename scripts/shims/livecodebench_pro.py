@@ -23,6 +23,10 @@ def main() -> int:
     from judge import LightCPVerifierJudge, SupportedLanguage
     from util import extract_longest_cpp_code
 
+    verifier_image = os.environ.get("KAIRYU_LIGHTCPVERIFIER_IMAGE")
+    if verifier_image:
+        LightCPVerifierJudge.IMAGE_NAME = verifier_image
+
     secondary = context.get("secondary_sources", [])
     testcase = next(
         source
