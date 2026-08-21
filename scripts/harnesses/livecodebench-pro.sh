@@ -35,6 +35,7 @@ export HF_HOME="$hf_home"
 export HF_HUB_DISABLE_TELEMETRY=1
 export KAIRYU_BENCH_RAW_DIR="$raw"
 export KAIRYU_LIGHTCPVERIFIER_IMAGE="$verifier_image"
+export KAIRYU_LIGHTCPVERIFIER_HOST="${KAIRYU_LIGHTCPVERIFIER_HOST:-host.docker.internal}"
 export PYTHONPATH="$ROOT/src:$source_path"
 
 (cd "$work" && "$environment/bin/python" "$ROOT/scripts/shims/livecodebench_pro.py")

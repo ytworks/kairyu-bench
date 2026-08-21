@@ -39,8 +39,13 @@ class LiveCodeBenchProHarnessTest(unittest.TestCase):
             harness,
         )
         self.assertIn('export KAIRYU_LIGHTCPVERIFIER_IMAGE="$verifier_image"', harness)
+        self.assertIn(
+            'KAIRYU_LIGHTCPVERIFIER_HOST:-host.docker.internal', harness
+        )
         self.assertIn('os.environ.get("KAIRYU_LIGHTCPVERIFIER_IMAGE")', shim)
         self.assertIn("LightCPVerifierJudge.IMAGE_NAME = verifier_image", shim)
+        self.assertIn("class RoutedLightCPVerifierJudge", shim)
+        self.assertIn('self.base_url = f"http://{verifier_host}:{port}"', shim)
 
 
 if __name__ == "__main__":

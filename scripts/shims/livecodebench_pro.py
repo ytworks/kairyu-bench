@@ -27,6 +27,15 @@ def main() -> int:
     if verifier_image:
         LightCPVerifierJudge.IMAGE_NAME = verifier_image
 
+    verifier_host = os.environ.get("KAIRYU_LIGHTCPVERIFIER_HOST")
+
+    class RoutedLightCPVerifierJudge(LightCPVerifierJudge):
+        def _start_container(self) -> None:
+            super()._start_container()
+            if verifier_host:
+                port = self.container.ports["8081/tcp"][0]["HostPort"]
+                self.base_url = f"http://{verifier_host}:{port}"
+
     secondary = context.get("secondary_sources", [])
     testcase = next(
         source
@@ -65,7 +74,7 @@ def main() -> int:
         "please implement a solution in C++. Respect the execution time and memory "
         "limit. Wrap the code in ```cpp and ```."
     )
-    with LightCPVerifierJudge(worker=1) as verifier:
+    with RoutedLightCPVerifierJudge(worker=1) as verifier:
         for problem in problems:
             response = client.chat(
                 context["model_id"],
