@@ -146,6 +146,7 @@ if [ "$benchmark" = "swe-bench-pro" ]; then
             --model "openai/$KAIRYU_MODEL" \
             --config swebench.yaml \
             --config model.model_kwargs.max_tokens=8192 \
+            --config model.model_kwargs.timeout=1200 \
             --config environment.cwd=/app \
             --config environment.container_timeout=12h \
             --config environment.pull_timeout=1800 \

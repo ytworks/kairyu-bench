@@ -25,6 +25,7 @@ class OfficialShellSupportTest(unittest.TestCase):
 
         self.assertIn("environment.cwd=/app", harness)
         self.assertIn("environment.container_timeout=12h", harness)
+        self.assertIn("model.model_kwargs.timeout=1200", harness)
         self.assertIn("swe_bench_pro_eval.py", harness)
         self.assertIn("--use_local_docker", harness)
         self.assertIn('--expected-ids "$item_ids"', harness)
