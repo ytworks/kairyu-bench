@@ -29,6 +29,8 @@ class OfficialShellSupportTest(unittest.TestCase):
         self.assertIn('--expected-ids "$raw/instance-ids.txt"', harness)
         self.assertIn("SWE-bench Pro completed $index/$total", harness)
         self.assertIn('docker image rm -f "$image"', harness)
+        self.assertIn('environment.run_args=["--rm","--entrypoint",""]', harness)
+        self.assertIn("ln -s /app /testbed", harness)
 
     def test_terminal_bench_selects_each_supported_harbor_agent(self) -> None:
         entry = load_manifest()["terminal-bench"]
