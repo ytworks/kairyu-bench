@@ -4,7 +4,7 @@ set -eu
 ROOT=$(CDPATH= cd -- "$(dirname -- "$0")" && pwd)
 IMAGE=${KAIRYU_BENCH_IMAGE:-kairyu-bench:local}
 RESULTS_DIR=$ROOT/results
-CACHE_DIR=$ROOT/.cache
+CACHE_DIR=${KAIRYU_BENCH_CACHE_DIR:-$ROOT/.cache}
 
 command -v docker >/dev/null 2>&1 || {
     echo "kairyu-bench: Docker is required" >&2
