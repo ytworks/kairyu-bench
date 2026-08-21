@@ -136,32 +136,82 @@ def record_outcome(source: Path, destination: Path, expected_id: str) -> bool:
     return outcome
 
 
+def _expected_ids(path: Path) -> list[str]:
+    expected_ids = [
+        line for line in path.read_text(encoding="utf-8").splitlines() if line
+    ]
+    if len(expected_ids) != len(set(expected_ids)):
+        raise ValueError("expected instance IDs contain duplicates")
+    return expected_ids
+
+
+def aggregate_items(
+    items_path: Path,
+    predictions_path: Path,
+    outcomes_path: Path,
+    expected_ids_path: Path,
+) -> None:
+    expected_ids = _expected_ids(expected_ids_path)
+    predictions: list[dict[str, str]] = []
+    outcomes: dict[str, bool] = {}
+    for index, expected_id in enumerate(expected_ids, 1):
+        item = items_path / f"{index:04d}"
+        item_predictions = json.loads(
+            (item / "predictions.json").read_text(encoding="utf-8")
+        )
+        item_outcomes = json.loads(
+            (item / "evaluation/eval_results.json").read_text(encoding="utf-8")
+        )
+        if (
+            not isinstance(item_predictions, list)
+            or len(item_predictions) != 1
+            or not isinstance(item_predictions[0], dict)
+            or item_predictions[0].get("instance_id") != expected_id
+        ):
+            raise ValueError(f"item {index} prediction does not match {expected_id}")
+        if not isinstance(item_outcomes, dict) or set(item_outcomes) != {expected_id}:
+            raise ValueError(f"item {index} outcome does not match {expected_id}")
+        outcome = item_outcomes[expected_id]
+        if not isinstance(outcome, bool):
+            raise ValueError(f"item {index} outcome is not boolean")
+        predictions.append(item_predictions[0])
+        outcomes[expected_id] = outcome
+    _write_json(predictions_path, predictions)
+    _write_json(outcomes_path, outcomes)
+
+
 def verify_complete(
     predictions_path: Path,
     outcomes_path: Path,
     expected_ids_path: Path,
 ) -> None:
-    expected_ids = [
-        line
-        for line in expected_ids_path.read_text(encoding="utf-8").splitlines()
-        if line
-    ]
-    if len(expected_ids) != len(set(expected_ids)):
-        raise ValueError("expected instance IDs contain duplicates")
+    expected_ids = _expected_ids(expected_ids_path)
     predictions = json.loads(predictions_path.read_text(encoding="utf-8"))
     outcomes = json.loads(outcomes_path.read_text(encoding="utf-8"))
-    if not isinstance(predictions, dict):
-        raise ValueError("mini-SWE-agent predictions must be an object")
+    if isinstance(predictions, dict):
+        prediction_ids = list(predictions)
+    elif isinstance(predictions, list) and all(
+        isinstance(prediction, dict)
+        and isinstance(prediction.get("instance_id"), str)
+        for prediction in predictions
+    ):
+        prediction_ids = [prediction["instance_id"] for prediction in predictions]
+    else:
+        raise ValueError("SWE-bench Pro predictions are malformed")
     if not isinstance(outcomes, dict) or not all(
         isinstance(key, str) and isinstance(value, bool)
         for key, value in outcomes.items()
     ):
         raise ValueError("official evaluator outcomes are malformed")
     expected = set(expected_ids)
-    if set(predictions) != expected or set(outcomes) != expected:
+    if (
+        len(prediction_ids) != len(expected_ids)
+        or set(prediction_ids) != expected
+        or set(outcomes) != expected
+    ):
         raise ValueError(
             "completed prediction/outcome IDs differ from selected IDs: "
-            f"expected={len(expected)}, predictions={len(predictions)}, "
+            f"expected={len(expected)}, predictions={len(prediction_ids)}, "
             f"outcomes={len(outcomes)}"
         )
 
@@ -185,6 +235,11 @@ def main(argv: list[str] | None = None) -> int:
     outcome.add_argument("source", type=Path)
     outcome.add_argument("destination", type=Path)
     outcome.add_argument("--expected-id", required=True)
+    aggregate = commands.add_parser("aggregate-items")
+    aggregate.add_argument("items", type=Path)
+    aggregate.add_argument("predictions", type=Path)
+    aggregate.add_argument("outcomes", type=Path)
+    aggregate.add_argument("expected_ids", type=Path)
     verify = commands.add_parser("verify")
     verify.add_argument("predictions", type=Path)
     verify.add_argument("outcomes", type=Path)
@@ -214,6 +269,13 @@ def main(argv: list[str] | None = None) -> int:
         elif args.command == "record-outcome":
             resolved = record_outcome(args.source, args.destination, args.expected_id)
             print("true" if resolved else "false")
+        elif args.command == "aggregate-items":
+            aggregate_items(
+                args.items,
+                args.predictions,
+                args.outcomes,
+                args.expected_ids,
+            )
         else:
             verify_complete(args.predictions, args.outcomes, args.expected_ids)
     except (OSError, ValueError, json.JSONDecodeError) as error:

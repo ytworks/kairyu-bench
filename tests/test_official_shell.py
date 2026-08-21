@@ -26,11 +26,14 @@ class OfficialShellSupportTest(unittest.TestCase):
         self.assertIn("environment.cwd=/app", harness)
         self.assertIn("swe_bench_pro_eval.py", harness)
         self.assertIn("--use_local_docker", harness)
-        self.assertIn('--expected-ids "$raw/instance-ids.txt"', harness)
+        self.assertIn('--expected-ids "$item_ids"', harness)
         self.assertIn("SWE-bench Pro completed $index/$total", harness)
         self.assertIn('docker image rm -f "$image"', harness)
         self.assertIn('environment.run_args=["--rm","--entrypoint",""]', harness)
         self.assertIn("ln -s /app /testbed", harness)
+        self.assertIn("KAIRYU_BENCH_SWEBENCH_PRO_WORKERS", harness)
+        self.assertIn('--output "$item_generation"', harness)
+        self.assertIn("aggregate-items", harness)
 
     def test_terminal_bench_selects_each_supported_harbor_agent(self) -> None:
         entry = load_manifest()["terminal-bench"]

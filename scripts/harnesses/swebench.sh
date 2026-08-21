@@ -56,12 +56,21 @@ if [ "$benchmark" = "swe-bench-pro" ]; then
     total=$(wc -l <"$raw/instance-ids.txt" | tr -d ' ')
     items="$raw/items"
     outcomes="$raw/evaluation/eval_results.json"
-    mkdir -p "$items" "$raw/evaluation" "$raw/generation"
+    workers=${KAIRYU_BENCH_SWEBENCH_PRO_WORKERS:-1}
+    case "$workers" in
+        ''|*[!0-9]*)
+            echo "kairyu-bench: KAIRYU_BENCH_SWEBENCH_PRO_WORKERS must be an integer from 1 to 16" >&2
+            exit 2
+            ;;
+    esac
+    if [ "$workers" -lt 1 ] || [ "$workers" -gt 16 ]; then
+        echo "kairyu-bench: KAIRYU_BENCH_SWEBENCH_PRO_WORKERS must be an integer from 1 to 16" >&2
+        exit 2
+    fi
+    mkdir -p "$items" "$raw/evaluation"
 
-    current_image=
     cleanup_task_image() {
-        image=$current_image
-        current_image=
+        image=$1
         [ -n "$image" ] || return 0
         [ "${KAIRYU_BENCH_CLEAN_TASK_IMAGES:-0}" = 1 ] || return 0
         container_ids=$(docker ps -aq --filter "ancestor=$image" 2>/dev/null) || container_ids=
@@ -69,27 +78,62 @@ if [ "$benchmark" = "swe-bench-pro" ]; then
             docker rm -f "$container_id" >/dev/null 2>&1 || true
         done
         docker image rm -f "$image" >/dev/null 2>&1 || true
-        docker image prune -f >/dev/null 2>&1 || true
         if docker image inspect "$image" >/dev/null 2>&1; then
             echo "SWE-bench Pro storage warning: could not remove $image" >&2
         else
             echo "SWE-bench Pro storage: removed completed task image $image"
         fi
     }
-    trap cleanup_task_image EXIT
-    trap 'cleanup_task_image; exit 130' HUP INT TERM
 
-    index=0
-    while IFS= read -r instance_id; do
-        [ -n "$instance_id" ] || continue
-        index=$((index + 1))
+    cleanup_all_task_objects() {
+        [ "${KAIRYU_BENCH_CLEAN_TASK_IMAGES:-0}" = 1 ] || return 0
+        docker ps -a --format '{{.ID}} {{.Image}}' 2>/dev/null |
+            while IFS=' ' read -r container_id image; do
+                case "$image" in
+                    jefzda/sweap-images:*)
+                        docker rm -f "$container_id" >/dev/null 2>&1 || true
+                        ;;
+                esac
+            done
+        docker image ls --format '{{.Repository}}:{{.Tag}}' 2>/dev/null |
+            while IFS= read -r image; do
+                case "$image" in
+                    jefzda/sweap-images:*)
+                        docker image rm -f "$image" >/dev/null 2>&1 || true
+                        ;;
+                esac
+            done
+    }
+
+    pids=
+    stop_pro_workers() {
+        trap - EXIT HUP INT TERM
+        for worker_pid in $pids; do
+            kill "$worker_pid" >/dev/null 2>&1 || true
+        done
+        for worker_pid in $pids; do
+            wait "$worker_pid" >/dev/null 2>&1 || true
+        done
+        cleanup_all_task_objects
+    }
+    trap 'stop_pro_workers' EXIT
+    trap 'stop_pro_workers; exit 130' HUP INT TERM
+
+    run_pro_item() (
+        index=$1
+        instance_id=$2
         key=$(printf '%04d' "$index")
         item="$items/$key"
         item_dataset="$item/dataset"
+        item_generation="$item/generation"
         item_predictions="$item/predictions.json"
         item_evaluation="$item/evaluation"
         item_ids="$item/instance-ids.txt"
-        mkdir -p "$item_dataset" "$item_evaluation"
+        current_image=
+        trap 'cleanup_task_image "$current_image"' EXIT
+        trap 'exit 130' HUP INT TERM
+
+        mkdir -p "$item_dataset" "$item_generation" "$item_evaluation"
         printf '%s\n' "$instance_id" >"$item_ids"
         python -m kairyu_bench.swebench_pro dataset \
             "$raw/selected.jsonl" \
@@ -102,7 +146,7 @@ if [ "$benchmark" = "swe-bench-pro" ]; then
         "$environment/bin/mini-extra" swebench \
             --subset "$item_dataset" \
             --split test \
-            --output "$raw/generation" \
+            --output "$item_generation" \
             --workers 1 \
             --model "openai/$KAIRYU_MODEL" \
             --config swebench.yaml \
@@ -113,7 +157,7 @@ if [ "$benchmark" = "swe-bench-pro" ]; then
             --config 'run.env_startup_command=test -e /testbed || ln -s /app /testbed'
 
         python -m kairyu_bench.swebench_pro predictions \
-            "$raw/generation/preds.json" \
+            "$item_generation/preds.json" \
             "$item_predictions" \
             --expected-ids "$item_ids" \
             --select-id "$instance_id"
@@ -130,22 +174,58 @@ if [ "$benchmark" = "swe-bench-pro" ]; then
         )
         resolved=$(python -m kairyu_bench.swebench_pro record-outcome \
             "$item_evaluation/eval_results.json" \
-            "$outcomes" \
+            "$item/outcome.json" \
             --expected-id "$instance_id")
-        cleanup_task_image
+        cleanup_task_image "$current_image"
+        current_image=
+        trap - EXIT HUP INT TERM
         echo "SWE-bench Pro completed $index/$total: resolved=$resolved instance=$instance_id"
-    done <"$raw/instance-ids.txt"
+    )
 
-    python -m kairyu_bench.swebench_pro predictions \
-        "$raw/generation/preds.json" \
+    wait_pro_batch() {
+        batch_failed=0
+        for worker_pid in $pids; do
+            wait "$worker_pid" || batch_failed=1
+        done
+        pids=
+        batch=0
+        [ "$batch_failed" -eq 0 ]
+    }
+
+    index=0
+    batch=0
+    while IFS= read -r instance_id; do
+        [ -n "$instance_id" ] || continue
+        index=$((index + 1))
+        run_pro_item "$index" "$instance_id" &
+        pids="$pids $!"
+        batch=$((batch + 1))
+        if [ "$batch" -eq "$workers" ]; then
+            if ! wait_pro_batch; then
+                echo "kairyu-bench: one or more SWE-bench Pro workers failed" >&2
+                exit 2
+            fi
+        fi
+    done <"$raw/instance-ids.txt"
+    if [ "$batch" -gt 0 ]; then
+        if ! wait_pro_batch; then
+            echo "kairyu-bench: one or more SWE-bench Pro workers failed" >&2
+            exit 2
+        fi
+    fi
+
+    python -m kairyu_bench.swebench_pro aggregate-items \
+        "$items" \
         "$raw/predictions.json" \
-        --expected-ids "$raw/instance-ids.txt"
+        "$outcomes" \
+        "$raw/instance-ids.txt"
     python -m kairyu_bench.swebench_pro verify \
-        "$raw/generation/preds.json" \
+        "$raw/predictions.json" \
         "$outcomes" \
         "$raw/instance-ids.txt"
     trap - EXIT HUP INT TERM
     normalize_official "$outcomes"
+    exit 0
 fi
 
 set -- \

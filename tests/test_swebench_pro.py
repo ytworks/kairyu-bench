@@ -6,6 +6,7 @@ import unittest
 from pathlib import Path
 
 from kairyu_bench.swebench_pro import (
+    aggregate_items,
     image_reference,
     prepare_dataset,
     prepare_predictions,
@@ -171,3 +172,48 @@ class SwebenchProPreparationTest(unittest.TestCase):
             recorded,
             {"instance-1": True, "instance-2": False},
         )
+
+    def test_parallel_item_results_aggregate_in_official_order(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            items = root / "items"
+            expected = root / "instance-ids.txt"
+            predictions = root / "predictions.json"
+            outcomes = root / "eval_results.json"
+            expected.write_text("instance-1\ninstance-2\n", encoding="utf-8")
+            for index, resolved in ((1, True), (2, False)):
+                item = items / f"{index:04d}"
+                (item / "evaluation").mkdir(parents=True)
+                (item / "predictions.json").write_text(
+                    json.dumps(
+                        [
+                            {
+                                "instance_id": f"instance-{index}",
+                                "patch": f"patch-{index}",
+                                "prefix": "kairyu-bench",
+                            }
+                        ]
+                    ),
+                    encoding="utf-8",
+                )
+                (item / "evaluation/eval_results.json").write_text(
+                    json.dumps({f"instance-{index}": resolved}),
+                    encoding="utf-8",
+                )
+
+            aggregate_items(items, predictions, outcomes, expected)
+            verify_complete(predictions, outcomes, expected)
+
+            self.assertEqual(
+                [
+                    prediction["instance_id"]
+                    for prediction in json.loads(
+                        predictions.read_text(encoding="utf-8")
+                    )
+                ],
+                ["instance-1", "instance-2"],
+            )
+            self.assertEqual(
+                json.loads(outcomes.read_text(encoding="utf-8")),
+                {"instance-1": True, "instance-2": False},
+            )

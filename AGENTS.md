@@ -83,8 +83,10 @@ Run nested task containers through a dedicated privileged Docker-in-Docker
 daemon whose data root and Unix socket are both beneath `/mnt/nvme/kairyu/`.
 Export that socket as `KAIRYU_BENCH_DOCKER_SOCKET`, and export
 `KAIRYU_BENCH_CLEAN_TASK_IMAGES=1`. The Pro harness generates and officially
-evaluates one problem at a time, then removes that completed problem's task
-container and image. This keeps only the current task image live and avoids
+evaluates at most `KAIRYU_BENCH_SWEBENCH_PRO_WORKERS` problems concurrently,
+then removes each completed problem's task container and image. Set it to the
+API's tested concurrency (four for the current four-replica local API). This
+keeps no more than the worker count of task images live and avoids
 using or pruning the host Docker daemon that serves the Kairyu API and Open
 WebUI. Obtain explicit user approval before using the privileged runner,
 privileged Docker-in-Docker daemon, and shared Docker socket.
@@ -103,6 +105,7 @@ test -n "${HF_TOKEN:-}"
 export KAIRYU_BENCH_CACHE_DIR=/mnt/nvme/kairyu/bench-cache/swe-bench-pro-full
 export KAIRYU_BENCH_DOCKER_SOCKET=/mnt/nvme/kairyu/docker/swe-bench-pro-full/run/docker.sock
 export KAIRYU_BENCH_CLEAN_TASK_IMAGES=1
+export KAIRYU_BENCH_SWEBENCH_PRO_WORKERS=4
 exec ./kairyu-bench run http://host.docker.internal:8003/v1 \
   --only swe-bench-pro \
   --run-id swe-bench-pro-full
@@ -111,10 +114,11 @@ exec ./kairyu-bench run http://host.docker.internal:8003/v1 \
 
 Immediately verify `run.json` is `running`, its `model_id` matches the local
 API, and `selected.jsonl` and `instance-ids.txt` both contain 731 problems.
-Count progress from `SWE-bench Pro completed N/731` log lines and cross-check
-against the number of keys in `evaluation/eval_results.json`. Report resolved
-count, current instance, elapsed time, API/Docker health, and root/NVMe free
-space at least once per minute while monitoring. Report cleanup failures
+Count progress from the number of `SWE-bench Pro completed` log lines and
+cross-check against the number of per-item `evaluation/eval_results.json`
+files. Completion numbers may arrive out of order with multiple workers.
+Report resolved count, current instances, elapsed time, API/Docker health, and
+root/NVMe free space at least once per minute while monitoring. Report cleanup failures
 immediately. Do not stop a healthy full run merely because it is slow.
 
 On completion, require all 731 prediction IDs and official boolean outcomes,
