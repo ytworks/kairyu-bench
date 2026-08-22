@@ -73,7 +73,19 @@ class HostEntrypointTest(unittest.TestCase):
                 f"-e KAIRYU_BENCH_CACHE_DIR={ROOT / '.cache'}", calls[1]
             )
             self.assertIn(
-                "-e KAIRYU_BENCH_SWEBENCH_PRO_WORKERS=1", calls[1]
+                "-e KAIRYU_BENCH_LIVECODEBENCH_PRO_RETRIES=3", calls[1]
+            )
+            self.assertIn(
+                "-e KAIRYU_BENCH_LIVECODEBENCH_PRO_WORKERS=4", calls[1]
+            )
+            self.assertIn(
+                "-e KAIRYU_BENCH_SWEBENCH_PRO_WORKERS=4", calls[1]
+            )
+            self.assertIn(
+                "-e KAIRYU_BENCH_TERMINAL_BENCH_WORKERS=4", calls[1]
+            )
+            self.assertIn(
+                "-e KAIRYU_LIGHTCPVERIFIER_HOST=container", calls[1]
             )
             self.assertIn("-e HF_TOKEN", calls[1])
             self.assertTrue(calls[1].endswith("kairyu-bench:local list"))

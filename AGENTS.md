@@ -1,5 +1,14 @@
 # Repository agent instructions
 
+## Benchmark concurrency
+
+LiveCodeBench Pro, SWE-bench Pro, and Terminal-Bench default to four concurrent
+problems. Override their bounded concurrency (1 through 16) with
+`KAIRYU_BENCH_LIVECODEBENCH_PRO_WORKERS`,
+`KAIRYU_BENCH_SWEBENCH_PRO_WORKERS`, and
+`KAIRYU_BENCH_TERMINAL_BENCH_WORKERS`, respectively. Each harness immediately
+refills a slot when one problem finishes; completion order is not guaranteed.
+
 ## LiveCodeBench Pro full run
 
 Use the repository wrapper, `./kairyu-bench`, for the official run. Do not
@@ -41,6 +50,10 @@ token. Choose a unique run ID if the example already exists.
 set -eu
 test -n "${HF_TOKEN:-}"
 export KAIRYU_BENCH_CACHE_DIR=/mnt/nvme/kairyu/bench-cache/livecodebench-pro-full
+export KAIRYU_BENCH_LIVECODEBENCH_PRO_WORKERS=4
+export KAIRYU_BENCH_LIVECODEBENCH_PRO_RETRIES=3
+# When KAIRYU_BENCH_DOCKER_SOCKET points at a separate Docker daemon, also set
+# KAIRYU_LIGHTCPVERIFIER_HOST to that daemon container's reachable IP address.
 exec ./kairyu-bench run http://host.docker.internal:8003/v1 \
   --only livecodebench-pro \
   --run-id livecodebench-pro-full
@@ -48,6 +61,8 @@ exec ./kairyu-bench run http://host.docker.internal:8003/v1 \
 ```
 
 Do not add `--limit`. Do not stop a healthy full run merely because it is slow.
+The Pro shim keeps four problems active and immediately starts the next problem
+when any one finishes. Completion log indices may therefore arrive out of order.
 
 ### Verification and progress reporting
 
