@@ -1,5 +1,14 @@
 # Repository agent instructions
 
+## Benchmark concurrency
+
+LiveCodeBench Pro, SWE-bench Pro, and Terminal-Bench default to four concurrent
+problems. Override their bounded concurrency (1 through 16) with
+`KAIRYU_BENCH_LIVECODEBENCH_PRO_WORKERS`,
+`KAIRYU_BENCH_SWEBENCH_PRO_WORKERS`, and
+`KAIRYU_BENCH_TERMINAL_BENCH_WORKERS`, respectively. Each harness immediately
+refills a slot when one problem finishes; completion order is not guaranteed.
+
 ## LiveCodeBench Pro full run
 
 Use the repository wrapper, `./kairyu-bench`, for the official run. Do not

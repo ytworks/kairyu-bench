@@ -76,10 +76,13 @@ class HostEntrypointTest(unittest.TestCase):
                 "-e KAIRYU_BENCH_LIVECODEBENCH_PRO_RETRIES=3", calls[1]
             )
             self.assertIn(
-                "-e KAIRYU_BENCH_LIVECODEBENCH_PRO_WORKERS=1", calls[1]
+                "-e KAIRYU_BENCH_LIVECODEBENCH_PRO_WORKERS=4", calls[1]
             )
             self.assertIn(
-                "-e KAIRYU_BENCH_SWEBENCH_PRO_WORKERS=1", calls[1]
+                "-e KAIRYU_BENCH_SWEBENCH_PRO_WORKERS=4", calls[1]
+            )
+            self.assertIn(
+                "-e KAIRYU_BENCH_TERMINAL_BENCH_WORKERS=4", calls[1]
             )
             self.assertIn(
                 "-e KAIRYU_LIGHTCPVERIFIER_HOST=container", calls[1]

@@ -13,7 +13,7 @@ from kairyu_bench.target import Endpoint, PreflightError, TargetClient
 
 
 def configured_workers() -> int:
-    raw_workers = os.environ.get("KAIRYU_BENCH_LIVECODEBENCH_PRO_WORKERS", "1")
+    raw_workers = os.environ.get("KAIRYU_BENCH_LIVECODEBENCH_PRO_WORKERS", "4")
     try:
         workers = int(raw_workers)
     except ValueError as error:

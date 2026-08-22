@@ -34,6 +34,9 @@ class OfficialShellSupportTest(unittest.TestCase):
         self.assertIn('environment.run_args=["--rm","--entrypoint",""]', harness)
         self.assertIn("ln -s /app /testbed", harness)
         self.assertIn("KAIRYU_BENCH_SWEBENCH_PRO_WORKERS", harness)
+        self.assertIn(
+            "workers=${KAIRYU_BENCH_SWEBENCH_PRO_WORKERS:-4}", harness
+        )
         self.assertIn("worker_pool_run", harness)
         self.assertNotIn("wait_pro_batch", harness)
         self.assertIn('--output "$item_generation"', harness)
@@ -185,6 +188,9 @@ trial.mkdir(parents=True)
                 self.assertEqual(
                     overlay, ROOT / "scripts/harnesses/harbor-host-gateway.yaml"
                 )
+                self.assertEqual(
+                    arguments[arguments.index("--n-concurrent") + 1], "4"
+                )
                 self.assertIn(
                     "host.docker.internal:host-gateway",
                     overlay.read_text(encoding="utf-8"),
@@ -195,6 +201,17 @@ trial.mkdir(parents=True)
                 self.assertEqual(
                     json.loads(result_path.read_text(encoding="utf-8"))["agent"], agent
                 )
+
+    def test_terminal_bench_uses_configurable_concurrency(self) -> None:
+        harness = (ROOT / "scripts/harnesses/terminal-bench.sh").read_text(
+            encoding="utf-8"
+        )
+
+        self.assertIn(
+            "workers=${KAIRYU_BENCH_TERMINAL_BENCH_WORKERS:-4}", harness
+        )
+        self.assertIn('--n-concurrent "$workers"', harness)
+        self.assertIn("must be an integer from 1 to 16", harness)
 
     def test_terminal_bench_rejects_codex_model_ids_with_a_slash(self) -> None:
         entry = load_manifest()["terminal-bench"]

@@ -57,7 +57,7 @@ if [ "$benchmark" = "swe-bench-pro" ]; then
     total=$(wc -l <"$raw/instance-ids.txt" | tr -d ' ')
     items="$raw/items"
     outcomes="$raw/evaluation/eval_results.json"
-    workers=${KAIRYU_BENCH_SWEBENCH_PRO_WORKERS:-1}
+    workers=${KAIRYU_BENCH_SWEBENCH_PRO_WORKERS:-4}
     case "$workers" in
         ''|*[!0-9]*)
             echo "kairyu-bench: KAIRYU_BENCH_SWEBENCH_PRO_WORKERS must be an integer from 1 to 16" >&2

@@ -18,15 +18,15 @@ ROOT = Path(__file__).resolve().parents[1]
 
 
 class LiveCodeBenchProHarnessTest(unittest.TestCase):
-    def test_worker_count_defaults_to_one_and_accepts_four(self) -> None:
+    def test_worker_count_defaults_to_four_and_accepts_an_override(self) -> None:
         with mock.patch.dict(os.environ, {}, clear=True):
-            self.assertEqual(configured_workers(), 1)
+            self.assertEqual(configured_workers(), 4)
         with mock.patch.dict(
             os.environ,
-            {"KAIRYU_BENCH_LIVECODEBENCH_PRO_WORKERS": "4"},
+            {"KAIRYU_BENCH_LIVECODEBENCH_PRO_WORKERS": "7"},
             clear=True,
         ):
-            self.assertEqual(configured_workers(), 4)
+            self.assertEqual(configured_workers(), 7)
 
     def test_worker_count_rejects_invalid_values(self) -> None:
         for value in ("0", "17", "four"):

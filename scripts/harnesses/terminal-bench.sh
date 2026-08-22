@@ -5,6 +5,18 @@ ROOT=$(CDPATH= cd -- "$(dirname -- "$0")/../.." && pwd)
 . "$ROOT/scripts/lib/official.sh"
 require_adapter terminal-bench
 harbor_agent=${KAIRYU_HARBOR_AGENT:-terminus-2}
+workers=${KAIRYU_BENCH_TERMINAL_BENCH_WORKERS:-4}
+
+case "$workers" in
+    ''|*[!0-9]*)
+        echo "kairyu-bench: KAIRYU_BENCH_TERMINAL_BENCH_WORKERS must be an integer from 1 to 16" >&2
+        exit 2
+        ;;
+esac
+if [ "$workers" -lt 1 ] || [ "$workers" -gt 16 ]; then
+    echo "kairyu-bench: KAIRYU_BENCH_TERMINAL_BENCH_WORKERS must be an integer from 1 to 16" >&2
+    exit 2
+fi
 
 source_repository=$(context_get source.repository)
 source_revision=$(context_get source.revision)
@@ -20,7 +32,7 @@ set -- \
     --jobs-dir "$raw/jobs" \
     --job-name "$run_id-terminal-bench" \
     --extra-docker-compose "$ROOT/scripts/harnesses/harbor-host-gateway.yaml" \
-    --n-concurrent 1 \
+    --n-concurrent "$workers" \
     --n-attempts 1
 case "$harbor_agent" in
     terminus-2)
