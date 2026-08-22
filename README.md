@@ -124,4 +124,4 @@ context/<name>.json      adapterへ渡した固定条件
 
 ## 注意
 
-SWE-bench、Terminal-Bench、LiveCodeBench Proはtask containerを作るため、runnerを `--privileged` で起動しDocker socketをmountします。信頼できるホスト上で実行してください。`KAIRYU_BENCH_DOCKER_SOCKET`を指定すると、nested task用に別のDocker daemonを使用できます。SWE-bench Proを専用daemonで実行する場合は、`KAIRYU_BENCH_CLEAN_TASK_IMAGES=1`で公式評価済みtaskのcontainerとimageを1問ごとに削除できます。`KAIRYU_BENCH_SWEBENCH_PRO_WORKERS`（既定1）で問題単位の並列数を指定でき、同時保持するtask imageもその件数以下に抑えます。全件実行は長時間・大容量・高コストになるため、疎通確認にはまず `--only ... --limit 1` を推奨します。
+SWE-bench、Terminal-Bench、LiveCodeBench Proはtask containerを作るため、runnerを `--privileged` で起動しDocker socketをmountします。信頼できるホスト上で実行してください。`KAIRYU_BENCH_DOCKER_SOCKET`を指定すると、nested task用に別のDocker daemonを使用できます。LiveCodeBench Proは`KAIRYU_BENCH_LIVECODEBENCH_PRO_WORKERS`（既定1）で問題単位の並列数を指定し、完了した枠へ次の問題を即補充します。一時的な生成失敗は`KAIRYU_BENCH_LIVECODEBENCH_PRO_RETRIES`（既定3）まで再試行し、全試行失敗時はその問題を不正解として記録して全体を続行します。SWE-bench Proを専用daemonで実行する場合は、`KAIRYU_BENCH_CLEAN_TASK_IMAGES=1`で公式評価済みtaskのcontainerとimageを1問ごとに削除できます。`KAIRYU_BENCH_SWEBENCH_PRO_WORKERS`（既定1）で問題単位の並列数を指定でき、同時保持するtask imageもその件数以下に抑えます。全件実行は長時間・大容量・高コストになるため、疎通確認にはまず `--only ... --limit 1` を推奨します。

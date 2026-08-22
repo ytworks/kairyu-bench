@@ -41,6 +41,8 @@ token. Choose a unique run ID if the example already exists.
 set -eu
 test -n "${HF_TOKEN:-}"
 export KAIRYU_BENCH_CACHE_DIR=/mnt/nvme/kairyu/bench-cache/livecodebench-pro-full
+export KAIRYU_BENCH_LIVECODEBENCH_PRO_WORKERS=4
+export KAIRYU_BENCH_LIVECODEBENCH_PRO_RETRIES=3
 exec ./kairyu-bench run http://host.docker.internal:8003/v1 \
   --only livecodebench-pro \
   --run-id livecodebench-pro-full
@@ -48,6 +50,8 @@ exec ./kairyu-bench run http://host.docker.internal:8003/v1 \
 ```
 
 Do not add `--limit`. Do not stop a healthy full run merely because it is slow.
+The Pro shim keeps four problems active and immediately starts the next problem
+when any one finishes. Completion log indices may therefore arrive out of order.
 
 ### Verification and progress reporting
 
