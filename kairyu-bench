@@ -4,7 +4,8 @@ set -eu
 ROOT=$(CDPATH= cd -- "$(dirname -- "$0")" && pwd)
 IMAGE=${KAIRYU_BENCH_IMAGE:-kairyu-bench:local}
 RESULTS_DIR=$ROOT/results
-CACHE_DIR=$ROOT/.cache
+CACHE_DIR=${KAIRYU_BENCH_CACHE_DIR:-$ROOT/.cache}
+DOCKER_SOCKET=${KAIRYU_BENCH_DOCKER_SOCKET:-/var/run/docker.sock}
 
 command -v docker >/dev/null 2>&1 || {
     echo "kairyu-bench: Docker is required" >&2
@@ -12,16 +13,22 @@ command -v docker >/dev/null 2>&1 || {
 }
 
 mkdir -p "$RESULTS_DIR" "$CACHE_DIR"
+[ -S "$DOCKER_SOCKET" ] || {
+    echo "kairyu-bench: Docker socket not found: $DOCKER_SOCKET" >&2
+    exit 2
+}
 
 docker build -t "$IMAGE" "$ROOT"
 
 exec docker run --rm --privileged \
     --add-host host.docker.internal:host-gateway \
-    -v /var/run/docker.sock:/var/run/docker.sock \
+    -v "$DOCKER_SOCKET:/var/run/docker.sock" \
     -v "$RESULTS_DIR:$RESULTS_DIR" \
     -v "$CACHE_DIR:$CACHE_DIR" \
     -e "KAIRYU_BENCH_RESULTS_DIR=$RESULTS_DIR" \
     -e "KAIRYU_BENCH_CACHE_DIR=$CACHE_DIR" \
+    -e "KAIRYU_BENCH_CLEAN_TASK_IMAGES=${KAIRYU_BENCH_CLEAN_TASK_IMAGES:-0}" \
+    -e "KAIRYU_BENCH_SWEBENCH_PRO_WORKERS=${KAIRYU_BENCH_SWEBENCH_PRO_WORKERS:-1}" \
     -e KAIRYU_API_KEY \
     -e HF_TOKEN \
     "$IMAGE" "$@"

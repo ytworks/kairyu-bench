@@ -83,6 +83,20 @@ class OfficialNormalizerTest(unittest.TestCase):
             ["django__django-1", "django__django-2"],
         )
 
+    def test_swebench_pro_uses_official_boolean_outcomes(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            raw = self._write_json(
+                Path(directory),
+                "eval_results.json",
+                {"instance-pro-1": True, "instance-pro-2": False},
+            )
+
+            result = normalize_official(_context("swe-bench-pro"), raw)
+
+        self.assertEqual(result.status, "completed")
+        self.assertEqual(result.data["score"]["primary"], 50.0)
+        self.assertEqual(result.data["counts"], {"requested": 2, "evaluated": 2})
+
     def test_harbor_reads_trial_rewards_without_counting_job_result(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
