@@ -43,6 +43,8 @@ test -n "${HF_TOKEN:-}"
 export KAIRYU_BENCH_CACHE_DIR=/mnt/nvme/kairyu/bench-cache/livecodebench-pro-full
 export KAIRYU_BENCH_LIVECODEBENCH_PRO_WORKERS=4
 export KAIRYU_BENCH_LIVECODEBENCH_PRO_RETRIES=3
+# When KAIRYU_BENCH_DOCKER_SOCKET points at a separate Docker daemon, also set
+# KAIRYU_LIGHTCPVERIFIER_HOST to that daemon container's reachable IP address.
 exec ./kairyu-bench run http://host.docker.internal:8003/v1 \
   --only livecodebench-pro \
   --run-id livecodebench-pro-full
