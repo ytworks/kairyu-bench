@@ -191,6 +191,15 @@ trial.mkdir(parents=True)
                 self.assertEqual(
                     arguments[arguments.index("--n-concurrent") + 1], "4"
                 )
+                if agent == "terminus-2":
+                    self.assertNotIn("--agent-setup-timeout-multiplier", arguments)
+                else:
+                    self.assertEqual(
+                        arguments[
+                            arguments.index("--agent-setup-timeout-multiplier") + 1
+                        ],
+                        "4",
+                    )
                 self.assertIn(
                     "host.docker.internal:host-gateway",
                     overlay.read_text(encoding="utf-8"),
@@ -212,6 +221,14 @@ trial.mkdir(parents=True)
         )
         self.assertIn('--n-concurrent "$workers"', harness)
         self.assertIn("must be an integer from 1 to 16", harness)
+        self.assertIn(
+            "setup_timeout_multiplier="
+            "${KAIRYU_BENCH_TERMINAL_BENCH_SETUP_TIMEOUT_MULTIPLIER:-4}",
+            harness,
+        )
+        self.assertIn(
+            '--agent-setup-timeout-multiplier "$setup_timeout_multiplier"', harness
+        )
 
     def test_terminal_bench_rejects_codex_model_ids_with_a_slash(self) -> None:
         entry = load_manifest()["terminal-bench"]

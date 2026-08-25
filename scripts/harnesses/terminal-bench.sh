@@ -17,6 +17,18 @@ if [ "$workers" -lt 1 ] || [ "$workers" -gt 16 ]; then
     echo "kairyu-bench: KAIRYU_BENCH_TERMINAL_BENCH_WORKERS must be an integer from 1 to 16" >&2
     exit 2
 fi
+setup_timeout_multiplier=${KAIRYU_BENCH_TERMINAL_BENCH_SETUP_TIMEOUT_MULTIPLIER:-4}
+
+case "$setup_timeout_multiplier" in
+    ''|*[!0-9]*)
+        echo "kairyu-bench: KAIRYU_BENCH_TERMINAL_BENCH_SETUP_TIMEOUT_MULTIPLIER must be an integer from 1 to 16" >&2
+        exit 2
+        ;;
+esac
+if [ "$setup_timeout_multiplier" -lt 1 ] || [ "$setup_timeout_multiplier" -gt 16 ]; then
+    echo "kairyu-bench: KAIRYU_BENCH_TERMINAL_BENCH_SETUP_TIMEOUT_MULTIPLIER must be an integer from 1 to 16" >&2
+    exit 2
+fi
 
 source_repository=$(context_get source.repository)
 source_revision=$(context_get source.revision)
@@ -45,6 +57,7 @@ case "$harbor_agent" in
         set -- "$@" \
             --agent claude-code \
             --model "$KAIRYU_MODEL" \
+            --agent-setup-timeout-multiplier "$setup_timeout_multiplier" \
             --agent-env "CLAUDE_CODE_DISABLE_ADAPTIVE_THINKING=1" \
             --agent-env "CLAUDE_CODE_DISABLE_EXPERIMENTAL_BETAS=1" \
             --agent-env "CLAUDE_CODE_ATTRIBUTION_HEADER=0"
@@ -55,7 +68,10 @@ case "$harbor_agent" in
                 unsupported "Harbor's Codex agent cannot preserve model IDs containing '/': $KAIRYU_MODEL"
                 ;;
         esac
-        set -- "$@" --agent codex --model "$KAIRYU_MODEL"
+        set -- "$@" \
+            --agent codex \
+            --model "$KAIRYU_MODEL" \
+            --agent-setup-timeout-multiplier "$setup_timeout_multiplier"
         ;;
     *)
         echo "kairyu-bench: unsupported Harbor agent: $harbor_agent" >&2
