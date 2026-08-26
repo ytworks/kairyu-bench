@@ -9,6 +9,12 @@ problems. Override their bounded concurrency (1 through 16) with
 `KAIRYU_BENCH_TERMINAL_BENCH_WORKERS`, respectively. Each harness immediately
 refills a slot when one problem finishes; completion order is not guaranteed.
 
+Terminal-Bench's installed agents (`claude-code` and `codex`) additionally honor
+`KAIRYU_BENCH_TERMINAL_BENCH_SETUP_TIMEOUT_MULTIPLIER` (integer 1 through 16,
+default 4). Harbor allows agent setup 360 seconds times this multiplier; the
+default covers slow `apt-get`/npm installs under four-way parallelism. The
+`terminus-2` agent has no install step and ignores this variable.
+
 ## LiveCodeBench Pro full run
 
 Use the repository wrapper, `./kairyu-bench`, for the official run. Do not

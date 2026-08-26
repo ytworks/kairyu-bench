@@ -85,6 +85,9 @@ class HostEntrypointTest(unittest.TestCase):
                 "-e KAIRYU_BENCH_TERMINAL_BENCH_WORKERS=4", calls[1]
             )
             self.assertIn(
+                "-e KAIRYU_BENCH_TERMINAL_BENCH_SETUP_TIMEOUT_MULTIPLIER=4", calls[1]
+            )
+            self.assertIn(
                 "-e KAIRYU_LIGHTCPVERIFIER_HOST=container", calls[1]
             )
             self.assertIn("-e HF_TOKEN", calls[1])
