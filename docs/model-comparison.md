@@ -4,7 +4,7 @@
 
 初版の値と出典は [`kairyu@9a00f39` の参照カタログ](https://github.com/ytworks/kairyu/blob/9a00f39cd60581d70baadb76d7df2737671e790c/kairyu/bench/reference.py) から転記しましたが、2026-08-27 に全列を一次ソース(各社の発表ページ・システムカード・モデルカード)と照合し、Fable 5列の誤値を修正のうえ、Mythos 5 / Opus 5 / Opus 4.8 / GPT-5.5 / Gemini 3.1 Pro / Gemma 4 / DeepSeek-V4-Flash-Vision-Exp / Qwen3.8-27B / Qwen3.8-Flash-Next / GLM-5.3 の列を追加しました。各提供元や第三者機関が異なる条件で測定した値を含むため、`kairyu-bench` の実測値と厳密に同条件とは限りません。
 
-2026-09-05にGPT-6 Astra列を追加しました。OpenAI発表の評価表を本文で確認し、GPQA Diamond、HLE（ツールあり）、MRCR v2を転記しました。Terminal-Bench 2.1は公式リーダーボードのCodex / highの値です。その他の新しい評価と未確認項目は [GPT-6 Astraの公開スコア・測定条件](gpt-6-astra-benchmarks.md) を参照してください。
+2026-09-05にGPT-6 Astra列を追加しました。OpenAI発表の評価表を本文で確認し、GPQA Diamond、HLE（ツールあり）、MRCR v2を転記しました。Terminal-Bench 2.1は公式リーダーボードのCodex / highの値です。調査した出典で確認できなかった項目は空欄のままです。
 
 | Benchmark | Fugu | Fugu Ultra | Fable 5 | Mythos 5 | Opus 5 | Opus 4.8 | GPT-6 Astra | GPT-5.6 Sol | GPT-5.5 | Gemini 3.1 Pro | Gemma 4 31B | DeepSeek-V4-Flash-0731 | DeepSeek-V4-Flash-Vision-Exp | Qwen3.8 MAX | Qwen3.8-27B | Qwen3.8-Flash-Next | GLM-5.2 | GLM-5.3 | Kimi K3 |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
@@ -41,7 +41,7 @@ Mythos 5はFable 5と同一の基盤モデルで、セーフガード(一部領�
 - Long Context Reasoning行の公開値に対し、このrunnerは代替としてLongBench v2を実行するため直接比較できません。
 - MRCR v2の測定コンテキストは、GPTが8-needle 256K–512K、Qwenが256K、GeminiとGemmaが8-needle 128K、このrunnerは4K–128Kです。
 - GPT-6 AstraのMRCR v2は8-needle 256K–512Kの100.0を採用しています。512K–1Mでは96.3であり、コンテキスト長を混同しないでください。OpenAIの発表値はreasoning effortをまたいで各評価項目で得られた最大値で、単一の固定effortを指定した一括測定とは扱えません。研究環境/APIと製品版ChatGPTではsystem promptやツールが異なり得ます([S21])。
-- GPT-6 AstraのTerminal-Bench 2.1はCodex / high、2026-09-03掲載、87.4 ± 1.8%（95%信頼区間）の公式リーダーボード値です([S22])。このrunnerの既定agent（Terminus-2）と同条件ではありません。
+- GPT-6 AstraのTerminal-Bench 2.1はCodex 0.151.0 / high、2026-09-03掲載、87.4 ± 1.8%（95%信頼区間）の公式リーダーボード値です([S22])。公開ジョブは各問題5試行・各effort 445試行で、このrunnerの既定agent（Terminus-2）・1試行と同条件ではありません。
 - GPT-6 AstraのTerminal-Bench 4.0（57.9）とDeepSWE v1.1（74.1）は、Terminal-Bench 2.1やSWE-Bench Proへ転記していません([S21])。
 - SWE-bench VerifiedのFable 5は5試行平均、このrunnerは1試行です。
 - Terminal-Bench 2.1のOpus 4.8はlaunch時に74.6と公表され、その後のシステムカード([S3])で82.7に更新されています。Opus 5はTB2.1を公表せず後継のFrontierBench v0.1に移行。Gemini 3.1 ProはTerminal-Bench 2.0のみ公表(68.5)のためTB2.1行は空欄です。
@@ -74,7 +74,7 @@ Mythos 5はFable 5と同一の基盤モデルで、セーフガード(一部領�
 - **S19** — [Gemini 3.1 Pro model page](https://deepmind.google/models/gemini/pro/), Google DeepMind, primary, retrieved 2026-08-27
 - **S20** — [Gemma 4 model card](https://ai.google.dev/gemma/docs/core/model_card_4), Google, primary, published 2026-07-30, retrieved 2026-08-27
 - **S21** — [GPT-6 Astra: A new generation of intelligence](https://openai.com/index/gpt-6-astra/), OpenAI, primary, retrieved 2026-09-05 (本文末のAcademic / Long Context表と評価条件。HLEはwith tools、MRCR v2はコンテキスト長別)
-- **S22** — [Terminal-Bench 2.1 leaderboard](https://www.tbench.ai/?version=2.1), Terminal-Bench, primary (benchmark organizer), listed 2026-09-03, retrieved 2026-09-05 (Codex / GPT-6 Astra / high。公式フロントエンドが使用する公開APIの2.1データを確認)
+- **S22** — [Terminal-Bench 2.1 leaderboard](https://www.tbench.ai/?version=2.1), Terminal-Bench, primary (benchmark organizer), listed 2026-09-03, retrieved 2026-09-05 (Codex / GPT-6 Astra / high。公式フロントエンドの公開APIで2.1データを確認。[公開ジョブ](https://hub.harborframework.com/jobs/17d1a7f6-3339-4670-8b70-3b145979f57f)でハーネスと試行数を確認)
 
 [S1]: https://sakana.ai/fugu-release/
 [S2]: https://www.anthropic.com/news/claude-fable-5-mythos-5
