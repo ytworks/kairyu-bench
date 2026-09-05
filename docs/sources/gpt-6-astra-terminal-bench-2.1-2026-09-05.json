@@ -1,0 +1,77 @@
+{
+  "retrieved_utc": "2026-09-05",
+  "site_url": "https://www.tbench.ai/?version=2.1",
+  "public_loader_url": "https://www.tbench.ai/_next/static/chunks/2x3i9ic-9g7br.js?dpl=dpl_8tspM5ZTBcs6uHJuARoeEwgweoiu",
+  "read_api_url": "https://ofhuhcpkvzjlejydnvyd.supabase.co/functions/v1/leaderboard-read",
+  "request_method": "POST",
+  "request_body": {
+    "package": "terminal-bench/terminal-bench-2-1",
+    "name": "main"
+  },
+  "description": "Selected public fields, transcribed without recomputing the organizer leaderboard scores. Accuracy is percent; CI half-width is percentage points.",
+  "rows": [
+    {
+      "model": "GPT-6 Astra",
+      "agent": "Codex",
+      "reasoning_effort": "high",
+      "leaderboard_date": "2026-09-03",
+      "accuracy_percent": 87.42,
+      "display_accuracy": "**87.4%** ± 1.8%",
+      "accuracy_ci95_half_width": 1.79,
+      "n_trials": 445
+    },
+    {
+      "model": "GPT-6 Astra",
+      "agent": "Codex",
+      "reasoning_effort": "medium",
+      "leaderboard_date": "2026-09-03",
+      "accuracy_percent": 86.97,
+      "display_accuracy": "**87.0%** ± 1.9%",
+      "accuracy_ci95_half_width": 1.89,
+      "n_trials": 445
+    },
+    {
+      "model": "GPT-6 Astra",
+      "agent": "Codex",
+      "reasoning_effort": "low",
+      "leaderboard_date": "2026-09-03",
+      "accuracy_percent": 86.74,
+      "display_accuracy": "**86.7%** ± 1.8%",
+      "accuracy_ci95_half_width": 1.82,
+      "n_trials": 445
+    },
+    {
+      "model": "GPT-6 Astra",
+      "agent": "Codex",
+      "reasoning_effort": "max",
+      "leaderboard_date": "2026-09-03",
+      "accuracy_percent": 86.74,
+      "display_accuracy": "**86.7%** ± 1.4%",
+      "accuracy_ci95_half_width": 1.36,
+      "n_trials": 445
+    },
+    {
+      "model": "GPT-6 Astra",
+      "agent": "Codex",
+      "reasoning_effort": "xhigh",
+      "leaderboard_date": "2026-09-03",
+      "accuracy_percent": 85.84,
+      "display_accuracy": "**85.8%** ± 1.4%",
+      "accuracy_ci95_half_width": 1.43,
+      "n_trials": 445
+    }
+  ],
+  "job": {
+    "source_url": "https://hub.harborframework.com/jobs/17d1a7f6-3339-4670-8b70-3b145979f57f",
+    "started_at": "2026-08-31T20:10:27.205566+00:00",
+    "finished_at": "2026-09-01T17:27:07.025801+00:00",
+    "agent_version": "0.151.0",
+    "dataset": {
+      "ref": "6",
+      "name": "terminal-bench/terminal-bench-2-1"
+    },
+    "n_attempts": 5,
+    "n_total_trials": 2225,
+    "n_errors": 65
+  }
+}

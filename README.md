@@ -2,7 +2,7 @@
 
 Kairyu互換APIを、公式実装に基づく12種類のベンチマークで評価する独立ランナーです。必要な引数はAPIのURLだけです。生成、採点、集計、比較はすべてDocker内で行い、`kairyu` 本体のコードはimport・コピーしません。
 
-[他モデルの公開ベンチマーク比較（出典付き）](docs/model-comparison.md)
+[他モデルの公開ベンチマーク比較（出典付き）](docs/model-comparison.md) · [GPT-6 Astraの公開スコア・測定条件（2026-09-05確認）](docs/gpt-6-astra-benchmarks.md) · [実測結果・公開値のWiki](https://github.com/ytworks/kairyu-bench/wiki)
 
 ```sh
 ./kairyu-bench run https://kairyu.example/v1
