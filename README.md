@@ -1,6 +1,6 @@
 # kairyu-bench
 
-Kairyu互換APIを、公式実装に基づく12種類のベンチマークで評価する独立ランナーです。必要な引数はAPIのURLだけです。生成、採点、集計、比較はすべてDocker内で行い、`kairyu` 本体のコードはimport・コピーしません。
+Kairyu互換APIを、公式実装に基づく13種類のベンチマークで評価する独立ランナーです。必要な引数はAPIのURLだけです。生成、採点、集計、比較はすべてDocker内で行い、`kairyu` 本体のコードはimport・コピーしません。
 
 [他モデルの公開ベンチマーク比較（出典付き）](docs/model-comparison.md)
 
@@ -15,7 +15,7 @@ Kairyu互換APIを、公式実装に基づく12種類のベンチマークで評
 必要なホスト依存はDockerだけです。初回実行時にはrunner imageをbuildし、公式sourceと個別Python環境は `.cache/` に固定revision別で保存します。Docker layer cacheを使うため、2回目以降のbuild確認は短時間です。
 
 ```sh
-# 全12種類
+# 全13種類
 ./kairyu-bench run https://kairyu.example/v1
 
 # 指定したベンチマークだけを、公式順の先頭10問で実行
@@ -35,6 +35,15 @@ Kairyu互換APIを、公式実装に基づく12種類のベンチマークで評
 ```sh
 KAIRYU_API_KEY=secret ./kairyu-bench run https://kairyu.example/v1
 ```
+
+### DeepSWE
+
+```bash
+./kairyu-bench run http://host.docker.internal:8003/v1 \
+  --only deepswe --limit 1 --run-id deepswe-smoke
+```
+
+既定4並列・1試行です。`KAIRYU_BENCH_DEEPSWE_ATTEMPTS=4`で4反復、全件なら113問・452試行になります。専用Docker daemon、NVMe、環境変数と完了確認は[DeepSWEの実行手順](docs/deepswe.md)を参照してください。
 
 ### Terminal-Benchのagent
 
@@ -72,6 +81,7 @@ agent本体はHarborがtask container内へ導入して起動するため、ホ�
 | `tau-bench-banking` | tau2 `banking_knowledge/alltools`、4 trials | 対象モデル自身をuser simulatorに使用 |
 | `long-context-reasoning` | LongBench v2 choice accuracy | private Fugu行の代替として明示 |
 | `mrcr-v2` | OpenAI MRCR v2、公式token bins/SequenceMatcher | 4K–128K、8 needles |
+| `deepswe` | DeepSWE v1.1 + Pier / mini-swe-agent | 113問、独立verifier、nested Docker |
 
 source、dataset、補助checkerのrevisionは [`src/kairyu_bench/data/benchmarks.json`](src/kairyu_bench/data/benchmarks.json) に固定しています。`--limit N` は各公式データ順を確定した後の先頭N問を選び、選択した問題IDをレポートへ残します。
 
@@ -108,7 +118,9 @@ context/<name>.json      adapterへ渡した固定条件
 
 `report.md` のmacro averageは、完了したpercent指標の単純平均です。公式leaderboardの総合指標ではありません。HLE/CharXivは `self_judged`、tauは `self_simulated` として常に表示されます。
 
-比較でdeltaを出す条件は、benchmark名、agent、source/dataset revision、問題ID、採点法、自己採点方針、score unitがすべて一致し、両方が `completed` であることです。それ以外は理由を表示しますが数値差は出しません。
+比較でdeltaを出す条件は、benchmark名、agent、source/dataset revision、問題ID、採点法、自己採点方針、score unitがすべて一致し、両方が `completed` であることです。それ以外は理由を表示しますが数値差は出しません。DeepSWEでは実際のruntime/task image provenanceも照合します。
+
+生成レポートの`public_references`には[出典付き公開値](docs/model-comparison.md)を併記します。公開値は実測のmacro averageやdeltaに含めません。DeepSWEは28モデル・70設定の公式原本を保存し、その他12項目も既存19モデルの出典と条件差を保持しています。
 
 ## API契約
 
@@ -124,4 +136,4 @@ context/<name>.json      adapterへ渡した固定条件
 
 ## 注意
 
-SWE-bench、Terminal-Bench、LiveCodeBench Proはtask containerを作るため、runnerを `--privileged` で起動しDocker socketをmountします。信頼できるホスト上で実行してください。`KAIRYU_BENCH_DOCKER_SOCKET`を指定すると、nested task用に別のDocker daemonを使用できます。LiveCodeBench Proを別daemonで動かす場合は、そのdaemon containerのrunnerから到達可能なIPを`KAIRYU_LIGHTCPVERIFIER_HOST`へ指定してください。LiveCodeBench Proは`KAIRYU_BENCH_LIVECODEBENCH_PRO_WORKERS`（既定4）で問題単位の並列数を指定し、完了した枠へ次の問題を即補充します。一時的な生成失敗は`KAIRYU_BENCH_LIVECODEBENCH_PRO_RETRIES`（既定3）まで再試行し、全試行失敗時はその問題を不正解として記録して全体を続行します。SWE-bench Proを専用daemonで実行する場合は、`KAIRYU_BENCH_CLEAN_TASK_IMAGES=1`で公式評価済みtaskのcontainerとimageを1問ごとに削除できます。`KAIRYU_BENCH_SWEBENCH_PRO_WORKERS`（既定4）で問題単位の並列数を指定でき、同時保持するtask imageもその件数以下に抑えます。Terminal-Benchは`KAIRYU_BENCH_TERMINAL_BENCH_WORKERS`（既定4）をHarborの同時実行数へ渡し、完了した枠へ次のtaskを補充します。Terminal-Benchの`claude-code`と`codex` agentは`KAIRYU_BENCH_TERMINAL_BENCH_SETUP_TIMEOUT_MULTIPLIER`（既定4、1から16）でagent setupのタイムアウト倍率（Harbor既定360秒×倍率）を指定できます（`terminus-2`はinstall工程がないため対象外）。3つの環境変数はいずれも1から16まで指定できます。全件実行は長時間・大容量・高コストになるため、疎通確認にはまず `--only ... --limit 1` を推奨します。
+SWE-bench、Terminal-Bench、LiveCodeBench Pro、DeepSWEはtask containerを作るため、runnerを `--privileged` で起動しDocker socketをmountします。信頼できるホスト上で実行してください。`KAIRYU_BENCH_DOCKER_SOCKET`を指定すると、nested task用に別のDocker daemonを使用できます。LiveCodeBench Proを別daemonで動かす場合は、そのdaemon containerのrunnerから到達可能なIPを`KAIRYU_LIGHTCPVERIFIER_HOST`へ指定してください。LiveCodeBench Proは`KAIRYU_BENCH_LIVECODEBENCH_PRO_WORKERS`（既定4）で問題単位の並列数を指定し、完了した枠へ次の問題を即補充します。一時的な生成失敗は`KAIRYU_BENCH_LIVECODEBENCH_PRO_RETRIES`（既定3）まで再試行し、全試行失敗時はその問題を不正解として記録して全体を続行します。SWE-bench Proを専用daemonで実行する場合は、`KAIRYU_BENCH_CLEAN_TASK_IMAGES=1`で公式評価済みtaskのcontainerとimageを1問ごとに削除できます。`KAIRYU_BENCH_SWEBENCH_PRO_WORKERS`（既定4）で問題単位の並列数を指定でき、同時保持するtask imageもその件数以下に抑えます。Terminal-Benchは`KAIRYU_BENCH_TERMINAL_BENCH_WORKERS`（既定4）をHarborの同時実行数へ渡し、完了した枠へ次のtaskを補充します。Terminal-Benchの`claude-code`と`codex` agentは`KAIRYU_BENCH_TERMINAL_BENCH_SETUP_TIMEOUT_MULTIPLIER`（既定4、1から16）でagent setupのタイムアウト倍率（Harbor既定360秒×倍率）を指定できます（`terminus-2`はinstall工程がないため対象外）。3つの環境変数はいずれも1から16まで指定できます。全件実行は長時間・大容量・高コストになるため、疎通確認にはまず `--only ... --limit 1` を推奨します。

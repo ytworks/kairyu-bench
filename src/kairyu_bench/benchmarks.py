@@ -11,6 +11,7 @@ BENCHMARK_NAMES = (
     "tau-bench-banking",
     "long-context-reasoning",
     "mrcr-v2",
+    "deepswe",
 )
 
 HARBOR_AGENT_NAMES = ("terminus-2", "claude-code", "codex")

@@ -236,7 +236,9 @@ class ReportingTest(unittest.TestCase):
         self.assertIsNone(row["delta"])
         self.assertEqual(row["reason"], "benchmark conditions differ")
 
-    def test_compare_rejects_legacy_tau_result_without_embedding_condition(self) -> None:
+    def test_compare_rejects_legacy_tau_result_without_embedding_condition(
+        self,
+    ) -> None:
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
             baseline = _run(
@@ -268,3 +270,53 @@ class ReportingTest(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class DeepSWEReportingTest(unittest.TestCase):
+    def test_published_references_never_change_measured_average_or_delta(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            left = _run(root, "left", [_result("left", "gpqa-diamond", 10)])
+            right = _run(root, "right", [_result("right", "gpqa-diamond", 20)])
+            report = write_score_report(right)
+            self.assertTrue(report["public_references"])
+            self.assertEqual(report["macro_average_percent"], 20)
+            self.assertEqual(compare_runs(left, right)["rows"][0]["delta"], 10)
+            self.assertIn("Published references", (right / "report.md").read_text())
+
+    def test_deepswe_requires_matching_observed_image_provenance(self):
+        from kairyu_bench.reporting import _compatibility
+
+        left = _result("left", "deepswe", 10, agent="mini-swe-agent")
+        right = _result("right", "deepswe", 20, agent="mini-swe-agent")
+        self.assertFalse(_compatibility(left, right)[0])
+        left.data["score"]["metrics"]["runtime_provenance"] = {
+            "task_images": ["sha256:one"]
+        }
+        right.data["score"]["metrics"]["runtime_provenance"] = {
+            "task_images": ["sha256:two"]
+        }
+        self.assertFalse(_compatibility(left, right)[0])
+        right.data["score"]["metrics"]["runtime_provenance"] = {
+            "task_images": ["sha256:one"]
+        }
+        self.assertTrue(_compatibility(left, right)[0])
+
+    def test_report_distinguishes_problems_and_trial_denominator(self):
+        result = _result("run", "deepswe", 25, agent="mini-swe-agent")
+        result.data["score"]["metrics"] = {
+            "passed_attempts": 2,
+            "scored_attempts": 8,
+            "requested_attempts": 8,
+            "excluded_attempts": 0,
+            "attempts_per_task": 4,
+            "pass_at_4_percent": 100,
+        }
+        with tempfile.TemporaryDirectory() as directory:
+            run = _run(Path(directory), "run", [result])
+            report = write_score_report(run)
+            markdown = (run / "report.md").read_text()
+            self.assertEqual(report["benchmarks"][0]["evaluated"], 2)
+            self.assertIn("2 passed / 8 scored of 8 planned", markdown)
+            self.assertIn("Repeats: 4", markdown)
+            self.assertEqual(report["macro_average_percent"], 25)

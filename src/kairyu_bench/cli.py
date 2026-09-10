@@ -100,6 +100,10 @@ def main(argv: Sequence[str] | None = None) -> int:
         try:
             endpoint = Endpoint.parse(args.endpoint)
             selected = select_benchmarks(args.only)
+            if "deepswe" in selected:
+                from kairyu_bench.deepswe import DeepSWESettings
+
+                DeepSWESettings.from_env(os.environ)
         except (ValueError, ManifestError) as error:
             parser.error(str(error))
         if args.dry_run:
@@ -126,7 +130,7 @@ def main(argv: Sequence[str] | None = None) -> int:
         )
         try:
             outcome = run_benchmarks(config, client, load_manifest())
-        except (PreflightError, FileExistsError, OSError) as error:
+        except (PreflightError, FileExistsError, OSError, ValueError) as error:
             print(f"kairyu-bench: {error}", file=sys.stderr)
             return 2
         print(f"run: {outcome.run_dir.name}")

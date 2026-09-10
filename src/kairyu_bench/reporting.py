@@ -6,6 +6,7 @@ from typing import Any
 
 from kairyu_bench.benchmarks import BENCHMARK_NAMES
 from kairyu_bench.results import BenchmarkResult
+from kairyu_bench.public_results import references_for
 
 
 def _read_object(path: Path) -> dict[str, Any]:
@@ -85,6 +86,39 @@ def score_report_markdown(report: dict[str, Any]) -> str:
             f"{row['evaluated']}/{row['requested']} | {row['method']} | {label} | "
             f"{agent} |"
         )
+        metrics = row.get("trial_metrics", {})
+        if "requested_attempts" in metrics:
+            lines.append(
+                f"\nDeepSWE trials: {metrics['passed_attempts']} passed / {metrics['scored_attempts']} scored "
+                f"of {metrics['requested_attempts']} planned; {metrics['excluded_attempts']} unscored. "
+                f"Repeats: {metrics['attempts_per_task']}; pass@4: {_score_text(metrics['pass_at_4_percent'])}%. "
+                "Local API cost: unavailable.\n"
+            )
+    references = report.get("public_references", [])
+    if references:
+        lines.extend(
+            [
+                "",
+                "## Published references (different or unverified conditions)",
+                "",
+                "These values are excluded from the macro average and run-to-run deltas. "
+                "All published DeepSWE configurations are retained; this is not a ranking under identical conditions.",
+                "",
+                "| Benchmark | Model | Score (%) | Configuration / limitations | Source |",
+                "| --- | --- | ---: | --- | --- |",
+            ]
+        )
+        for reference in references:
+            source = reference["source"]
+            config = reference.get("reasoning_effort") or "unspecified"
+            details = reference["conditions"]
+            if reference["benchmark"] == "deepswe":
+                details = f"{config}; {reference['passed_attempts']}/{reference['scored_attempts']} trials; {details}"
+            lines.append(
+                f"| {reference['benchmark']} | {reference['model']} | "
+                f"{reference['score_percent']:.2f} | {details} | "
+                f"[{reference['source_id']}]({source['url']}) (retrieved {source['retrieved_at']}) |"
+            )
     lines.append("")
     return "\n".join(lines)
 
@@ -111,6 +145,9 @@ def write_score_report(run_dir: Path) -> dict[str, Any]:
                 "self_simulated": result["scoring"]["self_simulated"],
                 "agent": result.get("agent"),
                 "error": result["error"],
+                "trial_metrics": result["score"]["metrics"]
+                if name == "deepswe"
+                else {},
             }
         )
     report: dict[str, Any] = {
@@ -128,6 +165,7 @@ def write_score_report(run_dir: Path) -> dict[str, Any]:
             sum(completed_scores) / len(completed_scores) if completed_scores else None
         ),
         "benchmarks": rows,
+        "public_references": references_for(metadata["benchmarks"]),
     }
     _write_json(run_dir / "report.json", report)
     (run_dir / "report.md").write_text(score_report_markdown(report), encoding="utf-8")
@@ -156,6 +194,14 @@ def _compatibility(
         return False, "scoring method or self-scoring policy differs"
     if left.get("conditions", {}) != right.get("conditions", {}):
         return False, "benchmark conditions differ"
+    if baseline.benchmark == "deepswe":
+        left_runtime = left["score"]["metrics"].get("runtime_provenance")
+        right_runtime = right["score"]["metrics"].get("runtime_provenance")
+        if not left_runtime or not right_runtime or left_runtime != right_runtime:
+            return (
+                False,
+                "DeepSWE runtime or task image provenance differs or is unavailable",
+            )
     if left["score"]["unit"] != right["score"]["unit"]:
         return False, "score unit differs"
     if left["score"]["primary"] is None or right["score"]["primary"] is None:

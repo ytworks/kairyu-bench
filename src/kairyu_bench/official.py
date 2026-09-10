@@ -68,7 +68,7 @@ def _ids(values: Iterable[object], field: str) -> list[str]:
 class OfficialObservation:
     problem_ids: list[str]
     evaluated: int
-    primary: float
+    primary: float | None
     metrics: dict[str, Any]
     error: str | None = None
     agent: str | None = None
@@ -356,6 +356,25 @@ def _tau(path: Path) -> OfficialObservation:
     )
 
 
+def _deepswe(path: Path) -> OfficialObservation:
+    from kairyu_bench.deepswe import summarize_deepswe
+
+    try:
+        summary = summarize_deepswe(path)
+    except ValueError as error:
+        raise OfficialNormalizationError(str(error)) from error
+    return OfficialObservation(
+        summary["problem_ids"], summary["evaluated_tasks"],
+        summary["pass_at_1_percent"], summary,
+        None if summary["status"] == "completed" else (
+            f"DeepSWE has {summary['excluded_attempts']} unscored trial slots and "
+            f"{len(summary['runtime_errors'])} runtime/cleanup errors; "
+            "see score.metrics.errors and official trial results"
+        ),
+        "mini-swe-agent",
+    )
+
+
 NORMALIZERS: dict[str, Callable[[Path], OfficialObservation]] = {
     "swe-bench-pro": _swebench_pro,
     "swe-bench-verified": _swebench,
@@ -366,6 +385,7 @@ NORMALIZERS: dict[str, Callable[[Path], OfficialObservation]] = {
     "charxiv-reasoning": _charxiv,
     "scicode": _scicode,
     "tau-bench-banking": _tau,
+    "deepswe": _deepswe,
 }
 
 
@@ -446,7 +466,7 @@ def normalize_official(context: dict[str, Any], raw_path: Path) -> BenchmarkResu
         raise OfficialNormalizationError(
             f"Harbor observed agent {observation.agent!r}, expected {expected_agent!r}"
         )
-    if not 0 <= observation.primary <= 100:
+    if observation.primary is not None and not 0 <= observation.primary <= 100:
         raise OfficialNormalizationError("official primary score is outside 0..100")
     if observation.evaluated > len(observation.problem_ids):
         raise OfficialNormalizationError(
@@ -458,6 +478,13 @@ def normalize_official(context: dict[str, Any], raw_path: Path) -> BenchmarkResu
         and observation.error is None
         else "partial"
     )
+    if observation.primary is None:
+        status = "failed"
+    if name == "deepswe":
+        if observation.metrics["model_id"] != context["model_id"]:
+            raise OfficialNormalizationError("DeepSWE observed model differs from context")
+        if observation.metrics["attempts_per_task"] != context["conditions"]["attempts_per_task"]:
+            raise OfficialNormalizationError("DeepSWE attempts differ from context")
     return _result(
         context,
         agent=observation.agent,

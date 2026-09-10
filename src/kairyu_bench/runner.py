@@ -157,6 +157,8 @@ def _validate_identity(
 
 
 def _selected_agent(entry: dict[str, Any], configured_agent: str) -> str | None:
+    if entry["name"] == "deepswe":
+        return "mini-swe-agent"
     if entry["scoring"]["method"] == "harbor-official-task-reward":
         return configured_agent
     return None
@@ -170,6 +172,12 @@ def run_benchmarks(
     run_dir = config.results_root / config.run_id
     if run_dir.exists():
         raise FileExistsError(f"run directory already exists: {config.run_id}")
+
+    deepswe_conditions: dict[str, Any] = {}
+    if "deepswe" in config.selected:
+        from kairyu_bench.deepswe import resolve_deepswe_conditions
+
+        deepswe_conditions = resolve_deepswe_conditions(manifest["deepswe"], os.environ)
 
     model_id = client.discover_chat_model()
     requires_embeddings = any(
@@ -214,6 +222,8 @@ def run_benchmarks(
             if "embeddings" in entry.get("requirements", [])
             else {}
         )
+        if name == "deepswe":
+            conditions = deepswe_conditions
         context = {
             "schema_version": 1,
             "run_id": config.run_id,

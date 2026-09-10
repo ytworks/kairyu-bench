@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import os
 import subprocess
+import socket
 import tempfile
 import unittest
 from pathlib import Path
@@ -44,15 +45,17 @@ class HostEntrypointTest(unittest.TestCase):
             env = os.environ.copy()
             env["PATH"] = f"{temp}:{env['PATH']}"
             env["FAKE_DOCKER_LOG"] = str(log)
-
-            result = subprocess.run(
-                [str(ROOT / "kairyu-bench"), "list"],
-                cwd=ROOT,
-                env=env,
-                text=True,
-                capture_output=True,
-                check=False,
-            )
+            # The wrapper validates a socket; this test never uses a real daemon.
+            with socket.socket(socket.AF_UNIX) as docker_socket:
+                socket_path = temp / "docker.sock"
+                docker_socket.bind(str(socket_path))
+                env["KAIRYU_BENCH_DOCKER_SOCKET"] = str(socket_path)
+                env["KAIRYU_BENCH_DEEPSWE_WORKERS"] = "7"
+                env["KAIRYU_BENCH_DEEPSWE_ATTEMPTS"] = "4"
+                result = subprocess.run(
+                    [str(ROOT / "kairyu-bench"), "list"], cwd=ROOT, env=env,
+                    text=True, capture_output=True, check=False,
+                )
 
             self.assertEqual(result.returncode, 0, result.stderr)
             calls = log.read_text(encoding="utf-8").splitlines()
@@ -60,6 +63,8 @@ class HostEntrypointTest(unittest.TestCase):
                 calls[0], f"build -t kairyu-bench:local {ROOT}"
             )
             self.assertIn("run --rm --privileged", calls[1])
+            self.assertIn("-e KAIRYU_BENCH_DEEPSWE_WORKERS=7", calls[1])
+            self.assertIn("-e KAIRYU_BENCH_DEEPSWE_ATTEMPTS=4", calls[1])
             self.assertIn(
                 f"-v {ROOT / 'results'}:{ROOT / 'results'}", calls[1]
             )
