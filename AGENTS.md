@@ -148,3 +148,35 @@ On completion, require all 731 prediction IDs and official boolean outcomes,
 official resolved percentage from `report.md` with resolved/evaluated counts.
 Preserve the full result directory. Only then may the dedicated cache and
 Docker data root be removed after their exact paths are rechecked.
+
+## DeepSWE v1.1 full run
+
+Use `./kairyu-bench run <API URL> --only deepswe`, following
+`docs/deepswe.md`. The pinned dataset has 113 tasks. No `--limit` means all 113;
+`KAIRYU_BENCH_DEEPSWE_ATTEMPTS=4` means four whole-set repetitions, 452 planned
+trial slots. The default is one repetition. `KAIRYU_BENCH_DEEPSWE_WORKERS`
+defaults to four (1–16), with immediate refill inside each repetition.
+
+Use a dedicated privileged Docker-in-Docker daemon, socket and data root under
+`/mnt/nvme/kairyu/`, with result/cache mounts at identical paths. Keep caches
+under `/mnt/nvme/kairyu/bench-cache/`, preserve repository `results/`, and set
+`KAIRYU_BENCH_CLEAN_TASK_IMAGES=1`. Obtain explicit user approval for the
+privileged runner, privileged daemon and shared Docker socket before starting.
+Do not use or prune the daemon that serves the Kairyu API or Open WebUI.
+
+After launch verify `run.json=running`, model ID against `/v1/models`, the
+113 selection IDs and 452 planned slots for the comparison run. Inspect the
+first official trial, committed patch and separate verifier reward. Report at
+least once per minute: scored/planned trials, passed trials, fully evaluated
+problems/113, active tasks, elapsed time, API/Docker health and root/NVMe space.
+Use `raw/deepswe/progress.json` and cross-check canonical trial results. Report
+retry and cleanup failures immediately. Do not stop a healthy full run for
+being slow.
+
+Require all 452 slots scored, all 113 problems evaluated, no cleanup errors,
+and run/normalized status `completed` before reporting a completed comparison
+run. Report official pass@1 with its numerator and denominator, plus pass@4
+and the four-repetition CI. API/verifier failures are unscored, not invented
+zeros. Preserve the full result directory. Only remove dedicated cache/data
+paths after confirming completion, their exact paths, and that they are not
+shared with another run.

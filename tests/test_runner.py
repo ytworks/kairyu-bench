@@ -47,11 +47,14 @@ payload = {
 }
 if "conditions" in context:
     payload["conditions"] = context["conditions"]
+if "embedding_model_id" in context.get("conditions", {}):
     expected = context["conditions"]["embedding_model_id"]
     if os.environ.get("KAIRYU_EMBEDDING_MODEL") != expected:
         raise RuntimeError("embedding model environment differs from context")
 if os.environ.get("KAIRYU_TEST_RESULT_AGENT"):
     payload["agent"] = os.environ["KAIRYU_TEST_RESULT_AGENT"]
+elif context.get("agent"):
+    payload["agent"] = context["agent"]
 Path(os.environ["KAIRYU_BENCH_RESULT_PATH"]).write_text(json.dumps(payload))
 """
 
@@ -118,6 +121,28 @@ class _DiscoveredClient:
 
 
 class BenchmarkRunnerTest(unittest.TestCase):
+    def test_deepswe_records_fixed_agent_and_effective_conditions(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            adapter = root / "adapters/deepswe/run.sh"
+            adapter.parent.mkdir(parents=True)
+            adapter.write_text(FAKE_ADAPTER, encoding="utf-8")
+            adapter.chmod(0o755)
+            config = RunConfig(
+                endpoint=Endpoint.parse("https://example.test/v1"),
+                selected=("deepswe",), limit=1, results_root=root / "results",
+                run_id="deepswe-test", app_root=root, harbor_agent="codex",
+            )
+            with mock.patch.dict(os.environ, {"KAIRYU_BENCH_DEEPSWE_ATTEMPTS": "4"}):
+                outcome = run_benchmarks(config, _DiscoveredClient(), load_manifest())
+            context = json.loads((outcome.run_dir / "context/deepswe.json").read_text())
+            result = json.loads((outcome.run_dir / "normalized/deepswe.json").read_text())
+        self.assertEqual(outcome.exit_code, 0)
+        self.assertEqual(context["agent"], "mini-swe-agent")
+        self.assertEqual(context["conditions"]["attempts_per_task"], 4)
+        self.assertEqual(context["conditions"]["transport"], "chat_completions")
+        self.assertEqual(result["conditions"], context["conditions"])
+
     def test_run_discovers_model_invokes_selected_adapter_and_validates_result(
         self,
     ) -> None:

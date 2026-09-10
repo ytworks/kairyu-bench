@@ -26,7 +26,44 @@ jobs:
       - run: python -m unittest discover -s tests -v
       - run: ruff check .
       - run: mypy --ignore-missing-imports src
+      - run: python scripts/update_model_comparison.py --check
       - run: find . -type f -name '*.sh' -not -path './.git/*' -exec sh -n {} +
+
+  deepswe-runtime:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: scripts/locks/deepswe-pier.txt
+      - run: python -m pip install -r scripts/locks/deepswe-pier.txt
+      - name: Install pinned official sources
+        run: |
+          python -m pip install --no-deps \
+            'git+https://github.com/datacurve-ai/pier.git@0c802fc067a425345b24d1c69411aa98acf61a1d' \
+            'git+https://github.com/SWE-agent/mini-swe-agent.git@a83fcae82d2a08f0ee0c688f9d137b3566c097f8'
+          python -m pip install --no-deps -e .
+      - name: Verify official API integration without Docker or a paid model
+        env:
+          LITELLM_LOCAL_MODEL_COST_MAP: "true"
+        run: python -m unittest discover -s tests -p test_deepswe_runtime.py -v
+      - name: Validate all 113 pinned task definitions
+        env:
+          LITELLM_LOCAL_MODEL_COST_MAP: "true"
+        run: |
+          git init /tmp/deepswe-source
+          git -C /tmp/deepswe-source fetch --depth=1 https://github.com/datacurve-ai/deep-swe.git 0b9fabbb63b9104d678fe965e1632f2dd9eaa2ea
+          git -C /tmp/deepswe-source checkout --detach FETCH_HEAD
+          python - <<'PY'
+          from pathlib import Path
+          from kairyu_bench.deepswe import select_deepswe_tasks
+          from kairyu_bench.deepswe_runtime import validate_tasks
+          root = Path('/tmp/deepswe-source/tasks')
+          assert len(validate_tasks(root, select_deepswe_tasks(root, None))) == 113
+          PY
 
   docker:
     runs-on: ubuntu-latest

@@ -208,5 +208,27 @@
     "adapter": "adapters/mrcr-v2/run.sh",
     "scoring": {"method": "openai-mrcr-sequencematcher-ratio", "unit": "percent"},
     "requirements": ["long-context"]
+  },
+  {
+    "name": "deepswe",
+    "kind": "agentic-official-harness",
+    "source": {
+      "repository": "https://github.com/datacurve-ai/pier",
+      "revision": "0c802fc067a425345b24d1c69411aa98acf61a1d"
+    },
+    "generator": {
+      "repository": "https://github.com/SWE-agent/mini-swe-agent",
+      "revision": "a83fcae82d2a08f0ee0c688f9d137b3566c097f8",
+      "version": "2.4.6"
+    },
+    "dataset": {
+      "id": "https://github.com/datacurve-ai/deep-swe",
+      "revision": "0b9fabbb63b9104d678fe965e1632f2dd9eaa2ea",
+      "version": "1.1",
+      "tasks": 113
+    },
+    "adapter": "adapters/deepswe/run.sh",
+    "scoring": {"method": "deepswe-v1.1-official-pass-at-1", "unit": "percent"},
+    "requirements": ["docker", "x86_64-recommended"]
   }
 ]

@@ -23,7 +23,7 @@ class CliContractTest(unittest.TestCase):
             check=False,
         )
 
-    def test_list_prints_the_twelve_public_adapter_names(self) -> None:
+    def test_list_prints_the_public_adapter_names(self) -> None:
         result = self.run_cli("list")
 
         self.assertEqual(result.returncode, 0, result.stderr)
@@ -42,6 +42,7 @@ class CliContractTest(unittest.TestCase):
                 "tau-bench-banking",
                 "long-context-reasoning",
                 "mrcr-v2",
+                "deepswe",
             ],
         )
 
@@ -50,7 +51,7 @@ class CliContractTest(unittest.TestCase):
 
         self.assertEqual(result.returncode, 0, result.stderr)
         self.assertIn("endpoint: https://example.test/v1", result.stdout)
-        self.assertIn("benchmarks: 12", result.stdout)
+        self.assertIn("benchmarks: 13", result.stdout)
         self.assertNotIn("model", result.stderr.lower())
 
     def test_dry_run_validates_only_and_positive_limit_without_api_access(self) -> None:
