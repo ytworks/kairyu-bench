@@ -36,6 +36,7 @@ def main() -> int:
                 ("scored_attempts", "n_attempted", 1),
                 ("ci_half_percent", "ci_half", 100),
                 ("attempts_per_task", "n_runs", 1),
+                ("task_count", "n_tasks_attempted", 1),
             ]:
                 if row[key] != original[field] * multiplier:
                     raise ValueError(

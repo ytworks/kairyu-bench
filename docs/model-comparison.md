@@ -1,25 +1,27 @@
 # 他モデルの公開ベンチマーク比較
 
-他モデルが公開しているスコアの参照表です。単位はすべて `%`。`—` は調査した出典で公開値を確認できなかった項目であり、0点ではありません。
+他モデルが公開しているスコアの参照表です。単位はすべて `%`。`—` は採用した出典に値がない項目であり、0点ではありません。DeepSWE行はDatacurve公式原本のみを使い、提供元による別条件の値は下に分けて記載しています。
 
 初版の値と出典は [`kairyu@9a00f39` の参照カタログ](https://github.com/ytworks/kairyu/blob/9a00f39cd60581d70baadb76d7df2737671e790c/kairyu/bench/reference.py) から転記しましたが、2026-08-27 に全列を一次ソース(各社の発表ページ・システムカード・モデルカード)と照合し、Fable 5列の誤値を修正のうえ、Mythos 5 / Opus 5 / Opus 4.8 / GPT-5.5 / Gemini 3.1 Pro / Gemma 4 / DeepSeek-V4-Flash-Vision-Exp / Qwen3.8-27B / Qwen3.8-Flash-Next / GLM-5.3 の列を追加しました。各提供元や第三者機関が異なる条件で測定した値を含むため、`kairyu-bench` の実測値と厳密に同条件とは限りません。
 
 2026-09-05にGPT-6 Astra列を追加しました。OpenAI発表の評価表を本文で確認し、GPQA Diamond、HLE（ツールあり）、MRCR v2を転記しました。Terminal-Bench 2.1は公式リーダーボードのCodex / highの値です。調査した出典で確認できなかった項目は空欄のままです。
+
+2026-09-10に既存の公開値102件中100件を再照合し、SciCodeのFable 5を60.2→61.0、GLM-5.2を50.0→51.2、Tau3 BankingのGLM-5.2を27.0→34.6へ更新しました。残る2件は表中に元の確認日を表示しています。[照合記録](sources/public-results-audit-20260910.md)に対象ページ・条件・保留理由をまとめています。
 
 <!-- BEGIN public-comparison -->
 | Benchmark | Fugu | Fugu Ultra | Fable 5 | Mythos 5 | Opus 5 | Opus 4.8 | GPT-6 Astra | GPT-5.6 Sol | GPT-5.5 | Gemini 3.1 Pro | Gemma 4 31B | DeepSeek-V4-Flash-0731 | DeepSeek-V4-Flash-Vision-Exp | Qwen3.8 MAX | Qwen3.8-27B | Qwen3.8-Flash-Next | GLM-5.2 | GLM-5.3 | Kimi K3 |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
 | SWE-Bench Pro | [59.0][S1] | [73.7][S1] | [80.0][S3] | [80.3][S3] | [79.2][S18] | [69.2][S17] | — | [64.6][S4] | [59.4][S4] | [54.2][S19] | — | — | — | [67.7][S6] | [61.7][S16] | [62.5][S14] | [62.1][S7] | — | — |
 | SWE-bench Verified | — | — | [95.0][S3] | [95.5][S3] | [96.0][S18] | [88.6][S3] | — | — | — | [80.6][S19] | — | — | — | — | — | — | — | — | — |
-| Terminal-Bench 2.1 | [80.2][S1] | [82.1][S1] | [84.3][S3] | [88.0][S3] | — | [82.7][S3] | [87.4][S22] | [88.8][S4] | [85.6][S4] | — | — | [82.7][S5] | [83.9][S13] | [86.6][S6] | [73.0][S16] | — | [81.0][S7] | [88.2][S15] | [88.3][S8] |
+| Terminal-Bench 2.1 | [80.2][S1] | [82.1][S1] | [84.3][S3] | [88.0][S3] | — | [82.7][S3] | [87.4 (2026-09-05)][S22] | [88.8][S4] | [85.6][S4] | — | — | [82.7][S5] | [83.9][S13] | [86.6][S6] | [73.0][S16] | — | [81.0][S7] | [88.2][S15] | [88.3][S8] |
 | LiveCodeBench | [92.9][S1] | [93.2][S1] | — | — | — | — | — | — | — | — | [80.0][S20] | — | — | — | [90.3][S16] | [91.9][S14] | — | — | — |
 | LiveCodeBench Pro | [87.8][S1] | [90.8][S1] | — | — | — | — | — | — | — | — | — | — | — | — | — | — | — | — | — |
 | HLE | [47.2][S1] | [50.0][S1] | [56.5][S18] | [59.0][S3] | [56.3][S18] | [49.8][S17] | [57.2 (tools)][S21] | [49.5][S9] | [41.4][S3] | [44.4][S19] | [19.5][S20] | — | — | [43.6][S6] | [30.8][S16] | [35.9][S14] | [40.5][S7] | [62.5 (tools)][S15] | [43.5][S8] |
 | CharXiv Reasoning | [85.1][S1] | [86.6][S1] | — | [88.9][S3] | — | [80.5][S3] | — | — | — | — | — | — | — | [93.5][S6] | [90.2][S16] | [90.6][S14] | — | — | [84.8][S8] |
 | GPQA Diamond | [95.5][S1] | [95.5][S1] | — | [94.1][S3] | — | — | [96.0][S21] | [94.6][S4] | [93.6][S4] | [94.3][S19] | [84.3][S20] | — | — | [92.6][S6] | [89.2][S16] | [91.7][S14] | [91.2][S7] | — | [93.5][S8] |
-| SciCode | [60.1][S1] | [58.7][S1] | [60.2][S10] | — | — | — | — | — | — | [59.0][S19] | — | — | — | — | — | — | [50.0][S12] | — | [58.7][S8] |
-| τ-bench Banking | [21.7][S1] | [20.6][S1] | — | — | — | — | — | — | — | — | — | — | — | [51.3][S11] | — | — | [27.0][S12] | [50.3][S11] | [33.4][S8] |
-| Long Context Reasoning | [74.7][S1] | [73.3][S1] | — | — | — | — | — | — | — | — | — | — | — | — | — | — | [71.0][S12] | — | [74.7][S8] |
+| SciCode | [60.1][S1] | [58.7][S1] | [61.0][S10] | — | — | — | — | — | — | [59.0][S19] | — | — | — | — | — | — | [51.2][S10] | — | [58.7][S8] |
+| τ-bench Banking | [21.7][S1] | [20.6][S1] | — | — | — | — | — | — | — | — | — | — | — | [51.3][S11] | — | — | [34.6][S11] | [50.3][S11] | [33.4][S8] |
+| Long Context Reasoning | [74.7][S1] | [73.3][S1] | — | — | — | — | — | — | — | — | — | — | — | — | — | — | [71.0 (2026-08-11)][S12] | — | [74.7][S8] |
 | MRCR v2 | [86.6][S1] | [93.6][S1] | — | — | — | — | [100.0][S21] | [91.5][S4] | [81.5][S4] | [84.9][S19] | [66.4][S20] | — | — | [92.9][S6] | — | — | — | — | — |
 | DeepSWE v1.1 | — | — | [69.91][S23] | — | [73.65][S23] | [58.97][S23] | [74.12][S23] | [72.67][S23] | [67.04][S23] | [11.73 (preview)][S23] | — | — | — | [57.46][S23] | — | — | [43.78][S23] | [68.96][S23] | [68.51][S23] |
 <!-- END public-comparison -->
@@ -66,7 +68,17 @@ Datacurveの公式JSON（生成日時2026-09-03）にある28モデル・70設�
 | `gemini-3-1-pro-preview` | high | [11.73][S23] | 53/452 | 113/113 | 28.32 | ±1.48 |
 <!-- END deepswe-comparison -->
 
-既存12行・19モデルの値と出典も同じJSONへ移し、欠測をnull、条件差を各行に保存しました。既存値の取得日は元の調査日を維持しています。`historical-transcription`は過去の出典付き転記、`verified-against-snapshot`は今回保存した原本との照合を示し、既存全値を今回再検証したという意味ではありません。τ-benchの公開Tau3 Bankingとrunnerのtau2-bench、Long Context ReasoningとLongBench v2は特に区別が必要です。
+提供元による追加のDeepSWE v1.1報告（いずれも2026-09-10確認）もあります。これらの値を公式原本の70設定に追加したり、最高値の選択対象に混ぜたりはしていません。採点数・除外数・effortが未公表の項目は推定しません。
+
+| Model | 公表スコア (%) | 出典と評価条件 |
+| --- | ---: | --- |
+| Qwen3.8-27B | [42.2][S16] | Claude Code、temperature=1、top_p=0.95、256K。反復数・採点数・CIは記載なし。 |
+| Qwen3.8-Flash-Next | [58.7][S14] | Claude Codeとmini-swe-agentの高い方（このモデルはmini）。temperature=1、top_p=0.95、256K。反復数・採点数・CIは記載なし。 |
+| Qwen3.8 MAX | [56.6][S6] | 両agentの高い方（このモデルはClaude Code）。temperature=1、top_p=0.95、256K。反復数・採点数・CIは記載なし。 |
+| Opus 5 | [68.8][S18] | システムカードpp.148–149。max effort、5試行平均。公式原本の4反復とは別条件。 |
+| GLM-5.3 | [66.9][S15] | mini-swe-agent、temperature=0.95、top_p=1、6h、400K。反復数・採点数・CIは記載なし。 |
+
+既存12行・19モデルの値と出典も同じJSONへ移し、欠測をnull、条件差を各行に保存しました。`verified-primary`は測定提供元の本文・表との今回の照合、`cross-checked-same-publisher`は同じ提供元の別資料での確認、`historical-transcription`は元の確認日を維持した過去値、`verified-against-snapshot`は保存したDeepSWE原本との照合です。元の取得日と今回の再確認日は区別し、変更した旧値もJSONに残しています。τ-benchの公開Tau3 Bankingとrunnerのtau2-bench、Long Context ReasoningとLongBench v2は特に区別が必要です。
 
 表の再生成は `python scripts/update_model_comparison.py`、出典整合性と差分検査は `--check` で行います。
 
@@ -85,7 +97,7 @@ Mythos 5はFable 5と同一の基盤モデルで、セーフガード(一部領�
 
 - HLEとCharXivは、このrunnerでは対象モデル自身による自己採点です。
 - 表のHLE値は原則 no tools 測定です(Anthropic系・Gemini・Gemmaはno toolsと明記)。GPT-6 Astraの57.2とGLM-5.3の62.5はツール使用あり(with tools)の公表値で、表中にも `tools` と明記しています。no tools値との直接比較には適しません。ツールあり同士もツール構成・ハーネスの一致は未確認です(ツールありのGLM-5.2はZ.aiのchartでは54.7)。
-- CharXiv ReasoningのMythos 5(88.9)とOpus 4.8(80.5)はno tools値(with toolsは各93.5 / 89.9)。CharXivのQwen3.8 MAX値は元のlaunch tableに解釈上の曖昧さがあり93.5を採用、Qwen3.8-Flash-Nextの90.6とQwen3.8-27Bの90.2("CharXiv RQ")は "With CI" として公開された値です。
+- CharXiv ReasoningのMythos 5(88.9)とOpus 4.8(80.5)はno tools値(with toolsは各93.5 / 89.9)。CharXivのQwen3.8 MAXはコード実行あり93.5（なし88.4）で、Qwenによる一部正解アノテーションの修正もあります。Qwen3.8-Flash-Nextの90.6とQwen3.8-27Bの90.2("CharXiv RQ")は "With CI" として公開された値です。
 - τ-benchは、このrunnerでは対象モデル自身をuser simulatorにも使用します。
 - Long Context Reasoning行の公開値に対し、このrunnerは代替としてLongBench v2を実行するため直接比較できません。
 - MRCR v2の測定コンテキストは、GPTが8-needle 256K–512K、Qwenが256K、GeminiとGemmaが8-needle 128K、このrunnerは4K–128Kです。
@@ -96,13 +108,13 @@ Mythos 5はFable 5と同一の基盤モデルで、セーフガード(一部領�
 - Terminal-Bench 2.1のOpus 4.8はlaunch時に74.6と公表され、その後のシステムカード([S3])で82.7に更新されています。Opus 5はTB2.1を公表せず後継のFrontierBench v0.1に移行。Gemini 3.1 ProはTerminal-Bench 2.0のみ公表(68.5)のためTB2.1行は空欄です。
 - Gemini 3.1 ProのLiveCodeBench ProはElo(2887)での公表のため、%基準の本表には記載していません。
 - Gemma 4の値は31B Dense(instruction-tuned)のものです。
-- Qwen3.8-Flash-NextとQwen3.8-27BのLiveCodeBench値はv6として公開されたものです(Fugu行のバージョンとの一致は未確認)。両者のSWE-Bench Pro値はQwenがClaude Codeハーネスで測定したと注記しています。Qwen3.8-27BのTerminal-Bench 2.1はTerminusハーネスでの測定です。
+- Qwen3.8-Flash-NextとQwen3.8-27BのLiveCodeBench値はv6として公開されたものです(Fugu行のバージョンとの一致は未確認)。Qwenの3モデルのSWE-Bench ProはClaude Code・temperature=1・top_p=0.95・256Kで、問題の修正後に再評価した値です。固定した元のpublic splitと同一ではありません。Qwen3.8-27BのTerminal-Bench 2.1はTerminusハーネスでの測定です。
 - Gemini 3.1 ProのSWE-Bench Pro値はPublicサブセットの公表値です。
-- AnthropicとOpenAIの表(画像)からの転記値は、それぞれの発表ページ・システムカードPDFを直接確認して照合済みです。DeepSeek-V4-Flash-Vision-ExpとGLM-5.3の公式値は発表ページのベンチマーク画像からの転記です(第三者転記と照合済み)。
+- 2026-09-10の照合ではAnthropicのPDF、OpenAIの本文表、QwenとZ.aiの本文表、DeepSeekの公式画像を確認しました。SakanaのHLEは表画像47.2を採用しています。同じ記事の別の概要図には48.5とあり、出典内の不一致を照合記録に残しています。
 
 ## 出典
 
-- **S1** — [Fugu release](https://sakana.ai/fugu-release/), Sakana AI, primary, published 2026-07-23, retrieved 2026-08-11
+- **S1** — [Fugu release](https://sakana.ai/fugu-release/), Sakana AI, primary, published 2026-06-22, retrieved 2026-08-11
 - **S2** — [Claude Fable 5 and Claude Mythos 5](https://www.anthropic.com/news/claude-fable-5-mythos-5), Anthropic, primary, published 2026-06-09, retrieved 2026-08-11 (表は「Mythos 5 / Fable 5」統合列のため、個別値はS3を参照)
 - **S3** — [Claude Fable 5 & Claude Mythos 5 System Card](https://www-cdn.anthropic.com/2f9323abbcc4abe219577539efe19a623c9ca2bd/Claude%20Fable%205%20%26%20Claude%20Mythos%205%20System%20Card.pdf), Anthropic, primary, published 2026-06-09, retrieved 2026-08-27 (Table 8.1.A。Opus 4.8/GPT-5.5等の competitor 値は各開発元の公表値からの転載と明記)
 - **S4** — [Introducing GPT-5.6](https://openai.com/index/gpt-5-6/), OpenAI, primary, published 2026-07-09, retrieved 2026-08-27 (付録のカテゴリ別評価表。GPT-5.5値も同表由来)
@@ -111,8 +123,8 @@ Mythos 5はFable 5と同一の基盤モデルで、セーフガード(一部領�
 - **S7** — [GLM-5.2 model card](https://huggingface.co/zai-org/GLM-5.2), Z.ai, primary, published 2026-06-16, retrieved 2026-08-11
 - **S8** — [Kimi K3 model card](https://huggingface.co/moonshotai/Kimi-K3), Moonshot AI, primary, published 2026-07-29, retrieved 2026-08-11
 - **S9** — [Humanity's Last Exam leaderboard](https://artificialanalysis.ai/evaluations/humanitys-last-exam), Artificial Analysis, third-party, rolling leaderboard, retrieved 2026-08-11
-- **S10** — [SciCode leaderboard](https://artificialanalysis.ai/evaluations/scicode), Artificial Analysis, third-party, rolling leaderboard, retrieved 2026-08-11 (再確認 2026-08-27、値変更なし)
-- **S11** — [Tau3 Banking leaderboard](https://artificialanalysis.ai/evaluations/tau3-banking), Artificial Analysis, third-party, rolling leaderboard, retrieved 2026-08-11 (GLM-5.3値は 2026-08-27 取得、Qwen3.8 MAX値も同日再確認で変更なし)
+- **S10** — [SciCode leaderboard](https://artificialanalysis.ai/evaluations/scicode), Artificial Analysis, independent measurement, retrieved 2026-09-10 (Fable 5 / adaptive max / Opus 4.8 fallback; GLM-5.2 / max)
+- **S11** — [Tau3 Banking leaderboard](https://artificialanalysis.ai/evaluations/tau3-banking), Artificial Analysis, third-party, rolling leaderboard, retrieved 2026-08-11 (GLM-5.3値は 2026-08-27 取得、Qwen3.8 MAX値も同日再確認で変更なし); rechecked 2026-09-10 (Qwen3.8 Max, GLM-5.3 / max, GLM-5.2 / max)
 - **S12** — [GLM-5.2 intelligence analysis](https://artificialanalysis.ai/models/glm-5-2), Artificial Analysis, third-party, published 2026-06-16, retrieved 2026-08-11
 - **S13** — [DeepSeek-V4-Flash-Vision-Exp release](https://api-docs.deepseek.com/news/news260821/), DeepSeek, primary image transcription, published 2026-08-21, retrieved 2026-08-27
 - **S14** — [Qwen3.8-Flash-Next model card](https://huggingface.co/Qwen/Qwen3.8-Flash-Next), Qwen, primary, published 2026-08-26, retrieved 2026-08-27

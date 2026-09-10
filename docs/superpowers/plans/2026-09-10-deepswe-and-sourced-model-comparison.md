@@ -415,7 +415,7 @@ exec ./kairyu-bench run http://host.docker.internal:8003/v1 \
 - [x] 公式PierのJob/TrialQueueで同時実行上限、完了枠補充、再試行、4反復の集計を検証（問題の実行のみfixture）。
 - [x] 公開原本70設定の値、model ID、effort、分子/分母/CIを検査。Opus 4.8 / maxは111問・429試行のため別途明記。
 - [x] 既存12行・19モデルの出典、取得日、欠測、条件差を構造化。最新mainのGPT-6 Astra列も保持。
-- [ ] 既存12行すべての一次ソースを今回の日付で再検証（現在は過去の出典付き値を保持しhistorical-transcriptionと明記）。
+- [x] 既存公開値102件中100件を2026-09-10に照合。3値を更新し、条件・旧値を保存。残る2件は旧確認日と理由を表・照合記録に明記。提供元による追加DeepSWE値も公式原本と分けて掲載。
 - [ ] 実モデル＋Dockerのsmokeと113問×4反復を完走。Linux SSH接続先未確定・privileged実行の明示承認未取得。
 
 実装検証と実モデルの採点結果を区別する。実測未実施の状態で計画全体や全件評価が完了したとは報告しない。具体的なNVMe/cache/socket/run IDと実行コマンドは`docs/deepswe.md`に保存。

@@ -3,9 +3,13 @@
   "sources": {
     "S1": {
       "url": "https://sakana.ai/fugu-release/",
-      "description": "[Fugu release](https://sakana.ai/fugu-release/), Sakana AI, primary, published 2026-07-23, retrieved 2026-08-11",
+      "description": "[Fugu release](https://sakana.ai/fugu-release/), Sakana AI, primary, published 2026-06-22, retrieved 2026-08-11",
       "retrieved_at": "2026-08-11",
-      "audit_status": "historical-transcription"
+      "audit_status": "verified-primary",
+      "rechecked_at": "2026-09-10",
+      "audit_record": "docs/sources/public-results-audit-20260910.md",
+      "evidence_url": "https://sakana.ai/assets/fugu-release/benchmark-table.png",
+      "audit_note": "Table image confirms the listed values; the separate overview chart shows HLE 48.5 rather than the table's 47.2. The catalog consistently uses the table."
     },
     "S2": {
       "url": "https://www.anthropic.com/news/claude-fable-5-mythos-5",
@@ -17,115 +21,155 @@
       "url": "https://www-cdn.anthropic.com/2f9323abbcc4abe219577539efe19a623c9ca2bd/Claude%20Fable%205%20%26%20Claude%20Mythos%205%20System%20Card.pdf",
       "description": "[Claude Fable 5 & Claude Mythos 5 System Card](https://www-cdn.anthropic.com/2f9323abbcc4abe219577539efe19a623c9ca2bd/Claude%20Fable%205%20%26%20Claude%20Mythos%205%20System%20Card.pdf), Anthropic, primary, published 2026-06-09, retrieved 2026-08-27 (Table 8.1.A。Opus 4.8/GPT-5.5等の competitor 値は各開発元の公表値からの転載と明記)",
       "retrieved_at": "2026-08-27",
-      "audit_status": "historical-transcription"
+      "audit_status": "verified-primary",
+      "rechecked_at": "2026-09-10",
+      "audit_record": "docs/sources/public-results-audit-20260910.md"
     },
     "S4": {
       "url": "https://openai.com/index/gpt-5-6/",
       "description": "[Introducing GPT-5.6](https://openai.com/index/gpt-5-6/), OpenAI, primary, published 2026-07-09, retrieved 2026-08-27 (付録のカテゴリ別評価表。GPT-5.5値も同表由来)",
       "retrieved_at": "2026-08-27",
-      "audit_status": "historical-transcription"
+      "audit_status": "verified-primary",
+      "rechecked_at": "2026-09-10",
+      "audit_record": "docs/sources/public-results-audit-20260910.md"
     },
     "S5": {
       "url": "https://huggingface.co/deepseek-ai/DeepSeek-V4-Flash-0731",
       "description": "[DeepSeek-V4-Flash-0731 model card](https://huggingface.co/deepseek-ai/DeepSeek-V4-Flash-0731), DeepSeek, primary, published 2026-07-31, retrieved 2026-08-11",
       "retrieved_at": "2026-08-11",
-      "audit_status": "historical-transcription"
+      "audit_status": "verified-primary",
+      "rechecked_at": "2026-09-10",
+      "audit_record": "docs/sources/public-results-audit-20260910.md"
     },
     "S6": {
       "url": "https://qwen.ai/blog?id=qwen3.8",
       "description": "[Qwen3.8 launch benchmark table](https://qwen.ai/blog?id=qwen3.8), Qwen, primary image transcription, published 2026-08-03, retrieved 2026-08-11",
       "retrieved_at": "2026-08-11",
-      "audit_status": "historical-transcription"
+      "audit_status": "verified-primary",
+      "rechecked_at": "2026-09-10",
+      "audit_record": "docs/sources/public-results-audit-20260910.md"
     },
     "S7": {
       "url": "https://huggingface.co/zai-org/GLM-5.2",
       "description": "[GLM-5.2 model card](https://huggingface.co/zai-org/GLM-5.2), Z.ai, primary, published 2026-06-16, retrieved 2026-08-11",
       "retrieved_at": "2026-08-11",
-      "audit_status": "historical-transcription"
+      "audit_status": "verified-primary",
+      "rechecked_at": "2026-09-10",
+      "audit_record": "docs/sources/public-results-audit-20260910.md"
     },
     "S8": {
       "url": "https://huggingface.co/moonshotai/Kimi-K3",
       "description": "[Kimi K3 model card](https://huggingface.co/moonshotai/Kimi-K3), Moonshot AI, primary, published 2026-07-29, retrieved 2026-08-11",
       "retrieved_at": "2026-08-11",
-      "audit_status": "historical-transcription"
+      "audit_status": "verified-primary",
+      "rechecked_at": "2026-09-10",
+      "audit_record": "docs/sources/public-results-audit-20260910.md"
     },
     "S9": {
       "url": "https://artificialanalysis.ai/evaluations/humanitys-last-exam",
       "description": "[Humanity's Last Exam leaderboard](https://artificialanalysis.ai/evaluations/humanitys-last-exam), Artificial Analysis, third-party, rolling leaderboard, retrieved 2026-08-11",
       "retrieved_at": "2026-08-11",
-      "audit_status": "historical-transcription"
+      "audit_status": "verified-primary",
+      "rechecked_at": "2026-09-10",
+      "audit_record": "docs/sources/public-results-audit-20260910.md"
     },
     "S10": {
       "url": "https://artificialanalysis.ai/evaluations/scicode",
-      "description": "[SciCode leaderboard](https://artificialanalysis.ai/evaluations/scicode), Artificial Analysis, third-party, rolling leaderboard, retrieved 2026-08-11 (再確認 2026-08-27、値変更なし)",
-      "retrieved_at": "2026-08-11",
-      "audit_status": "historical-transcription"
+      "description": "[SciCode leaderboard](https://artificialanalysis.ai/evaluations/scicode), Artificial Analysis, independent measurement, retrieved 2026-09-10 (Fable 5 / adaptive max / Opus 4.8 fallback; GLM-5.2 / max)",
+      "retrieved_at": "2026-09-10",
+      "audit_status": "verified-primary",
+      "rechecked_at": "2026-09-10",
+      "audit_record": "docs/sources/public-results-audit-20260910.md"
     },
     "S11": {
       "url": "https://artificialanalysis.ai/evaluations/tau3-banking",
-      "description": "[Tau3 Banking leaderboard](https://artificialanalysis.ai/evaluations/tau3-banking), Artificial Analysis, third-party, rolling leaderboard, retrieved 2026-08-11 (GLM-5.3値は 2026-08-27 取得、Qwen3.8 MAX値も同日再確認で変更なし)",
-      "retrieved_at": "2026-08-11",
-      "audit_status": "historical-transcription"
+      "description": "[Tau3 Banking leaderboard](https://artificialanalysis.ai/evaluations/tau3-banking), Artificial Analysis, third-party, rolling leaderboard, retrieved 2026-08-11 (GLM-5.3値は 2026-08-27 取得、Qwen3.8 MAX値も同日再確認で変更なし); rechecked 2026-09-10 (Qwen3.8 Max, GLM-5.3 / max, GLM-5.2 / max)",
+      "retrieved_at": "2026-09-10",
+      "audit_status": "verified-primary",
+      "rechecked_at": "2026-09-10",
+      "audit_record": "docs/sources/public-results-audit-20260910.md"
     },
     "S12": {
       "url": "https://artificialanalysis.ai/models/glm-5-2",
       "description": "[GLM-5.2 intelligence analysis](https://artificialanalysis.ai/models/glm-5-2), Artificial Analysis, third-party, published 2026-06-16, retrieved 2026-08-11",
       "retrieved_at": "2026-08-11",
-      "audit_status": "historical-transcription"
+      "audit_status": "historical-transcription",
+      "last_review_attempt": "2026-09-10",
+      "audit_note": "Legacy AA-LCR 71.0 retained at its original date. The current page reports AA-LCR v1.1, so its values are not substituted for the legacy version. SciCode and Tau3 rows now cite their dedicated evaluation pages."
     },
     "S13": {
       "url": "https://api-docs.deepseek.com/news/news260821/",
       "description": "[DeepSeek-V4-Flash-Vision-Exp release](https://api-docs.deepseek.com/news/news260821/), DeepSeek, primary image transcription, published 2026-08-21, retrieved 2026-08-27",
       "retrieved_at": "2026-08-27",
-      "audit_status": "historical-transcription"
+      "audit_status": "verified-primary",
+      "rechecked_at": "2026-09-10",
+      "audit_record": "docs/sources/public-results-audit-20260910.md",
+      "evidence_url": "https://api-docs.deepseek.com/img/v4_260821_benchmark_en.png"
     },
     "S14": {
       "url": "https://huggingface.co/Qwen/Qwen3.8-Flash-Next",
       "description": "[Qwen3.8-Flash-Next model card](https://huggingface.co/Qwen/Qwen3.8-Flash-Next), Qwen, primary, published 2026-08-26, retrieved 2026-08-27",
       "retrieved_at": "2026-08-27",
-      "audit_status": "historical-transcription"
+      "audit_status": "verified-primary",
+      "rechecked_at": "2026-09-10",
+      "audit_record": "docs/sources/public-results-audit-20260910.md"
     },
     "S15": {
       "url": "https://z.ai/blog/glm-5.3",
       "description": "[GLM-5.3 launch benchmark chart](https://z.ai/blog/glm-5.3), Z.ai, primary image transcription, published 2026-08, retrieved 2026-08-27",
       "retrieved_at": "2026-08-27",
-      "audit_status": "historical-transcription"
+      "audit_status": "verified-primary",
+      "rechecked_at": "2026-09-10",
+      "audit_record": "docs/sources/public-results-audit-20260910.md"
     },
     "S16": {
       "url": "https://huggingface.co/Qwen/Qwen3.8-27B",
       "description": "[Qwen3.8-27B model card](https://huggingface.co/Qwen/Qwen3.8-27B), Qwen, primary, published 2026-08, retrieved 2026-08-27",
       "retrieved_at": "2026-08-27",
-      "audit_status": "historical-transcription"
+      "audit_status": "verified-primary",
+      "rechecked_at": "2026-09-10",
+      "audit_record": "docs/sources/public-results-audit-20260910.md"
     },
     "S17": {
       "url": "https://www.anthropic.com/news/claude-opus-4-8",
       "description": "[Introducing Claude Opus 4.8](https://www.anthropic.com/news/claude-opus-4-8), Anthropic, primary image transcription, published 2026-05-28, retrieved 2026-08-27",
       "retrieved_at": "2026-08-27",
-      "audit_status": "historical-transcription"
+      "audit_status": "cross-checked-same-publisher",
+      "rechecked_at": "2026-09-10",
+      "audit_record": "docs/sources/public-results-audit-20260910.md",
+      "corroborating_source_id": "S18"
     },
     "S18": {
       "url": "https://www-cdn.anthropic.com/b514064af1408018e64b1ad24e7d5e75850b4ffd/Claude%20Opus%205%20System%20Card.pdf",
       "description": "[Claude Opus 5 System Card](https://www-cdn.anthropic.com/b514064af1408018e64b1ad24e7d5e75850b4ffd/Claude%20Opus%205%20System%20Card.pdf), Anthropic, primary, published 2026-07-24, retrieved 2026-08-27 (Table 8.1.A。Fable 5のHLE 56.5もここに記載)",
       "retrieved_at": "2026-08-27",
-      "audit_status": "historical-transcription"
+      "audit_status": "verified-primary",
+      "rechecked_at": "2026-09-10",
+      "audit_record": "docs/sources/public-results-audit-20260910.md"
     },
     "S19": {
       "url": "https://deepmind.google/models/gemini/pro/",
       "description": "[Gemini 3.1 Pro model page](https://deepmind.google/models/gemini/pro/), Google DeepMind, primary, retrieved 2026-08-27",
       "retrieved_at": "2026-08-27",
-      "audit_status": "historical-transcription"
+      "audit_status": "verified-primary",
+      "rechecked_at": "2026-09-10",
+      "audit_record": "docs/sources/public-results-audit-20260910.md"
     },
     "S20": {
       "url": "https://ai.google.dev/gemma/docs/core/model_card_4",
       "description": "[Gemma 4 model card](https://ai.google.dev/gemma/docs/core/model_card_4), Google, primary, published 2026-07-30, retrieved 2026-08-27",
       "retrieved_at": "2026-08-27",
-      "audit_status": "historical-transcription"
+      "audit_status": "verified-primary",
+      "rechecked_at": "2026-09-10",
+      "audit_record": "docs/sources/public-results-audit-20260910.md"
     },
     "S21": {
       "url": "https://openai.com/index/gpt-6-astra/",
       "description": "[GPT-6 Astra: A new generation of intelligence](https://openai.com/index/gpt-6-astra/), OpenAI, primary, retrieved 2026-09-05 (本文末のAcademic / Long Context表と評価条件。HLEはwith tools、MRCR v2はコンテキスト長別)",
       "retrieved_at": "2026-09-05",
-      "audit_status": "historical-transcription"
+      "audit_status": "verified-primary",
+      "rechecked_at": "2026-09-10",
+      "audit_record": "docs/sources/public-results-audit-20260910.md"
     },
     "S22": {
       "url": "https://www.tbench.ai/?version=2.1",
@@ -202,7 +246,8 @@
       "status": "published",
       "conditions": "Public subset / harness and repetitions vary by source; not matched to this run",
       "comparable": false,
-      "audit_status": "historical-transcription"
+      "audit_status": "verified-primary",
+      "verified_at": "2026-09-10"
     },
     {
       "benchmark": "swe-bench-pro",
@@ -213,7 +258,8 @@
       "status": "published",
       "conditions": "Public subset / harness and repetitions vary by source; not matched to this run",
       "comparable": false,
-      "audit_status": "historical-transcription"
+      "audit_status": "verified-primary",
+      "verified_at": "2026-09-10"
     },
     {
       "benchmark": "swe-bench-pro",
@@ -224,7 +270,8 @@
       "status": "published",
       "conditions": "Public subset / harness and repetitions vary by source; not matched to this run",
       "comparable": false,
-      "audit_status": "historical-transcription"
+      "audit_status": "verified-primary",
+      "verified_at": "2026-09-10"
     },
     {
       "benchmark": "swe-bench-pro",
@@ -235,7 +282,8 @@
       "status": "published",
       "conditions": "Public subset / harness and repetitions vary by source; not matched to this run",
       "comparable": false,
-      "audit_status": "historical-transcription"
+      "audit_status": "verified-primary",
+      "verified_at": "2026-09-10"
     },
     {
       "benchmark": "swe-bench-pro",
@@ -244,9 +292,10 @@
       "display_note": "",
       "source_id": "S18",
       "status": "published",
-      "conditions": "Public subset / harness and repetitions vary by source; not matched to this run",
+      "conditions": "Public subset / harness and repetitions vary by source; not matched to this run; adaptive thinking max, average of five trials (Opus 5 system card pp.148–149)",
       "comparable": false,
-      "audit_status": "historical-transcription"
+      "audit_status": "verified-primary",
+      "verified_at": "2026-09-10"
     },
     {
       "benchmark": "swe-bench-pro",
@@ -257,7 +306,9 @@
       "status": "published",
       "conditions": "Public subset / harness and repetitions vary by source; not matched to this run",
       "comparable": false,
-      "audit_status": "historical-transcription"
+      "audit_status": "cross-checked-same-publisher",
+      "verified_at": "2026-09-10",
+      "corroborating_source_id": "S18"
     },
     {
       "benchmark": "swe-bench-pro",
@@ -279,7 +330,8 @@
       "status": "published",
       "conditions": "Public subset / harness and repetitions vary by source; not matched to this run",
       "comparable": false,
-      "audit_status": "historical-transcription"
+      "audit_status": "verified-primary",
+      "verified_at": "2026-09-10"
     },
     {
       "benchmark": "swe-bench-pro",
@@ -290,7 +342,8 @@
       "status": "published",
       "conditions": "Public subset / harness and repetitions vary by source; not matched to this run",
       "comparable": false,
-      "audit_status": "historical-transcription"
+      "audit_status": "verified-primary",
+      "verified_at": "2026-09-10"
     },
     {
       "benchmark": "swe-bench-pro",
@@ -301,7 +354,8 @@
       "status": "published",
       "conditions": "Public subset / harness and repetitions vary by source; not matched to this run",
       "comparable": false,
-      "audit_status": "historical-transcription"
+      "audit_status": "verified-primary",
+      "verified_at": "2026-09-10"
     },
     {
       "benchmark": "swe-bench-pro",
@@ -343,9 +397,10 @@
       "display_note": "",
       "source_id": "S6",
       "status": "published",
-      "conditions": "Public subset / harness and repetitions vary by source; not matched to this run",
+      "conditions": "Qwen self-report / Claude Code / temperature=1, top_p=0.95, 256K context / problematic tasks corrected; not the pinned unmodified public evaluator",
       "comparable": false,
-      "audit_status": "historical-transcription"
+      "audit_status": "verified-primary",
+      "verified_at": "2026-09-10"
     },
     {
       "benchmark": "swe-bench-pro",
@@ -354,9 +409,10 @@
       "display_note": "",
       "source_id": "S16",
       "status": "published",
-      "conditions": "Public subset / harness and repetitions vary by source; not matched to this run",
+      "conditions": "Qwen self-report / Claude Code / temperature=1, top_p=0.95, 256K context / problematic tasks corrected; not the pinned unmodified public evaluator",
       "comparable": false,
-      "audit_status": "historical-transcription"
+      "audit_status": "verified-primary",
+      "verified_at": "2026-09-10"
     },
     {
       "benchmark": "swe-bench-pro",
@@ -365,9 +421,10 @@
       "display_note": "",
       "source_id": "S14",
       "status": "published",
-      "conditions": "Public subset / harness and repetitions vary by source; not matched to this run",
+      "conditions": "Qwen self-report / Claude Code / temperature=1, top_p=0.95, 256K context / problematic tasks corrected; not the pinned unmodified public evaluator",
       "comparable": false,
-      "audit_status": "historical-transcription"
+      "audit_status": "verified-primary",
+      "verified_at": "2026-09-10"
     },
     {
       "benchmark": "swe-bench-pro",
@@ -378,7 +435,8 @@
       "status": "published",
       "conditions": "Public subset / harness and repetitions vary by source; not matched to this run",
       "comparable": false,
-      "audit_status": "historical-transcription"
+      "audit_status": "verified-primary",
+      "verified_at": "2026-09-10"
     },
     {
       "benchmark": "swe-bench-pro",
@@ -433,7 +491,8 @@
       "status": "published",
       "conditions": "Harness and repetitions vary (Fable 5 averages five trials)",
       "comparable": false,
-      "audit_status": "historical-transcription"
+      "audit_status": "verified-primary",
+      "verified_at": "2026-09-10"
     },
     {
       "benchmark": "swe-bench-verified",
@@ -444,7 +503,8 @@
       "status": "published",
       "conditions": "Harness and repetitions vary (Fable 5 averages five trials)",
       "comparable": false,
-      "audit_status": "historical-transcription"
+      "audit_status": "verified-primary",
+      "verified_at": "2026-09-10"
     },
     {
       "benchmark": "swe-bench-verified",
@@ -453,9 +513,10 @@
       "display_note": "",
       "source_id": "S18",
       "status": "published",
-      "conditions": "Harness and repetitions vary (Fable 5 averages five trials)",
+      "conditions": "Harness and repetitions vary (Fable 5 averages five trials); adaptive thinking max, average of five trials (Opus 5 system card pp.148–149)",
       "comparable": false,
-      "audit_status": "historical-transcription"
+      "audit_status": "verified-primary",
+      "verified_at": "2026-09-10"
     },
     {
       "benchmark": "swe-bench-verified",
@@ -466,7 +527,8 @@
       "status": "published",
       "conditions": "Harness and repetitions vary (Fable 5 averages five trials)",
       "comparable": false,
-      "audit_status": "historical-transcription"
+      "audit_status": "verified-primary",
+      "verified_at": "2026-09-10"
     },
     {
       "benchmark": "swe-bench-verified",
@@ -510,7 +572,8 @@
       "status": "published",
       "conditions": "Harness and repetitions vary (Fable 5 averages five trials)",
       "comparable": false,
-      "audit_status": "historical-transcription"
+      "audit_status": "verified-primary",
+      "verified_at": "2026-09-10"
     },
     {
       "benchmark": "swe-bench-verified",
@@ -620,7 +683,8 @@
       "status": "published",
       "conditions": "2.1; harness and repetitions vary; Astra is Codex 0.151.0 / high / five trials",
       "comparable": false,
-      "audit_status": "historical-transcription"
+      "audit_status": "verified-primary",
+      "verified_at": "2026-09-10"
     },
     {
       "benchmark": "terminal-bench",
@@ -631,7 +695,8 @@
       "status": "published",
       "conditions": "2.1; harness and repetitions vary; Astra is Codex 0.151.0 / high / five trials",
       "comparable": false,
-      "audit_status": "historical-transcription"
+      "audit_status": "verified-primary",
+      "verified_at": "2026-09-10"
     },
     {
       "benchmark": "terminal-bench",
@@ -642,7 +707,8 @@
       "status": "published",
       "conditions": "2.1; harness and repetitions vary; Astra is Codex 0.151.0 / high / five trials",
       "comparable": false,
-      "audit_status": "historical-transcription"
+      "audit_status": "verified-primary",
+      "verified_at": "2026-09-10"
     },
     {
       "benchmark": "terminal-bench",
@@ -653,7 +719,8 @@
       "status": "published",
       "conditions": "2.1; harness and repetitions vary; Astra is Codex 0.151.0 / high / five trials",
       "comparable": false,
-      "audit_status": "historical-transcription"
+      "audit_status": "verified-primary",
+      "verified_at": "2026-09-10"
     },
     {
       "benchmark": "terminal-bench",
@@ -675,18 +742,20 @@
       "status": "published",
       "conditions": "2.1; harness and repetitions vary; Astra is Codex 0.151.0 / high / five trials",
       "comparable": false,
-      "audit_status": "historical-transcription"
+      "audit_status": "verified-primary",
+      "verified_at": "2026-09-10"
     },
     {
       "benchmark": "terminal-bench",
       "model": "GPT-6 Astra",
       "score_percent": 87.4,
-      "display_note": "",
+      "display_note": "(2026-09-05)",
       "source_id": "S22",
       "status": "published",
       "conditions": "2.1; harness and repetitions vary; Astra is Codex 0.151.0 / high / five trials",
       "comparable": false,
-      "audit_status": "historical-transcription"
+      "audit_status": "historical-transcription",
+      "audit_note": "Retained from the 2026-09-05 official leaderboard audit; not revalidated against the current board in this change."
     },
     {
       "benchmark": "terminal-bench",
@@ -697,7 +766,8 @@
       "status": "published",
       "conditions": "2.1; harness and repetitions vary; Astra is Codex 0.151.0 / high / five trials",
       "comparable": false,
-      "audit_status": "historical-transcription"
+      "audit_status": "verified-primary",
+      "verified_at": "2026-09-10"
     },
     {
       "benchmark": "terminal-bench",
@@ -708,7 +778,8 @@
       "status": "published",
       "conditions": "2.1; harness and repetitions vary; Astra is Codex 0.151.0 / high / five trials",
       "comparable": false,
-      "audit_status": "historical-transcription"
+      "audit_status": "verified-primary",
+      "verified_at": "2026-09-10"
     },
     {
       "benchmark": "terminal-bench",
@@ -739,9 +810,10 @@
       "display_note": "",
       "source_id": "S5",
       "status": "published",
-      "conditions": "2.1; harness and repetitions vary; Astra is Codex 0.151.0 / high / five trials",
+      "conditions": "DeepSeek Harness Minimal Mode / maximum tokens / temperature=1, top_p=0.95; not the local Terminus-2 default",
       "comparable": false,
-      "audit_status": "historical-transcription"
+      "audit_status": "verified-primary",
+      "verified_at": "2026-09-10"
     },
     {
       "benchmark": "terminal-bench",
@@ -750,9 +822,10 @@
       "display_note": "",
       "source_id": "S13",
       "status": "published",
-      "conditions": "2.1; harness and repetitions vary; Astra is Codex 0.151.0 / high / five trials",
+      "conditions": "DeepSeek Harness Minimal Mode / maximum tokens / temperature=1, top_p=0.95; not the local Terminus-2 default",
       "comparable": false,
-      "audit_status": "historical-transcription"
+      "audit_status": "verified-primary",
+      "verified_at": "2026-09-10"
     },
     {
       "benchmark": "terminal-bench",
@@ -761,9 +834,10 @@
       "display_note": "",
       "source_id": "S6",
       "status": "published",
-      "conditions": "2.1; harness and repetitions vary; Astra is Codex 0.151.0 / high / five trials",
+      "conditions": "Qwen self-report / Claude Code / avg@10 / 5h timeout / max_tokens=131072; not the local Terminus-2 default",
       "comparable": false,
-      "audit_status": "historical-transcription"
+      "audit_status": "verified-primary",
+      "verified_at": "2026-09-10"
     },
     {
       "benchmark": "terminal-bench",
@@ -774,7 +848,8 @@
       "status": "published",
       "conditions": "2.1; harness and repetitions vary; Astra is Codex 0.151.0 / high / five trials",
       "comparable": false,
-      "audit_status": "historical-transcription"
+      "audit_status": "verified-primary",
+      "verified_at": "2026-09-10"
     },
     {
       "benchmark": "terminal-bench",
@@ -796,7 +871,8 @@
       "status": "published",
       "conditions": "2.1; harness and repetitions vary; Astra is Codex 0.151.0 / high / five trials",
       "comparable": false,
-      "audit_status": "historical-transcription"
+      "audit_status": "verified-primary",
+      "verified_at": "2026-09-10"
     },
     {
       "benchmark": "terminal-bench",
@@ -805,9 +881,10 @@
       "display_note": "",
       "source_id": "S15",
       "status": "published",
-      "conditions": "2.1; harness and repetitions vary; Astra is Codex 0.151.0 / high / five trials",
+      "conditions": "Claude Code 2.1.207 / temperature=1, top_p=1, max_new_tokens=65536, 6h timeout; not the local Terminus-2 default",
       "comparable": false,
-      "audit_status": "historical-transcription"
+      "audit_status": "verified-primary",
+      "verified_at": "2026-09-10"
     },
     {
       "benchmark": "terminal-bench",
@@ -818,7 +895,8 @@
       "status": "published",
       "conditions": "2.1; harness and repetitions vary; Astra is Codex 0.151.0 / high / five trials",
       "comparable": false,
-      "audit_status": "historical-transcription"
+      "audit_status": "verified-primary",
+      "verified_at": "2026-09-10"
     },
     {
       "benchmark": "livecodebench",
@@ -829,7 +907,8 @@
       "status": "published",
       "conditions": "Dataset version/date window may differ (Qwen reports v6)",
       "comparable": false,
-      "audit_status": "historical-transcription"
+      "audit_status": "verified-primary",
+      "verified_at": "2026-09-10"
     },
     {
       "benchmark": "livecodebench",
@@ -840,7 +919,8 @@
       "status": "published",
       "conditions": "Dataset version/date window may differ (Qwen reports v6)",
       "comparable": false,
-      "audit_status": "historical-transcription"
+      "audit_status": "verified-primary",
+      "verified_at": "2026-09-10"
     },
     {
       "benchmark": "livecodebench",
@@ -939,7 +1019,8 @@
       "status": "published",
       "conditions": "Dataset version/date window may differ (Qwen reports v6)",
       "comparable": false,
-      "audit_status": "historical-transcription"
+      "audit_status": "verified-primary",
+      "verified_at": "2026-09-10"
     },
     {
       "benchmark": "livecodebench",
@@ -983,7 +1064,8 @@
       "status": "published",
       "conditions": "Dataset version/date window may differ (Qwen reports v6)",
       "comparable": false,
-      "audit_status": "historical-transcription"
+      "audit_status": "verified-primary",
+      "verified_at": "2026-09-10"
     },
     {
       "benchmark": "livecodebench",
@@ -994,7 +1076,8 @@
       "status": "published",
       "conditions": "Dataset version/date window may differ (Qwen reports v6)",
       "comparable": false,
-      "audit_status": "historical-transcription"
+      "audit_status": "verified-primary",
+      "verified_at": "2026-09-10"
     },
     {
       "benchmark": "livecodebench",
@@ -1038,7 +1121,8 @@
       "status": "published",
       "conditions": "Published percentage; full dataset selection and evaluation conditions not matched",
       "comparable": false,
-      "audit_status": "historical-transcription"
+      "audit_status": "verified-primary",
+      "verified_at": "2026-09-10"
     },
     {
       "benchmark": "livecodebench-pro",
@@ -1049,7 +1133,8 @@
       "status": "published",
       "conditions": "Published percentage; full dataset selection and evaluation conditions not matched",
       "comparable": false,
-      "audit_status": "historical-transcription"
+      "audit_status": "verified-primary",
+      "verified_at": "2026-09-10"
     },
     {
       "benchmark": "livecodebench-pro",
@@ -1247,7 +1332,8 @@
       "status": "published",
       "conditions": "Tools and judge differ; local runner self-judges",
       "comparable": false,
-      "audit_status": "historical-transcription"
+      "audit_status": "verified-primary",
+      "verified_at": "2026-09-10"
     },
     {
       "benchmark": "hle",
@@ -1258,7 +1344,8 @@
       "status": "published",
       "conditions": "Tools and judge differ; local runner self-judges",
       "comparable": false,
-      "audit_status": "historical-transcription"
+      "audit_status": "verified-primary",
+      "verified_at": "2026-09-10"
     },
     {
       "benchmark": "hle",
@@ -1267,9 +1354,10 @@
       "display_note": "",
       "source_id": "S18",
       "status": "published",
-      "conditions": "Tools and judge differ; local runner self-judges",
+      "conditions": "Tools and judge differ; local runner self-judges; adaptive thinking max, average of five trials (Opus 5 system card pp.148–149)",
       "comparable": false,
-      "audit_status": "historical-transcription"
+      "audit_status": "verified-primary",
+      "verified_at": "2026-09-10"
     },
     {
       "benchmark": "hle",
@@ -1280,7 +1368,8 @@
       "status": "published",
       "conditions": "Tools and judge differ; local runner self-judges",
       "comparable": false,
-      "audit_status": "historical-transcription"
+      "audit_status": "verified-primary",
+      "verified_at": "2026-09-10"
     },
     {
       "benchmark": "hle",
@@ -1289,9 +1378,10 @@
       "display_note": "",
       "source_id": "S18",
       "status": "published",
-      "conditions": "Tools and judge differ; local runner self-judges",
+      "conditions": "Tools and judge differ; local runner self-judges; adaptive thinking max, average of five trials (Opus 5 system card pp.148–149)",
       "comparable": false,
-      "audit_status": "historical-transcription"
+      "audit_status": "verified-primary",
+      "verified_at": "2026-09-10"
     },
     {
       "benchmark": "hle",
@@ -1302,7 +1392,9 @@
       "status": "published",
       "conditions": "Tools and judge differ; local runner self-judges",
       "comparable": false,
-      "audit_status": "historical-transcription"
+      "audit_status": "cross-checked-same-publisher",
+      "verified_at": "2026-09-10",
+      "corroborating_source_id": "S18"
     },
     {
       "benchmark": "hle",
@@ -1313,7 +1405,8 @@
       "status": "published",
       "conditions": "Tools and judge differ; local runner self-judges",
       "comparable": false,
-      "audit_status": "historical-transcription"
+      "audit_status": "verified-primary",
+      "verified_at": "2026-09-10"
     },
     {
       "benchmark": "hle",
@@ -1322,9 +1415,10 @@
       "display_note": "",
       "source_id": "S9",
       "status": "published",
-      "conditions": "Tools and judge differ; local runner self-judges",
+      "conditions": "Artificial Analysis / GPT-5.6 Sol (max); independently measured, not the local self-judge configuration",
       "comparable": false,
-      "audit_status": "historical-transcription"
+      "audit_status": "verified-primary",
+      "verified_at": "2026-09-10"
     },
     {
       "benchmark": "hle",
@@ -1335,7 +1429,8 @@
       "status": "published",
       "conditions": "Tools and judge differ; local runner self-judges",
       "comparable": false,
-      "audit_status": "historical-transcription"
+      "audit_status": "verified-primary",
+      "verified_at": "2026-09-10"
     },
     {
       "benchmark": "hle",
@@ -1346,7 +1441,8 @@
       "status": "published",
       "conditions": "Tools and judge differ; local runner self-judges",
       "comparable": false,
-      "audit_status": "historical-transcription"
+      "audit_status": "verified-primary",
+      "verified_at": "2026-09-10"
     },
     {
       "benchmark": "hle",
@@ -1357,7 +1453,8 @@
       "status": "published",
       "conditions": "Tools and judge differ; local runner self-judges",
       "comparable": false,
-      "audit_status": "historical-transcription"
+      "audit_status": "verified-primary",
+      "verified_at": "2026-09-10"
     },
     {
       "benchmark": "hle",
@@ -1390,7 +1487,8 @@
       "status": "published",
       "conditions": "Tools and judge differ; local runner self-judges",
       "comparable": false,
-      "audit_status": "historical-transcription"
+      "audit_status": "verified-primary",
+      "verified_at": "2026-09-10"
     },
     {
       "benchmark": "hle",
@@ -1399,9 +1497,10 @@
       "display_note": "",
       "source_id": "S16",
       "status": "published",
-      "conditions": "Tools and judge differ; local runner self-judges",
+      "conditions": "Qwen self-report / GPT-4o judge; local runner uses the evaluated model as judge",
       "comparable": false,
-      "audit_status": "historical-transcription"
+      "audit_status": "verified-primary",
+      "verified_at": "2026-09-10"
     },
     {
       "benchmark": "hle",
@@ -1410,9 +1509,10 @@
       "display_note": "",
       "source_id": "S14",
       "status": "published",
-      "conditions": "Tools and judge differ; local runner self-judges",
+      "conditions": "Qwen self-report / GPT-4o judge; local runner uses the evaluated model as judge",
       "comparable": false,
-      "audit_status": "historical-transcription"
+      "audit_status": "verified-primary",
+      "verified_at": "2026-09-10"
     },
     {
       "benchmark": "hle",
@@ -1423,7 +1523,8 @@
       "status": "published",
       "conditions": "Tools and judge differ; local runner self-judges",
       "comparable": false,
-      "audit_status": "historical-transcription"
+      "audit_status": "verified-primary",
+      "verified_at": "2026-09-10"
     },
     {
       "benchmark": "hle",
@@ -1432,9 +1533,10 @@
       "display_note": "(tools)",
       "source_id": "S15",
       "status": "published",
-      "conditions": "Tools and judge differ; local runner self-judges",
+      "conditions": "With tools / GPT-5.6-luna medium judge / temperature=1, top_p=0.95, max generation=163840, max context=300000 with context management; not the local self-judge configuration",
       "comparable": false,
-      "audit_status": "historical-transcription"
+      "audit_status": "verified-primary",
+      "verified_at": "2026-09-10"
     },
     {
       "benchmark": "hle",
@@ -1445,7 +1547,8 @@
       "status": "published",
       "conditions": "Tools and judge differ; local runner self-judges",
       "comparable": false,
-      "audit_status": "historical-transcription"
+      "audit_status": "verified-primary",
+      "verified_at": "2026-09-10"
     },
     {
       "benchmark": "charxiv-reasoning",
@@ -1456,7 +1559,8 @@
       "status": "published",
       "conditions": "Tool use varies; local runner self-judges",
       "comparable": false,
-      "audit_status": "historical-transcription"
+      "audit_status": "verified-primary",
+      "verified_at": "2026-09-10"
     },
     {
       "benchmark": "charxiv-reasoning",
@@ -1467,7 +1571,8 @@
       "status": "published",
       "conditions": "Tool use varies; local runner self-judges",
       "comparable": false,
-      "audit_status": "historical-transcription"
+      "audit_status": "verified-primary",
+      "verified_at": "2026-09-10"
     },
     {
       "benchmark": "charxiv-reasoning",
@@ -1489,7 +1594,8 @@
       "status": "published",
       "conditions": "Tool use varies; local runner self-judges",
       "comparable": false,
-      "audit_status": "historical-transcription"
+      "audit_status": "verified-primary",
+      "verified_at": "2026-09-10"
     },
     {
       "benchmark": "charxiv-reasoning",
@@ -1511,7 +1617,8 @@
       "status": "published",
       "conditions": "Tool use varies; local runner self-judges",
       "comparable": false,
-      "audit_status": "historical-transcription"
+      "audit_status": "verified-primary",
+      "verified_at": "2026-09-10"
     },
     {
       "benchmark": "charxiv-reasoning",
@@ -1597,9 +1704,10 @@
       "display_note": "",
       "source_id": "S6",
       "status": "published",
-      "conditions": "Tool use varies; local runner self-judges",
+      "conditions": "With code interpreter (93.5; without CI 88.4); some ground-truth annotations corrected by Qwen; not the local self-judge configuration",
       "comparable": false,
-      "audit_status": "historical-transcription"
+      "audit_status": "verified-primary",
+      "verified_at": "2026-09-10"
     },
     {
       "benchmark": "charxiv-reasoning",
@@ -1610,7 +1718,8 @@
       "status": "published",
       "conditions": "Tool use varies; local runner self-judges",
       "comparable": false,
-      "audit_status": "historical-transcription"
+      "audit_status": "verified-primary",
+      "verified_at": "2026-09-10"
     },
     {
       "benchmark": "charxiv-reasoning",
@@ -1621,7 +1730,8 @@
       "status": "published",
       "conditions": "Tool use varies; local runner self-judges",
       "comparable": false,
-      "audit_status": "historical-transcription"
+      "audit_status": "verified-primary",
+      "verified_at": "2026-09-10"
     },
     {
       "benchmark": "charxiv-reasoning",
@@ -1654,7 +1764,8 @@
       "status": "published",
       "conditions": "Tool use varies; local runner self-judges",
       "comparable": false,
-      "audit_status": "historical-transcription"
+      "audit_status": "verified-primary",
+      "verified_at": "2026-09-10"
     },
     {
       "benchmark": "gpqa-diamond",
@@ -1665,7 +1776,8 @@
       "status": "published",
       "conditions": "Prompt, sampling and repetition settings not matched",
       "comparable": false,
-      "audit_status": "historical-transcription"
+      "audit_status": "verified-primary",
+      "verified_at": "2026-09-10"
     },
     {
       "benchmark": "gpqa-diamond",
@@ -1676,7 +1788,8 @@
       "status": "published",
       "conditions": "Prompt, sampling and repetition settings not matched",
       "comparable": false,
-      "audit_status": "historical-transcription"
+      "audit_status": "verified-primary",
+      "verified_at": "2026-09-10"
     },
     {
       "benchmark": "gpqa-diamond",
@@ -1696,9 +1809,10 @@
       "display_note": "",
       "source_id": "S3",
       "status": "published",
-      "conditions": "Prompt, sampling and repetition settings not matched",
+      "conditions": "198-question Diamond subset / average of five trials / Mythos 5 without Fable safeguards; system card section 8.8, printed p.258",
       "comparable": false,
-      "audit_status": "historical-transcription"
+      "audit_status": "verified-primary",
+      "verified_at": "2026-09-10"
     },
     {
       "benchmark": "gpqa-diamond",
@@ -1731,7 +1845,8 @@
       "status": "published",
       "conditions": "Prompt, sampling and repetition settings not matched",
       "comparable": false,
-      "audit_status": "historical-transcription"
+      "audit_status": "verified-primary",
+      "verified_at": "2026-09-10"
     },
     {
       "benchmark": "gpqa-diamond",
@@ -1742,7 +1857,8 @@
       "status": "published",
       "conditions": "Prompt, sampling and repetition settings not matched",
       "comparable": false,
-      "audit_status": "historical-transcription"
+      "audit_status": "verified-primary",
+      "verified_at": "2026-09-10"
     },
     {
       "benchmark": "gpqa-diamond",
@@ -1753,7 +1869,8 @@
       "status": "published",
       "conditions": "Prompt, sampling and repetition settings not matched",
       "comparable": false,
-      "audit_status": "historical-transcription"
+      "audit_status": "verified-primary",
+      "verified_at": "2026-09-10"
     },
     {
       "benchmark": "gpqa-diamond",
@@ -1764,7 +1881,8 @@
       "status": "published",
       "conditions": "Prompt, sampling and repetition settings not matched",
       "comparable": false,
-      "audit_status": "historical-transcription"
+      "audit_status": "verified-primary",
+      "verified_at": "2026-09-10"
     },
     {
       "benchmark": "gpqa-diamond",
@@ -1775,7 +1893,8 @@
       "status": "published",
       "conditions": "Prompt, sampling and repetition settings not matched",
       "comparable": false,
-      "audit_status": "historical-transcription"
+      "audit_status": "verified-primary",
+      "verified_at": "2026-09-10"
     },
     {
       "benchmark": "gpqa-diamond",
@@ -1808,7 +1927,8 @@
       "status": "published",
       "conditions": "Prompt, sampling and repetition settings not matched",
       "comparable": false,
-      "audit_status": "historical-transcription"
+      "audit_status": "verified-primary",
+      "verified_at": "2026-09-10"
     },
     {
       "benchmark": "gpqa-diamond",
@@ -1819,7 +1939,8 @@
       "status": "published",
       "conditions": "Prompt, sampling and repetition settings not matched",
       "comparable": false,
-      "audit_status": "historical-transcription"
+      "audit_status": "verified-primary",
+      "verified_at": "2026-09-10"
     },
     {
       "benchmark": "gpqa-diamond",
@@ -1830,7 +1951,8 @@
       "status": "published",
       "conditions": "Prompt, sampling and repetition settings not matched",
       "comparable": false,
-      "audit_status": "historical-transcription"
+      "audit_status": "verified-primary",
+      "verified_at": "2026-09-10"
     },
     {
       "benchmark": "gpqa-diamond",
@@ -1841,7 +1963,8 @@
       "status": "published",
       "conditions": "Prompt, sampling and repetition settings not matched",
       "comparable": false,
-      "audit_status": "historical-transcription"
+      "audit_status": "verified-primary",
+      "verified_at": "2026-09-10"
     },
     {
       "benchmark": "gpqa-diamond",
@@ -1863,7 +1986,8 @@
       "status": "published",
       "conditions": "Prompt, sampling and repetition settings not matched",
       "comparable": false,
-      "audit_status": "historical-transcription"
+      "audit_status": "verified-primary",
+      "verified_at": "2026-09-10"
     },
     {
       "benchmark": "scicode",
@@ -1874,7 +1998,8 @@
       "status": "published",
       "conditions": "Evaluator/data configuration not matched",
       "comparable": false,
-      "audit_status": "historical-transcription"
+      "audit_status": "verified-primary",
+      "verified_at": "2026-09-10"
     },
     {
       "benchmark": "scicode",
@@ -1885,18 +2010,25 @@
       "status": "published",
       "conditions": "Evaluator/data configuration not matched",
       "comparable": false,
-      "audit_status": "historical-transcription"
+      "audit_status": "verified-primary",
+      "verified_at": "2026-09-10"
     },
     {
       "benchmark": "scicode",
       "model": "Fable 5",
-      "score_percent": 60.2,
+      "score_percent": 61.0,
       "display_note": "",
       "source_id": "S10",
       "status": "published",
-      "conditions": "Evaluator/data configuration not matched",
+      "conditions": "Artificial Analysis / 288 test subproblems; Fable 5 adaptive reasoning max with Opus 4.8 fallback; evaluator not matched to the local run",
       "comparable": false,
-      "audit_status": "historical-transcription"
+      "audit_status": "verified-primary",
+      "previous_publication": {
+        "score_percent": 60.2,
+        "source_id": "S10",
+        "retrieved_at": "2026-08-11"
+      },
+      "verified_at": "2026-09-10"
     },
     {
       "benchmark": "scicode",
@@ -1973,7 +2105,8 @@
       "status": "published",
       "conditions": "Evaluator/data configuration not matched",
       "comparable": false,
-      "audit_status": "historical-transcription"
+      "audit_status": "verified-primary",
+      "verified_at": "2026-09-10"
     },
     {
       "benchmark": "scicode",
@@ -2044,13 +2177,19 @@
     {
       "benchmark": "scicode",
       "model": "GLM-5.2",
-      "score_percent": 50.0,
+      "score_percent": 51.2,
       "display_note": "",
-      "source_id": "S12",
+      "source_id": "S10",
       "status": "published",
-      "conditions": "Evaluator/data configuration not matched",
+      "conditions": "Artificial Analysis / 288 test subproblems; GLM-5.2 max; evaluator not matched to the local run",
       "comparable": false,
-      "audit_status": "historical-transcription"
+      "audit_status": "verified-primary",
+      "previous_publication": {
+        "score_percent": 50.0,
+        "source_id": "S12",
+        "retrieved_at": "2026-08-11"
+      },
+      "verified_at": "2026-09-10"
     },
     {
       "benchmark": "scicode",
@@ -2072,7 +2211,8 @@
       "status": "published",
       "conditions": "Evaluator/data configuration not matched",
       "comparable": false,
-      "audit_status": "historical-transcription"
+      "audit_status": "verified-primary",
+      "verified_at": "2026-09-10"
     },
     {
       "benchmark": "tau-bench-banking",
@@ -2083,7 +2223,8 @@
       "status": "published",
       "conditions": "Public Tau3 Banking may differ from the pinned tau2-bench runner; local model is also the simulator",
       "comparable": false,
-      "audit_status": "historical-transcription"
+      "audit_status": "verified-primary",
+      "verified_at": "2026-09-10"
     },
     {
       "benchmark": "tau-bench-banking",
@@ -2094,7 +2235,8 @@
       "status": "published",
       "conditions": "Public Tau3 Banking may differ from the pinned tau2-bench runner; local model is also the simulator",
       "comparable": false,
-      "audit_status": "historical-transcription"
+      "audit_status": "verified-primary",
+      "verified_at": "2026-09-10"
     },
     {
       "benchmark": "tau-bench-banking",
@@ -2224,9 +2366,10 @@
       "display_note": "",
       "source_id": "S11",
       "status": "published",
-      "conditions": "Public Tau3 Banking may differ from the pinned tau2-bench runner; local model is also the simulator",
+      "conditions": "Public Tau3 Banking may differ from the pinned tau2-bench runner; local model is also the simulator; AA measures 97 tasks with pass@1 averaged over repeats",
       "comparable": false,
-      "audit_status": "historical-transcription"
+      "audit_status": "verified-primary",
+      "verified_at": "2026-09-10"
     },
     {
       "benchmark": "tau-bench-banking",
@@ -2253,13 +2396,19 @@
     {
       "benchmark": "tau-bench-banking",
       "model": "GLM-5.2",
-      "score_percent": 27.0,
+      "score_percent": 34.6,
       "display_note": "",
-      "source_id": "S12",
+      "source_id": "S11",
       "status": "published",
-      "conditions": "Public Tau3 Banking may differ from the pinned tau2-bench runner; local model is also the simulator",
+      "conditions": "Public Tau3 Banking may differ from the pinned tau2-bench runner; local model is also the simulator; AA measures 97 tasks with pass@1 averaged over repeats; max effort",
       "comparable": false,
-      "audit_status": "historical-transcription"
+      "audit_status": "verified-primary",
+      "previous_publication": {
+        "score_percent": 27.0,
+        "source_id": "S12",
+        "retrieved_at": "2026-08-11"
+      },
+      "verified_at": "2026-09-10"
     },
     {
       "benchmark": "tau-bench-banking",
@@ -2268,9 +2417,10 @@
       "display_note": "",
       "source_id": "S11",
       "status": "published",
-      "conditions": "Public Tau3 Banking may differ from the pinned tau2-bench runner; local model is also the simulator",
+      "conditions": "Public Tau3 Banking may differ from the pinned tau2-bench runner; local model is also the simulator; AA measures 97 tasks with pass@1 averaged over repeats; max effort",
       "comparable": false,
-      "audit_status": "historical-transcription"
+      "audit_status": "verified-primary",
+      "verified_at": "2026-09-10"
     },
     {
       "benchmark": "tau-bench-banking",
@@ -2281,7 +2431,8 @@
       "status": "published",
       "conditions": "Public Tau3 Banking may differ from the pinned tau2-bench runner; local model is also the simulator",
       "comparable": false,
-      "audit_status": "historical-transcription"
+      "audit_status": "verified-primary",
+      "verified_at": "2026-09-10"
     },
     {
       "benchmark": "long-context-reasoning",
@@ -2292,7 +2443,8 @@
       "status": "published",
       "conditions": "Published Long Context Reasoning is not the LongBench v2 substitute run here",
       "comparable": false,
-      "audit_status": "historical-transcription"
+      "audit_status": "verified-primary",
+      "verified_at": "2026-09-10"
     },
     {
       "benchmark": "long-context-reasoning",
@@ -2303,7 +2455,8 @@
       "status": "published",
       "conditions": "Published Long Context Reasoning is not the LongBench v2 substitute run here",
       "comparable": false,
-      "audit_status": "historical-transcription"
+      "audit_status": "verified-primary",
+      "verified_at": "2026-09-10"
     },
     {
       "benchmark": "long-context-reasoning",
@@ -2463,12 +2616,13 @@
       "benchmark": "long-context-reasoning",
       "model": "GLM-5.2",
       "score_percent": 71.0,
-      "display_note": "",
+      "display_note": "(2026-08-11)",
       "source_id": "S12",
       "status": "published",
       "conditions": "Published Long Context Reasoning is not the LongBench v2 substitute run here",
       "comparable": false,
-      "audit_status": "historical-transcription"
+      "audit_status": "historical-transcription",
+      "audit_note": "Legacy AA-LCR 71.0 retained at its original date. The current page reports AA-LCR v1.1, so its values are not substituted for the legacy version. SciCode and Tau3 rows now cite their dedicated evaluation pages."
     },
     {
       "benchmark": "long-context-reasoning",
@@ -2490,7 +2644,8 @@
       "status": "published",
       "conditions": "Published Long Context Reasoning is not the LongBench v2 substitute run here",
       "comparable": false,
-      "audit_status": "historical-transcription"
+      "audit_status": "verified-primary",
+      "verified_at": "2026-09-10"
     },
     {
       "benchmark": "mrcr-v2",
@@ -2501,7 +2656,8 @@
       "status": "published",
       "conditions": "Needle/token windows differ: public 128K/256K/256K–512K versus local 4K–128K",
       "comparable": false,
-      "audit_status": "historical-transcription"
+      "audit_status": "verified-primary",
+      "verified_at": "2026-09-10"
     },
     {
       "benchmark": "mrcr-v2",
@@ -2512,7 +2668,8 @@
       "status": "published",
       "conditions": "Needle/token windows differ: public 128K/256K/256K–512K versus local 4K–128K",
       "comparable": false,
-      "audit_status": "historical-transcription"
+      "audit_status": "verified-primary",
+      "verified_at": "2026-09-10"
     },
     {
       "benchmark": "mrcr-v2",
@@ -2567,7 +2724,8 @@
       "status": "published",
       "conditions": "Needle/token windows differ: public 128K/256K/256K–512K versus local 4K–128K",
       "comparable": false,
-      "audit_status": "historical-transcription"
+      "audit_status": "verified-primary",
+      "verified_at": "2026-09-10"
     },
     {
       "benchmark": "mrcr-v2",
@@ -2578,7 +2736,8 @@
       "status": "published",
       "conditions": "Needle/token windows differ: public 128K/256K/256K–512K versus local 4K–128K",
       "comparable": false,
-      "audit_status": "historical-transcription"
+      "audit_status": "verified-primary",
+      "verified_at": "2026-09-10"
     },
     {
       "benchmark": "mrcr-v2",
@@ -2589,7 +2748,8 @@
       "status": "published",
       "conditions": "Needle/token windows differ: public 128K/256K/256K–512K versus local 4K–128K",
       "comparable": false,
-      "audit_status": "historical-transcription"
+      "audit_status": "verified-primary",
+      "verified_at": "2026-09-10"
     },
     {
       "benchmark": "mrcr-v2",
@@ -2600,7 +2760,8 @@
       "status": "published",
       "conditions": "Needle/token windows differ: public 128K/256K/256K–512K versus local 4K–128K",
       "comparable": false,
-      "audit_status": "historical-transcription"
+      "audit_status": "verified-primary",
+      "verified_at": "2026-09-10"
     },
     {
       "benchmark": "mrcr-v2",
@@ -2611,7 +2772,8 @@
       "status": "published",
       "conditions": "Needle/token windows differ: public 128K/256K/256K–512K versus local 4K–128K",
       "comparable": false,
-      "audit_status": "historical-transcription"
+      "audit_status": "verified-primary",
+      "verified_at": "2026-09-10"
     },
     {
       "benchmark": "mrcr-v2",
@@ -2644,7 +2806,8 @@
       "status": "published",
       "conditions": "Needle/token windows differ: public 128K/256K/256K–512K versus local 4K–128K",
       "comparable": false,
-      "audit_status": "historical-transcription"
+      "audit_status": "verified-primary",
+      "verified_at": "2026-09-10"
     },
     {
       "benchmark": "mrcr-v2",
