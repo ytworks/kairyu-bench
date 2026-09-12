@@ -87,7 +87,7 @@ def best_deepswe(catalog: dict[str, Any]) -> list[dict[str, Any]]:
         if row["benchmark"] != "deepswe":
             continue
         previous = selected.get(row["model"])
-        # Selection policy is explicit; the detail table retains all configurations.
+        # Selection policy is explicitly displayed; all 70 configurations remain in JSON.
         if previous is None or row["score_percent"] > previous["score_percent"]:
             selected[row["model"]] = row
     return sorted(selected.values(), key=lambda r: (-r["score_percent"], r["model"]))
@@ -105,8 +105,7 @@ def comparison_table(catalog: dict[str, Any]) -> str:
         for model in models:
             if benchmark == "deepswe":
                 row = best.get(catalog["deepswe_display_mapping"].get(model))
-                effort = (row["reasoning_effort"] or "unspecified") if row else ""
-                note = f" ({effort})" if row else ""
+                note = " (preview)" if model == "Gemini 3.1 Pro" else ""
             else:
                 row = next(
                     r
@@ -127,17 +126,13 @@ def comparison_table(catalog: dict[str, Any]) -> str:
 
 def deepswe_table(catalog: dict[str, Any]) -> str:
     lines = [
-        "| Model ID | Effort | pass@1 (%) | Success / scored trials | Scored tasks | pass@4 (%) | Passed / scored tasks | 95% CI (%) |",
-        "| --- | --- | ---: | ---: | ---: | ---: | ---: | ---: |",
+        "| Model ID | Effort | pass@1 (%) | Success / scored trials | Scored tasks | pass@4 (%) | 95% CI half (pp) |",
+        "| --- | --- | ---: | ---: | ---: | ---: | ---: |",
     ]
-    for row in catalog["results"]:
-        if row["benchmark"] != "deepswe":
-            continue
+    for row in best_deepswe(catalog):
         lines.append(
             f"| `{row['model']}` | {row['reasoning_effort'] or 'unspecified'} | "
-            f"[{row['score_percent']:.2f}][{row['source_id']}] | {row['passed_attempts']}/{row['scored_attempts']} | "
-            f"{row['task_count']}/113 | {row['pass_at_4_percent']:.2f} | "
-            f"{row['tasks_passed_any']}/{row['task_count']} | "
-            f"{row['ci_lo_percent']:.2f}–{row['ci_hi_percent']:.2f} |"
+            f"[{row['score_percent']:.2f}][S23] | {row['passed_attempts']}/{row['scored_attempts']} | "
+            f"{row['task_count']}/113 | {row['pass_at_4_percent']:.2f} | ±{row['ci_half_percent']:.2f} |"
         )
     return "\n".join(lines)
