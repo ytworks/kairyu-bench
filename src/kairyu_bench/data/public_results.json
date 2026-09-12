@@ -184,7 +184,8 @@
       "generated_at": "2026-09-03T22:24:37.984682+00:00",
       "snapshot": "docs/sources/deepswe-v1.1-20260910.json",
       "sha256": "005cbedb49f988ba3f0d9636300862ad7ace93ce1992b37faf9945fe5b383415",
-      "audit_status": "verified-against-snapshot"
+      "audit_status": "verified-against-snapshot",
+      "rechecked_at": "2026-09-12"
     }
   },
   "table_models": [
@@ -206,7 +207,25 @@
     "Qwen3.8-Flash-Next",
     "GLM-5.2",
     "GLM-5.3",
-    "Kimi K3"
+    "Kimi K3",
+    "Gemini 3.8 Flash",
+    "GPT-5.6 Terra",
+    "Grok 4.6",
+    "GPT-5.6 Luna",
+    "Gemini 3.7 Flash",
+    "GLM-5.3 Flash",
+    "DeepSeek-V4-Pro",
+    "Muse Spark 1.2",
+    "Sonnet 5",
+    "Grok 4.5",
+    "DeepSeek-V4-Flash",
+    "Muse Spark 1.1",
+    "GPT-5.4",
+    "Gemini 3.6 Flash",
+    "Gemini 3.5 Flash",
+    "Kimi K2.7 Code",
+    "Sonnet 4.6",
+    "Gemini 3.1 Pro Preview"
   ],
   "benchmark_labels": {
     "swe-bench-pro": "SWE-Bench Pro",
@@ -230,11 +249,28 @@
     "GPT-6 Astra": "gpt-6-astra",
     "GPT-5.6 Sol": "gpt-5-6-sol",
     "GPT-5.5": "gpt-5-5",
-    "Gemini 3.1 Pro": "gemini-3-1-pro-preview",
     "Qwen3.8 MAX": "qwen3-8-max",
     "GLM-5.2": "glm-5-2",
     "GLM-5.3": "glm-5-3",
-    "Kimi K3": "kimi-k3"
+    "Kimi K3": "kimi-k3",
+    "Gemini 3.8 Flash": "gemini-3-8-flash",
+    "GPT-5.6 Terra": "gpt-5-6-terra",
+    "Grok 4.6": "grok-4-6",
+    "GPT-5.6 Luna": "gpt-5-6-luna",
+    "Gemini 3.7 Flash": "gemini-3-7-flash",
+    "GLM-5.3 Flash": "glm-5-3-flash",
+    "DeepSeek-V4-Pro": "deepseek-v4-pro",
+    "Muse Spark 1.2": "muse-spark-1-2",
+    "Sonnet 5": "claude-sonnet-5",
+    "Grok 4.5": "grok-4-5",
+    "DeepSeek-V4-Flash": "deepseek-v4-flash",
+    "Muse Spark 1.1": "muse-spark-1-1",
+    "GPT-5.4": "gpt-5-4",
+    "Gemini 3.6 Flash": "gemini-3-6-flash",
+    "Gemini 3.5 Flash": "gemini-3-5-flash",
+    "Kimi K2.7 Code": "kimi-k2-7-code",
+    "Sonnet 4.6": "claude-sonnet-4-6",
+    "Gemini 3.1 Pro Preview": "gemini-3-1-pro-preview"
   },
   "results": [
     {
@@ -2882,7 +2918,10 @@
       "status": "published",
       "comparable": false,
       "audit_status": "verified-against-snapshot",
-      "conditions": "DeepSWE v1.1 / Pier / mini-swe-agent / Modal; exact source, agent revision and image digests unverified against local Docker runtime"
+      "conditions": "DeepSWE v1.1 / Pier / mini-swe-agent / Modal; exact source, agent revision and image digests unverified against local Docker runtime",
+      "ci_lo_percent": 71.24964807371246,
+      "ci_hi_percent": 76.98044042186275,
+      "tasks_passed_any": 91
     },
     {
       "benchmark": "deepswe",
@@ -2902,7 +2941,10 @@
       "status": "published",
       "comparable": false,
       "audit_status": "verified-against-snapshot",
-      "conditions": "DeepSWE v1.1 / Pier / mini-swe-agent / Modal; exact source, agent revision and image digests unverified against local Docker runtime"
+      "conditions": "DeepSWE v1.1 / Pier / mini-swe-agent / Modal; exact source, agent revision and image digests unverified against local Docker runtime",
+      "ci_lo_percent": 72.40819014906883,
+      "ci_hi_percent": 75.24281656234058,
+      "tasks_passed_any": 97
     },
     {
       "benchmark": "deepswe",
@@ -2922,7 +2964,10 @@
       "status": "published",
       "comparable": false,
       "audit_status": "verified-against-snapshot",
-      "conditions": "DeepSWE v1.1 / Pier / mini-swe-agent / Modal; exact source, agent revision and image digests unverified against local Docker runtime"
+      "conditions": "DeepSWE v1.1 / Pier / mini-swe-agent / Modal; exact source, agent revision and image digests unverified against local Docker runtime",
+      "ci_lo_percent": 69.77633822227692,
+      "ci_hi_percent": 77.52095907502039,
+      "tasks_passed_any": 100
     },
     {
       "benchmark": "deepswe",
@@ -2942,7 +2987,10 @@
       "status": "published",
       "comparable": false,
       "audit_status": "verified-against-snapshot",
-      "conditions": "DeepSWE v1.1 / Pier / mini-swe-agent / Modal; exact source, agent revision and image digests unverified against local Docker runtime"
+      "conditions": "DeepSWE v1.1 / Pier / mini-swe-agent / Modal; exact source, agent revision and image digests unverified against local Docker runtime",
+      "ci_lo_percent": 69.80659243770221,
+      "ci_hi_percent": 76.65358455344823,
+      "tasks_passed_any": 93
     },
     {
       "benchmark": "deepswe",
@@ -2962,7 +3010,10 @@
       "status": "published",
       "comparable": false,
       "audit_status": "verified-against-snapshot",
-      "conditions": "DeepSWE v1.1 / Pier / mini-swe-agent / Modal; exact source, agent revision and image digests unverified against local Docker runtime"
+      "conditions": "DeepSWE v1.1 / Pier / mini-swe-agent / Modal; exact source, agent revision and image digests unverified against local Docker runtime",
+      "ci_lo_percent": 72.39976873936956,
+      "ci_hi_percent": 74.06040825178087,
+      "tasks_passed_any": 90
     },
     {
       "benchmark": "deepswe",
@@ -2982,7 +3033,10 @@
       "status": "published",
       "comparable": false,
       "audit_status": "verified-against-snapshot",
-      "conditions": "DeepSWE v1.1 / Pier / mini-swe-agent / Modal; exact source, agent revision and image digests unverified against local Docker runtime"
+      "conditions": "DeepSWE v1.1 / Pier / mini-swe-agent / Modal; exact source, agent revision and image digests unverified against local Docker runtime",
+      "ci_lo_percent": 70.09338059446893,
+      "ci_hi_percent": 76.21534423774585,
+      "tasks_passed_any": 97
     },
     {
       "benchmark": "deepswe",
@@ -3002,7 +3056,10 @@
       "status": "published",
       "comparable": false,
       "audit_status": "verified-against-snapshot",
-      "conditions": "DeepSWE v1.1 / Pier / mini-swe-agent / Modal; exact source, agent revision and image digests unverified against local Docker runtime"
+      "conditions": "DeepSWE v1.1 / Pier / mini-swe-agent / Modal; exact source, agent revision and image digests unverified against local Docker runtime",
+      "ci_lo_percent": 70.88307563794007,
+      "ci_hi_percent": 74.77393995226038,
+      "tasks_passed_any": 99
     },
     {
       "benchmark": "deepswe",
@@ -3022,7 +3079,10 @@
       "status": "published",
       "comparable": false,
       "audit_status": "verified-against-snapshot",
-      "conditions": "DeepSWE v1.1 / Pier / mini-swe-agent / Modal; exact source, agent revision and image digests unverified against local Docker runtime"
+      "conditions": "DeepSWE v1.1 / Pier / mini-swe-agent / Modal; exact source, agent revision and image digests unverified against local Docker runtime",
+      "ci_lo_percent": 70.19796153763716,
+      "ci_hi_percent": 75.37725970130089,
+      "tasks_passed_any": 93
     },
     {
       "benchmark": "deepswe",
@@ -3042,7 +3102,10 @@
       "status": "published",
       "comparable": false,
       "audit_status": "verified-against-snapshot",
-      "conditions": "DeepSWE v1.1 / Pier / mini-swe-agent / Modal; exact source, agent revision and image digests unverified against local Docker runtime"
+      "conditions": "DeepSWE v1.1 / Pier / mini-swe-agent / Modal; exact source, agent revision and image digests unverified against local Docker runtime",
+      "ci_lo_percent": 69.83684441682949,
+      "ci_hi_percent": 75.49648891650385,
+      "tasks_passed_any": 97
     },
     {
       "benchmark": "deepswe",
@@ -3062,7 +3125,10 @@
       "status": "published",
       "comparable": false,
       "audit_status": "verified-against-snapshot",
-      "conditions": "DeepSWE v1.1 / Pier / mini-swe-agent / Modal; exact source, agent revision and image digests unverified against local Docker runtime"
+      "conditions": "DeepSWE v1.1 / Pier / mini-swe-agent / Modal; exact source, agent revision and image digests unverified against local Docker runtime",
+      "ci_lo_percent": 68.73689454216633,
+      "ci_hi_percent": 73.29850368792218,
+      "tasks_passed_any": 94
     },
     {
       "benchmark": "deepswe",
@@ -3082,7 +3148,10 @@
       "status": "published",
       "comparable": false,
       "audit_status": "verified-against-snapshot",
-      "conditions": "DeepSWE v1.1 / Pier / mini-swe-agent / Modal; exact source, agent revision and image digests unverified against local Docker runtime"
+      "conditions": "DeepSWE v1.1 / Pier / mini-swe-agent / Modal; exact source, agent revision and image digests unverified against local Docker runtime",
+      "ci_lo_percent": 69.91259559533886,
+      "ci_hi_percent": 71.55081903880748,
+      "tasks_passed_any": 97
     },
     {
       "benchmark": "deepswe",
@@ -3102,7 +3171,10 @@
       "status": "published",
       "comparable": false,
       "audit_status": "verified-against-snapshot",
-      "conditions": "DeepSWE v1.1 / Pier / mini-swe-agent / Modal; exact source, agent revision and image digests unverified against local Docker runtime"
+      "conditions": "DeepSWE v1.1 / Pier / mini-swe-agent / Modal; exact source, agent revision and image digests unverified against local Docker runtime",
+      "ci_lo_percent": 66.66658684930744,
+      "ci_hi_percent": 73.15642200025007,
+      "tasks_passed_any": 100
     },
     {
       "benchmark": "deepswe",
@@ -3122,7 +3194,10 @@
       "status": "published",
       "comparable": false,
       "audit_status": "verified-against-snapshot",
-      "conditions": "DeepSWE v1.1 / Pier / mini-swe-agent / Modal; exact source, agent revision and image digests unverified against local Docker runtime"
+      "conditions": "DeepSWE v1.1 / Pier / mini-swe-agent / Modal; exact source, agent revision and image digests unverified against local Docker runtime",
+      "ci_lo_percent": 65.6912963913939,
+      "ci_hi_percent": 73.75824489300977,
+      "tasks_passed_any": 95
     },
     {
       "benchmark": "deepswe",
@@ -3142,7 +3217,10 @@
       "status": "published",
       "comparable": false,
       "audit_status": "verified-against-snapshot",
-      "conditions": "DeepSWE v1.1 / Pier / mini-swe-agent / Modal; exact source, agent revision and image digests unverified against local Docker runtime"
+      "conditions": "DeepSWE v1.1 / Pier / mini-swe-agent / Modal; exact source, agent revision and image digests unverified against local Docker runtime",
+      "ci_lo_percent": 67.06612091651647,
+      "ci_hi_percent": 72.17999881740815,
+      "tasks_passed_any": 100
     },
     {
       "benchmark": "deepswe",
@@ -3162,7 +3240,10 @@
       "status": "published",
       "comparable": false,
       "audit_status": "verified-against-snapshot",
-      "conditions": "DeepSWE v1.1 / Pier / mini-swe-agent / Modal; exact source, agent revision and image digests unverified against local Docker runtime"
+      "conditions": "DeepSWE v1.1 / Pier / mini-swe-agent / Modal; exact source, agent revision and image digests unverified against local Docker runtime",
+      "ci_lo_percent": 67.9691851565629,
+      "ci_hi_percent": 70.83347559731736,
+      "tasks_passed_any": 98
     },
     {
       "benchmark": "deepswe",
@@ -3182,7 +3263,10 @@
       "status": "published",
       "comparable": false,
       "audit_status": "verified-against-snapshot",
-      "conditions": "DeepSWE v1.1 / Pier / mini-swe-agent / Modal; exact source, agent revision and image digests unverified against local Docker runtime"
+      "conditions": "DeepSWE v1.1 / Pier / mini-swe-agent / Modal; exact source, agent revision and image digests unverified against local Docker runtime",
+      "ci_lo_percent": 65.93922012533709,
+      "ci_hi_percent": 71.97652266845449,
+      "tasks_passed_any": 99
     },
     {
       "benchmark": "deepswe",
@@ -3202,7 +3286,10 @@
       "status": "published",
       "comparable": false,
       "audit_status": "verified-against-snapshot",
-      "conditions": "DeepSWE v1.1 / Pier / mini-swe-agent / Modal; exact source, agent revision and image digests unverified against local Docker runtime"
+      "conditions": "DeepSWE v1.1 / Pier / mini-swe-agent / Modal; exact source, agent revision and image digests unverified against local Docker runtime",
+      "ci_lo_percent": 67.73124446609795,
+      "ci_hi_percent": 70.07636179788415,
+      "tasks_passed_any": 101
     },
     {
       "benchmark": "deepswe",
@@ -3222,7 +3309,10 @@
       "status": "published",
       "comparable": false,
       "audit_status": "verified-against-snapshot",
-      "conditions": "DeepSWE v1.1 / Pier / mini-swe-agent / Modal; exact source, agent revision and image digests unverified against local Docker runtime"
+      "conditions": "DeepSWE v1.1 / Pier / mini-swe-agent / Modal; exact source, agent revision and image digests unverified against local Docker runtime",
+      "ci_lo_percent": 67.48380844536031,
+      "ci_hi_percent": 69.7254938802211,
+      "tasks_passed_any": 98
     },
     {
       "benchmark": "deepswe",
@@ -3242,7 +3332,10 @@
       "status": "published",
       "comparable": false,
       "audit_status": "verified-against-snapshot",
-      "conditions": "DeepSWE v1.1 / Pier / mini-swe-agent / Modal; exact source, agent revision and image digests unverified against local Docker runtime"
+      "conditions": "DeepSWE v1.1 / Pier / mini-swe-agent / Modal; exact source, agent revision and image digests unverified against local Docker runtime",
+      "ci_lo_percent": 63.97739833756913,
+      "ci_hi_percent": 73.05142649613376,
+      "tasks_passed_any": 101
     },
     {
       "benchmark": "deepswe",
@@ -3262,7 +3355,10 @@
       "status": "published",
       "comparable": false,
       "audit_status": "verified-against-snapshot",
-      "conditions": "DeepSWE v1.1 / Pier / mini-swe-agent / Modal; exact source, agent revision and image digests unverified against local Docker runtime"
+      "conditions": "DeepSWE v1.1 / Pier / mini-swe-agent / Modal; exact source, agent revision and image digests unverified against local Docker runtime",
+      "ci_lo_percent": 65.19707153331677,
+      "ci_hi_percent": 69.7586806790726,
+      "tasks_passed_any": 95
     },
     {
       "benchmark": "deepswe",
@@ -3282,7 +3378,10 @@
       "status": "published",
       "comparable": false,
       "audit_status": "verified-against-snapshot",
-      "conditions": "DeepSWE v1.1 / Pier / mini-swe-agent / Modal; exact source, agent revision and image digests unverified against local Docker runtime"
+      "conditions": "DeepSWE v1.1 / Pier / mini-swe-agent / Modal; exact source, agent revision and image digests unverified against local Docker runtime",
+      "ci_lo_percent": 63.19549876432895,
+      "ci_hi_percent": 71.17950123567105,
+      "tasks_passed_any": 102
     },
     {
       "benchmark": "deepswe",
@@ -3302,7 +3401,10 @@
       "status": "published",
       "comparable": false,
       "audit_status": "verified-against-snapshot",
-      "conditions": "DeepSWE v1.1 / Pier / mini-swe-agent / Modal; exact source, agent revision and image digests unverified against local Docker runtime"
+      "conditions": "DeepSWE v1.1 / Pier / mini-swe-agent / Modal; exact source, agent revision and image digests unverified against local Docker runtime",
+      "ci_lo_percent": 60.569751889179635,
+      "ci_hi_percent": 73.50104457099735,
+      "tasks_passed_any": 100
     },
     {
       "benchmark": "deepswe",
@@ -3322,7 +3424,10 @@
       "status": "published",
       "comparable": false,
       "audit_status": "verified-against-snapshot",
-      "conditions": "DeepSWE v1.1 / Pier / mini-swe-agent / Modal; exact source, agent revision and image digests unverified against local Docker runtime"
+      "conditions": "DeepSWE v1.1 / Pier / mini-swe-agent / Modal; exact source, agent revision and image digests unverified against local Docker runtime",
+      "ci_lo_percent": 65.73453717840262,
+      "ci_hi_percent": 68.33625928177437,
+      "tasks_passed_any": 90
     },
     {
       "benchmark": "deepswe",
@@ -3342,7 +3447,10 @@
       "status": "published",
       "comparable": false,
       "audit_status": "verified-against-snapshot",
-      "conditions": "DeepSWE v1.1 / Pier / mini-swe-agent / Modal; exact source, agent revision and image digests unverified against local Docker runtime"
+      "conditions": "DeepSWE v1.1 / Pier / mini-swe-agent / Modal; exact source, agent revision and image digests unverified against local Docker runtime",
+      "ci_lo_percent": 64.564892272269,
+      "ci_hi_percent": 68.9162607210791,
+      "tasks_passed_any": 96
     },
     {
       "benchmark": "deepswe",
@@ -3362,7 +3470,10 @@
       "status": "published",
       "comparable": false,
       "audit_status": "verified-against-snapshot",
-      "conditions": "DeepSWE v1.1 / Pier / mini-swe-agent / Modal; exact source, agent revision and image digests unverified against local Docker runtime"
+      "conditions": "DeepSWE v1.1 / Pier / mini-swe-agent / Modal; exact source, agent revision and image digests unverified against local Docker runtime",
+      "ci_lo_percent": 62.40019338730129,
+      "ci_hi_percent": 68.57325794013234,
+      "tasks_passed_any": 94
     },
     {
       "benchmark": "deepswe",
@@ -3382,7 +3493,10 @@
       "status": "published",
       "comparable": false,
       "audit_status": "verified-against-snapshot",
-      "conditions": "DeepSWE v1.1 / Pier / mini-swe-agent / Modal; exact source, agent revision and image digests unverified against local Docker runtime"
+      "conditions": "DeepSWE v1.1 / Pier / mini-swe-agent / Modal; exact source, agent revision and image digests unverified against local Docker runtime",
+      "ci_lo_percent": 60.94504359782606,
+      "ci_hi_percent": 69.78890135630239,
+      "tasks_passed_any": 94
     },
     {
       "benchmark": "deepswe",
@@ -3402,7 +3516,10 @@
       "status": "published",
       "comparable": false,
       "audit_status": "verified-against-snapshot",
-      "conditions": "DeepSWE v1.1 / Pier / mini-swe-agent / Modal; exact source, agent revision and image digests unverified against local Docker runtime"
+      "conditions": "DeepSWE v1.1 / Pier / mini-swe-agent / Modal; exact source, agent revision and image digests unverified against local Docker runtime",
+      "ci_lo_percent": 63.47762421887939,
+      "ci_hi_percent": 67.05334923244803,
+      "tasks_passed_any": 93
     },
     {
       "benchmark": "deepswe",
@@ -3422,7 +3539,10 @@
       "status": "published",
       "comparable": false,
       "audit_status": "verified-against-snapshot",
-      "conditions": "DeepSWE v1.1 / Pier / mini-swe-agent / Modal; exact source, agent revision and image digests unverified against local Docker runtime"
+      "conditions": "DeepSWE v1.1 / Pier / mini-swe-agent / Modal; exact source, agent revision and image digests unverified against local Docker runtime",
+      "ci_lo_percent": 63.65486924786155,
+      "ci_hi_percent": 66.72207088517614,
+      "tasks_passed_any": 96
     },
     {
       "benchmark": "deepswe",
@@ -3442,7 +3562,10 @@
       "status": "published",
       "comparable": false,
       "audit_status": "verified-against-snapshot",
-      "conditions": "DeepSWE v1.1 / Pier / mini-swe-agent / Modal; exact source, agent revision and image digests unverified against local Docker runtime"
+      "conditions": "DeepSWE v1.1 / Pier / mini-swe-agent / Modal; exact source, agent revision and image digests unverified against local Docker runtime",
+      "ci_lo_percent": 61.26368832394585,
+      "ci_hi_percent": 67.49737362295679,
+      "tasks_passed_any": 102
     },
     {
       "benchmark": "deepswe",
@@ -3462,7 +3585,10 @@
       "status": "published",
       "comparable": false,
       "audit_status": "verified-against-snapshot",
-      "conditions": "DeepSWE v1.1 / Pier / mini-swe-agent / Modal; exact source, agent revision and image digests unverified against local Docker runtime"
+      "conditions": "DeepSWE v1.1 / Pier / mini-swe-agent / Modal; exact source, agent revision and image digests unverified against local Docker runtime",
+      "ci_lo_percent": 59.0148863911635,
+      "ci_hi_percent": 67.77082789455078,
+      "tasks_passed_any": 96
     },
     {
       "benchmark": "deepswe",
@@ -3482,7 +3608,10 @@
       "status": "published",
       "comparable": false,
       "audit_status": "verified-against-snapshot",
-      "conditions": "DeepSWE v1.1 / Pier / mini-swe-agent / Modal; exact source, agent revision and image digests unverified against local Docker runtime"
+      "conditions": "DeepSWE v1.1 / Pier / mini-swe-agent / Modal; exact source, agent revision and image digests unverified against local Docker runtime",
+      "ci_lo_percent": 56.49842780985077,
+      "ci_hi_percent": 69.16528900430852,
+      "tasks_passed_any": 100
     },
     {
       "benchmark": "deepswe",
@@ -3502,7 +3631,10 @@
       "status": "published",
       "comparable": false,
       "audit_status": "verified-against-snapshot",
-      "conditions": "DeepSWE v1.1 / Pier / mini-swe-agent / Modal; exact source, agent revision and image digests unverified against local Docker runtime"
+      "conditions": "DeepSWE v1.1 / Pier / mini-swe-agent / Modal; exact source, agent revision and image digests unverified against local Docker runtime",
+      "ci_lo_percent": 59.47858925334765,
+      "ci_hi_percent": 62.64530455196208,
+      "tasks_passed_any": 91
     },
     {
       "benchmark": "deepswe",
@@ -3522,7 +3654,10 @@
       "status": "published",
       "comparable": false,
       "audit_status": "verified-against-snapshot",
-      "conditions": "DeepSWE v1.1 / Pier / mini-swe-agent / Modal; exact source, agent revision and image digests unverified against local Docker runtime"
+      "conditions": "DeepSWE v1.1 / Pier / mini-swe-agent / Modal; exact source, agent revision and image digests unverified against local Docker runtime",
+      "ci_lo_percent": 58.052693948515355,
+      "ci_hi_percent": 62.30128835236961,
+      "tasks_passed_any": 91
     },
     {
       "benchmark": "deepswe",
@@ -3542,7 +3677,10 @@
       "status": "published",
       "comparable": false,
       "audit_status": "verified-against-snapshot",
-      "conditions": "DeepSWE v1.1 / Pier / mini-swe-agent / Modal; exact source, agent revision and image digests unverified against local Docker runtime"
+      "conditions": "DeepSWE v1.1 / Pier / mini-swe-agent / Modal; exact source, agent revision and image digests unverified against local Docker runtime",
+      "ci_lo_percent": 56.79029016687951,
+      "ci_hi_percent": 62.37830105713898,
+      "tasks_passed_any": 92
     },
     {
       "benchmark": "deepswe",
@@ -3562,7 +3700,10 @@
       "status": "published",
       "comparable": false,
       "audit_status": "verified-against-snapshot",
-      "conditions": "DeepSWE v1.1 / Pier / mini-swe-agent / Modal; exact source, agent revision and image digests unverified against local Docker runtime"
+      "conditions": "DeepSWE v1.1 / Pier / mini-swe-agent / Modal; exact source, agent revision and image digests unverified against local Docker runtime",
+      "ci_lo_percent": 57.20954362692973,
+      "ci_hi_percent": 60.73917432178823,
+      "tasks_passed_any": 88
     },
     {
       "benchmark": "deepswe",
@@ -3582,7 +3723,10 @@
       "status": "published",
       "comparable": false,
       "audit_status": "verified-against-snapshot",
-      "conditions": "DeepSWE v1.1 / Pier / mini-swe-agent / Modal; exact source, agent revision and image digests unverified against local Docker runtime"
+      "conditions": "DeepSWE v1.1 / Pier / mini-swe-agent / Modal; exact source, agent revision and image digests unverified against local Docker runtime",
+      "ci_lo_percent": 55.79848799986361,
+      "ci_hi_percent": 60.45986389323216,
+      "tasks_passed_any": 96
     },
     {
       "benchmark": "deepswe",
@@ -3602,7 +3746,10 @@
       "status": "published",
       "comparable": false,
       "audit_status": "verified-against-snapshot",
-      "conditions": "DeepSWE v1.1 / Pier / mini-swe-agent / Modal; exact source, agent revision and image digests unverified against local Docker runtime"
+      "conditions": "DeepSWE v1.1 / Pier / mini-swe-agent / Modal; exact source, agent revision and image digests unverified against local Docker runtime",
+      "ci_lo_percent": 54.798231826378874,
+      "ci_hi_percent": 60.12381717139396,
+      "tasks_passed_any": 94
     },
     {
       "benchmark": "deepswe",
@@ -3622,7 +3769,10 @@
       "status": "published",
       "comparable": false,
       "audit_status": "verified-against-snapshot",
-      "conditions": "DeepSWE v1.1 / Pier / mini-swe-agent / Modal; exact source, agent revision and image digests unverified against local Docker runtime"
+      "conditions": "DeepSWE v1.1 / Pier / mini-swe-agent / Modal; exact source, agent revision and image digests unverified against local Docker runtime",
+      "ci_lo_percent": 54.69030532683623,
+      "ci_hi_percent": 59.02650883245582,
+      "tasks_passed_any": 89
     },
     {
       "benchmark": "deepswe",
@@ -3642,7 +3792,10 @@
       "status": "published",
       "comparable": false,
       "audit_status": "verified-against-snapshot",
-      "conditions": "DeepSWE v1.1 / Pier / mini-swe-agent / Modal; exact source, agent revision and image digests unverified against local Docker runtime"
+      "conditions": "DeepSWE v1.1 / Pier / mini-swe-agent / Modal; exact source, agent revision and image digests unverified against local Docker runtime",
+      "ci_lo_percent": 52.74295943524101,
+      "ci_hi_percent": 56.99155383909527,
+      "tasks_passed_any": 92
     },
     {
       "benchmark": "deepswe",
@@ -3662,7 +3815,10 @@
       "status": "published",
       "comparable": false,
       "audit_status": "verified-against-snapshot",
-      "conditions": "DeepSWE v1.1 / Pier / mini-swe-agent / Modal; exact source, agent revision and image digests unverified against local Docker runtime"
+      "conditions": "DeepSWE v1.1 / Pier / mini-swe-agent / Modal; exact source, agent revision and image digests unverified against local Docker runtime",
+      "ci_lo_percent": 50.64898547928808,
+      "ci_hi_percent": 58.07584673547702,
+      "tasks_passed_any": 91
     },
     {
       "benchmark": "deepswe",
@@ -3682,7 +3838,10 @@
       "status": "published",
       "comparable": false,
       "audit_status": "verified-against-snapshot",
-      "conditions": "DeepSWE v1.1 / Pier / mini-swe-agent / Modal; exact source, agent revision and image digests unverified against local Docker runtime"
+      "conditions": "DeepSWE v1.1 / Pier / mini-swe-agent / Modal; exact source, agent revision and image digests unverified against local Docker runtime",
+      "ci_lo_percent": 51.42921338966476,
+      "ci_hi_percent": 56.53538838024673,
+      "tasks_passed_any": 88
     },
     {
       "benchmark": "deepswe",
@@ -3702,7 +3861,10 @@
       "status": "published",
       "comparable": false,
       "audit_status": "verified-against-snapshot",
-      "conditions": "DeepSWE v1.1 / Pier / mini-swe-agent / Modal; exact source, agent revision and image digests unverified against local Docker runtime"
+      "conditions": "DeepSWE v1.1 / Pier / mini-swe-agent / Modal; exact source, agent revision and image digests unverified against local Docker runtime",
+      "ci_lo_percent": 49.60923737597946,
+      "ci_hi_percent": 58.08307031632823,
+      "tasks_passed_any": 89
     },
     {
       "benchmark": "deepswe",
@@ -3722,7 +3884,10 @@
       "status": "published",
       "comparable": false,
       "audit_status": "verified-against-snapshot",
-      "conditions": "DeepSWE v1.1 / Pier / mini-swe-agent / Modal; exact source, agent revision and image digests unverified against local Docker runtime"
+      "conditions": "DeepSWE v1.1 / Pier / mini-swe-agent / Modal; exact source, agent revision and image digests unverified against local Docker runtime",
+      "ci_lo_percent": 51.171412865070785,
+      "ci_hi_percent": 56.35071102873452,
+      "tasks_passed_any": 88
     },
     {
       "benchmark": "deepswe",
@@ -3742,7 +3907,10 @@
       "status": "published",
       "comparable": false,
       "audit_status": "verified-against-snapshot",
-      "conditions": "DeepSWE v1.1 / Pier / mini-swe-agent / Modal; exact source, agent revision and image digests unverified against local Docker runtime"
+      "conditions": "DeepSWE v1.1 / Pier / mini-swe-agent / Modal; exact source, agent revision and image digests unverified against local Docker runtime",
+      "ci_lo_percent": 49.432091479689106,
+      "ci_hi_percent": 58.09003241411621,
+      "tasks_passed_any": 91
     },
     {
       "benchmark": "deepswe",
@@ -3762,7 +3930,10 @@
       "status": "published",
       "comparable": false,
       "audit_status": "verified-against-snapshot",
-      "conditions": "DeepSWE v1.1 / Pier / mini-swe-agent / Modal; exact source, agent revision and image digests unverified against local Docker runtime"
+      "conditions": "DeepSWE v1.1 / Pier / mini-swe-agent / Modal; exact source, agent revision and image digests unverified against local Docker runtime",
+      "ci_lo_percent": 51.48025737402474,
+      "ci_hi_percent": 56.04186651978057,
+      "tasks_passed_any": 88
     },
     {
       "benchmark": "deepswe",
@@ -3782,7 +3953,10 @@
       "status": "published",
       "comparable": false,
       "audit_status": "verified-against-snapshot",
-      "conditions": "DeepSWE v1.1 / Pier / mini-swe-agent / Modal; exact source, agent revision and image digests unverified against local Docker runtime"
+      "conditions": "DeepSWE v1.1 / Pier / mini-swe-agent / Modal; exact source, agent revision and image digests unverified against local Docker runtime",
+      "ci_lo_percent": 49.751633855764034,
+      "ci_hi_percent": 56.88553428582889,
+      "tasks_passed_any": 91
     },
     {
       "benchmark": "deepswe",
@@ -3802,7 +3976,10 @@
       "status": "published",
       "comparable": false,
       "audit_status": "verified-against-snapshot",
-      "conditions": "DeepSWE v1.1 / Pier / mini-swe-agent / Modal; exact source, agent revision and image digests unverified against local Docker runtime"
+      "conditions": "DeepSWE v1.1 / Pier / mini-swe-agent / Modal; exact source, agent revision and image digests unverified against local Docker runtime",
+      "ci_lo_percent": 50.28324161686275,
+      "ci_hi_percent": 56.35392652473017,
+      "tasks_passed_any": 90
     },
     {
       "benchmark": "deepswe",
@@ -3822,7 +3999,10 @@
       "status": "published",
       "comparable": false,
       "audit_status": "verified-against-snapshot",
-      "conditions": "DeepSWE v1.1 / Pier / mini-swe-agent / Modal; exact source, agent revision and image digests unverified against local Docker runtime"
+      "conditions": "DeepSWE v1.1 / Pier / mini-swe-agent / Modal; exact source, agent revision and image digests unverified against local Docker runtime",
+      "ci_lo_percent": 47.20830235866894,
+      "ci_hi_percent": 56.33152065018062,
+      "tasks_passed_any": 88
     },
     {
       "benchmark": "deepswe",
@@ -3842,7 +4022,10 @@
       "status": "published",
       "comparable": false,
       "audit_status": "verified-against-snapshot",
-      "conditions": "DeepSWE v1.1 / Pier / mini-swe-agent / Modal; exact source, agent revision and image digests unverified against local Docker runtime"
+      "conditions": "DeepSWE v1.1 / Pier / mini-swe-agent / Modal; exact source, agent revision and image digests unverified against local Docker runtime",
+      "ci_lo_percent": 50.2678065476865,
+      "ci_hi_percent": 53.27201646116306,
+      "tasks_passed_any": 88
     },
     {
       "benchmark": "deepswe",
@@ -3862,7 +4045,10 @@
       "status": "published",
       "comparable": false,
       "audit_status": "verified-against-snapshot",
-      "conditions": "DeepSWE v1.1 / Pier / mini-swe-agent / Modal; exact source, agent revision and image digests unverified against local Docker runtime"
+      "conditions": "DeepSWE v1.1 / Pier / mini-swe-agent / Modal; exact source, agent revision and image digests unverified against local Docker runtime",
+      "ci_lo_percent": 46.21285677328888,
+      "ci_hi_percent": 53.121954756644605,
+      "tasks_passed_any": 85
     },
     {
       "benchmark": "deepswe",
@@ -3882,7 +4068,10 @@
       "status": "published",
       "comparable": false,
       "audit_status": "verified-against-snapshot",
-      "conditions": "DeepSWE v1.1 / Pier / mini-swe-agent / Modal; exact source, agent revision and image digests unverified against local Docker runtime"
+      "conditions": "DeepSWE v1.1 / Pier / mini-swe-agent / Modal; exact source, agent revision and image digests unverified against local Docker runtime",
+      "ci_lo_percent": 46.43336050994396,
+      "ci_hi_percent": 50.91177223341886,
+      "tasks_passed_any": 86
     },
     {
       "benchmark": "deepswe",
@@ -3902,7 +4091,10 @@
       "status": "published",
       "comparable": false,
       "audit_status": "verified-against-snapshot",
-      "conditions": "DeepSWE v1.1 / Pier / mini-swe-agent / Modal; exact source, agent revision and image digests unverified against local Docker runtime"
+      "conditions": "DeepSWE v1.1 / Pier / mini-swe-agent / Modal; exact source, agent revision and image digests unverified against local Docker runtime",
+      "ci_lo_percent": 43.72377362536038,
+      "ci_hi_percent": 52.73640336579006,
+      "tasks_passed_any": 90
     },
     {
       "benchmark": "deepswe",
@@ -3922,7 +4114,10 @@
       "status": "published",
       "comparable": false,
       "audit_status": "verified-against-snapshot",
-      "conditions": "DeepSWE v1.1 / Pier / mini-swe-agent / Modal; exact source, agent revision and image digests unverified against local Docker runtime"
+      "conditions": "DeepSWE v1.1 / Pier / mini-swe-agent / Modal; exact source, agent revision and image digests unverified against local Docker runtime",
+      "ci_lo_percent": 42.97656202995626,
+      "ci_hi_percent": 50.386269828450814,
+      "tasks_passed_any": 85
     },
     {
       "benchmark": "deepswe",
@@ -3942,7 +4137,10 @@
       "status": "published",
       "comparable": false,
       "audit_status": "verified-against-snapshot",
-      "conditions": "DeepSWE v1.1 / Pier / mini-swe-agent / Modal; exact source, agent revision and image digests unverified against local Docker runtime"
+      "conditions": "DeepSWE v1.1 / Pier / mini-swe-agent / Modal; exact source, agent revision and image digests unverified against local Docker runtime",
+      "ci_lo_percent": 42.96578762942603,
+      "ci_hi_percent": 47.74217697234388,
+      "tasks_passed_any": 81
     },
     {
       "benchmark": "deepswe",
@@ -3962,7 +4160,10 @@
       "status": "published",
       "comparable": false,
       "audit_status": "verified-against-snapshot",
-      "conditions": "DeepSWE v1.1 / Pier / mini-swe-agent / Modal; exact source, agent revision and image digests unverified against local Docker runtime"
+      "conditions": "DeepSWE v1.1 / Pier / mini-swe-agent / Modal; exact source, agent revision and image digests unverified against local Docker runtime",
+      "ci_lo_percent": 41.328220362702936,
+      "ci_hi_percent": 47.167354858536,
+      "tasks_passed_any": 85
     },
     {
       "benchmark": "deepswe",
@@ -3982,7 +4183,10 @@
       "status": "published",
       "comparable": false,
       "audit_status": "verified-against-snapshot",
-      "conditions": "DeepSWE v1.1 / Pier / mini-swe-agent / Modal; exact source, agent revision and image digests unverified against local Docker runtime"
+      "conditions": "DeepSWE v1.1 / Pier / mini-swe-agent / Modal; exact source, agent revision and image digests unverified against local Docker runtime",
+      "ci_lo_percent": 42.05214815719697,
+      "ci_hi_percent": 45.50340739835859,
+      "tasks_passed_any": 87
     },
     {
       "benchmark": "deepswe",
@@ -4002,7 +4206,10 @@
       "status": "published",
       "comparable": false,
       "audit_status": "verified-against-snapshot",
-      "conditions": "DeepSWE v1.1 / Pier / mini-swe-agent / Modal; exact source, agent revision and image digests unverified against local Docker runtime"
+      "conditions": "DeepSWE v1.1 / Pier / mini-swe-agent / Modal; exact source, agent revision and image digests unverified against local Docker runtime",
+      "ci_lo_percent": 39.32945513980172,
+      "ci_hi_percent": 43.96675866866153,
+      "tasks_passed_any": 78
     },
     {
       "benchmark": "deepswe",
@@ -4022,7 +4229,10 @@
       "status": "published",
       "comparable": false,
       "audit_status": "verified-against-snapshot",
-      "conditions": "DeepSWE v1.1 / Pier / mini-swe-agent / Modal; exact source, agent revision and image digests unverified against local Docker runtime"
+      "conditions": "DeepSWE v1.1 / Pier / mini-swe-agent / Modal; exact source, agent revision and image digests unverified against local Docker runtime",
+      "ci_lo_percent": 39.334641405510666,
+      "ci_hi_percent": 42.261810922648976,
+      "tasks_passed_any": 77
     },
     {
       "benchmark": "deepswe",
@@ -4042,7 +4252,10 @@
       "status": "published",
       "comparable": false,
       "audit_status": "verified-against-snapshot",
-      "conditions": "DeepSWE v1.1 / Pier / mini-swe-agent / Modal; exact source, agent revision and image digests unverified against local Docker runtime"
+      "conditions": "DeepSWE v1.1 / Pier / mini-swe-agent / Modal; exact source, agent revision and image digests unverified against local Docker runtime",
+      "ci_lo_percent": 36.65020157144805,
+      "ci_hi_percent": 42.90535398410751,
+      "tasks_passed_any": 73
     },
     {
       "benchmark": "deepswe",
@@ -4062,7 +4275,10 @@
       "status": "published",
       "comparable": false,
       "audit_status": "verified-against-snapshot",
-      "conditions": "DeepSWE v1.1 / Pier / mini-swe-agent / Modal; exact source, agent revision and image digests unverified against local Docker runtime"
+      "conditions": "DeepSWE v1.1 / Pier / mini-swe-agent / Modal; exact source, agent revision and image digests unverified against local Docker runtime",
+      "ci_lo_percent": 31.533112892786306,
+      "ci_hi_percent": 41.033258788629624,
+      "tasks_passed_any": 77
     },
     {
       "benchmark": "deepswe",
@@ -4082,7 +4298,10 @@
       "status": "published",
       "comparable": false,
       "audit_status": "verified-against-snapshot",
-      "conditions": "DeepSWE v1.1 / Pier / mini-swe-agent / Modal; exact source, agent revision and image digests unverified against local Docker runtime"
+      "conditions": "DeepSWE v1.1 / Pier / mini-swe-agent / Modal; exact source, agent revision and image digests unverified against local Docker runtime",
+      "ci_lo_percent": 32.095643892134426,
+      "ci_hi_percent": 40.02824991317531,
+      "tasks_passed_any": 72
     },
     {
       "benchmark": "deepswe",
@@ -4102,7 +4321,10 @@
       "status": "published",
       "comparable": false,
       "audit_status": "verified-against-snapshot",
-      "conditions": "DeepSWE v1.1 / Pier / mini-swe-agent / Modal; exact source, agent revision and image digests unverified against local Docker runtime"
+      "conditions": "DeepSWE v1.1 / Pier / mini-swe-agent / Modal; exact source, agent revision and image digests unverified against local Docker runtime",
+      "ci_lo_percent": 31.729146807704478,
+      "ci_hi_percent": 38.49307541451774,
+      "tasks_passed_any": 68
     },
     {
       "benchmark": "deepswe",
@@ -4122,7 +4344,10 @@
       "status": "published",
       "comparable": false,
       "audit_status": "verified-against-snapshot",
-      "conditions": "DeepSWE v1.1 / Pier / mini-swe-agent / Modal; exact source, agent revision and image digests unverified against local Docker runtime"
+      "conditions": "DeepSWE v1.1 / Pier / mini-swe-agent / Modal; exact source, agent revision and image digests unverified against local Docker runtime",
+      "ci_lo_percent": 30.030271799081337,
+      "ci_hi_percent": 31.031675103573527,
+      "tasks_passed_any": 69
     },
     {
       "benchmark": "deepswe",
@@ -4142,7 +4367,10 @@
       "status": "published",
       "comparable": false,
       "audit_status": "verified-against-snapshot",
-      "conditions": "DeepSWE v1.1 / Pier / mini-swe-agent / Modal; exact source, agent revision and image digests unverified against local Docker runtime"
+      "conditions": "DeepSWE v1.1 / Pier / mini-swe-agent / Modal; exact source, agent revision and image digests unverified against local Docker runtime",
+      "ci_lo_percent": 29.386231901764383,
+      "ci_hi_percent": 31.638266984649878,
+      "tasks_passed_any": 65
     },
     {
       "benchmark": "deepswe",
@@ -4162,7 +4390,10 @@
       "status": "published",
       "comparable": false,
       "audit_status": "verified-against-snapshot",
-      "conditions": "DeepSWE v1.1 / Pier / mini-swe-agent / Modal; exact source, agent revision and image digests unverified against local Docker runtime"
+      "conditions": "DeepSWE v1.1 / Pier / mini-swe-agent / Modal; exact source, agent revision and image digests unverified against local Docker runtime",
+      "ci_lo_percent": 25.84133988380421,
+      "ci_hi_percent": 34.02562242218249,
+      "tasks_passed_any": 64
     },
     {
       "benchmark": "deepswe",
@@ -4182,7 +4413,10 @@
       "status": "published",
       "comparable": false,
       "audit_status": "verified-against-snapshot",
-      "conditions": "DeepSWE v1.1 / Pier / mini-swe-agent / Modal; exact source, agent revision and image digests unverified against local Docker runtime"
+      "conditions": "DeepSWE v1.1 / Pier / mini-swe-agent / Modal; exact source, agent revision and image digests unverified against local Docker runtime",
+      "ci_lo_percent": 24.696647220470695,
+      "ci_hi_percent": 29.285653664485057,
+      "tasks_passed_any": 54
     },
     {
       "benchmark": "deepswe",
@@ -4202,7 +4436,10 @@
       "status": "published",
       "comparable": false,
       "audit_status": "verified-against-snapshot",
-      "conditions": "DeepSWE v1.1 / Pier / mini-swe-agent / Modal; exact source, agent revision and image digests unverified against local Docker runtime"
+      "conditions": "DeepSWE v1.1 / Pier / mini-swe-agent / Modal; exact source, agent revision and image digests unverified against local Docker runtime",
+      "ci_lo_percent": 23.276690748868134,
+      "ci_hi_percent": 24.830213482757703,
+      "tasks_passed_any": 50
     },
     {
       "benchmark": "deepswe",
@@ -4222,7 +4459,10 @@
       "status": "published",
       "comparable": false,
       "audit_status": "verified-against-snapshot",
-      "conditions": "DeepSWE v1.1 / Pier / mini-swe-agent / Modal; exact source, agent revision and image digests unverified against local Docker runtime"
+      "conditions": "DeepSWE v1.1 / Pier / mini-swe-agent / Modal; exact source, agent revision and image digests unverified against local Docker runtime",
+      "ci_lo_percent": 10.244568255705316,
+      "ci_hi_percent": 13.206759177923006,
+      "tasks_passed_any": 32
     },
     {
       "benchmark": "deepswe",
@@ -4242,7 +4482,10 @@
       "status": "published",
       "comparable": false,
       "audit_status": "verified-against-snapshot",
-      "conditions": "DeepSWE v1.1 / Pier / mini-swe-agent / Modal; exact source, agent revision and image digests unverified against local Docker runtime"
+      "conditions": "DeepSWE v1.1 / Pier / mini-swe-agent / Modal; exact source, agent revision and image digests unverified against local Docker runtime",
+      "ci_lo_percent": 10.452866084502313,
+      "ci_hi_percent": 12.113505596913615,
+      "tasks_passed_any": 31
     },
     {
       "benchmark": "deepswe",
@@ -4262,7 +4505,2386 @@
       "status": "published",
       "comparable": false,
       "audit_status": "verified-against-snapshot",
-      "conditions": "DeepSWE v1.1 / Pier / mini-swe-agent / Modal; exact source, agent revision and image digests unverified against local Docker runtime"
+      "conditions": "DeepSWE v1.1 / Pier / mini-swe-agent / Modal; exact source, agent revision and image digests unverified against local Docker runtime",
+      "ci_lo_percent": 0.7183528101660299,
+      "ci_hi_percent": 2.3789923225773326,
+      "tasks_passed_any": 5
+    },
+    {
+      "benchmark": "swe-bench-pro",
+      "model": "Gemini 3.8 Flash",
+      "score_percent": null,
+      "display_note": "",
+      "source_id": null,
+      "status": "not-reported-in-reviewed-sources",
+      "conditions": "Only DeepSWE source reviewed for this added column; other benchmark score not verified",
+      "comparable": false,
+      "audit_status": "not-reported-in-reviewed-sources"
+    },
+    {
+      "benchmark": "swe-bench-pro",
+      "model": "GPT-5.6 Terra",
+      "score_percent": null,
+      "display_note": "",
+      "source_id": null,
+      "status": "not-reported-in-reviewed-sources",
+      "conditions": "Only DeepSWE source reviewed for this added column; other benchmark score not verified",
+      "comparable": false,
+      "audit_status": "not-reported-in-reviewed-sources"
+    },
+    {
+      "benchmark": "swe-bench-pro",
+      "model": "Grok 4.6",
+      "score_percent": null,
+      "display_note": "",
+      "source_id": null,
+      "status": "not-reported-in-reviewed-sources",
+      "conditions": "Only DeepSWE source reviewed for this added column; other benchmark score not verified",
+      "comparable": false,
+      "audit_status": "not-reported-in-reviewed-sources"
+    },
+    {
+      "benchmark": "swe-bench-pro",
+      "model": "GPT-5.6 Luna",
+      "score_percent": null,
+      "display_note": "",
+      "source_id": null,
+      "status": "not-reported-in-reviewed-sources",
+      "conditions": "Only DeepSWE source reviewed for this added column; other benchmark score not verified",
+      "comparable": false,
+      "audit_status": "not-reported-in-reviewed-sources"
+    },
+    {
+      "benchmark": "swe-bench-pro",
+      "model": "Gemini 3.7 Flash",
+      "score_percent": null,
+      "display_note": "",
+      "source_id": null,
+      "status": "not-reported-in-reviewed-sources",
+      "conditions": "Only DeepSWE source reviewed for this added column; other benchmark score not verified",
+      "comparable": false,
+      "audit_status": "not-reported-in-reviewed-sources"
+    },
+    {
+      "benchmark": "swe-bench-pro",
+      "model": "GLM-5.3 Flash",
+      "score_percent": null,
+      "display_note": "",
+      "source_id": null,
+      "status": "not-reported-in-reviewed-sources",
+      "conditions": "Only DeepSWE source reviewed for this added column; other benchmark score not verified",
+      "comparable": false,
+      "audit_status": "not-reported-in-reviewed-sources"
+    },
+    {
+      "benchmark": "swe-bench-pro",
+      "model": "DeepSeek-V4-Pro",
+      "score_percent": null,
+      "display_note": "",
+      "source_id": null,
+      "status": "not-reported-in-reviewed-sources",
+      "conditions": "Only DeepSWE source reviewed for this added column; other benchmark score not verified",
+      "comparable": false,
+      "audit_status": "not-reported-in-reviewed-sources"
+    },
+    {
+      "benchmark": "swe-bench-pro",
+      "model": "Muse Spark 1.2",
+      "score_percent": null,
+      "display_note": "",
+      "source_id": null,
+      "status": "not-reported-in-reviewed-sources",
+      "conditions": "Only DeepSWE source reviewed for this added column; other benchmark score not verified",
+      "comparable": false,
+      "audit_status": "not-reported-in-reviewed-sources"
+    },
+    {
+      "benchmark": "swe-bench-pro",
+      "model": "Sonnet 5",
+      "score_percent": null,
+      "display_note": "",
+      "source_id": null,
+      "status": "not-reported-in-reviewed-sources",
+      "conditions": "Only DeepSWE source reviewed for this added column; other benchmark score not verified",
+      "comparable": false,
+      "audit_status": "not-reported-in-reviewed-sources"
+    },
+    {
+      "benchmark": "swe-bench-pro",
+      "model": "Grok 4.5",
+      "score_percent": null,
+      "display_note": "",
+      "source_id": null,
+      "status": "not-reported-in-reviewed-sources",
+      "conditions": "Only DeepSWE source reviewed for this added column; other benchmark score not verified",
+      "comparable": false,
+      "audit_status": "not-reported-in-reviewed-sources"
+    },
+    {
+      "benchmark": "swe-bench-pro",
+      "model": "DeepSeek-V4-Flash",
+      "score_percent": null,
+      "display_note": "",
+      "source_id": null,
+      "status": "not-reported-in-reviewed-sources",
+      "conditions": "Only DeepSWE source reviewed for this added column; other benchmark score not verified",
+      "comparable": false,
+      "audit_status": "not-reported-in-reviewed-sources"
+    },
+    {
+      "benchmark": "swe-bench-pro",
+      "model": "Muse Spark 1.1",
+      "score_percent": null,
+      "display_note": "",
+      "source_id": null,
+      "status": "not-reported-in-reviewed-sources",
+      "conditions": "Only DeepSWE source reviewed for this added column; other benchmark score not verified",
+      "comparable": false,
+      "audit_status": "not-reported-in-reviewed-sources"
+    },
+    {
+      "benchmark": "swe-bench-pro",
+      "model": "GPT-5.4",
+      "score_percent": null,
+      "display_note": "",
+      "source_id": null,
+      "status": "not-reported-in-reviewed-sources",
+      "conditions": "Only DeepSWE source reviewed for this added column; other benchmark score not verified",
+      "comparable": false,
+      "audit_status": "not-reported-in-reviewed-sources"
+    },
+    {
+      "benchmark": "swe-bench-pro",
+      "model": "Gemini 3.6 Flash",
+      "score_percent": null,
+      "display_note": "",
+      "source_id": null,
+      "status": "not-reported-in-reviewed-sources",
+      "conditions": "Only DeepSWE source reviewed for this added column; other benchmark score not verified",
+      "comparable": false,
+      "audit_status": "not-reported-in-reviewed-sources"
+    },
+    {
+      "benchmark": "swe-bench-pro",
+      "model": "Gemini 3.5 Flash",
+      "score_percent": null,
+      "display_note": "",
+      "source_id": null,
+      "status": "not-reported-in-reviewed-sources",
+      "conditions": "Only DeepSWE source reviewed for this added column; other benchmark score not verified",
+      "comparable": false,
+      "audit_status": "not-reported-in-reviewed-sources"
+    },
+    {
+      "benchmark": "swe-bench-pro",
+      "model": "Kimi K2.7 Code",
+      "score_percent": null,
+      "display_note": "",
+      "source_id": null,
+      "status": "not-reported-in-reviewed-sources",
+      "conditions": "Only DeepSWE source reviewed for this added column; other benchmark score not verified",
+      "comparable": false,
+      "audit_status": "not-reported-in-reviewed-sources"
+    },
+    {
+      "benchmark": "swe-bench-pro",
+      "model": "Sonnet 4.6",
+      "score_percent": null,
+      "display_note": "",
+      "source_id": null,
+      "status": "not-reported-in-reviewed-sources",
+      "conditions": "Only DeepSWE source reviewed for this added column; other benchmark score not verified",
+      "comparable": false,
+      "audit_status": "not-reported-in-reviewed-sources"
+    },
+    {
+      "benchmark": "swe-bench-pro",
+      "model": "Gemini 3.1 Pro Preview",
+      "score_percent": null,
+      "display_note": "",
+      "source_id": null,
+      "status": "not-reported-in-reviewed-sources",
+      "conditions": "Only DeepSWE source reviewed for this added column; other benchmark score not verified",
+      "comparable": false,
+      "audit_status": "not-reported-in-reviewed-sources"
+    },
+    {
+      "benchmark": "swe-bench-verified",
+      "model": "Gemini 3.8 Flash",
+      "score_percent": null,
+      "display_note": "",
+      "source_id": null,
+      "status": "not-reported-in-reviewed-sources",
+      "conditions": "Only DeepSWE source reviewed for this added column; other benchmark score not verified",
+      "comparable": false,
+      "audit_status": "not-reported-in-reviewed-sources"
+    },
+    {
+      "benchmark": "swe-bench-verified",
+      "model": "GPT-5.6 Terra",
+      "score_percent": null,
+      "display_note": "",
+      "source_id": null,
+      "status": "not-reported-in-reviewed-sources",
+      "conditions": "Only DeepSWE source reviewed for this added column; other benchmark score not verified",
+      "comparable": false,
+      "audit_status": "not-reported-in-reviewed-sources"
+    },
+    {
+      "benchmark": "swe-bench-verified",
+      "model": "Grok 4.6",
+      "score_percent": null,
+      "display_note": "",
+      "source_id": null,
+      "status": "not-reported-in-reviewed-sources",
+      "conditions": "Only DeepSWE source reviewed for this added column; other benchmark score not verified",
+      "comparable": false,
+      "audit_status": "not-reported-in-reviewed-sources"
+    },
+    {
+      "benchmark": "swe-bench-verified",
+      "model": "GPT-5.6 Luna",
+      "score_percent": null,
+      "display_note": "",
+      "source_id": null,
+      "status": "not-reported-in-reviewed-sources",
+      "conditions": "Only DeepSWE source reviewed for this added column; other benchmark score not verified",
+      "comparable": false,
+      "audit_status": "not-reported-in-reviewed-sources"
+    },
+    {
+      "benchmark": "swe-bench-verified",
+      "model": "Gemini 3.7 Flash",
+      "score_percent": null,
+      "display_note": "",
+      "source_id": null,
+      "status": "not-reported-in-reviewed-sources",
+      "conditions": "Only DeepSWE source reviewed for this added column; other benchmark score not verified",
+      "comparable": false,
+      "audit_status": "not-reported-in-reviewed-sources"
+    },
+    {
+      "benchmark": "swe-bench-verified",
+      "model": "GLM-5.3 Flash",
+      "score_percent": null,
+      "display_note": "",
+      "source_id": null,
+      "status": "not-reported-in-reviewed-sources",
+      "conditions": "Only DeepSWE source reviewed for this added column; other benchmark score not verified",
+      "comparable": false,
+      "audit_status": "not-reported-in-reviewed-sources"
+    },
+    {
+      "benchmark": "swe-bench-verified",
+      "model": "DeepSeek-V4-Pro",
+      "score_percent": null,
+      "display_note": "",
+      "source_id": null,
+      "status": "not-reported-in-reviewed-sources",
+      "conditions": "Only DeepSWE source reviewed for this added column; other benchmark score not verified",
+      "comparable": false,
+      "audit_status": "not-reported-in-reviewed-sources"
+    },
+    {
+      "benchmark": "swe-bench-verified",
+      "model": "Muse Spark 1.2",
+      "score_percent": null,
+      "display_note": "",
+      "source_id": null,
+      "status": "not-reported-in-reviewed-sources",
+      "conditions": "Only DeepSWE source reviewed for this added column; other benchmark score not verified",
+      "comparable": false,
+      "audit_status": "not-reported-in-reviewed-sources"
+    },
+    {
+      "benchmark": "swe-bench-verified",
+      "model": "Sonnet 5",
+      "score_percent": null,
+      "display_note": "",
+      "source_id": null,
+      "status": "not-reported-in-reviewed-sources",
+      "conditions": "Only DeepSWE source reviewed for this added column; other benchmark score not verified",
+      "comparable": false,
+      "audit_status": "not-reported-in-reviewed-sources"
+    },
+    {
+      "benchmark": "swe-bench-verified",
+      "model": "Grok 4.5",
+      "score_percent": null,
+      "display_note": "",
+      "source_id": null,
+      "status": "not-reported-in-reviewed-sources",
+      "conditions": "Only DeepSWE source reviewed for this added column; other benchmark score not verified",
+      "comparable": false,
+      "audit_status": "not-reported-in-reviewed-sources"
+    },
+    {
+      "benchmark": "swe-bench-verified",
+      "model": "DeepSeek-V4-Flash",
+      "score_percent": null,
+      "display_note": "",
+      "source_id": null,
+      "status": "not-reported-in-reviewed-sources",
+      "conditions": "Only DeepSWE source reviewed for this added column; other benchmark score not verified",
+      "comparable": false,
+      "audit_status": "not-reported-in-reviewed-sources"
+    },
+    {
+      "benchmark": "swe-bench-verified",
+      "model": "Muse Spark 1.1",
+      "score_percent": null,
+      "display_note": "",
+      "source_id": null,
+      "status": "not-reported-in-reviewed-sources",
+      "conditions": "Only DeepSWE source reviewed for this added column; other benchmark score not verified",
+      "comparable": false,
+      "audit_status": "not-reported-in-reviewed-sources"
+    },
+    {
+      "benchmark": "swe-bench-verified",
+      "model": "GPT-5.4",
+      "score_percent": null,
+      "display_note": "",
+      "source_id": null,
+      "status": "not-reported-in-reviewed-sources",
+      "conditions": "Only DeepSWE source reviewed for this added column; other benchmark score not verified",
+      "comparable": false,
+      "audit_status": "not-reported-in-reviewed-sources"
+    },
+    {
+      "benchmark": "swe-bench-verified",
+      "model": "Gemini 3.6 Flash",
+      "score_percent": null,
+      "display_note": "",
+      "source_id": null,
+      "status": "not-reported-in-reviewed-sources",
+      "conditions": "Only DeepSWE source reviewed for this added column; other benchmark score not verified",
+      "comparable": false,
+      "audit_status": "not-reported-in-reviewed-sources"
+    },
+    {
+      "benchmark": "swe-bench-verified",
+      "model": "Gemini 3.5 Flash",
+      "score_percent": null,
+      "display_note": "",
+      "source_id": null,
+      "status": "not-reported-in-reviewed-sources",
+      "conditions": "Only DeepSWE source reviewed for this added column; other benchmark score not verified",
+      "comparable": false,
+      "audit_status": "not-reported-in-reviewed-sources"
+    },
+    {
+      "benchmark": "swe-bench-verified",
+      "model": "Kimi K2.7 Code",
+      "score_percent": null,
+      "display_note": "",
+      "source_id": null,
+      "status": "not-reported-in-reviewed-sources",
+      "conditions": "Only DeepSWE source reviewed for this added column; other benchmark score not verified",
+      "comparable": false,
+      "audit_status": "not-reported-in-reviewed-sources"
+    },
+    {
+      "benchmark": "swe-bench-verified",
+      "model": "Sonnet 4.6",
+      "score_percent": null,
+      "display_note": "",
+      "source_id": null,
+      "status": "not-reported-in-reviewed-sources",
+      "conditions": "Only DeepSWE source reviewed for this added column; other benchmark score not verified",
+      "comparable": false,
+      "audit_status": "not-reported-in-reviewed-sources"
+    },
+    {
+      "benchmark": "swe-bench-verified",
+      "model": "Gemini 3.1 Pro Preview",
+      "score_percent": null,
+      "display_note": "",
+      "source_id": null,
+      "status": "not-reported-in-reviewed-sources",
+      "conditions": "Only DeepSWE source reviewed for this added column; other benchmark score not verified",
+      "comparable": false,
+      "audit_status": "not-reported-in-reviewed-sources"
+    },
+    {
+      "benchmark": "terminal-bench",
+      "model": "Gemini 3.8 Flash",
+      "score_percent": null,
+      "display_note": "",
+      "source_id": null,
+      "status": "not-reported-in-reviewed-sources",
+      "conditions": "Only DeepSWE source reviewed for this added column; other benchmark score not verified",
+      "comparable": false,
+      "audit_status": "not-reported-in-reviewed-sources"
+    },
+    {
+      "benchmark": "terminal-bench",
+      "model": "GPT-5.6 Terra",
+      "score_percent": null,
+      "display_note": "",
+      "source_id": null,
+      "status": "not-reported-in-reviewed-sources",
+      "conditions": "Only DeepSWE source reviewed for this added column; other benchmark score not verified",
+      "comparable": false,
+      "audit_status": "not-reported-in-reviewed-sources"
+    },
+    {
+      "benchmark": "terminal-bench",
+      "model": "Grok 4.6",
+      "score_percent": null,
+      "display_note": "",
+      "source_id": null,
+      "status": "not-reported-in-reviewed-sources",
+      "conditions": "Only DeepSWE source reviewed for this added column; other benchmark score not verified",
+      "comparable": false,
+      "audit_status": "not-reported-in-reviewed-sources"
+    },
+    {
+      "benchmark": "terminal-bench",
+      "model": "GPT-5.6 Luna",
+      "score_percent": null,
+      "display_note": "",
+      "source_id": null,
+      "status": "not-reported-in-reviewed-sources",
+      "conditions": "Only DeepSWE source reviewed for this added column; other benchmark score not verified",
+      "comparable": false,
+      "audit_status": "not-reported-in-reviewed-sources"
+    },
+    {
+      "benchmark": "terminal-bench",
+      "model": "Gemini 3.7 Flash",
+      "score_percent": null,
+      "display_note": "",
+      "source_id": null,
+      "status": "not-reported-in-reviewed-sources",
+      "conditions": "Only DeepSWE source reviewed for this added column; other benchmark score not verified",
+      "comparable": false,
+      "audit_status": "not-reported-in-reviewed-sources"
+    },
+    {
+      "benchmark": "terminal-bench",
+      "model": "GLM-5.3 Flash",
+      "score_percent": null,
+      "display_note": "",
+      "source_id": null,
+      "status": "not-reported-in-reviewed-sources",
+      "conditions": "Only DeepSWE source reviewed for this added column; other benchmark score not verified",
+      "comparable": false,
+      "audit_status": "not-reported-in-reviewed-sources"
+    },
+    {
+      "benchmark": "terminal-bench",
+      "model": "DeepSeek-V4-Pro",
+      "score_percent": null,
+      "display_note": "",
+      "source_id": null,
+      "status": "not-reported-in-reviewed-sources",
+      "conditions": "Only DeepSWE source reviewed for this added column; other benchmark score not verified",
+      "comparable": false,
+      "audit_status": "not-reported-in-reviewed-sources"
+    },
+    {
+      "benchmark": "terminal-bench",
+      "model": "Muse Spark 1.2",
+      "score_percent": null,
+      "display_note": "",
+      "source_id": null,
+      "status": "not-reported-in-reviewed-sources",
+      "conditions": "Only DeepSWE source reviewed for this added column; other benchmark score not verified",
+      "comparable": false,
+      "audit_status": "not-reported-in-reviewed-sources"
+    },
+    {
+      "benchmark": "terminal-bench",
+      "model": "Sonnet 5",
+      "score_percent": null,
+      "display_note": "",
+      "source_id": null,
+      "status": "not-reported-in-reviewed-sources",
+      "conditions": "Only DeepSWE source reviewed for this added column; other benchmark score not verified",
+      "comparable": false,
+      "audit_status": "not-reported-in-reviewed-sources"
+    },
+    {
+      "benchmark": "terminal-bench",
+      "model": "Grok 4.5",
+      "score_percent": null,
+      "display_note": "",
+      "source_id": null,
+      "status": "not-reported-in-reviewed-sources",
+      "conditions": "Only DeepSWE source reviewed for this added column; other benchmark score not verified",
+      "comparable": false,
+      "audit_status": "not-reported-in-reviewed-sources"
+    },
+    {
+      "benchmark": "terminal-bench",
+      "model": "DeepSeek-V4-Flash",
+      "score_percent": null,
+      "display_note": "",
+      "source_id": null,
+      "status": "not-reported-in-reviewed-sources",
+      "conditions": "Only DeepSWE source reviewed for this added column; other benchmark score not verified",
+      "comparable": false,
+      "audit_status": "not-reported-in-reviewed-sources"
+    },
+    {
+      "benchmark": "terminal-bench",
+      "model": "Muse Spark 1.1",
+      "score_percent": null,
+      "display_note": "",
+      "source_id": null,
+      "status": "not-reported-in-reviewed-sources",
+      "conditions": "Only DeepSWE source reviewed for this added column; other benchmark score not verified",
+      "comparable": false,
+      "audit_status": "not-reported-in-reviewed-sources"
+    },
+    {
+      "benchmark": "terminal-bench",
+      "model": "GPT-5.4",
+      "score_percent": null,
+      "display_note": "",
+      "source_id": null,
+      "status": "not-reported-in-reviewed-sources",
+      "conditions": "Only DeepSWE source reviewed for this added column; other benchmark score not verified",
+      "comparable": false,
+      "audit_status": "not-reported-in-reviewed-sources"
+    },
+    {
+      "benchmark": "terminal-bench",
+      "model": "Gemini 3.6 Flash",
+      "score_percent": null,
+      "display_note": "",
+      "source_id": null,
+      "status": "not-reported-in-reviewed-sources",
+      "conditions": "Only DeepSWE source reviewed for this added column; other benchmark score not verified",
+      "comparable": false,
+      "audit_status": "not-reported-in-reviewed-sources"
+    },
+    {
+      "benchmark": "terminal-bench",
+      "model": "Gemini 3.5 Flash",
+      "score_percent": null,
+      "display_note": "",
+      "source_id": null,
+      "status": "not-reported-in-reviewed-sources",
+      "conditions": "Only DeepSWE source reviewed for this added column; other benchmark score not verified",
+      "comparable": false,
+      "audit_status": "not-reported-in-reviewed-sources"
+    },
+    {
+      "benchmark": "terminal-bench",
+      "model": "Kimi K2.7 Code",
+      "score_percent": null,
+      "display_note": "",
+      "source_id": null,
+      "status": "not-reported-in-reviewed-sources",
+      "conditions": "Only DeepSWE source reviewed for this added column; other benchmark score not verified",
+      "comparable": false,
+      "audit_status": "not-reported-in-reviewed-sources"
+    },
+    {
+      "benchmark": "terminal-bench",
+      "model": "Sonnet 4.6",
+      "score_percent": null,
+      "display_note": "",
+      "source_id": null,
+      "status": "not-reported-in-reviewed-sources",
+      "conditions": "Only DeepSWE source reviewed for this added column; other benchmark score not verified",
+      "comparable": false,
+      "audit_status": "not-reported-in-reviewed-sources"
+    },
+    {
+      "benchmark": "terminal-bench",
+      "model": "Gemini 3.1 Pro Preview",
+      "score_percent": null,
+      "display_note": "",
+      "source_id": null,
+      "status": "not-reported-in-reviewed-sources",
+      "conditions": "Only DeepSWE source reviewed for this added column; other benchmark score not verified",
+      "comparable": false,
+      "audit_status": "not-reported-in-reviewed-sources"
+    },
+    {
+      "benchmark": "livecodebench",
+      "model": "Gemini 3.8 Flash",
+      "score_percent": null,
+      "display_note": "",
+      "source_id": null,
+      "status": "not-reported-in-reviewed-sources",
+      "conditions": "Only DeepSWE source reviewed for this added column; other benchmark score not verified",
+      "comparable": false,
+      "audit_status": "not-reported-in-reviewed-sources"
+    },
+    {
+      "benchmark": "livecodebench",
+      "model": "GPT-5.6 Terra",
+      "score_percent": null,
+      "display_note": "",
+      "source_id": null,
+      "status": "not-reported-in-reviewed-sources",
+      "conditions": "Only DeepSWE source reviewed for this added column; other benchmark score not verified",
+      "comparable": false,
+      "audit_status": "not-reported-in-reviewed-sources"
+    },
+    {
+      "benchmark": "livecodebench",
+      "model": "Grok 4.6",
+      "score_percent": null,
+      "display_note": "",
+      "source_id": null,
+      "status": "not-reported-in-reviewed-sources",
+      "conditions": "Only DeepSWE source reviewed for this added column; other benchmark score not verified",
+      "comparable": false,
+      "audit_status": "not-reported-in-reviewed-sources"
+    },
+    {
+      "benchmark": "livecodebench",
+      "model": "GPT-5.6 Luna",
+      "score_percent": null,
+      "display_note": "",
+      "source_id": null,
+      "status": "not-reported-in-reviewed-sources",
+      "conditions": "Only DeepSWE source reviewed for this added column; other benchmark score not verified",
+      "comparable": false,
+      "audit_status": "not-reported-in-reviewed-sources"
+    },
+    {
+      "benchmark": "livecodebench",
+      "model": "Gemini 3.7 Flash",
+      "score_percent": null,
+      "display_note": "",
+      "source_id": null,
+      "status": "not-reported-in-reviewed-sources",
+      "conditions": "Only DeepSWE source reviewed for this added column; other benchmark score not verified",
+      "comparable": false,
+      "audit_status": "not-reported-in-reviewed-sources"
+    },
+    {
+      "benchmark": "livecodebench",
+      "model": "GLM-5.3 Flash",
+      "score_percent": null,
+      "display_note": "",
+      "source_id": null,
+      "status": "not-reported-in-reviewed-sources",
+      "conditions": "Only DeepSWE source reviewed for this added column; other benchmark score not verified",
+      "comparable": false,
+      "audit_status": "not-reported-in-reviewed-sources"
+    },
+    {
+      "benchmark": "livecodebench",
+      "model": "DeepSeek-V4-Pro",
+      "score_percent": null,
+      "display_note": "",
+      "source_id": null,
+      "status": "not-reported-in-reviewed-sources",
+      "conditions": "Only DeepSWE source reviewed for this added column; other benchmark score not verified",
+      "comparable": false,
+      "audit_status": "not-reported-in-reviewed-sources"
+    },
+    {
+      "benchmark": "livecodebench",
+      "model": "Muse Spark 1.2",
+      "score_percent": null,
+      "display_note": "",
+      "source_id": null,
+      "status": "not-reported-in-reviewed-sources",
+      "conditions": "Only DeepSWE source reviewed for this added column; other benchmark score not verified",
+      "comparable": false,
+      "audit_status": "not-reported-in-reviewed-sources"
+    },
+    {
+      "benchmark": "livecodebench",
+      "model": "Sonnet 5",
+      "score_percent": null,
+      "display_note": "",
+      "source_id": null,
+      "status": "not-reported-in-reviewed-sources",
+      "conditions": "Only DeepSWE source reviewed for this added column; other benchmark score not verified",
+      "comparable": false,
+      "audit_status": "not-reported-in-reviewed-sources"
+    },
+    {
+      "benchmark": "livecodebench",
+      "model": "Grok 4.5",
+      "score_percent": null,
+      "display_note": "",
+      "source_id": null,
+      "status": "not-reported-in-reviewed-sources",
+      "conditions": "Only DeepSWE source reviewed for this added column; other benchmark score not verified",
+      "comparable": false,
+      "audit_status": "not-reported-in-reviewed-sources"
+    },
+    {
+      "benchmark": "livecodebench",
+      "model": "DeepSeek-V4-Flash",
+      "score_percent": null,
+      "display_note": "",
+      "source_id": null,
+      "status": "not-reported-in-reviewed-sources",
+      "conditions": "Only DeepSWE source reviewed for this added column; other benchmark score not verified",
+      "comparable": false,
+      "audit_status": "not-reported-in-reviewed-sources"
+    },
+    {
+      "benchmark": "livecodebench",
+      "model": "Muse Spark 1.1",
+      "score_percent": null,
+      "display_note": "",
+      "source_id": null,
+      "status": "not-reported-in-reviewed-sources",
+      "conditions": "Only DeepSWE source reviewed for this added column; other benchmark score not verified",
+      "comparable": false,
+      "audit_status": "not-reported-in-reviewed-sources"
+    },
+    {
+      "benchmark": "livecodebench",
+      "model": "GPT-5.4",
+      "score_percent": null,
+      "display_note": "",
+      "source_id": null,
+      "status": "not-reported-in-reviewed-sources",
+      "conditions": "Only DeepSWE source reviewed for this added column; other benchmark score not verified",
+      "comparable": false,
+      "audit_status": "not-reported-in-reviewed-sources"
+    },
+    {
+      "benchmark": "livecodebench",
+      "model": "Gemini 3.6 Flash",
+      "score_percent": null,
+      "display_note": "",
+      "source_id": null,
+      "status": "not-reported-in-reviewed-sources",
+      "conditions": "Only DeepSWE source reviewed for this added column; other benchmark score not verified",
+      "comparable": false,
+      "audit_status": "not-reported-in-reviewed-sources"
+    },
+    {
+      "benchmark": "livecodebench",
+      "model": "Gemini 3.5 Flash",
+      "score_percent": null,
+      "display_note": "",
+      "source_id": null,
+      "status": "not-reported-in-reviewed-sources",
+      "conditions": "Only DeepSWE source reviewed for this added column; other benchmark score not verified",
+      "comparable": false,
+      "audit_status": "not-reported-in-reviewed-sources"
+    },
+    {
+      "benchmark": "livecodebench",
+      "model": "Kimi K2.7 Code",
+      "score_percent": null,
+      "display_note": "",
+      "source_id": null,
+      "status": "not-reported-in-reviewed-sources",
+      "conditions": "Only DeepSWE source reviewed for this added column; other benchmark score not verified",
+      "comparable": false,
+      "audit_status": "not-reported-in-reviewed-sources"
+    },
+    {
+      "benchmark": "livecodebench",
+      "model": "Sonnet 4.6",
+      "score_percent": null,
+      "display_note": "",
+      "source_id": null,
+      "status": "not-reported-in-reviewed-sources",
+      "conditions": "Only DeepSWE source reviewed for this added column; other benchmark score not verified",
+      "comparable": false,
+      "audit_status": "not-reported-in-reviewed-sources"
+    },
+    {
+      "benchmark": "livecodebench",
+      "model": "Gemini 3.1 Pro Preview",
+      "score_percent": null,
+      "display_note": "",
+      "source_id": null,
+      "status": "not-reported-in-reviewed-sources",
+      "conditions": "Only DeepSWE source reviewed for this added column; other benchmark score not verified",
+      "comparable": false,
+      "audit_status": "not-reported-in-reviewed-sources"
+    },
+    {
+      "benchmark": "livecodebench-pro",
+      "model": "Gemini 3.8 Flash",
+      "score_percent": null,
+      "display_note": "",
+      "source_id": null,
+      "status": "not-reported-in-reviewed-sources",
+      "conditions": "Only DeepSWE source reviewed for this added column; other benchmark score not verified",
+      "comparable": false,
+      "audit_status": "not-reported-in-reviewed-sources"
+    },
+    {
+      "benchmark": "livecodebench-pro",
+      "model": "GPT-5.6 Terra",
+      "score_percent": null,
+      "display_note": "",
+      "source_id": null,
+      "status": "not-reported-in-reviewed-sources",
+      "conditions": "Only DeepSWE source reviewed for this added column; other benchmark score not verified",
+      "comparable": false,
+      "audit_status": "not-reported-in-reviewed-sources"
+    },
+    {
+      "benchmark": "livecodebench-pro",
+      "model": "Grok 4.6",
+      "score_percent": null,
+      "display_note": "",
+      "source_id": null,
+      "status": "not-reported-in-reviewed-sources",
+      "conditions": "Only DeepSWE source reviewed for this added column; other benchmark score not verified",
+      "comparable": false,
+      "audit_status": "not-reported-in-reviewed-sources"
+    },
+    {
+      "benchmark": "livecodebench-pro",
+      "model": "GPT-5.6 Luna",
+      "score_percent": null,
+      "display_note": "",
+      "source_id": null,
+      "status": "not-reported-in-reviewed-sources",
+      "conditions": "Only DeepSWE source reviewed for this added column; other benchmark score not verified",
+      "comparable": false,
+      "audit_status": "not-reported-in-reviewed-sources"
+    },
+    {
+      "benchmark": "livecodebench-pro",
+      "model": "Gemini 3.7 Flash",
+      "score_percent": null,
+      "display_note": "",
+      "source_id": null,
+      "status": "not-reported-in-reviewed-sources",
+      "conditions": "Only DeepSWE source reviewed for this added column; other benchmark score not verified",
+      "comparable": false,
+      "audit_status": "not-reported-in-reviewed-sources"
+    },
+    {
+      "benchmark": "livecodebench-pro",
+      "model": "GLM-5.3 Flash",
+      "score_percent": null,
+      "display_note": "",
+      "source_id": null,
+      "status": "not-reported-in-reviewed-sources",
+      "conditions": "Only DeepSWE source reviewed for this added column; other benchmark score not verified",
+      "comparable": false,
+      "audit_status": "not-reported-in-reviewed-sources"
+    },
+    {
+      "benchmark": "livecodebench-pro",
+      "model": "DeepSeek-V4-Pro",
+      "score_percent": null,
+      "display_note": "",
+      "source_id": null,
+      "status": "not-reported-in-reviewed-sources",
+      "conditions": "Only DeepSWE source reviewed for this added column; other benchmark score not verified",
+      "comparable": false,
+      "audit_status": "not-reported-in-reviewed-sources"
+    },
+    {
+      "benchmark": "livecodebench-pro",
+      "model": "Muse Spark 1.2",
+      "score_percent": null,
+      "display_note": "",
+      "source_id": null,
+      "status": "not-reported-in-reviewed-sources",
+      "conditions": "Only DeepSWE source reviewed for this added column; other benchmark score not verified",
+      "comparable": false,
+      "audit_status": "not-reported-in-reviewed-sources"
+    },
+    {
+      "benchmark": "livecodebench-pro",
+      "model": "Sonnet 5",
+      "score_percent": null,
+      "display_note": "",
+      "source_id": null,
+      "status": "not-reported-in-reviewed-sources",
+      "conditions": "Only DeepSWE source reviewed for this added column; other benchmark score not verified",
+      "comparable": false,
+      "audit_status": "not-reported-in-reviewed-sources"
+    },
+    {
+      "benchmark": "livecodebench-pro",
+      "model": "Grok 4.5",
+      "score_percent": null,
+      "display_note": "",
+      "source_id": null,
+      "status": "not-reported-in-reviewed-sources",
+      "conditions": "Only DeepSWE source reviewed for this added column; other benchmark score not verified",
+      "comparable": false,
+      "audit_status": "not-reported-in-reviewed-sources"
+    },
+    {
+      "benchmark": "livecodebench-pro",
+      "model": "DeepSeek-V4-Flash",
+      "score_percent": null,
+      "display_note": "",
+      "source_id": null,
+      "status": "not-reported-in-reviewed-sources",
+      "conditions": "Only DeepSWE source reviewed for this added column; other benchmark score not verified",
+      "comparable": false,
+      "audit_status": "not-reported-in-reviewed-sources"
+    },
+    {
+      "benchmark": "livecodebench-pro",
+      "model": "Muse Spark 1.1",
+      "score_percent": null,
+      "display_note": "",
+      "source_id": null,
+      "status": "not-reported-in-reviewed-sources",
+      "conditions": "Only DeepSWE source reviewed for this added column; other benchmark score not verified",
+      "comparable": false,
+      "audit_status": "not-reported-in-reviewed-sources"
+    },
+    {
+      "benchmark": "livecodebench-pro",
+      "model": "GPT-5.4",
+      "score_percent": null,
+      "display_note": "",
+      "source_id": null,
+      "status": "not-reported-in-reviewed-sources",
+      "conditions": "Only DeepSWE source reviewed for this added column; other benchmark score not verified",
+      "comparable": false,
+      "audit_status": "not-reported-in-reviewed-sources"
+    },
+    {
+      "benchmark": "livecodebench-pro",
+      "model": "Gemini 3.6 Flash",
+      "score_percent": null,
+      "display_note": "",
+      "source_id": null,
+      "status": "not-reported-in-reviewed-sources",
+      "conditions": "Only DeepSWE source reviewed for this added column; other benchmark score not verified",
+      "comparable": false,
+      "audit_status": "not-reported-in-reviewed-sources"
+    },
+    {
+      "benchmark": "livecodebench-pro",
+      "model": "Gemini 3.5 Flash",
+      "score_percent": null,
+      "display_note": "",
+      "source_id": null,
+      "status": "not-reported-in-reviewed-sources",
+      "conditions": "Only DeepSWE source reviewed for this added column; other benchmark score not verified",
+      "comparable": false,
+      "audit_status": "not-reported-in-reviewed-sources"
+    },
+    {
+      "benchmark": "livecodebench-pro",
+      "model": "Kimi K2.7 Code",
+      "score_percent": null,
+      "display_note": "",
+      "source_id": null,
+      "status": "not-reported-in-reviewed-sources",
+      "conditions": "Only DeepSWE source reviewed for this added column; other benchmark score not verified",
+      "comparable": false,
+      "audit_status": "not-reported-in-reviewed-sources"
+    },
+    {
+      "benchmark": "livecodebench-pro",
+      "model": "Sonnet 4.6",
+      "score_percent": null,
+      "display_note": "",
+      "source_id": null,
+      "status": "not-reported-in-reviewed-sources",
+      "conditions": "Only DeepSWE source reviewed for this added column; other benchmark score not verified",
+      "comparable": false,
+      "audit_status": "not-reported-in-reviewed-sources"
+    },
+    {
+      "benchmark": "livecodebench-pro",
+      "model": "Gemini 3.1 Pro Preview",
+      "score_percent": null,
+      "display_note": "",
+      "source_id": null,
+      "status": "not-reported-in-reviewed-sources",
+      "conditions": "Only DeepSWE source reviewed for this added column; other benchmark score not verified",
+      "comparable": false,
+      "audit_status": "not-reported-in-reviewed-sources"
+    },
+    {
+      "benchmark": "hle",
+      "model": "Gemini 3.8 Flash",
+      "score_percent": null,
+      "display_note": "",
+      "source_id": null,
+      "status": "not-reported-in-reviewed-sources",
+      "conditions": "Only DeepSWE source reviewed for this added column; other benchmark score not verified",
+      "comparable": false,
+      "audit_status": "not-reported-in-reviewed-sources"
+    },
+    {
+      "benchmark": "hle",
+      "model": "GPT-5.6 Terra",
+      "score_percent": null,
+      "display_note": "",
+      "source_id": null,
+      "status": "not-reported-in-reviewed-sources",
+      "conditions": "Only DeepSWE source reviewed for this added column; other benchmark score not verified",
+      "comparable": false,
+      "audit_status": "not-reported-in-reviewed-sources"
+    },
+    {
+      "benchmark": "hle",
+      "model": "Grok 4.6",
+      "score_percent": null,
+      "display_note": "",
+      "source_id": null,
+      "status": "not-reported-in-reviewed-sources",
+      "conditions": "Only DeepSWE source reviewed for this added column; other benchmark score not verified",
+      "comparable": false,
+      "audit_status": "not-reported-in-reviewed-sources"
+    },
+    {
+      "benchmark": "hle",
+      "model": "GPT-5.6 Luna",
+      "score_percent": null,
+      "display_note": "",
+      "source_id": null,
+      "status": "not-reported-in-reviewed-sources",
+      "conditions": "Only DeepSWE source reviewed for this added column; other benchmark score not verified",
+      "comparable": false,
+      "audit_status": "not-reported-in-reviewed-sources"
+    },
+    {
+      "benchmark": "hle",
+      "model": "Gemini 3.7 Flash",
+      "score_percent": null,
+      "display_note": "",
+      "source_id": null,
+      "status": "not-reported-in-reviewed-sources",
+      "conditions": "Only DeepSWE source reviewed for this added column; other benchmark score not verified",
+      "comparable": false,
+      "audit_status": "not-reported-in-reviewed-sources"
+    },
+    {
+      "benchmark": "hle",
+      "model": "GLM-5.3 Flash",
+      "score_percent": null,
+      "display_note": "",
+      "source_id": null,
+      "status": "not-reported-in-reviewed-sources",
+      "conditions": "Only DeepSWE source reviewed for this added column; other benchmark score not verified",
+      "comparable": false,
+      "audit_status": "not-reported-in-reviewed-sources"
+    },
+    {
+      "benchmark": "hle",
+      "model": "DeepSeek-V4-Pro",
+      "score_percent": null,
+      "display_note": "",
+      "source_id": null,
+      "status": "not-reported-in-reviewed-sources",
+      "conditions": "Only DeepSWE source reviewed for this added column; other benchmark score not verified",
+      "comparable": false,
+      "audit_status": "not-reported-in-reviewed-sources"
+    },
+    {
+      "benchmark": "hle",
+      "model": "Muse Spark 1.2",
+      "score_percent": null,
+      "display_note": "",
+      "source_id": null,
+      "status": "not-reported-in-reviewed-sources",
+      "conditions": "Only DeepSWE source reviewed for this added column; other benchmark score not verified",
+      "comparable": false,
+      "audit_status": "not-reported-in-reviewed-sources"
+    },
+    {
+      "benchmark": "hle",
+      "model": "Sonnet 5",
+      "score_percent": null,
+      "display_note": "",
+      "source_id": null,
+      "status": "not-reported-in-reviewed-sources",
+      "conditions": "Only DeepSWE source reviewed for this added column; other benchmark score not verified",
+      "comparable": false,
+      "audit_status": "not-reported-in-reviewed-sources"
+    },
+    {
+      "benchmark": "hle",
+      "model": "Grok 4.5",
+      "score_percent": null,
+      "display_note": "",
+      "source_id": null,
+      "status": "not-reported-in-reviewed-sources",
+      "conditions": "Only DeepSWE source reviewed for this added column; other benchmark score not verified",
+      "comparable": false,
+      "audit_status": "not-reported-in-reviewed-sources"
+    },
+    {
+      "benchmark": "hle",
+      "model": "DeepSeek-V4-Flash",
+      "score_percent": null,
+      "display_note": "",
+      "source_id": null,
+      "status": "not-reported-in-reviewed-sources",
+      "conditions": "Only DeepSWE source reviewed for this added column; other benchmark score not verified",
+      "comparable": false,
+      "audit_status": "not-reported-in-reviewed-sources"
+    },
+    {
+      "benchmark": "hle",
+      "model": "Muse Spark 1.1",
+      "score_percent": null,
+      "display_note": "",
+      "source_id": null,
+      "status": "not-reported-in-reviewed-sources",
+      "conditions": "Only DeepSWE source reviewed for this added column; other benchmark score not verified",
+      "comparable": false,
+      "audit_status": "not-reported-in-reviewed-sources"
+    },
+    {
+      "benchmark": "hle",
+      "model": "GPT-5.4",
+      "score_percent": null,
+      "display_note": "",
+      "source_id": null,
+      "status": "not-reported-in-reviewed-sources",
+      "conditions": "Only DeepSWE source reviewed for this added column; other benchmark score not verified",
+      "comparable": false,
+      "audit_status": "not-reported-in-reviewed-sources"
+    },
+    {
+      "benchmark": "hle",
+      "model": "Gemini 3.6 Flash",
+      "score_percent": null,
+      "display_note": "",
+      "source_id": null,
+      "status": "not-reported-in-reviewed-sources",
+      "conditions": "Only DeepSWE source reviewed for this added column; other benchmark score not verified",
+      "comparable": false,
+      "audit_status": "not-reported-in-reviewed-sources"
+    },
+    {
+      "benchmark": "hle",
+      "model": "Gemini 3.5 Flash",
+      "score_percent": null,
+      "display_note": "",
+      "source_id": null,
+      "status": "not-reported-in-reviewed-sources",
+      "conditions": "Only DeepSWE source reviewed for this added column; other benchmark score not verified",
+      "comparable": false,
+      "audit_status": "not-reported-in-reviewed-sources"
+    },
+    {
+      "benchmark": "hle",
+      "model": "Kimi K2.7 Code",
+      "score_percent": null,
+      "display_note": "",
+      "source_id": null,
+      "status": "not-reported-in-reviewed-sources",
+      "conditions": "Only DeepSWE source reviewed for this added column; other benchmark score not verified",
+      "comparable": false,
+      "audit_status": "not-reported-in-reviewed-sources"
+    },
+    {
+      "benchmark": "hle",
+      "model": "Sonnet 4.6",
+      "score_percent": null,
+      "display_note": "",
+      "source_id": null,
+      "status": "not-reported-in-reviewed-sources",
+      "conditions": "Only DeepSWE source reviewed for this added column; other benchmark score not verified",
+      "comparable": false,
+      "audit_status": "not-reported-in-reviewed-sources"
+    },
+    {
+      "benchmark": "hle",
+      "model": "Gemini 3.1 Pro Preview",
+      "score_percent": null,
+      "display_note": "",
+      "source_id": null,
+      "status": "not-reported-in-reviewed-sources",
+      "conditions": "Only DeepSWE source reviewed for this added column; other benchmark score not verified",
+      "comparable": false,
+      "audit_status": "not-reported-in-reviewed-sources"
+    },
+    {
+      "benchmark": "charxiv-reasoning",
+      "model": "Gemini 3.8 Flash",
+      "score_percent": null,
+      "display_note": "",
+      "source_id": null,
+      "status": "not-reported-in-reviewed-sources",
+      "conditions": "Only DeepSWE source reviewed for this added column; other benchmark score not verified",
+      "comparable": false,
+      "audit_status": "not-reported-in-reviewed-sources"
+    },
+    {
+      "benchmark": "charxiv-reasoning",
+      "model": "GPT-5.6 Terra",
+      "score_percent": null,
+      "display_note": "",
+      "source_id": null,
+      "status": "not-reported-in-reviewed-sources",
+      "conditions": "Only DeepSWE source reviewed for this added column; other benchmark score not verified",
+      "comparable": false,
+      "audit_status": "not-reported-in-reviewed-sources"
+    },
+    {
+      "benchmark": "charxiv-reasoning",
+      "model": "Grok 4.6",
+      "score_percent": null,
+      "display_note": "",
+      "source_id": null,
+      "status": "not-reported-in-reviewed-sources",
+      "conditions": "Only DeepSWE source reviewed for this added column; other benchmark score not verified",
+      "comparable": false,
+      "audit_status": "not-reported-in-reviewed-sources"
+    },
+    {
+      "benchmark": "charxiv-reasoning",
+      "model": "GPT-5.6 Luna",
+      "score_percent": null,
+      "display_note": "",
+      "source_id": null,
+      "status": "not-reported-in-reviewed-sources",
+      "conditions": "Only DeepSWE source reviewed for this added column; other benchmark score not verified",
+      "comparable": false,
+      "audit_status": "not-reported-in-reviewed-sources"
+    },
+    {
+      "benchmark": "charxiv-reasoning",
+      "model": "Gemini 3.7 Flash",
+      "score_percent": null,
+      "display_note": "",
+      "source_id": null,
+      "status": "not-reported-in-reviewed-sources",
+      "conditions": "Only DeepSWE source reviewed for this added column; other benchmark score not verified",
+      "comparable": false,
+      "audit_status": "not-reported-in-reviewed-sources"
+    },
+    {
+      "benchmark": "charxiv-reasoning",
+      "model": "GLM-5.3 Flash",
+      "score_percent": null,
+      "display_note": "",
+      "source_id": null,
+      "status": "not-reported-in-reviewed-sources",
+      "conditions": "Only DeepSWE source reviewed for this added column; other benchmark score not verified",
+      "comparable": false,
+      "audit_status": "not-reported-in-reviewed-sources"
+    },
+    {
+      "benchmark": "charxiv-reasoning",
+      "model": "DeepSeek-V4-Pro",
+      "score_percent": null,
+      "display_note": "",
+      "source_id": null,
+      "status": "not-reported-in-reviewed-sources",
+      "conditions": "Only DeepSWE source reviewed for this added column; other benchmark score not verified",
+      "comparable": false,
+      "audit_status": "not-reported-in-reviewed-sources"
+    },
+    {
+      "benchmark": "charxiv-reasoning",
+      "model": "Muse Spark 1.2",
+      "score_percent": null,
+      "display_note": "",
+      "source_id": null,
+      "status": "not-reported-in-reviewed-sources",
+      "conditions": "Only DeepSWE source reviewed for this added column; other benchmark score not verified",
+      "comparable": false,
+      "audit_status": "not-reported-in-reviewed-sources"
+    },
+    {
+      "benchmark": "charxiv-reasoning",
+      "model": "Sonnet 5",
+      "score_percent": null,
+      "display_note": "",
+      "source_id": null,
+      "status": "not-reported-in-reviewed-sources",
+      "conditions": "Only DeepSWE source reviewed for this added column; other benchmark score not verified",
+      "comparable": false,
+      "audit_status": "not-reported-in-reviewed-sources"
+    },
+    {
+      "benchmark": "charxiv-reasoning",
+      "model": "Grok 4.5",
+      "score_percent": null,
+      "display_note": "",
+      "source_id": null,
+      "status": "not-reported-in-reviewed-sources",
+      "conditions": "Only DeepSWE source reviewed for this added column; other benchmark score not verified",
+      "comparable": false,
+      "audit_status": "not-reported-in-reviewed-sources"
+    },
+    {
+      "benchmark": "charxiv-reasoning",
+      "model": "DeepSeek-V4-Flash",
+      "score_percent": null,
+      "display_note": "",
+      "source_id": null,
+      "status": "not-reported-in-reviewed-sources",
+      "conditions": "Only DeepSWE source reviewed for this added column; other benchmark score not verified",
+      "comparable": false,
+      "audit_status": "not-reported-in-reviewed-sources"
+    },
+    {
+      "benchmark": "charxiv-reasoning",
+      "model": "Muse Spark 1.1",
+      "score_percent": null,
+      "display_note": "",
+      "source_id": null,
+      "status": "not-reported-in-reviewed-sources",
+      "conditions": "Only DeepSWE source reviewed for this added column; other benchmark score not verified",
+      "comparable": false,
+      "audit_status": "not-reported-in-reviewed-sources"
+    },
+    {
+      "benchmark": "charxiv-reasoning",
+      "model": "GPT-5.4",
+      "score_percent": null,
+      "display_note": "",
+      "source_id": null,
+      "status": "not-reported-in-reviewed-sources",
+      "conditions": "Only DeepSWE source reviewed for this added column; other benchmark score not verified",
+      "comparable": false,
+      "audit_status": "not-reported-in-reviewed-sources"
+    },
+    {
+      "benchmark": "charxiv-reasoning",
+      "model": "Gemini 3.6 Flash",
+      "score_percent": null,
+      "display_note": "",
+      "source_id": null,
+      "status": "not-reported-in-reviewed-sources",
+      "conditions": "Only DeepSWE source reviewed for this added column; other benchmark score not verified",
+      "comparable": false,
+      "audit_status": "not-reported-in-reviewed-sources"
+    },
+    {
+      "benchmark": "charxiv-reasoning",
+      "model": "Gemini 3.5 Flash",
+      "score_percent": null,
+      "display_note": "",
+      "source_id": null,
+      "status": "not-reported-in-reviewed-sources",
+      "conditions": "Only DeepSWE source reviewed for this added column; other benchmark score not verified",
+      "comparable": false,
+      "audit_status": "not-reported-in-reviewed-sources"
+    },
+    {
+      "benchmark": "charxiv-reasoning",
+      "model": "Kimi K2.7 Code",
+      "score_percent": null,
+      "display_note": "",
+      "source_id": null,
+      "status": "not-reported-in-reviewed-sources",
+      "conditions": "Only DeepSWE source reviewed for this added column; other benchmark score not verified",
+      "comparable": false,
+      "audit_status": "not-reported-in-reviewed-sources"
+    },
+    {
+      "benchmark": "charxiv-reasoning",
+      "model": "Sonnet 4.6",
+      "score_percent": null,
+      "display_note": "",
+      "source_id": null,
+      "status": "not-reported-in-reviewed-sources",
+      "conditions": "Only DeepSWE source reviewed for this added column; other benchmark score not verified",
+      "comparable": false,
+      "audit_status": "not-reported-in-reviewed-sources"
+    },
+    {
+      "benchmark": "charxiv-reasoning",
+      "model": "Gemini 3.1 Pro Preview",
+      "score_percent": null,
+      "display_note": "",
+      "source_id": null,
+      "status": "not-reported-in-reviewed-sources",
+      "conditions": "Only DeepSWE source reviewed for this added column; other benchmark score not verified",
+      "comparable": false,
+      "audit_status": "not-reported-in-reviewed-sources"
+    },
+    {
+      "benchmark": "gpqa-diamond",
+      "model": "Gemini 3.8 Flash",
+      "score_percent": null,
+      "display_note": "",
+      "source_id": null,
+      "status": "not-reported-in-reviewed-sources",
+      "conditions": "Only DeepSWE source reviewed for this added column; other benchmark score not verified",
+      "comparable": false,
+      "audit_status": "not-reported-in-reviewed-sources"
+    },
+    {
+      "benchmark": "gpqa-diamond",
+      "model": "GPT-5.6 Terra",
+      "score_percent": null,
+      "display_note": "",
+      "source_id": null,
+      "status": "not-reported-in-reviewed-sources",
+      "conditions": "Only DeepSWE source reviewed for this added column; other benchmark score not verified",
+      "comparable": false,
+      "audit_status": "not-reported-in-reviewed-sources"
+    },
+    {
+      "benchmark": "gpqa-diamond",
+      "model": "Grok 4.6",
+      "score_percent": null,
+      "display_note": "",
+      "source_id": null,
+      "status": "not-reported-in-reviewed-sources",
+      "conditions": "Only DeepSWE source reviewed for this added column; other benchmark score not verified",
+      "comparable": false,
+      "audit_status": "not-reported-in-reviewed-sources"
+    },
+    {
+      "benchmark": "gpqa-diamond",
+      "model": "GPT-5.6 Luna",
+      "score_percent": null,
+      "display_note": "",
+      "source_id": null,
+      "status": "not-reported-in-reviewed-sources",
+      "conditions": "Only DeepSWE source reviewed for this added column; other benchmark score not verified",
+      "comparable": false,
+      "audit_status": "not-reported-in-reviewed-sources"
+    },
+    {
+      "benchmark": "gpqa-diamond",
+      "model": "Gemini 3.7 Flash",
+      "score_percent": null,
+      "display_note": "",
+      "source_id": null,
+      "status": "not-reported-in-reviewed-sources",
+      "conditions": "Only DeepSWE source reviewed for this added column; other benchmark score not verified",
+      "comparable": false,
+      "audit_status": "not-reported-in-reviewed-sources"
+    },
+    {
+      "benchmark": "gpqa-diamond",
+      "model": "GLM-5.3 Flash",
+      "score_percent": null,
+      "display_note": "",
+      "source_id": null,
+      "status": "not-reported-in-reviewed-sources",
+      "conditions": "Only DeepSWE source reviewed for this added column; other benchmark score not verified",
+      "comparable": false,
+      "audit_status": "not-reported-in-reviewed-sources"
+    },
+    {
+      "benchmark": "gpqa-diamond",
+      "model": "DeepSeek-V4-Pro",
+      "score_percent": null,
+      "display_note": "",
+      "source_id": null,
+      "status": "not-reported-in-reviewed-sources",
+      "conditions": "Only DeepSWE source reviewed for this added column; other benchmark score not verified",
+      "comparable": false,
+      "audit_status": "not-reported-in-reviewed-sources"
+    },
+    {
+      "benchmark": "gpqa-diamond",
+      "model": "Muse Spark 1.2",
+      "score_percent": null,
+      "display_note": "",
+      "source_id": null,
+      "status": "not-reported-in-reviewed-sources",
+      "conditions": "Only DeepSWE source reviewed for this added column; other benchmark score not verified",
+      "comparable": false,
+      "audit_status": "not-reported-in-reviewed-sources"
+    },
+    {
+      "benchmark": "gpqa-diamond",
+      "model": "Sonnet 5",
+      "score_percent": null,
+      "display_note": "",
+      "source_id": null,
+      "status": "not-reported-in-reviewed-sources",
+      "conditions": "Only DeepSWE source reviewed for this added column; other benchmark score not verified",
+      "comparable": false,
+      "audit_status": "not-reported-in-reviewed-sources"
+    },
+    {
+      "benchmark": "gpqa-diamond",
+      "model": "Grok 4.5",
+      "score_percent": null,
+      "display_note": "",
+      "source_id": null,
+      "status": "not-reported-in-reviewed-sources",
+      "conditions": "Only DeepSWE source reviewed for this added column; other benchmark score not verified",
+      "comparable": false,
+      "audit_status": "not-reported-in-reviewed-sources"
+    },
+    {
+      "benchmark": "gpqa-diamond",
+      "model": "DeepSeek-V4-Flash",
+      "score_percent": null,
+      "display_note": "",
+      "source_id": null,
+      "status": "not-reported-in-reviewed-sources",
+      "conditions": "Only DeepSWE source reviewed for this added column; other benchmark score not verified",
+      "comparable": false,
+      "audit_status": "not-reported-in-reviewed-sources"
+    },
+    {
+      "benchmark": "gpqa-diamond",
+      "model": "Muse Spark 1.1",
+      "score_percent": null,
+      "display_note": "",
+      "source_id": null,
+      "status": "not-reported-in-reviewed-sources",
+      "conditions": "Only DeepSWE source reviewed for this added column; other benchmark score not verified",
+      "comparable": false,
+      "audit_status": "not-reported-in-reviewed-sources"
+    },
+    {
+      "benchmark": "gpqa-diamond",
+      "model": "GPT-5.4",
+      "score_percent": null,
+      "display_note": "",
+      "source_id": null,
+      "status": "not-reported-in-reviewed-sources",
+      "conditions": "Only DeepSWE source reviewed for this added column; other benchmark score not verified",
+      "comparable": false,
+      "audit_status": "not-reported-in-reviewed-sources"
+    },
+    {
+      "benchmark": "gpqa-diamond",
+      "model": "Gemini 3.6 Flash",
+      "score_percent": null,
+      "display_note": "",
+      "source_id": null,
+      "status": "not-reported-in-reviewed-sources",
+      "conditions": "Only DeepSWE source reviewed for this added column; other benchmark score not verified",
+      "comparable": false,
+      "audit_status": "not-reported-in-reviewed-sources"
+    },
+    {
+      "benchmark": "gpqa-diamond",
+      "model": "Gemini 3.5 Flash",
+      "score_percent": null,
+      "display_note": "",
+      "source_id": null,
+      "status": "not-reported-in-reviewed-sources",
+      "conditions": "Only DeepSWE source reviewed for this added column; other benchmark score not verified",
+      "comparable": false,
+      "audit_status": "not-reported-in-reviewed-sources"
+    },
+    {
+      "benchmark": "gpqa-diamond",
+      "model": "Kimi K2.7 Code",
+      "score_percent": null,
+      "display_note": "",
+      "source_id": null,
+      "status": "not-reported-in-reviewed-sources",
+      "conditions": "Only DeepSWE source reviewed for this added column; other benchmark score not verified",
+      "comparable": false,
+      "audit_status": "not-reported-in-reviewed-sources"
+    },
+    {
+      "benchmark": "gpqa-diamond",
+      "model": "Sonnet 4.6",
+      "score_percent": null,
+      "display_note": "",
+      "source_id": null,
+      "status": "not-reported-in-reviewed-sources",
+      "conditions": "Only DeepSWE source reviewed for this added column; other benchmark score not verified",
+      "comparable": false,
+      "audit_status": "not-reported-in-reviewed-sources"
+    },
+    {
+      "benchmark": "gpqa-diamond",
+      "model": "Gemini 3.1 Pro Preview",
+      "score_percent": null,
+      "display_note": "",
+      "source_id": null,
+      "status": "not-reported-in-reviewed-sources",
+      "conditions": "Only DeepSWE source reviewed for this added column; other benchmark score not verified",
+      "comparable": false,
+      "audit_status": "not-reported-in-reviewed-sources"
+    },
+    {
+      "benchmark": "scicode",
+      "model": "Gemini 3.8 Flash",
+      "score_percent": null,
+      "display_note": "",
+      "source_id": null,
+      "status": "not-reported-in-reviewed-sources",
+      "conditions": "Only DeepSWE source reviewed for this added column; other benchmark score not verified",
+      "comparable": false,
+      "audit_status": "not-reported-in-reviewed-sources"
+    },
+    {
+      "benchmark": "scicode",
+      "model": "GPT-5.6 Terra",
+      "score_percent": null,
+      "display_note": "",
+      "source_id": null,
+      "status": "not-reported-in-reviewed-sources",
+      "conditions": "Only DeepSWE source reviewed for this added column; other benchmark score not verified",
+      "comparable": false,
+      "audit_status": "not-reported-in-reviewed-sources"
+    },
+    {
+      "benchmark": "scicode",
+      "model": "Grok 4.6",
+      "score_percent": null,
+      "display_note": "",
+      "source_id": null,
+      "status": "not-reported-in-reviewed-sources",
+      "conditions": "Only DeepSWE source reviewed for this added column; other benchmark score not verified",
+      "comparable": false,
+      "audit_status": "not-reported-in-reviewed-sources"
+    },
+    {
+      "benchmark": "scicode",
+      "model": "GPT-5.6 Luna",
+      "score_percent": null,
+      "display_note": "",
+      "source_id": null,
+      "status": "not-reported-in-reviewed-sources",
+      "conditions": "Only DeepSWE source reviewed for this added column; other benchmark score not verified",
+      "comparable": false,
+      "audit_status": "not-reported-in-reviewed-sources"
+    },
+    {
+      "benchmark": "scicode",
+      "model": "Gemini 3.7 Flash",
+      "score_percent": null,
+      "display_note": "",
+      "source_id": null,
+      "status": "not-reported-in-reviewed-sources",
+      "conditions": "Only DeepSWE source reviewed for this added column; other benchmark score not verified",
+      "comparable": false,
+      "audit_status": "not-reported-in-reviewed-sources"
+    },
+    {
+      "benchmark": "scicode",
+      "model": "GLM-5.3 Flash",
+      "score_percent": null,
+      "display_note": "",
+      "source_id": null,
+      "status": "not-reported-in-reviewed-sources",
+      "conditions": "Only DeepSWE source reviewed for this added column; other benchmark score not verified",
+      "comparable": false,
+      "audit_status": "not-reported-in-reviewed-sources"
+    },
+    {
+      "benchmark": "scicode",
+      "model": "DeepSeek-V4-Pro",
+      "score_percent": null,
+      "display_note": "",
+      "source_id": null,
+      "status": "not-reported-in-reviewed-sources",
+      "conditions": "Only DeepSWE source reviewed for this added column; other benchmark score not verified",
+      "comparable": false,
+      "audit_status": "not-reported-in-reviewed-sources"
+    },
+    {
+      "benchmark": "scicode",
+      "model": "Muse Spark 1.2",
+      "score_percent": null,
+      "display_note": "",
+      "source_id": null,
+      "status": "not-reported-in-reviewed-sources",
+      "conditions": "Only DeepSWE source reviewed for this added column; other benchmark score not verified",
+      "comparable": false,
+      "audit_status": "not-reported-in-reviewed-sources"
+    },
+    {
+      "benchmark": "scicode",
+      "model": "Sonnet 5",
+      "score_percent": null,
+      "display_note": "",
+      "source_id": null,
+      "status": "not-reported-in-reviewed-sources",
+      "conditions": "Only DeepSWE source reviewed for this added column; other benchmark score not verified",
+      "comparable": false,
+      "audit_status": "not-reported-in-reviewed-sources"
+    },
+    {
+      "benchmark": "scicode",
+      "model": "Grok 4.5",
+      "score_percent": null,
+      "display_note": "",
+      "source_id": null,
+      "status": "not-reported-in-reviewed-sources",
+      "conditions": "Only DeepSWE source reviewed for this added column; other benchmark score not verified",
+      "comparable": false,
+      "audit_status": "not-reported-in-reviewed-sources"
+    },
+    {
+      "benchmark": "scicode",
+      "model": "DeepSeek-V4-Flash",
+      "score_percent": null,
+      "display_note": "",
+      "source_id": null,
+      "status": "not-reported-in-reviewed-sources",
+      "conditions": "Only DeepSWE source reviewed for this added column; other benchmark score not verified",
+      "comparable": false,
+      "audit_status": "not-reported-in-reviewed-sources"
+    },
+    {
+      "benchmark": "scicode",
+      "model": "Muse Spark 1.1",
+      "score_percent": null,
+      "display_note": "",
+      "source_id": null,
+      "status": "not-reported-in-reviewed-sources",
+      "conditions": "Only DeepSWE source reviewed for this added column; other benchmark score not verified",
+      "comparable": false,
+      "audit_status": "not-reported-in-reviewed-sources"
+    },
+    {
+      "benchmark": "scicode",
+      "model": "GPT-5.4",
+      "score_percent": null,
+      "display_note": "",
+      "source_id": null,
+      "status": "not-reported-in-reviewed-sources",
+      "conditions": "Only DeepSWE source reviewed for this added column; other benchmark score not verified",
+      "comparable": false,
+      "audit_status": "not-reported-in-reviewed-sources"
+    },
+    {
+      "benchmark": "scicode",
+      "model": "Gemini 3.6 Flash",
+      "score_percent": null,
+      "display_note": "",
+      "source_id": null,
+      "status": "not-reported-in-reviewed-sources",
+      "conditions": "Only DeepSWE source reviewed for this added column; other benchmark score not verified",
+      "comparable": false,
+      "audit_status": "not-reported-in-reviewed-sources"
+    },
+    {
+      "benchmark": "scicode",
+      "model": "Gemini 3.5 Flash",
+      "score_percent": null,
+      "display_note": "",
+      "source_id": null,
+      "status": "not-reported-in-reviewed-sources",
+      "conditions": "Only DeepSWE source reviewed for this added column; other benchmark score not verified",
+      "comparable": false,
+      "audit_status": "not-reported-in-reviewed-sources"
+    },
+    {
+      "benchmark": "scicode",
+      "model": "Kimi K2.7 Code",
+      "score_percent": null,
+      "display_note": "",
+      "source_id": null,
+      "status": "not-reported-in-reviewed-sources",
+      "conditions": "Only DeepSWE source reviewed for this added column; other benchmark score not verified",
+      "comparable": false,
+      "audit_status": "not-reported-in-reviewed-sources"
+    },
+    {
+      "benchmark": "scicode",
+      "model": "Sonnet 4.6",
+      "score_percent": null,
+      "display_note": "",
+      "source_id": null,
+      "status": "not-reported-in-reviewed-sources",
+      "conditions": "Only DeepSWE source reviewed for this added column; other benchmark score not verified",
+      "comparable": false,
+      "audit_status": "not-reported-in-reviewed-sources"
+    },
+    {
+      "benchmark": "scicode",
+      "model": "Gemini 3.1 Pro Preview",
+      "score_percent": null,
+      "display_note": "",
+      "source_id": null,
+      "status": "not-reported-in-reviewed-sources",
+      "conditions": "Only DeepSWE source reviewed for this added column; other benchmark score not verified",
+      "comparable": false,
+      "audit_status": "not-reported-in-reviewed-sources"
+    },
+    {
+      "benchmark": "tau-bench-banking",
+      "model": "Gemini 3.8 Flash",
+      "score_percent": null,
+      "display_note": "",
+      "source_id": null,
+      "status": "not-reported-in-reviewed-sources",
+      "conditions": "Only DeepSWE source reviewed for this added column; other benchmark score not verified",
+      "comparable": false,
+      "audit_status": "not-reported-in-reviewed-sources"
+    },
+    {
+      "benchmark": "tau-bench-banking",
+      "model": "GPT-5.6 Terra",
+      "score_percent": null,
+      "display_note": "",
+      "source_id": null,
+      "status": "not-reported-in-reviewed-sources",
+      "conditions": "Only DeepSWE source reviewed for this added column; other benchmark score not verified",
+      "comparable": false,
+      "audit_status": "not-reported-in-reviewed-sources"
+    },
+    {
+      "benchmark": "tau-bench-banking",
+      "model": "Grok 4.6",
+      "score_percent": null,
+      "display_note": "",
+      "source_id": null,
+      "status": "not-reported-in-reviewed-sources",
+      "conditions": "Only DeepSWE source reviewed for this added column; other benchmark score not verified",
+      "comparable": false,
+      "audit_status": "not-reported-in-reviewed-sources"
+    },
+    {
+      "benchmark": "tau-bench-banking",
+      "model": "GPT-5.6 Luna",
+      "score_percent": null,
+      "display_note": "",
+      "source_id": null,
+      "status": "not-reported-in-reviewed-sources",
+      "conditions": "Only DeepSWE source reviewed for this added column; other benchmark score not verified",
+      "comparable": false,
+      "audit_status": "not-reported-in-reviewed-sources"
+    },
+    {
+      "benchmark": "tau-bench-banking",
+      "model": "Gemini 3.7 Flash",
+      "score_percent": null,
+      "display_note": "",
+      "source_id": null,
+      "status": "not-reported-in-reviewed-sources",
+      "conditions": "Only DeepSWE source reviewed for this added column; other benchmark score not verified",
+      "comparable": false,
+      "audit_status": "not-reported-in-reviewed-sources"
+    },
+    {
+      "benchmark": "tau-bench-banking",
+      "model": "GLM-5.3 Flash",
+      "score_percent": null,
+      "display_note": "",
+      "source_id": null,
+      "status": "not-reported-in-reviewed-sources",
+      "conditions": "Only DeepSWE source reviewed for this added column; other benchmark score not verified",
+      "comparable": false,
+      "audit_status": "not-reported-in-reviewed-sources"
+    },
+    {
+      "benchmark": "tau-bench-banking",
+      "model": "DeepSeek-V4-Pro",
+      "score_percent": null,
+      "display_note": "",
+      "source_id": null,
+      "status": "not-reported-in-reviewed-sources",
+      "conditions": "Only DeepSWE source reviewed for this added column; other benchmark score not verified",
+      "comparable": false,
+      "audit_status": "not-reported-in-reviewed-sources"
+    },
+    {
+      "benchmark": "tau-bench-banking",
+      "model": "Muse Spark 1.2",
+      "score_percent": null,
+      "display_note": "",
+      "source_id": null,
+      "status": "not-reported-in-reviewed-sources",
+      "conditions": "Only DeepSWE source reviewed for this added column; other benchmark score not verified",
+      "comparable": false,
+      "audit_status": "not-reported-in-reviewed-sources"
+    },
+    {
+      "benchmark": "tau-bench-banking",
+      "model": "Sonnet 5",
+      "score_percent": null,
+      "display_note": "",
+      "source_id": null,
+      "status": "not-reported-in-reviewed-sources",
+      "conditions": "Only DeepSWE source reviewed for this added column; other benchmark score not verified",
+      "comparable": false,
+      "audit_status": "not-reported-in-reviewed-sources"
+    },
+    {
+      "benchmark": "tau-bench-banking",
+      "model": "Grok 4.5",
+      "score_percent": null,
+      "display_note": "",
+      "source_id": null,
+      "status": "not-reported-in-reviewed-sources",
+      "conditions": "Only DeepSWE source reviewed for this added column; other benchmark score not verified",
+      "comparable": false,
+      "audit_status": "not-reported-in-reviewed-sources"
+    },
+    {
+      "benchmark": "tau-bench-banking",
+      "model": "DeepSeek-V4-Flash",
+      "score_percent": null,
+      "display_note": "",
+      "source_id": null,
+      "status": "not-reported-in-reviewed-sources",
+      "conditions": "Only DeepSWE source reviewed for this added column; other benchmark score not verified",
+      "comparable": false,
+      "audit_status": "not-reported-in-reviewed-sources"
+    },
+    {
+      "benchmark": "tau-bench-banking",
+      "model": "Muse Spark 1.1",
+      "score_percent": null,
+      "display_note": "",
+      "source_id": null,
+      "status": "not-reported-in-reviewed-sources",
+      "conditions": "Only DeepSWE source reviewed for this added column; other benchmark score not verified",
+      "comparable": false,
+      "audit_status": "not-reported-in-reviewed-sources"
+    },
+    {
+      "benchmark": "tau-bench-banking",
+      "model": "GPT-5.4",
+      "score_percent": null,
+      "display_note": "",
+      "source_id": null,
+      "status": "not-reported-in-reviewed-sources",
+      "conditions": "Only DeepSWE source reviewed for this added column; other benchmark score not verified",
+      "comparable": false,
+      "audit_status": "not-reported-in-reviewed-sources"
+    },
+    {
+      "benchmark": "tau-bench-banking",
+      "model": "Gemini 3.6 Flash",
+      "score_percent": null,
+      "display_note": "",
+      "source_id": null,
+      "status": "not-reported-in-reviewed-sources",
+      "conditions": "Only DeepSWE source reviewed for this added column; other benchmark score not verified",
+      "comparable": false,
+      "audit_status": "not-reported-in-reviewed-sources"
+    },
+    {
+      "benchmark": "tau-bench-banking",
+      "model": "Gemini 3.5 Flash",
+      "score_percent": null,
+      "display_note": "",
+      "source_id": null,
+      "status": "not-reported-in-reviewed-sources",
+      "conditions": "Only DeepSWE source reviewed for this added column; other benchmark score not verified",
+      "comparable": false,
+      "audit_status": "not-reported-in-reviewed-sources"
+    },
+    {
+      "benchmark": "tau-bench-banking",
+      "model": "Kimi K2.7 Code",
+      "score_percent": null,
+      "display_note": "",
+      "source_id": null,
+      "status": "not-reported-in-reviewed-sources",
+      "conditions": "Only DeepSWE source reviewed for this added column; other benchmark score not verified",
+      "comparable": false,
+      "audit_status": "not-reported-in-reviewed-sources"
+    },
+    {
+      "benchmark": "tau-bench-banking",
+      "model": "Sonnet 4.6",
+      "score_percent": null,
+      "display_note": "",
+      "source_id": null,
+      "status": "not-reported-in-reviewed-sources",
+      "conditions": "Only DeepSWE source reviewed for this added column; other benchmark score not verified",
+      "comparable": false,
+      "audit_status": "not-reported-in-reviewed-sources"
+    },
+    {
+      "benchmark": "tau-bench-banking",
+      "model": "Gemini 3.1 Pro Preview",
+      "score_percent": null,
+      "display_note": "",
+      "source_id": null,
+      "status": "not-reported-in-reviewed-sources",
+      "conditions": "Only DeepSWE source reviewed for this added column; other benchmark score not verified",
+      "comparable": false,
+      "audit_status": "not-reported-in-reviewed-sources"
+    },
+    {
+      "benchmark": "long-context-reasoning",
+      "model": "Gemini 3.8 Flash",
+      "score_percent": null,
+      "display_note": "",
+      "source_id": null,
+      "status": "not-reported-in-reviewed-sources",
+      "conditions": "Only DeepSWE source reviewed for this added column; other benchmark score not verified",
+      "comparable": false,
+      "audit_status": "not-reported-in-reviewed-sources"
+    },
+    {
+      "benchmark": "long-context-reasoning",
+      "model": "GPT-5.6 Terra",
+      "score_percent": null,
+      "display_note": "",
+      "source_id": null,
+      "status": "not-reported-in-reviewed-sources",
+      "conditions": "Only DeepSWE source reviewed for this added column; other benchmark score not verified",
+      "comparable": false,
+      "audit_status": "not-reported-in-reviewed-sources"
+    },
+    {
+      "benchmark": "long-context-reasoning",
+      "model": "Grok 4.6",
+      "score_percent": null,
+      "display_note": "",
+      "source_id": null,
+      "status": "not-reported-in-reviewed-sources",
+      "conditions": "Only DeepSWE source reviewed for this added column; other benchmark score not verified",
+      "comparable": false,
+      "audit_status": "not-reported-in-reviewed-sources"
+    },
+    {
+      "benchmark": "long-context-reasoning",
+      "model": "GPT-5.6 Luna",
+      "score_percent": null,
+      "display_note": "",
+      "source_id": null,
+      "status": "not-reported-in-reviewed-sources",
+      "conditions": "Only DeepSWE source reviewed for this added column; other benchmark score not verified",
+      "comparable": false,
+      "audit_status": "not-reported-in-reviewed-sources"
+    },
+    {
+      "benchmark": "long-context-reasoning",
+      "model": "Gemini 3.7 Flash",
+      "score_percent": null,
+      "display_note": "",
+      "source_id": null,
+      "status": "not-reported-in-reviewed-sources",
+      "conditions": "Only DeepSWE source reviewed for this added column; other benchmark score not verified",
+      "comparable": false,
+      "audit_status": "not-reported-in-reviewed-sources"
+    },
+    {
+      "benchmark": "long-context-reasoning",
+      "model": "GLM-5.3 Flash",
+      "score_percent": null,
+      "display_note": "",
+      "source_id": null,
+      "status": "not-reported-in-reviewed-sources",
+      "conditions": "Only DeepSWE source reviewed for this added column; other benchmark score not verified",
+      "comparable": false,
+      "audit_status": "not-reported-in-reviewed-sources"
+    },
+    {
+      "benchmark": "long-context-reasoning",
+      "model": "DeepSeek-V4-Pro",
+      "score_percent": null,
+      "display_note": "",
+      "source_id": null,
+      "status": "not-reported-in-reviewed-sources",
+      "conditions": "Only DeepSWE source reviewed for this added column; other benchmark score not verified",
+      "comparable": false,
+      "audit_status": "not-reported-in-reviewed-sources"
+    },
+    {
+      "benchmark": "long-context-reasoning",
+      "model": "Muse Spark 1.2",
+      "score_percent": null,
+      "display_note": "",
+      "source_id": null,
+      "status": "not-reported-in-reviewed-sources",
+      "conditions": "Only DeepSWE source reviewed for this added column; other benchmark score not verified",
+      "comparable": false,
+      "audit_status": "not-reported-in-reviewed-sources"
+    },
+    {
+      "benchmark": "long-context-reasoning",
+      "model": "Sonnet 5",
+      "score_percent": null,
+      "display_note": "",
+      "source_id": null,
+      "status": "not-reported-in-reviewed-sources",
+      "conditions": "Only DeepSWE source reviewed for this added column; other benchmark score not verified",
+      "comparable": false,
+      "audit_status": "not-reported-in-reviewed-sources"
+    },
+    {
+      "benchmark": "long-context-reasoning",
+      "model": "Grok 4.5",
+      "score_percent": null,
+      "display_note": "",
+      "source_id": null,
+      "status": "not-reported-in-reviewed-sources",
+      "conditions": "Only DeepSWE source reviewed for this added column; other benchmark score not verified",
+      "comparable": false,
+      "audit_status": "not-reported-in-reviewed-sources"
+    },
+    {
+      "benchmark": "long-context-reasoning",
+      "model": "DeepSeek-V4-Flash",
+      "score_percent": null,
+      "display_note": "",
+      "source_id": null,
+      "status": "not-reported-in-reviewed-sources",
+      "conditions": "Only DeepSWE source reviewed for this added column; other benchmark score not verified",
+      "comparable": false,
+      "audit_status": "not-reported-in-reviewed-sources"
+    },
+    {
+      "benchmark": "long-context-reasoning",
+      "model": "Muse Spark 1.1",
+      "score_percent": null,
+      "display_note": "",
+      "source_id": null,
+      "status": "not-reported-in-reviewed-sources",
+      "conditions": "Only DeepSWE source reviewed for this added column; other benchmark score not verified",
+      "comparable": false,
+      "audit_status": "not-reported-in-reviewed-sources"
+    },
+    {
+      "benchmark": "long-context-reasoning",
+      "model": "GPT-5.4",
+      "score_percent": null,
+      "display_note": "",
+      "source_id": null,
+      "status": "not-reported-in-reviewed-sources",
+      "conditions": "Only DeepSWE source reviewed for this added column; other benchmark score not verified",
+      "comparable": false,
+      "audit_status": "not-reported-in-reviewed-sources"
+    },
+    {
+      "benchmark": "long-context-reasoning",
+      "model": "Gemini 3.6 Flash",
+      "score_percent": null,
+      "display_note": "",
+      "source_id": null,
+      "status": "not-reported-in-reviewed-sources",
+      "conditions": "Only DeepSWE source reviewed for this added column; other benchmark score not verified",
+      "comparable": false,
+      "audit_status": "not-reported-in-reviewed-sources"
+    },
+    {
+      "benchmark": "long-context-reasoning",
+      "model": "Gemini 3.5 Flash",
+      "score_percent": null,
+      "display_note": "",
+      "source_id": null,
+      "status": "not-reported-in-reviewed-sources",
+      "conditions": "Only DeepSWE source reviewed for this added column; other benchmark score not verified",
+      "comparable": false,
+      "audit_status": "not-reported-in-reviewed-sources"
+    },
+    {
+      "benchmark": "long-context-reasoning",
+      "model": "Kimi K2.7 Code",
+      "score_percent": null,
+      "display_note": "",
+      "source_id": null,
+      "status": "not-reported-in-reviewed-sources",
+      "conditions": "Only DeepSWE source reviewed for this added column; other benchmark score not verified",
+      "comparable": false,
+      "audit_status": "not-reported-in-reviewed-sources"
+    },
+    {
+      "benchmark": "long-context-reasoning",
+      "model": "Sonnet 4.6",
+      "score_percent": null,
+      "display_note": "",
+      "source_id": null,
+      "status": "not-reported-in-reviewed-sources",
+      "conditions": "Only DeepSWE source reviewed for this added column; other benchmark score not verified",
+      "comparable": false,
+      "audit_status": "not-reported-in-reviewed-sources"
+    },
+    {
+      "benchmark": "long-context-reasoning",
+      "model": "Gemini 3.1 Pro Preview",
+      "score_percent": null,
+      "display_note": "",
+      "source_id": null,
+      "status": "not-reported-in-reviewed-sources",
+      "conditions": "Only DeepSWE source reviewed for this added column; other benchmark score not verified",
+      "comparable": false,
+      "audit_status": "not-reported-in-reviewed-sources"
+    },
+    {
+      "benchmark": "mrcr-v2",
+      "model": "Gemini 3.8 Flash",
+      "score_percent": null,
+      "display_note": "",
+      "source_id": null,
+      "status": "not-reported-in-reviewed-sources",
+      "conditions": "Only DeepSWE source reviewed for this added column; other benchmark score not verified",
+      "comparable": false,
+      "audit_status": "not-reported-in-reviewed-sources"
+    },
+    {
+      "benchmark": "mrcr-v2",
+      "model": "GPT-5.6 Terra",
+      "score_percent": null,
+      "display_note": "",
+      "source_id": null,
+      "status": "not-reported-in-reviewed-sources",
+      "conditions": "Only DeepSWE source reviewed for this added column; other benchmark score not verified",
+      "comparable": false,
+      "audit_status": "not-reported-in-reviewed-sources"
+    },
+    {
+      "benchmark": "mrcr-v2",
+      "model": "Grok 4.6",
+      "score_percent": null,
+      "display_note": "",
+      "source_id": null,
+      "status": "not-reported-in-reviewed-sources",
+      "conditions": "Only DeepSWE source reviewed for this added column; other benchmark score not verified",
+      "comparable": false,
+      "audit_status": "not-reported-in-reviewed-sources"
+    },
+    {
+      "benchmark": "mrcr-v2",
+      "model": "GPT-5.6 Luna",
+      "score_percent": null,
+      "display_note": "",
+      "source_id": null,
+      "status": "not-reported-in-reviewed-sources",
+      "conditions": "Only DeepSWE source reviewed for this added column; other benchmark score not verified",
+      "comparable": false,
+      "audit_status": "not-reported-in-reviewed-sources"
+    },
+    {
+      "benchmark": "mrcr-v2",
+      "model": "Gemini 3.7 Flash",
+      "score_percent": null,
+      "display_note": "",
+      "source_id": null,
+      "status": "not-reported-in-reviewed-sources",
+      "conditions": "Only DeepSWE source reviewed for this added column; other benchmark score not verified",
+      "comparable": false,
+      "audit_status": "not-reported-in-reviewed-sources"
+    },
+    {
+      "benchmark": "mrcr-v2",
+      "model": "GLM-5.3 Flash",
+      "score_percent": null,
+      "display_note": "",
+      "source_id": null,
+      "status": "not-reported-in-reviewed-sources",
+      "conditions": "Only DeepSWE source reviewed for this added column; other benchmark score not verified",
+      "comparable": false,
+      "audit_status": "not-reported-in-reviewed-sources"
+    },
+    {
+      "benchmark": "mrcr-v2",
+      "model": "DeepSeek-V4-Pro",
+      "score_percent": null,
+      "display_note": "",
+      "source_id": null,
+      "status": "not-reported-in-reviewed-sources",
+      "conditions": "Only DeepSWE source reviewed for this added column; other benchmark score not verified",
+      "comparable": false,
+      "audit_status": "not-reported-in-reviewed-sources"
+    },
+    {
+      "benchmark": "mrcr-v2",
+      "model": "Muse Spark 1.2",
+      "score_percent": null,
+      "display_note": "",
+      "source_id": null,
+      "status": "not-reported-in-reviewed-sources",
+      "conditions": "Only DeepSWE source reviewed for this added column; other benchmark score not verified",
+      "comparable": false,
+      "audit_status": "not-reported-in-reviewed-sources"
+    },
+    {
+      "benchmark": "mrcr-v2",
+      "model": "Sonnet 5",
+      "score_percent": null,
+      "display_note": "",
+      "source_id": null,
+      "status": "not-reported-in-reviewed-sources",
+      "conditions": "Only DeepSWE source reviewed for this added column; other benchmark score not verified",
+      "comparable": false,
+      "audit_status": "not-reported-in-reviewed-sources"
+    },
+    {
+      "benchmark": "mrcr-v2",
+      "model": "Grok 4.5",
+      "score_percent": null,
+      "display_note": "",
+      "source_id": null,
+      "status": "not-reported-in-reviewed-sources",
+      "conditions": "Only DeepSWE source reviewed for this added column; other benchmark score not verified",
+      "comparable": false,
+      "audit_status": "not-reported-in-reviewed-sources"
+    },
+    {
+      "benchmark": "mrcr-v2",
+      "model": "DeepSeek-V4-Flash",
+      "score_percent": null,
+      "display_note": "",
+      "source_id": null,
+      "status": "not-reported-in-reviewed-sources",
+      "conditions": "Only DeepSWE source reviewed for this added column; other benchmark score not verified",
+      "comparable": false,
+      "audit_status": "not-reported-in-reviewed-sources"
+    },
+    {
+      "benchmark": "mrcr-v2",
+      "model": "Muse Spark 1.1",
+      "score_percent": null,
+      "display_note": "",
+      "source_id": null,
+      "status": "not-reported-in-reviewed-sources",
+      "conditions": "Only DeepSWE source reviewed for this added column; other benchmark score not verified",
+      "comparable": false,
+      "audit_status": "not-reported-in-reviewed-sources"
+    },
+    {
+      "benchmark": "mrcr-v2",
+      "model": "GPT-5.4",
+      "score_percent": null,
+      "display_note": "",
+      "source_id": null,
+      "status": "not-reported-in-reviewed-sources",
+      "conditions": "Only DeepSWE source reviewed for this added column; other benchmark score not verified",
+      "comparable": false,
+      "audit_status": "not-reported-in-reviewed-sources"
+    },
+    {
+      "benchmark": "mrcr-v2",
+      "model": "Gemini 3.6 Flash",
+      "score_percent": null,
+      "display_note": "",
+      "source_id": null,
+      "status": "not-reported-in-reviewed-sources",
+      "conditions": "Only DeepSWE source reviewed for this added column; other benchmark score not verified",
+      "comparable": false,
+      "audit_status": "not-reported-in-reviewed-sources"
+    },
+    {
+      "benchmark": "mrcr-v2",
+      "model": "Gemini 3.5 Flash",
+      "score_percent": null,
+      "display_note": "",
+      "source_id": null,
+      "status": "not-reported-in-reviewed-sources",
+      "conditions": "Only DeepSWE source reviewed for this added column; other benchmark score not verified",
+      "comparable": false,
+      "audit_status": "not-reported-in-reviewed-sources"
+    },
+    {
+      "benchmark": "mrcr-v2",
+      "model": "Kimi K2.7 Code",
+      "score_percent": null,
+      "display_note": "",
+      "source_id": null,
+      "status": "not-reported-in-reviewed-sources",
+      "conditions": "Only DeepSWE source reviewed for this added column; other benchmark score not verified",
+      "comparable": false,
+      "audit_status": "not-reported-in-reviewed-sources"
+    },
+    {
+      "benchmark": "mrcr-v2",
+      "model": "Sonnet 4.6",
+      "score_percent": null,
+      "display_note": "",
+      "source_id": null,
+      "status": "not-reported-in-reviewed-sources",
+      "conditions": "Only DeepSWE source reviewed for this added column; other benchmark score not verified",
+      "comparable": false,
+      "audit_status": "not-reported-in-reviewed-sources"
+    },
+    {
+      "benchmark": "mrcr-v2",
+      "model": "Gemini 3.1 Pro Preview",
+      "score_percent": null,
+      "display_note": "",
+      "source_id": null,
+      "status": "not-reported-in-reviewed-sources",
+      "conditions": "Only DeepSWE source reviewed for this added column; other benchmark score not verified",
+      "comparable": false,
+      "audit_status": "not-reported-in-reviewed-sources"
     }
   ]
 }

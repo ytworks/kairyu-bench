@@ -35,6 +35,9 @@ def main() -> int:
                 ("passed_attempts", "n_passed", 1),
                 ("scored_attempts", "n_attempted", 1),
                 ("ci_half_percent", "ci_half", 100),
+                ("ci_lo_percent", "ci_lo", 100),
+                ("ci_hi_percent", "ci_hi", 100),
+                ("tasks_passed_any", "n_tasks_passed_any", 1),
                 ("attempts_per_task", "n_runs", 1),
                 ("task_count", "n_tasks_attempted", 1),
             ]:
