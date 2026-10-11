@@ -8,7 +8,8 @@
 
 ## 状態と前提
 
-- 2026-10-11 作成。計画段階で、リポジトリ・Wiki とも未変更。調査時の HEAD はリポジトリ `84560af`、Wiki `629a522`（いずれも 2026-09-30/10-01 の9月分更新の直後）。
+- **実施状況（2026-10-11）**: ユーザーが全項目を承認したため、Task 2〜6を実施した。ただしネットワーク許可はこのセッションに反映されず、区分Bの一次確認（Task 1）はできなかった。このため、A区分と、作業中に一次資料で確認できた値だけを反映した。反映したのは、Haiku 5.5・Atria-Dawn-Preview・Hy4 previewの列、Gemini Flash各版とGLM-5.3 Flashの空欄、DeepSWEの注記と自己報告、SWE-Bench Pro V2の注記。B区分は [`docs/sources/public-results-audit-20261011.md`](../../sources/public-results-audit-20261011.md) の「保留した値」に残しており、許可が反映された新しいセッションでTask 1から再開する。
+- 2026-10-11 作成。計画作成の時点では、リポジトリ・Wiki とも未変更だった。調査時の HEAD はリポジトリ `84560af`、Wiki `629a522`（いずれも 2026-09-30/10-01 の9月分更新の直後）。
 - 「今実行できるベンチマーク」は `src/kairyu_bench/data/benchmarks.json` に登録済みの13種と解釈する。対象は SWE-bench Pro、SWE-bench Verified、Terminal-Bench 2.1、LiveCodeBench、LiveCodeBench Pro、HLE、CharXiv Reasoning、GPQA Diamond、SciCode、τ-bench Banking、Long Context Reasoning、MRCR v2、DeepSWE v1.1。
 - Wiki は既存3ページだけを更新し、新しいページは作らない（Wiki 履歴 `6e201d9`「remove new pages and retain updates to existing wiki pages」の方針を踏襲）。
 - 9月分（PR #26）と同じく、追加値は Markdown にだけ記載する。参照カタログ `src/kairyu_bench/data/public_results.json` と、`<!-- BEGIN/END public-comparison -->`・`<!-- BEGIN/END deepswe-comparison -->` の生成表は変更しない。CI が `python scripts/update_model_comparison.py --check` で生成表の一致を検査しているためである。
