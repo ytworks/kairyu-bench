@@ -41,6 +41,38 @@ class OfficialSourceManifestTest(unittest.TestCase):
         )
         self.assertIn("embeddings", manifest["tau-bench-banking"]["requirements"])
 
+    def test_terminal_bench_4_pins_the_leaderboard_dataset_digest(self) -> None:
+        entry = load_manifest()["terminal-bench-4"]
+
+        self.assertEqual(
+            entry["source"],
+            {
+                "repository": "https://github.com/harbor-framework/harbor",
+                "revision": "b53b8134e1241686dca7759af188f987ecc48e8b",
+                "version": "0.24.0",
+            },
+        )
+        self.assertEqual(
+            entry["dataset"],
+            {
+                "id": "terminal-bench/terminal-bench",
+                "revision": "sha256:39d9f44b40420cde8fdcc087579c0d72a7e14fa3656d603c3f0d22fb35e27732",
+                "version": "4.0.0",
+                "tasks": 66,
+            },
+        )
+        self.assertEqual(
+            [source["revision"] for source in entry["secondary_sources"]],
+            [
+                "452bf305c6daa62fc59061d22133a7cbc7c1572e",
+                "209679e34327a78ce8e9bf5300b2f317992863c9",
+            ],
+        )
+        self.assertEqual(
+            entry["scoring"],
+            {"method": "terminal-bench-4.0-leaderboard-accuracy", "unit": "percent"},
+        )
+
 
 if __name__ == "__main__":
     unittest.main()

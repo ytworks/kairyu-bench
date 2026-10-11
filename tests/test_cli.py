@@ -43,6 +43,7 @@ class CliContractTest(unittest.TestCase):
                 "long-context-reasoning",
                 "mrcr-v2",
                 "deepswe",
+                "terminal-bench-4",
             ],
         )
 
@@ -51,7 +52,7 @@ class CliContractTest(unittest.TestCase):
 
         self.assertEqual(result.returncode, 0, result.stderr)
         self.assertIn("endpoint: https://example.test/v1", result.stdout)
-        self.assertIn("benchmarks: 13", result.stdout)
+        self.assertIn("benchmarks: 14", result.stdout)
         self.assertNotIn("model", result.stderr.lower())
 
     def test_dry_run_validates_only_and_positive_limit_without_api_access(self) -> None:

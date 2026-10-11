@@ -156,12 +156,33 @@ def _validate_identity(
         raise ResultValidationError("adapter result benchmark conditions changed")
 
 
+HARBOR_AGENT_SCORING = {
+    "harbor-official-task-reward",
+    "terminal-bench-4.0-leaderboard-accuracy",
+}
+
+
 def _selected_agent(entry: dict[str, Any], configured_agent: str) -> str | None:
     if entry["name"] == "deepswe":
         return "mini-swe-agent"
-    if entry["scoring"]["method"] == "harbor-official-task-reward":
+    if entry["scoring"]["method"] in HARBOR_AGENT_SCORING:
         return configured_agent
     return None
+
+
+def resolve_conditions(
+    name: str, entry: dict[str, Any], harbor_agent: str
+) -> dict[str, Any]:
+    """Benchmark conditions that are fixed before the model is contacted."""
+    if name == "deepswe":
+        from kairyu_bench.deepswe import resolve_deepswe_conditions
+
+        return resolve_deepswe_conditions(entry, os.environ)
+    if name == "terminal-bench-4":
+        from kairyu_bench.terminal_bench4 import resolve_terminal_bench4_conditions
+
+        return resolve_terminal_bench4_conditions(entry, os.environ, harbor_agent)
+    return {}
 
 
 def run_benchmarks(
@@ -173,11 +194,10 @@ def run_benchmarks(
     if run_dir.exists():
         raise FileExistsError(f"run directory already exists: {config.run_id}")
 
-    deepswe_conditions: dict[str, Any] = {}
-    if "deepswe" in config.selected:
-        from kairyu_bench.deepswe import resolve_deepswe_conditions
-
-        deepswe_conditions = resolve_deepswe_conditions(manifest["deepswe"], os.environ)
+    resolved_conditions = {
+        name: resolve_conditions(name, manifest[name], config.harbor_agent)
+        for name in config.selected
+    }
 
     model_id = client.discover_chat_model()
     requires_embeddings = any(
@@ -222,8 +242,8 @@ def run_benchmarks(
             if "embeddings" in entry.get("requirements", [])
             else {}
         )
-        if name == "deepswe":
-            conditions = deepswe_conditions
+        if resolved_conditions[name]:
+            conditions = resolved_conditions[name]
         context = {
             "schema_version": 1,
             "run_id": config.run_id,

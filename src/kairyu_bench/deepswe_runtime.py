@@ -26,6 +26,7 @@ from pier.models.agent.network import NetworkAllowlist
 from pier.models.job.config import JobConfig
 from pier.models.task.task import Task
 
+from kairyu_bench import artifacts
 from kairyu_bench.deepswe import (
     read_object,
     select_deepswe_tasks,
@@ -259,17 +260,7 @@ def build_job_config(
 
 
 def redact_artifacts(raw_dir: Path) -> None:
-    # Retain trajectories and official outputs, with credential literals removed.
-    values = [os.environ.get(key, "") for key in ("OPENAI_API_KEY", "HF_TOKEN")]
-    secrets = [value.encode() for value in values if value and value != "not-required"]
-    for path in raw_dir.rglob("*"):
-        if path.is_file() and not path.is_symlink() and secrets:
-            content = path.read_bytes()
-            redacted = content
-            for secret in secrets:
-                redacted = redacted.replace(secret, b"[REDACTED]")
-            if redacted != content:
-                path.write_bytes(redacted)
+    artifacts.redact_artifacts(raw_dir)
 
 
 def validate_tasks(task_root: Path, ids: list[str]) -> dict[str, str]:

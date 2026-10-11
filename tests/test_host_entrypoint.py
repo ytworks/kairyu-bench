@@ -52,6 +52,8 @@ class HostEntrypointTest(unittest.TestCase):
                 env["KAIRYU_BENCH_DOCKER_SOCKET"] = str(socket_path)
                 env["KAIRYU_BENCH_DEEPSWE_WORKERS"] = "7"
                 env["KAIRYU_BENCH_DEEPSWE_ATTEMPTS"] = "4"
+                env["KAIRYU_BENCH_TERMINAL_BENCH_4_ATTEMPTS"] = "5"
+                env.pop("KAIRYU_BENCH_TERMINAL_BENCH_4_WORKERS", None)
                 result = subprocess.run(
                     [str(ROOT / "kairyu-bench"), "list"], cwd=ROOT, env=env,
                     text=True, capture_output=True, check=False,
@@ -65,6 +67,10 @@ class HostEntrypointTest(unittest.TestCase):
             self.assertIn("run --rm --privileged", calls[1])
             self.assertIn("-e KAIRYU_BENCH_DEEPSWE_WORKERS=7", calls[1])
             self.assertIn("-e KAIRYU_BENCH_DEEPSWE_ATTEMPTS=4", calls[1])
+            self.assertIn("-e KAIRYU_BENCH_TERMINAL_BENCH_4_ATTEMPTS=5", calls[1])
+            self.assertIn("-e KAIRYU_BENCH_TERMINAL_BENCH_4_WORKERS=4", calls[1])
+            self.assertIn("-e KAIRYU_BENCH_TERMINAL_BENCH_4_RETRIES=3", calls[1])
+            self.assertIn("-e KAIRYU_BENCH_TERMINAL_BENCH_4_REASONING_EFFORT ", calls[1])
             self.assertIn(
                 f"-v {ROOT / 'results'}:{ROOT / 'results'}", calls[1]
             )

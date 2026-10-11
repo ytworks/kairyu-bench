@@ -1,0 +1,16 @@
+# Requests one GPU like the three Terminal-Bench 4.0 GPU tasks. On a Docker
+# daemon without the NVIDIA runtime the environment must fail to start.
+schema_version = "1.4"
+
+[agent]
+timeout_sec = 60.0
+
+[verifier]
+timeout_sec = 60.0
+
+[environment]
+build_timeout_sec = 300.0
+cpus = 1
+memory_mb = 512
+gpus = 1
+docker_image = "alpine:3.23.4@sha256:5b10f432ef3da1b8d4c7eb6c487f2f5a8f096bc91145e68878dd4a5019afde11"

@@ -143,6 +143,57 @@ class BenchmarkRunnerTest(unittest.TestCase):
         self.assertEqual(context["conditions"]["transport"], "chat_completions")
         self.assertEqual(result["conditions"], context["conditions"])
 
+    def test_terminal_bench_4_uses_the_harbor_agent_and_resolves_conditions_first(
+        self,
+    ) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            adapter = root / "adapters/terminal-bench-4/run.sh"
+            adapter.parent.mkdir(parents=True)
+            adapter.write_text(FAKE_ADAPTER, encoding="utf-8")
+            adapter.chmod(0o755)
+            config = RunConfig(
+                endpoint=Endpoint.parse("https://example.test/v1"),
+                selected=("terminal-bench-4",), limit=1, results_root=root / "results",
+                run_id="tb4-test", app_root=root, harbor_agent="claude-code",
+            )
+            env = {
+                "KAIRYU_BENCH_TERMINAL_BENCH_4_ATTEMPTS": "5",
+                "KAIRYU_BENCH_TERMINAL_BENCH_4_REASONING_EFFORT": "max",
+            }
+            with mock.patch.dict(os.environ, env):
+                outcome = run_benchmarks(config, _DiscoveredClient(), load_manifest())
+            context = json.loads(
+                (outcome.run_dir / "context/terminal-bench-4.json").read_text()
+            )
+            result = json.loads(
+                (outcome.run_dir / "normalized/terminal-bench-4.json").read_text()
+            )
+        self.assertEqual(outcome.exit_code, 0)
+        self.assertEqual(context["agent"], "claude-code")
+        self.assertEqual(context["conditions"]["agent"], "claude-code")
+        self.assertEqual(context["conditions"]["attempts_per_task"], 5)
+        self.assertEqual(context["conditions"]["reasoning_effort"], "max")
+        self.assertEqual(result["conditions"], context["conditions"])
+
+    def test_invalid_terminal_bench_4_settings_fail_before_contacting_the_model(
+        self,
+    ) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            client = _DiscoveredClient()
+            config = RunConfig(
+                endpoint=Endpoint.parse("https://example.test/v1"),
+                selected=("terminal-bench-4",), limit=1, results_root=root / "results",
+                run_id="tb4-invalid", app_root=root, harbor_agent="claude-code",
+            )
+            with mock.patch.dict(
+                os.environ, {"KAIRYU_BENCH_TERMINAL_BENCH_4_ATTEMPTS": "4"}
+            ), self.assertRaisesRegex(ValueError, "ATTEMPTS must be 1 or 5"):
+                run_benchmarks(config, client, load_manifest())
+            self.assertEqual(client.chat_discoveries, 0)
+            self.assertFalse((root / "results" / "tb4-invalid").exists())
+
     def test_run_discovers_model_invokes_selected_adapter_and_validates_result(
         self,
     ) -> None:

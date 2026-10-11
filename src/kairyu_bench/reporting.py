@@ -54,6 +54,33 @@ def _score_text(score: float | int | None) -> str:
     return "—" if score is None else f"{float(score):.2f}"
 
 
+TRIAL_BENCHMARKS = ("deepswe", "terminal-bench-4")
+
+
+def _trial_summary(benchmark: str, metrics: dict[str, Any]) -> str:
+    counts = (
+        f"{metrics['passed_attempts']} passed / {metrics['scored_attempts']} scored "
+        f"of {metrics['requested_attempts']} planned; {metrics['excluded_attempts']} unscored"
+    )
+    if benchmark == "terminal-bench-4":
+        ci = metrics["ci95_half_width_percent"]
+        pass_at_k = metrics["pass_at_k"] or {}
+        equivalent = metrics["leaderboard_equivalent"]["accuracy_percent"]
+        return (
+            f"\nTerminal-Bench 4.0 trials: {counts}; "
+            f"{metrics['gpu_unavailable_attempts']} GPU slots scored 0 without a GPU. "
+            f"Attempts: {metrics['attempts_per_task']}; "
+            f"95% CI: ±{_score_text(ci)} pp; pass@5: {_score_text(pass_at_k.get('pass_at_5'))}; "
+            f"leaderboard-equivalent accuracy: {_score_text(equivalent)}%. "
+            "Local API cost: unavailable.\n"
+        )
+    return (
+        f"\nDeepSWE trials: {counts}. "
+        f"Repeats: {metrics['attempts_per_task']}; pass@4: {_score_text(metrics['pass_at_4_percent'])}%. "
+        "Local API cost: unavailable.\n"
+    )
+
+
 def score_report_markdown(report: dict[str, Any]) -> str:
     lines = [
         f"# kairyu-bench score report: {report['run_id']}",
@@ -88,12 +115,7 @@ def score_report_markdown(report: dict[str, Any]) -> str:
         )
         metrics = row.get("trial_metrics", {})
         if "requested_attempts" in metrics:
-            lines.append(
-                f"\nDeepSWE trials: {metrics['passed_attempts']} passed / {metrics['scored_attempts']} scored "
-                f"of {metrics['requested_attempts']} planned; {metrics['excluded_attempts']} unscored. "
-                f"Repeats: {metrics['attempts_per_task']}; pass@4: {_score_text(metrics['pass_at_4_percent'])}%. "
-                "Local API cost: unavailable.\n"
-            )
+            lines.append(_trial_summary(row["benchmark"], metrics))
     references = report.get("public_references", [])
     if references:
         lines.extend(
@@ -146,7 +168,7 @@ def write_score_report(run_dir: Path) -> dict[str, Any]:
                 "agent": result.get("agent"),
                 "error": result["error"],
                 "trial_metrics": result["score"]["metrics"]
-                if name == "deepswe"
+                if name in TRIAL_BENCHMARKS
                 else {},
             }
         )
@@ -194,6 +216,10 @@ def _compatibility(
         return False, "scoring method or self-scoring policy differs"
     if left.get("conditions", {}) != right.get("conditions", {}):
         return False, "benchmark conditions differ"
+    if baseline.benchmark == "terminal-bench-4" and left["score"]["metrics"].get(
+        "gpu_available"
+    ) != right["score"]["metrics"].get("gpu_available"):
+        return False, "Terminal-Bench 4.0 GPU availability differs"
     if baseline.benchmark == "deepswe":
         left_runtime = left["score"]["metrics"].get("runtime_provenance")
         right_runtime = right["score"]["metrics"].get("runtime_provenance")
