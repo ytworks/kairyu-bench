@@ -15,9 +15,12 @@ Linux / x86_64、Docker Composeを推奨します。113タスクの定義を検�
 | `KAIRYU_BENCH_DEEPSWE_ATTEMPTS` | 1 | 1または4。4の場合は同じ113問を4反復、並列数は合計workers以内 |
 | `KAIRYU_BENCH_DEEPSWE_RETRIES` | 3 | 0–16。一時的API・環境エラーのPier再試行上限。mini自身のAPI retryも適用 |
 | `KAIRYU_BENCH_DEEPSWE_REASONING_EFFORT` | 未指定 | none/minimal/low/medium/high/xhigh/max。未指定はAPI既定 |
+| `KAIRYU_BENCH_DEEPSWE_API_TIMEOUT_SECONDS` | 未指定 | 1–10800の整数。指定時だけmini agentのHTTP API応答待ち時間を秒単位で設定。未指定は固定ライブラリの既定 |
 | `KAIRYU_BENCH_CLEAN_TASK_IMAGES` | 0 | 専用daemonで1に設定。評価後に当該taskの残存imageを削除 |
 
 APIへは`/v1/chat/completions`を使い、`/models`で検出したmodel IDを変えずに渡します。対応していないeffortを自動で弱めません。APIキーは環境変数から渡し、configの引数に埋め込みません。APIホストとポートだけをPierの認証付きproxyへ許可し、taskの内部ネットワークと独立verifierのネットワーク遮断を保持します。`host.docker.internal`はrunnerが解決したIPをproxy containerへ渡します。
+
+APIの1応答が既定の600秒を超える構成では、例えば`KAIRYU_BENCH_DEEPSWE_API_TIMEOUT_SECONDS=3600`を指定すると、応答待ちの途中でHTTP再試行が重なることを避けられます。これはHTTPクライアントの待ち時間だけを変更し、公式タスクのagent実行上限10800秒やverifierの上限は変更しません。指定した値は実行条件と公式agent configに記録します。
 
 ## 全件測定用の専用Docker daemon
 

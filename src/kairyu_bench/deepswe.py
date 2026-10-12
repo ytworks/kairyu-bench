@@ -52,6 +52,7 @@ class DeepSWESettings:
     attempts: int = 1
     retries: int = 3
     reasoning_effort: str | None = None
+    api_timeout_seconds: int | None = None
 
     @classmethod
     def from_env(cls, env: Mapping[str, str]) -> "DeepSWESettings":
@@ -63,14 +64,17 @@ class DeepSWESettings:
         effort = env.get("KAIRYU_BENCH_DEEPSWE_REASONING_EFFORT") or None
         if effort is not None and effort not in REASONING_EFFORTS:
             raise ValueError("KAIRYU_BENCH_DEEPSWE_REASONING_EFFORT is invalid")
-        return cls(workers, attempts, retries, effort)
+        api_timeout = None
+        if "KAIRYU_BENCH_DEEPSWE_API_TIMEOUT_SECONDS" in env:
+            api_timeout = _integer(env, "API_TIMEOUT_SECONDS", 600, 1, 10800)
+        return cls(workers, attempts, retries, effort, api_timeout)
 
 
 def resolve_deepswe_conditions(
     entry: dict[str, Any], env: Mapping[str, str]
 ) -> dict[str, Any]:
     settings = DeepSWESettings.from_env(env)
-    return {
+    conditions = {
         "benchmark_version": entry["dataset"]["version"],
         "agent_revision": entry["generator"]["revision"],
         "agent_version": entry["generator"]["version"],
@@ -89,6 +93,9 @@ def resolve_deepswe_conditions(
         "error_policy": "deepswe-v1.1-provider-verifier-network-excluded-v1",
         "cost_policy": "unavailable-for-local-api",
     }
+    if settings.api_timeout_seconds is not None:
+        conditions["api_timeout_seconds"] = settings.api_timeout_seconds
+    return conditions
 
 
 def _task_ids(value: object) -> list[str]:

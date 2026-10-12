@@ -219,6 +219,8 @@ def build_job_config(
     }
     if conditions["reasoning_effort"] != "server_default":
         kwargs["reasoning_effort"] = conditions["reasoning_effort"]
+    if "api_timeout_seconds" in conditions:
+        kwargs["model_kwargs"] = {"timeout": conditions["api_timeout_seconds"]}
     return JobConfig.model_validate(
         {
             "job_name": f"repeat-{repeat}",

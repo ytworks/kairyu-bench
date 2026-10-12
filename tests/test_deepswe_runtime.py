@@ -9,7 +9,7 @@ import os
 import tempfile
 import unittest
 from pathlib import Path
-from unittest.mock import patch
+from unittest.mock import AsyncMock, patch
 
 from kairyu_bench.manifest import load_manifest
 from kairyu_bench.deepswe import resolve_deepswe_conditions
@@ -52,6 +52,38 @@ class DeepSWERuntimeTest(unittest.TestCase):
         self.assertEqual(config.agents[0].kwargs["version"], "2.4.6")
         self.assertNotIn("fake-secret", config.model_dump_json())
         self.assertNotIn("AgentTimeoutError", config.retry.include_exceptions)
+        self.assertNotIn("model_kwargs", config.agents[0].kwargs)
+
+    def test_api_timeout_reaches_official_agent_command_without_extending_task(self):
+        import asyncio
+        import shlex
+        from pier.models.agent.context import AgentContext
+
+        module = self.module()
+        entry = load_manifest()["deepswe"]
+        context = {
+            "run_id": "test", "model_id": "org/model", "generator": entry["generator"],
+            "conditions": resolve_deepswe_conditions(entry, {
+                "KAIRYU_BENCH_DEEPSWE_API_TIMEOUT_SECONDS": "3600",
+                "KAIRYU_BENCH_DEEPSWE_REASONING_EFFORT": "max",
+            }),
+        }
+        with tempfile.TemporaryDirectory() as directory, patch.dict(os.environ, {
+            "OPENAI_BASE_URL": "http://example.test/v1", "OPENAI_API_KEY": "fake-secret",
+        }):
+            root = Path(directory)
+            config = module.build_job_config(context, root, root, ["task-a"], 0)
+            agent = module.KairyuMiniSweAgent(logs_dir=root,
+                model_name=config.agents[0].model_name, **config.agents[0].kwargs)
+            with patch.object(agent, "exec_as_agent", new_callable=AsyncMock) as execute:
+                asyncio.run(agent.run("A synthetic task", object(), AgentContext()))
+            command = shlex.split(execute.call_args.kwargs["command"])
+        self.assertIn("--model=openai/org/model", command)
+        self.assertIn("model.model_kwargs.timeout=3600", command)
+        self.assertIn("model.model_kwargs.reasoning_effort=max", command)
+        self.assertEqual(config.timeout_multiplier, 1)
+        self.assertIsNone(config.agent_timeout_multiplier)
+        self.assertIsNone(config.agents[0].override_timeout_sec)
 
     def test_installed_agent_allows_only_target_api_and_reports_actual_identity(self):
         module = self.module()
