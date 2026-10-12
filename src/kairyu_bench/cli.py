@@ -104,6 +104,10 @@ def main(argv: Sequence[str] | None = None) -> int:
                 from kairyu_bench.deepswe import DeepSWESettings
 
                 DeepSWESettings.from_env(os.environ)
+            if "terminal-bench-4" in selected:
+                from kairyu_bench.terminal_bench4 import TerminalBench4Settings
+
+                TerminalBench4Settings.from_env(os.environ, args.harbor_agent)
         except (ValueError, ManifestError) as error:
             parser.error(str(error))
         if args.dry_run:

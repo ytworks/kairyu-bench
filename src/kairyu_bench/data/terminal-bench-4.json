@@ -1,0 +1,852 @@
+{
+  "schema_version": 1,
+  "benchmark_version": "4.0.0",
+  "dataset": "terminal-bench/terminal-bench",
+  "dataset_ref": "sha256:39d9f44b40420cde8fdcc087579c0d72a7e14fa3656d603c3f0d22fb35e27732",
+  "harbor_version": "0.24.0",
+  "minimum_trials_per_task": 5,
+  "agents": {
+    "claude-code": {
+      "model_prefix": "",
+      "kwargs": {
+        "version": "2.1.231"
+      },
+      "env": {
+        "CLAUDE_CODE_SIMPLE": "1",
+        "CLAUDE_CODE_DISABLE_ADAPTIVE_THINKING": "1",
+        "CLAUDE_CODE_DISABLE_EXPERIMENTAL_BETAS": "1",
+        "CLAUDE_CODE_ATTRIBUTION_HEADER": "0"
+      },
+      "reasoning_efforts": [
+        "low",
+        "medium",
+        "high",
+        "xhigh",
+        "max"
+      ],
+      "retry_exclude_exceptions": [
+        "AgentSafetyRefusalError",
+        "AgentTimeoutError",
+        "ApiUsageLimitError",
+        "RewardFileEmptyError",
+        "RewardFileNotFoundError",
+        "VerifierOutputParseError",
+        "VerifierTimeoutError"
+      ],
+      "official_run_config": "leaderboard/runs/tb-4-0-0-opus-5-claude-code.json"
+    },
+    "codex": {
+      "model_prefix": "",
+      "kwargs": {
+        "version": "0.149.1"
+      },
+      "env": {},
+      "reasoning_efforts": [
+        "none",
+        "minimal",
+        "low",
+        "medium",
+        "high",
+        "xhigh",
+        "max"
+      ],
+      "retry_exclude_exceptions": [
+        "AgentTimeoutError",
+        "ApiUsageLimitError",
+        "RewardFileEmptyError",
+        "RewardFileNotFoundError",
+        "VerifierOutputParseError",
+        "VerifierTimeoutError"
+      ],
+      "official_run_config": "leaderboard/runs/tb-4-0-0-gpt-5-6-sol-codex.json"
+    },
+    "terminus-2": {
+      "model_prefix": "openai/",
+      "kwargs": {},
+      "env": {},
+      "reasoning_efforts": [
+        "none",
+        "minimal",
+        "low",
+        "medium",
+        "high",
+        "xhigh",
+        "max"
+      ],
+      "retry_exclude_exceptions": [
+        "AgentSafetyRefusalError",
+        "AgentTimeoutError",
+        "ApiUsageLimitError",
+        "RewardFileEmptyError",
+        "RewardFileNotFoundError",
+        "VerifierOutputParseError",
+        "VerifierTimeoutError"
+      ],
+      "official_run_config": null
+    }
+  },
+  "gpu_tasks": [
+    "terminal-bench/fp8-rmsnorm-gemm",
+    "terminal-bench/jax-speedrun-gpu",
+    "terminal-bench/math-eval-grader"
+  ],
+  "offline_verifier_tasks": [
+    "terminal-bench/batched-eval-parity",
+    "terminal-bench/lake-temp-glm"
+  ],
+  "tasks": {
+    "terminal-bench/atrx-vep-crispr": {
+      "digest": "sha256:4ebe9e13de8cbd39ee2f9e14a9d7b1233c047ae43fba238ebc6274465697be3a",
+      "images": [
+        "harborframework/terminal-bench:atrx-vep-crispr-environment-942b2c3a7def0a2e@sha256:2879e29fdb7a997c4dd32e12b026a9f95f17670e4b5619b52c62b3cdbb5a71de",
+        "harborframework/terminal-bench:atrx-vep-crispr-verifier-4727aa67ef5af0f2@sha256:935ef7ba68b484c20b48857a4b086e10076897b003819c2c3356fae2f28a46f3"
+      ],
+      "cpus": 2,
+      "memory_mb": 4096,
+      "gpus": 0,
+      "verifier_allow_internet": true
+    },
+    "terminal-bench/batched-eval-parity": {
+      "digest": "sha256:e1d54abdb0a83b6c28714fe54c5fd0cfe053132cf2a9d511a0166c6c556ea2be",
+      "images": [
+        "harborframework/terminal-bench:batched-eval-parity-environment-00a2f89ac64b1a55@sha256:73e931f5311398037c2230a4aa1a179fde8619942ecdaa9d98f4fdea548dba47",
+        "harborframework/terminal-bench:batched-eval-parity-verifier-4ec557b03f34f592@sha256:ed22ecd4714d6f9455421cca5278b43a1421a2a35e5479d8d663671a5b1c84b3"
+      ],
+      "cpus": 2,
+      "memory_mb": 4096,
+      "gpus": 0,
+      "verifier_allow_internet": false
+    },
+    "terminal-bench/biped-contact-dynamics": {
+      "digest": "sha256:7d9120179572cbb6511108fcfa1e76e6bc1bb56f2cace8e606d4ccded15cb4c4",
+      "images": [
+        "harborframework/terminal-bench:biped-contact-dynamics-environment-3d0b2d5b2223e011@sha256:ad16a57e6a031a5937dc77e9e7cc3c7aada8159ccf192731f5de783fa7667624",
+        "harborframework/terminal-bench:biped-contact-dynamics-verifier-c9389decdbd82efc@sha256:333df062b1a4b04d0b0777aaedc61715714bb5f8f749d0a4ac0669a24842bfb3"
+      ],
+      "cpus": 4,
+      "memory_mb": 8192,
+      "gpus": 0,
+      "verifier_allow_internet": true
+    },
+    "terminal-bench/bun-sourcemap-leak": {
+      "digest": "sha256:e55ae542f338f50f4468d940c7d7c93a45d34fd418dc6cc5883c1fedc753603a",
+      "images": [
+        "harborframework/terminal-bench:bun-sourcemap-leak-environment-af9a682ece894ebd@sha256:63c69d9bc2334b93f3e17662670ee3d283238029ef94542aa84eb0c91207518e",
+        "harborframework/terminal-bench:bun-sourcemap-leak-verifier-4f21b4a5a4e1a334@sha256:5757c422d338c7b9ef9d7f008d5c8e5b98572379713aeee88cf3b3d5bdf67ea3"
+      ],
+      "cpus": 2,
+      "memory_mb": 4096,
+      "gpus": 0,
+      "verifier_allow_internet": true
+    },
+    "terminal-bench/cad-model": {
+      "digest": "sha256:037b83651678230c04217bc7bd077c9e2c3d5a383bb368cdeb19e88a2202f644",
+      "images": [
+        "harborframework/terminal-bench:cad-model-environment-db08203ec880d2cc@sha256:988e1ff362f361ceb1fc93e99cafc1d90f5b6c5d8fed13a5695c23b3669a127c",
+        "harborframework/terminal-bench:cad-model-verifier-0cf09c47914ff3da@sha256:7d38bc61497dffd5be75b554385d59ac71996b89fb23aa80b5bcf4f4e6cc40ec"
+      ],
+      "cpus": 2,
+      "memory_mb": 8192,
+      "gpus": 0,
+      "verifier_allow_internet": true
+    },
+    "terminal-bench/cargo-flight-dispatch": {
+      "digest": "sha256:18a1c2670ce4be0e6752f48ed6c750281d7f97db025f5e74edc6c8728f62f5b5",
+      "images": [
+        "harborframework/terminal-bench:cargo-flight-dispatch-environment-0e8f4594c29582c9@sha256:dc2ca2bbf8e3fb46d2eae0360eef9770c17000bba640bdaf9ed328261ebfcfbe",
+        "harborframework/terminal-bench:cargo-flight-dispatch-verifier-e183ee232dcd5d6d@sha256:30fcb24407f742d82dedda1649ceae39b57e69901a9ef3be177fbfe517fdd10e"
+      ],
+      "cpus": 2,
+      "memory_mb": 4096,
+      "gpus": 0,
+      "verifier_allow_internet": true
+    },
+    "terminal-bench/coq-block-bound": {
+      "digest": "sha256:4e2a6b608b18eeda1e18996efa115fec3573d90d4f798406b073b078fea52c89",
+      "images": [
+        "harborframework/terminal-bench:coq-block-bound-environment-b28abe9458ead071@sha256:f170c71c691b03c14a5bf482593c3f568dc2e4e48db3e8716f87ccfe31923055",
+        "harborframework/terminal-bench:coq-block-bound-verifier-63ae9707b37def0c@sha256:32d3b0e016acfc56093546aa9a18c6a3ec477471b040d63b93bc01fd3bf9f28c"
+      ],
+      "cpus": 2,
+      "memory_mb": 4096,
+      "gpus": 0,
+      "verifier_allow_internet": true
+    },
+    "terminal-bench/ctr-optimization": {
+      "digest": "sha256:df8b7d99e23ad23ac9c92da35ff0a2714d78781e9424edd63143cc86860e096b",
+      "images": [
+        "harborframework/terminal-bench:ctr-optimization-environment-f22bf10e7c9a34e7@sha256:718822ca93c5d49694d69a094a84a68a8b6e3f09415ff23fb2baf01c209bd3c2",
+        "harborframework/terminal-bench:ctr-optimization-verifier-95230a1e10470b64@sha256:5b1c5955a918a75c15795660644a1c1e5525d99eca650fe9ddaea8c994b27693",
+        "harborframework/terminal-bench:ctr-optimization-sidecar-api-35cd5fe7841b4933@sha256:4dee63e20e07c00cdab5b1ba977b1f848a074f967bd8f97c9cda9027725e17d5"
+      ],
+      "cpus": 2,
+      "memory_mb": 8192,
+      "gpus": 0,
+      "verifier_allow_internet": true
+    },
+    "terminal-bench/cumulative-layout-shift": {
+      "digest": "sha256:d9805202ade29c603a55f5aa5af27a794a2ed3897e05e8ff0a484b4a84a0ed8a",
+      "images": [
+        "harborframework/terminal-bench:cumulative-layout-shift-environment-7c5f839ce1345e4b@sha256:d840b99ee43fffbd7a76eab8e28d996063de8571725d2f4dbb5869d5d018baa1",
+        "harborframework/terminal-bench:cumulative-layout-shift-verifier-11f8afe9c3e2df5f@sha256:1f720bbb344fadc91460eb6e3e8d6c577521246807288e6369bf9ca48a86cd14",
+        "harborframework/terminal-bench:cumulative-layout-shift-sidecar-barber-shop-data-backend-57bd45dbb96a662e@sha256:1f40268536b534165e32aa58b910eaa422a863c39cc6de005a09e3536efd9dda"
+      ],
+      "cpus": 4,
+      "memory_mb": 8192,
+      "gpus": 0,
+      "verifier_allow_internet": true
+    },
+    "terminal-bench/data-anonymization": {
+      "digest": "sha256:dec4261252665cf2981783df104ea10c901dcab3720b27b4bf8909a059713f08",
+      "images": [
+        "harborframework/terminal-bench:data-anonymization-environment-093726f22cfc5916@sha256:15e6ecdae19768a5daa5fd326c70ef7a44e8c75c82e7cb1d7cde3503f6d02329",
+        "harborframework/terminal-bench:data-anonymization-verifier-4ba65655b6d96556@sha256:8ad8a2cd7fd11a6fefded057703c3a4833a9eec448821d7b2de0ffa2df4b2372"
+      ],
+      "cpus": 2,
+      "memory_mb": 8192,
+      "gpus": 0,
+      "verifier_allow_internet": true
+    },
+    "terminal-bench/distributed-dedup": {
+      "digest": "sha256:a645441376fea3d5b1acc15b64fe288eb0bb835724f6bf7a21adb1eca2bb814d",
+      "images": [
+        "harborframework/terminal-bench:distributed-dedup-environment-53ace6a7986f44ab@sha256:662f82603e0c0897123c35ce946995788c90fa8bbeab941005779be0e08364be",
+        "harborframework/terminal-bench:distributed-dedup-verifier-80dfba7b8ac81d03@sha256:207b3f1c1e514143aff668b591c12ff807a2dbcc03a25a872921cba09d1bd2ce"
+      ],
+      "cpus": 8,
+      "memory_mb": 16384,
+      "gpus": 0,
+      "verifier_allow_internet": true
+    },
+    "terminal-bench/embedding-drift-monitor": {
+      "digest": "sha256:6907ffce9ad5c8a8b41fe9c0a076a9aeb9754a2f8083c52f9aede5481a4f4c59",
+      "images": [
+        "harborframework/terminal-bench:embedding-drift-monitor-environment-64921d5ad388b5f3@sha256:02e1353b0893a2fa43f88a58141e91d6558a3f0ab013ab9c4007c47bd47f5183",
+        "harborframework/terminal-bench:embedding-drift-monitor-verifier-ba6079d4e153d027@sha256:5f3c5824b551cda5165408736d1b58d072ff260bb97e9e39d19d274a5fccfdac"
+      ],
+      "cpus": 2,
+      "memory_mb": 4096,
+      "gpus": 0,
+      "verifier_allow_internet": true
+    },
+    "terminal-bench/fin-saccr-rwa": {
+      "digest": "sha256:bd0ee47169986cfdd4b0ccc98f461382c612e1301dd75f98d1381015eb25398a",
+      "images": [
+        "harborframework/terminal-bench:fin-saccr-rwa-environment-2b3426a115c87bef@sha256:99da0ead996b32412b132ecc59fee12d065d61c7d54738e1613cbd0b63f7e066",
+        "harborframework/terminal-bench:fin-saccr-rwa-verifier-ebc8805d1bc20f9f@sha256:938d6e69653a40479c9cd09363d28a66f1eda2ce6e6202f0e09e0affd1186304"
+      ],
+      "cpus": 2,
+      "memory_mb": 4096,
+      "gpus": 0,
+      "verifier_allow_internet": true
+    },
+    "terminal-bench/foodstuff-beta-activity": {
+      "digest": "sha256:52adca169e97e15fe8692986470b6556f478e7348a37c58739a5bdb3f02cc45a",
+      "images": [
+        "harborframework/terminal-bench:foodstuff-beta-activity-environment-4e8c3175f7aa3144@sha256:5177fbfb37bf67fe1a0c85f71a895ea16f5906f60f86c27fcab44be607f3875b",
+        "harborframework/terminal-bench:foodstuff-beta-activity-verifier-befed3de24c268d9@sha256:4e45b4f49b74e2b1ee094da0ab237c512ea167f5891a88521475f2d95012ad7d"
+      ],
+      "cpus": 2,
+      "memory_mb": 4096,
+      "gpus": 0,
+      "verifier_allow_internet": true
+    },
+    "terminal-bench/formal-crypto": {
+      "digest": "sha256:cb4f5a280f6ac1bfcc6c919841810084e286ce3109969841e1f5739fe9f7acf7",
+      "images": [
+        "harborframework/terminal-bench:formal-crypto-environment-3c0066bab9089eba@sha256:522d2bd46845e0bc1ba8ae6be6c6bc137cda568b2cc0db631921164d533af273",
+        "harborframework/terminal-bench:formal-crypto-verifier-2f48b8010d0c3998@sha256:09517a19225bce8be7fa99251a2d4b0e334ebf0c3015aa3fb9f4d632daf1f0e6"
+      ],
+      "cpus": 8,
+      "memory_mb": 4096,
+      "gpus": 0,
+      "verifier_allow_internet": true
+    },
+    "terminal-bench/fp8-rmsnorm-gemm": {
+      "digest": "sha256:c071d986784369f0403ebf60070c7f96d7df3acc7e5a4614c986f8f421acda38",
+      "images": [
+        "harborframework/terminal-bench:fp8-rmsnorm-gemm-environment-c6108b9484d3fcde@sha256:2ff70c4fda8432085a4df9bb6565c309058077de0b93d827ed68c1cede55e055",
+        "harborframework/terminal-bench:fp8-rmsnorm-gemm-verifier-c271bffb46b7613f@sha256:50e696b2cd95d7713c352b0f2c57f92e0383828c19fac139d6803f15cdbfdd53"
+      ],
+      "cpus": 4,
+      "memory_mb": 16384,
+      "gpus": 1,
+      "verifier_allow_internet": true
+    },
+    "terminal-bench/freecad-impeller": {
+      "digest": "sha256:40d322e979d30dd53c0a9330445b8799cf5c02099b0718a3b3ad15231b366dba",
+      "images": [
+        "harborframework/terminal-bench:freecad-impeller-environment-857daa7d56e8af05@sha256:8db26e0067fce1ba499bc788fdb226902903959f584c6dc82616927a7f34522f",
+        "harborframework/terminal-bench:freecad-impeller-verifier-4b4a95b5b055e4b2@sha256:88f74667d395495b5e2bbaadd1c9e2b7bd4c3e8a667b0e2d748a7e1d69b939d1"
+      ],
+      "cpus": 2,
+      "memory_mb": 4096,
+      "gpus": 0,
+      "verifier_allow_internet": true
+    },
+    "terminal-bench/freecad-platform-drawing": {
+      "digest": "sha256:ed6db89260074bd0db58b064d90977cc4d470843deefecd8a9caf7f21da9a747",
+      "images": [
+        "harborframework/terminal-bench:freecad-platform-drawing-environment-3dafc5df7f3ec548@sha256:0af594347ef82260f0e34491a28aa47344b6cdc3d38397bea0cfc6528df00a64",
+        "harborframework/terminal-bench:freecad-platform-drawing-verifier-f8d7515ad73628f5@sha256:68711d63427fb1755c2331481913b2dda688c32d9be905ac7cf29d8286be9bb0"
+      ],
+      "cpus": 2,
+      "memory_mb": 4096,
+      "gpus": 0,
+      "verifier_allow_internet": true
+    },
+    "terminal-bench/freecad-spring-clip": {
+      "digest": "sha256:c3110552902a44e17326df0a87083eb6028068cfbc7aa47461c7f2c0aa528bab",
+      "images": [
+        "harborframework/terminal-bench:freecad-spring-clip-environment-857daa7d56e8af05@sha256:a0106585542716d3114bffe1dc0e492536ab032d3f2be45f0c4789ad8bae78f7",
+        "harborframework/terminal-bench:freecad-spring-clip-verifier-2303c306f4550661@sha256:3ebc4314228ce4d15270065a0924db0dea54ebd45aa4e05e8e1e1a257b1b9488"
+      ],
+      "cpus": 2,
+      "memory_mb": 4096,
+      "gpus": 0,
+      "verifier_allow_internet": true
+    },
+    "terminal-bench/freight-dispatch-shift": {
+      "digest": "sha256:9c27972688139fce999058386bd381ca194c9f4ba76161a52bb8560aee9ceb2c",
+      "images": [
+        "harborframework/terminal-bench:freight-dispatch-shift-environment-b8a25b24cf23c8d7@sha256:f9ffe49f11bcc6e77e33fd1bacd0a60027547526d716575c71e52517ac96daf8",
+        "harborframework/terminal-bench:freight-dispatch-shift-verifier-3a05c31659f4dcad@sha256:5f8a8a3d18fbe18836dbd9c292bdb1182277c701e980c4d734aca848e0a4f0ba",
+        "harborframework/terminal-bench:freight-dispatch-shift-sidecar-event-feed-42859b8ef057c829@sha256:f5975c403f3d3edc43e926ac49a63ea8561f9731ea63366180424380ad952782"
+      ],
+      "cpus": 2,
+      "memory_mb": 4096,
+      "gpus": 0,
+      "verifier_allow_internet": true
+    },
+    "terminal-bench/glycan-ms2-elucidation": {
+      "digest": "sha256:80bf0ef924d6ba9a4323172f5a13df1734609914ddd086deef2da0288e9c560d",
+      "images": [
+        "harborframework/terminal-bench:glycan-ms2-elucidation-environment-bb9eb36539c5ff23@sha256:825463f0016da4d719d8a169fa76815c989f479053aabc06e35f5d5d85a583c1",
+        "harborframework/terminal-bench:glycan-ms2-elucidation-verifier-743094642de5bfc2@sha256:afb6a4b9e33e003c76e7d5bfb9a247ac8e1664cc36f1f53392dd1fe33aa17ae8"
+      ],
+      "cpus": 2,
+      "memory_mb": 4096,
+      "gpus": 0,
+      "verifier_allow_internet": true
+    },
+    "terminal-bench/gsea-proteomics": {
+      "digest": "sha256:7c0512e617cd4c0a0b595ebfb81258495d7e4a12c003cd0592c1137aa986a85d",
+      "images": [
+        "harborframework/terminal-bench:gsea-proteomics-environment-7136c78ad59182b0@sha256:fada63d4d1036fa3e6ac03006c184e677fe9e2277dd524a264e0eb573f892d1f",
+        "harborframework/terminal-bench:gsea-proteomics-verifier-f623d825c65f5564@sha256:97bbe5fe5cbeed012e55763cfb088d65543213a6a139968cf08b94fb1028513f"
+      ],
+      "cpus": 4,
+      "memory_mb": 4096,
+      "gpus": 0,
+      "verifier_allow_internet": true
+    },
+    "terminal-bench/heat-pump-warranty": {
+      "digest": "sha256:7ce04515367c33c3673d1e6dc387edfa9b5a2565e6f040b1d24626efc07d0ad7",
+      "images": [
+        "harborframework/terminal-bench:heat-pump-warranty-environment-760b960d24b30b4c@sha256:8245f02d4346749433b53cf2d2ea281e624c2410aa697394a8d70a32ae2c1a99",
+        "harborframework/terminal-bench:heat-pump-warranty-verifier-f396506fe36af39b@sha256:4d3730e4fac2dc4fce918f86888cd209af7c630686ff6c97eafde1aac49c0365",
+        "harborframework/terminal-bench:heat-pump-warranty-sidecar-warranty-portal-9b1856ffd65950a9@sha256:c754da3670b3455e05c7a6f52608a0906e9b102cad2957b6a84e853461079a08",
+        "harborframework/terminal-bench:heat-pump-warranty-sidecar-asset-ledger-61c5ee7eb0a19cd7@sha256:4906b2be733507125a12559fcb7a1162f483f397dd835bd66d94f463f2ef0da8",
+        "harborframework/terminal-bench:heat-pump-warranty-sidecar-document-vault-61247c2a9becac9d@sha256:2f309687721bdd0e55dd08193832051ebf064f6b84053f3ae6f6a79365687e34",
+        "harborframework/terminal-bench:heat-pump-warranty-sidecar-returns-ledger-0a15c968bfd78180@sha256:94a3e3f4423ddde7d84405c463d1738d1a680d63846ef5f7aca3d3dac88c1888",
+        "harborframework/terminal-bench:heat-pump-warranty-sidecar-compliance-ledger-55a4e36df409fe04@sha256:e7191e63c1f7609f9b1fd5c2bcc83511537f2b107df325acbbf7201d0d1c138f",
+        "harborframework/terminal-bench:heat-pump-warranty-sidecar-warranty-inbox-1b35b5032cd7e558@sha256:2e5e263df61ecd255c04952270ef3f3bb3c0bd2a819b210836661bdf5cfc3d61"
+      ],
+      "cpus": 2,
+      "memory_mb": 4096,
+      "gpus": 0,
+      "verifier_allow_internet": true
+    },
+    "terminal-bench/hof-topology-interpenetration": {
+      "digest": "sha256:2534e62c5ab3c8592f4e0de3dee14ff07a5c1c9434164e7f80e2f564273de014",
+      "images": [
+        "harborframework/terminal-bench:hof-topology-interpenetration-environment-97d810c502498c4b@sha256:5b3fd0b5ff13696137fd4350ad75d5f63cf7a1ab70c57b1bd33aa87b296eea5e",
+        "harborframework/terminal-bench:hof-topology-interpenetration-verifier-4503ab4aabacc3de@sha256:d9087f406a7ce12e410b392d15c07a57a33df20cdb5cd8b477694b80d6f4d91b"
+      ],
+      "cpus": 2,
+      "memory_mb": 8192,
+      "gpus": 0,
+      "verifier_allow_internet": true
+    },
+    "terminal-bench/html-js-filter": {
+      "digest": "sha256:f211960f1f7c66ace91c3d079db073ed0f841d458db4cad1f2f943cba6cc79f3",
+      "images": [
+        "harborframework/terminal-bench:html-js-filter-environment-84a8dc9541acfe09@sha256:72aefd5ceb952e93e1fbc6e14787b9b91975adc218912b73ab3fb86e335fdcbf",
+        "harborframework/terminal-bench:html-js-filter-verifier-ac9fd00a91ed471d@sha256:dd983453dd5361f3c8b632dcaf3bca845c47670b107f10b29643c4b50afeb62a"
+      ],
+      "cpus": 2,
+      "memory_mb": 8192,
+      "gpus": 0,
+      "verifier_allow_internet": true
+    },
+    "terminal-bench/interleaved-vigenere": {
+      "digest": "sha256:238a75a32aad5e60b33a22ac53087790e95b752c6272f41d724407f198df4a14",
+      "images": [
+        "harborframework/terminal-bench:interleaved-vigenere-environment-9d9fa0a5aba4b859@sha256:683e32f166cb4698c641bf45cb7efbeb631e879d8d5143bc6cdf799f16d4b592",
+        "harborframework/terminal-bench:interleaved-vigenere-verifier-16783c64c1923947@sha256:bfe3a07dc06a39182f64dbb1d92af539340587f778409fe62bd82bfacb36f259"
+      ],
+      "cpus": 4,
+      "memory_mb": 4096,
+      "gpus": 0,
+      "verifier_allow_internet": true
+    },
+    "terminal-bench/intrastat-meldung": {
+      "digest": "sha256:d944c51392857e886211327f38086513c0540b5c2f557b75b2b44dec209b8222",
+      "images": [
+        "harborframework/terminal-bench:intrastat-meldung-environment-8ee45061a2f8d64c@sha256:6357248f210a333fb08d0fc28f23020b909364ef1a67db132418e651e71bb788",
+        "harborframework/terminal-bench:intrastat-meldung-verifier-50a738477a28b2e6@sha256:c9ede6308df3ae229a469071b58c6deb2a23ceb87abe44b2cd66ebea31b8c1a9",
+        "harborframework/terminal-bench:intrastat-meldung-sidecar-odoo-5ac013ecb7a2351d@sha256:5b35fea6469419b2f2fafd9a562cbe9bab0d38decfdcdf27a3c8f8fc4acf9778",
+        "harborframework/terminal-bench:intrastat-meldung-sidecar-compliance-hub-5ac013ecb7a2351d@sha256:c019cea99f27450679b0390571e6d68640dff055534b0f5c5e798fa30661138e",
+        "harborframework/terminal-bench:intrastat-meldung-sidecar-idev-5ac013ecb7a2351d@sha256:b1ec3caa5ca80a7b2a00ec28ec54a51dbc7680ea297578a5bf27ab4ae79949e1",
+        "harborframework/terminal-bench:intrastat-meldung-sidecar-services-5ac013ecb7a2351d@sha256:e7af68dd2519d09eefc6e68d714e4115ef35f67ca8b674507bd3f93ac0d3f9c0",
+        "harborframework/terminal-bench:intrastat-meldung-sidecar-dms-5ac013ecb7a2351d@sha256:5722eaf160ff537576d713a09e4c3ebd9b200d6b5054e02ab607e434a7dfd082"
+      ],
+      "cpus": 2,
+      "memory_mb": 8192,
+      "gpus": 0,
+      "verifier_allow_internet": true
+    },
+    "terminal-bench/jax-speedrun-gpu": {
+      "digest": "sha256:b8ea491d376abbb0da944e7a3b0fdef710d6de76a85cd5e25d132a8a541748fe",
+      "images": [
+        "harborframework/terminal-bench:jax-speedrun-gpu-environment-03138eca1759d833@sha256:d091f08f4076c6e37c0e395740c8defaab655aa7d89811b004f1243772d7712d",
+        "harborframework/terminal-bench:jax-speedrun-gpu-verifier-b5f55f05e039ed20@sha256:ce97526fdfdd6c0a69a13d1328590396d5e75d60296840a2fb93585506475408"
+      ],
+      "cpus": 16,
+      "memory_mb": 32768,
+      "gpus": 1,
+      "verifier_allow_internet": true
+    },
+    "terminal-bench/ks-solver-cpp": {
+      "digest": "sha256:d4eef6bb296028e57be0abb4b19dab71cf04b807cbe22fad4bc64174f9380cc0",
+      "images": [
+        "harborframework/terminal-bench:ks-solver-cpp-environment-51c99d0afd53676d@sha256:0675bf671a3210bf3a3cddbb8a25892d5d8ba7a7f2eced7bd711c41354b182af",
+        "harborframework/terminal-bench:ks-solver-cpp-verifier-df928848fea91753@sha256:b039eb06e664258595691440578497ffd933d0bb4b708638f837abd0d6030010"
+      ],
+      "cpus": 4,
+      "memory_mb": 8192,
+      "gpus": 0,
+      "verifier_allow_internet": true
+    },
+    "terminal-bench/kv-live-surgery": {
+      "digest": "sha256:810958fbeefc6a7f677624f908561e6e47d88aec8c06fa5321d81f5aa75a9ffc",
+      "images": [
+        "harborframework/terminal-bench:kv-live-surgery-environment-6e8d8c54429dfc9f@sha256:dd272ea1f98a6529bfee74e4a52330a44e414017a0cad756add94e23cac1473a",
+        "harborframework/terminal-bench:kv-live-surgery-verifier-8b631950635ab7d6@sha256:f235830f84d6b5a87921603d6f7ce9a238f5a0de4b84ca003db0318f274b9cc6",
+        "harborframework/terminal-bench:kv-live-surgery-sidecar-loadgen-e42e01bb667f9fd9@sha256:ecb13e07d75c8d041ab0f6357d2d84cc6112fc1ce1a182a7de71f2ab420f3fd5"
+      ],
+      "cpus": 2,
+      "memory_mb": 4096,
+      "gpus": 0,
+      "verifier_allow_internet": true
+    },
+    "terminal-bench/lake-temp-glm": {
+      "digest": "sha256:4ccec50699de5de3b1bcdedf1189a56d72520220da27306c10d93419a3316a0c",
+      "images": [
+        "harborframework/terminal-bench:lake-temp-glm-environment-3ae3d0cb406426b3@sha256:c7c7b68d683b29a4453764e9dca7d5d3939e448e48fe330d169eaf779e300d85",
+        "harborframework/terminal-bench:lake-temp-glm-verifier-fe8b78a552d8a4e8@sha256:9aedaa876a10b8106e4836ce61b2abcc2a17a6b12e8d671f9f07ba492e31a1b2"
+      ],
+      "cpus": 8,
+      "memory_mb": 8192,
+      "gpus": 0,
+      "verifier_allow_internet": false
+    },
+    "terminal-bench/layout-config-recreation": {
+      "digest": "sha256:997003ffc98f6df316167de8752c9beada20cb1292588b0fa6409d87ed3a1def",
+      "images": [
+        "harborframework/terminal-bench:layout-config-recreation-environment-c8f24ca4c004dba0@sha256:4e0950673218d66a9884a65a8b8fe4e7608a21ff0d34fd5f05ebbaa23de1304a",
+        "harborframework/terminal-bench:layout-config-recreation-verifier-7a4fc980fb8ee4c4@sha256:3ade8f7386ae44fed7501a92ed065d0c73516d00e89444020f1fdc2dc2df3d0f"
+      ],
+      "cpus": 2,
+      "memory_mb": 8192,
+      "gpus": 0,
+      "verifier_allow_internet": true
+    },
+    "terminal-bench/layout-config-recreation2": {
+      "digest": "sha256:193312b14b1dcb6ef551efff691cbb708b2032f58879b0b19efe88a2cddc9deb",
+      "images": [
+        "harborframework/terminal-bench:layout-config-recreation2-environment-9caa9d6614e4ae31@sha256:c08989cd9fc6858e7ec7488acf65b2840ece53581fb4327b3e667ff15da23724",
+        "harborframework/terminal-bench:layout-config-recreation2-verifier-5f249ec0c47d9285@sha256:6f428236b1ffbef143a9f8c70d732155796c45b4ab4a7e80ab8dced97b4cfaaa"
+      ],
+      "cpus": 4,
+      "memory_mb": 8192,
+      "gpus": 0,
+      "verifier_allow_internet": true
+    },
+    "terminal-bench/legacy-utility-triage": {
+      "digest": "sha256:d9954d3b78c8440a5927bc9826bfd9a61827391bf47f0885575fc7f27c4c8b6e",
+      "images": [
+        "harborframework/terminal-bench:legacy-utility-triage-environment-5cc1128c429e8d05@sha256:f599a42278c8fd1b0185933752c29c33d4dfa5850cbabd7e712e70654d96a643",
+        "harborframework/terminal-bench:legacy-utility-triage-verifier-5b9caa2f94d1848e@sha256:df47bb8f0b6cf490d380c294e38769cc755b4fbf3720ff23b960647d86bae403",
+        "harborframework/terminal-bench:legacy-utility-triage-sidecar-legacy-workstation-e8775dad9c6bd514@sha256:706a7124caa138c3e8fc116af4413a637087869cd1dd7bf7e86c2069afa682a4",
+        "harborframework/terminal-bench:legacy-utility-triage-sidecar-legacy-app-44fa7b126bb99cb6@sha256:f381021e014f4f36f619068edf0f3a2ed54b05cfa84245301afbedc2d9dd3042"
+      ],
+      "cpus": 2,
+      "memory_mb": 8192,
+      "gpus": 0,
+      "verifier_allow_internet": true
+    },
+    "terminal-bench/live-database-cutover": {
+      "digest": "sha256:850fc34a564f68c1cf6f48178700168a4e3322f7ac6de80df98eb8a42d54913f",
+      "images": [
+        "harborframework/terminal-bench:live-database-cutover-environment-5997c5b486ffe2b0@sha256:dbd2997e95d6bdde237f94cefb8cdc45ef5c7bbd44ecde02052a6dffcde14054",
+        "harborframework/terminal-bench:live-database-cutover-verifier-414377563ab8198b@sha256:ef8c2eb446624c3e8a37f8487771b5b6dbe853e4b42cac856ef1f518b3a214ac",
+        "harborframework/terminal-bench:live-database-cutover-sidecar-mysql-db-15531a3d85d91c9d@sha256:79bf81670ba7d98dfb04552ccad598331c5729b92b8311dfb1b5edcd84d6c55b",
+        "redis:7-alpine",
+        "harborframework/terminal-bench:live-database-cutover-sidecar-postgres-db-42772d973839630b@sha256:20d349253b3b0ead577aaf2208de0d7648692e3064e0efe88e5125e0b63be8c9",
+        "harborframework/terminal-bench:live-database-cutover-sidecar-customer-53744832a5bce5e9@sha256:aa5a2a5c2b9c1e334125f0e5953e1b082ac61fdb4c2b1291c9171045b5af3dcf"
+      ],
+      "cpus": 16,
+      "memory_mb": 16384,
+      "gpus": 0,
+      "verifier_allow_internet": true
+    },
+    "terminal-bench/math-eval-grader": {
+      "digest": "sha256:aac7c54d58a56d79a5c0a0f869e70a74c42b327b086ba8010b0dd477e114b904",
+      "images": [
+        "harborframework/terminal-bench:math-eval-grader-environment-ca68d32d17d9a0bb@sha256:a58366cc4b4192c2b74612b6a2adfe0404a3ca48807ddc4447a5708e9f473773",
+        "harborframework/terminal-bench:math-eval-grader-verifier-0192759c2b864045@sha256:533d93f5c35875fa688d63dbb216c1ba3900cd06bb9c44e6617187e2ee72c8ee"
+      ],
+      "cpus": 8,
+      "memory_mb": 16384,
+      "gpus": 1,
+      "verifier_allow_internet": true
+    },
+    "terminal-bench/medical-claims-processing": {
+      "digest": "sha256:8c7adb0a16026a79de234ed834d03942b53bd70237d02f47a381dd295b880552",
+      "images": [
+        "harborframework/terminal-bench:medical-claims-processing-environment-98fb909bc55e54a7@sha256:dc51c3e3da8c9b5758b095543f94f4c5082ff401a8d63414a2898708e787d541",
+        "harborframework/terminal-bench:medical-claims-processing-verifier-10f6ae885fcf9fe6@sha256:452fabedbea53b205cecbf28a97c2ccec6d51f746a2eba87531db61e5fd8c17d",
+        "harborframework/terminal-bench:medical-claims-processing-sidecar-playwright-mcp-8867302f7b779be5@sha256:9a5080ae6a8d839875f4a5536145a279a9321721dcfd0ac15286de8caffb3aff",
+        "harborframework/terminal-bench:medical-claims-processing-sidecar-workspace-37f3799ffc402618@sha256:d18cb02cc2d98bb1a9d92ed5804792bf52347cee129dbfe1a5bc3c853afe268e"
+      ],
+      "cpus": 2,
+      "memory_mb": 16384,
+      "gpus": 0,
+      "verifier_allow_internet": true
+    },
+    "terminal-bench/mp-checkpoint-consolidation": {
+      "digest": "sha256:7be196e68aa533288fb3e6f78969816a9076ff4f1eaf6fca4c28be8eb619fc6c",
+      "images": [
+        "harborframework/terminal-bench:mp-checkpoint-consolidation-environment-ec6c265be75f814b@sha256:50c0e61cab4540d182d7d6485947f8a7992a1f4ce2e95065a4a8b8177701656d",
+        "harborframework/terminal-bench:mp-checkpoint-consolidation-verifier-d33d17c6b0f7e532@sha256:dbefb3198c1fe21d9a0e8dabb0f9fffa47591ab4a60f68211e77454a1d3686d8"
+      ],
+      "cpus": 4,
+      "memory_mb": 4096,
+      "gpus": 0,
+      "verifier_allow_internet": true
+    },
+    "terminal-bench/music-harmony": {
+      "digest": "sha256:f32afbf135cbd3c622ee687ba032abe61cab85a33b5243ee5cbbde82557f3ed1",
+      "images": [
+        "harborframework/terminal-bench:music-harmony-environment-9c139576eb79ce7a@sha256:26953c07a02fdb9075dbb647f8a277e68b96bf0bed6603d9155fa3c6202167f2",
+        "harborframework/terminal-bench:music-harmony-verifier-2faaea77d607aa40@sha256:ec35f8a983ca8c8700b868ef7fd5f0fa6d721cf5bb820e938efc6e559c67aa49"
+      ],
+      "cpus": 2,
+      "memory_mb": 4096,
+      "gpus": 0,
+      "verifier_allow_internet": true
+    },
+    "terminal-bench/mvcc-lsm-compaction": {
+      "digest": "sha256:370406dd79cc164e50b73568de37c34eba1b0e30782d7dc03f87c38c68123137",
+      "images": [
+        "harborframework/terminal-bench:mvcc-lsm-compaction-environment-3a74f5fdb94f7d43@sha256:4f86b06046a0d4def8b779cf0f3ed0ac61165e3cd8ef9ae82d89a8075888bd7f",
+        "harborframework/terminal-bench:mvcc-lsm-compaction-verifier-1cb69b730abb8ada@sha256:d65f351fece158955ff26b320988f1349c54aaeae607e34064495fc4ab7fd1d9"
+      ],
+      "cpus": 2,
+      "memory_mb": 4096,
+      "gpus": 0,
+      "verifier_allow_internet": true
+    },
+    "terminal-bench/nextjs-performance": {
+      "digest": "sha256:81f8315fb984f91208c45b4ac153c8801d07d3beec5eb0f0d3fa9d49b6588fdd",
+      "images": [
+        "harborframework/terminal-bench:nextjs-performance-environment-6069ddb935a93aee@sha256:c2b1ae7f93b579cc3378d13b4e613ac7e8c0a5f06e4a295142dc2a07459399f0",
+        "harborframework/terminal-bench:nextjs-performance-verifier-2db77624d85783b8@sha256:9779ef143cc897dcaf255f82167d0e070c2d2fa3671a57517fc8ef779d88610a",
+        "harborframework/terminal-bench:nextjs-performance-sidecar-warehouse-api-ad5ec787ca3cb3eb@sha256:1b3bc750097ca5004dc7c5315835702616926e8901c03b2fe8b3017c48cabbf9"
+      ],
+      "cpus": 2,
+      "memory_mb": 4096,
+      "gpus": 0,
+      "verifier_allow_internet": true
+    },
+    "terminal-bench/ontology-kg-querying": {
+      "digest": "sha256:3149354c3fdc71ee698752c294cd9b020a908ab01280f7494513e69708f8833c",
+      "images": [
+        "harborframework/terminal-bench:ontology-kg-querying-environment-754adf02ebb0aafe@sha256:c148b1263df8b40853c796440b3c9846d50a7716d342be0dcca993a093f67a49",
+        "harborframework/terminal-bench:ontology-kg-querying-verifier-034faff24d3c2e46@sha256:722158661c83dadf49facfae89d413dbe80405896e2d780f5d8bda355ca85cb7"
+      ],
+      "cpus": 2,
+      "memory_mb": 4096,
+      "gpus": 0,
+      "verifier_allow_internet": true
+    },
+    "terminal-bench/payments-pipeline-fix": {
+      "digest": "sha256:ed92bf0b59203522407a2f628f186ccd11ee300a7a1ee04641f9510e46db1f14",
+      "images": [
+        "harborframework/terminal-bench:payments-pipeline-fix-environment-18a0d069e5ba5a20@sha256:be62f14692d1aafaaffe40c46a01b034baa53a6e333931f9705c343054398f7e",
+        "harborframework/terminal-bench:payments-pipeline-fix-verifier-c570b6cbbabf3203@sha256:0f9eccbfc074584d8c5dfa24d6254626bf76c59609e3ba043a10a344d50e1a3c",
+        "harborframework/terminal-bench:payments-pipeline-fix-sidecar-seeder-dfa2b554b10ec940@sha256:d74e2040609ab0c266aa8d36f7927f6966d393e5b28b0a594428b4b48e589259",
+        "apache/kafka-native:4.3.1",
+        "harborframework/terminal-bench:payments-pipeline-fix-sidecar-customer-7526dda72acc4b73@sha256:29995da6ac028ab31f407430596a9fa5328e74ba20ee018f998af9e354b5c7ad"
+      ],
+      "cpus": 4,
+      "memory_mb": 8192,
+      "gpus": 0,
+      "verifier_allow_internet": true
+    },
+    "terminal-bench/photonic-waveguide-routing": {
+      "digest": "sha256:31cd14c817cd8b05f7fce5492bf8c44777b6bfc7c0e0057e482d18164d28423e",
+      "images": [
+        "harborframework/terminal-bench:photonic-waveguide-routing-environment-8f60c11211ea24d5@sha256:95b69206e60d9ced34686c80c34c9088cb652493065bbf32ecc54c5092484263",
+        "harborframework/terminal-bench:photonic-waveguide-routing-verifier-f25114d144b12353@sha256:f0b54b54e85b950cef472761c26de6fd2e734c8c2fd9b8caf271a0a6572522cb"
+      ],
+      "cpus": 2,
+      "memory_mb": 4096,
+      "gpus": 0,
+      "verifier_allow_internet": true
+    },
+    "terminal-bench/pretrain-shard-corruption": {
+      "digest": "sha256:0f17568e65b9e8b79480e474a457811a65815cdaf7272660efffd1bc690021a0",
+      "images": [
+        "harborframework/terminal-bench:pretrain-shard-corruption-environment-8c9cb8274f9108d2@sha256:19a95b38f036934e0acbe2c16ba01d203c2920882aff7d12b2e87d343acd64e7",
+        "harborframework/terminal-bench:pretrain-shard-corruption-verifier-79203a9e06963ec4@sha256:6f6b2c661ef7e83649c991811b2b52790f7f4a7c5c8655055daf2f87c74fc561"
+      ],
+      "cpus": 4,
+      "memory_mb": 8192,
+      "gpus": 0,
+      "verifier_allow_internet": true
+    },
+    "terminal-bench/production-planning": {
+      "digest": "sha256:1958ac51553517b79e3a642ed4f3bd9affb5b42166dcbacaa4c32f4b040edaff",
+      "images": [
+        "harborframework/terminal-bench:production-planning-environment-9f109deeb56285c3@sha256:e208937f1b0afee417543774020e03ac578621cb62a5daa2a21da1e1cc585afe",
+        "harborframework/terminal-bench:production-planning-verifier-5f92eb4288d90375@sha256:0d34f331489adb16b84f7855509cdca671efff715db263a6642d0377acb25d24"
+      ],
+      "cpus": 2,
+      "memory_mb": 4096,
+      "gpus": 0,
+      "verifier_allow_internet": true
+    },
+    "terminal-bench/protein-autointerp-disulfide": {
+      "digest": "sha256:6b70d5b8b2ed87b10cd58461c58981d4296f504eda0869c63cd6b0fb2b9edfb9",
+      "images": [
+        "harborframework/terminal-bench:protein-autointerp-disulfide-environment-9e76839f79cb638a@sha256:66f68c5d49ef0b2d31a2f3436f13f2b76be078066839044b1d4506be51b702f4",
+        "harborframework/terminal-bench:protein-autointerp-disulfide-verifier-21dadfd19ba60765@sha256:d26c2efef786b9542c0a5b85bfb20c99ca5fb34e3e134cc4288cac481dd4576e"
+      ],
+      "cpus": 4,
+      "memory_mb": 8192,
+      "gpus": 0,
+      "verifier_allow_internet": true
+    },
+    "terminal-bench/react-lead-form": {
+      "digest": "sha256:790af6a6308be694896fa5258c3f3c1b536dfa75acdb9936799a4344a3e4573b",
+      "images": [
+        "harborframework/terminal-bench:react-lead-form-environment-0c310f9153d5acfe@sha256:df7f7d6faa482b2988767cfaa82a101ffbd7602ae33ee7a2ce505d46bb5362e0",
+        "harborframework/terminal-bench:react-lead-form-verifier-ea3260a28fc75f28@sha256:e754f993d14cf7270a99d777cd546910ec8f3677530fadb9c4e6ddaf31922ee2"
+      ],
+      "cpus": 2,
+      "memory_mb": 4096,
+      "gpus": 0,
+      "verifier_allow_internet": true
+    },
+    "terminal-bench/retro-console-soc": {
+      "digest": "sha256:2b43b109ac633a4740364a3942df1195a8ae6ebfdae93b6a53e1ade8a6ffcf9e",
+      "images": [
+        "harborframework/terminal-bench:retro-console-soc-environment-4694536af2c13b46@sha256:920823da842d15a23b5c65da49ca8fec9939e1a97b75ea732347a3de4d280e21",
+        "harborframework/terminal-bench:retro-console-soc-verifier-b4558a6d339954de@sha256:74fa22af4d6cc9d19ad8598c958eacc83a96030f8b40e79b4ee29aeeb5c624df"
+      ],
+      "cpus": 2,
+      "memory_mb": 4096,
+      "gpus": 0,
+      "verifier_allow_internet": true
+    },
+    "terminal-bench/risk-scorer-replay": {
+      "digest": "sha256:3645f552b5485633a67027130c9d471eb1a364f1451b6ada140bacd148f9cd87",
+      "images": [
+        "harborframework/terminal-bench:risk-scorer-replay-environment-d17e46d0dc017f4b@sha256:70ddcc08fd13a993f6bf38198ec63033f93a88d00ebf7d5aeee0e121a006bcf9",
+        "harborframework/terminal-bench:risk-scorer-replay-verifier-d5f329d7aa3d21c7@sha256:ad52052aad1904dc5dd90705374344403e1293b38d666c3546095ac0963a9831"
+      ],
+      "cpus": 2,
+      "memory_mb": 4096,
+      "gpus": 0,
+      "verifier_allow_internet": true
+    },
+    "terminal-bench/roy-polymorph-cn": {
+      "digest": "sha256:012e714e79b4ff4f0d36eeb8fa2b6fa3be1043a71af880af8a71f61487669dfc",
+      "images": [
+        "harborframework/terminal-bench:roy-polymorph-cn-environment-404d1936e5238380@sha256:d08338e632e4dcb41c7d5dfd107b8e0edc54af01bbae65f351c2cfbcb157ac14",
+        "harborframework/terminal-bench:roy-polymorph-cn-verifier-db06703104efc4ed@sha256:4353fcbd45e2eb9f748475667d1de570824361bf37c241b3eae5318c09a13778"
+      ],
+      "cpus": 2,
+      "memory_mb": 4096,
+      "gpus": 0,
+      "verifier_allow_internet": true
+    },
+    "terminal-bench/rs-archive-clone": {
+      "digest": "sha256:a6e74dbc5290e535872d70d5a9f52b97ca040d520a7b5f11a6f5b14013c4da85",
+      "images": [
+        "harborframework/terminal-bench:rs-archive-clone-environment-db7a31120e4ea4bf@sha256:207aa8b9546ba775ea1fc50811e710139fad54a25aa8de401716efdd554b8c20",
+        "harborframework/terminal-bench:rs-archive-clone-verifier-07241a10a5e9d8a2@sha256:1a1f1eadf4e4913b2b61930fcee5b4a95ea9fba621a2028c3b58f73cff1f64c2"
+      ],
+      "cpus": 4,
+      "memory_mb": 4096,
+      "gpus": 0,
+      "verifier_allow_internet": true
+    },
+    "terminal-bench/satb-audio-transcription": {
+      "digest": "sha256:2b1bf5dcc71458a7e378f84468959993a304a8e89e51381ac0f78163e6e60f14",
+      "images": [
+        "harborframework/terminal-bench:satb-audio-transcription-environment-61476d1957ff1e72@sha256:818f600ce1ab17d3a537e69ac848c268dc40cf21086a054f495e77fe4c4e4e56",
+        "harborframework/terminal-bench:satb-audio-transcription-verifier-9b454531ac2baac4@sha256:f3833c50b415010b2682ab2060e2241c92e3f55b4689a4013f0f97c9c84d2b08"
+      ],
+      "cpus": 4,
+      "memory_mb": 8192,
+      "gpus": 0,
+      "verifier_allow_internet": true
+    },
+    "terminal-bench/session-window-debug": {
+      "digest": "sha256:f7e05e0d4c0e90d7050445fd158db514158272c50aafa1b2446ef3f68bd01182",
+      "images": [
+        "harborframework/terminal-bench:session-window-debug-environment-a05048a37a8c0198@sha256:b5fb99c6a88ba1274fea1abeb3209f23869e5d8a483d50f8f3d925bdbdbe5f8f",
+        "harborframework/terminal-bench:session-window-debug-verifier-5f15b536bd15c598@sha256:8ee1a52619501d6b7e40dfc56f0307d6f476afce4b6d45fd980c5dd6f5a7c592"
+      ],
+      "cpus": 2,
+      "memory_mb": 4096,
+      "gpus": 0,
+      "verifier_allow_internet": true
+    },
+    "terminal-bench/sglang-qwen-burst": {
+      "digest": "sha256:32bdf75983144af64a855c3711df1136cd347219b05bf5ef3b839375b1f82941",
+      "images": [
+        "harborframework/terminal-bench:sglang-qwen-burst-environment-d4290738d466a0c9@sha256:7b089021e0e2970de1131b570e6666a358527e80d10e9b95cbf4720c9bb3bc75",
+        "harborframework/terminal-bench:sglang-qwen-burst-verifier-eaa673d0eed14722@sha256:28823a1f27df2d0bc48043a28e0b03e0b16e7847424faf286e7b4658ab3552de"
+      ],
+      "cpus": 2,
+      "memory_mb": 8192,
+      "gpus": 0,
+      "verifier_allow_internet": true
+    },
+    "terminal-bench/shadow-relay": {
+      "digest": "sha256:bb4928fdbe32ef9a17fe829ae45270533a07c93e071bc81c3b250f5fc4aa49b6",
+      "images": [
+        "harborframework/terminal-bench:shadow-relay-environment-af3a553c2d31f40a@sha256:85ed6579499c6c890ce0f8ceb77af4a22af21122ca6c639f80cbedf6b92faf09",
+        "harborframework/terminal-bench:shadow-relay-verifier-6b5fcf69fa09a003@sha256:144df5448fa71d5b3c9e857d300ab25d30bb74bf99badb352b4b13ed1ffdf63d"
+      ],
+      "cpus": 8,
+      "memory_mb": 4096,
+      "gpus": 0,
+      "verifier_allow_internet": true
+    },
+    "terminal-bench/sound-change-cascade": {
+      "digest": "sha256:6214ceb80aaa657d72658a6f39a44fa11ea51f443822b6a1212eef1ba65bf91d",
+      "images": [
+        "harborframework/terminal-bench:sound-change-cascade-environment-55194a2779f3596e@sha256:fdc4c21a9e32df1a756e43db9550d74c43be866470653e82d069d50a3d297b61",
+        "harborframework/terminal-bench:sound-change-cascade-verifier-46b541ccb17a88b9@sha256:d5652b2c014fe8b3dc36ef4b23054bcf643504ff43d3526c3eeb9cacb5de9f6c"
+      ],
+      "cpus": 2,
+      "memory_mb": 4096,
+      "gpus": 0,
+      "verifier_allow_internet": true
+    },
+    "terminal-bench/takens-embedding-lean": {
+      "digest": "sha256:8d8c7bdc58a79af79502ac9cdaf4c65333ae907f08a9615f6b538fa0d7530ac4",
+      "images": [
+        "harborframework/terminal-bench:takens-embedding-lean-environment-ea8170629831d6d7@sha256:827f3562ff749dfaa09c01f99bbe26b7e113ee1238c7a3213b3b710acfeb63aa",
+        "harborframework/terminal-bench:takens-embedding-lean-verifier-759175b7913049c8@sha256:972142bdfd4c9e3b515625b9bc64628bd182df4fb88be1db63dfda5a2768b026"
+      ],
+      "cpus": 4,
+      "memory_mb": 16384,
+      "gpus": 0,
+      "verifier_allow_internet": true
+    },
+    "terminal-bench/telecom-entity-resolution": {
+      "digest": "sha256:f818fa0aabaa916c35966e67e611e06d2bed372555d4f16b0e147726d382d1ad",
+      "images": [
+        "harborframework/terminal-bench:telecom-entity-resolution-environment-d0137fc961c9cd0d@sha256:2182d9c24d959710063973913832c41c2dffb08f0f403d6054255e73d801ebb2",
+        "harborframework/terminal-bench:telecom-entity-resolution-verifier-c455956143382d00@sha256:d525cb703393c7b5bea87b945633e2b196a5cb1b2dece4503ccc976486417369"
+      ],
+      "cpus": 2,
+      "memory_mb": 8192,
+      "gpus": 0,
+      "verifier_allow_internet": true
+    },
+    "terminal-bench/uefi-bootkit": {
+      "digest": "sha256:f17de5664e18ba15b6af2262c35954093fdfcfe7f2852e8ea57dd4a6f131a208",
+      "images": [
+        "harborframework/terminal-bench:uefi-bootkit-environment-e48e84f866a86b30@sha256:659199eba775d65277a40437a63a7b2417bef53c9efd3b909d809f5f8cb0e4d3",
+        "harborframework/terminal-bench:uefi-bootkit-verifier-0954691a0670b88b@sha256:2a8c74f079abf61ddbba7dd74e2c84bbc5a554702ca7b91735abf74dd78420be"
+      ],
+      "cpus": 2,
+      "memory_mb": 16384,
+      "gpus": 0,
+      "verifier_allow_internet": true
+    },
+    "terminal-bench/vba-userform-port": {
+      "digest": "sha256:38f141630a3803538908de5080d4a38e87fa3ce77a9fbbaad284cb7f9e89fe22",
+      "images": [
+        "harborframework/terminal-bench:vba-userform-port-environment-6440e5b47411548a@sha256:c69155e05f747c75cf3b8320989979df8ceab622a8729f3ac813baca71d78b64",
+        "harborframework/terminal-bench:vba-userform-port-verifier-e1bd4ac3ebb909cc@sha256:f71902eab191f92cde999097091628cd8f236715b08bd8338ecf45b88fa15424"
+      ],
+      "cpus": 2,
+      "memory_mb": 8192,
+      "gpus": 0,
+      "verifier_allow_internet": true
+    },
+    "terminal-bench/vf2-speedup-networkx": {
+      "digest": "sha256:cdbad1f303f57856199aae757bdbc6363111e8ad60d31db49c61d01706da63ab",
+      "images": [
+        "harborframework/terminal-bench:vf2-speedup-networkx-environment-73a0e69b7d24da37@sha256:092389cf724b06c60a67e108c6a1cd6bcb18a9f5e1b0aba87691668d6cbfecd0",
+        "harborframework/terminal-bench:vf2-speedup-networkx-verifier-759c5dcc555bc1ab@sha256:c2d59fdb9e18517aa9cd8025df2bee96bb080df38ac772690cde16359d922f9e"
+      ],
+      "cpus": 2,
+      "memory_mb": 8192,
+      "gpus": 0,
+      "verifier_allow_internet": true
+    },
+    "terminal-bench/vllm-deepseek-streaming": {
+      "digest": "sha256:cb78aec591411780aedf133b95ca829584ba48768bbc437487fa773afbde321d",
+      "images": [
+        "harborframework/terminal-bench:vllm-deepseek-streaming-environment-a6e209d1612afee4@sha256:2bbccf4d1c264df16294be81c91be386961938dcc1d58c6b74a04425a7ff0bf3",
+        "harborframework/terminal-bench:vllm-deepseek-streaming-verifier-83c62854223894b0@sha256:bf50893791878aef03381ee543698baf0c2c16ff5e94ac6c03d9eba3b735c2d5"
+      ],
+      "cpus": 2,
+      "memory_mb": 4096,
+      "gpus": 0,
+      "verifier_allow_internet": true
+    },
+    "terminal-bench/vpp-loss-divergence": {
+      "digest": "sha256:6db99a33495fcd7489072a4753a365e0cb4db9ea64c2b3f85a8b44db984fd0d3",
+      "images": [
+        "harborframework/terminal-bench:vpp-loss-divergence-environment-50b7c56494675e27@sha256:cf91023f3f7bf5f27e9213d1b0764ff41fa7375814df5278813ef5d784fc42f8",
+        "harborframework/terminal-bench:vpp-loss-divergence-verifier-d007cef259b500ae@sha256:2a7bd7c59d18c5bd9acc158d832345fe1506d83e4d9f0f121e3ea8c8767c8761"
+      ],
+      "cpus": 2,
+      "memory_mb": 8192,
+      "gpus": 0,
+      "verifier_allow_internet": true
+    },
+    "terminal-bench/wal-recovery-ordering": {
+      "digest": "sha256:8eb700419711e0d5eba317b8f6dec41aa3411e03e320e82b8da8070974ff3aae",
+      "images": [
+        "harborframework/terminal-bench:wal-recovery-ordering-environment-4b8e041ddc112263@sha256:71d215eab08bf95f60d828a5328d7bc1424b4a048ebf6551027267a651396657",
+        "harborframework/terminal-bench:wal-recovery-ordering-verifier-9652d9f57fa673d2@sha256:f053156f29885278a914665f9320541b78fbb971001d5bb5d5d3b72eccc45d11"
+      ],
+      "cpus": 2,
+      "memory_mb": 4096,
+      "gpus": 0,
+      "verifier_allow_internet": true
+    },
+    "terminal-bench/wdm-design": {
+      "digest": "sha256:99aa16fb8df2da75e69948e78ccefb69360c439d981011ce08efd57e7e918a91",
+      "images": [
+        "harborframework/terminal-bench:wdm-design-environment-407d1d42601ed972@sha256:4f499bbf1ac6c14260d96b1333530a7fb2b81ab4e8666cd894d930533a6271fc",
+        "harborframework/terminal-bench:wdm-design-verifier-48398335c6ed5e1d@sha256:4c68a20dd4ec86aad777e900951c8c5e4970bc1e96fcbddce38bb034eb446ab3"
+      ],
+      "cpus": 8,
+      "memory_mb": 16384,
+      "gpus": 0,
+      "verifier_allow_internet": true
+    }
+  }
+}

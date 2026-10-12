@@ -2,7 +2,6 @@
 
 from __future__ import annotations
 
-import hashlib
 import json
 import math
 import re
@@ -11,39 +10,23 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Any, Mapping
 
+from kairyu_bench import artifacts
+from kairyu_bench.artifacts import env_integer, sha256_file, write_json
+
 
 MODEL_FAILURES = {"AgentTimeoutError", "ContextWindowExceededError"}
 TASK_ID = re.compile(r"[A-Za-z0-9][A-Za-z0-9_.-]*\Z")
 REASONING_EFFORTS = {"none", "minimal", "low", "medium", "high", "xhigh", "max"}
 
 
-def write_json(path: Path, payload: object) -> None:
-    path.parent.mkdir(parents=True, exist_ok=True)
-    temporary = path.with_suffix(path.suffix + ".tmp")
-    temporary.write_text(
-        json.dumps(payload, indent=2, allow_nan=False) + "\n", encoding="utf-8"
-    )
-    temporary.replace(path)
-
-
 def read_object(path: Path) -> dict[str, Any]:
-    try:
-        value = json.loads(path.read_text(encoding="utf-8"))
-    except (OSError, ValueError) as error:
-        raise ValueError(f"cannot read DeepSWE artifact {path}: {error}") from error
-    if not isinstance(value, dict):
-        raise ValueError(f"DeepSWE artifact must be an object: {path}")
-    return value
+    return artifacts.read_object(path, "DeepSWE")
 
 
 def _integer(
     env: Mapping[str, str], suffix: str, default: int, low: int, high: int
 ) -> int:
-    key = "KAIRYU_BENCH_DEEPSWE_" + suffix
-    text = env.get(key, str(default))
-    if not re.fullmatch(r"[0-9]+", text) or not low <= int(text) <= high:
-        raise ValueError(f"{key} must be an integer from {low} to {high}")
-    return int(text)
+    return env_integer(env, "KAIRYU_BENCH_DEEPSWE_" + suffix, default, low, high)
 
 
 @dataclass(frozen=True)
@@ -342,7 +325,3 @@ def summarize_deepswe(raw_dir: Path) -> dict[str, Any]:
         "status": "completed" if complete else "partial" if scored else "failed",
         "cost_usd": None,
     }
-
-
-def sha256_file(path: Path) -> str:
-    return hashlib.sha256(path.read_bytes()).hexdigest()

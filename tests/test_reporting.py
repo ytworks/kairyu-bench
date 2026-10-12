@@ -320,3 +320,44 @@ class DeepSWEReportingTest(unittest.TestCase):
             self.assertIn("2 passed / 8 scored of 8 planned", markdown)
             self.assertIn("Repeats: 4", markdown)
             self.assertEqual(report["macro_average_percent"], 25)
+
+
+class TerminalBench4ReportingTest(unittest.TestCase):
+    def test_report_shows_ci_pass_at_5_and_gpu_slots(self):
+        result = _result("run", "terminal-bench-4", 20, agent="claude-code")
+        result.data["score"]["metrics"] = {
+            "passed_attempts": 66,
+            "scored_attempts": 330,
+            "requested_attempts": 330,
+            "excluded_attempts": 0,
+            "gpu_unavailable_attempts": 15,
+            "attempts_per_task": 5,
+            "ci95_half_width_percent": 3.1,
+            "pass_at_k": {"pass_at_5": 0.31},
+            "leaderboard_equivalent": {"accuracy_percent": 20.0},
+        }
+        with tempfile.TemporaryDirectory() as directory:
+            run = _run(Path(directory), "run", [result])
+            write_score_report(run)
+            markdown = (run / "report.md").read_text()
+        self.assertIn(
+            "Terminal-Bench 4.0 trials: 66 passed / 330 scored of 330 planned; 0 unscored; "
+            "15 GPU slots scored 0 without a GPU. Attempts: 5; 95% CI: ±3.10 pp; "
+            "pass@5: 0.31; leaderboard-equivalent accuracy: 20.00%.",
+            markdown,
+        )
+        self.assertNotIn("DeepSWE trials", markdown)
+
+    def test_compare_rejects_runs_with_different_gpu_availability(self):
+        from kairyu_bench.reporting import _compatibility
+
+        left = _result("left", "terminal-bench-4", 10, agent="claude-code")
+        right = _result("right", "terminal-bench-4", 20, agent="claude-code")
+        left.data["score"]["metrics"] = {"gpu_available": False}
+        right.data["score"]["metrics"] = {"gpu_available": True}
+        self.assertEqual(
+            _compatibility(left, right),
+            (False, "Terminal-Bench 4.0 GPU availability differs"),
+        )
+        right.data["score"]["metrics"] = {"gpu_available": False}
+        self.assertTrue(_compatibility(left, right)[0])

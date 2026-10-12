@@ -375,6 +375,25 @@ def _deepswe(path: Path) -> OfficialObservation:
     )
 
 
+def _terminal_bench_4(path: Path) -> OfficialObservation:
+    from kairyu_bench.terminal_bench4_accounting import summarize
+
+    try:
+        summary = summarize(path)
+    except ValueError as error:
+        raise OfficialNormalizationError(str(error)) from error
+    return OfficialObservation(
+        summary["problem_ids"], summary["evaluated_tasks"],
+        summary["accuracy_percent"], summary,
+        None if summary["status"] == "completed" else (
+            f"Terminal-Bench 4.0 has {summary['excluded_attempts']} unscored trial slots and "
+            f"{len(summary['runtime_errors'])} runtime/cleanup errors; "
+            "see score.metrics.errors and official trial results"
+        ),
+        summary["agent"],
+    )
+
+
 NORMALIZERS: dict[str, Callable[[Path], OfficialObservation]] = {
     "swe-bench-pro": _swebench_pro,
     "swe-bench-verified": _swebench,
@@ -386,7 +405,11 @@ NORMALIZERS: dict[str, Callable[[Path], OfficialObservation]] = {
     "scicode": _scicode,
     "tau-bench-banking": _tau,
     "deepswe": _deepswe,
+    "terminal-bench-4": _terminal_bench_4,
 }
+
+
+REPEATED_TRIAL_LABELS = {"deepswe": "DeepSWE", "terminal-bench-4": "Terminal-Bench 4.0"}
 
 
 def _artifact_path(context: dict[str, Any], raw_path: Path) -> str:
@@ -480,11 +503,12 @@ def normalize_official(context: dict[str, Any], raw_path: Path) -> BenchmarkResu
     )
     if observation.primary is None:
         status = "failed"
-    if name == "deepswe":
+    label = REPEATED_TRIAL_LABELS.get(name)
+    if label is not None:
         if observation.metrics["model_id"] != context["model_id"]:
-            raise OfficialNormalizationError("DeepSWE observed model differs from context")
+            raise OfficialNormalizationError(f"{label} observed model differs from context")
         if observation.metrics["attempts_per_task"] != context["conditions"]["attempts_per_task"]:
-            raise OfficialNormalizationError("DeepSWE attempts differ from context")
+            raise OfficialNormalizationError(f"{label} attempts differ from context")
     return _result(
         context,
         agent=observation.agent,

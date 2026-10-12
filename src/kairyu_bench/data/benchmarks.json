@@ -230,5 +230,33 @@
     "adapter": "adapters/deepswe/run.sh",
     "scoring": {"method": "deepswe-v1.1-official-pass-at-1", "unit": "percent"},
     "requirements": ["docker", "x86_64-recommended"]
+  },
+  {
+    "name": "terminal-bench-4",
+    "kind": "agentic-official-harness",
+    "source": {
+      "repository": "https://github.com/harbor-framework/harbor",
+      "revision": "b53b8134e1241686dca7759af188f987ecc48e8b",
+      "version": "0.24.0"
+    },
+    "dataset": {
+      "id": "terminal-bench/terminal-bench",
+      "revision": "sha256:39d9f44b40420cde8fdcc087579c0d72a7e14fa3656d603c3f0d22fb35e27732",
+      "version": "4.0.0",
+      "tasks": 66
+    },
+    "secondary_sources": [
+      {
+        "id": "https://github.com/harbor-framework/terminal-bench",
+        "revision": "452bf305c6daa62fc59061d22133a7cbc7c1572e"
+      },
+      {
+        "id": "https://github.com/harbor-framework/terminal-bench/tree/main/leaderboard",
+        "revision": "209679e34327a78ce8e9bf5300b2f317992863c9"
+      }
+    ],
+    "adapter": "adapters/terminal-bench-4/run.sh",
+    "scoring": {"method": "terminal-bench-4.0-leaderboard-accuracy", "unit": "percent"},
+    "requirements": ["docker", "x86_64-recommended"]
   }
 ]

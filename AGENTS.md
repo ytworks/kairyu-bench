@@ -15,6 +15,11 @@ default 4). Harbor allows agent setup 360 seconds times this multiplier; the
 default covers slow `apt-get`/npm installs under four-way parallelism. The
 `terminus-2` agent has no install step and ignores this variable.
 
+Terminal-Bench 4.0 (`terminal-bench-4`) uses its own
+`KAIRYU_BENCH_TERMINAL_BENCH_4_WORKERS` (1 through 16, default 4) and never
+sets a setup-timeout multiplier: the official leaderboard forbids every
+timeout and resource override, so agent setup keeps Harbor's 360 seconds.
+
 ## LiveCodeBench Pro full run
 
 Use the repository wrapper, `./kairyu-bench`, for the official run. Do not
@@ -180,3 +185,52 @@ and the four-repetition CI. API/verifier failures are unscored, not invented
 zeros. Preserve the full result directory. Only remove dedicated cache/data
 paths after confirming completion, their exact paths, and that they are not
 shared with another run.
+
+## Terminal-Bench 4.0 full run
+
+Use `./kairyu-bench run <API URL> --only terminal-bench-4 --harbor-agent
+claude-code`, following `docs/terminal-bench-4.md`. The pinned dataset is
+`terminal-bench/terminal-bench@sha256:39d9f44b…7732` (66 tasks), run with the
+official `harbor run --config` of Harbor 0.24.0 and a Kairyu job plugin. No
+`--limit` means all 66 tasks; `KAIRYU_BENCH_TERMINAL_BENCH_4_ATTEMPTS=5` means
+the leaderboard's 66 × 5 = 330 planned trial slots. The default is one attempt.
+Never add timeout multipliers or resource overrides.
+
+Use a dedicated privileged Docker-in-Docker daemon, socket and data root under
+`/mnt/nvme/kairyu/`, with result/cache mounts at identical paths. Before
+starting it, check `nproc` and `free -g`: the daemon must expose at least 16
+CPUs (two tasks request 16); exclude the API's cores with `--cpuset-cpus` and
+cap its memory. Keep at least 400 GB free on NVMe (157 task images, about
+98 GB compressed, all coexist at peak because Harbor runs attempts
+round-robin). Keep caches under `/mnt/nvme/kairyu/bench-cache/`, preserve
+repository `results/`, and set `KAIRYU_BENCH_CLEAN_TASK_IMAGES=1`. Obtain
+explicit user approval for the privileged runner, privileged daemon, shared
+Docker socket, and for occupying the API for several days before starting. Do
+not use or prune the daemon that serves the Kairyu API or Open WebUI.
+
+The three GPU tasks run and, without an NVIDIA runtime in the daemon, are
+scored 0 as `gpu-unavailable` (15 slots in the comparison run); they do not
+make the run partial. Other API, environment, verifier and cleanup failures are
+unscored, not invented zeros.
+
+After launch verify `run.json=running`, the model ID against `/v1/models`, the
+66 selected tasks and 330 planned slots in `raw/terminal-bench-4/trial-plan.json`.
+Inspect the first official trial: claude-code 2.1.231 installed, the API reached
+through the gateway overlay, and a reward from the separate verifier. Report at
+least once per minute: scored/planned slots, passed, gpu-unavailable, unscored,
+fully evaluated tasks/66, active trials, elapsed time, API/Docker health and
+root/NVMe space. Use `raw/terminal-bench-4/progress.json` and the
+`Terminal-Bench 4.0 progress:` log lines, and cross-check the canonical trial
+results. Report retries, plugin errors and cleanup failures immediately. Do not
+stop a healthy full run for being slow; each agent may run for eight hours.
+To stop deliberately, send SIGTERM to `harbor run` inside the runner container.
+
+Require all 330 slots scored (including the 15 gpu-unavailable), all 66 tasks
+evaluated, no cleanup or plugin errors, and run/normalized status `completed`
+before reporting a completed comparison run. Report accuracy with its
+numerator and denominator, the 95% CI, pass@2 through pass@5, the
+leaderboard-equivalent accuracy and the non-GPU accuracy. The published
+leaderboard ran on Modal with GPUs, so never present the local score as a
+leaderboard entry. Preserve the full result directory. Only remove dedicated
+cache/data paths after confirming completion, their exact paths, and that they
+are not shared with another run.
