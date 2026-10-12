@@ -30,6 +30,7 @@ class DeepSWETest(unittest.TestCase):
             (settings.workers, settings.attempts, settings.retries), (4, 1, 3)
         )
         self.assertIsNone(settings.reasoning_effort)
+        self.assertIsNone(settings.api_timeout_seconds)
         for key, value in (
             ("WORKERS", "0"),
             ("WORKERS", "17"),
@@ -41,6 +42,21 @@ class DeepSWETest(unittest.TestCase):
         ):
             with self.subTest(key=key, value=value), self.assertRaises(ValueError):
                 module.DeepSWESettings.from_env({f"KAIRYU_BENCH_DEEPSWE_{key}": value})
+
+    def test_api_timeout_is_optional_bounded_and_recorded_when_configured(self):
+        module = self.module()
+        entry = load_manifest()["deepswe"]
+        self.assertNotIn("api_timeout_seconds", module.resolve_deepswe_conditions(entry, {}))
+        for seconds in (1, 3600, 10800):
+            with self.subTest(seconds=seconds):
+                env = {"KAIRYU_BENCH_DEEPSWE_API_TIMEOUT_SECONDS": str(seconds)}
+                self.assertEqual(module.DeepSWESettings.from_env(env).api_timeout_seconds, seconds)
+                conditions = module.resolve_deepswe_conditions(entry, env)
+                self.assertEqual(conditions["api_timeout_seconds"], seconds)
+                self.assertEqual(conditions["timeout_multiplier"], 1)
+        for value in ("", "0", "10801", "-1", "1.5", "1; echo unsafe"):
+            with self.subTest(value=value), self.assertRaisesRegex(ValueError, "API_TIMEOUT_SECONDS"):
+                module.DeepSWESettings.from_env({"KAIRYU_BENCH_DEEPSWE_API_TIMEOUT_SECONDS": value})
 
     def test_limit_selects_sorted_prefix_and_ignores_non_tasks(self):
         module = self.module()

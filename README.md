@@ -2,7 +2,7 @@
 
 Kairyu互換APIを、公式実装に基づく14種類のベンチマークで評価する独立ランナーです。必要な引数はAPIのURLだけです。生成、採点、集計、比較はすべてDocker内で行い、`kairyu` 本体のコードはimport・コピーしません。
 
-[他モデルの公開ベンチマーク比較（出典付き）](docs/model-comparison.md)
+[他モデルの公開ベンチマーク比較（出典付き、2026-10-11更新・48モデル）](docs/model-comparison.md)
 
 ```sh
 ./kairyu-bench run https://kairyu.example/v1
@@ -43,7 +43,7 @@ KAIRYU_API_KEY=secret ./kairyu-bench run https://kairyu.example/v1
   --only deepswe --limit 1 --run-id deepswe-smoke
 ```
 
-既定4並列・1試行です。`KAIRYU_BENCH_DEEPSWE_ATTEMPTS=4`で4反復、全件なら113問・452試行になります。専用Docker daemon、NVMe、環境変数と完了確認は[DeepSWEの実行手順](docs/deepswe.md)を参照してください。
+既定4並列・1試行です。`KAIRYU_BENCH_DEEPSWE_ATTEMPTS=4`で4反復、全件なら113問・452試行になります。専用Docker daemon、NVMe、環境変数と完了確認は[DeepSWEの実行手順](docs/deepswe.md)を参照してください。公式リポジトリでは採点の不具合（[#105](https://github.com/datacurve-ai/deep-swe/issues/105)、[#107](https://github.com/datacurve-ai/deep-swe/issues/107)）が未解決のまま報告されています。固定しているtask定義とverifierにも当てはまるため、実測値を読む際は[比較ページのDeepSWE節](docs/model-comparison.md)の注記も参照してください。
 
 ### Terminal-Bench 4.0
 
@@ -79,7 +79,7 @@ agent本体はHarborがtask container内へ導入して起動するため、ホ�
 
 | 名前 | 実行・採点 | 補足 |
 | --- | --- | --- |
-| `swe-bench-pro` | mini-SWE-agent + SWE-bench公式harness | nested Docker、x86_64推奨 |
+| `swe-bench-pro` | mini-SWE-agent + SWE-bench公式harness | v1 public 731問に固定（2026-09-22公開のV2・642問とは別）、nested Docker、x86_64推奨 |
 | `swe-bench-verified` | mini-SWE-agent + SWE-bench公式harness | nested Docker、x86_64推奨 |
 | `terminal-bench` | Harbor公式harness、Terminal-Bench 2.1 | nested Docker |
 | `livecodebench` | LiveCodeBench v6公式prompt・code tests・pass@1 | API transportだけ薄いshim |
@@ -131,7 +131,7 @@ context/<name>.json      adapterへ渡した固定条件
 
 比較でdeltaを出す条件は、benchmark名、agent、source/dataset revision、問題ID、採点法、自己採点方針、score unitがすべて一致し、両方が `completed` であることです。それ以外は理由を表示しますが数値差は出しません。DeepSWEでは実際のruntime/task image provenanceも照合します。
 
-生成レポートの`public_references`には[出典付き公開値](docs/model-comparison.md)を併記します。公開値は実測のmacro averageやdeltaに含めません。DeepSWEは28モデル・70設定の公式原本を保存し、その他12項目も既存19モデルの出典と条件差を保持しています。
+生成レポートの`public_references`には[出典付き公開値](docs/model-comparison.md)を併記します。公開値は実測のmacro averageやdeltaに含めません。参照カタログには、DeepSWEの28モデル・70設定の公式原本と、その他12項目の既存19モデルの出典・条件差を保存しています。比較ページでは、2026-09-12以降に一次資料で確認したモデルと値をMarkdownで追記し、48モデルまで拡張しています。
 
 ## API契約
 
