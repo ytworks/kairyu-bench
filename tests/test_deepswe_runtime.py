@@ -81,6 +81,9 @@ class DeepSWERuntimeTest(unittest.TestCase):
         self.assertIn("--model=openai/org/model", command)
         self.assertIn("model.model_kwargs.timeout=3600", command)
         self.assertIn("model.model_kwargs.reasoning_effort=max", command)
+        self.assertIn(
+            'model.model_kwargs.allowed_openai_params=["reasoning_effort"]', command
+        )
         self.assertEqual(config.timeout_multiplier, 1)
         self.assertIsNone(config.agent_timeout_multiplier)
         self.assertIsNone(config.agents[0].override_timeout_sec)

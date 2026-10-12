@@ -217,10 +217,16 @@ def build_job_config(
             Path(__file__).parent / "data/deepswe-agent-lock.json"
         )["packages"],
     }
+    model_kwargs = {}
     if conditions["reasoning_effort"] != "server_default":
         kwargs["reasoning_effort"] = conditions["reasoning_effort"]
+        # mini-swe-agent sets drop_params, and LiteLLM then drops
+        # reasoning_effort for a model it does not know; keep it on the wire.
+        model_kwargs["allowed_openai_params"] = ["reasoning_effort"]
     if "api_timeout_seconds" in conditions:
-        kwargs["model_kwargs"] = {"timeout": conditions["api_timeout_seconds"]}
+        model_kwargs["timeout"] = conditions["api_timeout_seconds"]
+    if model_kwargs:
+        kwargs["model_kwargs"] = model_kwargs
     return JobConfig.model_validate(
         {
             "job_name": f"repeat-{repeat}",
