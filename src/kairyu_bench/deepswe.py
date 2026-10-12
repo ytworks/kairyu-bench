@@ -36,6 +36,7 @@ class DeepSWESettings:
     retries: int = 3
     reasoning_effort: str | None = None
     api_timeout_seconds: int | None = None
+    tasks: tuple[str, ...] | None = None
 
     @classmethod
     def from_env(cls, env: Mapping[str, str]) -> "DeepSWESettings":
@@ -50,7 +51,14 @@ class DeepSWESettings:
         api_timeout = None
         if "KAIRYU_BENCH_DEEPSWE_API_TIMEOUT_SECONDS" in env:
             api_timeout = _integer(env, "API_TIMEOUT_SECONDS", 600, 1, 10800)
-        return cls(workers, attempts, retries, effort, api_timeout)
+        tasks = None
+        if env.get("KAIRYU_BENCH_DEEPSWE_TASKS"):
+            tasks = tuple(
+                _task_ids(
+                    [task.strip() for task in env["KAIRYU_BENCH_DEEPSWE_TASKS"].split(",")]
+                )
+            )
+        return cls(workers, attempts, retries, effort, api_timeout, tasks)
 
 
 def resolve_deepswe_conditions(
@@ -78,6 +86,8 @@ def resolve_deepswe_conditions(
     }
     if settings.api_timeout_seconds is not None:
         conditions["api_timeout_seconds"] = settings.api_timeout_seconds
+    if settings.tasks is not None:
+        conditions["selected_tasks"] = list(settings.tasks)
     return conditions
 
 
@@ -94,7 +104,9 @@ def _task_ids(value: object) -> list[str]:
     return value
 
 
-def select_deepswe_tasks(task_root: Path, limit: int | None) -> list[str]:
+def select_deepswe_tasks(
+    task_root: Path, limit: int | None, tasks: list[str] | None = None
+) -> list[str]:
     ids = _task_ids(
         sorted(
             task.name
@@ -105,6 +117,11 @@ def select_deepswe_tasks(task_root: Path, limit: int | None) -> list[str]:
             and (task / "instruction.md").is_file()
         )
     )
+    if tasks is not None:
+        unknown = sorted(set(_task_ids(list(tasks))) - set(ids))
+        if unknown:
+            raise ValueError(f"DeepSWE tasks are not in the dataset: {unknown}")
+        ids = [task for task in ids if task in set(tasks)]
     if limit is not None:
         if isinstance(limit, bool) or not isinstance(limit, int) or limit <= 0:
             raise ValueError("DeepSWE limit must be a positive integer")

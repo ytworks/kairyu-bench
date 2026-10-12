@@ -15,6 +15,7 @@ Linux / x86_64、Docker Composeを推奨します。113タスクの定義を検�
 | `KAIRYU_BENCH_DEEPSWE_ATTEMPTS` | 1 | 1または4。4の場合は同じ113問を4反復、並列数は合計workers以内 |
 | `KAIRYU_BENCH_DEEPSWE_RETRIES` | 3 | 0–16。一時的API・環境エラーのPier再試行上限。mini自身のAPI retryも適用 |
 | `KAIRYU_BENCH_DEEPSWE_REASONING_EFFORT` | 未指定 | none/minimal/low/medium/high/xhigh/max。未指定はAPI既定 |
+| `KAIRYU_BENCH_DEEPSWE_TASKS` | 未指定 | カンマ区切りのtask ID。指定時だけそのtaskに限って実行し、実行条件に記録。datasetにないIDはエラー。採点できなかったtaskの再実行用 |
 | `KAIRYU_BENCH_DEEPSWE_API_TIMEOUT_SECONDS` | 未指定 | 1–10800の整数。指定時だけmini agentのHTTP API応答待ち時間を秒単位で設定。未指定は固定ライブラリの既定 |
 | `KAIRYU_BENCH_CLEAN_TASK_IMAGES` | 0 | 専用daemonで1に設定。評価後に当該taskの残存imageを削除 |
 
