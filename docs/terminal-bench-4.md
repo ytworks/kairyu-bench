@@ -19,6 +19,7 @@ Linux / x86_64、Docker Composeを推奨します。66タスクをタスク名�
 - `--harbor-agent`で`claude-code`（比較用フルランの既定方針）、`terminus-2`、`codex`を選べます。
 - agentの版・環境変数とretry設定は、公式リーダーボードの実行config（terminal-bench@`209679e3…`の`leaderboard/runs/`）に合わせています。
 - claude-codeは2.1.231です。ローカルAPI向けに、2.1で使っている互換envも渡します。
+- codexは、モデルIDに`/`を含む場合は実行前に`unsupported`で停止します。固定HarborのCodex agentは最後の`/`より後ろだけをモデル名として送るため、記録したIDと実際の指定が一致しなくなるからです（2.1と同じ扱い）。claude-codeとterminus-2は完全なIDを渡します。
 
 | 環境変数 | 既定 | 設定範囲・意味 |
 | --- | --- | --- |
@@ -26,7 +27,7 @@ Linux / x86_64、Docker Composeを推奨します。66タスクをタスク名�
 | `KAIRYU_BENCH_TERMINAL_BENCH_4_ATTEMPTS` | 1 | 1または5。5は公式リーダーボードと同じ66タスク×5試行（330 slot） |
 | `KAIRYU_BENCH_TERMINAL_BENCH_4_RETRIES` | 3 | 0–16。Harborの`retry.max_retries`。対象外の例外は常に公式と同じ |
 | `KAIRYU_BENCH_TERMINAL_BENCH_4_REASONING_EFFORT` | 未指定 | agentが受け付ける値のみ（claude-code: low/medium/high/xhigh/max）。未指定はAPI既定 |
-| `KAIRYU_BENCH_CLEAN_TASK_IMAGES` | 0 | 専用daemonで1に設定。各タスクの全試行が確定した時点で、そのタスクのimageを削除 |
+| `KAIRYU_BENCH_CLEAN_TASK_IMAGES` | 0 | 専用daemonで1に設定。各タスクの全試行が確定した時点で、そのタスクのimageを削除。失敗は記録し、後続タスクの完了時とjob終了時に再試行 |
 
 **タイムアウトとリソース**
 - 公式規則に合わせ、タイムアウト倍率とCPU・メモリ・GPU・ストレージのoverrideは一切設定しません。
@@ -111,7 +112,7 @@ export KAIRYU_BENCH_TERMINAL_BENCH_4_ATTEMPTS=5
 - `jobs/<run-id>-terminal-bench-4/`：Harbor公式のjob/trialディレクトリ。config、lock、result、trajectory、verifierログを含みます。
 - `retries/<trial>/<n>/`：Harborが再試行前に削除する、失敗した試行の証跡を退避したもの。
 - `progress.json` / `summary.json`：現在の集計、実行中trial、経過時間、API/Dockerの状態、root/cacheの空き容量。
-- `cleanup-errors/`、`plugin-errors/`、`runtime-error.json`：これらがあるrunは`completed`になりません。
+- `cleanup-errors/`、`plugin-errors/`、`runtime-error.json`：これらがあるrunは`completed`になりません。`cleanup-errors/`の記録は、その後の再試行でimageを削除できた時点で消えます。`docker image rm`が「No such image」以外で失敗した場合（daemon接続エラーやtimeoutを含む）は削除済みとみなしません。
 
 **試行の分類**
 

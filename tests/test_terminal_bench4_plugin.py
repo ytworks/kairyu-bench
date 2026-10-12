@@ -128,10 +128,16 @@ class PluginTest(unittest.TestCase):
         self.bin.mkdir()
         self.docker_log = self.root / "docker.log"
         docker = self.bin / "docker"
+        self.daemon_down = self.root / "daemon-down"
         docker.write_text(
             "#!/bin/sh\n"
             f'echo "$*" >> "{self.docker_log}"\n'
-            'case "$*" in *fail-rm*) [ "$2" = rm ] && exit 1;; esac\n'
+            f'if [ -e "{self.daemon_down}" ] && [ "$2" = rm ] && [ "$3" = kept:1 ]; then\n'
+            f'  rm -f "{self.daemon_down}"\n'
+            '  echo "Cannot connect to the Docker daemon" >&2; exit 1\n'
+            "fi\n"
+            'case "$*" in *fail-rm*) [ "$2" = rm ] && { echo "conflict" >&2; exit 1; };; esac\n'
+            'case "$*" in *gone:*) [ "$2" = rm ] && { echo "Error response from daemon: No such image: x" >&2; exit 1; };; esac\n'
             "exit 0\n",
             encoding="utf-8",
         )
@@ -241,6 +247,48 @@ class PluginTest(unittest.TestCase):
         progress = json.loads((self.root / "progress.json").read_text())
         self.assertEqual(progress["docker"], "ok")
         self.assertEqual(progress["api"], "unconfigured")
+
+    def test_failed_removals_are_recorded_retried_and_cleared(self) -> None:
+        plugin, _ = self.start([TASK], 1, clean=True)
+        plugin.lock = {
+            **plugin.lock,
+            "tasks": {
+                **plugin.lock["tasks"],
+                TASK: {**plugin.lock["tasks"][TASK], "images": ["kept:1", "gone:1"]},
+            },
+        }
+        plugin.finished_tasks.add(TASK)
+        self.daemon_down.touch()
+        errors = self.root / "cleanup-errors"
+
+        asyncio.run(plugin.cleanup_images())
+
+        self.assertEqual(plugin.removed_images, {"gone:1"})
+        recorded = json.loads((errors / "kept_1.json").read_text())
+        self.assertEqual(recorded["image"], "kept:1")
+        self.assertIn("Cannot connect to the Docker daemon", recorded["stderr"])
+
+        asyncio.run(plugin.cleanup_images())
+
+        self.assertEqual(plugin.removed_images, {"gone:1", "kept:1"})
+        self.assertEqual(list(errors.glob("*.json")), [])
+        self.assertNotIn("image inspect", self.docker_log.read_text())
+
+    def test_job_end_retries_pending_removals(self) -> None:
+        plugin, _ = self.start([TASK], 1, clean=True)
+        plugin.lock = {
+            **plugin.lock,
+            "tasks": {**plugin.lock["tasks"], TASK: {**plugin.lock["tasks"][TASK], "images": ["kept:1"]}},
+        }
+        plugin.finished_tasks.add(TASK)
+        self.daemon_down.touch()
+        asyncio.run(plugin.cleanup_images())
+        self.assertTrue((self.root / "cleanup-errors" / "kept_1.json").exists())
+
+        asyncio.run(plugin.on_job_end(None))
+
+        self.assertEqual(plugin.removed_images, {"kept:1"})
+        self.assertFalse((self.root / "cleanup-errors" / "kept_1.json").exists())
 
     def test_hooks_record_errors_instead_of_raising_into_harbor(self) -> None:
         plugin, _ = self.start([TASK], 1)

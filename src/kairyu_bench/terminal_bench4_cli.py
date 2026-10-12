@@ -105,6 +105,11 @@ def prepare(
     lock = load_lock()
     if harbor_version != lock["harbor_version"]:
         raise ValueError(f"{LABEL} needs Harbor {lock['harbor_version']}, found {harbor_version}")
+    if context["agent"] == "codex" and "/" in context["model_id"]:
+        # Pinned Harbor's Codex agent sends only the text after the last '/'.
+        raise Unsupported(
+            f"Harbor's Codex agent cannot preserve model IDs containing '/': {context['model_id']}"
+        )
     tasks = select_tasks(lock, context.get("limit"))
     daemon = check_daemon(info, lock, tasks, egress)
     overlay = write_overlay(raw_dir, gateway_address(context["endpoint"], resolve))

@@ -33,6 +33,7 @@ from kairyu_bench.terminal_bench4_accounting import summarize
 
 HEARTBEAT_SECONDS = 60
 PROBE_TIMEOUT_SECONDS = 15
+NO_SUCH_IMAGE = re.compile(r"no such image", re.IGNORECASE)
 
 
 def verify_job_start(
@@ -94,16 +95,20 @@ def _api_health(env: Mapping[str, str]) -> str:
         return type(error).__name__
 
 
-async def _docker(*args: str) -> int:
+async def _docker(*args: str) -> tuple[int, str]:
+    """Run docker; return its exit code and stderr (124 and "timeout" on timeout)."""
     process = await asyncio.create_subprocess_exec(
-        "docker", *args, stdout=asyncio.subprocess.DEVNULL, stderr=asyncio.subprocess.DEVNULL
+        "docker", *args, stdout=asyncio.subprocess.DEVNULL, stderr=asyncio.subprocess.PIPE
     )
     try:
-        return await asyncio.wait_for(process.wait(), timeout=PROBE_TIMEOUT_SECONDS * 4)
+        _, stderr = await asyncio.wait_for(
+            process.communicate(), timeout=PROBE_TIMEOUT_SECONDS * 4
+        )
     except asyncio.TimeoutError:
         process.kill()
         await process.wait()
-        return 124
+        return 124, "timeout"
+    return process.returncode or 0, stderr.decode(errors="replace")
 
 
 class KairyuTB4Plugin:
@@ -118,6 +123,7 @@ class KairyuTB4Plugin:
         self.final_counts: dict[str, int] = {}
         self.finished_tasks: set[str] = set()
         self.removed_images: set[str] = set()
+        self.removing_images: set[str] = set()
         self.plugin_errors = 0
         self.started = time.monotonic()
         self.heartbeat: asyncio.Task[None] | None = None
@@ -147,6 +153,7 @@ class KairyuTB4Plugin:
         if self.heartbeat is not None:
             self.heartbeat.cancel()
             await asyncio.gather(self.heartbeat, return_exceptions=True)
+        await self.cleanup_images()  # a last retry for removals that failed earlier
         await self.snapshot()
 
     async def _phase(self, event: Any) -> None:
@@ -197,28 +204,44 @@ class KairyuTB4Plugin:
         await self.snapshot()
 
     async def cleanup_images(self) -> None:
+        """Remove finished tasks' images; failures stay recorded until a retry succeeds."""
         if self.env.get("KAIRYU_BENCH_CLEAN_TASK_IMAGES") != "1":
             return
         selected = self.selected["problem_ids"]
         for image in removable_images(self.lock, selected, self.finished_tasks):
-            if image in self.removed_images:
+            if image in self.removed_images or image in self.removing_images:
                 continue
+            self.removing_images.add(image)
+            try:
+                await self._remove_image(image)
+            finally:
+                self.removing_images.discard(image)
+
+    async def _remove_image(self, image: str) -> None:
+        reference = removal_reference(image)
+        error_path = self.raw_dir / "cleanup-errors" / f"{_safe_name(reference)}.json"
+        code, stderr = await _docker("image", "rm", reference)
+        if code == 0 or NO_SUCH_IMAGE.search(stderr):
             self.removed_images.add(image)
-            reference = removal_reference(image)
-            if await _docker("image", "inspect", reference) != 0:
-                continue
-            if await _docker("image", "rm", reference) != 0:
-                write_json(
-                    self.raw_dir / "cleanup-errors" / f"{_safe_name(reference)}.json",
-                    {"type": "TaskImageRemovalError", "image": reference},
-                )
-                print(f"{LABEL} cleanup failed: {reference}", flush=True)
+            error_path.unlink(missing_ok=True)
+            return
+        write_json(
+            error_path,
+            {
+                "type": "TaskImageRemovalError",
+                "image": reference,
+                "exit_code": code,
+                "stderr": stderr.strip()[-500:],
+            },
+        )
+        print(f"{LABEL} cleanup failed: {reference} exit={code}", flush=True)
 
     async def snapshot(self) -> None:
         try:
             summary = summarize(self.raw_dir)
             api = await asyncio.to_thread(_api_health, self.env)
-            docker = "ok" if await _docker("info", "--format", "{{.ServerVersion}}") == 0 else "error"
+            docker_code, _ = await _docker("info", "--format", "{{.ServerVersion}}")
+            docker = "ok" if docker_code == 0 else "error"
             state = {
                 **summary,
                 "active": dict(self.active),

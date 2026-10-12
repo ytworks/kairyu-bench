@@ -106,6 +106,28 @@ class PrepareFinalizeTest(unittest.TestCase):
         self.assertFalse(runtime["gpu_available"])
         self.assertEqual(runtime["harbor_version"], "0.24.0")
 
+    def test_codex_rejects_model_ids_that_harbor_would_truncate(self) -> None:
+        entry = load_manifest()["terminal-bench-4"]
+        codex = {
+            **context(),
+            "agent": "codex",
+            "model_id": "org/model",
+            "conditions": resolve_terminal_bench4_conditions(entry, {}, "codex"),
+        }
+        with tempfile.TemporaryDirectory() as directory:
+            with self.assertRaisesRegex(Unsupported, "cannot preserve model IDs containing '/'"):
+                prepare(codex, Path(directory), INFO, lambda: True, "0.24.0")
+            self.assertFalse((Path(directory) / "job-config.json").exists())
+
+    def test_claude_code_keeps_model_ids_with_a_slash(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            prepare(
+                {**context(), "model_id": "org/model"}, Path(directory), INFO,
+                lambda: True, "0.24.0", lambda _: "172.17.0.1",
+            )
+            config = json.loads((Path(directory) / "job-config.json").read_text())
+        self.assertEqual(config["agents"][0]["model_name"], "org/model")
+
     def test_prepare_rejects_another_harbor_version(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
             with self.assertRaisesRegex(ValueError, "needs Harbor 0.24.0"):
