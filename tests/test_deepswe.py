@@ -58,6 +58,33 @@ class DeepSWETest(unittest.TestCase):
             with self.subTest(value=value), self.assertRaisesRegex(ValueError, "API_TIMEOUT_SECONDS"):
                 module.DeepSWESettings.from_env({"KAIRYU_BENCH_DEEPSWE_API_TIMEOUT_SECONDS": value})
 
+    def test_named_tasks_select_a_recorded_subset_and_reject_unknown_ids(self):
+        module = self.module()
+        entry = load_manifest()["deepswe"]
+        env = {"KAIRYU_BENCH_DEEPSWE_TASKS": "task-z, task-a"}
+        self.assertEqual(module.DeepSWESettings.from_env(env).tasks, ("task-z", "task-a"))
+        self.assertEqual(
+            module.resolve_deepswe_conditions(entry, env)["selected_tasks"],
+            ["task-z", "task-a"],
+        )
+        self.assertNotIn("selected_tasks", module.resolve_deepswe_conditions(entry, {}))
+        for value in ("task-a,task-a", "task-a,", "../task-a"):
+            with self.subTest(value=value), self.assertRaises(ValueError):
+                module.DeepSWESettings.from_env({"KAIRYU_BENCH_DEEPSWE_TASKS": value})
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            for name in ("task-z", "task-a", "task-m"):
+                task = root / name
+                task.mkdir()
+                (task / "task.toml").write_text(f'[task]\nname = "datacurve/{name}"\n')
+                (task / "instruction.md").write_text("Synthetic task\n")
+            self.assertEqual(
+                module.select_deepswe_tasks(root, None, ["task-z", "task-a"]),
+                ["task-a", "task-z"],
+            )
+            with self.assertRaisesRegex(ValueError, "not in the dataset"):
+                module.select_deepswe_tasks(root, None, ["task-b"])
+
     def test_limit_selects_sorted_prefix_and_ignores_non_tasks(self):
         module = self.module()
         with tempfile.TemporaryDirectory() as directory:

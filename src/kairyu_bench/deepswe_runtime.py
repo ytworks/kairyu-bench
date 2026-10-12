@@ -333,7 +333,9 @@ async def run(context: dict[str, Any], raw_dir: Path, task_root: Path) -> None:
     if len(all_ids) != context["dataset"]["tasks"]:
         raise ValueError("DeepSWE source does not contain the locked 113 tasks")
     names = validate_tasks(task_root, all_ids)
-    ids = select_deepswe_tasks(task_root, context.get("limit"))
+    ids = select_deepswe_tasks(
+        task_root, context.get("limit"), context["conditions"].get("selected_tasks")
+    )
     attempts = context["conditions"]["attempts_per_task"]
     write_json(
         raw_dir / "selected.json",
