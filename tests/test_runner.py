@@ -143,6 +143,32 @@ class BenchmarkRunnerTest(unittest.TestCase):
         self.assertEqual(context["conditions"]["transport"], "chat_completions")
         self.assertEqual(result["conditions"], context["conditions"])
 
+    def test_deepswe_context_names_the_configured_deepseek_harness_agent(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            adapter = root / "adapters/deepswe/run.sh"
+            adapter.parent.mkdir(parents=True)
+            adapter.write_text(FAKE_ADAPTER, encoding="utf-8")
+            adapter.chmod(0o755)
+            config = RunConfig(
+                endpoint=Endpoint.parse("https://example.test/v1"),
+                selected=("deepswe",), limit=1, results_root=root / "results",
+                run_id="deepswe-dsh-test", app_root=root, harbor_agent="codex",
+            )
+            env = {
+                "KAIRYU_BENCH_DEEPSWE_AGENT": "deepseek-harness",
+                "KAIRYU_BENCH_DEEPSWE_CONTEXT_WINDOW": "262144",
+            }
+            with mock.patch.dict(os.environ, env):
+                outcome = run_benchmarks(config, _DiscoveredClient(), load_manifest())
+            context = json.loads((outcome.run_dir / "context/deepswe.json").read_text())
+            result = json.loads((outcome.run_dir / "normalized/deepswe.json").read_text())
+        self.assertEqual(outcome.exit_code, 0)
+        self.assertEqual(context["agent"], "deepseek-harness")
+        self.assertEqual(context["conditions"]["agent"], "deepseek-harness")
+        self.assertEqual(context["conditions"]["transport"], "anthropic_messages")
+        self.assertEqual(result["agent"], "deepseek-harness")
+
     def test_terminal_bench_4_uses_the_harbor_agent_and_resolves_conditions_first(
         self,
     ) -> None:

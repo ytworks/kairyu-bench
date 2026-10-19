@@ -7,7 +7,7 @@ DatacurveのDeepSWE v1.1を、既存ベンチマークと同じwrapper、API URL
   --only deepswe --limit 1 --run-id deepswe-smoke-20260910
 ```
 
-Linux / x86_64、Docker Composeを推奨します。113タスクの定義を検証し、ディレクトリ名の昇順に選択してから`--limit`を適用します。全件は`--limit`なしです。モデルが使うコマンド、prompt、commit済みpatchの取得、独立verifierによる採点は固定した公式Pier / mini-swe-agentを使用します。`--harbor-agent`はDeepSWEには適用されません。
+Linux / x86_64、Docker Composeを推奨します。113タスクの定義を検証し、ディレクトリ名の昇順に選択してから`--limit`を適用します。全件は`--limit`なしです。モデルが使うコマンド、prompt、commit済みpatchの取得、独立verifierによる採点は固定した公式Pier / mini-swe-agentを使用します。agentは`KAIRYU_BENCH_DEEPSWE_AGENT`で[DeepSeek Harness（Minimal）](#deepseek-harnessminimal)にも切り替えられます。`--harbor-agent`はDeepSWEには適用されません。
 
 | 環境変数 | 既定 | 設定範囲・意味 |
 | --- | --- | --- |
@@ -17,11 +17,72 @@ Linux / x86_64、Docker Composeを推奨します。113タスクの定義を検�
 | `KAIRYU_BENCH_DEEPSWE_REASONING_EFFORT` | 未指定 | none/minimal/low/medium/high/xhigh/max。未指定はAPI既定 |
 | `KAIRYU_BENCH_DEEPSWE_TASKS` | 未指定 | カンマ区切りのtask ID。指定時だけそのtaskに限って実行し、実行条件に記録。datasetにないIDはエラー。採点できなかったtaskの再実行用 |
 | `KAIRYU_BENCH_DEEPSWE_API_TIMEOUT_SECONDS` | 未指定 | 1–10800の整数。指定時だけmini agentのHTTP API応答待ち時間を秒単位で設定。未指定は固定ライブラリの既定 |
+| `KAIRYU_BENCH_DEEPSWE_AGENT` | `mini-swe-agent` | `mini-swe-agent`または`deepseek-harness` |
+| `KAIRYU_BENCH_DEEPSWE_CONTEXT_WINDOW` | 未指定 | deepseek-harnessでは必須。モデルのcontext長（token）。mini-swe-agentでは指定するとエラー |
+| `KAIRYU_BENCH_DEEPSWE_MAX_TOKENS` | 49152 | deepseek-harnessのみ。1回の応答の`max_tokens` |
 | `KAIRYU_BENCH_CLEAN_TASK_IMAGES` | 0 | 専用daemonで1に設定。評価後に当該taskの残存imageを削除 |
 
 APIへは`/v1/chat/completions`を使い、`/models`で検出したmodel IDを変えずに渡します。対応していないeffortを自動で弱めません。APIキーは環境変数から渡し、configの引数に埋め込みません。APIホストとポートだけをPierの認証付きproxyへ許可し、taskの内部ネットワークと独立verifierのネットワーク遮断を保持します。`host.docker.internal`はrunnerが解決したIPをproxy containerへ渡します。
 
 APIの1応答が既定の600秒を超える構成では、例えば`KAIRYU_BENCH_DEEPSWE_API_TIMEOUT_SECONDS=3600`を指定すると、応答待ちの途中でHTTP再試行が重なることを避けられます。これはHTTPクライアントの待ち時間だけを変更し、公式タスクのagent実行上限10800秒やverifierの上限は変更しません。指定した値は実行条件と公式agent configに記録します。
+
+## DeepSeek Harness（Minimal）
+
+`KAIRYU_BENCH_DEEPSWE_AGENT=deepseek-harness`にすると、mini-swe-agentの代わりにDeepSeek公式のagent harness（[deepseek-ai/deepseek-harness](https://github.com/deepseek-ai/deepseek-harness)）を使います。DeepSeekが公開coding benchmarkに使っているMinimal mode、つまり同梱の`sdk-minimal` profileだけを使います。dataset、instruction、Pierのtrial実行、commit済みpatchの取得、独立verifier、採点規則はmini-swe-agentの場合と同じです。
+
+```bash
+KAIRYU_BENCH_DEEPSWE_AGENT=deepseek-harness \
+KAIRYU_BENCH_DEEPSWE_CONTEXT_WINDOW=262144 \
+./kairyu-bench run http://host.docker.internal:8003/v1 \
+  --only deepswe --limit 1 --run-id deepswe-dsh-smoke-20261019
+```
+
+**固定している版と構成**
+- `deepseek-harness-sdk==0.2.1rc2`と、Linux x86_64用のnative runtime（`deepseek-harness-runtime-bin`、glibc 2.28以上）を、`src/kairyu_bench/data/deepswe-deepseek-harness-lock.json`のhash付きwheelからtask imageへ導入します。対応するsourceはtag `dsh-v0.2.1-rc.2`（`687f282e8625c6b8d11ff58211a90524be2e4317`）です。
+- 実行時にNodeやネットワークからの追加downloadはありません。
+- uvは固定したPierのAntigravity installerと同じ版（sha256で検証）、Pythonは3.12です。
+- system prompt、tool（永続`bash`・`read_image`・`working_directory`）、bashの300秒timeout、自動compactionはprofileの既定のままです。git identityの設定や自動commitは行わず、instructionの指示どおりagent自身がcommitします。
+- profileへの変更は、DeepSeek APIだけが受け付ける拡張2行を無効にするpatchだけです：`session-log-deepseek`（最大8MiBのsession logをリクエストに添付する機能）と`plugin-package-inventory-deepseek`。内容は`deepswe-deepseek-harness.patch.json`にあります。
+
+**APIの要件**
+- dshの`deepseek-official` providerは、Anthropic Messages互換の`POST <endpoint>/v1/messages`をSSE streamingで呼びます。`/chat/completions`は使いません。
+- リクエストbodyには`model`（`/models`で検出したIDをそのまま）、`max_tokens`、`stream: true`、`thinking`、`output_config.effort`（effortが`off`以外のとき）、`system`、`tools`が入ります。
+- headerは`x-api-key`、`anthropic-version: 2023-06-01`と、`x-deepseek-harness-user-id` / `x-deepseek-harness-session-id`です。
+- 応答の`stop_reason`は`end_turn`・`stop_sequence`・`tool_use`・`max_tokens`のいずれかである必要があります。それ以外は`MALFORMED_RESPONSE`になります。
+- KairyuのClaude Code用`/v1/messages`がこれらを受け付けるかは、まず`--limit 1`のsmokeで確認してください。
+
+**設定**
+- context長：dshの既定は1M tokenなので、`KAIRYU_BENCH_DEEPSWE_CONTEXT_WINDOW`は必須です。
+  - 値は`DSH_CONTEXT_WINDOW`として渡します。
+  - dshの自動compactionの検査と同じ式で事前に確認し、compactionが無効になる組み合わせはエラーにします。既定の`max_tokens` 49152では、127172以上が必要です。
+- effort：`KAIRYU_BENCH_DEEPSWE_REASONING_EFFORT`は、dshが受け付ける`off`・`low`・`high`・`max`だけを指定できます。
+  - 未指定ではdshの既定値（`high`）が送られ、実行条件には`agent_default`と記録します。
+  - 対応していない値を自動で弱めることはしません。
+- 使えない変数：`KAIRYU_BENCH_DEEPSWE_API_TIMEOUT_SECONDS`はdshでは指定できません（dshのstream idle timeoutは48時間です）。
+
+**接続と秘密情報**
+- API keyは`DEEPSEEK_API_KEY`として環境変数だけで渡します。
+- 許可されるのはAPIのhostだけです。dshは`HTTP(S)_PROXY`のURLに入った認証情報を使い、Pierの認証付きproxyを経由します。DNSでAPIのhostを解決せず、absolute-formのリクエストを送ります。
+- dshのbash toolは、名前に`KEY`・`PASSWORD`・`SECRET`・`TOKEN`を含む環境変数と`DSH_*`をmodelのshellから除きます。mini-swe-agentとは異なります。
+- `DSH_TELEMETRY_MODE=DISABLED`を設定します。
+
+**採点と成果物**
+- 終了状態は各trialの`agent_result.metadata.dsh_exit_status`に記録し、次のように扱います。
+
+| 終了状態 | 扱い |
+| --- | --- |
+| `completed`、`max-tokens` | verifierで採点 |
+| `ContextWindowExceededError`、Pierのagent timeout | 失敗（0点） |
+| 一時的なAPIエラー（`provider:RATE_LIMIT`・`SERVER`・`TRANSPORT`・`TIMEOUT`・`EMPTY_RESPONSE`） | dsh自身の再試行の後にPierで再試行。それでも失敗すれば採点対象外 |
+| その他のAPIエラー、runtime異常、結果の欠落 | 採点対象外 |
+
+- `jobs/`のagentログには`deepseek-harness.txt`、`dsh-result.json`、`dsh-events.jsonl`、`dsh-home/sessions/`（session JSONL）が残ります。
+- 実行条件（`context/deepswe.json`）には、agent・版・source revision・profile・lock・runner・patchのsha256、context長、`max_tokens`、effortを記録します。
+- 比較レポートは、agentや実行条件が異なるrun同士にdeltaを出しません。DeepSWEの公開leaderboardはすべてmini-swe-agentによる値なので、dshの実測とは条件が異なる参考値として扱います。
+
+**導入時の注意**
+- このagentを追加した変更でmini-swe-agentの`adapter_sha256`も変わるため、それより前のmini-swe-agentのrunとは「conditions differ」になります。
+- 各taskのagent imageは約330MB増えます。`KAIRYU_BENCH_CLEAN_TASK_IMAGES=1`ならtaskごとに削除されます。
 
 ## 全件測定用の専用Docker daemon
 

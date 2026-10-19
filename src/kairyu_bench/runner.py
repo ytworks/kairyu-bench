@@ -162,9 +162,11 @@ HARBOR_AGENT_SCORING = {
 }
 
 
-def _selected_agent(entry: dict[str, Any], configured_agent: str) -> str | None:
+def _selected_agent(
+    entry: dict[str, Any], configured_agent: str, conditions: dict[str, Any]
+) -> str | None:
     if entry["name"] == "deepswe":
-        return "mini-swe-agent"
+        return conditions.get("agent", "mini-swe-agent")
     if entry["scoring"]["method"] in HARBOR_AGENT_SCORING:
         return configured_agent
     return None
@@ -232,7 +234,7 @@ def run_benchmarks(
     statuses: dict[str, str] = {}
     for name in config.selected:
         entry = manifest[name]
-        agent = _selected_agent(entry, config.harbor_agent)
+        agent = _selected_agent(entry, config.harbor_agent, resolved_conditions[name])
         adapter_started_at = _utc_now()
         result_path = run_dir / "normalized" / f"{name}.json"
         log_path = run_dir / "logs" / f"{name}.log"
