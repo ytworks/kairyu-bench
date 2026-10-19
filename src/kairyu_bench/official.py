@@ -371,7 +371,7 @@ def _deepswe(path: Path) -> OfficialObservation:
             f"{len(summary['runtime_errors'])} runtime/cleanup errors; "
             "see score.metrics.errors and official trial results"
         ),
-        "mini-swe-agent",
+        summary["agent"],
     )
 
 

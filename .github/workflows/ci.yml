@@ -50,6 +50,21 @@ jobs:
         env:
           LITELLM_LOCAL_MODEL_COST_MAP: "true"
         run: python -m unittest discover -s tests -p test_deepswe_runtime.py -v
+      - name: Install the locked DeepSeek Harness runtime in its own venv
+        run: |
+          python - > /tmp/dsh-requirements.txt <<'PY'
+          import json
+          lock = json.load(open("src/kairyu_bench/data/deepswe-deepseek-harness-lock.json"))
+          print("\n".join(lock["requirements"]))
+          PY
+          python -m venv /tmp/dsh-venv
+          /tmp/dsh-venv/bin/python -m pip install --require-hashes --no-deps \
+            --only-binary :all: -r /tmp/dsh-requirements.txt
+      - name: Verify the DeepSeek Harness agent and the real runtime's requests
+        env:
+          LITELLM_LOCAL_MODEL_COST_MAP: "true"
+          KAIRYU_BENCH_DSH_PYTHON: /tmp/dsh-venv/bin/python
+        run: python -m unittest discover -s tests -p test_deepswe_dsh.py -v
       - name: Validate all 113 pinned task definitions
         env:
           LITELLM_LOCAL_MODEL_COST_MAP: "true"
@@ -107,6 +122,18 @@ jobs:
           '
       - run: docker run --rm kairyu-bench:ci list
       - run: docker run --rm kairyu-bench:ci run https://example.test/v1 --only gpqa-diamond --limit 1 --dry-run
+      - name: Resolve DeepSeek Harness conditions from the installed package
+        run: |
+          docker run --rm --entrypoint python \
+            -e KAIRYU_BENCH_DEEPSWE_AGENT=deepseek-harness \
+            -e KAIRYU_BENCH_DEEPSWE_CONTEXT_WINDOW=262144 \
+            kairyu-bench:ci -c '
+          import os
+          from kairyu_bench.deepswe import resolve_deepswe_conditions
+          from kairyu_bench.manifest import load_manifest
+          conditions = resolve_deepswe_conditions(load_manifest()["deepswe"], os.environ)
+          assert conditions["agent"] == "deepseek-harness", conditions
+          '
       - name: Check Docker Compose availability
         run: docker run --rm --entrypoint docker kairyu-bench:ci compose --project-name kairyu-bench-ci version
       - name: Check nested Docker access
