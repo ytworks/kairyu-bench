@@ -170,7 +170,7 @@ def command_run(args: argparse.Namespace) -> int:
         run_dir=args.results_dir / run_id,
         tier=args.tier,
         split=args.split,
-        chat=ChatClient(endpoint.base_url, model, api_key=api_key),
+        chat=ChatClient(endpoint.base_url, model, api_key=api_key, concurrency=args.chat_concurrency),
         logprob=logprob,
         loader=_loader(),
         chat_concurrency=args.chat_concurrency,

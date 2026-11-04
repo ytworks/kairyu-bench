@@ -64,8 +64,15 @@ class ChatClient:
     model: str
     api_key: str | None = None
     timeout: float = 7200.0
+    # Requests in flight at once, across every thread (None: unbounded).
+    concurrency: int | None = None
     calls: int = 0
     _lock: threading.Lock = field(default_factory=threading.Lock, repr=False)
+    _slots: threading.BoundedSemaphore | None = field(default=None, repr=False)
+
+    def __post_init__(self) -> None:
+        if self.concurrency is not None:
+            self._slots = threading.BoundedSemaphore(self.concurrency)
 
     def chat(
         self,
@@ -85,10 +92,16 @@ class ChatClient:
         }
         if tools:
             payload["tools"] = tools
-        started = time.monotonic()
-        response = _post(
-            f"{self.base_url}/chat/completions", payload, api_key=self.api_key, timeout=self.timeout
-        )
+        if self._slots is not None:
+            self._slots.acquire()
+        try:
+            started = time.monotonic()
+            response = _post(
+                f"{self.base_url}/chat/completions", payload, api_key=self.api_key, timeout=self.timeout
+            )
+        finally:
+            if self._slots is not None:
+                self._slots.release()
         with self._lock:
             self.calls += 1
         choices = response.get("choices")

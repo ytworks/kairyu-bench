@@ -248,17 +248,22 @@ def reply_record(reply: ChatReply) -> dict[str, Any]:
 def run_chat(
     context: Context, item: Item, messages: list[dict[str, Any]], *, tools: list[dict[str, Any]] | None = None
 ) -> Outcome:
-    """``item.samples`` independent single-turn requests at the item's token cap."""
+    """``item.samples`` independent single-turn requests at the item's token cap,
+    sent at once (the client bounds the requests in flight)."""
 
-    if context.chat is None:
+    from concurrent.futures import ThreadPoolExecutor
+
+    chat = context.chat
+    if chat is None:
         raise RuntimeError("chat endpoint is required")
-    samples = [
-        reply_record(
-            context.chat.chat(messages, max_tokens=item.max_tokens, seed=seed(item.id, sample), tools=tools)
-        )
-        for sample in range(item.samples)
-    ]
-    return {"samples": samples}
+
+    def one(sample: int) -> dict[str, Any]:
+        return reply_record(chat.chat(messages, max_tokens=item.max_tokens, seed=seed(item.id, sample), tools=tools))
+
+    if item.samples == 1:
+        return {"samples": [one(0)]}
+    with ThreadPoolExecutor(item.samples, thread_name_prefix="wsp-sample") as pool:
+        return {"samples": list(pool.map(one, range(item.samples)))}
 
 
 def score_each(

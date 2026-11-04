@@ -88,8 +88,9 @@ def _finish_later(finish: Any, item: Item, done: Future[Outcome]) -> None:
 
 
 def _ordered(items: list[Item]) -> list[Item]:
-    # Longest first so the slowest items do not start last.
-    return sorted(items, key=lambda item: (-(item.expected_tokens or item.max_tokens) * item.samples, item.id))
+    # Longest request first so the slowest do not start last (an item's
+    # samples run at once, so its length is that of one request).
+    return sorted(items, key=lambda item: (-(item.expected_tokens or item.max_tokens), -item.samples, item.id))
 
 
 def execute(manifest: Manifest, items: list[Item], settings: RunSettings) -> dict[str, Any]:

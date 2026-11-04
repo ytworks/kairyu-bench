@@ -46,6 +46,47 @@ class SplitTest(unittest.TestCase):
         self.assertEqual(sum(split_of[f"gpqa-diamond:{n:04d}"] == "dev" for n in range(10)), 5)
 
 
+class SampleConcurrencyTest(unittest.TestCase):
+    def test_samples_are_sent_at_once_within_the_request_bound(self) -> None:
+        import threading
+        from unittest import mock
+
+        from kairyu_bench.wsp.client import ChatClient
+        from kairyu_bench.wsp.sources import run_chat
+
+        for bound, expected in ((4, 4), (2, 2)):
+            with self.subTest(bound=bound):
+                state = {"in_flight": 0, "peak": 0}
+                changed = threading.Condition()
+                release = threading.Event()
+
+                def fake_post(url: str, payload: dict[str, Any], **_: Any) -> dict[str, Any]:
+                    with changed:
+                        state["in_flight"] += 1
+                        state["peak"] = max(state["peak"], state["in_flight"])
+                        changed.notify_all()
+                    self.assertTrue(release.wait(30), "requests were never released")  # hang bound
+                    with changed:
+                        state["in_flight"] -= 1
+                    return {"choices": [{"message": {"content": "x"}, "finish_reason": "stop"}], "usage": {}}
+
+                client = ChatClient("http://api.test/v1", "m", concurrency=bound)
+                item = Item("aime-2026:1", "aime-2026", "dev", 10, 16, 4, "", 0)
+                replies: list[Any] = []
+                with mock.patch("kairyu_bench.wsp.client._post", fake_post):
+                    worker = threading.Thread(
+                        target=lambda: replies.append(run_chat(Context(chat=client, logprob=None), item, []))
+                    )
+                    worker.start()
+                    with changed:
+                        self.assertTrue(changed.wait_for(lambda: state["in_flight"] == expected, 30))
+                    release.set()
+                    worker.join(30)
+
+                self.assertEqual(state["peak"], expected)
+                self.assertEqual(len(replies[0]["samples"]), 4)
+
+
 class TierTest(unittest.TestCase):
     def test_tiers_fill_smallest_first_within_cumulative_targets(self) -> None:
         # Review case: two items that fit only the 30-minute tier come before
