@@ -1,0 +1,186 @@
+{
+  "schema_version": 1,
+  "reference": {
+    "model": "google/gemma-4-31B-it@842da3794eaa0b77d5f08bae87a17459d91ff475",
+    "layout": "kairyu examples/gemma-4-31b-8gpu: four TP2 replicas, MTP 4, vLLM v0.33.0 SM120 overlay",
+    "sampling": "checkpoint generation_config (temperature 1.0, top_p 0.95, top_k 64), thinking on"
+  },
+  "note": "Per-split cumulative item targets per tier. Provisional until calibration; the frozen manifest records what was chosen.",
+  "tiers": {
+    "10": {
+      "minutes": 10,
+      "max_output_tokens": 16384
+    },
+    "30": {
+      "minutes": 30,
+      "max_output_tokens": 32768
+    },
+    "60": {
+      "minutes": 60,
+      "max_output_tokens": 65536
+    }
+  },
+  "margin": 0.6,
+  "sources": {
+    "mmlu-pro": {
+      "10": 60,
+      "30": 180,
+      "60": 360
+    },
+    "gpqa-diamond": {
+      "10": 16,
+      "30": 48,
+      "60": 99
+    },
+    "triviaqa": {
+      "10": 40,
+      "30": 120,
+      "60": 240
+    },
+    "gsm8k-platinum": {
+      "10": 16,
+      "30": 50,
+      "60": 100
+    },
+    "math-500": {
+      "10": 20,
+      "30": 60,
+      "60": 120
+    },
+    "aime-2026": {
+      "10": 4,
+      "30": 12,
+      "60": 15
+    },
+    "hmmt-feb-2026": {
+      "10": 4,
+      "30": 13,
+      "60": 16
+    },
+    "humaneval-plus": {
+      "10": 10,
+      "30": 30,
+      "60": 60
+    },
+    "mbpp-plus": {
+      "10": 10,
+      "30": 30,
+      "60": 60
+    },
+    "livecodebench": {
+      "10": 6,
+      "30": 20,
+      "60": 50
+    },
+    "scicode": {
+      "10": 0,
+      "30": 10,
+      "60": 30
+    },
+    "ifeval": {
+      "10": 40,
+      "30": 120,
+      "60": 270
+    },
+    "ifbench": {
+      "10": 15,
+      "30": 50,
+      "60": 150
+    },
+    "bfcl": {
+      "10": 40,
+      "30": 120,
+      "60": 300
+    },
+    "terminal-bench": {
+      "10": 2,
+      "30": 6,
+      "60": 12
+    },
+    "swe-bench-pro": {
+      "10": 0,
+      "30": 4,
+      "60": 8
+    },
+    "ruler": {
+      "10": 8,
+      "30": 24,
+      "60": 48
+    },
+    "mrcr-v2": {
+      "10": 4,
+      "30": 16,
+      "60": 32
+    },
+    "longbench-v2": {
+      "10": 0,
+      "30": 10,
+      "60": 30
+    },
+    "bbeh": {
+      "10": 23,
+      "30": 46,
+      "60": 92
+    },
+    "musr": {
+      "10": 10,
+      "30": 30,
+      "60": 60
+    },
+    "hellaswag": {
+      "10": 100,
+      "30": 300,
+      "60": 600
+    },
+    "arc-challenge": {
+      "10": 100,
+      "30": 300,
+      "60": 580
+    },
+    "winogrande": {
+      "10": 100,
+      "30": 300,
+      "60": 600
+    },
+    "mgsm": {
+      "10": 22,
+      "30": 55,
+      "60": 110
+    },
+    "mmlu-prox-ja": {
+      "10": 20,
+      "30": 60,
+      "60": 120
+    },
+    "jamc-qa": {
+      "10": 24,
+      "30": 72,
+      "60": 160
+    },
+    "mmmu-pro": {
+      "10": 16,
+      "30": 48,
+      "60": 120
+    },
+    "xstest": {
+      "10": 36,
+      "30": 108,
+      "60": 225
+    },
+    "probe-wikitext": {
+      "10": 8,
+      "30": 16,
+      "60": 30
+    },
+    "probe-wikipedia-ja": {
+      "10": 12,
+      "30": 40,
+      "60": 80
+    },
+    "probe-code": {
+      "10": 12,
+      "30": 40,
+      "60": 80
+    }
+  }
+}

@@ -42,6 +42,69 @@ class OfficialShellSupportTest(unittest.TestCase):
         self.assertIn('--output "$item_generation"', harness)
         self.assertIn("aggregate-items", harness)
 
+    def test_terminal_bench_setup_only_downloads_tasks_into_harbors_cache(self) -> None:
+        # wsp prepare: Harbor must store task packages where `harbor run`
+        # and the image lookup read them, not in the default export layout.
+        entry = load_manifest()["terminal-bench"]
+        revision = entry["source"]["revision"]
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            cache = root / "cache"
+            context_path = root / "context.json"
+            context_path.write_text(
+                json.dumps(
+                    {
+                        "benchmark": "terminal-bench",
+                        "source": entry["source"],
+                        "dataset": entry["dataset"],
+                        "limit": None,
+                        "run_id": "wsp-prepare",
+                    }
+                ),
+                encoding="utf-8",
+            )
+            source = cache / "sources" / f"harbor-{revision}"
+            source.mkdir(parents=True)
+            (source / ".kairyu-bench-revision").write_text(revision + "\n", encoding="utf-8")
+            environment = cache / "venvs" / f"v2-harbor-{revision}"
+            (environment / "bin").mkdir(parents=True)
+            (environment / ".kairyu-bench-ready").write_text(
+                f"{revision}\n{environment.resolve()}\n", encoding="utf-8"
+            )
+            capture_path = root / "harbor-args.json"
+            harbor = environment / "bin" / "harbor"
+            harbor.write_text(
+                "#!/usr/bin/env python3\n"
+                "import json, os, sys\n"
+                "open(os.environ['HARBOR_ARGS_PATH'], 'w').write(json.dumps(sys.argv[1:]))\n",
+                encoding="utf-8",
+            )
+            harbor.chmod(0o755)
+            fake_bin = root / "bin"
+            fake_bin.mkdir()
+            (fake_bin / "python").symlink_to(sys.executable)
+            subprocess.run(
+                [str(ROOT / "scripts/harnesses/terminal-bench.sh")],
+                cwd=ROOT,
+                env={
+                    **os.environ,
+                    "PATH": f"{fake_bin}:{os.environ['PATH']}",
+                    "PYTHONPATH": str(ROOT / "src"),
+                    "HOME": str(root / "home"),
+                    "KAIRYU_BENCH_CONTEXT": str(context_path),
+                    "KAIRYU_BENCH_RUN_DIR": str(root / "run"),
+                    "KAIRYU_BENCH_CACHE_DIR": str(cache),
+                    "KAIRYU_BENCH_SETUP_ONLY": "1",
+                    "KAIRYU_BENCH_HARBOR_CACHE_DIR": str(cache / "harbor"),
+                    "HARBOR_ARGS_PATH": str(capture_path),
+                },
+                check=True,
+            )
+
+            arguments = json.loads(capture_path.read_text(encoding="utf-8"))
+            self.assertEqual(arguments, ["download", entry["dataset"]["id"], "--cache"])
+            self.assertEqual((root / "home" / ".cache" / "harbor").resolve(), (cache / "harbor").resolve())
+
     def test_terminal_bench_selects_each_supported_harbor_agent(self) -> None:
         entry = load_manifest()["terminal-bench"]
         revision = entry["source"]["revision"]
@@ -156,6 +219,8 @@ trial.mkdir(parents=True)
                     "ANTHROPIC_API_KEY": "super-secret",
                     "HARBOR_ARGS_PATH": str(capture_path),
                 }
+                if agent == "terminus-2":
+                    process_environment["KAIRYU_BENCH_TERMINAL_BENCH_MAX_TURNS"] = "250"
                 subprocess.run(
                     [str(ROOT / "scripts/harnesses/terminal-bench.sh")],
                     cwd=ROOT,
@@ -182,6 +247,12 @@ trial.mkdir(parents=True)
                     if argument == "--agent-env"
                 ]
                 self.assertEqual(actual_agent_env, expected_agent_env)
+                if agent == "terminus-2":
+                    # wsp's turn bound replaces the agent time limit (and the
+                    # per-call timeout) as what ends a trial.
+                    self.assertIn("max_turns=250", arguments)
+                    self.assertIn('llm_call_kwargs={"timeout": 1200}', arguments)
+                    self.assertIn("--agent-timeout-multiplier", arguments)
                 overlay = Path(
                     arguments[arguments.index("--extra-docker-compose") + 1]
                 )

@@ -66,6 +66,18 @@ KAIRYU_BENCH_DEEPSWE_CONTEXT_WINDOW=262144 \
 
 公式リーダーボードと同じdataset digest・Harbor 0.24.0・agent版で実行し、タイムアウトやリソースのoverrideは設定しません。既定は4並列・1試行です。`KAIRYU_BENCH_TERMINAL_BENCH_4_ATTEMPTS=5`にすると、公式と同じ66タスク×5試行（330試行）になります。GPUタスク3件は実行し、GPUがなければ`gpu-unavailable`として0点で記録します。専用Docker daemon、NVMe、採点規則、完了確認は[Terminal-Bench 4.0の実行手順](docs/terminal-bench-4.md)を参照してください。
 
+### Weight-space programming（`wsp`）
+
+重みを編集したモデルの得失を、Gemma 4 31B・8GPU 基準で10分・30分・60分に収まる3パターンで測ります。どのパターンも14能力すべて（知識・数学・コード・指示追従・関数呼び出し・エージェント作業・長文脈・推論・常識・多言語/日本語・画像・安全性ほか）を、LLM の審判なしで採点し、元モデルとの差と入れ替わりを出します。
+
+```sh
+./kairyu-bench wsp prepare
+./kairyu-bench wsp run http://host.docker.internal:8020/v1 --tier 10 --split dev --logprob-endpoint http://gemma-0:8000/v1
+./kairyu-bench wsp compare results/<元モデル> results/<編集版>
+```
+
+詳細は[wspの説明](docs/wsp.md)を参照してください。
+
 ### Terminal-Benchのagent
 
 Harborで実行する `terminal-bench` と `terminal-bench-4` は `terminus-2`（既定）、`claude-code`、`codex` からagentを選べます。

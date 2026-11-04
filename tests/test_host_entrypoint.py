@@ -73,6 +73,8 @@ class HostEntrypointTest(unittest.TestCase):
             self.assertIn("-e KAIRYU_BENCH_TERMINAL_BENCH_4_WORKERS=4", calls[1])
             self.assertIn("-e KAIRYU_BENCH_TERMINAL_BENCH_4_RETRIES=3", calls[1])
             self.assertIn("-e KAIRYU_BENCH_TERMINAL_BENCH_4_REASONING_EFFORT ", calls[1])
+            # Relative arguments resolve against the caller's directory.
+            self.assertIn(f"-v {ROOT}:{ROOT} -w {ROOT}", calls[1])
             self.assertIn(
                 f"-v {ROOT / 'results'}:{ROOT / 'results'}", calls[1]
             )

@@ -21,12 +21,16 @@ run_id=$(context_get run_id)
 source_path=$(checkout_source "$benchmark" "$source_repository" "$source_revision")
 generator_path=$(checkout_source mini-swe-agent "$generator_repository" "$generator_revision")
 if [ "$benchmark" = "swe-bench-pro" ]; then
+    # litellm stays at the release the agent was proven with: 1.106 imports
+    # the optional mcp package unconditionally, and every instance exits with
+    # ModuleNotFoundError before its first model call (an empty patch).
     environment=$(ensure_venv \
         swebench-pro \
-        "$source_revision-$generator_revision" \
+        "$source_revision-$generator_revision-litellm-1.99.0" \
         "datasets==5.0.0" \
         "docker==7.1.0" \
         "pandas==2.3.2" \
+        "litellm==1.99.0" \
         "$generator_path")
 else
     environment=$(ensure_venv \
@@ -42,12 +46,26 @@ hf_home="${KAIRYU_BENCH_CACHE_DIR:-/work/cache}/hf/$benchmark-$dataset_revision"
 mkdir -p "$hf_home" "$raw/generation" "$raw/reports"
 export HF_HOME="$hf_home"
 export HF_HUB_DISABLE_TELEMETRY=1
+# KAIRYU_BENCH_SETUP_ONLY=1 stops after the sources, environments and the
+# dataset are cached (wsp prepare); no agent or evaluator runs.
+if [ "${KAIRYU_BENCH_SETUP_ONLY:-0}" = 1 ]; then
+    python -m kairyu_bench.harness_data --split test --cache-only
+    exit 0
+fi
 
+# KAIRYU_BENCH_SWEBENCH_PRO_INSTANCES (comma-separated instance IDs) runs
+# exactly those SWE-bench Pro instances instead of the first --limit.
+if [ "$benchmark" = "swe-bench-pro" ] && [ -n "${KAIRYU_BENCH_SWEBENCH_PRO_INSTANCES:-}" ]; then
+    set -- --select "$KAIRYU_BENCH_SWEBENCH_PRO_INSTANCES"
+else
+    set --
+fi
 python -m kairyu_bench.harness_data \
     --split test \
     --id-field instance_id \
     --output "$raw/selected.jsonl" \
-    --ids "$raw/instance-ids.txt"
+    --ids "$raw/instance-ids.txt" \
+    "$@"
 
 export HF_DATASETS_OFFLINE=1
 export HF_HUB_OFFLINE=1

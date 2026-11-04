@@ -35,6 +35,25 @@ source_revision=$(context_get source.revision)
 dataset_id=$(context_get dataset.id)
 limit=$(context_get limit)
 run_id=$(context_get run_id)
+
+# KAIRYU_BENCH_HARBOR_CACHE_DIR keeps Harbor's task cache (~/.cache/harbor)
+# in a persistent directory instead of the container's home.
+if [ -n "${KAIRYU_BENCH_HARBOR_CACHE_DIR:-}" ]; then
+    mkdir -p "$KAIRYU_BENCH_HARBOR_CACHE_DIR" "$HOME/.cache"
+    if [ ! -e "$HOME/.cache/harbor" ]; then
+        ln -s "$KAIRYU_BENCH_HARBOR_CACHE_DIR" "$HOME/.cache/harbor"
+    fi
+fi
+# KAIRYU_BENCH_SETUP_ONLY=1 prepares Harbor and the dataset's task packages
+# without running an agent (wsp prepare).
+if [ "${KAIRYU_BENCH_SETUP_ONLY:-0}" = 1 ]; then
+    source_path=$(checkout_source harbor "$source_repository" "$source_revision")
+    environment=$(ensure_venv harbor "$source_revision" "$source_path")
+    # --cache: the content-addressed layout `harbor run` reads
+    # (~/.cache/harbor/tasks/packages), not the default export layout.
+    "$environment/bin/harbor" download "$dataset_id" --cache
+    exit 0
+fi
 raw=$(raw_directory terminal-bench)
 mkdir -p "$raw/jobs"
 
@@ -78,8 +97,42 @@ case "$harbor_agent" in
         exit 2
         ;;
 esac
+# KAIRYU_BENCH_TERMINAL_BENCH_MAX_TURNS bounds terminus-2 by turns instead of
+# the task's agent time limit, so the score does not depend on serving speed
+# (wsp). The time limits then only detect hangs: 48x the agent limit (12 hours
+# for a 900-second task, the SWE-bench Pro container lifetime) and the
+# SWE-bench Pro harness's 1200 seconds per model call.
+if [ -n "${KAIRYU_BENCH_TERMINAL_BENCH_MAX_TURNS:-}" ]; then
+    case "$harbor_agent:$KAIRYU_BENCH_TERMINAL_BENCH_MAX_TURNS" in
+        terminus-2:*[!0-9]*|terminus-2:0)
+            echo "kairyu-bench: KAIRYU_BENCH_TERMINAL_BENCH_MAX_TURNS must be a positive integer" >&2
+            exit 2
+            ;;
+        terminus-2:*)
+            ;;
+        *)
+            unsupported "KAIRYU_BENCH_TERMINAL_BENCH_MAX_TURNS needs the terminus-2 agent"
+            ;;
+    esac
+    set -- "$@" \
+        --agent-kwarg "max_turns=$KAIRYU_BENCH_TERMINAL_BENCH_MAX_TURNS" \
+        --agent-kwarg 'llm_call_kwargs={"timeout": 1200}' \
+        --agent-timeout-multiplier 48
+fi
 if [ "$limit" != "null" ]; then
     set -- "$@" --n-tasks "$limit"
+fi
+# KAIRYU_BENCH_TERMINAL_BENCH_TASKS (comma-separated task names) runs exactly
+# those tasks; Harbor matches them as terminal-bench/<task>.
+requested_tasks=0
+if [ -n "${KAIRYU_BENCH_TERMINAL_BENCH_TASKS:-}" ]; then
+    old_ifs=$IFS
+    IFS=,
+    for task in $KAIRYU_BENCH_TERMINAL_BENCH_TASKS; do
+        set -- "$@" --include-task-name "terminal-bench/$task"
+        requested_tasks=$((requested_tasks + 1))
+    done
+    IFS=$old_ifs
 fi
 
 require_command docker
@@ -88,4 +141,11 @@ source_path=$(checkout_source harbor "$source_repository" "$source_revision")
 environment=$(ensure_venv harbor "$source_revision" "$source_path")
 
 "$environment/bin/harbor" "$@"
+if [ "$requested_tasks" -gt 0 ]; then
+    trials=$(find "$raw/jobs" -mindepth 3 -maxdepth 3 -name result.json | wc -l | tr -d ' ')
+    if [ "$trials" -ne "$requested_tasks" ]; then
+        echo "kairyu-bench: requested $requested_tasks Terminal-Bench tasks, Harbor ran $trials" >&2
+        exit 2
+    fi
+fi
 normalize_official "$raw/jobs"
