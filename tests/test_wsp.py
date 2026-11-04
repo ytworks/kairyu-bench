@@ -170,6 +170,34 @@ class AgentTest(unittest.TestCase):
             [{"swe-bench-pro": 1}, {"terminal-bench": 1}],
         )
 
+    def test_task_image_cleanup_is_refused_only_when_agent_tasks_run(self) -> None:
+        from unittest import mock
+
+        from kairyu_bench.target import PreflightError
+        from kairyu_bench.wsp.cli import main
+
+        items = [
+            {"id": f"{source}:{name}-{split}", "source": source, "split": split, "tier": 10, "max_tokens": 16384}
+            for source, name in (("mmlu-pro", "1"), ("terminal-bench", "git-leak-recovery"))
+            for split in ("dev", "test")
+        ]
+        tiers = {str(t): {"minutes": t, "max_output_tokens": 16384} for t in (10, 30, 60)}
+        with tempfile.TemporaryDirectory() as directory, mock.patch.dict(
+            "os.environ", {"KAIRYU_BENCH_CLEAN_TASK_IMAGES": "1"}
+        ):
+            manifest = Path(directory) / "manifest.json"
+            manifest.write_text(json.dumps({"schema_version": 1, "tiers": tiers, "items": items}))
+            arguments = [
+                "run", "http://127.0.0.1:9/v1", "--tier", "10", "--split", "dev",
+                "--manifest", str(manifest), "--incomplete-manifest", "--results-dir", directory,
+            ]
+
+            with self.assertRaisesRegex(SystemExit, "KAIRYU_BENCH_CLEAN_TASK_IMAGES"):
+                main(arguments)
+            # Without agent tasks the run proceeds to the endpoint (none here).
+            with self.assertRaises(PreflightError):
+                main([*arguments, "--only", "mmlu-pro"])
+
     def test_swe_bench_pro_keeps_item_verdicts_without_the_aggregate(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
             items = Path(directory) / "raw" / "swe-bench-pro" / "items"

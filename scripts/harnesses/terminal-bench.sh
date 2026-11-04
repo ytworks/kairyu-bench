@@ -49,7 +49,9 @@ fi
 if [ "${KAIRYU_BENCH_SETUP_ONLY:-0}" = 1 ]; then
     source_path=$(checkout_source harbor "$source_repository" "$source_revision")
     environment=$(ensure_venv harbor "$source_revision" "$source_path")
-    "$environment/bin/harbor" download "$dataset_id"
+    # --cache: the content-addressed layout `harbor run` reads
+    # (~/.cache/harbor/tasks/packages), not the default export layout.
+    "$environment/bin/harbor" download "$dataset_id" --cache
     exit 0
 fi
 raw=$(raw_directory terminal-bench)

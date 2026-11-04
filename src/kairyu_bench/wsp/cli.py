@@ -142,16 +142,16 @@ def command_run(args: argparse.Namespace) -> int:
     gaps = missing_coverage(items).get(f"{args.tier}/{args.split}", [])
     if gaps and not args.incomplete_manifest:
         raise WspManifestError(f"tier {args.tier} {args.split} has no items for: {', '.join(gaps)}")
-    # Task images come from `wsp prepare`; removing them would move their
-    # download into the next timed run.
-    if any(item.kind == "agent" for item in items) and os.environ.get("KAIRYU_BENCH_CLEAN_TASK_IMAGES") == "1":
-        raise SystemExit("wsp run keeps prepared task images: unset KAIRYU_BENCH_CLEAN_TASK_IMAGES=1")
     if args.only:
         wanted = set(args.only.split(","))
         unknown = wanted - set(SOURCE_BY_NAME)
         if unknown:
             raise SystemExit(f"unknown sources: {sorted(unknown)}")
         items = [item for item in items if item.source in wanted]
+    # Task images come from `wsp prepare`; removing them would move their
+    # download into the next timed run. Only runs with agent tasks care.
+    if any(item.kind == "agent" for item in items) and os.environ.get("KAIRYU_BENCH_CLEAN_TASK_IMAGES") == "1":
+        raise SystemExit("wsp run keeps prepared task images: unset KAIRYU_BENCH_CLEAN_TASK_IMAGES=1")
     endpoint = _endpoint(args.endpoint)
     api_key = os.environ.get("KAIRYU_API_KEY")
     model = TargetClient(endpoint, api_key=api_key).discover_chat_model()
