@@ -21,12 +21,16 @@ run_id=$(context_get run_id)
 source_path=$(checkout_source "$benchmark" "$source_repository" "$source_revision")
 generator_path=$(checkout_source mini-swe-agent "$generator_repository" "$generator_revision")
 if [ "$benchmark" = "swe-bench-pro" ]; then
+    # litellm stays at the release the agent was proven with: 1.106 imports
+    # the optional mcp package unconditionally, and every instance exits with
+    # ModuleNotFoundError before its first model call (an empty patch).
     environment=$(ensure_venv \
         swebench-pro \
-        "$source_revision-$generator_revision" \
+        "$source_revision-$generator_revision-litellm-1.99.0" \
         "datasets==5.0.0" \
         "docker==7.1.0" \
         "pandas==2.3.2" \
+        "litellm==1.99.0" \
         "$generator_path")
 else
     environment=$(ensure_venv \
