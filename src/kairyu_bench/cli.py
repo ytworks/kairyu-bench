@@ -100,10 +100,11 @@ def main(argv: Sequence[str] | None = None) -> int:
         try:
             endpoint = Endpoint.parse(args.endpoint)
             selected = select_benchmarks(args.only)
+            deepswe_agent = None
             if "deepswe" in selected:
                 from kairyu_bench.deepswe import DeepSWESettings
 
-                DeepSWESettings.from_env(os.environ)
+                deepswe_agent = DeepSWESettings.from_env(os.environ).agent
             if "terminal-bench-4" in selected:
                 from kairyu_bench.terminal_bench4 import TerminalBench4Settings
 
@@ -116,6 +117,8 @@ def main(argv: Sequence[str] | None = None) -> int:
             print("selected: " + ",".join(selected))
             print(f"limit: {args.limit if args.limit is not None else 'all'}")
             print(f"harbor agent: {args.harbor_agent}")
+            if deepswe_agent is not None:
+                print(f"deepswe agent: {deepswe_agent}")
             return 0
 
         client = TargetClient(

@@ -28,6 +28,9 @@ from pier.models.task.task import Task
 
 from kairyu_bench import artifacts
 from kairyu_bench.deepswe import (
+    DEEPSEEK_HARNESS,
+    DSH_LOCK,
+    MINI_SWE_AGENT,
     read_object,
     select_deepswe_tasks,
     sha256_file,
@@ -56,6 +59,20 @@ def _model_id(value: str) -> str:
     return value
 
 
+def api_allowlist(endpoint: str) -> NetworkAllowlist:
+    parsed = urlsplit(endpoint)
+    if (
+        parsed.scheme not in {"http", "https"}
+        or not parsed.hostname
+        or parsed.username
+        or parsed.password
+    ):
+        raise ValueError(
+            "DeepSWE requires an HTTP(S) API endpoint without embedded credentials"
+        )
+    return NetworkAllowlist(domains=[parsed.hostname])
+
+
 class KairyuMiniSweAgent(MiniSweAgent):
     # Use the packaged, pinned cost map rather than refreshing from main.
     def install_spec(self):
@@ -68,20 +85,9 @@ class KairyuMiniSweAgent(MiniSweAgent):
         return spec
 
     def network_allowlist(self) -> NetworkAllowlist:
-        endpoint = (
+        return api_allowlist(
             self._get_env("OPENAI_BASE_URL") or self._get_env("OPENAI_API_BASE") or ""
         )
-        parsed = urlsplit(endpoint)
-        if (
-            parsed.scheme not in {"http", "https"}
-            or not parsed.hostname
-            or parsed.username
-            or parsed.password
-        ):
-            raise ValueError(
-                "DeepSWE requires an HTTP(S) API endpoint without embedded credentials"
-            )
-        return NetworkAllowlist(domains=[parsed.hostname])
 
     def populate_context_post_run(self, context):
         super().populate_context_post_run(context)
@@ -210,24 +216,12 @@ def build_job_config(
     context, raw_dir, task_root, task_ids, repeat, gateway_address=None
 ) -> JobConfig:
     conditions = context["conditions"]
-    kwargs = {
-        "version": context["generator"]["version"],
-        "model_class": "litellm",
-        "cost_limit": 0,
-        "extra_python_packages": read_object(
-            Path(__file__).parent / "data/deepswe-agent-lock.json"
-        )["packages"],
-    }
-    model_kwargs = {}
-    if conditions["reasoning_effort"] != "server_default":
-        kwargs["reasoning_effort"] = conditions["reasoning_effort"]
-        # mini-swe-agent sets drop_params, and LiteLLM then drops
-        # reasoning_effort for a model it does not know; keep it on the wire.
-        model_kwargs["allowed_openai_params"] = ["reasoning_effort"]
-    if "api_timeout_seconds" in conditions:
-        model_kwargs["timeout"] = conditions["api_timeout_seconds"]
-    if model_kwargs:
-        kwargs["model_kwargs"] = model_kwargs
+    if conditions.get("agent", MINI_SWE_AGENT) == DEEPSEEK_HARNESS:
+        from kairyu_bench.deepswe_dsh import agent_config
+
+        agent = agent_config(context["model_id"], conditions)
+    else:
+        agent = _mini_agent_config(context)
     return JobConfig.model_validate(
         {
             "job_name": f"repeat-{repeat}",
@@ -250,13 +244,7 @@ def build_job_config(
                     "AgentSetupTimeoutError",
                 ],
             },
-            "agents": [
-                {
-                    "import_path": "kairyu_bench.deepswe_runtime:KairyuMiniSweAgent",
-                    "model_name": "openai/" + _model_id(context["model_id"]),
-                    "kwargs": kwargs,
-                }
-            ],
+            "agents": [agent],
             "environment": {
                 "import_path": "kairyu_bench.deepswe_runtime:KairyuDockerEnvironment",
                 "delete": True,
@@ -265,6 +253,33 @@ def build_job_config(
             "tasks": [{"path": task_root / task} for task in task_ids],
         }
     )
+
+
+def _mini_agent_config(context) -> dict[str, Any]:
+    conditions = context["conditions"]
+    kwargs = {
+        "version": context["generator"]["version"],
+        "model_class": "litellm",
+        "cost_limit": 0,
+        "extra_python_packages": read_object(
+            Path(__file__).parent / "data/deepswe-agent-lock.json"
+        )["packages"],
+    }
+    model_kwargs = {}
+    if conditions["reasoning_effort"] != "server_default":
+        kwargs["reasoning_effort"] = conditions["reasoning_effort"]
+        # mini-swe-agent sets drop_params, and LiteLLM then drops
+        # reasoning_effort for a model it does not know; keep it on the wire.
+        model_kwargs["allowed_openai_params"] = ["reasoning_effort"]
+    if "api_timeout_seconds" in conditions:
+        model_kwargs["timeout"] = conditions["api_timeout_seconds"]
+    if model_kwargs:
+        kwargs["model_kwargs"] = model_kwargs
+    return {
+        "import_path": "kairyu_bench.deepswe_runtime:KairyuMiniSweAgent",
+        "model_name": "openai/" + _model_id(context["model_id"]),
+        "kwargs": kwargs,
+    }
 
 
 def redact_artifacts(raw_dir: Path) -> None:
@@ -336,33 +351,43 @@ async def run(context: dict[str, Any], raw_dir: Path, task_root: Path) -> None:
     ids = select_deepswe_tasks(
         task_root, context.get("limit"), context["conditions"].get("selected_tasks")
     )
-    attempts = context["conditions"]["attempts_per_task"]
+    conditions = context["conditions"]
+    agent = conditions.get("agent", MINI_SWE_AGENT)
+    attempts = conditions["attempts_per_task"]
     write_json(
         raw_dir / "selected.json",
         {
             "problem_ids": ids,
             "model_id": context["model_id"],
             "attempts": attempts,
-            "agent_version": context["generator"]["version"],
+            "agent": agent,
+            "agent_version": conditions["agent_version"],
             "dataset": context["dataset"],
         },
     )
     (raw_dir / "instance-ids.txt").write_text("".join(task + "\n" for task in ids))
     write_trial_plan(raw_dir, ids, attempts)
-    packages = {
-        name: metadata.version(name)
-        for name in ("datacurve-pier", "mini-swe-agent", "litellm", "openai")
-    }
+    if agent == DEEPSEEK_HARNESS:
+        # The agent packages live in each task image, pinned by the lock.
+        packages = {"datacurve-pier": metadata.version("datacurve-pier")}
+        for requirement in read_object(DSH_LOCK)["requirements"]:
+            name, version = requirement.split(" ", 1)[0].split("==", 1)
+            packages[name] = version
+        lock_sha256 = sha256_file(DSH_LOCK)
+    else:
+        packages = {
+            name: metadata.version(name)
+            for name in ("datacurve-pier", "mini-swe-agent", "litellm", "openai")
+        }
+        lock_sha256 = sha256_file(Path(__file__).parent / "data/deepswe-agent-lock.json")
     write_json(
         raw_dir / "runtime.json",
         {
             "packages": packages,
             "source": context["source"],
             "dataset": context["dataset"],
-            "agent_lock_sha256": sha256_file(
-                Path(__file__).parent / "data/deepswe-agent-lock.json"
-            ),
-            "conditions": context["conditions"],
+            "agent_lock_sha256": lock_sha256,
+            "conditions": conditions,
         },
     )
     gateway = None

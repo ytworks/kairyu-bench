@@ -45,6 +45,17 @@ KAIRYU_API_KEY=secret ./kairyu-bench run https://kairyu.example/v1
 
 既定4並列・1試行です。`KAIRYU_BENCH_DEEPSWE_ATTEMPTS=4`で4反復、全件なら113問・452試行になります。専用Docker daemon、NVMe、環境変数と完了確認は[DeepSWEの実行手順](docs/deepswe.md)を参照してください。公式リポジトリでは採点の不具合（[#105](https://github.com/datacurve-ai/deep-swe/issues/105)、[#107](https://github.com/datacurve-ai/deep-swe/issues/107)）が未解決のまま報告されています。固定しているtask定義とverifierにも当てはまるため、実測値を読む際は[比較ページのDeepSWE節](docs/model-comparison.md)の注記も参照してください。
 
+agentは既定のmini-swe-agentのほか、DeepSeek Harness（`dsh`）のMinimal modeも選べます。dshはAnthropic Messages互換の`POST /v1/messages`を使い、モデルのcontext長の指定が必要です。
+
+```bash
+KAIRYU_BENCH_DEEPSWE_AGENT=deepseek-harness \
+KAIRYU_BENCH_DEEPSWE_CONTEXT_WINDOW=262144 \
+./kairyu-bench run http://host.docker.internal:8003/v1 \
+  --only deepswe --limit 1 --run-id deepswe-dsh-smoke
+```
+
+詳細は[DeepSWEの実行手順](docs/deepswe.md#deepseek-harnessminimal)を参照してください。公開leaderboardの値はすべてmini-swe-agentによるもので、dshの実測とは比較条件が異なります。
+
 ### Terminal-Bench 4.0
 
 ```bash
@@ -91,7 +102,7 @@ agent本体はHarborがtask container内へ導入して起動するため、ホ�
 | `tau-bench-banking` | tau2 `banking_knowledge/alltools`、4 trials | 対象モデル自身をuser simulatorに使用 |
 | `long-context-reasoning` | LongBench v2 choice accuracy | private Fugu行の代替として明示 |
 | `mrcr-v2` | OpenAI MRCR v2、公式token bins/SequenceMatcher | 4K–128K、8 needles |
-| `deepswe` | DeepSWE v1.1 + Pier / mini-swe-agent | 113問、独立verifier、nested Docker |
+| `deepswe` | DeepSWE v1.1 + Pier / mini-swe-agent（DeepSeek Harnessも選択可） | 113問、独立verifier、nested Docker |
 | `terminal-bench-4` | Harbor 0.24.0公式CLI、Terminal-Bench 4.0 | 66タスク、公式リーダーボード式、nested Docker |
 
 source、dataset、補助checkerのrevisionは [`src/kairyu_bench/data/benchmarks.json`](src/kairyu_bench/data/benchmarks.json) に固定しています。`--limit N` は各公式データ順を確定した後の先頭N問を選び、選択した問題IDをレポートへ残します。
@@ -141,7 +152,7 @@ context/<name>.json      adapterへ渡した固定条件
 - `POST /v1/chat/completions`
 - OpenAI互換の `model`、`messages`、`max_tokens`、`temperature`
 - CharXivでは `image_url` のdata URL入力
-- Claude Codeを使う場合はAnthropic互換の `POST /v1/messages`
+- Claude Code、またはDeepSWEでDeepSeek Harnessを使う場合はAnthropic互換の `POST /v1/messages`（SSE streaming）
 
 公開レポートにはendpointのSHA-256 fingerprintだけを記録します。API URLはローカルのadapter contextに保存され、API keyは保存しません。
 

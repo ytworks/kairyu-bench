@@ -162,6 +162,15 @@ Use `./kairyu-bench run <API URL> --only deepswe`, following
 trial slots. The default is one repetition. `KAIRYU_BENCH_DEEPSWE_WORKERS`
 defaults to four (1–16), with immediate refill inside each repetition.
 
+The agent defaults to mini-swe-agent. `KAIRYU_BENCH_DEEPSWE_AGENT=deepseek-harness`
+runs DeepSeek Harness 0.2.1rc2 in its shipped `sdk-minimal` profile instead; it
+calls the API's Anthropic-compatible streaming `POST /v1/messages` and requires
+`KAIRYU_BENCH_DEEPSWE_CONTEXT_WINDOW` (the model's context length, at least
+127172 with the default `KAIRYU_BENCH_DEEPSWE_MAX_TOKENS=49152`). Its reasoning
+effort accepts only off/low/high/max. Smoke it with `--limit 1` first and
+confirm the API accepts its requests. Runs with different agents are never
+compared, and the public DeepSWE leaderboard is mini-swe-agent only.
+
 Use a dedicated privileged Docker-in-Docker daemon, socket and data root under
 `/mnt/nvme/kairyu/`, with result/cache mounts at identical paths. Keep caches
 under `/mnt/nvme/kairyu/bench-cache/`, preserve repository `results/`, and set
