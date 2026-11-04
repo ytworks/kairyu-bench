@@ -127,7 +127,9 @@ def _load_choice(source: str):  # type: ignore[no-untyped-def]
     def load(loader: Loader) -> dict[str, Row]:
         if source == "hellaswag":
             rows = loader.dataset(spec.dataset or "", split="validation", revision=spec.revision)
-            return {f"hellaswag:{row['ind']}": dict(row) for row in rows}
+            # `ind` repeats across the ActivityNet and WikiHow parts; the row
+            # number is the unique id.
+            return {f"hellaswag:{index:05d}": dict(row) for index, row in enumerate(rows)}
         if source == "arc-challenge":
             rows = loader.dataset(spec.dataset or "", config="ARC-Challenge", split="test", revision=spec.revision)
             return {f"arc-challenge:{row['id']}": dict(row) for row in rows}
