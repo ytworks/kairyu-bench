@@ -80,7 +80,7 @@ KAIRYU_BENCH_DOCKER_NETWORK=gemma-4-31b-8gpu_default ./kairyu-bench wsp run \
 ```
 
 Kairyu の API は `prompt_logprobs` を上流 vLLM へ渡さないため、対数確率を使う項目だけ vLLM レプリカへ直接送ります。`KAIRYU_BENCH_DOCKER_NETWORK` はランナーを例のスタックの Docker ネットワークへ参加させます（例の API は 127.0.0.1 にだけ公開されているので、ネットワーク内のサービス名 `kairyu:8000` を使います）。ラッパーは呼び出したディレクトリを同じパスでマウントして作業場所にするので、`pool.json` や `results/<run>` のような相対パスがそのまま使えます。
-エージェント作業には Docker が必要で、SWE-bench Pro は専用の Docker デーモン（`KAIRYU_BENCH_DOCKER_SOCKET`）を推奨します（[AGENTS.md](../AGENTS.md)）。`--agent-concurrency N`（既定4）は、エージェント作業全体で同時に走る課題数の上限です。Terminal-Bench と SWE-bench Pro に課題数の比で分け（それぞれ最低1、N が出典の数より少なければ順番に実行）、各ハーネスの `KAIRYU_BENCH_TERMINAL_BENCH_WORKERS` / `KAIRYU_BENCH_SWEBENCH_PRO_WORKERS` も上限として守ります。SWE-bench Pro は、一部の課題が失敗しても公式評価が済んだ課題の結果を使い、結果の無い課題だけを未採点にします。エージェントが例外で終わった課題（環境の不具合などで、空の変更が評価されたもの）も未採点にし、事故として測り直します。採点するのは mini-swe-agent 自身の終わり方（提出、手数・時間の上限、形式誤りの繰り返し）と、モデル自身の作業がモデルの文脈長を超えた場合だけです。
+エージェント作業には Docker が必要で、SWE-bench Pro は専用の Docker デーモン（`KAIRYU_BENCH_DOCKER_SOCKET`）を推奨します（[AGENTS.md](../AGENTS.md)）。`--agent-concurrency N`（既定4）は、エージェント作業全体で同時に走る課題数の上限です。Terminal-Bench と SWE-bench Pro に課題数の比で分け（それぞれ最低1、N が出典の数より少なければ順番に実行）、各ハーネスの `KAIRYU_BENCH_TERMINAL_BENCH_WORKERS` / `KAIRYU_BENCH_SWEBENCH_PRO_WORKERS` も上限として守ります。SWE-bench Pro は、一部の課題が失敗しても公式評価が済んだ課題の結果を使い、結果の無い課題だけを未採点にします。
 
 エージェント作業の準備（Harbor・SWE-bench Pro・mini-swe-agent の固定版と環境、Harbor の課題定義、課題イメージ）は `wsp prepare` が時間の外で済ませます。Harbor の課題定義はキャッシュ（`$KAIRYU_BENCH_CACHE_DIR/harbor`）に置き、課題イメージは実行に使う Docker デーモンへ取得します。そのため `wsp run` は、終わった課題のイメージを消す `KAIRYU_BENCH_CLEAN_TASK_IMAGES=1` を拒否します。試行ごとの公式の準備（環境の起動とエージェントの準備）は公式手順の一部として時間に含め、その秒数を Terminal-Bench の結果（`setup_seconds`）に記録します。
 

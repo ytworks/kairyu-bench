@@ -159,22 +159,13 @@ def _terminal_bench_outcomes(run_dir: Path) -> dict[str, dict[str, Any]]:
     return outcomes
 
 
-# mini-swe-agent's own ends (its InterruptAgentFlow exits) and a context
-# overflow of the model's own trajectory. Any other exit status is an
-# uncaught exception, e.g. a broken environment, which exits before or
-# between model calls with an empty patch.
-AGENT_ENDS = frozenset({"Submitted", "LimitsExceeded", "TimeExceeded", "RepeatedFormatError", "ContextWindowExceededError"})
-
-
 def _swe_bench_pro_outcomes(run_dir: Path) -> dict[str, dict[str, Any]]:
     """Official per-instance verdicts, read item by item.
 
     The harness writes the aggregate only when every item succeeded; each
     item's `evaluation/eval_results.json` (the official evaluator's
     `{instance_id: bool}`) is kept either way, so an item that failed leaves
-    only its own instance unscored. An instance whose agent ended with an
-    exception (no trajectory, or an exit status outside AGENT_ENDS) is
-    unscored too: its verdict judges the empty patch, not the model.
+    only its own instance unscored.
     """
 
     outcomes: dict[str, dict[str, Any]] = {}
@@ -185,11 +176,6 @@ def _swe_bench_pro_outcomes(run_dir: Path) -> dict[str, dict[str, Any]]:
         expected = ids.read_text(encoding="utf-8").strip()
         payload = json.loads(verdict.read_text(encoding="utf-8"))
         if not isinstance(payload, dict) or set(payload) != {expected} or not isinstance(payload[expected], bool):
-            continue
-        trajectory = item / "generation" / expected / f"{expected}.traj.json"
-        if not trajectory.is_file():
-            continue
-        if json.loads(trajectory.read_text(encoding="utf-8")).get("info", {}).get("exit_status") not in AGENT_ENDS:
             continue
         # The harness records no per-item time; an item's span is from its
         # selection file to its verdict file.
