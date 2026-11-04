@@ -1,0 +1,9 @@
+# Interpreter that runs SciCode step tests (scicode-bench/SciCode e3158ea on
+# PYTHONPATH). scipy<1.14 keeps scipy.integrate.simps for problems 2 and 28;
+# numpy 2 because pyarrow (via datasets, imported by scicode.parse) needs it.
+numpy>=2,<2.3
+scipy<1.14
+sympy
+h5py
+matplotlib
+datasets==5.0.0

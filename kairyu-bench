@@ -20,7 +20,11 @@ mkdir -p "$RESULTS_DIR" "$CACHE_DIR"
 
 docker build -t "$IMAGE" "$ROOT"
 
+# KAIRYU_BENCH_DOCKER_NETWORK joins the runner to a Docker network, e.g. a
+# served model's compose network so `wsp run --logprob-endpoint` reaches its
+# vLLM replicas directly.
 exec docker run --rm --privileged \
+    ${KAIRYU_BENCH_DOCKER_NETWORK:+--network "$KAIRYU_BENCH_DOCKER_NETWORK"} \
     --add-host host.docker.internal:host-gateway \
     -v "$DOCKER_SOCKET:/var/run/docker.sock" \
     -v "$RESULTS_DIR:$RESULTS_DIR" \
@@ -39,6 +43,8 @@ exec docker run --rm --privileged \
     -e KAIRYU_BENCH_DEEPSWE_REASONING_EFFORT \
     -e KAIRYU_BENCH_DEEPSWE_API_TIMEOUT_SECONDS \
     -e KAIRYU_BENCH_DEEPSWE_TASKS \
+    -e KAIRYU_BENCH_TERMINAL_BENCH_TASKS \
+    -e KAIRYU_BENCH_SWEBENCH_PRO_INSTANCES \
     -e "KAIRYU_BENCH_TERMINAL_BENCH_4_WORKERS=${KAIRYU_BENCH_TERMINAL_BENCH_4_WORKERS-4}" \
     -e "KAIRYU_BENCH_TERMINAL_BENCH_4_ATTEMPTS=${KAIRYU_BENCH_TERMINAL_BENCH_4_ATTEMPTS-1}" \
     -e "KAIRYU_BENCH_TERMINAL_BENCH_4_RETRIES=${KAIRYU_BENCH_TERMINAL_BENCH_4_RETRIES-3}" \

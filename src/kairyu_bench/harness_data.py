@@ -38,6 +38,7 @@ def export_selected_rows(
     ids_path: Path,
     *,
     config: str | None = None,
+    explicit: list[str] | None = None,
 ) -> list[str]:
     dataset = context["dataset"]
     rows = list(_load_dataset(dataset["id"], dataset["revision"], split, config))
@@ -46,7 +47,7 @@ def export_selected_rows(
         if id_field not in row:
             raise ValueError(f"dataset row {index} has no {id_field}")
         canonical_ids.append(str(row[id_field]))
-    selected_ids = select_problem_ids(canonical_ids, context.get("limit"))
+    selected_ids = select_problem_ids(canonical_ids, context.get("limit"), explicit)
     selected_set = set(selected_ids)
     selected_rows = [row for row in rows if str(row[id_field]) in selected_set]
     output_path.parent.mkdir(parents=True, exist_ok=True)
@@ -69,6 +70,7 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--output", type=Path)
     parser.add_argument("--ids", type=Path)
     parser.add_argument("--config")
+    parser.add_argument("--select", help="comma-separated problem IDs (dataset order is kept)")
     parser.add_argument("--cache-only", action="store_true")
     args = parser.parse_args(argv)
     context_path = os.environ.get("KAIRYU_BENCH_CONTEXT")
@@ -93,6 +95,7 @@ def main(argv: list[str] | None = None) -> int:
                 args.output,
                 args.ids,
                 config=args.config,
+                explicit=[item.strip() for item in args.select.split(",")] if args.select else None,
             )
     except (OSError, RuntimeError, ValueError) as error:
         print(f"kairyu-bench dataset export: {error}", file=sys.stderr)

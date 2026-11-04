@@ -87,12 +87,33 @@ def build_parser() -> argparse.ArgumentParser:
     compare = commands.add_parser("compare", help="compare two result runs")
     compare.add_argument("baseline")
     compare.add_argument("candidate")
+
+    wsp = commands.add_parser(
+        "wsp",
+        help="weight-space programming tiers (10/30/60 minutes); see docs/wsp.md",
+        add_help=False,
+    )
+    wsp.add_argument("arguments", nargs=argparse.REMAINDER)
     return parser
 
 
 def main(argv: Sequence[str] | None = None) -> int:
     parser = build_parser()
-    args = parser.parse_args(argv)
+    args, extra = parser.parse_known_args(argv)
+    if args.command == "wsp":
+        arguments = [*args.arguments, *extra]
+        # Commands that load datasets or score need the pinned scorer
+        # environment; the harness prepares it and re-enters the wsp CLI.
+        if arguments[:1] and arguments[0] in {"prepare", "pool", "run", "freeze"} and not os.environ.get(
+            "KAIRYU_BENCH_WSP_ENV"
+        ):
+            harness = _default_app_root() / "scripts" / "harnesses" / "wsp.sh"
+            os.execvp("sh", ["sh", str(harness), *arguments])
+        from kairyu_bench.wsp.cli import main as wsp_main
+
+        return wsp_main(arguments)
+    if extra:
+        parser.error("unrecognized arguments: " + " ".join(extra))
     if args.command == "list":
         print("\n".join(BENCHMARK_NAMES))
         return 0

@@ -24,6 +24,13 @@ class DeterministicSelectionTest(unittest.TestCase):
         with self.assertRaisesRegex(SelectionError, "duplicate"):
             select_problem_ids(["q-1", "q-1"], limit=None)
 
+    def test_explicit_ids_keep_dataset_order_and_reject_unknown_ids(self) -> None:
+        selected = select_problem_ids(["q-1", "q-2", "q-3"], limit=None, explicit=["q-3", "q-1"])
+
+        self.assertEqual(selected, ["q-1", "q-3"])
+        with self.assertRaisesRegex(SelectionError, "known"):
+            select_problem_ids(["q-1"], limit=None, explicit=["q-9"])
+
 
 if __name__ == "__main__":
     unittest.main()

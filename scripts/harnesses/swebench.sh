@@ -43,11 +43,19 @@ mkdir -p "$hf_home" "$raw/generation" "$raw/reports"
 export HF_HOME="$hf_home"
 export HF_HUB_DISABLE_TELEMETRY=1
 
+# KAIRYU_BENCH_SWEBENCH_PRO_INSTANCES (comma-separated instance IDs) runs
+# exactly those SWE-bench Pro instances instead of the first --limit.
+if [ "$benchmark" = "swe-bench-pro" ] && [ -n "${KAIRYU_BENCH_SWEBENCH_PRO_INSTANCES:-}" ]; then
+    set -- --select "$KAIRYU_BENCH_SWEBENCH_PRO_INSTANCES"
+else
+    set --
+fi
 python -m kairyu_bench.harness_data \
     --split test \
     --id-field instance_id \
     --output "$raw/selected.jsonl" \
-    --ids "$raw/instance-ids.txt"
+    --ids "$raw/instance-ids.txt" \
+    "$@"
 
 export HF_DATASETS_OFFLINE=1
 export HF_HUB_OFFLINE=1

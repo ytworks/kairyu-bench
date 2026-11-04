@@ -39,3 +39,18 @@ official leaderboard run configs at
 To update deliberately: change the pin, run `uv pip compile` with the command
 in the lock header, regenerate the dataset lock from the registry, and re-run
 the `terminal-bench-4-runtime` CI job.
+
+# wsp scorer locks
+
+`wsp.txt`, `wsp-evalplus.txt` and `wsp-scicode.txt` target CPython 3.12 on Linux
+and list every package of their environment with hashes; `scripts/harnesses/wsp.sh`
+installs each with `--require-hashes --no-deps`.
+
+- `wsp.txt` = `uv pip compile --python-version 3.12 --python-platform linux --generate-hashes --no-header wsp.in`
+  followed by the same command with `--no-deps` on `wsp-bfcl.in`. bfcl-eval is
+  added without its declared dependencies: its checkers and multi-turn backends
+  need the closure listed in `wsp.in`, not sentence-transformers/faiss/torch or
+  SerpAPI, which serve only the excluded memory and web-search categories.
+- `wsp-evalplus.txt` and `wsp-scicode.txt` = the same compile command on
+  `wsp-evalplus.in` / `wsp-scicode.in` (EvalPlus's tree-sitter conflicts with
+  BFCL's; SciCode needs scipy<1.14).

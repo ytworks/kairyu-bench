@@ -81,6 +81,18 @@ esac
 if [ "$limit" != "null" ]; then
     set -- "$@" --n-tasks "$limit"
 fi
+# KAIRYU_BENCH_TERMINAL_BENCH_TASKS (comma-separated task names) runs exactly
+# those tasks; Harbor matches them as terminal-bench/<task>.
+requested_tasks=0
+if [ -n "${KAIRYU_BENCH_TERMINAL_BENCH_TASKS:-}" ]; then
+    old_ifs=$IFS
+    IFS=,
+    for task in $KAIRYU_BENCH_TERMINAL_BENCH_TASKS; do
+        set -- "$@" --include-task-name "terminal-bench/$task"
+        requested_tasks=$((requested_tasks + 1))
+    done
+    IFS=$old_ifs
+fi
 
 require_command docker
 require_command git
@@ -88,4 +100,11 @@ source_path=$(checkout_source harbor "$source_repository" "$source_revision")
 environment=$(ensure_venv harbor "$source_revision" "$source_path")
 
 "$environment/bin/harbor" "$@"
+if [ "$requested_tasks" -gt 0 ]; then
+    trials=$(find "$raw/jobs" -mindepth 3 -maxdepth 3 -name result.json | wc -l | tr -d ' ')
+    if [ "$trials" -ne "$requested_tasks" ]; then
+        echo "kairyu-bench: requested $requested_tasks Terminal-Bench tasks, Harbor ran $trials" >&2
+        exit 2
+    fi
+fi
 normalize_official "$raw/jobs"
