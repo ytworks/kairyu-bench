@@ -23,6 +23,88 @@ WORKERS_ENV = {
 }
 
 
+def harbor_cache() -> Path:
+    """Harbor's task cache, kept in the benchmark cache (not the container's home)."""
+
+    return Path(os.environ.get("KAIRYU_BENCH_CACHE_DIR", "/work/cache")) / "harbor"
+
+
+def _task_images(source: str, names: list[str]) -> list[str]:
+    """The prebuilt task images the selected tasks run in."""
+
+    if source == "terminal-bench":
+        import tomllib
+
+        images: set[str] = set()
+        for name in names:
+            manifests = sorted((harbor_cache() / "tasks" / "packages" / "terminal-bench" / name).glob("*/task.toml"))
+            if not manifests:
+                raise RuntimeError(f"Terminal-Bench task {name} is not in Harbor's cache")
+            for manifest in manifests:
+                image = tomllib.loads(manifest.read_text(encoding="utf-8")).get("environment", {}).get("docker_image")
+                if not image:
+                    raise RuntimeError(f"Terminal-Bench task {name} has no prebuilt image")
+                images.add(str(image))
+        return sorted(images)
+    from datasets import load_dataset
+
+    from kairyu_bench.manifest import load_manifest as load_benchmarks
+
+    dataset = load_benchmarks()[source]["dataset"]
+    tags = {
+        row["instance_id"]: row["dockerhub_tag"]
+        for row in load_dataset(dataset["id"], split="test", revision=dataset["revision"])
+    }
+    return sorted(f"jefzda/sweap-images:{tags[name]}" for name in names)
+
+
+def prepare(items: list[Item]) -> None:
+    """Untimed setup for the selected agent tasks: each harness's pinned
+    sources and environments (its setup-only mode), Harbor's task packages,
+    and every task image pulled into the Docker daemon the runs use."""
+
+    import subprocess
+    import tempfile
+
+    from kairyu_bench.manifest import load_manifest as load_benchmarks
+
+    benchmarks = load_benchmarks()
+    for source in ("terminal-bench", "swe-bench-pro"):
+        names = sorted({item.id.split(":", 1)[1] for item in items if item.source == source})
+        if not names:
+            continue
+        entry = benchmarks[source]
+        with tempfile.TemporaryDirectory(prefix=f"wsp-prepare-{source}-") as directory:
+            context = Path(directory) / "context.json"
+            context.write_text(
+                json.dumps(
+                    {
+                        "benchmark": source,
+                        "source": entry["source"],
+                        "generator": entry.get("generator"),
+                        "dataset": entry["dataset"],
+                        "limit": None,
+                        "run_id": "wsp-prepare",
+                    }
+                ),
+                encoding="utf-8",
+            )
+            environment = dict(
+                os.environ,
+                KAIRYU_BENCH_CONTEXT=str(context),
+                KAIRYU_BENCH_RUN_DIR=directory,
+                KAIRYU_BENCH_SETUP_ONLY="1",
+                KAIRYU_BENCH_HARBOR_CACHE_DIR=str(harbor_cache()),
+            )
+            subprocess.run(
+                ["sh", str(_app_root() / entry["adapter"])], cwd=_app_root(), env=environment, check=True
+            )
+        images = _task_images(source, names)
+        for image in images:
+            subprocess.run(["docker", "pull", "--quiet", image], check=True)
+        print(f"{source}: {len(names)} tasks prepared, {len(images)} task images pulled", flush=True)
+
+
 def _candidates() -> dict[str, Any]:
     raw = resources.files("kairyu_bench").joinpath("data/wsp/agent-candidates.json").read_text(encoding="utf-8")
     return json.loads(raw)
@@ -55,16 +137,23 @@ def _terminal_bench_outcomes(run_dir: Path) -> dict[str, dict[str, Any]]:
         trial = json.loads(path.read_text(encoding="utf-8"))
         name = str(trial.get("task_name", "")).split("/")[-1]
         rewards = ((trial.get("verifier_result") or {}).get("rewards") or {})
-        seconds = None
-        if trial.get("started_at") and trial.get("finished_at"):
-            seconds = (
-                datetime.fromisoformat(str(trial["finished_at"]).replace("Z", "+00:00"))
-                - datetime.fromisoformat(str(trial["started_at"]).replace("Z", "+00:00"))
+
+        def span(phase: dict[str, Any] | None) -> float | None:
+            if not phase or not phase.get("started_at") or not phase.get("finished_at"):
+                return None
+            return (
+                datetime.fromisoformat(str(phase["finished_at"]).replace("Z", "+00:00"))
+                - datetime.fromisoformat(str(phase["started_at"]).replace("Z", "+00:00"))
             ).total_seconds()
+
+        setup = [span(trial.get(phase)) for phase in ("environment_setup", "agent_setup")]
         outcomes[name] = {
             "reward": rewards.get("reward"),
             "exception": (trial.get("exception_info") or {}).get("exception_type"),
-            "seconds": seconds,
+            "seconds": span(trial),
+            # The official per-trial setup (environment start, agent setup);
+            # it stays inside the timed window as in the official harness.
+            "setup_seconds": sum(value for value in setup if value is not None),
             "trial": path.parent.name,
         }
     return outcomes
@@ -112,6 +201,8 @@ def _batch(source: str):  # type: ignore[no-untyped-def]
         names = [rows[item.id]["name"] for item in items]
         os.environ[SELECTION_ENV[source]] = ",".join(names)
         os.environ[WORKERS_ENV[source]] = str(workers)
+        # Task packages and images come from `wsp prepare` (untimed).
+        os.environ["KAIRYU_BENCH_HARBOR_CACHE_DIR"] = str(harbor_cache())
         endpoint = Endpoint.parse(context.chat.base_url)
         config = RunConfig(
             endpoint=endpoint,

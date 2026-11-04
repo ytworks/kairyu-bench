@@ -62,12 +62,16 @@ CHAT_CHECKPOINT_DIR=/mnt/nvme/<編集済みチェックポイント> ./run.sh up
 ## 使い方
 
 ```sh
-# 1回だけ: データ・公式ソース・採点環境・RULER データ・SciCode の test_data.h5 を用意
+# リポジトリの直下で実行します（相対パスはこのディレクトリを基準にホストのファイルを読み書きします）。
+
+# 1回だけ: データ・公式ソース・採点環境・RULER データ・SciCode の test_data.h5、
+# 確定版の問題リストにあるエージェント課題の環境と課題イメージを用意
 ./kairyu-bench wsp prepare
 
-# 評価（--logprob-endpoint は prompt_logprobs を返す vLLM レプリカ）
+# 評価（ランナーを例の Docker ネットワークに入れ、API とレプリカにサービス名で接続。
+# --logprob-endpoint は prompt_logprobs を返す vLLM レプリカ）
 KAIRYU_BENCH_DOCKER_NETWORK=gemma-4-31b-8gpu_default ./kairyu-bench wsp run \
-  http://host.docker.internal:8020/v1 --tier 10 --split dev --label <重みのハッシュなど> \
+  http://kairyu:8000/v1 --tier 10 --split dev --label <重みのハッシュなど> \
   --logprob-endpoint http://gemma-0:8000/v1 --logprob-endpoint http://gemma-1:8000/v1 \
   --logprob-endpoint http://gemma-2:8000/v1 --logprob-endpoint http://gemma-3:8000/v1
 
@@ -75,8 +79,10 @@ KAIRYU_BENCH_DOCKER_NETWORK=gemma-4-31b-8gpu_default ./kairyu-bench wsp run \
 ./kairyu-bench wsp compare results/<元モデルの run> results/<編集版の run>
 ```
 
-Kairyu の API は `prompt_logprobs` を上流 vLLM へ渡さないため、対数確率を使う項目だけ vLLM レプリカへ直接送ります。`KAIRYU_BENCH_DOCKER_NETWORK` はランナーを例のスタックの Docker ネットワークへ参加させます。
+Kairyu の API は `prompt_logprobs` を上流 vLLM へ渡さないため、対数確率を使う項目だけ vLLM レプリカへ直接送ります。`KAIRYU_BENCH_DOCKER_NETWORK` はランナーを例のスタックの Docker ネットワークへ参加させます（例の API は 127.0.0.1 にだけ公開されているので、ネットワーク内のサービス名 `kairyu:8000` を使います）。ラッパーは呼び出したディレクトリを同じパスでマウントして作業場所にするので、`pool.json` や `results/<run>` のような相対パスがそのまま使えます。
 エージェント作業には Docker が必要で、SWE-bench Pro は専用の Docker デーモン（`KAIRYU_BENCH_DOCKER_SOCKET`）を推奨します（[AGENTS.md](../AGENTS.md)）。`--agent-concurrency N`（既定4）は、エージェント作業全体で同時に走る課題数の上限です。Terminal-Bench と SWE-bench Pro に課題数の比で分け（それぞれ最低1、N が出典の数より少なければ順番に実行）、各ハーネスの `KAIRYU_BENCH_TERMINAL_BENCH_WORKERS` / `KAIRYU_BENCH_SWEBENCH_PRO_WORKERS` も上限として守ります。SWE-bench Pro は、一部の課題が失敗しても公式評価が済んだ課題の結果を使い、結果の無い課題だけを未採点にします。
+
+エージェント作業の準備（Harbor・SWE-bench Pro・mini-swe-agent の固定版と環境、Harbor の課題定義、課題イメージ）は `wsp prepare` が時間の外で済ませます。Harbor の課題定義はキャッシュ（`$KAIRYU_BENCH_CACHE_DIR/harbor`）に置き、課題イメージは実行に使う Docker デーモンへ取得します。そのため `wsp run` は、終わった課題のイメージを消す `KAIRYU_BENCH_CLEAN_TASK_IMAGES=1` を拒否します。試行ごとの公式の準備（環境の起動とエージェントの準備）は公式手順の一部として時間に含め、その秒数を Terminal-Bench の結果（`setup_seconds`）に記録します。
 
 確定版の問題リストは、全パターン・両方の組で14能力すべてに問題があることを読み込み時に検査します（`freeze` も、足りなければ書き出さずに失敗します）。別の問題リストを `--manifest` で渡すときは、実行するパターンと組で14能力がそろっている必要があります。開発用の小さなリストは `--incomplete-manifest` を付けたときだけ使え、その回の総合スコアは出ません。
 
@@ -92,9 +98,9 @@ API の通信障害で採点できなかった項目は `unscored` として記�
 
 ## 問題リストの作り方（校正）
 
-1. `wsp pool --output pool.json`: 各出典の dev・test から、60分版の目標数の1.5倍ずつを層別に取ります（エージェント作業は過去の実行で短かった課題が候補: `src/kairyu_bench/data/wsp/agent-candidates.json`）。
+1. `wsp pool --output pool.json`: 各出典の dev・test から、60分版の目標数の1.5倍ずつを層別に取ります（エージェント作業は過去の実行で短かった課題が候補: `src/kairyu_bench/data/wsp/agent-candidates.json`）。続けて `wsp prepare --manifest pool.json` で、その候補のエージェント課題を用意します。
 2. `wsp run ... --manifest pool.json --tier 60`: 元モデルで1回、長い上限で実行して問題ごとの出力長を測ります。
-3. `wsp freeze --pool pool.json --calibration results/<run> --output src/kairyu_bench/data/wsp/manifest.json`: 元モデルがそのパターンの上限の `margin`（0.6）倍以内で答え終えた問題だけを、そのパターンに入れます（エージェント作業は実測の秒数をパターンの時間と比べます）。上限と目標数は `src/kairyu_bench/data/wsp/targets.json` です。10分版は短く解ける問題が中心になり、長く考える問題は30・60分版で増えます。
+3. `wsp freeze --pool pool.json --calibration results/<run> --output src/kairyu_bench/data/wsp/manifest.json`: 元モデルがそのパターンの上限の `margin`（0.6）倍以内で答え終えた問題だけを、そのパターンに入れます（エージェント作業は実測の秒数をパターンの時間と比べます）。上限と目標数は `src/kairyu_bench/data/wsp/targets.json` です。小さいパターンから順に、そのパターンに収まる問題を候補の順（層別の無作為順）に累積の目標数まで取り、dev と test は各段で同じ数をそろえます。10分版は短く解ける問題が中心になり、長く考える問題は30・60分版で増えます。
 
 ## 公式手順との違い
 
@@ -104,7 +110,7 @@ API の通信障害で採点できなかった項目は `unscored` として記�
 - BBEH は問題文と指示文を空行で区切る（論文に区切りの記載なし）。採点は問題ごとの正誤の平均。
 - IFEval は言語判定（langdetect）にシードを固定。
 - EvalPlus は最小時間制限 4 秒（0.3.1 は1秒、後の版で4秒に変更）。0.3.1 で正解解も必ず不合格になる HumanEval/32 は除外。
-- SciCode は背景なし設定（kairyu-bench の既定）。1ステップのテスト上限は 300 秒（公式 1,800 秒）。問題ごとの得点は通ったステップの割合。
+- SciCode は背景なし設定（kairyu-bench の既定）。1ステップのテスト上限は 300 秒（公式 1,800 秒）。問題ごとの得点は通ったステップの割合で、1ステップでも上限トークンに達した回答は0点。
 - BFCL はエージェント系（web_search・memory）を除外（SerpAPI とモデルのダウンロードが必要なため）。
 - RULER は外部コーパス不要の6課題（niah_single_1・niah_multikey_2/3・vt・cwe・fwe）。補完モデル用の回答書き出し（answer prefix）は送らない。
 - HellaSwag・ARC は lm-eval と同じく選択肢本文の文字数で割った値（acc_norm）、WinoGrande は割らない値（acc）で選びます。指示調整版モデルを生の文章で測るため、一般に公表される事前学習モデルの値より低めになります。元モデルとの差で読んでください。

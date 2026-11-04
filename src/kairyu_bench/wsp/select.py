@@ -130,25 +130,22 @@ def assign_tiers(
                 return tier
         return None
 
-    picked: dict[str, list[tuple[str, int]]] = {}
-    for split in SPLITS:
-        chosen: list[tuple[str, int]] = []
-        for item_id in orders[split]:
-            tier_floor = eligible_tier(item_id)
-            if tier_floor is None:
-                continue
-            for tier, quota in zip(TIERS, cumulative, strict=True):
-                if tier >= tier_floor and sum(1 for _, t in chosen if t <= tier) < quota:
-                    chosen.append((item_id, tier))
-                    break
-            if len(chosen) == cumulative[-1]:
-                break
-        picked[split] = chosen
-    # Equal composition: cut each tier to the smaller split's count.
-    balanced: dict[str, list[tuple[str, int]]] = {split: [] for split in SPLITS}
-    for tier in TIERS:
-        counts = {split: [entry for entry in picked[split] if entry[1] == tier] for split in SPLITS}
-        keep = min(len(entries) for entries in counts.values())
+    # Smallest tier first: tier T takes, from what is left, items the base
+    # model finished within T's limit until T's cumulative target is met, so
+    # no cumulative count exceeds its target and short items fill the short
+    # tiers. dev and test take the same number at every tier.
+    floors = {split: {item_id: eligible_tier(item_id) for item_id in orders[split]} for split in SPLITS}
+    remaining = {split: [item_id for item_id in orders[split] if floors[split][item_id] is not None] for split in SPLITS}
+    chosen: dict[str, list[tuple[str, int]]] = {split: [] for split in SPLITS}
+    for tier, quota in zip(TIERS, cumulative, strict=True):
+        eligible = {
+            split: [item_id for item_id in remaining[split] if (floors[split][item_id] or 0) <= tier]
+            for split in SPLITS
+        }
+        take = min(quota - len(chosen[SPLITS[0]]), *(len(ids) for ids in eligible.values()))
         for split in SPLITS:
-            balanced[split].extend(counts[split][:keep])
-    return balanced
+            picked = eligible[split][: max(0, take)]
+            chosen[split].extend((item_id, tier) for item_id in picked)
+            taken = set(picked)
+            remaining[split] = [item_id for item_id in remaining[split] if item_id not in taken]
+    return chosen

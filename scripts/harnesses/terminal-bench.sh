@@ -35,6 +35,23 @@ source_revision=$(context_get source.revision)
 dataset_id=$(context_get dataset.id)
 limit=$(context_get limit)
 run_id=$(context_get run_id)
+
+# KAIRYU_BENCH_HARBOR_CACHE_DIR keeps Harbor's task cache (~/.cache/harbor)
+# in a persistent directory instead of the container's home.
+if [ -n "${KAIRYU_BENCH_HARBOR_CACHE_DIR:-}" ]; then
+    mkdir -p "$KAIRYU_BENCH_HARBOR_CACHE_DIR" "$HOME/.cache"
+    if [ ! -e "$HOME/.cache/harbor" ]; then
+        ln -s "$KAIRYU_BENCH_HARBOR_CACHE_DIR" "$HOME/.cache/harbor"
+    fi
+fi
+# KAIRYU_BENCH_SETUP_ONLY=1 prepares Harbor and the dataset's task packages
+# without running an agent (wsp prepare).
+if [ "${KAIRYU_BENCH_SETUP_ONLY:-0}" = 1 ]; then
+    source_path=$(checkout_source harbor "$source_repository" "$source_revision")
+    environment=$(ensure_venv harbor "$source_revision" "$source_path")
+    "$environment/bin/harbor" download "$dataset_id"
+    exit 0
+fi
 raw=$(raw_directory terminal-bench)
 mkdir -p "$raw/jobs"
 

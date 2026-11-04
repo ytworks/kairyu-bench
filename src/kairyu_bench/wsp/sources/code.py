@@ -289,6 +289,9 @@ def _score_scicode(entries: list[tuple[Item, Row, Outcome]], loader: Loader) -> 
     for position, (_, row, outcome) in enumerate(entries):
         steps = row["problem"]["sub_steps"]
         for index, sample in enumerate(outcome["samples"]):
+            # A sample with any step cut at the token cap scores 0 (below).
+            if sample.get("finish_reason") == "length":
+                continue
             for step_index, step in enumerate(steps):
                 if (row["problem"]["problem_id"], step_index) in SCICODE_AUTHOR_STEPS:
                     continue
@@ -300,16 +303,25 @@ def _score_scicode(entries: list[tuple[Item, Row, Outcome]], loader: Loader) -> 
                         "tests": list(step["test_cases"]),
                     }
                 )
-    verdicts = run_scorer(
-        loader.python("wsp"),
-        "kairyu_bench.wsp.scorers.scicode_score",
-        {"python": str(loader.python("scicode")), "h5": str(loader.file("scicode-h5")), "jobs": jobs},
-        pythonpath=(loader.source("scicode") / "src",),
+    verdicts = (
+        run_scorer(
+            loader.python("wsp"),
+            "kairyu_bench.wsp.scorers.scicode_score",
+            {"python": str(loader.python("scicode")), "h5": str(loader.file("scicode-h5")), "jobs": jobs},
+            pythonpath=(loader.source("scicode") / "src",),
+        )
+        if jobs
+        else {}
     )
     results: list[Scored] = []
     for position, (_, row, outcome) in enumerate(entries):
-        values, details = [], []
-        for index, _ in enumerate(outcome["samples"]):
+        values: list[float] = []
+        details: list[dict[str, Any]] = []
+        for index, sample in enumerate(outcome["samples"]):
+            if sample.get("finish_reason") == "length":
+                values.append(0.0)
+                details.append({"truncated": True})
+                continue
             keys = [key for key in verdicts if key.startswith(f"{position}:{index}:")]
             passed = sum(bool(verdicts[key]) for key in keys)
             values.append(passed / len(keys) if keys else 0.0)

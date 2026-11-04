@@ -47,6 +47,7 @@ def _load_rows(names: Sequence[str]) -> dict[str, dict[str, Any]]:
 
 
 def command_prepare(args: argparse.Namespace) -> int:
+    from kairyu_bench.wsp.sources.agents import prepare as prepare_agents
     from kairyu_bench.wsp.sources.long_context import generate_ruler
 
     digest = generate_ruler(_loader())
@@ -54,6 +55,14 @@ def command_prepare(args: argparse.Namespace) -> int:
     names = [name for name in SOURCE_BY_NAME if SOURCE_BY_NAME[name].kind != "agent"]
     for name, rows in _load_rows(names).items():
         print(f"{name}: {len(rows)} candidate items", flush=True)
+    # Agent tasks of the given manifest (a calibration pool), else of the
+    # frozen manifest once it exists.
+    frozen = resources.files("kairyu_bench").joinpath("data/wsp/manifest.json")
+    if args.manifest is not None or frozen.is_file():
+        manifest = load_manifest(args.manifest, require_all_areas=args.manifest is None)
+        prepare_agents([item for item in manifest.items if item.kind == "agent"])
+    else:
+        print("agent tasks: no manifest yet; run `wsp prepare --manifest <pool>` after `wsp pool`", flush=True)
     return 0
 
 
@@ -133,6 +142,10 @@ def command_run(args: argparse.Namespace) -> int:
     gaps = missing_coverage(items).get(f"{args.tier}/{args.split}", [])
     if gaps and not args.incomplete_manifest:
         raise WspManifestError(f"tier {args.tier} {args.split} has no items for: {', '.join(gaps)}")
+    # Task images come from `wsp prepare`; removing them would move their
+    # download into the next timed run.
+    if any(item.kind == "agent" for item in items) and os.environ.get("KAIRYU_BENCH_CLEAN_TASK_IMAGES") == "1":
+        raise SystemExit("wsp run keeps prepared task images: unset KAIRYU_BENCH_CLEAN_TASK_IMAGES=1")
     if args.only:
         wanted = set(args.only.split(","))
         unknown = wanted - set(SOURCE_BY_NAME)
@@ -266,7 +279,8 @@ def command_report(args: argparse.Namespace) -> int:
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(prog="kairyu-bench wsp")
     commands = parser.add_subparsers(dest="command", required=True)
-    commands.add_parser("prepare", help="download every pinned dataset and official source")
+    prepare = commands.add_parser("prepare", help="download every pinned dataset, source and task image")
+    prepare.add_argument("--manifest", type=Path, default=None, help="prepare this manifest's agent tasks")
     pool = commands.add_parser("pool", help="write the calibration pool manifest")
     pool.add_argument("--output", type=Path, required=True)
     pool.add_argument("--factor", type=float, default=1.5)

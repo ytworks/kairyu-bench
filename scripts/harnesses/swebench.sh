@@ -42,6 +42,12 @@ hf_home="${KAIRYU_BENCH_CACHE_DIR:-/work/cache}/hf/$benchmark-$dataset_revision"
 mkdir -p "$hf_home" "$raw/generation" "$raw/reports"
 export HF_HOME="$hf_home"
 export HF_HUB_DISABLE_TELEMETRY=1
+# KAIRYU_BENCH_SETUP_ONLY=1 stops after the sources, environments and the
+# dataset are cached (wsp prepare); no agent or evaluator runs.
+if [ "${KAIRYU_BENCH_SETUP_ONLY:-0}" = 1 ]; then
+    python -m kairyu_bench.harness_data --split test --cache-only
+    exit 0
+fi
 
 # KAIRYU_BENCH_SWEBENCH_PRO_INSTANCES (comma-separated instance IDs) runs
 # exactly those SWE-bench Pro instances instead of the first --limit.

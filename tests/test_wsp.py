@@ -11,7 +11,7 @@ from kairyu_bench.wsp.catalog import AREA_KEYS, SOURCES
 from kairyu_bench.wsp.manifest import Item
 from kairyu_bench.wsp.report import compare
 from kairyu_bench.wsp.run import allocate_workers
-from kairyu_bench.wsp.select import assign_splits, split_order
+from kairyu_bench.wsp.select import Measured, assign_splits, assign_tiers, split_order
 from kairyu_bench.wsp.sources import Context, Loader, adapters
 from kairyu_bench.wsp.sources.agents import _swe_bench_pro_outcomes
 
@@ -44,6 +44,29 @@ class SplitTest(unittest.TestCase):
         orders = split_order("mmlu-pro", [(item, "s") for item in english], split_of)
         self.assertEqual(len(orders["dev"]), len(orders["test"]))
         self.assertEqual(sum(split_of[f"gpqa-diamond:{n:04d}"] == "dev" for n in range(10)), 5)
+
+
+class TierTest(unittest.TestCase):
+    def test_tiers_fill_smallest_first_within_cumulative_targets(self) -> None:
+        # Review case: two items that fit only the 30-minute tier come before
+        # one that fits 10 minutes; targets are cumulative {10: 1, 30: 2, 60: 3}.
+        limits = {10: 100, 30: 300, 60: 600}
+        measured = {}
+        orders: dict[str, list[str]] = {}
+        for split in ("dev", "test"):
+            ids = [f"mmlu-pro:{split}-{n}" for n in range(4)]
+            for item_id, tokens in zip(ids, (200, 200, 50, 500), strict=True):
+                measured[item_id] = Measured(tokens=tokens, finished=True)
+            orders[split] = ids
+
+        chosen = assign_tiers(
+            "mmlu-pro", orders, {10: 1, 30: 2, 60: 3}, tier_tokens=limits, margin=1.0, measured=measured
+        )
+
+        for split in ("dev", "test"):
+            tiers = dict(chosen[split])
+            self.assertEqual(tiers[f"mmlu-pro:{split}-2"], 10)  # the short item is not lost
+            self.assertEqual([sum(1 for t in tiers.values() if t <= tier) for tier in (10, 30, 60)], [1, 2, 3])
 
 
 class ComparisonTest(unittest.TestCase):
@@ -188,6 +211,15 @@ class ScoringTest(unittest.TestCase):
                 outcomes = [{"samples": [_reply(right)]}, {"samples": [_reply(wrong)]}, {"samples": [_reply(right, "length")]}]
                 scored = registry[source].score([(_item(source), row, outcome) for outcome in outcomes], Loader())
                 self.assertEqual([entry.score for entry in scored], [1.0, 0.0, 0.0])
+
+    def test_scicode_sample_cut_at_the_cap_scores_zero(self) -> None:
+        # One step reached the token cap; the step tests are not run.
+        row = {"problem": {"problem_id": "1", "sub_steps": [{"step_number": "1.1", "test_cases": []}]}}
+        outcome = {"samples": [{"finish_reason": "length", "files": {"1.1": "def f(): return 1"}}]}
+
+        scored = adapters()["scicode"].score([(_item("scicode"), row, outcome)], Loader())
+
+        self.assertEqual((scored[0].score, scored[0].detail), (0.0, {"samples": [{"truncated": True}]}))
 
     def test_choice_log_likelihood_divides_by_choice_characters_as_lm_eval(self) -> None:
         # Review case: ARC choices "a" and "bbb" with log-likelihoods -1 and
