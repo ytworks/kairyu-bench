@@ -15,7 +15,7 @@ from importlib import resources
 from pathlib import Path
 from typing import Any
 
-from kairyu_bench.wsp.catalog import SOURCE_BY_NAME, SPLITS, TIERS
+from kairyu_bench.wsp.catalog import AREA_KEYS, SOURCE_BY_NAME, SPLITS, TIERS
 
 
 class WspManifestError(ValueError):
@@ -84,7 +84,22 @@ def _item(entry: object) -> Item:
     return item
 
 
-def parse_manifest(data: dict[str, Any], *, sha256: str) -> Manifest:
+def missing_coverage(items: tuple[Item, ...] | list[Item]) -> dict[str, list[str]]:
+    """``"<tier>/<split>" -> areas without an item`` for every tier and split."""
+
+    gaps: dict[str, list[str]] = {}
+    for tier in TIERS:
+        for split in SPLITS:
+            covered = {
+                SOURCE_BY_NAME[item.source].area for item in items if item.split == split and item.tier <= tier
+            }
+            absent = [area for area in AREA_KEYS if area not in covered]
+            if absent:
+                gaps[f"{tier}/{split}"] = absent
+    return gaps
+
+
+def parse_manifest(data: dict[str, Any], *, sha256: str, require_all_areas: bool = True) -> Manifest:
     if data.get("schema_version") != 1:
         raise WspManifestError("schema_version must be 1")
     tiers = data.get("tiers")
@@ -105,10 +120,15 @@ def parse_manifest(data: dict[str, Any], *, sha256: str) -> Manifest:
     for source, tier, _ in composition:
         if composition[(source, tier, "dev")] != composition[(source, tier, "test")]:
             raise WspManifestError(f"{source} tier {tier}: dev and test differ in size")
+    # Every tier measures every area; a list missing one is not a wsp tier.
+    gaps = missing_coverage(items) if require_all_areas else {}
+    if gaps:
+        detail = "; ".join(f"{key}: {', '.join(areas)}" for key, areas in gaps.items())
+        raise WspManifestError(f"areas without items: {detail}")
     return Manifest(data=data, items=items, sha256=sha256)
 
 
-def load_manifest(path: Path | None = None) -> Manifest:
+def load_manifest(path: Path | None = None, *, require_all_areas: bool = True) -> Manifest:
     if path is None:
         resource = resources.files("kairyu_bench").joinpath("data/wsp/manifest.json")
         raw = resource.read_bytes()
@@ -117,4 +137,4 @@ def load_manifest(path: Path | None = None) -> Manifest:
     data = json.loads(raw)
     if not isinstance(data, dict):
         raise WspManifestError("manifest must be an object")
-    return parse_manifest(data, sha256=hashlib.sha256(raw).hexdigest())
+    return parse_manifest(data, sha256=hashlib.sha256(raw).hexdigest(), require_all_areas=require_all_areas)

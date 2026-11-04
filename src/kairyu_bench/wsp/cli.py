@@ -13,7 +13,7 @@ from typing import Any
 
 from kairyu_bench.artifacts import write_json
 from kairyu_bench.wsp.catalog import SOURCE_BY_NAME, SPLITS, TIERS
-from kairyu_bench.wsp.manifest import WspManifestError, load_manifest, parse_manifest
+from kairyu_bench.wsp.manifest import WspManifestError, load_manifest, missing_coverage, parse_manifest
 
 
 def _targets() -> dict[str, Any]:
@@ -104,7 +104,10 @@ def command_pool(args: argparse.Namespace) -> int:
                     }
                 )
     pool = {"schema_version": 1, "purpose": "calibration pool", "tiers": targets["tiers"], "items": entries}
-    parse_manifest(pool, sha256="pool")
+    parsed = parse_manifest(pool, sha256="pool", require_all_areas=False)
+    gaps = {key: areas for key, areas in missing_coverage(parsed.items).items() if key.startswith("60/")}
+    if gaps:
+        raise WspManifestError(f"calibration pool lacks areas: {gaps}")
     write_json(args.output, pool)
     print(f"pool: {len(entries)} items -> {args.output}")
     return 0
@@ -122,8 +125,14 @@ def command_run(args: argparse.Namespace) -> int:
     from kairyu_bench.wsp.client import ChatClient, LogprobClient
     from kairyu_bench.wsp.run import RunSettings, execute
 
-    manifest = load_manifest(args.manifest)
+    # The frozen manifest covers every area in every tier; any manifest must
+    # cover them in the tier and split that runs (calibration pools only
+    # hold tier-60 items).
+    manifest = load_manifest(args.manifest, require_all_areas=args.manifest is None)
     items = manifest.select(args.tier, args.split)
+    gaps = missing_coverage(items).get(f"{args.tier}/{args.split}", [])
+    if gaps and not args.incomplete_manifest:
+        raise WspManifestError(f"tier {args.tier} {args.split} has no items for: {', '.join(gaps)}")
     if args.only:
         wanted = set(args.only.split(","))
         unknown = wanted - set(SOURCE_BY_NAME)
@@ -227,6 +236,8 @@ def command_freeze(args: argparse.Namespace) -> int:
         "calibration_runs": [path.name for path in args.calibration],
         "items": items,
     }
+    # Refuses (and writes nothing) unless every tier and split covers all
+    # fourteen areas, e.g. when calibration left an area without items.
     parse_manifest(manifest, sha256="frozen")
     write_json(args.output, manifest)
     return 0
@@ -235,7 +246,7 @@ def command_freeze(args: argparse.Namespace) -> int:
 def command_compare(args: argparse.Namespace) -> int:
     from kairyu_bench.wsp.report import compare, comparison_markdown
 
-    comparison = compare(args.base, args.candidate)
+    comparison = compare(args.base, args.candidate, partial=args.partial)
     if args.output:
         write_json(args.output, comparison)
     print(comparison_markdown(comparison), end="")
@@ -264,12 +275,22 @@ def build_parser() -> argparse.ArgumentParser:
     run.add_argument("--tier", type=int, choices=TIERS, required=True)
     run.add_argument("--split", choices=SPLITS, required=True)
     run.add_argument("--manifest", type=Path, default=None, help="default: the frozen manifest")
+    run.add_argument(
+        "--incomplete-manifest",
+        action="store_true",
+        help="accept a --manifest that lacks areas (development lists; no overall score)",
+    )
     run.add_argument("--only", default=None, help="comma-separated sources (diagnostic runs)")
     run.add_argument("--logprob-endpoint", action="append", default=[], help="vLLM base URL with prompt_logprobs")
     run.add_argument("--label", default=None, help="name of the served weights, e.g. their tree hash")
     run.add_argument("--chat-concurrency", type=int, default=256)
     run.add_argument("--logprob-concurrency", type=int, default=32)
-    run.add_argument("--agent-concurrency", type=int, default=4)
+    run.add_argument(
+        "--agent-concurrency",
+        type=int,
+        default=4,
+        help="agent tasks running at once in total (each harness's own worker setting is also an upper bound)",
+    )
     run.add_argument("--run-id", default=None)
     run.add_argument(
         "--results-dir",
@@ -284,6 +305,11 @@ def build_parser() -> argparse.ArgumentParser:
     compare.add_argument("base", type=Path)
     compare.add_argument("candidate", type=Path)
     compare.add_argument("--output", type=Path, default=None)
+    compare.add_argument(
+        "--partial",
+        action="store_true",
+        help="also compare runs with different or unscored items (no overall score unless all areas pair)",
+    )
     report = commands.add_parser("report", help="rebuild a run's report")
     report.add_argument("run_dir", type=Path)
     return parser

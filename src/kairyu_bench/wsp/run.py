@@ -59,6 +59,30 @@ class _Recorder:
         self.stream.close()
 
 
+def allocate_workers(counts: dict[str, int], total: int, limits: dict[str, int]) -> list[dict[str, int]]:
+    """Waves of ``source -> workers`` so at most ``total`` agent tasks run at once.
+
+    Sources run together when each can have a worker; the total is split by
+    task count (largest remainder, at least one each). Otherwise they run
+    one after another. No source exceeds its harness's own worker setting
+    or its task count.
+    """
+
+    if total < 1:
+        raise ValueError("agent concurrency must be at least 1")
+    sources = sorted(source for source, count in counts.items() if count > 0)
+    if not sources:
+        return []
+    if total < len(sources):
+        return [{source: max(1, min(total, limits[source], counts[source]))} for source in sources]
+    tasks = sum(counts[source] for source in sources)
+    shares = {source: max(1, total * counts[source] // tasks) for source in sources}
+    remainders = sorted(sources, key=lambda source: (-(total * counts[source] % tasks), source))
+    for source in remainders[: max(0, total - sum(shares.values()))]:
+        shares[source] += 1
+    return [{source: max(1, min(shares[source], limits[source], counts[source])) for source in sources}]
+
+
 def _finish_later(finish: Any, item: Item, done: Future[Outcome]) -> None:
     finish(item, done)
 
@@ -161,11 +185,11 @@ def execute(manifest: Manifest, items: list[Item], settings: RunSettings) -> dic
     def run_one(item: Item) -> Outcome:
         return registry[item.source].execute(context, item, rows[item.source][item.id])
 
-    def run_batch(source: str, batch_items: list[Item]) -> None:
+    def run_batch(source: str, batch_items: list[Item], workers: int) -> None:
         batch = registry[source].batch
         assert batch is not None
         try:
-            found = batch(context, batch_items, rows[source])
+            found = batch(context, batch_items, rows[source], workers)
             failure = None
         except Exception as caught:  # noqa: BLE001 - every item of the batch is unscored
             found, failure = {}, f"{type(caught).__name__}: {caught}"
@@ -184,8 +208,21 @@ def execute(manifest: Manifest, items: list[Item], settings: RunSettings) -> dic
     }
     try:
         batched = sorted({item.source for item in items if registry[item.source].batch is not None})
-        for source in batched:
-            pools["agent"].submit(run_batch, source, [item for item in items if item.source == source])
+        waves = allocate_workers(
+            {source: sum(1 for item in items if item.source == source) for source in batched},
+            settings.agent_concurrency,
+            {source: registry[source].worker_limit() for source in batched},  # type: ignore[misc]
+        )
+
+        def run_waves() -> None:
+            for wave in waves:
+                with ThreadPoolExecutor(len(wave), thread_name_prefix="wsp-batch") as batches:
+                    for source, workers in wave.items():
+                        batches.submit(
+                            run_batch, source, [item for item in items if item.source == source], workers
+                        )
+
+        pools["agent"].submit(run_waves)
         for kind in ("agent", "chat", "logprob"):
             for item in _ordered([entry for entry in items if entry.kind == kind and entry.source not in batched]):
                 submitted = pools[kind].submit(run_one, item)

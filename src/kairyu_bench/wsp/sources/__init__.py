@@ -148,8 +148,11 @@ class Adapter:
     # (e.g. BFCL's four official groups).
     equal_strata: bool = False
     # Sources whose items run together in one official harness invocation
-    # (agent tasks): returns an outcome per item id; `execute` is unused.
-    batch: Callable[[Context, list[Item], dict[str, Row]], dict[str, Outcome]] | None = None
+    # (agent tasks), with a number of parallel workers: returns an outcome
+    # per item id; `execute` is unused.
+    batch: Callable[[Context, list[Item], dict[str, Row], int], dict[str, Outcome]] | None = None
+    # The harness's own worker setting, an upper bound for `batch` workers.
+    worker_limit: Callable[[], int] | None = None
 
 
 ADAPTERS: dict[str, Adapter] = {}

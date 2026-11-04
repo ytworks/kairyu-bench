@@ -49,11 +49,11 @@ CHAT_CHECKPOINT_DIR=/mnt/nvme/<編集済みチェックポイント> ./run.sh up
 | 画像理解 | MMMU-Pro（標準10択と画像版） | 公式 CoT プロンプトと解析 |
 | 安全性 | XSTest | 公式文字列一致: 安全な質問は答えたら1、危険な質問は断ったら1 |
 
-総合スコアは14能力の単純平均、能力のスコアはその出典スコアの平均です。
+総合スコアは14能力の単純平均、能力のスコアはその出典スコアの平均です。14能力のどれかが採点できなかった回（`--only` や通信障害）では、総合スコアを出しません。
 
 スコアに入れない診断（すべてのパターン）:
 
-- **次トークン分布**: WikiText-2・日本語 Wikipedia・コード（MBPP+ の解答）の先頭512トークンで、元モデルとの KL（上位20語による下限近似）、最有力トークンの一致率、負の対数尤度。生成なしで安く、重みの変化を最も早く検出します。
+- **次トークン分布**: WikiText-2・日本語 Wikipedia・コード（MBPP+ の解答）の先頭512トークンで、元モデルとの KL、最有力トークンの一致率、負の対数尤度。KL は、両モデルとも確率が分かる語（上位20語と実際の次の語）を1語ずつ、それ以外を「残り」1区分にまとめた分布で計算するので、真の KL の下限です。生成なしで安く、重みの変化を最も早く検出します。
 - **生成の健全性**: 上限到達率、空回答の率、平均出力長。
 - **確信度の正しさ**: 選択式の対数確率からの校正誤差。
 
@@ -76,7 +76,9 @@ KAIRYU_BENCH_DOCKER_NETWORK=gemma-4-31b-8gpu_default ./kairyu-bench wsp run \
 ```
 
 Kairyu の API は `prompt_logprobs` を上流 vLLM へ渡さないため、対数確率を使う項目だけ vLLM レプリカへ直接送ります。`KAIRYU_BENCH_DOCKER_NETWORK` はランナーを例のスタックの Docker ネットワークへ参加させます。
-エージェント作業には Docker が必要で、SWE-bench Pro は専用の Docker デーモン（`KAIRYU_BENCH_DOCKER_SOCKET`）を推奨します（[AGENTS.md](../AGENTS.md)）。
+エージェント作業には Docker が必要で、SWE-bench Pro は専用の Docker デーモン（`KAIRYU_BENCH_DOCKER_SOCKET`）を推奨します（[AGENTS.md](../AGENTS.md)）。`--agent-concurrency N`（既定4）は、エージェント作業全体で同時に走る課題数の上限です。Terminal-Bench と SWE-bench Pro に課題数の比で分け（それぞれ最低1、N が出典の数より少なければ順番に実行）、各ハーネスの `KAIRYU_BENCH_TERMINAL_BENCH_WORKERS` / `KAIRYU_BENCH_SWEBENCH_PRO_WORKERS` も上限として守ります。SWE-bench Pro は、一部の課題が失敗しても公式評価が済んだ課題の結果を使い、結果の無い課題だけを未採点にします。
+
+確定版の問題リストは、全パターン・両方の組で14能力すべてに問題があることを読み込み時に検査します（`freeze` も、足りなければ書き出さずに失敗します）。別の問題リストを `--manifest` で渡すときは、実行するパターンと組で14能力がそろっている必要があります。開発用の小さなリストは `--incomplete-manifest` を付けたときだけ使え、その回の総合スコアは出ません。
 
 調整用（dev）は編集の比較・選択に、最終確認用（test）は最終報告だけに使ってください。test を見ながら編集を選ぶと、その結果は最終確認になりません。
 
@@ -84,7 +86,7 @@ Kairyu の API は `prompt_logprobs` を上流 vLLM へ渡さないため、対�
 
 `results/<run-id>/` に `run.json`（状態、時間、未採点の項目）、`items.jsonl`（問題ごとの応答・トークン数・得点・抽出結果）、`responses.jsonl`（到着順の生の応答）、`report.json` / `report.md` を保存します。エージェント作業は `agents/<出典>/` に通常の kairyu-bench の結果として残ります。
 
-`compare` は同じ問題リスト（manifest の SHA-256）・パターン・組の2回分だけを比べます。区間は出典ごとに問題を復元抽出する対応のあるブートストラップ（2,000回、固定シード）で、同じ入力からは同じ値が出ます。
+`compare` は同じ問題リスト（manifest の SHA-256）・パターン・組で、両方とも `completed`、かつ問題の集合が同じ2回だけを比べます。`--partial` を付けると、`--only` の回や未採点のある回でも、両方で採点できた問題だけで能力ごとの差を出します。その場合は能力ごとの欠けた問題数を表示し、14能力がそろわなければ総合の差は出しません。区間は出典ごとに問題を復元抽出する対応のあるブートストラップ（2,000回、固定シード）で、同じ入力からは同じ値が出ます。
 
 API の通信障害で採点できなかった項目は `unscored` として記録され、状態は `partial` になります（推測の0点にはしません）。
 
@@ -92,7 +94,7 @@ API の通信障害で採点できなかった項目は `unscored` として記�
 
 1. `wsp pool --output pool.json`: 各出典の dev・test から、60分版の目標数の1.5倍ずつを層別に取ります（エージェント作業は過去の実行で短かった課題が候補: `src/kairyu_bench/data/wsp/agent-candidates.json`）。
 2. `wsp run ... --manifest pool.json --tier 60`: 元モデルで1回、長い上限で実行して問題ごとの出力長を測ります。
-3. `wsp freeze --pool pool.json --calibration results/<run> --output src/kairyu_bench/data/wsp/manifest.json`: 元モデルがそのパターンの上限の `margin`（0.6）倍以内で答え終えた問題だけを、そのパターンに入れます。上限と目標数は `src/kairyu_bench/data/wsp/targets.json` です。10分版は短く解ける問題が中心になり、長く考える問題は30・60分版で増えます。
+3. `wsp freeze --pool pool.json --calibration results/<run> --output src/kairyu_bench/data/wsp/manifest.json`: 元モデルがそのパターンの上限の `margin`（0.6）倍以内で答え終えた問題だけを、そのパターンに入れます（エージェント作業は実測の秒数をパターンの時間と比べます）。上限と目標数は `src/kairyu_bench/data/wsp/targets.json` です。10分版は短く解ける問題が中心になり、長く考える問題は30・60分版で増えます。
 
 ## 公式手順との違い
 
@@ -105,7 +107,7 @@ API の通信障害で採点できなかった項目は `unscored` として記�
 - SciCode は背景なし設定（kairyu-bench の既定）。1ステップのテスト上限は 300 秒（公式 1,800 秒）。問題ごとの得点は通ったステップの割合。
 - BFCL はエージェント系（web_search・memory）を除外（SerpAPI とモデルのダウンロードが必要なため）。
 - RULER は外部コーパス不要の6課題（niah_single_1・niah_multikey_2/3・vt・cwe・fwe）。補完モデル用の回答書き出し（answer prefix）は送らない。
-- HellaSwag・ARC・WinoGrande は指示調整版モデルを生の文章で測るため、一般に公表される事前学習モデルの値より低めになります。元モデルとの差で読んでください。
+- HellaSwag・ARC は lm-eval と同じく選択肢本文の文字数で割った値（acc_norm）、WinoGrande は割らない値（acc）で選びます。指示調整版モデルを生の文章で測るため、一般に公表される事前学習モデルの値より低めになります。元モデルとの差で読んでください。
 - コードを実行する採点（EvalPlus・LiveCodeBench・SciCode）はテストに時間制限があり、採点機の負荷が極端だと判定が変わりえます。採点は別プロセスで並列数を抑えて行います。
 
 ## ロックの更新

@@ -71,23 +71,39 @@ def _terminal_bench_outcomes(run_dir: Path) -> dict[str, dict[str, Any]]:
 
 
 def _swe_bench_pro_outcomes(run_dir: Path) -> dict[str, dict[str, Any]]:
-    raw = run_dir / "raw" / "swe-bench-pro"
-    path = raw / "evaluation" / "eval_results.json"
-    if not path.is_file():
-        return {}
-    resolved = json.loads(path.read_text(encoding="utf-8"))
-    # The harness records no per-item time; an item's span is from its
-    # selection file to its outcome file.
-    seconds: dict[str, float] = {}
-    for item in (raw / "items").glob("*"):
-        ids, outcome = item / "instance-ids.txt", item / "outcome.json"
-        if ids.is_file() and outcome.is_file():
-            seconds[ids.read_text(encoding="utf-8").strip()] = outcome.stat().st_mtime - ids.stat().st_mtime
-    return {name: {"reward": float(bool(value)), "seconds": seconds.get(name)} for name, value in resolved.items()}
+    """Official per-instance verdicts, read item by item.
+
+    The harness writes the aggregate only when every item succeeded; each
+    item's `evaluation/eval_results.json` (the official evaluator's
+    `{instance_id: bool}`) is kept either way, so an item that failed leaves
+    only its own instance unscored.
+    """
+
+    outcomes: dict[str, dict[str, Any]] = {}
+    for item in sorted((run_dir / "raw" / "swe-bench-pro" / "items").glob("*")):
+        ids, verdict = item / "instance-ids.txt", item / "evaluation" / "eval_results.json"
+        if not (ids.is_file() and verdict.is_file()):
+            continue
+        expected = ids.read_text(encoding="utf-8").strip()
+        payload = json.loads(verdict.read_text(encoding="utf-8"))
+        if not isinstance(payload, dict) or set(payload) != {expected} or not isinstance(payload[expected], bool):
+            continue
+        # The harness records no per-item time; an item's span is from its
+        # selection file to its verdict file.
+        outcomes[expected] = {
+            "reward": float(payload[expected]),
+            "seconds": verdict.stat().st_mtime - ids.stat().st_mtime,
+        }
+    return outcomes
+
+
+def _worker_limit(source: str):  # type: ignore[no-untyped-def]
+    # The kairyu-bench wrapper always passes these (default 4).
+    return lambda: int(os.environ.get(WORKERS_ENV[source], "4"))
 
 
 def _batch(source: str):  # type: ignore[no-untyped-def]
-    def run(context: Context, items: list[Item], rows: dict[str, Row]) -> dict[str, Outcome]:
+    def run(context: Context, items: list[Item], rows: dict[str, Row], workers: int) -> dict[str, Outcome]:
         from kairyu_bench.manifest import load_manifest as load_benchmarks
         from kairyu_bench.runner import RunConfig, run_benchmarks
         from kairyu_bench.target import Endpoint, TargetClient
@@ -95,7 +111,7 @@ def _batch(source: str):  # type: ignore[no-untyped-def]
         assert context.chat is not None and context.run_dir is not None
         names = [rows[item.id]["name"] for item in items]
         os.environ[SELECTION_ENV[source]] = ",".join(names)
-        os.environ[WORKERS_ENV[source]] = str(min(16, len(names)))
+        os.environ[WORKERS_ENV[source]] = str(workers)
         endpoint = Endpoint.parse(context.chat.base_url)
         config = RunConfig(
             endpoint=endpoint,
@@ -144,5 +160,6 @@ for _source in ("terminal-bench", "swe-bench-pro"):
             execute=_unused,
             score=_score,
             batch=_batch(_source),
+            worker_limit=_worker_limit(_source),
         ),
     )

@@ -43,25 +43,25 @@ def _hellaswag_preprocess(text: str) -> str:
     return text.replace("  ", " ")
 
 
-def _requests(source: str, row: Row) -> tuple[list[tuple[str, str]], int]:
-    """``(context, continuation)`` per choice and the gold index."""
+def _requests(source: str, row: Row) -> tuple[list[tuple[str, str]], int, list[str]]:
+    """``(context, continuation)`` per choice, the gold index, and lm-eval's
+    ``doc_to_choice`` strings (whose character counts acc_norm divides by)."""
 
     if source == "hellaswag":
         ctx = row["ctx_a"] + " " + row["ctx_b"].capitalize()
         query = _hellaswag_preprocess(row["activity_label"] + ": " + ctx)
         choices = [_hellaswag_preprocess(ending) for ending in row["endings"]]
-        return [(query, TARGET_DELIMITER + choice) for choice in choices], int(row["label"])
+        return [(query, TARGET_DELIMITER + choice) for choice in choices], int(row["label"]), choices
     if source == "arc-challenge":
         query = f"Question: {row['question']}\nAnswer:"
         choices = list(row["choices"]["text"])
-        return [(query, TARGET_DELIMITER + choice) for choice in choices], list(
-            row["choices"]["label"]
-        ).index(row["answerKey"])
+        gold = list(row["choices"]["label"]).index(row["answerKey"])
+        return [(query, TARGET_DELIMITER + choice) for choice in choices], gold, choices
     if source == "winogrande":
         index = row["sentence"].index("_")
         target = TARGET_DELIMITER + row["sentence"][index + 1 :].strip()
         contexts = [row["sentence"][:index] + option for option in (row["option1"], row["option2"])]
-        return [(ctx, target) for ctx in contexts], {"1": 0, "2": 1}[row["answer"]]
+        return [(ctx, target) for ctx in contexts], {"1": 0, "2": 1}[row["answer"]], contexts
     raise ValueError(source)
 
 
@@ -86,9 +86,11 @@ def _continuation_logprob(context: Context, prefix: str, continuation: str) -> f
 
 
 def _execute_choice(context: Context, item: Item, row: Row) -> Outcome:
-    pairs, gold = _requests(item.source, row)
+    pairs, gold, choices = _requests(item.source, row)
     logliks = [_continuation_logprob(context, prefix, continuation) for prefix, continuation in pairs]
-    lengths = [len(continuation.encode("utf-8")) for _, continuation in pairs]
+    # lm-eval task.py process_results: acc_norm divides by len(choice), the
+    # choice's characters without the target delimiter.
+    lengths = [len(choice) for choice in choices]
     return {"logliks": logliks, "lengths": lengths, "gold": gold}
 
 

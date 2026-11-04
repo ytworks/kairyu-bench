@@ -1,9 +1,10 @@
 """Scores per source, area and overall; paired comparison with a base run.
 
 Area score = mean of its sources' scores; overall = mean of the area scores
-(every area weighs the same). A comparison resamples items inside each
-source (paired, stratified bootstrap with a fixed seed), so its intervals
-are reproducible and reflect both item and sampling noise.
+(every area weighs the same), and only when all fourteen areas are scored. A
+comparison resamples items inside each source (paired, stratified bootstrap
+with a fixed seed), so its intervals are reproducible and reflect both item
+and sampling noise.
 """
 
 from __future__ import annotations
@@ -41,13 +42,20 @@ def _samples(record: dict[str, Any]) -> list[dict[str, Any]]:
 
 
 def composite(source_scores: dict[str, float]) -> tuple[dict[str, float], float | None]:
+    """Area scores, and the overall score only if every area has one: a mean
+    over fewer areas is a different quantity and is never reported as it."""
+
     by_area: dict[str, list[float]] = defaultdict(list)
     for source, value in source_scores.items():
         area = SOURCE_BY_NAME[source].area
         if area is not None:
             by_area[area].append(value)
     areas = {area: sum(values) / len(values) for area, values in by_area.items()}
-    return areas, _mean(areas.values())
+    return areas, _mean(areas.values()) if set(areas) == set(AREA_LABELS) else None
+
+
+def _missing_areas(areas: dict[str, float]) -> list[str]:
+    return [area for area in AREA_LABELS if area not in areas]
 
 
 def build_report(run_dir: Path) -> dict[str, Any]:
@@ -84,6 +92,7 @@ def build_report(run_dir: Path) -> dict[str, Any]:
         "timing": run.get("timing"),
         "unscored": run.get("unscored", []),
         "overall": overall,
+        "missing_areas": _missing_areas(areas),
         "areas": {area: areas.get(area) for area in AREA_LABELS},
         "sources": sources,
         "calibration_ece": _calibration_error(records),
@@ -120,10 +129,16 @@ def _fmt(value: float | None, scale: float = 100.0, digits: int = 1) -> str:
 def report_markdown(report: dict[str, Any]) -> str:
     run = report["run"]
     timing = report.get("timing") or {}
+    missing = report.get("missing_areas") or []
+    overall = (
+        f"**{_fmt(report['overall'])}** (mean of the area scores, 0–100)"
+        if not missing
+        else f"– (not computed: {len(missing)} areas unscored: {', '.join(missing)})"
+    )
     lines = [
         f"# WSP tier {run['tier']} ({run['split']}) — {run.get('label') or run['model_id']}",
         "",
-        f"Overall: **{_fmt(report['overall'])}** (mean of the area scores, 0–100). "
+        f"Overall: {overall}. "
         f"Status: {run['status']}; wall {timing.get('wall_seconds')} s "
         f"(target {timing.get('target_minutes')} min); unscored items: {len(report['unscored'])}.",
         "",
@@ -171,13 +186,32 @@ def _interval(values: list[float]) -> tuple[float, float]:
     return low, high
 
 
-def _probe_divergence(base: list[dict[str, Any]], candidate: list[dict[str, Any]]) -> dict[str, Any]:
-    """Next-token distribution change on the probe texts (top-k approximation).
+def _position_kl(p_entry: dict[str, Any], q_entry: dict[str, Any]) -> float:
+    """KL(base || edited) at one position, a lower bound of the true KL.
 
-    KL(base || edited) is summed over the base model's top-k tokens; a token
-    missing from the edited top-k takes the edited top-k's lowest logprob, so
-    the value is a lower bound.
+    The vocabulary is coarsened into the tokens whose probability both runs
+    returned (their top-k and the actual next token) and one bucket for all
+    other tokens, holding each model's remaining mass. KL never grows under
+    such a coarsening (data-processing inequality), so the value is a lower
+    bound for any top-k.
     """
+
+    p = {int(token): value for token, value in p_entry["top"]}
+    q = {int(token): value for token, value in q_entry["top"]}
+    p[int(p_entry["token"])] = float(p_entry["logprob"])
+    q[int(q_entry["token"])] = float(q_entry["logprob"])
+    known = sorted(set(p) & set(q))
+    kl = math.fsum(math.exp(p[token]) * (p[token] - q[token]) for token in known)
+    rest_p = max(0.0, 1.0 - math.fsum(math.exp(p[token]) for token in known))
+    rest_q = max(0.0, 1.0 - math.fsum(math.exp(q[token]) for token in known))
+    if rest_p > 0.0:
+        # Floating-point sums can leave a true small remainder at 0.
+        kl += rest_p * math.log(rest_p / max(rest_q, 1e-12))
+    return max(kl, 0.0)
+
+
+def _probe_divergence(base: list[dict[str, Any]], candidate: list[dict[str, Any]]) -> dict[str, Any]:
+    """Next-token distribution change on the probe texts."""
 
     by_id = {record["id"]: record for record in candidate}
     totals: dict[str, dict[str, float]] = defaultdict(lambda: defaultdict(float))
@@ -195,8 +229,7 @@ def _probe_divergence(base: list[dict[str, Any]], candidate: list[dict[str, Any]
         for p_entry, q_entry in zip(left, right, strict=True):
             p = {int(token): value for token, value in p_entry["top"]}
             q = {int(token): value for token, value in q_entry["top"]}
-            floor = min(q.values())
-            bucket["kl"] += sum(math.exp(lp) * (lp - q.get(token, floor)) for token, lp in p.items())
+            bucket["kl"] += _position_kl(p_entry, q_entry)
             bucket["top1"] += float(max(p, key=p.__getitem__) == max(q, key=q.__getitem__))
             bucket["nll_base"] -= p_entry["logprob"]
             bucket["nll_candidate"] -= q_entry["logprob"]
@@ -214,35 +247,73 @@ def _probe_divergence(base: list[dict[str, Any]], candidate: list[dict[str, Any]
     }
 
 
-def compare(base_dir: Path, candidate_dir: Path) -> dict[str, Any]:
+def compare(base_dir: Path, candidate_dir: Path, *, partial: bool = False) -> dict[str, Any]:
+    """Paired comparison of two runs of one tier and split.
+
+    Both runs must be complete and hold the same items; ``partial`` allows
+    other runs (``--only``, unscored items) and then reports what is missing
+    per area and no overall score unless every area is paired.
+    """
+
     base_run = read_object(base_dir / "run.json", "wsp run")
     candidate_run = read_object(candidate_dir / "run.json", "wsp run")
     for key in ("manifest_sha256", "tier", "split"):
         if base_run.get(key) != candidate_run.get(key):
             raise ValueError(f"runs differ in {key}: {base_run.get(key)} vs {candidate_run.get(key)}")
     base, candidate = read_items(base_dir), read_items(candidate_dir)
+    base_ids = {record["id"] for record in base}
+    candidate_ids = {record["id"] for record in candidate}
+    if not partial:
+        problems = [
+            f"{name} run is {run.get('status')} ({len(run.get('unscored') or [])} unscored items)"
+            for name, run in (("base", base_run), ("candidate", candidate_run))
+            if run.get("status") != "completed"
+        ]
+        if base_ids != candidate_ids:
+            problems.append(
+                f"item sets differ: {len(base_ids - candidate_ids)} only in base, "
+                f"{len(candidate_ids - base_ids)} only in candidate"
+            )
+        if problems:
+            raise ValueError("; ".join(problems) + " (use --partial to compare what both runs scored)")
     pairs = _paired(base, candidate)
+    # Capability items that are not scored in both runs, per area.
+    item_source = {record["id"]: record["source"] for record in base + candidate}
+    base_scored = {record["id"] for record in base if record.get("score") is not None}
+    candidate_scored = {record["id"] for record in candidate if record.get("score") is not None}
+    missing: dict[str, int] = defaultdict(int)
+    for item_id in base_ids | candidate_ids:
+        area = SOURCE_BY_NAME[item_source[item_id]].area
+        if area is not None and not (item_id in base_scored and item_id in candidate_scored):
+            missing[area] += 1
 
-    def summary(chosen: dict[str, list[tuple[float, float]]]) -> tuple[dict[str, float], dict[str, float], float]:
+    def summary(
+        chosen: dict[str, list[tuple[float, float]]],
+    ) -> tuple[dict[str, float], dict[str, float], float | None]:
         base_areas, base_overall = composite({s: sum(b for b, _ in v) / len(v) for s, v in chosen.items() if v})
         cand_areas, cand_overall = composite({s: sum(c for _, c in v) / len(v) for s, v in chosen.items() if v})
         deltas = {area: cand_areas[area] - base_areas[area] for area in base_areas}
         sources = {s: sum(c - b for b, c in v) / len(v) for s, v in chosen.items() if v}
-        return deltas, sources, (cand_overall or 0.0) - (base_overall or 0.0)
+        overall = None if base_overall is None or cand_overall is None else cand_overall - base_overall
+        return deltas, sources, overall
 
     area_delta, source_delta, overall_delta = summary(pairs)
     generator = random.Random(BOOTSTRAP_SEED)
     area_draws: dict[str, list[float]] = defaultdict(list)
     source_draws: dict[str, list[float]] = defaultdict(list)
     overall_draws: list[float] = []
-    for _ in range(BOOTSTRAP_RESAMPLES):
-        resampled = {source: [values[generator.randrange(len(values))] for _ in values] for source, values in sorted(pairs.items())}
+    for _ in range(BOOTSTRAP_RESAMPLES if pairs else 0):
+        resampled = {
+            source: [values[generator.randrange(len(values))] for _ in values]
+            for source, values in sorted(pairs.items())
+        }
         deltas, sources, overall = summary(resampled)
         for key, value in deltas.items():
             area_draws[key].append(value)
         for key, value in sources.items():
             source_draws[key].append(value)
-        overall_draws.append(overall)
+        if overall is not None:
+            overall_draws.append(overall)
 
     base_scores = {s: sum(b for b, _ in v) / len(v) for s, v in pairs.items() if v}
     cand_scores = {s: sum(c for _, c in v) / len(v) for s, v in pairs.items() if v}
@@ -259,9 +330,15 @@ def compare(base_dir: Path, candidate_dir: Path) -> dict[str, Any]:
         "schema_version": 1,
         "tier": base_run["tier"],
         "split": base_run["split"],
+        "partial": partial,
+        "missing_areas": _missing_areas(area_delta),
+        "unpaired_items": {area: missing[area] for area in AREA_LABELS if missing.get(area)},
         "base": {"label": base_run.get("label"), "model_id": base_run.get("model_id"), "overall": base_overall},
         "candidate": {"label": candidate_run.get("label"), "model_id": candidate_run.get("model_id"), "overall": cand_overall},
-        "overall": {"delta": overall_delta, "ci95": _interval(overall_draws)},
+        "overall": {
+            "delta": overall_delta,
+            "ci95": _interval(overall_draws) if overall_delta is not None else None,
+        },
         "areas": {
             area: {
                 "base": base_areas[area],
@@ -269,6 +346,7 @@ def compare(base_dir: Path, candidate_dir: Path) -> dict[str, Any]:
                 "delta": area_delta[area],
                 "ci95": _interval(area_draws[area]),
                 "flips": flips[area],
+                "unpaired": missing.get(area, 0),
             }
             for area in AREA_LABELS
             if area in area_delta
@@ -293,23 +371,44 @@ def comparison_markdown(comparison: dict[str, Any]) -> str:
         return f"{value * 100:+.1f}"
 
     overall = comparison["overall"]
+    if overall["delta"] is None:
+        missing = comparison["missing_areas"]
+        headline = f"Overall: – (not computed: {len(missing)} areas not paired: {', '.join(missing)})"
+    else:
+        headline = (
+            f"Overall: {_fmt(comparison['base']['overall'])} → {_fmt(comparison['candidate']['overall'])} "
+            f"({pp(overall['delta'])} pt, 95% CI {pp(overall['ci95'][0])} to {pp(overall['ci95'][1])})"
+        )
     lines = [
         f"# WSP tier {comparison['tier']} ({comparison['split']}): "
         f"{comparison['candidate']['label'] or comparison['candidate']['model_id']} vs "
         f"{comparison['base']['label'] or comparison['base']['model_id']}",
         "",
-        f"Overall: {_fmt(comparison['base']['overall'])} → {_fmt(comparison['candidate']['overall'])} "
-        f"({pp(overall['delta'])} pt, 95% CI {pp(overall['ci95'][0])} to {pp(overall['ci95'][1])})",
+        headline,
+    ]
+    if comparison["partial"]:
+        unpaired = comparison["unpaired_items"]
+        lines += [
+            "",
+            "Partial comparison (--partial): "
+            + (
+                "items not scored in both runs: " + ", ".join(f"{area} {count}" for area, count in unpaired.items())
+                if unpaired
+                else "every item is scored in both runs"
+            )
+            + ".",
+        ]
+    lines += [
         "",
-        "| Area | 能力 | Base | Edited | Δ pt | 95% CI | Lost | Gained | Items |",
-        "|---|---|---:|---:|---:|---|---:|---:|---:|",
+        "| Area | 能力 | Base | Edited | Δ pt | 95% CI | Lost | Gained | Items | Unpaired |",
+        "|---|---|---:|---:|---:|---|---:|---:|---:|---:|",
     ]
     for area, entry in comparison["areas"].items():
         low, high = entry["ci95"]
         lines.append(
             f"| {area} | {AREA_LABELS[area]} | {_fmt(entry['base'])} | {_fmt(entry['candidate'])} | "
             f"{pp(entry['delta'])} | {pp(low)} to {pp(high)} | {entry['flips']['lost']} | "
-            f"{entry['flips']['gained']} | {entry['flips']['items']} |"
+            f"{entry['flips']['gained']} | {entry['flips']['items']} | {entry['unpaired']} |"
         )
     if comparison["probes"]:
         lines += [
