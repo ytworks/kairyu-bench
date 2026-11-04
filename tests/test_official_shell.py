@@ -219,6 +219,8 @@ trial.mkdir(parents=True)
                     "ANTHROPIC_API_KEY": "super-secret",
                     "HARBOR_ARGS_PATH": str(capture_path),
                 }
+                if agent == "terminus-2":
+                    process_environment["KAIRYU_BENCH_TERMINAL_BENCH_MAX_TURNS"] = "250"
                 subprocess.run(
                     [str(ROOT / "scripts/harnesses/terminal-bench.sh")],
                     cwd=ROOT,
@@ -245,6 +247,12 @@ trial.mkdir(parents=True)
                     if argument == "--agent-env"
                 ]
                 self.assertEqual(actual_agent_env, expected_agent_env)
+                if agent == "terminus-2":
+                    # wsp's turn bound replaces the agent time limit (and the
+                    # per-call timeout) as what ends a trial.
+                    self.assertIn("max_turns=250", arguments)
+                    self.assertIn('llm_call_kwargs={"timeout": 1200}', arguments)
+                    self.assertIn("--agent-timeout-multiplier", arguments)
                 overlay = Path(
                     arguments[arguments.index("--extra-docker-compose") + 1]
                 )

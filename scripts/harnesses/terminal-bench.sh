@@ -97,6 +97,28 @@ case "$harbor_agent" in
         exit 2
         ;;
 esac
+# KAIRYU_BENCH_TERMINAL_BENCH_MAX_TURNS bounds terminus-2 by turns instead of
+# the task's agent time limit, so the score does not depend on serving speed
+# (wsp). The time limits then only detect hangs: 48x the agent limit (12 hours
+# for a 900-second task, the SWE-bench Pro container lifetime) and the
+# SWE-bench Pro harness's 1200 seconds per model call.
+if [ -n "${KAIRYU_BENCH_TERMINAL_BENCH_MAX_TURNS:-}" ]; then
+    case "$harbor_agent:$KAIRYU_BENCH_TERMINAL_BENCH_MAX_TURNS" in
+        terminus-2:*[!0-9]*|terminus-2:0)
+            echo "kairyu-bench: KAIRYU_BENCH_TERMINAL_BENCH_MAX_TURNS must be a positive integer" >&2
+            exit 2
+            ;;
+        terminus-2:*)
+            ;;
+        *)
+            unsupported "KAIRYU_BENCH_TERMINAL_BENCH_MAX_TURNS needs the terminus-2 agent"
+            ;;
+    esac
+    set -- "$@" \
+        --agent-kwarg "max_turns=$KAIRYU_BENCH_TERMINAL_BENCH_MAX_TURNS" \
+        --agent-kwarg 'llm_call_kwargs={"timeout": 1200}' \
+        --agent-timeout-multiplier 48
+fi
 if [ "$limit" != "null" ]; then
     set -- "$@" --n-tasks "$limit"
 fi

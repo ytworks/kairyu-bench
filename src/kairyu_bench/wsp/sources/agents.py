@@ -21,6 +21,10 @@ WORKERS_ENV = {
     "terminal-bench": "KAIRYU_BENCH_TERMINAL_BENCH_WORKERS",
     "swe-bench-pro": "KAIRYU_BENCH_SWEBENCH_PRO_WORKERS",
 }
+# Terminal-Bench is bounded by turns, not by its official agent time limit,
+# so a score does not depend on serving speed (principle 4); 250 is the
+# official mini-swe-agent step limit SWE-bench Pro runs with.
+TERMINAL_BENCH_MAX_TURNS = 250
 
 
 def harbor_cache() -> Path:
@@ -201,6 +205,8 @@ def _batch(source: str):  # type: ignore[no-untyped-def]
         names = [rows[item.id]["name"] for item in items]
         os.environ[SELECTION_ENV[source]] = ",".join(names)
         os.environ[WORKERS_ENV[source]] = str(workers)
+        if source == "terminal-bench":
+            os.environ["KAIRYU_BENCH_TERMINAL_BENCH_MAX_TURNS"] = str(TERMINAL_BENCH_MAX_TURNS)
         # Task packages and images come from `wsp prepare` (untimed).
         os.environ["KAIRYU_BENCH_HARBOR_CACHE_DIR"] = str(harbor_cache())
         endpoint = Endpoint.parse(context.chat.base_url)
