@@ -239,19 +239,30 @@ class AgentTest(unittest.TestCase):
             with self.assertRaises(PreflightError):
                 main([*arguments, "--only", "mmlu-pro"])
 
-    def test_swe_bench_pro_keeps_item_verdicts_without_the_aggregate(self) -> None:
+    def test_swe_bench_pro_scores_agent_ends_and_leaves_crashes_unscored(self) -> None:
+        # Without the aggregate, each item keeps its own verdict; an agent
+        # that crashed (here before its first model call) is not a 0.
+        cases = (
+            ("task-a", True, "Submitted"),
+            ("task-b", None, "Submitted"),
+            ("task-c", False, "LimitsExceeded"),
+            ("task-d", False, "ModuleNotFoundError"),
+        )
         with tempfile.TemporaryDirectory() as directory:
             items = Path(directory) / "raw" / "swe-bench-pro" / "items"
-            for index, (instance, verdict) in enumerate((("task-a", True), ("task-b", None)), 1):
+            for index, (instance, verdict, exit_status) in enumerate(cases, 1):
                 item = items / f"{index:04d}"
                 (item / "evaluation").mkdir(parents=True)
+                (item / "generation" / instance).mkdir(parents=True)
                 (item / "instance-ids.txt").write_text(instance + "\n", encoding="utf-8")
+                trajectory = {"info": {"exit_status": exit_status}}
+                (item / "generation" / instance / f"{instance}.traj.json").write_text(json.dumps(trajectory))
                 if verdict is not None:
                     (item / "evaluation" / "eval_results.json").write_text(json.dumps({instance: verdict}))
 
             outcomes = _swe_bench_pro_outcomes(Path(directory))
 
-        self.assertEqual({name: entry["reward"] for name, entry in outcomes.items()}, {"task-a": 1.0})
+        self.assertEqual({name: entry["reward"] for name, entry in outcomes.items()}, {"task-a": 1.0, "task-c": 0.0})
 
 
 class ScoringTest(unittest.TestCase):
