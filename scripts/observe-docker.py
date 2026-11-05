@@ -317,7 +317,27 @@ def restore(docker, args):
     original = docker.inspect(state["original_id"])
     current = docker.inspect(args.container)
     if current["Id"] == original["Id"] and state["status"] in ("restored", "restored_stopped", "rolled_back"):
-        return {"operation": "restore", "container": args.container, "status": "already_original"}
+        desired_running = bool(state["original_was_running"]) and not args.leave_stopped
+        summary = {"operation": "restore", "container": args.container,
+                   "original_id": original["Id"], "leave_stopped": args.leave_stopped,
+                   "desired_running": desired_running, "environment_values_displayed": False}
+        if bool(current["State"].get("Running")) == desired_running:
+            return {**summary, "status": "already_original"}
+        if not args.apply:
+            return {**summary, "status": "dry_run"}
+        with (directory / "restore.lock").open("a") as lock:
+            fcntl.flock(lock.fileno(), fcntl.LOCK_EX | fcntl.LOCK_NB)
+            checked_current(docker, args.container, original["Id"])
+            if bool(docker.inspect(original["Id"])["State"].get("Running")) == desired_running:
+                return {**summary, "status": "already_original"}
+            if desired_running:
+                docker.call("POST", f"/containers/{original['Id']}/start")
+                wait_ready(docker, original["Id"], args.health_timeout)
+            else:
+                stop(docker, original["Id"])
+            state["status"] = "restored" if desired_running else "restored_stopped"
+            private_json(directory / "state.json", state)
+            return {**summary, "status": state["status"]}
     if current["Config"].get("Labels", {}).get(LABEL) != state["operation_id"]:
         raise ValueError("current container is not the observer owned by this backup")
     if state.get("observer_id", current["Id"]) != current["Id"]:

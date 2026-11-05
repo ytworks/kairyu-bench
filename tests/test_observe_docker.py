@@ -199,6 +199,46 @@ class DockerObserverTests(unittest.TestCase):
         self.assertFalse(any("/start" in path for _, path in docker.calls[before:]))
         self.assertEqual(module.restore(docker, self.args)["status"], "already_original")
 
+    def test_already_original_converges_running_state_without_touching_other_containers(self):
+        for initial_status, was_running in (("restored", True), ("rolled_back", True), ("restored", False)):
+            with self.subTest(initial_status=initial_status, was_running=was_running):
+                suffix = f"{initial_status}-{was_running}"
+                self.args.backup_dir = self.root / ("backup-" + suffix)
+                self.args.runtime_cache = self.root / ("cache-" + suffix)
+                self.args.apply, self.args.leave_stopped = True, False
+                self.original["State"].update(Running=was_running, Status="running" if was_running else "exited")
+                docker = FakeDocker(self.original, "create" if initial_status == "rolled_back" else None)
+                if initial_status == "rolled_back":
+                    with self.assertRaisesRegex(RuntimeError, "create"):
+                        self.apply(docker)
+                    docker.failure = None
+                else:
+                    self.apply(docker)
+                    module.restore(docker, self.args)
+                state_path = self.args.backup_dir / "replica/state.json"
+                others = {key: copy.deepcopy(value) for key, value in docker.containers.items() if key != "original"}
+                for leave_stopped in (True, False):
+                    self.args.leave_stopped = leave_stopped
+                    desired = was_running and not leave_stopped
+                    before_calls, before_state = list(docker.calls), state_path.read_bytes()
+                    before_running = docker.inspect("original")["State"]["Running"]
+                    self.args.apply = False
+                    dry = module.restore(docker, self.args)
+                    self.assertEqual(dry["status"], "already_original" if before_running == desired else "dry_run")
+                    self.assertEqual(docker.calls, before_calls)
+                    self.assertEqual(state_path.read_bytes(), before_state)
+                    self.args.apply = True
+                    module.restore(docker, self.args)
+                    self.assertEqual(docker.inspect("replica")["Id"], "original")
+                    self.assertEqual(docker.inspect("original")["State"]["Running"], desired)
+                    after_calls = list(docker.calls)
+                    self.assertEqual(module.restore(docker, self.args)["status"], "already_original")
+                    self.assertEqual(docker.calls, after_calls)
+                    self.assertTrue(all(path.startswith("/containers/original/") and
+                                        ("/start" in path or "/stop" in path)
+                                        for _, path in docker.calls[len(before_calls):]))
+                    self.assertEqual({key: value for key, value in docker.containers.items() if key != "original"}, others)
+
     def test_failure_and_signal_restore_only_owned_container(self):
         for failure in ("create", "start", "health", "signal"):
             with self.subTest(failure=failure):

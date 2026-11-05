@@ -2,7 +2,7 @@
 
 The Python API in `kairyu_bench.wsp.weights.finite_response` analyzes already measured whole-model edit directions. It does not load a model, run WSP, edit a checkpoint, or turn synthetic margins into benchmark scores.
 
-Install SciPy 1.11 or later in a separate analysis environment to use `solve_minimum_change`; NumPy-only realization and Pareto functions need no additional dependency. SciPy is imported only by the solver.
+Install SciPy 1.11 or later in a separate analysis environment to use `solve_minimum_change` or `project_bf16_response`. Realization, grid and Pareto functions remain NumPy-only; SciPy is imported only by the solver and active-cone projection.
 
 ## Input contract
 
@@ -81,3 +81,26 @@ The owner subsequently ran all three fixed sets on one GPU. Original → three c
 All three are multi-tensor joint sets, not single-coordinate trials. The provisional WSP screen order is the smallest hs-0020 first, then h-0397 for its implementation/algorithm contributions, with h-0485 as a distinct general/reference tradeoff if needed. hs-0020 code folds were -0.000294 and +0.074979: its positive mean does not imply both folds improved. h-0397 improved both code, implementation and algorithm folds. Some h-0485 purpose signs changed relative to the projection. Consequently, even reprojection with bounded residual was not a reliable substitute for actual finite measurement.
 
 KL here is full-vocabulary divergence at the fixed first/last **correct-answer prediction positions**, averaged by case and fold. Correct NLL covers all correct continuation tokens. These different supports and probability weighting can yield a small KL alongside a larger correct-token NLL increase. None of these diagnostics establishes free-generation correctness, WSP gains, or universal nonregression. No actual WSP result is asserted in this table.
+
+## Original-base composition preview
+
+`compose_bf16_sets(base, variants)` in `weights.composition` is a read-only arithmetic helper. Its inputs are absolute BF16 values sharing one selected coordinate scope. It sums each variant's delta from the same original base in FP64, converts to FP32, and rounds to BF16 once. It reports overlaps, sign agreement, cancellation, realized norm and rounding error. It does not overwrite an existing candidate or decide adoption. It preserves the original stored value on exact numerical cancellation, including signed zero.
+
+The materialized hs0020 was independently checked against its spec, finite metrics and all 52 tensors' actual before/after bytes and SHA values. It changed 1,076 elements across 31 layers: 645 elements in 28 post-attention norms and 431 in 24 post-FFN norms. Those two roles account for 45.12% and 54.88% of squared delta norm. No attention/FFN matrix or final norm was edited.
+
+Two cumulative previews were computed without materializing them or running a model:
+
+| Original-base sum | Shared changed coordinates | Same / opposite signs | Exact cancellations | Final changed values | Realized L2 |
+|---|---:|---:|---:|---:|---:|
+| hs0020 + 0397 | 862 | 441 / 421 | 205 | 9,135 | 0.0004326863701 |
+| hs0020 + 0485 | 882 | 438 / 444 | 205 | 8,983 | 0.0004416910105 |
+
+Both span 90 tensors and 49 layers. Additional BF16 no-ops were one and zero; relative rounding errors were 1.247% and 1.143%. Over 80% of hs0020 coordinates overlap the other sets, with nearly half pointing in the opposite direction. Their benefits therefore cannot be assumed to add, even though full-vector delta cosine is near zero. These previews remain unadopted and unmeasured. Evidence is `joint-composition-preview.json`; the materialization audit is `hs0020-materialization-audit.json`.
+
+## Activation-to-weight follow-up boundary
+
+The observed baseline highlighted layer 50 attention for MBPP 410, layer 51 attention for MBPP 576, and layer 6 MLP for BFCL irrelevance 684 relative to length-nearest successful controls. These are single-task associations, not causal directions. The collector records attention/MLP **before** their post-branch norm; current edits affect the gain **after** that observation. A same-layer pre-norm RMS contrast cannot directly establish how to edit its downstream gain.
+
+Static checkpoint reads found hs0020/0397/0485 changed 14/60/51 post-attention channels at layer 50, 33/89/80 at layer 51, and 0/13/14 post-FFN channels at layer 6. The proposed inspected channels have small gains: approximately 0.0005–0.0007 at layers 50/51, compared with whole-vector medians 0.77344/0.58594. Corresponding O-projection row norms are around one to two. Small gains can compensate large activations; neither small weight magnitude nor a static outlier identifies a coding channel.
+
+`activation-weight-channel-followup.json` proposes six edited channels plus two unchanged controls of similar gain per site, paired with the same residual coordinates. Priority goes to differing signs across candidate edits. It is a proposal only: no new capture configuration was activated. Residuals also contain other branches and are not an isolated post-norm measurement. The existing static reader/inspection API read only the relevant native vectors and 3.75 MB of projection rows; no full checkpoint reread or model call was needed.
