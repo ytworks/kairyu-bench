@@ -346,4 +346,3 @@ def signed_simplex_grid(endpoint_count: int) -> list[np.ndarray]:
                 coefficient[list(active)] = weights
                 result.append(coefficient)
     return result
-
