@@ -178,6 +178,7 @@ def command_run(args: argparse.Namespace) -> int:
         agent_concurrency=args.agent_concurrency,
         label=args.label,
         endpoint_fingerprint=endpoint_fingerprint(endpoint),
+        observe_config=args.observe_config,
     )
     meta = execute(manifest, items, settings)
     print(f"run: {run_id} status={meta['status']} wall={meta['timing']['wall_seconds']} s")
@@ -279,6 +280,8 @@ def command_report(args: argparse.Namespace) -> int:
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(prog="kairyu-bench wsp")
     commands = parser.add_subparsers(dest="command", required=True)
+    commands.add_parser("observe", help="activation capture and comparison", add_help=False)
+    commands.add_parser("weights", help="CPU checkpoint inspection and comparison", add_help=False)
     prepare = commands.add_parser("prepare", help="download every pinned dataset, source and task image")
     prepare.add_argument("--manifest", type=Path, default=None, help="prepare this manifest's agent tasks")
     pool = commands.add_parser("pool", help="write the calibration pool manifest")
@@ -305,6 +308,7 @@ def build_parser() -> argparse.ArgumentParser:
         default=4,
         help="agent tasks running at once in total (each harness's own worker setting is also an upper bound)",
     )
+    run.add_argument("--observe-config", type=Path, default=None, help="activation capture configuration")
     run.add_argument("--run-id", default=None)
     run.add_argument(
         "--results-dir",
@@ -340,7 +344,16 @@ COMMANDS = {
 
 
 def main(argv: Sequence[str] | None = None) -> int:
-    args = build_parser().parse_args(argv)
+    arguments = list(sys.argv[1:] if argv is None else argv)
+    if arguments[:1] == ["observe"]:
+        from kairyu_bench.wsp.observe.cli import main as observe_main
+
+        return observe_main(arguments[1:])
+    if arguments[:1] == ["weights"]:
+        from kairyu_bench.wsp.weights.cli import main as weights_main
+
+        return weights_main(arguments[1:])
+    args = build_parser().parse_args(arguments)
     try:
         return COMMANDS[args.command](args)
     except (WspManifestError, ValueError, OSError) as error:

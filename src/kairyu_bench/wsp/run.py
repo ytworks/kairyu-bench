@@ -39,6 +39,7 @@ class RunSettings:
     agent_concurrency: int
     label: str | None
     endpoint_fingerprint: str
+    observe_config: Path | None = None
 
 
 class _Recorder:
@@ -126,7 +127,18 @@ def execute(manifest: Manifest, items: list[Item], settings: RunSettings) -> dic
         raise RuntimeError(f"items absent from their pinned datasets: {absent[:5]}")
     loaded_s = time.monotonic() - started
 
-    context = Context(chat=settings.chat, logprob=settings.logprob, loader=settings.loader, run_dir=run_dir)
+    observer = None
+    if settings.observe_config is not None:
+        from kairyu_bench.wsp.observe.tracing import RequestRecorder
+
+        observer = RequestRecorder(settings.observe_config, run_id=run_dir.name)
+        run_meta["observation"] = {"capture_id": observer.capture_id, "output_dir": str(observer.output), "run_id": run_dir.name}
+        write_json(run_dir / "run.json", run_meta)
+
+    context = Context(
+        chat=settings.chat, logprob=settings.logprob, loader=settings.loader, run_dir=run_dir,
+        observe_config=settings.observe_config, run_id=run_dir.name,
+    )
     outcomes: dict[str, Outcome] = {}
     errors: dict[str, str] = {}
     remaining: defaultdict[str, int] = defaultdict(int)
@@ -184,6 +196,9 @@ def execute(manifest: Manifest, items: list[Item], settings: RunSettings) -> dic
             score_futures.append(scoring_pool.submit(score_source, item.source))
 
     def run_one(item: Item) -> Outcome:
+        if observer is not None:
+            with observer.item(item.id):
+                return registry[item.source].execute(context, item, rows[item.source][item.id])
         return registry[item.source].execute(context, item, rows[item.source][item.id])
 
     def run_batch(source: str, batch_items: list[Item], workers: int) -> None:

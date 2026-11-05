@@ -65,3 +65,14 @@ def env_integer(
     if not re.fullmatch(r"[0-9]+", text) or not low <= int(text) <= high:
         raise ValueError(f"{key} must be an integer from {low} to {high}")
     return int(text)
+
+
+def validate_output_path(output: Path, inputs: Iterable[Path]) -> None:
+    """Reject overwriting an input file, an alias, or a file inside an input tree."""
+    resolved = output.resolve()
+    for source in inputs:
+        source = source.resolve()
+        if resolved == source or (source.is_dir() and resolved.is_relative_to(source)):
+            raise ValueError(f"output overlaps input: {output}")
+        if output.exists() and source.exists() and source.is_file() and os.path.samefile(output, source):
+            raise ValueError(f"output aliases input: {output}")

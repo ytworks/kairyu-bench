@@ -3,6 +3,8 @@
 重みを直接編集したモデルが「何を得て何を失ったか」を、どの編集手法にも同じ物差しで測る共通ベンチマークです。
 基準環境（Gemma 4 31B・8GPU）で **10分・30分・60分** に収まる3つのパターンがあり、どのパターンも14の能力すべてを測ります。
 
+重みとactivationの観測: [重み観測ガイド](wsp-weight-observation.md)。試行と運用上の限界: [Gemma 4重み編集実験記録](experiments/2026-11-04-gemma4-weight-editing.md)。
+
 計画とその理由: [`docs/superpowers/plans/2026-11-04-wsp-benchmark.md`](superpowers/plans/2026-11-04-wsp-benchmark.md)
 
 ## 原則
