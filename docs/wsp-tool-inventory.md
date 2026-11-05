@@ -41,6 +41,7 @@ in the [first experiment](experiments/2026-11-04-gemma4-weight-editing.md) and
 [cost comparison and generated outcomes](experiments/2026-11-06-local-gradient-costs.md),
 [composition method review](experiments/anonymous-composition-review-2026-11-06.md),
 and [measured composition and sparse-matrix response](experiments/2026-11-06-composed-and-matrix-finite.md).
+The [frozen confirmation record](experiments/2026-11-06-frozen-confirmation.md) preserves the common-item comparison, operational exclusion, and environment limits.
 They do not define an additional portable tool API. Serving changes use the
 existing Gemma example's supported control command; the benchmark repository
 does not gain a second serving implementation.
