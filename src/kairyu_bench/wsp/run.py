@@ -40,6 +40,7 @@ class RunSettings:
     label: str | None
     endpoint_fingerprint: str
     observe_config: Path | None = None
+    excluded_item_ids: tuple[str, ...] = ()
 
 
 class _Recorder:
@@ -118,6 +119,8 @@ def execute(manifest: Manifest, items: list[Item], settings: RunSettings) -> dic
         "items": len(items),
         "started_at": _utc_now(),
     }
+    if settings.excluded_item_ids:
+        run_meta["excluded_item_ids"] = list(settings.excluded_item_ids)
     write_json(run_dir / "run.json", run_meta)
 
     started = time.monotonic()

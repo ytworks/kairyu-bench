@@ -21,6 +21,8 @@ private runtime configuration and model reasoning are separate artifacts.
 | Large offline activation overview | [report generator](../src/kairyu_bench/wsp/observe/report.py) | Task-wise compressed loading, bounded cache, explicit errors; all tasks retained |
 | Observer deployment/restore and an isolated trace gateway | [deployment guide](wsp-observation-deployment.md) | Explicit apply and ownership-bound rollback; supported example remains responsible for model serving |
 | Anonymous method review and reserve metadata audit | [review tool](../scripts/claude-method-review.py), [reserve audit](../scripts/wsp-reserve-audit.py) | Review transmission is explicit and hash-pinned; reserve audit does not inspect answers |
+| Explicit task-image cache preparation and verification | [prefetch tool](../scripts/prefetch-task-images.py), [guide](task-image-prefetch.md) | Preview first; pinned daemon and registry digests; bounded retries and disk checks; no container execution |
+| Recorded operational item exclusions | [WSP CLI](../src/kairyu_bench/wsp/cli.py), [guide](wsp.md) | Explicit selected IDs recorded in run metadata; manifest and scoring rules unchanged; compare common scored items with disclosed denominator |
 | Baseline observation analysis | [experiment analysis recipe](experiments/2026-11-06-observed-gemma-analysis.py) | One-pass read of retained capture; associations are not edit directions |
 | Repeated WSP gain/loss ranges and DeepSWE trial usage | [evidence recipes](experiments/scripts/README.md) | Official scoring is reused; fractional changes, retry UUIDs, steps and missing usage are preserved |
 

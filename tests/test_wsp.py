@@ -254,6 +254,102 @@ class AgentTest(unittest.TestCase):
         self.assertEqual({name: entry["reward"] for name, entry in outcomes.items()}, {"task-a": 1.0})
 
 
+class RunSelectionTest(unittest.TestCase):
+    def _manifest(self, root: Path) -> Path:
+        items = [
+            {"id": f"{source}:{name}-{split}", "source": source, "split": split,
+             "tier": tier, "max_tokens": 16384}
+            for source, name, tier in (
+                ("mmlu-pro", "keep", 10), ("mmlu-pro", "omit-a", 10),
+                ("mmlu-pro", "omit-b", 10), ("mmlu-pro", "later", 30),
+                ("ifeval", "outside", 10),
+            )
+            for split in ("dev", "test")
+        ]
+        path = root / "manifest.json"
+        path.write_text(json.dumps({
+            "schema_version": 1,
+            "tiers": {str(t): {"minutes": t, "max_output_tokens": 16384} for t in (10, 30, 60)},
+            "items": items,
+        }))
+        return path
+
+    def _arguments(self, root: Path, manifest: Path) -> list[str]:
+        return [
+            "run", "http://api.test/v1", "--tier", "10", "--split", "dev",
+            "--manifest", str(manifest), "--incomplete-manifest", "--only", "mmlu-pro",
+            "--results-dir", str(root), "--run-id", "selected",
+        ]
+
+    def test_excluded_items_are_not_executed_and_keep_manifest_identity(self) -> None:
+        import hashlib
+        import io
+        from contextlib import redirect_stdout
+        from dataclasses import replace
+        from unittest import mock
+
+        from kairyu_bench.wsp.cli import main
+
+        executed: list[str] = []
+
+        def run_one(context: Context, item: Item, row: dict[str, Any]) -> dict[str, Any]:
+            executed.append(item.id)
+            return {"samples": [_reply("Answer: A")]}
+
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            manifest = self._manifest(root)
+            original = manifest.read_bytes()
+            rows = {entry["id"]: {"expected": "A"} for entry in json.loads(original)["items"]}
+            adapter = replace(adapters()["mmlu-pro"], load=lambda loader: rows, execute=run_one)
+            with (
+                mock.patch("kairyu_bench.target.TargetClient.discover_chat_model", return_value="fixture"),
+                mock.patch("kairyu_bench.wsp.run.adapters", return_value={"mmlu-pro": adapter}),
+                mock.patch("kairyu_bench.wsp.client._post", side_effect=AssertionError("unexpected API call")),
+                redirect_stdout(io.StringIO()),
+            ):
+                result = main([
+                    *self._arguments(root, manifest),
+                    "--exclude-item", "mmlu-pro:omit-b-dev",
+                    "--exclude-item", "mmlu-pro:omit-a-dev",
+                ])
+            meta = json.loads((root / "selected/run.json").read_text())
+            records = [json.loads(line) for line in (root / "selected/items.jsonl").read_text().splitlines()]
+            self.assertEqual(manifest.read_bytes(), original)
+        self.assertEqual(result, 0)
+        self.assertEqual(executed, ["mmlu-pro:keep-dev"])
+        self.assertEqual([(record["id"], record["score"]) for record in records], [("mmlu-pro:keep-dev", 1.0)])
+        self.assertEqual(meta["excluded_item_ids"], ["mmlu-pro:omit-a-dev", "mmlu-pro:omit-b-dev"])
+        self.assertEqual(meta["manifest_sha256"], hashlib.sha256(original).hexdigest())
+        self.assertEqual((meta["items"], meta["status"]), (1, "completed"))
+
+    def test_outside_selection_and_all_item_exclusions_fail_before_discovery(self) -> None:
+        import io
+        from contextlib import redirect_stderr
+        from unittest import mock
+
+        from kairyu_bench.wsp.cli import main
+
+        cases = [
+            ["mmlu-pro:missing"], ["mmlu-pro:keep-test"], ["mmlu-pro:later-dev"],
+            ["ifeval:outside-dev"],
+            ["mmlu-pro:keep-dev", "mmlu-pro:omit-a-dev", "mmlu-pro:omit-b-dev"],
+        ]
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            manifest = self._manifest(root)
+            for excluded in cases:
+                with (
+                    self.subTest(excluded=excluded),
+                    mock.patch("kairyu_bench.target.TargetClient.discover_chat_model") as discovery,
+                    redirect_stderr(io.StringIO()),
+                ):
+                    flags = [flag for item_id in excluded for flag in ("--exclude-item", item_id)]
+                    self.assertEqual(main([*self._arguments(root, manifest), *flags]), 2)
+                    discovery.assert_not_called()
+                    self.assertFalse((root / "selected").exists())
+
+
 class ScoringTest(unittest.TestCase):
     """Official extraction rules: a right reply scores 1, a wrong one 0, and a
     reply cut at the token cap 0 whatever it says."""

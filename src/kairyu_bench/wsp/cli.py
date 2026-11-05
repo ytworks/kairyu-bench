@@ -148,6 +148,14 @@ def command_run(args: argparse.Namespace) -> int:
         if unknown:
             raise SystemExit(f"unknown sources: {sorted(unknown)}")
         items = [item for item in items if item.source in wanted]
+    excluded = sorted(set(args.exclude_item))
+    if excluded:
+        outside = set(excluded) - {item.id for item in items}
+        if outside:
+            raise WspManifestError(f"excluded items are not selected by tier/split/--only: {sorted(outside)}")
+        items = [item for item in items if item.id not in excluded]
+        if not items:
+            raise WspManifestError("--exclude-item removes every selected item")
     # Task images come from `wsp prepare`; removing them would move their
     # download into the next timed run. Only runs with agent tasks care.
     if any(item.kind == "agent" for item in items) and os.environ.get("KAIRYU_BENCH_CLEAN_TASK_IMAGES") == "1":
@@ -179,6 +187,7 @@ def command_run(args: argparse.Namespace) -> int:
         label=args.label,
         endpoint_fingerprint=endpoint_fingerprint(endpoint),
         observe_config=args.observe_config,
+        excluded_item_ids=tuple(excluded),
     )
     meta = execute(manifest, items, settings)
     print(f"run: {run_id} status={meta['status']} wall={meta['timing']['wall_seconds']} s")
@@ -298,6 +307,10 @@ def build_parser() -> argparse.ArgumentParser:
         help="accept a --manifest that lacks areas (development lists; no overall score)",
     )
     run.add_argument("--only", default=None, help="comma-separated sources (diagnostic runs)")
+    run.add_argument(
+        "--exclude-item", action="append", default=[], metavar="ITEM_ID",
+        help="exclude a selected item without changing the manifest (repeatable; recorded in run.json)",
+    )
     run.add_argument("--logprob-endpoint", action="append", default=[], help="vLLM base URL with prompt_logprobs")
     run.add_argument("--label", default=None, help="name of the served weights, e.g. their tree hash")
     run.add_argument("--chat-concurrency", type=int, default=256)
