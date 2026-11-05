@@ -54,6 +54,22 @@ class DeepSWERuntimeTest(unittest.TestCase):
         self.assertNotIn("AgentTimeoutError", config.retry.include_exceptions)
         self.assertNotIn("model_kwargs", config.agents[0].kwargs)
 
+    def test_32_workers_reach_pier_config(self):
+        module = self.module()
+        entry = load_manifest()["deepswe"]
+        env = {"KAIRYU_BENCH_DEEPSWE_WORKERS": "32"}
+        context = {
+            "run_id": "test", "model_id": "org/model", "generator": entry["generator"],
+            "conditions": resolve_deepswe_conditions(entry, env),
+        }
+        with tempfile.TemporaryDirectory() as directory, patch.dict(os.environ, {
+            "OPENAI_BASE_URL": "http://example.test/v1",
+        }):
+            config = module.build_job_config(
+                context, Path(directory), Path(directory), ["task-a"], 0
+            )
+        self.assertEqual(config.n_concurrent_trials, 32)
+
     def test_api_timeout_reaches_official_agent_command_without_extending_task(self):
         import asyncio
         import shlex

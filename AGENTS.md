@@ -160,7 +160,7 @@ Use `./kairyu-bench run <API URL> --only deepswe`, following
 `docs/deepswe.md`. The pinned dataset has 113 tasks. No `--limit` means all 113;
 `KAIRYU_BENCH_DEEPSWE_ATTEMPTS=4` means four whole-set repetitions, 452 planned
 trial slots. The default is one repetition. `KAIRYU_BENCH_DEEPSWE_WORKERS`
-defaults to four (1–16), with immediate refill inside each repetition.
+defaults to four (1–32), with immediate refill inside each repetition.
 
 The agent defaults to mini-swe-agent. `KAIRYU_BENCH_DEEPSWE_AGENT=deepseek-harness`
 runs DeepSeek Harness 0.2.1rc2 in its shipped `sdk-minimal` profile instead; it
