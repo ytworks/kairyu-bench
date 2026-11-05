@@ -296,6 +296,44 @@ class Checkpoint:
     def read(self, name: str, start: int = 0, count: int | None = None) -> np.ndarray:
         return self.decode(self.read_raw(name, start, count), self.tensors[name].dtype)
 
+    def read_indices(self, name: str, indices: list[int]) -> np.ndarray:
+        """Read bounded explicit flat coordinates without loading a whole matrix.
+
+        Ordering and repeated coordinates are preserved. One stable file handle
+        reads only requested adjacent spans; accounting records actual bytes read.
+        """
+        tensor = self.tensors[name]
+        if (not isinstance(indices, list) or len(indices) > 1_000_000
+                or any(type(i) is not int or i < 0 or i >= tensor.numel for i in indices)):
+            raise CheckpointError("invalid explicit coordinate list")
+        width = DTYPES[tensor.dtype][1]
+        output = bytearray(len(indices) * width)
+        positions: dict[int, list[int]] = {}
+        for destination, index in enumerate(indices):
+            positions.setdefault(index, []).append(destination)
+        ordered = sorted(positions)
+        actual = 0
+        cursor = 0
+        with self._open_stable(tensor.shard) as stream:
+            while cursor < len(ordered):
+                end = cursor + 1
+                while end < len(ordered) and ordered[end] == ordered[end - 1] + 1:
+                    end += 1
+                first, last = ordered[cursor], ordered[end - 1]
+                stream.seek(tensor.offset + first * width)
+                raw = stream.read((last - first + 1) * width)
+                actual += len(raw)
+                if len(raw) != (last - first + 1) * width:
+                    raise CheckpointError("source truncated during selected read")
+                for index in ordered[cursor:end]:
+                    item = raw[(index-first)*width:(index-first+1)*width]
+                    for destination in positions[index]:
+                        output[destination*width:(destination+1)*width] = item
+                cursor = end
+        self._count("tensor_payload", actual)
+        self._track(tensor.shard)
+        return self.decode(bytes(output), tensor.dtype)
+
     def iter_chunks(self, name: str, chunk_bytes: int = DEFAULT_CHUNK_BYTES) -> Iterator[tuple[int, bytes, np.ndarray]]:
         if type(chunk_bytes) is not int or not 8 <= chunk_bytes <= MAX_READ_BYTES:
             raise CheckpointError("chunk_bytes must be between 8 bytes and 64 MiB")

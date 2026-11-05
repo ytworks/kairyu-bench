@@ -243,3 +243,191 @@ audit, controls, contrasts, request linkage and all 232×180×7 task/phase
 metric values exactly matched the first analysis. Saved nonfinite counts
 were zero in those code/tools summaries. Ruff and diff whitespace checks
 passed. This adds no model calls, verifier reruns, or grading changes.
+
+
+## Follow-up: 0397 hard-code dev30 subset
+
+Run gemma4-resume-h0397-dev30-hard-code-20261106 evaluated the official
+tier30/dev subset selected by **only livecodebench,scicode**: 20 LCB and
+10 SciCode problems, all scored, no errors or truncation. This is a
+30-item diagnostic subset, not a full 14-area tier30 result.
+
+The standard partial comparison pairs exactly those 30 IDs with
+wsp-base-30-dev-1-20261104, retaining the same manifest/tier/split.
+Overall score is unavailable. Among these two sources, the code aggregate
+rose from 52.6508% to 57.6508%; this is not a full-code or all-area score.
+
+| Measure | Old official base dev30 | Candidate 0397 |
+|---|---:|---:|
+| LCB passed | 15/20 | 16/20 |
+| SciCode mean per-problem step fraction | 30.3016% | 35.3016% |
+| arc195_b | fail | pass |
+| SciCode14 | 0/2 steps | 1/2 steps, problem not fully solved |
+| Other 28 item scores | unchanged | unchanged |
+
+Elapsed time was 377.0 s, including loading 7.4 s. Generation finished at
+236.8 s; subsequent scoring took about 140.2 s. There were 59 model
+requests: 20 single-answer LCB requests plus 39 SciCode stage requests.
+All saved finish reasons were stop.
+
+- [ARC195 B, Uniform Sum](https://atcoder.jp/contests/arc195/tasks/arc195_b):
+  fill unknown nonnegative values and permute A so all corresponding sums
+  agree, with N up to 2,000. The old base's public final code overcounted
+  duplicate-value matches as countA × countB. The candidate instead uses
+  min(countA, countB), respecting that each element can be matched once.
+  It passed after one generation, 10,524 output tokens and 95.46 s API time.
+  Both historical base dev30 and dev60 failed this item. The code change
+  and official pass are observed; repeatability is not yet established.
+- SciCode14, Brownian_motion_in_the_optical_tweezer: two stages implement
+  Langevin dynamics using Mannella leapfrog integration and mean-squared
+  displacement across trials. Candidate used two generations, 9,660
+  output tokens and 92.72 s summed API time. Its 1/2 step result is within
+  historical unedited-base variation: old dev60 already achieved 2/2.
+  Canonical detail preserves the passed-step count, not which step passed.
+
+The independent finite calibration predicted mean margin deltas of
++0.01252 for algorithm and +0.01482 for implementation; measured finite
+deltas were +0.02121 and +0.02125 respectively. These are correct-versus-foil
+log-probability margins, **not accuracy forecasts**. The WSP result supports
+one observed algorithm-task gain; the easier screen still had 17/20 code
+passes, so broad coding improvement is not established.
+
+For a low-cost official repeat, tier30/dev with only livecodebench retains
+the original manifest and repeats the gained problem together with 19
+controls. It omits the 39 SciCode calls and their grading cost. The current
+CLI has source filtering but no individual-item filter; a one-item custom
+manifest would be a separate diagnostic with a different manifest identity.
+No repeat was launched by this analysis. The planned next check, owned by the
+benchmark launcher after full dev10, is this same-checkpoint 20-item repeat
+followed by a fresh official-base 20-item run, both without capture, to avoid
+attributing observation-condition differences to the weight edit.
+
+Evidence is under ROOT/analysis/resume-h0397-hard30/:
+official-base30-paired.json, task-deltas-public-metadata.json, and
+interpretation.json. Only public final code and metadata were inspected;
+no hidden reasoning, additional model calls, or verifier reruns were used.
+
+
+## Follow-up: 0397 full dev10 and LCB repeat
+
+Run gemma4-resume-h0397-dev10-full-20261106 completed all 778 dev10 items
+with no unscored items or generation errors. Wall time was 636.3 s,
+including 104.8 s loading. Compared with the fresh observed base, overall
+was 80.2148% → 81.9196% (+1.7048 pp, paired 95% CI −0.1583 to +3.8889 pp).
+Code remained 87.7778%, BFCL remained 35/40, and agents remained 50%, with
+the same per-item verdicts in those three areas. IFBench rose 12/15 → 13/15
+(item 259 gained), while IFEval fell 39/40 → 38/40 (item 218 lost).
+
+Reasoning rose 5 pp: MuSR murder_mysteries205 and 243 were gained, while
+object_placements187 was lost. Other changes included expert +6.25 pp,
+vision +12.5 pp, facts −2.5 pp, knowledge −1.6667 pp, commonsense −0.3333 pp
+and multilingual −0.2778 pp. Relative to the old original dev10 base,
+overall was only +0.6959 pp (95% CI −1.3959 to +2.7931 pp), code +3.3333 pp
+from MBPP801, instructions −4.5833 pp and reasoning −2.1739 pp. MBPP801
+also passed in the fresh unedited base, so that historical difference is
+not evidence that the edit caused the gain. These baseline-sensitive
+results do not establish a broad coding improvement.
+
+Run gemma4-resume-h0397-dev30-lcb-repeat-20261106 then repeated the same
+20 LCB problems on the same checkpoint without observation. It completed
+20/20 with no unscored items in 145.866 s. Accuracy changed 16/20 → 15/20:
+arc195_b stayed correct, but abc390_g changed from pass to fail; the other
+18 verdicts stayed the same. Thus the new algorithm-task gain repeated,
+while the total gain over the historical 15/20 base did not. A fresh
+unedited-base run under the same normal serving conditions is the next
+comparison, owned by the benchmark launcher.
+
+Evidence: ROOT/analysis/resume-h0397-full10/ contains the official observed
+and original base comparisons and item deltas;
+ROOT/analysis/resume-h0397-lcb-repeat/first-versus-repeat.json contains the
+official 20-item paired partial comparison. Overall remains unavailable
+for the LCB-only subset. No hidden reasoning was inspected.
+
+The reusable [experiment evidence recipes](scripts/README.md) preserve the
+official comparisons while exposing repeat ranges, fractional item
+changes and recorded steps/tokens, including UUID-deduplicated DeepSWE
+retry usage. They make no new model or verifier calls.
+
+
+The fresh normal-serving base check,
+gemma4-resume-base-dev30-lcb-matched-20261106, completed 20/20 with no
+unscored items in 153.956 s. Its LCB score was 14/20, versus 16/20 and
+15/20 in the two 0397 observations. Only two IDs varied across the four
+observations:
+
+| Item | Old base dev30 | Fresh normal base | 0397 first | 0397 repeat |
+|---|---:|---:|---:|---:|
+| arc195_b | 0 | 0 | 1 | 1 |
+| abc390_g | 1 | 0 | 1 | 0 |
+| Other 18 items | unchanged | unchanged | unchanged | unchanged |
+
+The official common-20 comparisons give +10 pp (95% CI 0 to +25 pp) for
+the first candidate observation and +5 pp (0 to +15 pp) for its repeat
+against the fresh base. The arc195_b gain is supported by both candidate
+observations and both base observations; abc390_g varies on both sides.
+These are small descriptive repeat counts, not proof of a stable effect
+size across unseen problems. Normal serving was used for these three new
+LCB evaluations, without activation capture.
+
+The fresh base used 20 calls, 12,686 input and 128,865 output tokens; the
+candidate repeat used 20 calls, 12,686 input and 132,468 output tokens.
+Summed API durations were 1,065.389 and 1,103.934 s respectively, which
+overlap under parallel execution and must not be added to the wall times.
+Evidence in the same repeat directory:
+fresh-base-versus-first0397.json, fresh-base-versus-repeat0397.json,
+and four-observation-scores.json.
+
+
+## Follow-up: 0485 95-item screen
+
+gemma4-resume-h0485-dev10-screen-20261106 completed all 95 items in
+67.853 s with no unscored items. This is the official dev10 source subset
+of 20 code, 40 BFCL, 15 IFBench and 20 log-probability probes; it is not a
+14-area baseline or a full dev10 evaluation.
+
+| Measure | Fresh observed base, common items | 0397 screen | 0485 screen |
+|---|---:|---:|---:|
+| HumanEval+ | 10/10 | 10/10 | 10/10 |
+| MBPP+ | 8/10 | 7/10 | 7/10 |
+| BFCL | 35/40 | 35/40 | 34/40 |
+| IFBench | 12/15 | 12/15 | 13/15 |
+
+Against the fresh observed base, MBPP801 changed to fail on both base and
+plus tests. BFCL live_multiple_924-191-12 changed to fail with the official
+error simple_function_checker:missing_optional; this does not establish
+that the model chose the wrong function. IFBench93 and 259 became correct
+under both strict/loose checks, while IFBench182 failed both. The latter
+used one request, 3,346 output tokens and 33.82 s API time. MBPP801 used
+one request, 1,104 output tokens and 15.69 s; the BFCL item used one request,
+423 output tokens and 10.68 s. All finished normally, without API errors.
+
+Relative to the historical base95, code and BFCL totals were unchanged:
+BFCL multi_turn_miss_func_111 was gained while live_multiple_924-191-12
+was lost; IFBench259 was the only instruction-score gain. The screen
+therefore does not yet support code/tool improvement. There were 168
+recorded chat calls and 87,227 output tokens across the 75 chat items;
+20 probes are separate. Official comparisons and changed-item lists are
+under ROOT/analysis/resume-h0485-screen/.
+
+
+0485 also completed the official 30-item hard-code subset in
+gemma4-resume-h0485-dev30-hard-code-20261106: 308.773 s, 30/30 scored,
+no unscored items. LCB was 16/20; SciCode's mean per-problem step fraction
+was 40.3016%. Relative to old base dev30, only arc195_b (0→1) and SciCode14
+(0/2→2/2) changed. Relative to the first 0397 hard30 observation, all LCB
+verdicts matched and only SciCode14 rose from 1/2 to 2/2.
+
+Against the fresh normal base's 14/20 LCB result, the gains were arc195_b
+and abc390_g, with no losses. The former is now correct in both 0397
+observations and this 0485 observation; abc390_g already varied on both
+base/candidate sides. SciCode14's full solution also occurred in old
+unedited dev60, so it is not a uniquely new ability. These hard-code
+results are encouraging alongside the screen's code/tool losses, but do
+not by themselves select 0485 or establish a stable overall gain.
+
+All 59 recorded calls finished with stop, totaling 87,821 input and 273,928
+output tokens. arc195_b used one call/9,253 output tokens/84.53 s API time;
+abc390_g one call/11,317 tokens/99.27 s; SciCode14 two stage calls/8,817
+tokens/88.61 s summed API time. Official paired comparisons and changed
+IDs are under ROOT/analysis/resume-h0485-hard30/. No additional generations
+or verifier reruns were made by this analysis.

@@ -1,4 +1,4 @@
-"""Finite-only Gemma 4 native-edit replay: original, <=3 sets, original.
+"""Finite-only Gemma 4 native/sparse-matrix edit replay: original, <=3 sets, original.
 
 Optional torch/transformers dependencies are imported only when explicitly run.
 No checkpoint writes, gradients, free generation, solver, or WSP acceptance gate.
@@ -48,7 +48,7 @@ def batches(rows: list[Any]) -> list[list[Any]]:
 
 def load_plan(path: Path, checkpoint: Checkpoint) -> tuple[dict[str, Any], list[dict[str, Any]], dict[str, str]]:
     plan = json.loads(path.read_text())
-    if plan.get("schema_version") != 1 or plan.get("architecture") != "gemma4_native_bf16":
+    if plan.get("schema_version") != 1 or plan.get("architecture") not in {"gemma4_native_bf16", "gemma4_sparse_bf16"}:
         raise ValueError("unsupported finite replay plan")
     entries = plan.get("candidates")
     if not isinstance(entries, list) or not 1 <= len(entries) <= 3:
@@ -98,32 +98,55 @@ def load_plan(path: Path, checkpoint: Checkpoint) -> tuple[dict[str, Any], list[
             raise ValueError("nonempty edits required")
         seen, count, square = set(), 0, 0.0
         for edit in edits:
-            if set(edit) != {"tensor", "indices", "set_values"}:
-                raise ValueError("finite replay accepts exact native set_values only")
-            name = edit["tensor"]
-            tensor = checkpoint.tensors.get(name)
-            if (not isinstance(name, str) or not name.startswith("model.language_model.")
-                    or name in seen or tensor is None or tensor.dtype != "BF16" or len(tensor.shape) > 1):
-                raise ValueError("unique existing native BF16 tensors required")
+            name = edit.get("tensor")
+            tensor = checkpoint.tensors.get(name) if isinstance(name, str) else None
+            matrix = "coordinates" in edit
+            if (tensor is None or not isinstance(name, str) or not name.startswith("model.language_model.")
+                    or name in seen or tensor.dtype != "BF16"):
+                raise ValueError("unique existing text BF16 tensors required")
+            if matrix:
+                if plan["architecture"] != "gemma4_sparse_bf16" or len(tensor.shape) != 2:
+                    raise ValueError("rank-2 edits require an explicit sparse BF16 plan")
+                if set(edit) != {"tensor", "coordinates", "set_values"}:
+                    raise ValueError("matrix replay accepts exact coordinate set_values only")
+                coordinates = edit["coordinates"]
+                if (not isinstance(coordinates, list) or not coordinates or len(coordinates) > 512
+                        or any(not isinstance(cell, list) or len(cell) != 2
+                               or any(type(x) is not int for x in cell)
+                               or not 0 <= cell[0] < tensor.shape[0]
+                               or not 0 <= cell[1] < tensor.shape[1] for cell in coordinates)):
+                    raise ValueError("invalid matrix coordinates")
+                indices = [row * tensor.shape[1] + column for row, column in coordinates]
+            else:
+                if set(edit) != {"tensor", "indices", "set_values"} or len(tensor.shape) > 1:
+                    raise ValueError("native replay accepts exact vector/scalar set_values only")
+                indices = edit["indices"]
             seen.add(name)
-            indices, values = edit["indices"], edit["set_values"]
-            if (not isinstance(indices, list) or not indices or len(indices) != len(values)
+            values = edit["set_values"]
+            if (not isinstance(indices, list) or not indices or not isinstance(values, list)
+                    or len(indices) != len(values)
                     or any(type(i) is not int or i < 0 or i >= tensor.numel for i in indices)
-                    or len(set(indices)) != len(indices)):
-                raise ValueError("invalid native coordinates")
+                    or len(set(indices)) != len(indices)
+                    or any(type(v) not in (int, float) for v in values)):
+                raise ValueError("invalid exact coordinates/values")
             v64 = np.asarray(values, dtype=np.float64)
             v32 = v64.astype(np.float32)
             if (not np.isfinite(v64).all() or not np.array_equal(v64, v32.astype(np.float64))
                     or np.any(v32.view(np.uint32) & 0xFFFF)):
                 raise ValueError("set_values must already be finite exact BF16")
-            original = checkpoint.read(name, 0, tensor.numel)[indices]
+            original = checkpoint.read_indices(name, indices)
+            if not np.isfinite(original).all():
+                raise ValueError("source coordinates must be finite")
             difference = v64 - original
             if np.any(difference == 0):
                 raise ValueError("declared coordinates must be non-noop")
             count += len(indices)
             if count > 1000000:
-                raise ValueError("native edit count exceeds one million")
+                raise ValueError("total edit count exceeds one million")
+            if matrix and sum(len(e.get("coordinates", [])) for e in edits) > 65536:
+                raise ValueError("matrix edit count exceeds 65,536")
             square += float(difference @ difference)
+            edit["_flat_indices"] = indices
         spec["_verified_metrics"] = {"changed_elements": count, "changed_tensors": len(edits),
                                      "delta_l2": float(np.sqrt(square))}
         specs.append(spec)
@@ -211,6 +234,49 @@ def prepare_frames(tokenizer: Any, cases: dict[str, Any]) -> tuple[dict[str, Any
         "frames": frames}
 
 
+class ParameterEdits:
+    """Capture only the verified union of edited BF16 coordinates and restore it.
+
+    The enclosing replay owns the model exclusively. This is an edit restoration
+    boundary, not a snapshot of every parameter in an arbitrary mutating model.
+    """
+    def __init__(self, checkpoint: Checkpoint, specs: list[dict[str, Any]],
+                 params: dict[str, Any], device: str) -> None:
+        import torch
+        self.torch, self.params, self.device = torch, params, device
+        self.specs = {spec["id"]: json.loads(json.dumps(spec, allow_nan=False)) for spec in specs}
+        self.originals: dict[str, Any] = {}
+        self.indices: dict[str, Any] = {}
+        names = sorted({e["tensor"] for spec in specs for e in spec["edits"]})
+        for name in names:
+            param = params[name]
+            indices = sorted({i for spec in specs for edit in spec["edits"]
+                              if edit["tensor"] == name for i in edit["_flat_indices"]})
+            if tuple(param.shape) != checkpoint.tensors[name].shape or param.dtype != torch.bfloat16:
+                raise ValueError("loaded parameter shape/dtype differs from original checkpoint")
+            device_indices = torch.tensor(indices, dtype=torch.long, device=device)
+            selected = param.detach().view(-1).index_select(0, device_indices)
+            value = selected.float().cpu().numpy()
+            if not np.array_equal(value, checkpoint.read_indices(name, indices)):
+                raise ValueError("loaded selected coordinates differ from original checkpoint")
+            self.indices[name] = device_indices
+            self.originals[name] = selected.cpu().clone()
+
+    def apply(self, spec: Any | None) -> None:
+        torch = self.torch
+        if spec is not None and spec != self.specs.get(spec.get("id")):
+            raise ValueError("RAM application requires an unchanged preverified fixed spec")
+        with torch.no_grad():
+            for name, original in self.originals.items():
+                self.params[name].view(-1).index_copy_(0, self.indices[name], original.to(self.device))
+            if spec is not None:
+                for edit in spec["edits"]:
+                    p = self.params[edit["tensor"]].view(-1)
+                    indices = torch.tensor(edit["_flat_indices"], dtype=torch.long, device=self.device)
+                    values = torch.tensor(edit["set_values"], dtype=torch.bfloat16, device=self.device)
+                    p.index_copy_(0, indices, values)
+
+
 def run(args: argparse.Namespace) -> dict[str, Any]:
     import torch
     from transformers import AutoTokenizer, Gemma4ForConditionalGeneration
@@ -267,27 +333,12 @@ def run(args: argparse.Namespace) -> dict[str, Any]:
     params = {"model.language_model." + n: p for n, p in net.named_parameters()}
     for i, layer in enumerate(net.layers):
         params[f"model.language_model.layers.{i}.layer_scalar"] = layer.layer_scalar
-    names = sorted({e["tensor"] for spec in specs for e in spec["edits"]})
-    originals = {}
-    for name in names:
-        param = params[name]
-        value = param.detach().flatten().float().cpu().numpy()
-        if param.dtype != torch.bfloat16 or not np.array_equal(value, checkpoint.read(name, 0, param.numel())):
-            raise ValueError("loaded native parameter differs from original checkpoint")
-        originals[name] = param.detach().cpu().clone()
+    edits_state = ParameterEdits(checkpoint, specs, params, args.device)
     if any(p.requires_grad for p in model.parameters()):
         raise ValueError("all gradients must be disabled")
     base_aux: dict[tuple[str, int, int], Any] = {}
     def apply(spec: Any | None) -> None:
-        with torch.no_grad():
-            for name, original in originals.items():
-                params[name].copy_(original.to(args.device))
-            if spec is not None:
-                for edit in spec["edits"]:
-                    p = params[edit["tensor"]].view(-1)
-                    indices = torch.tensor(edit["indices"], dtype=torch.long, device=args.device)
-                    values = torch.tensor(edit["set_values"], dtype=torch.bfloat16, device=args.device)
-                    p.index_copy_(0, indices, values)
+        edits_state.apply(spec)
         torch.cuda.synchronize()
     def evaluate(store_base: bool = False, recovery: bool = False) -> dict[str, Any]:
         values: dict[str, Any] = {}

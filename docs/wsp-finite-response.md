@@ -104,3 +104,36 @@ The observed baseline highlighted layer 50 attention for MBPP 410, layer 51 atte
 Static checkpoint reads found hs0020/0397/0485 changed 14/60/51 post-attention channels at layer 50, 33/89/80 at layer 51, and 0/13/14 post-FFN channels at layer 6. The proposed inspected channels have small gains: approximately 0.0005–0.0007 at layers 50/51, compared with whole-vector medians 0.77344/0.58594. Corresponding O-projection row norms are around one to two. Small gains can compensate large activations; neither small weight magnitude nor a static outlier identifies a coding channel.
 
 `activation-weight-channel-followup.json` proposes six edited channels plus two unchanged controls of similar gain per site, paired with the same residual coordinates. Priority goes to differing signs across candidate edits. It is a proposal only: no new capture configuration was activated. Residuals also contain other branches and are not an isolated post-norm measurement. The existing static reader/inspection API read only the relevant native vectors and 3.75 MB of projection rows; no full checkpoint reread or model call was needed.
+
+## Sparse matrix replay and coordinate reads
+
+A fixed plan can now declare `architecture: "gemma4_sparse_bf16"` and mix
+native vector edits with rank-2 BF16 edits. Each matrix edit uses explicit
+`coordinates: [[row, column], ...]` and exact stored `set_values`; bounds are
+512 coordinates per matrix, 65,536 matrix coordinates per candidate, and one
+million coordinates overall. The spec and prior full-content checkpoint receipt
+remain hash-pinned. This extension does not propose a direction or accept a
+candidate automatically.
+
+`Checkpoint.read_indices` reads only requested adjacent spans through one
+stat-checked file handle, preserving requested order and duplicates. The replay
+captures the union of edited coordinates once, verifies their loaded values
+against the checkpoint, and restores those coordinates before every fixed set
+and in the failure recovery path. It does not duplicate each selected full
+matrix on the CPU or GPU. A changed or unregistered spec is rejected at the RAM
+application boundary.
+
+The model is owned exclusively by the replay and has gradients disabled.
+The restoration boundary covers the verified edit union; it is not a snapshot
+of arbitrary other mutations to the model. The restored-base forward remains
+the final behavioral check. Process/GPU death can still prevent restoration.
+
+The sparse extension uses the same pinned official-chat, teacher-forced public
+answer protocol as the native replay. It does not retrospectively reproduce
+the earlier F experiment's raw next-token scoring frame. Keep those historical
+results and the new protocol separate.
+
+Validation used tiny CPU BF16 tensors, including a joint native/matrix set,
+a different second candidate, and an injected forward failure. All six replay
+tests passed in a CPU container with no exposed GPU. No real Gemma replay was
+run to claim validation of this newly added matrix path.

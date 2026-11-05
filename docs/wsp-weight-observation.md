@@ -300,6 +300,8 @@ gzipの展開にはブラウザ標準の `DecompressionStream` が必要です�
 
 ## 観測を編集案へつなげる記録
 
+全層の目的別感度を収集し、明示した目的・許容損失からBF16共同編集を提案するGemma 4専用の[実験レシピ](../scripts/experiments/gemma4-purpose/README.md)も収録しています。局所微分、有限forward、WSP実測を別の証拠として扱います。
+
 新しい編集案ごとに、次の項目をMarkdownへ残します。
 
 | 項目 | 記録内容 |

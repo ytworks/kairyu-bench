@@ -158,3 +158,5 @@ Gemma 4 31B・8GPU（`gemma-4-31b-8gpu`）で、確定版の問題リストを�
 ## ロックの更新
 
 `scripts/locks/README.md` を参照してください。
+
+Reusable weight editing, observation, finite replay and evidence tools are indexed in the [WSP tool inventory](wsp-tool-inventory.md).

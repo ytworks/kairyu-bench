@@ -1,13 +1,16 @@
 from __future__ import annotations
 
 import hashlib
+import importlib.util
+import copy
+import numpy as np
 import json
 import tempfile
 import unittest
 from pathlib import Path
 
 from kairyu_bench.wsp.weights.checkpoint import Checkpoint
-from kairyu_bench.wsp.weights.finite_replay import batches, load_plan, replay_sequence
+from kairyu_bench.wsp.weights.finite_replay import ParameterEdits, batches, load_plan, replay_sequence
 from test_wsp_weights import weights
 
 
@@ -108,6 +111,100 @@ class ReplayTests(unittest.TestCase):
         packed = batches(rows)
         self.assertEqual([row[0] for batch in packed for row in batch], ["short", "long"])
         self.assertEqual(len(packed), 2)
+
+
+class SparseReplayTests(unittest.TestCase):
+    def setUp(self) -> None:
+        self.directory = tempfile.TemporaryDirectory()
+        self.addCleanup(self.directory.cleanup)
+        self.root = Path(self.directory.name)
+        self.model = self.root / "checkpoint"
+        self.matrix = "model.language_model.layers.0.mlp.down_proj.weight"
+        self.norm = "model.language_model.norm.weight"
+        raw = (np.arange(1, 7, dtype=np.float32).view(np.uint32) >> 16).astype("<u2").tobytes()
+        weights(self.model / "model.safetensors", {
+            self.matrix: ("BF16", (2, 3), raw),
+            self.norm: ("BF16", (2,), b"\x80\x3f\x00\x40"),
+        })
+        index = self.model / "model.safetensors.index.json"
+        index.write_text(json.dumps({"weight_map": {
+            self.matrix: "model.safetensors", self.norm: "model.safetensors"}}))
+        self.checkpoint = Checkpoint(self.model)
+        receipt = self.root / "identity.json"
+        receipt.write_text(json.dumps(self.checkpoint.identity()))
+        cases, frame = self.root / "cases.json", self.root / "frame.json"
+        cases.write_text("{}")
+        frame.write_text("{}")
+        self.documents = [
+            {"id": "mixed", "edits": [
+                {"tensor": self.matrix, "coordinates": [[0, 2], [1, 0]], "set_values": [3.03125, 4.0625]},
+                {"tensor": self.norm, "indices": [0], "set_values": [1.0078125]}]},
+            {"id": "other", "edits": [
+                {"tensor": self.matrix, "coordinates": [[1, 2]], "set_values": [6.0625]}]},
+        ]
+        self.plan = {"schema_version": 1, "architecture": "gemma4_sparse_bf16",
+                     "checkpoint_index_sha256": self.digest(index),
+                     "checkpoint_attestation": {"path": str(receipt), "sha256": self.digest(receipt)},
+                     "cases": {"path": str(cases), "sha256": self.digest(cases)},
+                     "frame_evidence": {"path": str(frame), "sha256": self.digest(frame)}}
+        self.plan_path = self.root / "plan.json"
+        self.write_specs()
+
+    @staticmethod
+    def digest(path):
+        return hashlib.sha256(path.read_bytes()).hexdigest()
+
+    def write_specs(self):
+        self.plan["candidates"] = []
+        for document in self.documents:
+            path = self.root / (document["id"] + ".json")
+            path.write_text(json.dumps(document))
+            self.plan["candidates"].append({"id": document["id"], "spec": str(path), "sha256": self.digest(path)})
+        self.plan_path.write_text(json.dumps(self.plan))
+
+    def test_selected_reader_and_matrix_plan_metrics(self):
+        before = self.checkpoint.read_counts["tensor_payload"]
+        np.testing.assert_array_equal(self.checkpoint.read_indices(self.matrix, [5, 0, 5, 3]), [6, 1, 6, 4])
+        self.assertEqual(self.checkpoint.read_counts["tensor_payload"] - before, 6)
+        _, specs, _ = load_plan(self.plan_path, self.checkpoint)
+        self.assertEqual(specs[0]["edits"][0]["_flat_indices"], [2, 3])
+        self.assertEqual(specs[0]["_verified_metrics"]["changed_elements"], 3)
+        self.assertAlmostEqual(specs[0]["_verified_metrics"]["delta_l2"], np.linalg.norm([.03125, .0625, .0078125]))
+        # A bad coordinate is rejected before it can address a different row.
+        self.documents[0]["edits"][0]["coordinates"] = [[0, 3], [1, 0]]
+        self.write_specs()
+        with self.assertRaisesRegex(ValueError, "matrix coordinates"):
+            load_plan(self.plan_path, self.checkpoint)
+
+    @unittest.skipUnless(importlib.util.find_spec("torch"), "optional Torch RAM-replay boundary")
+    def test_torch_sparse_restore_on_switch_and_failed_forward(self):
+        import torch
+        _, specs, _ = load_plan(self.plan_path, self.checkpoint)
+        params = {self.matrix: torch.arange(1, 7, dtype=torch.bfloat16).reshape(2, 3),
+                  self.norm: torch.tensor([1, 2], dtype=torch.bfloat16)}
+        pristine = {key: value.clone() for key, value in params.items()}
+        state = ParameterEdits(self.checkpoint, specs, params, "cpu")
+        state.apply(specs[0])
+        self.assertEqual(float(params[self.matrix][0, 2]), 3.03125)
+        self.assertEqual(float(params[self.norm][0]), 1.0078125)
+        state.apply(specs[1])
+        self.assertEqual(float(params[self.matrix][0, 2]), 3.)
+        self.assertEqual(float(params[self.matrix][1, 2]), 6.0625)
+        self.assertTrue(torch.equal(params[self.norm], pristine[self.norm]))
+        wrong = copy.deepcopy(specs[0])
+        wrong["edits"][0]["_flat_indices"] = [0, 1]
+        with self.assertRaisesRegex(ValueError, "unchanged preverified"):
+            state.apply(wrong)
+        def evaluate(**flags):
+            if not flags.get("store_base") and not flags.get("recovery"):
+                raise RuntimeError("synthetic forward failure")
+            return [value.clone() for value in params.values()]
+        _, _, repeated, failure = replay_sequence(specs, state.apply, evaluate, lambda *args: None)
+        self.assertIsInstance(failure, RuntimeError)
+        self.assertIsNotNone(repeated)
+        self.assertTrue(all(torch.equal(params[key], value) for key, value in pristine.items()))
+        self.assertEqual(sum(value.numel() for value in state.originals.values()), 4)
+        self.checkpoint.assert_stable()
 
 
 if __name__ == "__main__":
