@@ -175,3 +175,35 @@ per-tensor / total件数、必要なopt-in、上限適合性をreport.editor_com
 旧matrixの座標を再現する場合は--seed 20261105を明示します。
 既定seedは0です。式・座標抽出と小行列autogradはCPU検査しますが、
 移植後にGemma全体のforwardを再実行したことを意味しません。
+
+## 保存済みchat微分の費用比較
+
+compare_costs.pyは過去のchat-native collector形式（cases / scan-coverage / observationsと数値tensor辞書）を、
+対応するbasis.npz・basis provenance・frame-evidenceと照合して読むCPU専用レシピです。
+cases SHA、元checkpoint identity、template frame、tensor順序・shapeを確認します。
+Torchファイルは自己生成した保存感度に限定し、weights_only=True / map_location=cpuで読みます。
+実モデル、GPU、forward、ベンチは使いません。新しいデータをこの旧形式に変換する必要はありません。
+
+~~~bash
+OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 \
+python scripts/experiments/gemma4-purpose/compare_costs.py \
+  --legacy-chat /nvme/saved-chat --basis /nvme/saved-basis/basis.npz \
+  --basis-provenance /nvme/saved-basis/provenance.json \
+  --plan /nvme/cost-plan.json --output /nvme/new-cost-comparison
+~~~
+
+既定preview、--runで最大3profileを計算します。
+plan.profilesにはid、cost_metric、group_mean_lower、fold_lowerを指定します。
+後二つは計測した全目的の名前をキーとする有限値の辞書です。
+各目的のfold平均と各foldの許容損失を明示し、固定の全fold非退行を加えません。
+plan.roundingはjoint.pyと同じです。diagnostic_relative_floorは正の診断用floorです。
+相対費用のcost_metricはtype=role_relative、floor_ratio、absolute_floorを指定します。
+役割はtensor名のlayer番号だけを*へ置換したものです。
+役割ごとのfloor=max(absolute_floor, floor_ratio×役割全座標の絶対値中央値)を使い、
+cost=1/max(abs(weight), floor)とします。これはFisherやactivation摂動の実測ではありません。
+
+任意のfixed_delta_floor_ratiosは既に得た実変位の費用を別floorで計るだけで、
+追加の最適化や第4候補を意味しません。
+reference_normを指定した場合は、そのscopeとartifact SHAをplanに残してください。
+結果は3案の同じcoding目標に対する局所予測、実BF16丸め、役割別変位、
+絶対L2と相対費用を保存します。既存の生成改善や失点を、この局所予測へ変換しません。

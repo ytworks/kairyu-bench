@@ -16,6 +16,7 @@ from typing import Any, Callable
 
 import numpy as np
 
+from kairyu_bench.wsp.weights import checkpoint as checkpoint_reader
 from kairyu_bench.wsp.weights.checkpoint import Checkpoint
 
 
@@ -53,7 +54,8 @@ def load_plan(path: Path, checkpoint: Checkpoint) -> tuple[dict[str, Any], list[
     entries = plan.get("candidates")
     if not isinstance(entries, list) or not 1 <= len(entries) <= 3:
         raise ValueError("one through three fixed candidate specs required")
-    hashes = {str(path.resolve()): _sha(path), str(Path(__file__).resolve()): _sha(Path(__file__))}
+    hashes = {str(path.resolve()): _sha(path), str(Path(__file__).resolve()): _sha(Path(__file__)),
+              str(Path(checkpoint_reader.__file__).resolve()): _sha(Path(checkpoint_reader.__file__))}
     for field in ("cases", "frame_evidence"):
         item = plan[field]
         source = Path(item["path"])

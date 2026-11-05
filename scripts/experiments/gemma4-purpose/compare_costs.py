@@ -97,7 +97,8 @@ def load_inputs(args):
         "method": method, "cases_sha256": cases_sha, "frame_sha256": frame_sha,
         "source_tree_sha256": observation["base_tree_sha256"],
         "fold_counts": fold_counts, "raw_G_mixed": False,
-        "scope": "saved CPU BF16 official chat public-answer mean-logp derivatives; no new forward"}
+        "scope": "saved CPU BF16 official chat public-answer mean-logp derivatives; no new forward",
+        "basis_trust_boundary": "saved basis values and matching source identity/inventory are trusted artifacts; original checkpoint payload bytes are not reread or reattested here"}
 
 
 def main(argv=None):
@@ -116,13 +117,25 @@ def main(argv=None):
         raise ValueError("at most three prespecified cost profiles")
     if args.output.exists() or args.output.is_symlink():
         raise ValueError("fresh output required")
-    inputs = [args.legacy_chat, args.basis, args.basis_provenance, args.plan, Path(__file__), Path(joint.__file__), Path(common.__file__)]
+    inputs = [args.legacy_chat, args.basis, args.basis_provenance, args.plan, Path(__file__), Path(joint.__file__), Path(common.__file__), Path(joint.finite_response.__file__)]
     output = args.output.resolve()
     if any(output == p.resolve() or output in p.resolve().parents or p.resolve() in output.parents for p in inputs):
         raise ValueError("output must be disjoint from inputs")
+    for profile in profiles[1:]:
+        if any(profile[field] != profiles[0][field] for field in ("group_mean_lower", "fold_lower")):
+            raise ValueError("cost comparison requires identical explicit constraints across profiles")
     ids = [p["id"] for p in profiles]
     if len(set(ids)) != len(ids) or any(not isinstance(i, str) or not re.fullmatch(r"[A-Za-z0-9][A-Za-z0-9_.-]{0,79}", i) for i in ids):
         raise ValueError("safe unique profile identifiers required")
+    filenames = ["input-evidence.json", "progress.json", "summary.json", "failure.json"]
+    filenames.extend(filename for identifier in ids
+                     for filename in (identifier + ".json", identifier + "-report.json"))
+    if len(set(filenames)) != len(filenames):
+        raise ValueError("profile IDs collide with generated output filenames")
+    diagnostic_floor = plan.get("diagnostic_relative_floor")
+    if (type(diagnostic_floor) not in (int, float)
+            or not np.isfinite(diagnostic_floor) or diagnostic_floor <= 0):
+        raise ValueError("diagnostic_relative_floor must be finite and positive")
     if not args.run:
         print(json.dumps({"profiles": ids, "mode": "CPU saved derivatives only", "new_forwards": 0, "writes": 0}))
         return 0

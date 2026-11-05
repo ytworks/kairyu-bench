@@ -13,6 +13,7 @@ private runtime configuration and model reasoning are separate artifacts.
 | Exact BF16 LoRA merge, joint native scale, and adapter diagnostics | [Gemma LoRA recipes](../scripts/experiments/gemma4_lora/README.md) | Pinned 410-text-projection recipe; compiled kernel source and tests included, binary excluded |
 | Purpose gradients across native gains, virtual branch directions and sampled matrix coordinates | [purpose collection recipes](../scripts/experiments/gemma4-purpose/README.md) | Cases and frames are explicit; new code validated on CPU fixtures, not claimed as a new real-model measurement |
 | Joint edits from saved local gradients | [local-G solver](../scripts/experiments/gemma4-purpose/joint.py) | Explicit purposes, fold constraints, permitted losses and cost metric; BF16 predictions require finite measurement |
+| Matched cost metrics on saved local gradients | [cost comparison](../scripts/experiments/gemma4-purpose/compare_costs.py) | Identical constraints, explicit near-zero floors, output-name collision checks; no new forward |
 | Saved finite-response analysis and quantized joint-set proposals | [finite-response guide](wsp-finite-response.md) | Endpoint secants, active-cone projection and Pareto reports are predictions, not scores |
 | Original-base composition | [composition](../src/kairyu_bench/wsp/weights/composition.py) | Report overlap, cancellation and actual BF16 deltas; no assumed additive benefit |
 | Fixed native/sparse-matrix RAM replay | [finite replay](../src/kairyu_bench/wsp/weights/finite_replay.py) | Original → fixed sets → restored original; no persistent weight writes or automatic adoption |
@@ -34,7 +35,9 @@ Machine-specific launch queues, one-time mount repair, verifier artifact
 recovery, retirement commands, deployment snapshots and publication scripts
 are operational records. Their methods, failures and safeguards are recorded
 in the [first experiment](experiments/2026-11-04-gemma4-weight-editing.md) and
-[resumed experiment](experiments/2026-11-06-observed-gemma-baseline.md).
+[resumed experiment](experiments/2026-11-06-observed-gemma-baseline.md),
+[cost comparison and generated outcomes](experiments/2026-11-06-local-gradient-costs.md),
+and [composition method review](experiments/anonymous-composition-review-2026-11-06.md).
 They do not define an additional portable tool API. Serving changes use the
 existing Gemma example's supported control command; the benchmark repository
 does not gain a second serving implementation.

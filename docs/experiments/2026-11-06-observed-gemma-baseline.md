@@ -431,3 +431,85 @@ abc390_g one call/11,317 tokens/99.27 s; SciCode14 two stage calls/8,817
 tokens/88.61 s summed API time. Official paired comparisons and changed
 IDs are under ROOT/analysis/resume-h0485-hard30/. No additional generations
 or verifier reruns were made by this analysis.
+
+## Follow-up: 0485 full dev10
+
+gemma4-resume-h0485-dev10-full-20261106 completed all 778 items with
+zero unscored items in 620.229 s (load 104.9 s is included). Official
+runtime counters recorded 555 chat calls and 3,062 log-probability calls.
+The chat-call records contain 1,041,340 output tokens; Terminal-Bench
+agent usage is recorded separately below.
+
+| Comparison base | Overall base → 0485 | Delta pp | Paired 95% CI pp |
+|---|---:|---:|---:|
+| Fresh observed base | 80.2148% → 82.1640% | +1.9492 | -0.2719 to +4.4581 |
+| 0397 full dev10 | 81.9196% → 82.1640% | +0.2443 | -2.1027 to +2.6127 |
+| Old original base dev10 | 81.2237% → 82.1640% | +0.9402 | -1.3602 to +3.3699 |
+
+| Area | Fresh observed base | 0397 | 0485 | 0485 − fresh pp |
+|---|---:|---:|---:|---:|
+| knowledge | 90.0000% | 88.3333% | 90.0000% | +0.0000 |
+| expert | 81.2500% | 87.5000% | 81.2500% | +0.0000 |
+| facts | 70.0000% | 67.5000% | 67.5000% | -2.5000 |
+| math | 98.7500% | 98.7500% | 95.9375% | -2.8125 |
+| code | 87.7778% | 87.7778% | 84.4444% | -3.3333 |
+| instructions | 88.7500% | 90.8333% | 92.0833% | +3.3333 |
+| tools | 87.5000% | 87.5000% | 87.5000% | +0.0000 |
+| agents | 50.0000% | 50.0000% | 50.0000% | +0.0000 |
+| long-context | 81.3436% | 81.3779% | 93.7500% | +12.4064 |
+| reasoning | 71.9565% | 76.9565% | 71.9565% | +0.0000 |
+| commonsense | 67.3333% | 67.0000% | 66.0000% | -1.3333 |
+| multilingual | 80.9848% | 80.7071% | 83.7626% | +2.7778 |
+| vision | 81.2500% | 93.7500% | 100.0000% | +18.7500 |
+| safety | 86.1111% | 88.8889% | 86.1111% | +0.0000 |
+
+The overall increase is mainly long-context and vision. Coding fell by
+3.3333 pp relative to both the fresh base and 0397; tools and agents had
+identical verdicts. Compared with 0397, reasoning also fell 5 pp, expert
+6.25 pp and math 2.8125 pp. Relative to the old original base, code was
+unchanged, instructions fell 3.3333 pp and reasoning fell 7.1739 pp.
+The intervals include zero, and this is one full observation per candidate.
+
+Concrete changed tasks and recorded work:
+
+- MBPP801: count equal values among three integers. The final code returns
+  1 when all differ, while the official reference returns 0; the public
+  input [-1, -2, -3] exposes that discrepancy. Both base/plus suites fail.
+  One call, 1,290 output tokens, 195.30 s API time. Fresh base and 0397 full
+  passed, but old original base failed, so the historical variability remains
+  relevant. No new execution was needed to identify this final-code mismatch.
+- IFBench93: explain Atlantic Charter principles with every word on a
+  separate line. Both strict/loose checks pass: one call, 1,479 output
+  tokens, 47.47 s. This is the instruction gain over the fresh base.
+- MRCR-v2:2069: the long-dialogue reference/reproduction score rose from
+  0.00749 (fresh base) or 0.01024 (0397/old base) to 1. One call, 11,210
+  output tokens, 275.47 s. This is an observed item gain, not proof that a
+  particular edited coordinate caused better long-context handling.
+- BBEH disambiguation_qa119 and MuSR murder_mysteries205 were gained relative
+  to the fresh base, while BBEH nycc018 and MuSR object_placements187 were
+  lost. Their respective call/output-token counts were 1/4,784, 1/2,162,
+  1/5,796 and 1/6,944. Relative to 0397, MuSR murder_mysteries243 was also
+  lost (one call, 4,530 tokens). Specific reasoning errors were not inferred
+  from uninspected hidden reasoning.
+- RULER fwe:131072:005 reached 16,384 output tokens and finish_reason=length;
+  its official detail marks truncated=true and score 0. This was the only
+  truncated chat call, not an unscored infrastructure error (514.80 s API
+  time). It remained a failure in the compared runs.
+- Terminal-Bench portfolio-optimization passed after 5 agent steps,
+  31,643 input/6,344 output tokens. install-windows-3.11 failed after 12
+  steps, 80,862 input/9,729 output tokens. Both had official verifier
+  rewards and no exception. These agent steps are distinct from HTTP
+  request counts; their usage was not invented from the WSP item summary.
+
+Some same-checkpoint screen/full outcomes differ: the screen's BFCL
+missing_optional failure recovered in full; IFBench259 went from pass to
+fail, while IFBench182 recovered. Full BFCL was 35/40 and IFBench13/15.
+Equal aggregate counts therefore do not imply equal item outcomes.
+
+The three official comparisons, per-item usage/deltas and metadata-only
+progress snapshots are under ROOT/analysis/resume-h0485-full10/. They were
+generated with the checked-in WSP evidence recipe. Per-item usage for
+log-probability tasks is unknown here and is null, not zero. API durations
+include concurrent waits and must not be summed into elapsed wall time.
+No additional generations, regrading, or held-out performance inspection
+were performed by this analysis.
