@@ -316,14 +316,15 @@ def restore(docker, args):
         raise ValueError("backup belongs to another container")
     original = docker.inspect(state["original_id"])
     current = docker.inspect(args.container)
-    if current["Id"] == original["Id"] and state["status"] in ("restored", "rolled_back"):
+    if current["Id"] == original["Id"] and state["status"] in ("restored", "restored_stopped", "rolled_back"):
         return {"operation": "restore", "container": args.container, "status": "already_original"}
     if current["Config"].get("Labels", {}).get(LABEL) != state["operation_id"]:
         raise ValueError("current container is not the observer owned by this backup")
     if state.get("observer_id", current["Id"]) != current["Id"]:
         raise ValueError("observer container identity differs from saved receipt")
     summary = {"operation": "restore", "container": args.container,
-               "original_id": original["Id"], "observer_id": current["Id"], "environment_values_displayed": False}
+               "original_id": original["Id"], "observer_id": current["Id"], "environment_values_displayed": False,
+               "leave_stopped": args.leave_stopped}
     if not args.apply:
         return {**summary, "status": "dry_run"}
     lock = (directory / "restore.lock").open("a")
@@ -334,13 +335,15 @@ def restore(docker, args):
         stop(docker, current["Id"])
         rename(docker, current["Id"], retired_name)
         rename(docker, original["Id"], args.container)
-        if state["original_was_running"]:
+        if args.leave_stopped:
+            stop(docker, original["Id"])
+        elif state["original_was_running"]:
             docker.call("POST", f"/containers/{original['Id']}/start")
             wait_ready(docker, original["Id"], args.health_timeout)
-        state["status"] = "restored"
+        state["status"] = "restored_stopped" if args.leave_stopped else "restored"
         private_json(directory / "state.json", state)
         # Keep the stopped observer as recovery evidence too; never prune other containers.
-        return {**summary, "status": "restored", "stopped_observer_name": retired_name}
+        return {**summary, "status": state["status"], "stopped_observer_name": retired_name}
     except BaseException:
         for sig in (signal.SIGTERM, signal.SIGINT, signal.SIGHUP):
             signal.signal(sig, signal.SIG_IGN)
@@ -371,11 +374,15 @@ def main(argv=None):
     parser.add_argument("--socket", default="/var/run/docker.sock")
     parser.add_argument("--health-timeout", type=float, default=900.0)
     parser.add_argument("--apply", action="store_true")
+    parser.add_argument("--leave-stopped", action="store_true",
+                        help="restore original container without loading its model; restore only")
     args = parser.parse_args(argv)
     if not re.fullmatch(r"[A-Za-z0-9][A-Za-z0-9_.-]{0,127}", args.container):
         parser.error("invalid container name")
     if args.health_timeout <= 0:
         parser.error("health timeout must be positive")
+    if args.leave_stopped and args.operation != "restore":
+        parser.error("--leave-stopped is only valid with restore")
     if args.operation == "attach" and any(x is None for x in (args.capture, args.source, args.runtime_cache)):
         parser.error("attach requires --capture, --source and --runtime-cache")
     docker = Docker(args.socket)

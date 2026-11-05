@@ -92,7 +92,7 @@ class DockerObserverTests(unittest.TestCase):
                                      "limits": {"storage_bytes": 2 * 1024**3}}))
         self.args = SimpleNamespace(container="replica", source=source, capture=config,
                                     runtime_cache=self.root / "cache", backup_dir=self.root / "backup",
-                                    replica="r0", apply=True, health_timeout=1)
+                                    replica="r0", apply=True, health_timeout=1, leave_stopped=False)
         self.original = {
             "Id": "original", "Name": "/replica", "Image": "sha256:pinned",
             "Config": {"User": "1003:1003", "Cmd": ["serve", "/checkpoint"], "Entrypoint": ["vllm"],
@@ -185,6 +185,19 @@ class DockerObserverTests(unittest.TestCase):
         self.assertFalse(docker.inspect("observer")["State"]["Running"])
         self.assertEqual(docker.inspect("original")["Config"], self.original["Config"])
         self.assertFalse(any(method == "DELETE" for method, _ in docker.calls))
+
+    def test_restore_can_release_gpu_without_reloading_original_model(self):
+        docker = FakeDocker(self.original)
+        self.apply(docker)
+        self.args.leave_stopped = True
+        before = len(docker.calls)
+        result = module.restore(docker, self.args)
+        self.assertEqual(result["status"], "restored_stopped")
+        self.assertEqual(docker.inspect("replica")["Id"], "original")
+        self.assertFalse(docker.inspect("original")["State"]["Running"])
+        self.assertFalse(docker.inspect("observer")["State"]["Running"])
+        self.assertFalse(any("/start" in path for _, path in docker.calls[before:]))
+        self.assertEqual(module.restore(docker, self.args)["status"], "already_original")
 
     def test_failure_and_signal_restore_only_owned_container(self):
         for failure in ("create", "start", "health", "signal"):

@@ -121,3 +121,15 @@ before removing that owned container. Docker stream framing can be present and
 the bounded excerpt can be truncated. It may contain sensitive diagnostic
 values; it is never printed or uploaded. Failure to retrieve a log does not
 prevent the rollback, and the receipt records whether the excerpt was saved.
+
+### Releasing GPUs for a finite probe
+
+After a benchmark finishes and every writer queue drains, `restore --leave-stopped
+--apply` restores the original container name/configuration while keeping both the
+original and retired observer stopped. This avoids loading the original model only
+to stop it again for a separate finite probe. The receipt says `restored_stopped`.
+Normal `restore --apply` keeps its original restart behavior. Restart serving via
+the owning example lifecycle after the probe. Before Compose manages that service
+again, preserve any required retired-observer logs and remove only its exact owned
+container ID from the receipt, so old Compose service labels do not create duplicate
+service instances. Never prune unrelated containers.
