@@ -34,3 +34,5 @@ serving/queue shortcut.
 The audit inventory records source line counts, dependencies, file hashes, and
 host-specific/credential-handling flags locally. No credentials, raw trajectories,
 model weights, environment dump, or signed download URL is included in this PR.
+
+The completed evaluation and per-task official outcomes are recorded in [Frozen 0397 final DeepSWE comparison](2026-11-06-deepswe-frozen-h0397.md). Both models scored 1/113; the edited checkpoint did not satisfy the strict-gain HF publication condition.
