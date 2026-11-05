@@ -1,6 +1,8 @@
 from __future__ import annotations
 
+import base64
 import copy
+import gzip
 import json
 import shutil
 import subprocess
@@ -47,6 +49,8 @@ class _Parser(HTMLParser):
         self.resources: list[str] = []
         self.data = ""
         self.in_data = False
+        self.active_payload: str | None = None
+        self.payloads: dict[str, str] = {}
 
     def handle_starttag(self, tag: str, attrs: list[tuple[str, str | None]]) -> None:
         values = dict(attrs)
@@ -56,14 +60,20 @@ class _Parser(HTMLParser):
             if values.get(key):
                 self.resources.append(values[key])
         self.in_data = tag == "script" and values.get("id") == "observation-data"
+        self.active_payload = values.get("id") if tag == "script" and values.get("id", "").startswith("observation-payload-") else None
+        if self.active_payload:
+            self.payloads[self.active_payload] = ""
 
     def handle_endtag(self, tag: str) -> None:
         if tag == "script":
             self.in_data = False
+            self.active_payload = None
 
     def handle_data(self, data: str) -> None:
         if self.in_data:
             self.data += data
+        if self.active_payload:
+            self.payloads[self.active_payload] += data
 
 
 _NODE = r"""
@@ -171,7 +181,17 @@ class ObservationReportTest(unittest.TestCase):
         self.assertNotIn("innerHTML", html)
         parser = _Parser()
         parser.feed(html)
-        self.assertEqual(json.loads(parser.data), data)
+        decoded = json.loads(parser.data)
+        self.assertEqual(decoded.pop("report_storage")["encoding"], "task-gzip-base64")
+        for run in decoded["runs"]:
+            for task in run["tasks"]:
+                payload = task.pop("observations_payload", None)
+                if payload:
+                    raw = gzip.decompress(base64.b64decode(parser.payloads[payload["element_id"]]))
+                    self.assertEqual(len(raw), payload["raw_bytes"])
+                    task["observations"] = json.loads(raw)
+                    self.assertEqual(len(task["observations"]), payload["count"])
+        self.assertEqual(decoded, data)
         self.assertEqual(len(parser.ids), len(set(parser.ids)))
         self.assertEqual(parser.resources, [])
         self.assertIn("connect-src 'none'", html)
@@ -212,6 +232,78 @@ class ObservationReportTest(unittest.TestCase):
         value["runs"][0]["tasks"][0]["observations"][0]["sample_count"] = 0
         with self.assertRaisesRegex(ValueError, "sample_count"):
             build_report(value)
+
+    @unittest.skipUnless(shutil.which("node"), "Node is needed for gzip/lazy interaction checks")
+    def test_lazy_task_loading_races_lru_and_errors(self) -> None:
+        data = fixture()
+        for run in data["runs"]:
+            first = run["tasks"][0]
+            for index in range(3, 8):
+                task = copy.deepcopy(first)
+                task["id"] = f"problem-{index}"
+                task["observations"][0]["request_id"] = f"request-{index}"
+                run["tasks"].append(task)
+        parser = _Parser()
+        parser.feed(build_report(data))
+        script = _NODE[:_NODE.index('const data=input.data')]
+        script = script.replace('const context={document,window:{},console};',
+            'for(const [id,text] of Object.entries(input.payloads))elements[id].textContent=text;'
+            'const context={document,window:{},console,DecompressionStream,Blob,TextDecoder,Uint8Array,atob};')
+        script += r"""
+(async()=>{
+ await api.render();
+ assert.equal(elements["load-state"].dataset.state,"ready");
+ assert.equal(cellButtons().length,1);
+ assert.equal(api.cacheInfo().tasks,2);
+ elements.view.value="diff";await api.render();
+ assert.equal(cellButtons()[0].textContent,"1");
+ elements.task.value=JSON.stringify(["unit","problem-3"]);
+ const stale=api.render();
+ elements.task.value=JSON.stringify(["unit","problem-4"]);
+ const latest=api.render();
+ await Promise.all([stale,latest]);
+ assert(elements["request-scope"].textContent.includes("request-4"));
+ for(const id of ["problem-5","problem-6","problem-7"]){
+  elements.task.value=JSON.stringify(["unit",id]);await api.render();
+  assert(api.cacheInfo().tasks<=4);
+  assert(api.cacheInfo().raw_bytes<=api.cacheInfo().max_raw_bytes);
+ }
+ const original=context.DecompressionStream;
+ context.DecompressionStream=undefined;
+ elements.task.value=JSON.stringify(["unit","problem-1"]);await api.render();
+ assert.equal(elements["load-state"].dataset.state,"error");
+ assert(elements["load-state"].textContent.includes("DecompressionStream"));
+ assert.equal(cellButtons().length,0);
+ assert(elements["coverage"].textContent.includes("未表示"));
+ context.DecompressionStream=original;
+ await api.render();
+ assert.equal(elements["load-state"].dataset.state,"ready");
+ elements.task.value=JSON.stringify(["unit","problem-3"]);
+ const payload=input.data.runs[0].tasks.find(t=>t.id==="problem-3").observations_payload;
+ vm.runInContext('DATA.runs[0].tasks.find(t=>t.id==="problem-3").observations_payload.raw_bytes=1',context);
+ await api.render();
+ assert.equal(elements["load-state"].dataset.state,"error");
+ assert(elements["load-state"].textContent.includes("実展開容量"));
+ vm.runInContext('DATA.runs[0].tasks.find(t=>t.id==="problem-3").observations_payload.raw_bytes='+payload.raw_bytes,context);
+ elements[payload.element_id].textContent="corrupt";
+ await api.render();
+ assert.equal(elements["load-state"].dataset.state,"error");
+ assert.equal(cellButtons().length,0);
+ elements.area.value="tools";await api.render();
+ assert.equal(elements["load-state"].dataset.state,"ready");
+ assert.equal(cellButtons().length,0);
+ assert(elements["outcome-summary"].textContent.includes("対応スコアなし 1"));
+ console.log("Lazy gzip, epoch, LRU, missing feature and corrupt payload checks passed");
+})().catch(error=>{console.error(error);process.exitCode=1;});
+"""
+        result = subprocess.run(
+            ["node", "-e", script],
+            input=json.dumps({"data": json.loads(parser.data), "payloads": parser.payloads,
+                              "ids": parser.ids, "js": _JS}),
+            capture_output=True, text=True, timeout=20, check=False,
+        )
+        self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+        self.assertIn("checks passed", result.stdout)
 
     @unittest.skipUnless(shutil.which("node"), "Node is needed for offline DOM interaction checks")
     def test_offline_interactions_and_pairing_guards(self) -> None:

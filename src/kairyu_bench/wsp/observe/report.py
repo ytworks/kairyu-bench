@@ -1,6 +1,8 @@
 """Offline observation reports. Rendering does not load weights or contact a model."""
 from __future__ import annotations
 
+import base64
+import gzip
 import json
 import os
 import tempfile
@@ -61,11 +63,42 @@ def build_report(data: Mapping[str, Any]) -> str:
     only escaped text and dynamic UI nodes are populated with textContent.
     """
     _validate(data)
-    payload = json.dumps(data, ensure_ascii=False, allow_nan=False, separators=(",", ":"))
+    packed = {**data, "runs": []}
+    payloads: list[str] = []
+    for run in data["runs"]:
+        copied_run = {**run, "tasks": []}
+        packed["runs"].append(copied_run)
+        for task in run["tasks"]:
+            copied = {key: value for key, value in task.items()
+                      if key not in {"observations", "observations_payload"}}
+            rows = task.get("observations", [])
+            if rows:
+                raw = json.dumps(rows, ensure_ascii=False, allow_nan=False,
+                                 separators=(",", ":")).encode("utf-8")
+                compressed = gzip.compress(raw, compresslevel=1, mtime=0)
+                identifier = f"observation-payload-{len(payloads)}"
+                copied["observations_payload"] = {
+                    "element_id": identifier, "encoding": "gzip-base64",
+                    "count": len(rows), "raw_bytes": len(raw),
+                    "compressed_bytes": len(compressed),
+                }
+                encoded = base64.b64encode(compressed).decode("ascii")
+                payloads.append(f'<script id="{identifier}" type="application/octet-stream">{encoded}</script>')
+            else:
+                copied["observations"] = []
+            copied_run["tasks"].append(copied)
+    packed["report_storage"] = {
+        "encoding": "task-gzip-base64", "cache_max_tasks": 4,
+        "cache_max_raw_bytes": 128 * 1024**2,
+        "scope": "serialized observation bytes; browser heap is larger",
+    }
+    payload = json.dumps(packed, ensure_ascii=False, allow_nan=False, separators=(",", ":"))
     for old, new in (("&", "\\u0026"), ("<", "\\u003c"), (">", "\\u003e"),
                      ("\u2028", "\\u2028"), ("\u2029", "\\u2029")):
         payload = payload.replace(old, new)
-    return _HTML.replace("__OBSERVATION_DATA__", payload).replace("__OBSERVATION_JS__", _JS)
+    return (_HTML.replace("__OBSERVATION_JS__", _JS)
+            .replace("__OBSERVATION_PAYLOADS__", "".join(payloads))
+            .replace("__OBSERVATION_DATA__", payload))
 
 
 def write_report(data: Mapping[str, Any], output: str | Path) -> Path:
@@ -137,6 +170,7 @@ details{margin:10px 0}summary{cursor:pointer}#task-table tr.selected{background:
 <label>位置の下限<input id="start" type="number" min="0" placeholder="制限なし"></label><label>位置の上限<input id="end" type="number" min="0" placeholder="制限なし"></label>
 <label class="check"><input id="accepted-only" type="checkbox">受理確認済みのみ</label>
 </div>
+<p id="load-state" role="status" aria-live="polite"></p>
 <p id="request-scope" class="muted" style="overflow-wrap:anywhere"></p><div id="coverage" class="statline" aria-live="polite"></div>
 <p id="pairing" class="warning"></p>
 <p class="muted">各セルは選択問題・選択requestの採取範囲です。異なるcall/trialの同位置を平均しません。RMSはsample数で重み付けした二乗平均平方根、meanは加重平均、max_absは最大、nonfinite_countは合計。その他はbin値の加重平均です。差分は対応bin差の加重平均です。TP rankは別の行です。活性量や重みnormだけから能力への因果効果を断定できません。</p>
@@ -150,11 +184,13 @@ details{margin:10px 0}summary{cursor:pointer}#task-table tr.selected{background:
 </section>
 <section class="panel"><h2>採取範囲・実行条件</h2><div id="provenance"></div></section>
 </main><script id="observation-data" type="application/json">__OBSERVATION_DATA__</script>
+__OBSERVATION_PAYLOADS__
 <script>__OBSERVATION_JS__</script></body></html>"""
 
 _JS = r"""
 "use strict";
 const DATA = JSON.parse(document.getElementById("observation-data").textContent);
+document.getElementById("observation-data").textContent="";
 const byId = id => document.getElementById(id);
 const finite = x => typeof x === "number" && Number.isFinite(x);
 const str = x => x === null || x === undefined ? "未記録" : String(x);
@@ -166,6 +202,68 @@ function options(id, values, desired) {
   const el=byId(id); el.replaceChildren();
   for(const [value,label] of values){const o=node("option",label);o.value=value;el.append(o);}
   el.value=values.some(v=>v[0]===desired) ? desired : (values[0]?.[0] || "");
+}
+const CACHE_LIMIT_TASKS=4,CACHE_LIMIT_BYTES=128*1024*1024;
+const taskCache=new Map();
+let loadQueue=Promise.resolve(),renderEpoch=0,activeTasks=new Set();
+function observationCount(task){return task?.observations_payload?.count ?? task?.observations?.length ?? 0;}
+function cacheInfo(){return {tasks:taskCache.size,raw_bytes:[...taskCache.values()].reduce((n,x)=>n+x,0),max_tasks:CACHE_LIMIT_TASKS,max_raw_bytes:CACHE_LIMIT_BYTES};}
+function touchTask(task){
+  if(taskCache.has(task)){const bytes=taskCache.get(task);taskCache.delete(task);taskCache.set(task,bytes);}
+}
+function trimCache(extraBytes=0){
+  for(const [task,bytes] of taskCache){
+    const info=cacheInfo();
+    if(info.tasks+(extraBytes?1:0)<=CACHE_LIMIT_TASKS&&info.raw_bytes+extraBytes<=CACHE_LIMIT_BYTES)break;
+    if(activeTasks.has(task))continue;
+    delete task.observations;taskCache.delete(task);
+  }
+  const info=cacheInfo();
+  if(info.raw_bytes+extraBytes>CACHE_LIMIT_BYTES||info.tasks+(extraBytes?1:0)>CACHE_LIMIT_TASKS)
+    throw new Error("選択問題の展開容量が上限128MiBを超えます。単独実験または小さい範囲のレポートを選んでください。");
+}
+function loadTask(task,epoch){
+  const operation=loadQueue.then(async()=>{
+    if(epoch!==renderEpoch)return false;
+    if(Array.isArray(task.observations)){touchTask(task);return true;}
+    if(typeof DecompressionStream!=="function")
+      throw new Error("このブラウザはgzipのローカル展開（DecompressionStream）に対応していません。対応する新しいブラウザで開いてください。");
+    const payload=task.observations_payload;
+    if(!payload||payload.encoding!=="gzip-base64")throw new Error("観測payload形式が不明です。");
+    trimCache(payload.raw_bytes);
+    const element=byId(payload.element_id);
+    if(!element)throw new Error("観測payloadがHTMLにありません。");
+    const binary=atob(element.textContent),bytes=new Uint8Array(binary.length);
+    for(let i=0;i<binary.length;i++)bytes[i]=binary.charCodeAt(i);
+    const stream=new Blob([bytes]).stream().pipeThrough(new DecompressionStream("gzip"));
+    const reader=stream.getReader(),decoder=new TextDecoder("utf-8",{fatal:true}),chunks=[];
+    let expanded=0;
+    try{
+      while(true){
+        const part=await reader.read();if(part.done)break;
+        expanded+=part.value.byteLength;
+        if(expanded>payload.raw_bytes||expanded>CACHE_LIMIT_BYTES)
+          throw new Error("観測payloadの実展開容量が宣言値または128MiB上限を超えました。");
+        chunks.push(decoder.decode(part.value,{stream:true}));
+      }
+      chunks.push(decoder.decode());
+    }catch(error){await reader.cancel().catch(()=>{});throw error;}
+    if(expanded!==payload.raw_bytes)throw new Error("観測payloadの実展開容量が宣言値と一致しません。");
+    const rows=JSON.parse(chunks.join(""));
+    if(!Array.isArray(rows)||rows.length!==payload.count)throw new Error("観測payloadの件数が一致しません。");
+    if(epoch!==renderEpoch&&!activeTasks.has(task))return false;
+    task.observations=rows;taskCache.set(task,payload.raw_bytes);trimCache();
+    return epoch===renderEpoch;
+  });
+  loadQueue=operation.catch(()=>{});
+  return operation;
+}
+function clearObservationView(message,state){
+  byId("load-state").textContent=message;byId("load-state").dataset.state=state;
+  byId("heatmap").replaceChildren();byId("heatmap-limit").textContent="";
+  byId("coverage").textContent="";byId("pairing").textContent="";
+  byId("request-scope").textContent="";options("base-request",[],"");options("candidate-request",[],"");byId("cell-summary").textContent=message;
+  byId("cell-detail").textContent="";byId("weight-detail").replaceChildren();
 }
 function selectedRuns(){return [DATA.runs.find(r=>r.id===byId("base").value),DATA.runs.find(r=>r.id===byId("candidate").value)];}
 function allTaskRows(base,candidate){
@@ -330,12 +428,13 @@ function renderProvenance(base,candidate){
     dest.append(detail);
   }
 }
-function render(){
+async function render(){
+  const epoch=++renderEpoch;
   const [base,candidate]=selectedRuns(),all=allTaskRows(base,candidate);
   options("area",[["","全領域"],...[...new Set(all.map(t=>t.area))].sort().map(x=>[x,x])],byId("area").value);
   options("source",[["","全出典"],...[...new Set(all.map(t=>t.source))].sort().map(x=>[x,x])],byId("source").value);
   const tasks=visibleTasks(all,byId("area").value,byId("source").value,byId("search").value);
-  const firstSampled=tasks.find(t=>(t.baseline?.observations?.length||t.candidate?.observations?.length));
+  const firstSampled=tasks.find(t=>(observationCount(t.baseline)||observationCount(t.candidate)));
   options("task",tasks.map(t=>[t.key,t.source+" / "+t.id]),tasks.some(t=>t.key===byId("task").value)?byId("task").value:firstSampled?.key);
   const focus=tasks.filter(t=>t.key===byId("task").value),body=byId("task-body");body.replaceChildren();
   let gain=0,loss=0,equal=0,unpaired=0;
@@ -349,10 +448,31 @@ function render(){
     tr.append(node("td",t.area+" / "+t.source));
     for(const task of [t.baseline,t.candidate])tr.append(node("td",fmt(task?.score)+" · "+str(task?.status)));
     tr.append(node("td",finite(t.baseline?.score)&&finite(t.candidate?.score)?fmt(t.candidate.score-t.baseline.score):"対応スコアなし"));
-    tr.append(node("td",(t.baseline?.observations?.length||0)+" / "+(t.candidate?.observations?.length||0)));body.append(tr);
+    tr.append(node("td",observationCount(t.baseline)+" / "+observationCount(t.candidate)));body.append(tr);
   }
   byId("outcome-summary").textContent=tasks.length+"問題 · 得点増 "+gain+" / 減 "+loss+" / 同 "+equal+" / 対応スコアなし "+unpaired;
   byId("task-limit").textContent=tasks.length>300?"問題表は先頭300件。検索または領域で絞り込めます。":"";
+  activeTasks=new Set(focus.flatMap(t=>[t.baseline,t.candidate]).filter(Boolean));
+  renderProvenance(base,candidate);
+  const pending=[...activeTasks].filter(t=>!Array.isArray(t.observations));
+  if(pending.length){
+    clearObservationView("選択した問題の観測をローカルで展開中…（未展開は欠測ではありません）","loading");
+    try{
+      if([...activeTasks].reduce((n,t)=>n+(t.observations_payload?.raw_bytes||0),0)>CACHE_LIMIT_BYTES)
+        throw new Error("選択問題の展開容量が上限128MiBを超えます。単独実験または小さい範囲のレポートを選んでください。");
+      for(const task of pending)await loadTask(task,epoch);
+      if(epoch!==renderEpoch)return;
+    }catch(error){
+      if(epoch!==renderEpoch)return;
+      clearObservationView("観測を展開できません: "+String(error.message||error)+" 元の記録は保持されています。","error");
+      byId("coverage").textContent="選択問題の元の観測 "+[...activeTasks].reduce((n,t)=>n+observationCount(t),0)+"件（未表示。0や欠測には補完しません）";
+      return;
+    }
+  }
+  for(const task of activeTasks)touchTask(task);
+  trimCache();
+  byId("load-state").textContent=DATA.report_storage?"選択問題だけ展開。キャッシュ最大4問題/128MiB（非圧縮JSON容量、実メモリは別）。":"";
+  byId("load-state").dataset.state="ready";
   const baselineObservations=focus.flatMap(t=>t.baseline?.observations||[]),candidateObservations=focus.flatMap(t=>t.candidate?.observations||[]);
   options("base-request",requestOptions(baselineObservations),byId("base-request").value);
   options("candidate-request",requestOptions(candidateObservations),byId("candidate-request").value);
@@ -402,6 +522,6 @@ byId("data-kind").append(node("span",kinds.includes("synthetic")?"合成デー�
 if(DATA.runs.some(r=>r.provenance?.input_kind==="synthetic_calibration"))byId("data-kind").append(node("span","合成入力のツール検証 — 能力評価ではありません","badge"));
 for(const id of ["base","candidate","area","source","task","base-request","candidate-request","view","metric","rank","phase","role","site","start","end","accepted-only"])byId(id).addEventListener("change",render);
 byId("search").addEventListener("input",render);
-window.KairyuObserve=Object.freeze({observationScope,requestOptions,allTaskRows,visibleTasks,pairReason,collectRecords,makeHeatmap,weightAssociation,render});
+window.KairyuObserve=Object.freeze({observationScope,requestOptions,allTaskRows,visibleTasks,pairReason,collectRecords,makeHeatmap,weightAssociation,render,cacheInfo,observationCount});
 render();
 """
