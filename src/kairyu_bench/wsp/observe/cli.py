@@ -3,11 +3,20 @@
 from __future__ import annotations
 
 import argparse
+import re
 from pathlib import Path
 from typing import Sequence
 
 from kairyu_bench.artifacts import read_object, validate_output_path, write_json
 from kairyu_bench.wsp.observe.core import compare_reports, initialize_capture, merge_capture
+
+
+
+def _decode_offsets(value: str) -> list[int]:
+    parts = [part.strip() for part in value.split(",")]
+    if not parts or any(re.fullmatch(r"[0-9]+", part) is None for part in parts):
+        raise argparse.ArgumentTypeError("decode offsets must be comma-separated nonnegative integers")
+    return [int(part) for part in parts]
 
 
 def build_parser() -> argparse.ArgumentParser:
@@ -21,6 +30,8 @@ def build_parser() -> argparse.ArgumentParser:
     init.add_argument("--replicas", type=int, default=4)
     init.add_argument("--mtp-tokens", type=int, default=4)
     init.add_argument("--mode", choices=("live", "replay", "teacher_forced"), default="live")
+    init.add_argument("--decode-offsets", type=_decode_offsets, action="append",
+                      help="ascending unique prompt-relative offsets, at most 32; comma-separated or repeated")
     merge = commands.add_parser("merge", help="join worker records and benchmark outcomes")
     merge.add_argument("capture", type=Path)
     merge.add_argument("--results", type=Path)
@@ -46,6 +57,8 @@ def main(argv: Sequence[str] | None = None) -> int:
             result = initialize_capture(
                 args.checkpoint, args.output_dir, model=args.model, tp_size=args.tp_size,
                 replicas=args.replicas, mtp_tokens=args.mtp_tokens, mode=args.mode,
+                decode_offsets=([offset for group in args.decode_offsets for offset in group]
+                                if args.decode_offsets is not None else None),
             )
             print(Path(result["output_dir"]) / "capture.json")
             return 0

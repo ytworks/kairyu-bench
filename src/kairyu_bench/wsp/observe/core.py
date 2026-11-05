@@ -13,6 +13,7 @@ from pathlib import Path
 from typing import Any, Iterator
 
 from kairyu_bench.artifacts import read_object, write_json
+from kairyu_bench.wsp.observe.collector import read_decode_offsets, sampling_metadata
 
 _REQUEST = re.compile(r"observe-([0-9a-f]{32})-([0-9a-f]{32})")
 
@@ -20,12 +21,13 @@ _REQUEST = re.compile(r"observe-([0-9a-f]{32})-([0-9a-f]{32})")
 def initialize_capture(
     checkpoint: Path, output_dir: Path, *, model: str,
     tp_size: int = 2, replicas: int = 4, mtp_tokens: int = 4,
-    mode: str = "live",
+    mode: str = "live", decode_offsets: list[int] | tuple[int, ...] | None = None,
 ) -> dict[str, Any]:
     from kairyu_bench.wsp.weights.checkpoint import Checkpoint
 
     if tp_size < 1 or replicas < 1 or mtp_tokens < 0 or mode not in {"live", "replay", "teacher_forced"}:
         raise ValueError("invalid topology or observation mode")
+    offsets = read_decode_offsets(decode_offsets)
     if output_dir.exists() and any(output_dir.iterdir()):
         raise ValueError("capture output directory must be new or empty")
     identity = Checkpoint(checkpoint).identity()
@@ -42,9 +44,12 @@ def initialize_capture(
         },
         "limits": {
             "gpu_buffer_mib": 256, "storage_bytes": 2 * 1024**3,
-            "prefill_positions": 32, "decode_positions": 32,
+            "prefill_positions": 32, "decode_positions": 32 if offsets is None else len(offsets),
         },
+        "sampling": sampling_metadata(32, 32, offsets),
     }
+    if offsets is not None:
+        document["decode_offsets"] = list(offsets)
     write_json(output_dir / "capture.json", document)
     return document
 
@@ -329,6 +334,9 @@ def merge_capture(
         "capture": {
             "status": "complete" if complete else "partial_or_running",
             "limits": config["limits"], "token_bin_size": token_bin_size,
+            "sampling": sampling_metadata(config["limits"].get("prefill_positions", 32),
+                                          config["limits"].get("decode_positions", 32),
+                                          read_decode_offsets(config.get("decode_offsets"))),
             "counts": {"records": count, "unlinked_records": unlinked,
                        "workers": len(statuses), "expected_workers": expected,
                        "excluded_other_run_records": excluded_other_runs},

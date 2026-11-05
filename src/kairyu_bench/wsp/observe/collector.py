@@ -27,6 +27,33 @@ def selected_request(request_id: str) -> bool:
     return re.match(r"^(?:(?:chatcmpl|cmpl)-)?observe-", request_id) is not None
 
 
+def read_decode_offsets(value: Any) -> tuple[int, ...] | None:
+    """Explicit relative positions are a bounded ordered selection, not a range."""
+    if value is None:
+        return None
+    if (not isinstance(value, (list, tuple)) or not 1 <= len(value) <= 32
+            or any(type(offset) is not int or offset < 0 for offset in value)
+            or any(a >= b for a, b in zip(value, value[1:]))):
+        raise ValueError("decode_offsets must contain 1..32 ascending unique nonnegative integers")
+    return tuple(value)
+
+
+def sampling_metadata(prefill: int, decode: int,
+                      decode_offsets: tuple[int, ...] | None = None) -> dict[str, Any]:
+    policy = ("first_execution_of_first_unique_positions" if decode_offsets is None
+              else "first_execution_of_requested_decode_offsets")
+    return {
+        "policy": policy,
+        "prefill_policy": "first_execution_of_first_unique_positions",
+        "decode_policy": policy,
+        "requested_offsets": list(decode_offsets) if decode_offsets is not None else None,
+        "offset_origin": "token_position_minus_prompt_length",
+        "missing_policy": "unobserved_requested_offsets_are_missing_not_zero",
+        "semantic_boundary": "thinking_code_boundary_not_measured",
+        "limits": {"prefill": prefill, "decode": decode if decode_offsets is None else len(decode_offsets)},
+    }
+
+
 @dataclass(frozen=True)
 class CaptureConfig:
     capture_id: str
@@ -40,6 +67,7 @@ class CaptureConfig:
     outlier_rms_threshold: float = 6.0
     detail_channels: dict[str, tuple[int, ...]] = field(default_factory=dict)
     detail_heads: dict[str, tuple[int, ...]] = field(default_factory=dict)
+    decode_offsets: tuple[int, ...] | None = None
 
     @classmethod
     def read(cls, path: str | Path) -> CaptureConfig:
@@ -65,6 +93,9 @@ class CaptureConfig:
         ):
             if type(value) is not int or not 1 <= value <= maximum:
                 raise ValueError(f"{name} must be an integer in 1..{maximum}")
+        offsets = read_decode_offsets(data.get("decode_offsets"))
+        if offsets is not None and len(offsets) > decode:
+            raise ValueError("decode_offsets exceeds decode_positions limit")
         threshold = limits.get("outlier_rms_threshold", 6.0)
         if isinstance(threshold, bool) or not isinstance(threshold, (int, float)) or not math.isfinite(threshold) or threshold <= 0:
             raise ValueError("outlier_rms_threshold must be finite and positive")
@@ -75,7 +106,7 @@ class CaptureConfig:
         return cls(capture_id, out, dict(data["checkpoint"]), runtime,
                    gpu * 1024**2, storage, prefill, decode, float(threshold),
                    read_detail_selection(data.get("detail_channels", {}), heads=False),
-                   read_detail_selection(data.get("detail_heads", {}), heads=True))
+                   read_detail_selection(data.get("detail_heads", {}), heads=True), offsets)
 
 
 def read_detail_selection(value: Any, *, heads: bool) -> dict[str, tuple[int, ...]]:
@@ -205,7 +236,11 @@ class CaptureWriter:
             "sites": sites, "checkpoint": config.checkpoint, "runtime": config.runtime,
             "observed_checkpoint": observed_checkpoint,
             "token_kind": "target", "draft_activation_collected": False,
-            "sampling_policy": "first_execution_of_first_unique_positions",
+            "sampling_policy": sampling_metadata(config.prefill_positions, config.decode_positions,
+                                                   config.decode_offsets)["policy"],
+            "sampling": sampling_metadata(config.prefill_positions, config.decode_positions,
+                                          config.decode_offsets),
+            "requested_offsets": list(config.decode_offsets) if config.decode_offsets is not None else None,
             "metrics_scope": "finite coordinates; nonfinite_count is separate",
             "outlier_rms_threshold": config.outlier_rms_threshold,
         }
@@ -291,8 +326,14 @@ class Row:
 class PositionSampler:
     """Bounded per-active-request state. Never samples padding as a request."""
 
-    def __init__(self, prefill: int = 32, decode: int = 32):
-        self.limits = {"prefill": prefill, "decode": decode}
+    def __init__(self, prefill: int = 32, decode: int = 32,
+                 decode_offsets: tuple[int, ...] | None = None):
+        self.decode_offsets = read_decode_offsets(decode_offsets)
+        if self.decode_offsets is not None and len(self.decode_offsets) > decode:
+            raise ValueError("decode_offsets exceeds decode_positions limit")
+        self._decode_offset_set = frozenset(self.decode_offsets or ())
+        self.limits = {"prefill": prefill,
+                       "decode": decode if self.decode_offsets is None else len(self.decode_offsets)}
         self.selected: dict[str, dict[str, set[int]]] = {}
 
     def finish(self, request_ids: Any) -> None:
@@ -319,6 +360,9 @@ class PositionSampler:
             for offset in range(count):
                 position = int(positions[start + offset])
                 phase = "prefill" if position < prompt_lengths[req] else "decode"
+                if (phase == "decode" and self.decode_offsets is not None
+                        and position - prompt_lengths[req] not in self._decode_offset_set):
+                    continue
                 used = known[phase]
                 if position in used or len(used) >= self.limits[phase]:
                     continue
@@ -398,9 +442,11 @@ def row_record(config: CaptureConfig, replica: str, rank: int, step: int,
         "speculative_index": row.speculative_index, "accepted": accepted,
         "acceptance_semantics": "rejection_sampler_prefix_not_stop_filtered",
         "metrics": values_out,
-        "sample": {"policy": "first_execution_of_first_unique_positions",
+        "sample": {**sampling_metadata(config.prefill_positions, config.decode_positions,
+                                       config.decode_offsets),
                    "limit": config.prefill_positions if row.phase == "prefill"
-                   else config.decode_positions},
+                   else (config.decode_positions if config.decode_offsets is None
+                         else len(config.decode_offsets))},
     }
     for name in ("detail_kind", "parent_site_id", "channel_index", "head_local_index",
                  "head_global_index", "head_dim", "activation_axis"):

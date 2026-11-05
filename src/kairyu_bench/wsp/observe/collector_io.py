@@ -10,7 +10,7 @@ from typing import Any
 
 import numpy as np
 
-from kairyu_bench.wsp.observe.collector import METRICS
+from kairyu_bench.wsp.observe.collector import METRICS, sampling_metadata
 
 
 class RecordQueue:
@@ -82,9 +82,9 @@ class RecordQueue:
             "metric_names": list(METRICS),
             "row_fields": ["request_id", "token_position", "phase", "speculative_index", "accepted"],
             "rows": rows, "values": values.tolist(),
-            "sample": {"policy": "first_execution_of_first_unique_positions",
-                       "limits": {"prefill": self.writer.config.prefill_positions,
-                                  "decode": self.writer.config.decode_positions}},
+            "sample": sampling_metadata(self.writer.config.prefill_positions,
+                                        self.writer.config.decode_positions,
+                                        self.writer.config.decode_offsets),
         }
         try:
             import msgspec

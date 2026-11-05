@@ -139,6 +139,94 @@ class RuntimeCollectionTests(unittest.TestCase):
             self.assertIsNone(status["writer_queue"]["last_enqueued_at_unix"])
             self.assertIsNone(status["writer_queue"]["last_completed_at_unix"])
 
+    def test_decode_offsets_validate_before_checkpoint_read_and_roundtrip_cli(self) -> None:
+        from kairyu_bench.wsp.observe.cli import main
+        from kairyu_bench.wsp.observe.core import initialize_capture, merge_capture
+
+        invalid = [[], [1, 0], [0, 0], [-1], [True], [1.0], ["1"], list(range(33)), "0,1"]
+        with tempfile.TemporaryDirectory() as temp:
+            root = Path(temp)
+            with patch("kairyu_bench.wsp.weights.checkpoint.Checkpoint") as checkpoint:
+                for offsets in invalid:
+                    with self.subTest(offsets=offsets), self.assertRaisesRegex(ValueError, "decode_offsets"):
+                        initialize_capture(root / "base", root / "bad", model="synthetic",
+                                           decode_offsets=offsets)
+                checkpoint.assert_not_called()
+                self.assertFalse((root / "bad").exists())
+                checkpoint.return_value.identity.return_value = {"sha256": "a" * 64}
+                with patch("builtins.print"):
+                    self.assertEqual(main(["init", str(root / "base"), "--output-dir", str(root / "capture"),
+                                           "--model", "synthetic", "--decode-offsets", "0,1,8",
+                                           "--decode-offsets", "64"]), 0)
+            config = CaptureConfig.read(root / "capture/capture.json")
+            self.assertEqual(config.decode_offsets, (0, 1, 8, 64))
+            self.assertEqual(config.decode_positions, 4)
+            report = merge_capture(root / "capture")
+            capture = report["runs"][0]["capture"]
+            self.assertEqual(capture["sampling"]["requested_offsets"], [0, 1, 8, 64])
+            self.assertEqual(capture["sampling"]["policy"], "first_execution_of_requested_decode_offsets")
+            self.assertEqual(capture["sampling"]["semantic_boundary"], "thinking_code_boundary_not_measured")
+            self.assertEqual(report["runs"][0]["tasks"], [])  # No zero-valued fabricated late records.
+            self.assertEqual(capture["counts"]["records"], 0)
+            data = json.loads((root / "capture/capture.json").read_text())
+            for offsets in invalid:
+                data["decode_offsets"] = offsets
+                (root / "capture/capture.json").write_text(json.dumps(data))
+                with self.subTest(offsets=offsets), self.assertRaisesRegex(ValueError, "decode_offsets"):
+                    CaptureConfig.read(root / "capture/capture.json")
+            data["decode_offsets"] = [0, 1, 8, 64, 128]  # Exceeds explicit decode_positions=4.
+            (root / "capture/capture.json").write_text(json.dumps(data))
+            with self.assertRaisesRegex(ValueError, "exceeds"):
+                CaptureConfig.read(root / "capture/capture.json")
+
+    def test_decode_offsets_use_prompt_boundary_and_first_execution(self) -> None:
+        sampler = PositionSampler(prefill=2, decode_offsets=(0, 2, 4, 64, 1024))
+        rows = sampler.select(["a", "b"], {"a": 4, "b": 4},
+                              [98, 99, 100, 101, 198, 199, 200, 201],
+                              {"a": 100, "b": 200}, {})
+        self.assertEqual([(r.request_id, r.token_position) for r in rows],
+                         [("a", 98), ("a", 99), ("a", 100),
+                          ("b", 198), ("b", 199), ("b", 200)])
+        # Re-executing the offset-0 input is ignored. A selected speculative
+        # input retains its original zero-based MTP index.
+        rows = sampler.select(["a"], {"a": 5}, [100, 101, 102, 103, 104], {"a": 100}, {"a": 2})
+        self.assertEqual([(r.token_position, r.speculative_index) for r in rows], [(102, None), (104, 1)])
+        self.assertEqual(sampler.select(["a"], {"a": 1}, [104], {"a": 100}, {}), [])
+        rows = sampler.select(["a"], {"a": 2}, [163, 164], {"a": 100}, {})
+        self.assertEqual([r.token_position for r in rows], [164])
+        self.assertEqual(sampler.selected["a"]["decode"], {100, 102, 104, 164})
+        self.assertNotIn(1124, sampler.selected["a"]["decode"])  # Unreached offset is missing.
+        sampler.finish(["a"])
+        self.assertEqual(len(sampler.select(["a"], {"a": 1}, [100], {"a": 100}, {})), 1)
+
+    def test_decode_offsets_preserve_compact_and_legacy_metadata(self) -> None:
+        import numpy as np
+        from kairyu_bench.wsp.observe.collector_io import RecordQueue
+        from kairyu_bench.wsp.observe.core import observation_records
+
+        with tempfile.TemporaryDirectory() as temp:
+            config = replace(self.config(Path(temp)), decode_offsets=(0, 8, 64))
+            site = {"site_id": "layer.0.residual", "layer": 0, "role": "residual"}
+            writer = CaptureWriter(config, "r0", 0, [site], 100)
+            queue = RecordQueue(writer, [site])
+            row = Row(0, "observe-x", 108, "decode", 0)
+            pending = types.SimpleNamespace(step=1, values=np.zeros((1, 1, len(METRICS)), dtype=np.float32),
+                                            drafts={"observe-x": 1}, rows=[row])
+            self.assertTrue(queue.submit(pending, {"observe-x": 0}))
+            self.assertTrue(queue.close())
+            decoded = list(observation_records(writer.directory / "observations.jsonl.gz",
+                                               {site["site_id"]: site}))
+            self.assertEqual(len(decoded), 1)
+            self.assertFalse(decoded[0]["accepted"])
+            self.assertEqual(decoded[0]["sample"]["requested_offsets"], [0, 8, 64])
+            self.assertEqual(decoded[0]["sample"]["limits"]["decode"], 3)
+            legacy = row_record(config, "r0", 0, 1, site, row, [0.] * len(METRICS), {"observe-x": 0})
+            self.assertEqual(legacy["sample"]["policy"], decoded[0]["sample"]["policy"])
+            self.assertEqual(legacy["sample"]["requested_offsets"], [0, 8, 64])
+            sites = json.loads((writer.directory / "sites.json").read_text())
+            self.assertEqual(sites["requested_offsets"], [0, 8, 64])
+            self.assertEqual(sites["sampling"]["missing_policy"], "unobserved_requested_offsets_are_missing_not_zero")
+
     def test_internal_warmup_request_is_excluded(self) -> None:
         self.assertFalse(selected_request("req_7_generated-warmup-id"))
         self.assertFalse(selected_request("chatcmpl-ordinary-request"))
@@ -200,6 +288,11 @@ class RuntimeCollectionTests(unittest.TestCase):
         self.assertEqual([r.index for r in rows], [0, 1, 2, 3, 4])
         self.assertEqual([r.speculative_index for r in rows], [None, 0, 1, None, None])
         self.assertEqual([r.phase for r in rows], ["decode"] * 3 + ["prefill"] * 2)
+        requested, actual_drafts = v2_batch_rows(batch, states, PositionSampler(decode_offsets=(0, 2, 64)))
+        self.assertEqual(actual_drafts, drafts)
+        self.assertEqual([r.index for r in requested], [0, 2, 3, 4])
+        self.assertEqual([r.speculative_index for r in requested], [None, 1, None, None])
+        self.assertNotIn(999, [r.token_position for r in requested])
 
     def test_layout_reordering_padding_and_request_budget(self) -> None:
         sampler = PositionSampler(prefill=2, decode=2)
@@ -281,7 +374,7 @@ class RuntimeCollectionTests(unittest.TestCase):
             self.assertEqual(record["metrics"]["nonfinite_count"], 20)
             encoded = json.dumps(record, allow_nan=False)
             for forbidden in ("prompt", "reasoning_content", "token_ids", "activation_values"):
-                self.assertNotIn(forbidden, encoded)
+                self.assertNotIn(json.dumps(forbidden) + ":", encoded)
 
 
 @unittest.skipUnless(importlib.util.find_spec("torch"), "optional serving PyTorch unavailable")

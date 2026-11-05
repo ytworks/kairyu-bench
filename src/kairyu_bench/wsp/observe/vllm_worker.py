@@ -108,7 +108,8 @@ class CaptureWorker(Worker):
             self._capture_tensor.sites, self._capture_tensor.buffer_bytes, observed_checkpoint)
         self._capture_queue = RecordQueue(self._capture_writer, self._capture_tensor.sites)
         self._capture_sampler = PositionSampler(
-            self._capture_config.prefill_positions, self._capture_config.decode_positions)
+            self._capture_config.prefill_positions, self._capture_config.decode_positions,
+            self._capture_config.decode_offsets)
         self._capture_pending: Pending | None = None
         self._capture_step = 0
         self._capture_disabled = False

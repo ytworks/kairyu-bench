@@ -161,6 +161,18 @@ tensor名は対象checkpointで確認して指定します。例の名前をす�
   --tp-size 2 --replicas 4 --mtp-tokens 4 --mode live
 ```
 
+長い生成の途中・後半も同じ上限内で観測するには、任意の `--decode-offsets` を指定できます。
+
+```sh
+./kairyu-bench wsp observe init /mnt/nvme/<checkpoint> \
+  --output-dir /mnt/nvme/<capture> --model <served-model-id> \
+  --decode-offsets 0,1,2,4,8,16,32,64,128,256,512,1024,2048,4096,8192,16384
+```
+
+値は昇順・重複なしの非負整数、最大32個です。引数の繰返しも可能です。offsetは実際の `token_position - prompt_length` で、0はpromptの直後の入力token位置です。指定位置の最初の実行だけを採り、prefillは従来どおり先頭の最大32位置を採ります。省略時のdecode採取も従来どおり最初の最大32位置です。
+
+設定・site・圧縮batch・merge reportへ `policy` と `requested_offsets` を保存します。生成が指定位置へ到達しない場合、prefix cache・padding・quota・drop等で記録がない場合は、未観測として残し0で埋めません。未観測の理由を位置だけから確定しません。MTPの受理/不受理は引き続き別に記録します。modeは `live` のままで、thinkingとコード回答の意味的な境界を検出・測定したものではありません。
+
 新しいcapture directoryを使用します。checkpoint識別を取り、`capture.json`へmode・topology・上限を保存します。既定はworker当たりGPU観測bufferの上限256MiB、capture全体のworker・client/APIログ・metadataへの割当容量2GiB、requestごとのprefill/decode先頭各32位置です。全token・全requestの均等標本ではありません。prefix cacheで再計算されなかったprompt位置は採取されず、全promptの被覆率を推定できる分母がない場合もあります。上限・drop・error・受理不明を結果と一緒に読みます。
 
 serving imageにも同じパッケージを導入し、capture directoryをhost・API・worker・ベンチrunnerから同じ絶対pathで見えるようにします。replicaごとに識別子を分け、通常のvLLM起動引数に次を追加します。
