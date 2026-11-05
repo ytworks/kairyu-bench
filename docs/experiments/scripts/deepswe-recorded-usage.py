@@ -2,7 +2,8 @@
 """Read official DeepSWE scores and distinct-trial recorded usage, without regrading.
 
 Canonical results determine scores. Retry archives add usage, never extra scores.
-No trajectories, prompt/answer text, tool arguments, or environment values are read.
+By default no trajectories are read. Opt-in agent API metadata reads only a bounded
+first info object; messages, tool arguments and environment values are never output.
 """
 
 from __future__ import annotations
@@ -59,7 +60,150 @@ def metric(values: list[Any], expected: int) -> dict[str, Any]:
     }
 
 
-def collect(run_dir: Path) -> dict[str, Any]:
+
+MAX_INFO_PREFIX_BYTES = 2 * 1024 * 1024
+
+
+def file_state(path: Path) -> tuple[int, ...]:
+    value = path.stat()
+    return (value.st_dev, value.st_ino, value.st_size, value.st_mtime_ns, value.st_ctime_ns)
+
+
+def agent_api_prefix(path: Path, raw: Path) -> dict[str, Any]:
+    """Stop at the first info object's closing brace; never scan messages."""
+    import hashlib
+
+    if not path.resolve().is_relative_to(raw.resolve()):
+        raise ValueError("trajectory path escapes this run")
+    result: dict[str, Any] = {
+        "trajectory": str(path.relative_to(raw)), "api_calls": None,
+        "status": "missing_trajectory", "prefix_bytes": 0,
+    }
+    if not path.exists():
+        return result
+    before = file_state(path)
+    prefix = bytearray()
+
+    class Unavailable(Exception):
+        pass
+
+    try:
+        with path.open("rb") as stream:
+            def take() -> bytes:
+                if len(prefix) >= MAX_INFO_PREFIX_BYTES:
+                    raise Unavailable("prefix_limit")
+                char = stream.read(1)
+                if not char:
+                    raise Unavailable("truncated_info")
+                prefix.extend(char)
+                return char
+
+            def nonspace() -> bytes:
+                char = take()
+                while char in b" \t\r\n":
+                    char = take()
+                return char
+
+            if nonspace() != b"{" or nonspace() != b'"':
+                raise Unavailable("unsupported_layout")
+            key = bytearray(b'"')
+            escaped = False
+            while True:
+                char = take()
+                key.extend(char)
+                if char == b'"' and not escaped:
+                    break
+                escaped = char == b"\\" and not escaped
+            if json.loads(key) != "info":
+                raise Unavailable("info_not_first")
+            if nonspace() != b":" or nonspace() != b"{":
+                raise Unavailable("info_not_object")
+            start = len(prefix) - 1
+            depth, quoted, escaped = 1, False, False
+            while depth:
+                char = take()
+                if quoted:
+                    if char == b'"' and not escaped:
+                        quoted = False
+                    escaped = char == b"\\" and not escaped
+                elif char == b'"':
+                    quoted, escaped = True, False
+                elif char == b"{":
+                    depth += 1
+                elif char == b"}":
+                    depth -= 1
+            info = json.loads(prefix[start:])
+            stats = info.get("model_stats")
+            value = stats.get("api_calls") if isinstance(stats, dict) else None
+            if not isinstance(value, int) or isinstance(value, bool) or value < 0:
+                raise Unavailable("missing_or_invalid_api_calls")
+            result.update(api_calls=value, status="recorded")
+    except Unavailable as error:
+        result["status"] = str(error)
+    except (json.JSONDecodeError, UnicodeDecodeError):
+        result["status"] = "malformed_info"
+    if file_state(path) != before:
+        raise ValueError("trajectory changed during metadata read")
+    result.update(
+        prefix_bytes=len(prefix), prefix_sha256=hashlib.sha256(prefix).hexdigest(),
+        source_stat=dict(zip(("device", "inode", "size", "mtime_ns", "ctime_ns"), before)),
+    )
+    return result
+
+
+def add_agent_api_metadata(
+    raw: Path, selected: dict[str, Any], records: dict[str, Any], expected: int,
+) -> dict[str, Any]:
+    """Join job metadata to existing trial UUIDs; jobs never add scores or trials."""
+    values: dict[str, int] = {}
+    observations: dict[str, list[dict[str, Any]]] = {key: [] for key in records}
+    paths = {raw / path for record in records.values() for path in record["paths"]}
+    jobs = set((raw / "jobs").glob("repeat-*/*/result.json"))
+    for path in sorted(paths | jobs):
+        if not path.resolve().is_relative_to(raw.resolve()):
+            raise ValueError("agent metadata result path escapes this run")
+        before = file_state(path)
+        payload = read_object(path)
+        identity = payload.get("id")
+        if identity not in records:
+            continue
+        recorded = records[identity]["measurement"]
+        task, repeat = recorded["task_id"], recorded["repeat_index"]
+        _validate_trial(payload, selected, task)
+        if not isinstance(recorded["task_checksum"], str) or not recorded["task_checksum"]:
+            raise ValueError("agent metadata join requires a task checksum")
+        if payload.get("task_checksum") != recorded["task_checksum"]:
+            raise ValueError("same trial UUID has conflicting task checksum")
+        if path in jobs and path.relative_to(raw / "jobs").parts[0] != f"repeat-{repeat}":
+            raise ValueError("same trial UUID has conflicting repeat")
+        agent = payload.get("agent_result") or {}
+        execution = payload.get("agent_execution") or {}
+        usage = {key: agent.get(field) if numeric(agent.get(field)) else None
+                 for key, field in METRICS.items()}
+        if (usage != recorded["usage"]
+                or execution.get("started_at") != recorded["agent_started_at"]
+                or execution.get("finished_at") != recorded["agent_finished_at"]):
+            raise ValueError("same trial UUID has conflicting identity/usage/time")
+        trajectory = path.parent / "agent" / "mini-swe-agent.trajectory.json"
+        if os.path.lexists(trajectory):
+            observation = agent_api_prefix(trajectory, raw)
+            observation["sibling_result"] = str(path.relative_to(raw))
+            observations[identity].append(observation)
+            value = observation["api_calls"]
+            if value is not None:
+                if identity in values and values[identity] != value:
+                    raise ValueError("same trial UUID has conflicting agent API counters")
+                values[identity] = value
+        if file_state(path) != before:
+            raise ValueError("sibling result changed during metadata read")
+    for identity, record in records.items():
+        record["agent_api_metadata"] = {
+            "api_calls": values.get(identity), "observations": observations[identity],
+            "status": "recorded" if identity in values else "unavailable",
+        }
+    return metric(list(values.values()), expected)
+
+def collect(run_dir: Path, *, agent_api_metadata: bool = False) -> dict[str, Any]:
     raw = run_dir / "raw" / "deepswe"
     # Existing official validator and score semantics remain authoritative.
     official = summarize_deepswe(raw)
@@ -133,7 +277,7 @@ def collect(run_dir: Path) -> dict[str, Any]:
     for identity, record in records.items():
         record["canonical"] = identity in canonical_ids
     metadata = read_object(run_dir / "run.json")
-    return {
+    report = {
         "schema_version": 1,
         "run_id": run_dir.name,
         "official_summary": official,
@@ -162,6 +306,22 @@ def collect(run_dir: Path) -> dict[str, Any]:
         ],
     }
 
+    if agent_api_metadata:
+        report["usage"]["agent_api_calls"] = add_agent_api_metadata(raw, selected, records, expected)
+        report["agent_api_metadata"] = {
+            "field": "trajectory.info.model_stats.api_calls",
+            "scope": "Agent-recorded model counter, not independent HTTP transport/server telemetry.",
+            "join_keys": ["task_id", "repeat_index", "task_checksum", "trial UUID"],
+            "prefix_limit_bytes": MAX_INFO_PREFIX_BYTES,
+            "read_scope": "Only first top-level info object; stop before messages.",
+            "steps_used_to_infer_api_calls": False,
+        }
+        report["limits"].append(
+            "Opt-in agent API counters are metadata only; missing/invalid prefixes remain null, "
+            "and distinct trial UUIDs are counted once. They do not measure independent HTTP traffic."
+        )
+    return report
+
 
 def write_fresh(path: Path, value: dict[str, Any], run_dir: Path) -> None:
     if path.resolve().is_relative_to(run_dir.resolve()):
@@ -185,10 +345,12 @@ def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("run", type=Path)
     parser.add_argument("--output", type=Path, required=True)
+    parser.add_argument("--agent-api-metadata", action="store_true",
+                        help="Read bounded first-info trajectory counters, never messages")
     args = parser.parse_args()
     if os.path.lexists(args.output):
         raise FileExistsError(args.output)
-    report = collect(args.run)
+    report = collect(args.run, agent_api_metadata=args.agent_api_metadata)
     write_fresh(args.output, report, args.run)
     print(
         json.dumps(

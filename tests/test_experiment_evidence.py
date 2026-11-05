@@ -2,10 +2,12 @@ from __future__ import annotations
 
 import copy
 import importlib.util
+import io
 import json
 import tempfile
 import unittest
 from pathlib import Path
+from unittest.mock import patch
 
 from kairyu_bench.deepswe import summarize_deepswe, write_trial_plan
 from kairyu_bench.wsp.report import compare
@@ -342,6 +344,155 @@ class DeepSWERecordedUsageTest(unittest.TestCase):
                 DEEPSWE.write_fresh(output, report, path)
             with self.assertRaises(ValueError):
                 DEEPSWE.write_fresh(path / "usage.json", report, path)
+
+
+class DeepSWEAgentApiMetadataTest(unittest.TestCase):
+    @staticmethod
+    def trajectory(result, calls, *, suffix=b',"messages":["body must not be read"]}'):
+        path = result.parent / "agent" / "mini-swe-agent.trajectory.json"
+        path.parent.mkdir(parents=True, exist_ok=True)
+        info = {"model_stats": {"api_calls": calls}, "ignored": SECRET + ' {"}\\'}
+        prefix = b'{"info":' + json.dumps(info).encode()
+        path.write_bytes(prefix + suffix)
+        return path, prefix
+
+    def test_opt_in_counts_api_counter_once_per_uuid_without_changing_scores(self):
+        with tempfile.TemporaryDirectory() as directory:
+            run, raw = deepswe_run(Path(directory), trial())
+            canonical = raw / "trials/repeat-0/task-a/result.json"
+            self.trajectory(canonical, 5)
+            archive = raw / f"retries/repeat-0/task-a/{UUID_B}/result.json"
+            save(archive, trial(UUID_B, 0))
+            self.trajectory(archive, 4)
+            job = raw / "jobs/repeat-0/task-a__copy/result.json"
+            save(job, trial())
+            self.trajectory(job, 5)
+            with patch.object(DEEPSWE, "agent_api_prefix", side_effect=AssertionError("opt in only")):
+                default = DEEPSWE.collect(run)
+            self.assertNotIn("agent_api_calls", default["usage"])
+            report = DEEPSWE.collect(run, agent_api_metadata=True)
+            self.assertEqual(report["official_summary"], default["official_summary"])
+            self.assertEqual(report["usage"]["agent_steps"]["total"], 4)
+            self.assertEqual(report["usage"]["agent_api_calls"]["total"], 9)
+            self.assertEqual(report["usage"]["agent_api_calls"]["measured_trials"], 2)
+            self.assertEqual(report["recorded_trial_count"], 2)
+            self.assertNotIn(SECRET, json.dumps(report))
+
+    def test_prefix_stops_exactly_before_messages_and_handles_escaped_braces(self):
+        with tempfile.TemporaryDirectory() as directory:
+            run, raw = deepswe_run(Path(directory), trial())
+            trajectory, prefix = self.trajectory(
+                raw / "trials/repeat-0/task-a/result.json", 0, suffix=b'\xffINVALID BODY'
+            )
+            original = Path.open
+            read_count = []
+
+            class PrefixOnly(io.BytesIO):
+                def read(self, size=-1):
+                    self_test.assertEqual(size, 1)
+                    self_test.assertLess(self.tell(), len(prefix))
+                    value = super().read(size)
+                    read_count.append(len(value))
+                    return value
+
+            self_test = self
+
+            def opened(path, *args, **kwargs):
+                if path == trajectory:
+                    return PrefixOnly(prefix)
+                return original(path, *args, **kwargs)
+
+            with patch.object(Path, "open", opened):
+                report = DEEPSWE.collect(run, agent_api_metadata=True)
+            self.assertEqual(sum(read_count), len(prefix))
+            self.assertEqual(report["usage"]["agent_api_calls"]["total"], 0)
+
+    def test_missing_invalid_unsupported_and_bounded_prefixes_remain_unknown(self):
+        examples = [
+            b'{"messages":INVALID BODY', b'{"info":', b'{"info":[]}',
+            b'{"info":{"model_stats":{"api_calls":true}}}',
+            b'{"info":{"model_stats":{"api_calls":1.0}}}',
+            b'{"info":{"model_stats":{"api_calls":-1}}}',
+            b'{"info":{"model_stats":{}}}', b'{"info":{"huge":"' + b'x' * 100,
+        ]
+        for content in [None, *examples]:
+            with self.subTest(content=content), tempfile.TemporaryDirectory() as directory:
+                run, raw = deepswe_run(Path(directory), trial())
+                if content is not None:
+                    target, _ = self.trajectory(raw / "trials/repeat-0/task-a/result.json", 9)
+                    target.write_bytes(content)
+                with patch.object(DEEPSWE, "MAX_INFO_PREFIX_BYTES", 80):
+                    report = DEEPSWE.collect(run, agent_api_metadata=True)
+                result = report["usage"]["agent_api_calls"]
+                self.assertIsNone(result["total"])
+                self.assertEqual(result["sum_recorded"], 0)
+                self.assertEqual(result["missing_trials"], 1)
+                self.assertEqual(report["usage"]["agent_steps"]["total"], 2)
+
+    def test_job_uuid_counter_checksum_task_and_repeat_conflicts_are_rejected(self):
+        for kind in ("counter", "checksum", "missing_checksum", "task", "repeat"):
+            with self.subTest(kind=kind), tempfile.TemporaryDirectory() as directory:
+                payload = trial()
+                if kind == "missing_checksum":
+                    payload["task_checksum"] = None
+                run, raw = deepswe_run(Path(directory), payload)
+                self.trajectory(raw / "trials/repeat-0/task-a/result.json", 5)
+                job = raw / f"jobs/repeat-{1 if kind == 'repeat' else 0}/task-a__job/result.json"
+                payload = copy.deepcopy(payload)
+                if kind == "checksum":
+                    payload["task_checksum"] = "other"
+                if kind == "task":
+                    payload["task_name"] = "datacurve/other"
+                save(job, payload)
+                self.trajectory(job, 6 if kind == "counter" else 5)
+                with self.assertRaises(ValueError):
+                    DEEPSWE.collect(run, agent_api_metadata=True)
+
+    def test_unknown_job_uuid_is_not_added_and_missing_canonical_slot_stays_missing(self):
+        with tempfile.TemporaryDirectory() as directory:
+            run, raw = deepswe_run(Path(directory))
+            archive = raw / f"retries/repeat-0/task-a/{UUID_B}/result.json"
+            save(archive, trial(UUID_B))
+            self.trajectory(archive, 7)
+            job = raw / "jobs/repeat-0/task-a__unfinished/result.json"
+            save(job, trial())
+            self.trajectory(job, 99)
+            report = DEEPSWE.collect(run, agent_api_metadata=True)
+            result = report["usage"]["agent_api_calls"]
+            self.assertIsNone(result["total"])
+            self.assertEqual(result["sum_recorded"], 7)
+            self.assertEqual(result["expected_trials"], 2)
+            self.assertEqual(result["measured_trials"], 1)
+            self.assertEqual(report["official_summary"]["scored_attempts"], 0)
+
+    def test_trajectory_escape_and_changed_file_are_rejected(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            run, raw = deepswe_run(root, trial())
+            target, _ = self.trajectory(raw / "trials/repeat-0/task-a/result.json", 3)
+            outside = root / "outside.json"
+            outside.write_bytes(target.read_bytes())
+            target.unlink()
+            target.symlink_to(outside)
+            with self.assertRaisesRegex(ValueError, "escapes"):
+                DEEPSWE.collect(run, agent_api_metadata=True)
+            target.unlink()
+            target.write_bytes(outside.read_bytes())
+            real_state = DEEPSWE.file_state
+            calls = 0
+
+            def changed(path):
+                nonlocal calls
+                value = real_state(path)
+                if path == target:
+                    calls += 1
+                    if calls > 1:
+                        return (*value[:-1], value[-1] + 1)
+                return value
+
+            with patch.object(DEEPSWE, "file_state", changed):
+                with self.assertRaisesRegex(ValueError, "changed"):
+                    DEEPSWE.collect(run, agent_api_metadata=True)
 
 
 if __name__ == "__main__":

@@ -14,6 +14,11 @@ PYTHONPATH=src python docs/experiments/scripts/wsp-run-evidence.py \
 
 PYTHONPATH=src python docs/experiments/scripts/deepswe-recorded-usage.py \
   /data/deepswe-run --output /data/analysis/new-deepswe-usage.json
+
+# Optional recorded model API counter; no message bodies are read.
+PYTHONPATH=src python docs/experiments/scripts/deepswe-recorded-usage.py \
+  /data/deepswe-run --agent-api-metadata \
+  --output /data/analysis/new-deepswe-api-metadata.json
 ```
 
 Both outputs must be fresh paths outside all input run directories. Input files
@@ -49,3 +54,22 @@ count. `sum_recorded` is only the known portion. Concurrent request/agent
 durations are sums, not wall time. Multi-call WSP samples contribute their
 individual call records once; aggregate sample totals are not added again.
 Agent summaries without recorded calls/tokens remain unknown.
+
+With `--agent-api-metadata`, DeepSWE adds `usage.agent_api_calls` separately
+from `usage.agent_steps`. The source is the agent's recorded
+`trajectory.info.model_stats.api_calls` counter, **not independent HTTP
+transport/server telemetry**. No count is inferred from steps. The reader
+requires `info` to be the first top-level object and stops at its closing
+brace, with a fixed 2 MiB prefix limit; it does not scan, decode or parse
+`messages`. Only nonnegative integer counters are accepted. Missing files,
+unsupported ordering, truncated/oversized metadata and invalid counters remain
+unknown with measured/missing coverage and per-observation status.
+
+Metadata beside canonical/retry results and under `jobs/repeat-*/` is linked by
+task, repeat, nonempty task checksum and trial UUID, using the sibling `result.json`.
+Job copies add no trial or score. Conflicting identities, existing usage/timing
+or two recorded API counters for the same UUID are rejected; matching copies
+count once. Unmatched job UUIDs are ignored, so unfinished canonical slots stay
+missing. Per-file stat stability and the SHA256 of only the read prefix are
+recorded; a changed file or path escaping the run is rejected. The source
+trajectory is never modified. Existing output without this flag is unchanged.
