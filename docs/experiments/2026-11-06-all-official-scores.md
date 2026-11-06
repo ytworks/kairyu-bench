@@ -1,6 +1,6 @@
 # Gemma4公式スコア全実行台帳（2026-11-06）
 
-snapshot: 2026-11-06T14:36:01.112056+00:00。WSP **115 runs**（completed110、partial4、保存metadataがrunningの旧run1）。
+snapshot: 2026-11-06T15:28:29.481355+00:00。WSP **118 runs**（completed112、partial4、running2＝旧保存run1＋S full14実行中1）。
 新規採点・モデル実行なし。指定したNVMe resultsとlegacy resultsの直下run.json/report.jsonだけを採録した。
 5つのDeepSWE runはWSP台帳から分離し、完了・取消結果を代表表へ併記する。元R1/R2はincompleteで、この台帳から完成した点を捏造しない。
 公式reportから値を転記し、欠測は「—」。表は小数6桁表示、sourceの未丸め値はcatalog JSONに残す。
@@ -42,6 +42,8 @@ partialのoverallは公開表で空欄にし、reportの元値はcatalogのrepor
 | N＝P＋K1 text1/16 | 71.6032 | fresh P | 74.2421 | −2.6389 | 同時ペア、Nを採らずPを保持 |
 | P・Rの同時対照 | 73.2698 | — | — | — | 同じPのfresh再測定 |
 | R＝P＋math MLP全層c1 | 73.6270 | fresh P | 73.2698 | +0.3571 | 一時昇格、後続full14退行で撤回 |
+| P・Sの同時対照 | 72.5754 | — | — | — | 同じPのfresh再測定 |
+| S＝P＋科学native連成 | 74.2421 | fresh P | 72.5754 | +1.6667 | LCB2 gain／MBPP1 loss、Sci不変、full14中・未採用 |
 
 M−Oは−3.2778pp。Pのworking採用はユーザーの「改善後から積み上げる」方針による。
 最終code>90達成、未知集合への汎化、統計的確定とは別である。
@@ -4890,3 +4892,23 @@ B73.4087の同時対照は0397であり、後日original72.5754を同時対照�
 R full14 closure SHA db693d71de3180fe49910d9a89cf07c494771a1f2e37dfc4c41fbd2750969095：歴史P比overall−2.0927795 pp、CI[−4.26587,−.09675]、25 changed（9 gain／16 loss）。この得失を受けownerはR増分を不採用とした。P復帰後の新state pinはowner記録を参照し、全公式score行は採用判断に合わせて書き換えない。
 
 最新作業親の正式状態はP：working-incumbent.json SHA 2666c54246852bf328be8b6293ff3402f011403fc27ad28113c5bcddaf923c99。R増分の撤回decision SHA 1619f5487e92716434641797eb93971a4ad88e181ccc9f105d96f5d788b1e528。これは既存Pへの復帰で新たな重み改善ではなく、v3-final取得時のR採用状態は履歴として残す。
+
+## v4追加3実行と保存証跡
+
+all-scores-20261106-v4/をfresh出力として既存run/report専用exporterを再使用した。旧115行は全fieldが完全一致し、新しいS/P公式ペアと実在するS full14 running行だけ追加。v1/v2/v3/v3-finalは不変。読取エラー／metadata不一致0。S full14の未完了scoreはunknownのまま、0補完しない。
+
+| Run ID | 状態 | protocol | 項目 / 採点 / 未採点 | code % | overall % |
+|---|---|---|---:|---:|---:|
+| gemma4-code90-current-p-native-s-c32-dev30-code-20261106 | completed | code90_dev30 | 90 / 90 / 0 | 74.242063 | — |
+| gemma4-code90-heretic-public-base-c32-dev30-code-pairs-20261106 | completed | code90_dev30 | 90 / 90 / 0 | 72.575397 | — |
+| gemma4-code90-candidate-s-c32-dev10-full14-20261106 | running | full14_tier10 | 778 / 不明 / 不明 | — | — |
+
+S−fresh Pは+1.666667 pp、paired CI[−1.666667,+6.250000]。LCB3777／abc390_gが0→1、MBPP641が1→0、SciCode部分点は不変。proxy科学LL改善を公式SciCode改善に読み替えない。全14領域評価中のためSは未採用で、作業親は同じP（state2666c542…）のまま。[Sの固定編集・実測・運用記録](2026-11-06-current-p-native-science-step-s.md)を参照。
+
+| v4 Artifact | SHA256 |
+|---|---|
+| catalog.json | 3c8868f29dc06d06a2cdb3022e3c301e8edcfda0fbf2c23902be7920a25764c8 |
+| coverage.json | e92c9c7c40b25af77fa1c72bfe8c291a60855ecc11c45ea224b180b94eab004c |
+| runs.csv | 3e89b964f823e8157b17c7c54d7031b064f7836269417361c1ae970d300941ae |
+| source-scores.csv | 97cc889b2be47219633579c0d4f9f86545c9cd368b6a6f13129d0aca659641a2 |
+| preservation-validation.json | a32a42ec73f8f6cf803e03a2a33800955e75b21bf803824de28c245cc53bc801 |
