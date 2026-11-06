@@ -9,8 +9,8 @@ with nonzero adapter hooks.
 The model contains the actual BF16 result of `W + c * (2 B A)`: FP32 GEMM in
 128-row blocks, multiply by 2, multiply by the exactly represented FP32 coefficient,
 separate FP32 addition, then ties-to-even BF16 once. Coefficient zero preserves
-the original bytes, including signed zero. Every uploaded block is read back and
-compared byte for byte. Each candidate records every projection's source/target
+the original bytes, including signed zero. Each complete BF16 matrix is uploaded once, read back once and compared byte for
+byte; the CPU GEMM and rounding blocks remain exactly 128 rows. Each candidate records every projection's source/target
 SHA256, changed element/byte counts, and actual BF16 delta norm.
 
 A plan pins the source index, a prior complete content-identity receipt, authored
@@ -64,7 +64,10 @@ For the 410 text projections in this study, the CPU cache is approximately
 It never stores six complete BF16 candidates. The first base sweep precedes
 cache construction. GEMM is computed once per block and reused across candidates;
 each candidate is merged anew from the original, never accumulated from a previous
-candidate. GPU memory includes only one model and bounded copy buffers.
+candidate. GPU memory includes only one model and bounded copy buffers. CPU transfer
+workspace/readback temporaries are bounded below 1 GiB and included in the
+explicit estimate. Moving device transfers to matrix granularity does not change
+the arithmetic, candidate bytes, source proof or restoration comparison.
 
 The shared `PublicAnswerEvaluator` is also used by native/sparse
 [finite replay](wsp-finite-response.md). All public correct/foil answer tokens

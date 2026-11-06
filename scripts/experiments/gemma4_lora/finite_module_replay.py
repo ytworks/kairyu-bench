@@ -140,6 +140,8 @@ def preflight(args, module):
             output == p or output.is_relative_to(p) or p.is_relative_to(output) for p in protected):
         raise ValueError("fresh output disjoint from all inputs required")
     elements = sum(math.prod(row["shape"]) for row in common_mapping)
+    if max(math.prod(row["shape"]) * 2 for row in common_mapping) * 4 > GIB:
+        raise ValueError("whole-matrix transfer temporaries exceed 1 GiB")
     estimate = elements * 6 + GIB
     if estimate > args.maximum_host_cache_gib * GIB:
         raise ValueError("original plus delta cache exceeds explicit host memory bound")
@@ -181,7 +183,10 @@ class StreamedModuleEdits:
         for index, item in enumerate(self.mapping):
             name = item["tensor"]
             rows, columns = item["shape"]
-            original = np.empty((rows, columns), np.uint16)
+            self.deadline()
+            # One device transfer per matrix; retain a private host copy even
+            # when the CPU fixture's .cpu() would otherwise alias its parameter.
+            original = self.raw(self.params[name]).copy()
             delta = np.empty((rows, columns), np.float32)
             a = self.module.dense.tensor(donor, self.header, self.offset, item["lora_A"])
             b = self.module.dense.tensor(donor, self.header, self.offset, item["lora_B"])
@@ -191,9 +196,8 @@ class StreamedModuleEdits:
                 stop = min(rows, first + self.module.BLOCK_ROWS)
                 raw = self.checkpoint.read_raw(name, first * columns, (stop - first) * columns)
                 block = np.frombuffer(raw, "<u2").reshape(stop - first, columns)
-                if not np.array_equal(self.raw(self.params[name][first:stop]), block):
+                if not np.array_equal(original[first:stop], block):
                     raise ValueError("loaded source matrix bytes differ from attested checkpoint")
-                original[first:stop] = block
                 delta[first:stop] = self.module.delta_block(a, b[first:stop])
                 if not np.isfinite(delta[first:stop]).all():
                     raise ValueError("nonfinite cached direction")
@@ -225,9 +229,7 @@ class StreamedModuleEdits:
         if candidate is None:
             with torch.no_grad():
                 for name, original in self.originals.items():
-                    for first in range(0, len(original), self.module.BLOCK_ROWS):
-                        stop = min(len(original), first + self.module.BLOCK_ROWS)
-                        self.copy_and_check(self.params[name][first:stop], original[first:stop])
+                    self.copy_and_check(self.params[name], original)
             self.restoration = {"readback_exact": True, "matrices": len(self.originals),
                                 "all_target_matrices": self.ready}
             return
@@ -243,6 +245,7 @@ class StreamedModuleEdits:
                 original, delta = self.originals[name], self.deltas[name]
                 value = recipe["module_coefficients"][name]
                 hasher, squares, changed, bytechanged, maximum = hashlib.sha256(), [], 0, 0, 0.
+                target_bits = original if value == 0 else np.empty_like(original)
                 for first in range(0, len(original), self.module.BLOCK_ROWS):
                     self.deadline()
                     stop = min(len(original), first + self.module.BLOCK_ROWS)
@@ -251,11 +254,17 @@ class StreamedModuleEdits:
                     else:
                         merged, stats, counts = self.module.merge_block(original[first:stop], delta[first:stop], value)
                         ds, nc, bc, peak = float(stats[1]), int(counts[0]), int(counts[1]), float(stats[2])
-                    hasher.update(self.copy_and_check(self.params[name][first:stop], merged))
+                    if value != 0:
+                        target_bits[first:stop] = merged
                     squares.append(ds)
                     changed += nc
                     bytechanged += bc
                     maximum = max(maximum, peak)
+                self.deadline()
+                # CPU arithmetic remains fixed at 128 rows; only transfer and
+                # bitwise verification use the full matrix.
+                hasher.update(self.copy_and_check(self.params[name], target_bits))
+                del target_bits
                 records.append(dict(item, coefficient=value, entry_kind="lora_matrix",
                                     source_tensor_sha256=self.original_sha[name],
                                     candidate_tensor_sha256=hasher.hexdigest(), changed_count=changed,
@@ -318,6 +327,8 @@ def run(args, module, prepared):
                   "prior_source_attestation": plan["checkpoint_attestation"],
                   "full_source_rehashed_here": False, "host_cache_estimate_bytes": estimate,
                   "memory_budget": memory_budget,
+                  "transfer_granularity": "one complete BF16 matrix; all CPU GEMM/merge blocks remain 128 rows",
+                  "maximum_transient_transfer_bytes": max(math.prod(row["shape"]) * 2 for row in mapping) * 4,
                   "numeric_recipe": candidates[0]["recipe"],
                   "declared_control_tree_sha256": candidates[0]["spec"]["base_tree_sha256"],
                   "model_loads": 1,

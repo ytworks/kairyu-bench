@@ -111,13 +111,14 @@ class ModuleRamTest(unittest.TestCase):
             names = ["model.language_model.layers.0.mlp.up_proj.weight",
                      "model.language_model.layers.1.self_attn.o_proj.weight"]
             values = np.array([[1., -0., -1., .125], [2., -2., .5, -.5], [4., .25, -4., .0625]], np.float32)
+            values = np.tile(values, (86, 1))[:257]
             raw = (values.view(np.uint32) >> 16).astype("<u2")
-            weights(root / "model.safetensors", {n: ("BF16", (3, 4), raw.tobytes()) for n in names})
+            weights(root / "model.safetensors", {n: ("BF16", (257, 4), raw.tobytes()) for n in names})
             checkpoint = Checkpoint(root)
             params = {n: torch.from_numpy(raw.copy()).view(torch.bfloat16) for n in names}
-            mapping = [{"tensor": n, "shape": [3, 4], "lora_A": "A", "lora_B": "B"} for n in names]
+            mapping = [{"tensor": n, "shape": [257, 4], "lora_A": "A", "lora_B": "B"} for n in names]
             a = np.full((16, 4), 1 / 8, np.float32)
-            b = np.full((3, 16), 1 / 16, np.float32)
+            b = np.full((257, 16), 1 / 16, np.float32)
             calls = []
             def delta_block(av, bv):
                 calls.append(1)
@@ -135,8 +136,17 @@ class ModuleRamTest(unittest.TestCase):
             cache = tool.StreamedModuleEdits(checkpoint, params, mapping, recipes, module, {}, 0,
                                             maximum_bytes=raw.size * 2 * 6)
             seen = []
+            transfers = {"read": 0, "write_verify": 0}
+            raw_method, copy_method = cache.raw, cache.copy_and_check
+            def tracked_read(tensor):
+                transfers["read"] += 1
+                return raw_method(tensor)
+            def tracked_write(tensor, bits):
+                transfers["write_verify"] += 1
+                return copy_method(tensor, bits)
+            cache.raw, cache.copy_and_check = tracked_read, tracked_write
             def evaluate(**flags):
-                current = {n: cache.raw(p).copy() for n, p in params.items()}
+                current = {n: raw_method(p).copy() for n, p in params.items()}
                 if not flags.get("store_base") and not flags.get("recovery"):
                     index = len(seen)
                     c = coefficients[index]
@@ -150,7 +160,8 @@ class ModuleRamTest(unittest.TestCase):
             _, results, repeat, failure = replay_sequence(candidates, cache.apply, evaluate, lambda *args: None)
             self.assertIsNone(failure)
             self.assertEqual(len(results), 6)
-            self.assertEqual(len(calls), 2)  # each projection's GEMM cache is built exactly once
+            self.assertEqual(len(calls), 6)  # two matrices, three unchanged 128-row GEMM blocks each
+            self.assertEqual(transfers, {"read": 16, "write_verify": 14})  # matrix transfers, never row-block transfers
             self.assertEqual(sum(v.nbytes for v in cache.originals.values()) + sum(v.nbytes for v in cache.deltas.values()), raw.size * 2 * 6)
             for value in repeat.values():
                 np.testing.assert_array_equal(value, raw)  # includes negative-zero bits
