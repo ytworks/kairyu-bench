@@ -145,8 +145,8 @@ def load_plan(path: Path, checkpoint: Checkpoint) -> tuple[dict[str, Any], list[
             count += len(indices)
             if count > 1000000:
                 raise ValueError("total edit count exceeds one million")
-            if matrix and sum(len(e.get("coordinates", [])) for e in edits) > 65536:
-                raise ValueError("matrix edit count exceeds 65,536")
+            if matrix and sum(len(e.get("coordinates", [])) for e in edits) > 262144:
+                raise ValueError("matrix edit count exceeds 262,144")
             square += float(difference @ difference)
             edit["_flat_indices"] = indices
         spec["_verified_metrics"] = {"changed_elements": count, "changed_tensors": len(edits),

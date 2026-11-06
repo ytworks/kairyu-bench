@@ -27,6 +27,24 @@ def save(path: Path, value: Any) -> None:
     temporary.replace(path)
 
 
+def positive_int(value: str) -> int:
+    number = int(value)
+    if number < 1:
+        raise argparse.ArgumentTypeError("must be a positive integer")
+    return number
+
+
+def objective_batches(rows: list, mode: str, max_cases_per_microbatch: int | None = None) -> list[list]:
+    """Retain existing packing/order, optionally split each pack into bounded case groups."""
+    if max_cases_per_microbatch is not None and (type(max_cases_per_microbatch) is not int or max_cases_per_microbatch < 1):
+        raise ValueError("max cases per microbatch must be a positive integer")
+    packed = batches(rows) if mode == "chat-public-answer" else [rows]
+    if max_cases_per_microbatch is None:
+        return packed
+    return [batch[start:start + max_cases_per_microbatch] for batch in packed
+            for start in range(0, len(batch), max_cases_per_microbatch)]
+
+
 def parser(description: str, *, chat: bool) -> argparse.ArgumentParser:
     result = argparse.ArgumentParser(description=description)
     result.add_argument("--checkpoint", type=Path, required=True)
@@ -37,6 +55,8 @@ def parser(description: str, *, chat: bool) -> argparse.ArgumentParser:
     result.add_argument("--device", choices=("cpu", "cuda:0"), default="cpu")
     result.add_argument("--threads", type=int, default=4)
     result.add_argument("--seed", type=int, default=0)
+    result.add_argument("--max-cases-per-microbatch", type=positive_int,
+                        help="split each existing pack into at most this many correct/foil pairs")
     result.add_argument("--reference-tolerance", type=float, default=1e-5)
     result.add_argument("--run", action="store_true", help="otherwise validate inputs and print a preview only")
     result.add_argument("--gpu-exclusive-approved", action="store_true")
@@ -47,12 +67,14 @@ def parser(description: str, *, chat: bool) -> argparse.ArgumentParser:
     return result
 
 
-def read_cases(path: Path) -> dict[str, list[list[dict[str, Any]]]]:
+def read_cases(path: Path, *, content: bytes | None = None) -> dict[str, list[list[dict[str, Any]]]]:
     """Accept explicit correct/foil cases or the old raw observation cases."""
-    document = json.loads(path.read_text())
+    document = json.loads(path.read_bytes() if content is None else content)
     groups = document.get("cases", document) if isinstance(document, dict) else None
     if not isinstance(groups, dict) or not groups:
         raise ValueError("cases must map purpose names to nonempty folds")
+    if document.get("gradient_allowed") is False or document.get("split") in ("transfer", "test", "holdout"):
+        raise ValueError("declared transfer/evaluation cases cannot be gradient input")
     normalized: dict[str, list[list[dict[str, Any]]]] = {}
     count = 0
     for name, folds in groups.items():
@@ -68,6 +90,8 @@ def read_cases(path: Path) -> dict[str, list[list[dict[str, Any]]]]:
             for position, row in enumerate(fold):
                 if not isinstance(row, dict):
                     raise ValueError("each case must be an object")
+                if row.get("gradient_allowed") is False or row.get("split") in ("transfer", "test", "holdout"):
+                    raise ValueError("declared transfer/evaluation cases cannot be gradient input")
                 case = {"id": row.get("id", f"{name}:{index}:{position}"),
                         "prompt": row.get("prompt"),
                         "correct": row.get("correct", row.get("positive")),
@@ -93,6 +117,8 @@ def read_cases(path: Path) -> dict[str, list[list[dict[str, Any]]]]:
 def preflight(args: argparse.Namespace, script: Path) -> tuple[Checkpoint, dict, dict]:
     if not 1 <= args.threads <= 32 or not np.isfinite(args.reference_tolerance) or args.reference_tolerance < 0:
         raise ValueError("invalid thread count or reference tolerance")
+    if args.max_cases_per_microbatch is not None and args.max_cases_per_microbatch < 1:
+        raise ValueError("max cases per microbatch must be positive")
     if args.output.is_symlink() or args.output.exists():
         raise ValueError("output must be a new, non-symlink directory")
     inputs = [args.checkpoint.resolve(), args.cases.resolve(), script.resolve(), Path(__file__).resolve(), Path(finite_replay.__file__).resolve()]
@@ -101,9 +127,12 @@ def preflight(args: argparse.Namespace, script: Path) -> tuple[Checkpoint, dict,
     output = args.output.resolve()
     if any(output == p or output in p.parents or p in output.parents for p in inputs):
         raise ValueError("output must be disjoint from checkpoint and input files")
+    file_inputs = [p for p in inputs if p.is_file()]
+    input_states = {str(p): input_state(p) for p in file_inputs}
     checkpoint = Checkpoint(args.checkpoint)
-    cases = read_cases(args.cases)
-    hashes = {str(p): sha(p) for p in inputs if p.is_file()}
+    case_content = inputs[1].read_bytes()
+    cases = read_cases(inputs[1], content=case_content)
+    hashes = {str(p): (hashlib.sha256(case_content).hexdigest() if p == inputs[1] else sha(p)) for p in file_inputs}
     current = checkpoint.identity(hash_files=False)
     receipt_sha = None
     if args.checkpoint_attestation:
@@ -126,17 +155,28 @@ def preflight(args: argparse.Namespace, script: Path) -> tuple[Checkpoint, dict,
     if args.device != "cpu" and not args.gpu_exclusive_approved:
         raise ValueError("CUDA requires an explicit exclusive-owner handoff")
     provenance = {"checkpoint": current, "full_tree_rehashed_here": False,
-                  "attestation_receipt_sha256": receipt_sha, "input_sha256": hashes,
+                  "attestation_receipt_sha256": receipt_sha, "input_sha256": hashes, "input_stat": input_states,
+                  "calibration_scope": "Explicit caller cases only; no evaluation dataset/result lookup or independent holdout claim",
                   "mode": args.mode, "device": args.device, "threads": args.threads, "seed": args.seed,
+                  "max_cases_per_microbatch": args.max_cases_per_microbatch,
                   "purposes": len(cases), "folds": sum(len(v) for v in cases.values()),
                   "cases": sum(len(f) for v in cases.values() for f in v),
                   "model_forwards": "not_run" if not args.run else "explicitly_requested",
                   "new_checkpoints": 0, "wsp_calls": 0}
+    assert_inputs(checkpoint, provenance)
     return checkpoint, cases, provenance
+
+
+def input_state(path: Path) -> dict[str, int]:
+    stat = path.stat()
+    return {"device": stat.st_dev, "inode": stat.st_ino, "size": stat.st_size,
+            "mtime_ns": stat.st_mtime_ns, "ctime_ns": stat.st_ctime_ns}
 
 
 def assert_inputs(checkpoint: Checkpoint, provenance: dict) -> None:
     checkpoint.assert_stable()
+    if any(input_state(Path(name)) != state for name, state in provenance.get("input_stat", {}).items()):
+        raise ValueError("recipe input stat changed during collection")
     for name, digest in provenance["input_sha256"].items():
         if sha(Path(name)) != digest:
             raise ValueError("recipe input changed during collection")
@@ -169,7 +209,8 @@ def load_model(args: argparse.Namespace):
 
 
 def raw_frames(tokenizer: Any, cases: dict) -> tuple[dict, dict]:
-    prepared, evidence = {}, {}
+    prepared: dict[str, list] = {}
+    evidence: dict[str, list] = {}
     for group, folds in cases.items():
         prepared[group], evidence[group] = [], []
         for fold in folds:

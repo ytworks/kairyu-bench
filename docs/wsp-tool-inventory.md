@@ -52,3 +52,11 @@ CPU fixture validation of the new entrypoints is distinct from the earlier
 real-model runs, and the inventory does not claim those runs used later code.
 
 The [migration ledger](experiments/reusable-tool-inventory.md) records the original operation groups and their closed or method-only disposition.
+
+The opt-in sampled-matrix editor and finite replay support 512 coordinates per matrix and 262,144 matrix coordinates per candidate. RAM replay retains its one-million total edited-coordinate limit. This storage/validation bound is not a scientific edit-size threshold.
+
+## Science calibration and candidate diagnostics
+
+The [science recipe guide](../scripts/experiments/gemma4-purpose/README.md) includes executable author-owned train/transfer cases, preview-first public-answer generation, and restricted CPU-container execution. Generation records the declared checkpoint and decoding frame, persists public answers and numeric usage only, and does not establish serving identity by itself. The sandbox keeps expected values outside the generated-code process and reports infrastructure failures as unknown. Neither result is a WSP score.
+
+The same guide documents current/legacy attention geometry, one-case gradient accumulation and native/matrix joint proposals. [Stored donor alignment](../scripts/experiments/gemma4_lora/README.md) compares saved BF16 bytes with sampled scientific derivatives; it cannot infer the full donor direction from those cells. See the [code90 protocol](experiments/2026-11-06-code90-plan.md), [GPU pilot and actual failures](experiments/2026-11-06-science-matrix-pilot.md), and [candidate-method review](experiments/anonymous-science-candidate-review-2026-11-06.md).

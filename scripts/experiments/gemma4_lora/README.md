@@ -106,3 +106,36 @@ dry-run, source preservation, foreign-manifest collision, exact scalar rounding,
 read-only coefficient audit, and the combined native norm recipe. They do not
 load or edit the real Gemma checkpoint. Earlier measured benefits and failures
 remain in [the experiment record](../../../docs/experiments/2026-11-04-gemma4-weight-editing.md).
+
+## Join a completed sampled matrix gradient with a stored donor checkpoint
+
+`donor_gradient_alignment.py` reads the matrix collector's completed
+`summary.json`, `coverage.json`, `provenance.json`, `sample-plan.npz` and
+fold gradient arrays. It gathers the same BF16 cells from an **already stored**
+donor checkpoint; it never recreates the merge, writes weights, calls a model,
+or reads benchmark answers/results.
+
+```sh
+python scripts/experiments/gemma4_lora/donor_gradient_alignment.py \
+  --collection MATRIX_COLLECTION_DIRECTORY \
+  --merged-manifest EXISTING_DENSE_RECIPE_MANIFEST.json \
+  --output NEW_ALIGNMENT.json
+```
+
+Base file states and sampled values must match the gradient's provenance.
+Merged recognized checkpoint files are streamed through SHA-256 once and must
+match the recipe manifest. This costs a full payload read, with 1 MiB hash
+buffers; matrices are never loaded whole. Input arrays are bounded to 64 MiB
+uncompressed and one million coordinates, gradients are read one fold at a
+time, and source/input continuity is checked again before publishing a fresh
+output outside the input trees.
+
+The report gives actual nonzero stored deltas, coverage, and per-fold inner
+products/cosines/sign agreement, also split by layer and projection family.
+Zero-vector cosine is null. **The inner product predicts only an edit of the
+sampled cells.** Stratified coordinates are not an unbiased estimate of a full
+LoRA direction, and raw/chat objectives must not be mixed. Non-overlapping
+native norm edits can coexist structurally, but their joint finite outcome
+still requires separate measurement. Donor training-base and data-overlap
+uncertainties remain. If the stored checkpoint was retired, this tool refuses;
+it does not silently substitute approximate factor arithmetic.

@@ -136,10 +136,50 @@ class NativeEditorTest(unittest.TestCase):
                 with self.assertRaises(ValueError):
                     editor.plan_edits(self.base, recipe)
 
-    def test_batched_matrix_opt_in_and_stable_limits(self) -> None:
-        self.assertEqual(editor.matrix_coordinate_limits({}), (64, 64))
-        self.assertEqual(editor.matrix_coordinate_limits(
-            {"matrix_batch": True, "matrix_sample_plan_sha256": "a" * 64}), (512, 65536))
+    def test_batched_matrix_create_verify_and_ram_plan_over_old_total_limit(self) -> None:
+        from kairyu_bench.wsp.weights.checkpoint import Checkpoint
+        from kairyu_bench.wsp.weights.finite_replay import load_plan
+
+        base = self.root / "batched-base"
+        base.mkdir()
+        names = [f"model.language_model.layers.{i}.mlp.down_proj.weight" for i in range(129)]
+        safetensor(base / "all.safetensors", {name: ([1, 512], [1.] * 512) for name in names})
+        index = base / "model.safetensors.index.json"
+        index.write_text(json.dumps({"weight_map": {name: "all.safetensors" for name in names}}))
+        recipe = {"id": "batched", "matrix_batch": True, "matrix_sample_plan_sha256": "a" * 64,
+                  "edits": [{"tensor": name, "coordinates": [[0, i] for i in range(512)],
+                             "set_values": [1.0078125] * 512} for name in names]}
+        path = self.root / "batched-spec.json"
+        path.write_text(json.dumps(recipe))
+        dest, manifest = self.root / "batched-copy", self.root / "batched-manifest.json"
+        before = (base / "all.safetensors").read_bytes()
+        editor.create(base, dest, path, manifest, apply=True)
+        verified = editor.verify(manifest)
+        self.assertEqual(verified["changed_elements"], 129 * 512)
+        self.assertEqual((base / "all.safetensors").read_bytes(), before)
+        self.assertFalse(os.path.samefile(base / "all.safetensors", dest / "all.safetensors"))
+        checkpoint = Checkpoint(base)
+        attestation = self.root / "attestation.json"
+        attestation.write_text(json.dumps(checkpoint.identity()))
+        cases, frame = self.root / "cases.json", self.root / "frame.json"
+        cases.write_text("{}")
+        frame.write_text("{}")
+        def reference(file):
+            return {"path": str(file), "sha256": hashlib.sha256(file.read_bytes()).hexdigest()}
+        plan = {"schema_version": 1, "architecture": "gemma4_sparse_bf16",
+                "checkpoint_index_sha256": reference(index)["sha256"],
+                "checkpoint_attestation": reference(attestation), "cases": reference(cases),
+                "frame_evidence": reference(frame),
+                "candidates": [{"id": "batched", "spec": str(path), "sha256": reference(path)["sha256"]}]}
+        plan_path = self.root / "plan.json"
+        plan_path.write_text(json.dumps(plan))
+        _, candidates, _ = load_plan(plan_path, checkpoint)
+        self.assertEqual(candidates[0]["_verified_metrics"]["changed_elements"], verified["changed_elements"])
+        self.assertAlmostEqual(candidates[0]["_verified_metrics"]["delta_l2"], verified["delta_l2"])
+        recipe.pop("matrix_batch")
+        path.write_text(json.dumps(recipe))
+        with self.assertRaisesRegex(ValueError, "in-limit"):
+            editor.plan_edits(base, recipe)
 
     def test_existing_paths_overlap_symlinks_and_hardlinks(self) -> None:
         self.dest.mkdir()

@@ -101,7 +101,7 @@ def matrix_coordinate_limits(spec: dict[str, Any]) -> tuple[int, int]:
     if (mode is not True or not isinstance(digest, str) or len(digest) != 64
             or any(c not in "0123456789abcdef" for c in digest)):
         raise ValueError("matrix_batch=true requires a lowercase SHA-256 for the sampled coordinate plan")
-    return 512, 65536
+    return 512, 262144
 
 def sparse_matrix_patches(base: Path, edit: dict[str, Any], shard: str, tensor_offset: int, shape: list[int], *, max_coordinates: int = 64) -> list[dict[str, Any]]:
     coordinates = edit["coordinates"]

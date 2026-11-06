@@ -78,7 +78,37 @@ headと行・列の帯を保った標本です。Gemma 4の形状に合わなけ
 forward入力とbackward出力の積から真のdL/dW[row,column]を計算し、
 FP32積・FP64のtoken/batch和で集めます。全行列のparameter gradientは保持しません。
 先頭・末尾の対象行列の計8座標で、zero-additive probeのautogradと照合します。
-目的関数はraw-next-tokenだけであり、chat計測とは混ぜません。
+既定は従来のraw-next-tokenです。--mode chat-public-answerを指定するとnativeと同じ
+公式thinking ON frame、公開correct/foil回答それぞれの全token平均log probability差を使います。
+native/virtual gainの微分へ読み替えず、同じ行列の実座標に対する微分として保存します。
+先頭tokenが同じ回答でも後続tokenまで採点します。異なるmodeのcollectionは混ぜません。
+
+native/matrixの両方で --max-cases-per-microbatch 1 を指定すると、既存packingの順序を
+保ってcorrect/foilの1組ずつに分割します。省略時は従来packingを維持します。
+分割後も元foldの件数で勾配を割るため目的関数の重みは同じです。ただしBF16の
+計算順序による丸め差はあり、実行時のbatch設定をprovenanceに保存します。
+これはactivation checkpointingではなく、単一組でもGPUメモリを保証しません。
+matrixのhead配置は現HFの per_layer_config（例05）または旧checkpointの
+global head fieldsから解決し、実際のprojection形状と一致することを必須とします。
+
+chatは共有の1600 paired-token packingでmicrobatchへ分け、各batchのmargin和を
+元foldの例数で割って累積します。例数や回答token数の違うbatchを等重み平均しません。
+初期pilotではprefix+correct/foilがそれぞれ512token以下のケースだけを受け付け、
+超過はtruncateせず拒否します。1case/foldからGPUのpeak memoryを確認してください。
+現在はeager/evalでgradient checkpointingを使いません。checkpoint再計算はhookと
+zero-additive probeの二重作成を防ぐため拒否します。2k tokenへ黙って拡張しないでください。
+
+~~~bash
+python scripts/experiments/gemma4-purpose/matrix.py \
+  --checkpoint /nvme/model --cases /nvme/authored-science-cases.json \
+  --output /nvme/new-chat-matrix --mode chat-public-answer
+~~~
+
+上はpreviewです。実計測には既存のattestationと--run、GPUの場合は排他承認flagが必要です。
+casesは明示された1ファイルのcaptured bytesをparse/hashし、前後statも照合します。
+隣接dataset、benchmark結果、評価splitを自動探索しません。入力の出典・calibration用途は
+呼出側で固定してください。ケースを改良や選択に使った後は独立holdoutではありません。
+この道具だけで入力内容が評価データから独立していると証明するものではありません。
 
 ## 実行資源と成果物
 
@@ -155,7 +185,7 @@ caller_declared_reference_normとして明示し、その分母に対する比�
 元実験の全保存tensorノルムを固定値で埋め込んでいません。
 specは正規editorで元原本と再検証し、実有限forward→公式dev→未見評価へ進めてください。
 行列は通常64座標までです。これを超えるspecには--allow-batched-matrixの明示指定が必要です。
-その場合も512座標/tensor・合計65,536座標以内に限り、sample-plan SHA付きmatrix_batch specを出します。
+その場合も512座標/tensor・合計262,144座標以内に限り、sample-plan SHA付きmatrix_batch specを出します。
 未opt-inまたは上限超過ではreportのみを書き、specを出さず終了コード2を返します。
 per-tensor / total件数、必要なopt-in、上限適合性をreport.editor_compatibilityで確認できます。
 標本数209,920全体の編集を既存editorで適用できるとは扱いません。
@@ -166,7 +196,7 @@ per-tensor / total件数、必要なopt-in、上限適合性をreport.editor_com
 |---|---|
 | 全層native gain、O-head / down-column仮想gainのraw目的微分 | native.pyのraw-next-tokenと--virtual |
 | thinking ON公開回答全tokenのnative目的微分 | native.pyのchat-public-answer |
-| 全投影行列を層化した真の座標微分とzero-additive照合 | matrix.py |
+| 全投影行列を層化した真の座標微分とzero-additive照合（raw / 公開chat回答） | matrix.py |
 | native / sampled matrixの局所G最小L2・BF16残差補正 | joint.py |
 | 候補RAM適用、有限forward、元checkpointへ復元 | 既存weights/finite_replay.py側の明示固定spec経路 |
 | WSP実行・採用・全自動探索 | 収録対象レシピでは実行しない |
@@ -207,3 +237,140 @@ cost=1/max(abs(weight), floor)とします。これはFisherやactivation摂動�
 reference_normを指定した場合は、そのscopeとartifact SHAをplanに残してください。
 結果は3案の同じcoding目標に対する局所予測、実BF16丸め、役割別変位、
 絶対L2と相対費用を保存します。既存の生成改善や失点を、この局所予測へ変換しません。
+
+## code90: 自作の実行検証済み科学校正
+
+science_cases.pyは、今回独立に作成したNumPy programの学習用16caseと、
+別のproblem familyの転移確認用8caseを生成・CPU検証します。
+既存benchmarkの問題・正解・reference実装や隠れたreasoningを取り込んでいません。
+これは重み感度・実行校正のための入力であり、WSP scoreや未見評価の代用ではありません。
+現在のSciCode失敗が数値・shape・signatureのどれに由来するか未分類のため、
+特定の原因が実測で支配的だとは主張しません。
+
+学習用は、重み付きmoment、積分、周期差分、確率正規化、ridge、Markov状態、
+射影、密度、共分散、保存flux、陰的更新、batch統計、Verlet、group集約、
+補間、batched線形系を扱います。数値algorithmと状態/保全を2目的に分け、
+各目的は別familyからなる2foldです。各promptはinterface・shape・float64出力・
+入力を変更しない契約を指定します。正しい実装は入力から計算する一般的な
+algorithmであり、検証で得た定数配列を返しません。
+
+各correct/foilを可変shape、float32/float64入力、決定的な乱数seedで実行します。
+参照は独立のloopまたは解析的恒等式で作り、数値・shape・dtype・有限性・
+入力保全を確認します。foilは数式、axis、dtype等の1箇所を変えた実行可能な
+programで、少なくとも1つの検査に落ちない限りexportしません。
+元の検証は各8trial、別seedのfixtureでも同じ契約を確認しています。
+有限個の入力を通過したことは全入力に対する数学的証明ではありません。
+
+~~~bash
+# 既定はCPU検証だけ。出力やモデルを作らない。
+python scripts/experiments/gemma4-purpose/science_cases.py
+
+# 検証後、新しいdirectoryだけへ書く。
+OPENBLAS_NUM_THREADS=1 python scripts/experiments/gemma4-purpose/science_cases.py \
+  --write --output /nvme/science-calibration
+~~~
+
+出力は次の通りです。
+
+- train-cases.json: purpose→fold→case形式。16caseだけをnative/matrix collectorへ渡す。
+- transfer-cases.json: split=transfer、gradient_allowed=falseの別envelope。
+  既存collectorのread_casesはこの形式を拒否する。gradient_allowed=falseや
+  split=transfer/test/holdoutの明示ラベルはpurpose→foldへ再ラップしても拒否する。
+  未申告データの独立性までは保証しない。学習gradient・係数fit・
+  重み学習へ渡さず、別familyへの生成/実行の確認に使う。
+- metadata.json: source hash、family一覧、seed、NumPy version、correct/foilの
+  実行成否とtext長。正解全文やfixture入力は検証logへ重複出力しない。
+
+転移familyはKalman、3D回転、log-domain HMM、周期Poisson、線形保存制約、
+確率状態の共分散伝播、barycentric補間、熱的速度再調整です。学習用とのfamily名は
+重複しませんが、基本的な数理primitiveは共有し、統計的独立性を保証しません。
+この8caseを繰り返し見て候補を選ぶなら既見校正となり、新しい最終評価ではありません。
+
+テスト実装はteacher-forcing用JSONへ含めません。prompt+correct/foilは最大2048
+UTF-8 bytesに制限しますが、これはtoken数ではありません。今回のGemma公式tokenizer・
+正規chat-public-answer frameをCPUだけで照合した学習16caseは、prefixを含め
+141〜255tokensで、512token上限内でした。tokenizer/templateを変えるときは
+再確認し、超過を黙って切り捨てないでください。
+
+このutilityは自分のsource内の信頼済みprogramだけをexecします。
+外部JSONやモデル生成codeを実行するsandboxではありません。
+新しいmodel生成の実行確認には、別途隔離された実行環境が必要です。
+NumPy以外の追加依存、モデルロード、ネットワーク、GPU、WSP呼出しはありません。
+
+
+## code90: 生成されたpublic answerの隔離実行
+
+science_sandbox.pyは自作科学校正16件・転移8件に対する保存済みpublic answerを
+評価します。モデル/APIを呼ばず、生成codeをホストでexecしません。
+既存のNumPy入りDocker image IDと明示Unix socket/daemon IDを指定し、
+networkなし、UID1003、read-only、capabilitiesなし、GPUなし、host mountなしの
+短命コンテナでsolveだけを実行します。image pullやdaemon設定変更はありません。
+入力配列だけをstdinへ渡し、correct/foil/referenceや期待値は渡しません。
+信頼済みscience_cases.sampleの期待値との数値比較はホスト側で行います。
+
+~~~bash
+python scripts/experiments/gemma4-purpose/science_sandbox.py \
+  --cases /nvme/science-calibration/transfer-cases.json \
+  --responses /nvme/generation/transfer-responses.json \
+  --docker-socket /nvme/docker/run/docker.sock --daemon-id EXPECTED_ID \
+  --image sha256:EXISTING_IMAGE_ID --output /nvme/new-execution-preview
+# 内容を確認後、別のfresh outputと --run で実行する。
+~~~
+
+既定previewはDocker命令0で、fresh outputへpreview receiptを書きます。
+--runは既存imageのIDとdaemonを照合してから各caseを直列実行します。
+既定はCPU1、RAM512MiB、PID64、tmpfs16MiB、startupを含むcase wall15秒、
+stdout+stderr合計1MiBです。停止時の削除対象は自分が生成したUUID名かつ
+一致する所有ラベルのコンテナだけです。Docker自体の制御命令には別の20秒上限があります。
+接続先や所有権が変わった場合は他のコンテナを操作せず停止します。
+Dockerはprocess隔離であり、悪意あるcodeに対する形式的なsecurity証明ではありません。
+
+responses JSONはschema_version=1、split=train|transfer、cases_sha256、
+generation、responsesを持ちます。trainは既存purpose→fold mapping、
+transferは既存cases配列envelopeをそのまま指定できます。
+generationはcheckpoint_sha256/model_id/frame/enable_thinking/reasoning_saved=falseと
+sampling条件を保存します。例えばsampling=server_official_generation_config、
+temperature=null、max_tokens=8192、seed=0です。
+各responseはid、public_answer、request_id、finish_reason、seconds、
+数値だけのusageを持ちます。隠れたreasoning本文は受け付けず保存しません。
+cases内容はこのレシピの信頼済みcatalogと完全一致させ、SHAで生成入力と照合します。
+
+抽出はplain Python、または回答全体が1つのPython fenced blockの場合だけです。
+短い説明付きの正しい関数をformat failureにする可能性があり、WSPのcode sanitizerと
+同一の指標ではありません。reportは元public answerと抽出codeのSHAを別に残し、
+形式/構文、実行/interface、数値、shape、dtype、入力変更を区別します。
+未知応答、timeout、sandbox/protocol errorはunknownで、勝手に0へ補いません。
+数値比較はrtol=2e-6、atol=2e-7、float64 ndarray出力・有限性・shape一致を要求します。
+入力保全検査はcontainer内のため、敵対的なprotocol偽装まで排除する採点器ではありません。
+
+学習/転移は別reportで、転移caseをgradientへ渡しません。この8caseで候補を繰り返し
+選ぶと既見校正になります。公式WSP score、未見確認、code90達成の代用にはしません。
+現在の16件は短い数値kernelの基礎確認です。収束判定、複雑な境界条件、
+多段の関数依存、数値特異点、確率的許容誤差、計算量・保全を含む大きな実装への
+転移は別に確認が必要です。
+
+
+science_generate.pyは、今回のone-off生成launcherから固定パスとDocker探索を除いた
+再利用CLIです。API endpoint/model/checkpoint SHAを明示し、plain train mappingと
+transfer cases配列envelopeの双方を受けます。元のcorrect/foilはAPIへ送信せず、
+promptだけをnative thinking ONで送ります。temperature/top_pを省略してserverの
+公式generation_configを使い、seed0/max_tokens8192が既定です。
+checkpoint SHAは呼出側の申告であり、このCLIだけで配信中の重みを認証しません。
+別途同じserving identity/readonly mount証拠を確保してください。
+
+~~~bash
+python scripts/experiments/gemma4-purpose/science_generate.py \
+  --cases /nvme/science-calibration/transfer-cases.json --split transfer \
+  --endpoint http://127.0.0.1:8000/v1 --model MODEL_ID \
+  --checkpoint-sha256 CHECKPOINT_SHA256 --output /nvme/new-generation
+# 既定previewはHTTP 0、receipt保存のみ。--runで明示実行。
+~~~
+
+最大32並列、既定8、socket操作timeout240秒、retry0、1case1choiceです。
+urllibのtimeoutは各socket操作への制限で、request全体の厳密なwall deadlineではありません。
+public content、request ID、finish_reason、数値token usage、経過秒だけを保存し、
+reasoning本文・raw response・HTTP error本文は保存しません。usage欠測はnullです。
+失敗はexception classだけをerror_typeへ保存します。SIGINT等で中断した場合は
+未着手futureを取り消しますが、実行中HTTPは個別timeoutまで待つ場合があります。
+このutilityはAPI呼出しだけで、code実行・重み変更・WSP採点をしません。
+生成結果はscience_sandbox.pyへ別途渡します。

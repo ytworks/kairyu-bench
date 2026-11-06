@@ -56,7 +56,7 @@ coding channel from a name or a large weight. Matrix edits require BF16 rank 2,
 unique explicit [row, column] coordinates, and at most 64 matrix coordinates
 per candidate. A predeclared stratified sample can opt into matrix_batch: true
 with a lowercase matrix_sample_plan_sha256; limits then become 512 coordinates
-per matrix and 65,536 total. The hash is provenance supplied by the caller, not
+per matrix and 262,144 total. The hash is provenance supplied by the caller, not
 proof that a sample is scientifically representative.
 
 Values are rounded once to the stored dtype. BF16 uses FP32 conversion followed

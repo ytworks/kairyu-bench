@@ -171,7 +171,7 @@ def editor_compatibility(edits, *, allow_batched_matrix=False):
     counts = {e["tensor"]: len(e["coordinates"]) for e in edits if "coordinates" in e}
     total = sum(counts.values())
     requires_batch = total > 64 or max(counts.values(), default=0) > 64
-    within_limit = total <= 65536 and max(counts.values(), default=0) <= 512
+    within_limit = total <= 262144 and max(counts.values(), default=0) <= 512
     allowed = within_limit and (not requires_batch or allow_batched_matrix)
     return {"matrix_coordinates_per_tensor": counts, "total_matrix_coordinates": total,
             "requires_matrix_batch": requires_batch, "within_batched_editor_limit": within_limit,
@@ -184,7 +184,7 @@ def main(argv=None):
     parser.add_argument("--output", type=Path, required=True)
     parser.add_argument("--write-spec", action="store_true", help="write the diagnostic proposal to a fresh directory")
     parser.add_argument("--allow-batched-matrix", action="store_true",
-                        help="explicitly permit editor-compatible <=512/tensor, <=65536 total matrix coordinates")
+                        help="explicitly permit editor-compatible <=512/tensor, <=262144 total matrix coordinates")
     args = parser.parse_args(argv)
     plan_sha = common.sha(args.plan)
     plan = json.loads(args.plan.read_text())

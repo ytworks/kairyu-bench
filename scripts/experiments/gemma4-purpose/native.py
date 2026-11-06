@@ -82,8 +82,7 @@ def collect(args, checkpoint, cases, provenance):
             for fold, rows in enumerate(folds):
                 accum = {key: torch.zeros_like(names[key], dtype=torch.float32) for key in ordered}
                 measured, unused = {}, set()
-                # Raw objectives preserve each original fold's single batch.
-                packed = common.batches(rows) if args.mode == "chat-public-answer" else [rows]
+                packed = common.objective_batches(rows, args.mode, args.max_cases_per_microbatch)
                 for batch in packed:
                     margins = common.objective(torch, net, head, tokenizer, batch, args.mode, args.device)
                     gradients = torch.autograd.grad(margins.sum() / len(rows), [names[k] for k in ordered], allow_unused=True)
@@ -102,7 +101,7 @@ def collect(args, checkpoint, cases, provenance):
                 np.savez_compressed(path, **arrays)
                 record = {"purpose": group, "fold": fold, "examples": len(rows),
                           "margins": [{"id": row[0], "margin": measured[row[0]]} for row in rows],
-                          "mean_margin": float(np.mean(list(measured.values()))),
+                          "mean_margin": float(np.mean(list(measured.values()))), "microbatches": len(packed),
                           "unused_tensors": sorted(unused), "file": path.name, **reference}
                 records.append(record)
                 common.save(args.output / "progress.json", {"completed_folds": len(records), "last": record})
@@ -113,7 +112,10 @@ def collect(args, checkpoint, cases, provenance):
         summary = {"status": "completed", "mode": args.mode, "coverage": coverage,
                    "folds": records, "seconds": time.monotonic() - start,
                    "runtime": {"torch": torch.__version__, "transformers": common.transformers_version(), "device": args.device, "weight_dtype": "BF16",
-                               "attention": "eager", "gradients": "native BF16 autograd, accumulated FP32"},
+                               "attention": "eager", "gradients": "native BF16 autograd, accumulated FP32",
+                                "max_cases_per_microbatch": args.max_cases_per_microbatch,
+                                "gpu_peak_allocated_GiB": torch.cuda.max_memory_allocated() / 2**30 if args.device != "cpu" else None,
+                                "gpu_peak_reserved_GiB": torch.cuda.max_memory_reserved() / 2**30 if args.device != "cpu" else None},
                    "objective": ("mean correct-minus-foil public-answer mean log probability" if args.mode == "chat-public-answer"
                                  else "mean first distinguishing next-token softcapped logit margin"),
                    "source_values_unchanged": True, "candidate_selection": False,

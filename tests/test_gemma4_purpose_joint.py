@@ -29,7 +29,10 @@ class PurposeJointTests(unittest.TestCase):
         self.assertFalse(report["spec_emission_allowed"])
         report = JOINT.editor_compatibility([edit], allow_batched_matrix=True)
         self.assertTrue(report["spec_emission_allowed"])
-        excessive = [{"tensor": str(i), "coordinates": [[0, j] for j in range(512)]} for i in range(129)]
+        observed_scope = [{"tensor": str(i), "coordinates": [[0, j] for j in range(512)]} for i in range(410)]
+        report = JOINT.editor_compatibility(observed_scope, allow_batched_matrix=True)
+        self.assertTrue(report["spec_emission_allowed"])
+        excessive = [{"tensor": str(i), "coordinates": [[0, j] for j in range(512)]} for i in range(513)]
         report = JOINT.editor_compatibility(excessive, allow_batched_matrix=True)
         self.assertFalse(report["within_batched_editor_limit"])
         self.assertFalse(report["spec_emission_allowed"])

@@ -110,7 +110,7 @@ Static checkpoint reads found hs0020/0397/0485 changed 14/60/51 post-attention c
 A fixed plan can now declare `architecture: "gemma4_sparse_bf16"` and mix
 native vector edits with rank-2 BF16 edits. Each matrix edit uses explicit
 `coordinates: [[row, column], ...]` and exact stored `set_values`; bounds are
-512 coordinates per matrix, 65,536 matrix coordinates per candidate, and one
+512 coordinates per matrix, 262,144 matrix coordinates per candidate, and one
 million coordinates overall. The spec and prior full-content checkpoint receipt
 remain hash-pinned. This extension does not propose a direction or accept a
 candidate automatically.
