@@ -1,15 +1,103 @@
 # R: 現作業モデルのattentionを保持するMLP数学方向（2026-11-06）
 
-**範囲指定ツールの実装・独立レビュー・CPU検証は完了。Rの作成・配信・smoke・公式scoreはまだない。**
+**公式dev90でfresh P73.269841→R73.626984（+0.357143 pp）。Rを作業モデルへ昇格し、次の編集元をRの保存weightsへ更新した。90点目標は未達。**
 [公式N−P](2026-11-06-incumbent-coherent-step-n.md)はfresh P74.242063に対しN71.603175、
 差−2.638889 pp（95% CI [−7.083333,+1.111111]）で、Nを採らずPを保持する判断となった。
-Rの親はPに決まり、更新state SHAは3bc3b04014732f799987888d171d4f70116724af3e31147aa243095950a5294c。
+R作成時の親はPで、その時点のstate SHAは3bc3b04014732f799987888d171d4f70116724af3e31147aa243095950a5294c。
 sourceはcheckpoints/code90-heretic-public-base-official-protocol-v1、treeは
 3dfb3bd1db0ab2ba4fff843616bb0d3109e0b97a6c9349658620908f2a24bebc。
 作成直前にもSHA/path/treeを確認し、original Oを作成元へ戻さない。
 Pの73.8254→74.2421は重み不変の再測定差であり、新しい重み改善とは数えない。
 
 ツールのCPU suiteは507件収集、455 pass／52 optional skip、失敗0。前版506件から、r128/F32の範囲指定作成→独立verify→freezeと対象外byte保持を検証する1件を追加した。既定の410行列経路も維持し、Ruff／mypy73もPASS。証跡はanalysis/code90-resume-20261106/cpu-integration-structured-mlp-scope-v1/ci-results.json（SHA256 5a47f8fe58ec82f525b62f13c36afc11cd215f6839ab55893268a167b1d7b229）。これはツールの動作確認で、Rの能力確認ではない。
+
+## 公式比較と累積更新
+
+両runは同じ90項目を全件採点し、未採点0、正式chat119 callsずつ。
+native ON、公式sampler/caps、c32、TP2/MTP4、固定source5e3を維持した。
+実runner OCIを自動削除前に取得し、両image設定・RootFS、host76 source pins、
+installed Python73 files、配信CIDとreadonly weightsの継続性を照合した。
+
+| 指標 | fresh P | R |
+|---|---:|---:|
+| 公式4source等重みcode | 73.269841 | 73.626984 |
+| HumanEval+ | 30/30 | 29/30 |
+| MBPP+ | 23/30 | 24/30 |
+| LiveCodeBench | 15/20 | 15/20 |
+| SciCode source平均 | 41.412698 | 42.841270 |
+| 出力tokens | 318,770 | 322,596 |
+| 入力tokens | 94,082 | 94,017 |
+| wall秒 | 339.9 | 427.1 |
+
+差は+0.357143 pp、paired95% CI [−2.142857,+2.857143] pp。
+小幅でCIは0を含むが、固定した正の改善条件に従って作業モデルを更新した。
+MBPP641が0→1、SciCode80が2/7→3/7となり、HumanEval95が1→0となった。
+SciCodeの部分点増加をbinary flipへ置き換えない。
+全sourceのtruncation／emptyは0。counterの正式119 stopに加わるlength1、
+入力21／出力1 tokenは起動確認であり、採点対象の打切りではない。
+wallはこの実行窓の観測で、隔離された速度効果とは扱わない。
+
+次の入力はcheckpoints/code90-heretic-public-base-math-mlp-c1-v1、
+tree ea3d27ababa4f189fb5058c5055492ddad42180ec619c80d5a427baccea9cbee。
+current working-incumbent.jsonはc0e271c4811d2e60b856e58dd6c7940fef10b6593454ef8554efcb2932a89d49、
+作業更新判断はheretic-public-base-math-mlp-c1-v1/working-decision.json
+（SHA197caa94f18184f09002e51434e9194a5f1cf074937d09718d86c0c92a18e62b）。
+作成時の親P state3bcはhistoryへ保存した。
+Pで測った微分は歴史資料とし、次の編集に現在の微分を用いるにはRで再観測する。
+全14領域、known64、DeepSWE、HF適格はこのdev90更新とは別に確認する。
+過去のP−original差と今回のR−P差を、異なる実行窓をまたいで加算しない。
+
+最終比較証拠はdev90-final-summary.json
+（SHA5472def6705c91eaa4a76fe8e8fa5c8bf85dc0089956f250e81d8e9162d63520）、
+r-vs-current-p-evidence.json
+（SHAebde5a3a1dedbbb5c8929d3a674f5358b6b7096c9da9c17abbaa2464af00d483）。
+本節の相対artifact pathはanalysis/code90-resume-20261106/を起点とする。
+
+## 保存重みの作成と独立検証
+
+現Pからprivate checkpointを1回作成し、既存CPU recipeによる独立verifyを1回実行した。
+作成は **385.406秒**、verifyは **269.462秒**。
+実行はUID1003、CPU0–7、BLAS4 threads、既存af9 image/runc、300GiB reserveで、
+GPU・配信・生成はこの作成手順には含まない。並行したPのnative観測（GPU4／CPU32–39）
+とCPU/NVMe資源を共有しており、この時間を隔離した速度比較とはしない。
+
+| 保存後に確認した量 | R |
+|---|---:|
+| 完全に検証したtext mapping | 410行列 |
+| 既存FP32演算で適用・再生成したMLP | 180行列、60 complete triplets |
+| 実際にstored BF16が変わった行列 | 180 |
+| attentionの明示0係数・raw byte保持 | 230行列 |
+| stored BF16変更要素 | 5,458,871,089 |
+| 親Pに対する実ΔL2 | 2.487264934266907 |
+| source／candidateの全file hash・stat範囲 | 各9ファイル |
+
+attentionの係数0には加算・丸めを通さず、native normalization/scalar、vision、
+embedding、その他対象外spanとprotocol metadataもbyte単位で照合した。
+[CPU freeze bridge](../wsp-dense-checkpoint-freeze.md)はvalidated410／regenerated180／zero230を分け、
+`all_410_matrices_cpu_regenerated=false`を記録する。全410を再計算したという証跡ではない。
+元Pの全9file stat、parent state、数値source/kernel pinは作成・verify前後と
+終了後のmetadata監査で一致した。checkpointは
+`checkpoints/code90-heretic-public-base-math-mlp-c1-v1`、
+保存treeは `ea3d27ababa4f189fb5058c5055492ddad42180ec619c80d5a427baccea9cbee`。
+
+追加GEMMやpayload再走査をせず、過去Iの保存manifestでも構成を照合した。
+P−Oの既存exact deltaが全180MLPのraw byte一致を示し、
+IとRは同じmath factor・係数1・128-row FP32演算・NumPy/BLAS/kernel条件を用いる。
+Rの180行列のsource SHA、完成target SHA、変更数はIのMLP180と全て一致した。
+この照合はRのMLP構成を確認するもので、Iのattentionや能力scoreをRへ引き継ぐ証拠ではない。
+RのattentionはPの保存値を保持する。
+
+gemma-3だけをRへ置き換え、N／P／original／embeddingの設定・identityを保持した。
+配信後の固定24問authored smokeは完了し、**R20/24対current parent P21/24**。
+Rはtrain13/16・transfer7/8、
+gain0／loss1（lexicographic-pair-rankingのruntime失敗）だった。
+全24件stop、unknown0、新規構造失敗0、usable final無しのcap0で、
+事前の構造停止条件は発火しなかった。これをsemantic非退行とは呼ばない。
+
+記録output tokensはR43,536／P41,241。
+両者は同一case・template・sampling・sandbox seed/trialsだが、Pは保存済みsmoke参照で
+fresh同時比較ではない。これはWSP scoreでも採用判断でもなく、公式R−fresh P評価は別工程である。
+上記は構造化numeric summary／receiptだけから記録し、モデル出力本文やreasoningは読んでいない。
 
 ## 仮説と変更セット
 
@@ -68,7 +156,7 @@ raw stream／thinking本文は保存せず、公開finalだけを方法上の意
 振幅grid、有意差・全領域非退行の新gateは必須工程にしない。
 逐次BF16保存では順序がbyteへ影響し得るため、連続差分の加算性と区別する。
 
-## 親の現在の観測と次に判別すること
+## 親Pの観測と次に判別すること
 
 Pの全14領域dev10は778/778採点・未採点0、overall78.47510、
 code87.77778だった。code26項目にはSciCodeがなく、code90や最終既知64と混ぜない。
@@ -94,7 +182,7 @@ implementationの公式実行結果である。
 ただしPで既に観測された大きな領域損失も累積記録から消さない。
 CIは不確実性を示すが追加の有意差gateではない。
 current-parent-relativeの暫定更新と、最終90点超／一般化／DeepSWE／HFの達成は区別する。
-具体的なspec/比較planは、更新済みP stateと直前の継続性確認に束縛する。
+R作成のspec/比較planは当時のP stateに束縛した。今後のspec/比較planは更新済みR stateと直前の継続性確認に束縛する。
 
 ## 証拠
 
@@ -109,6 +197,17 @@ current-parent-relativeの暫定更新と、最終90点超／一般化／DeepSWE
 | 同method-plan.md | 9bb767cab708d2ec5c2236a794510d067059259102b4effeba1c41ff97f38ba4 |
 | incumbent-p-retention-full14-v1/final-summary.json | 44bb74ccc8930f610687469d7725072f9afd4bfeafca9d1780a936ee3eb00616 |
 | 同historical-original-evidence.json | ca4f38882403866d13b8af0f9b11e2eb2055baf2f8bed9a9696f908286f1c40d |
-| 更新後working-incumbent.json | 3bc3b04014732f799987888d171d4f70116724af3e31147aa243095950a5294c |
+| R作成時の親P state（historyに保存） | 3bc3b04014732f799987888d171d4f70116724af3e31147aa243095950a5294c |
 | heretic-public-base-k1-c00625-v1/working-decision.json | e4c71e80f5eba7a85d64c9562cf2ef36c92f215ce3e6b1c81de671d58a06dc86 |
 | incumbent-p-retention-full14-v1/retention-public-numeric.json | f9e4498128aa083f9e0665b40c5297eb081ad7212c2e45168e37baaa5bbf485b |
+| heretic-public-base-math-mlp-c1-v1/spec.json | 6522908a8c303ef0e99609ce297c22d7145026b8e66b13b632c2ed4777e8deb4 |
+| 同launch-plan.json | 256d69f3b54c9c2226c1d445905de9aa6d543cf49ffff152640eb8be2fd7aaab |
+| 同create-completion.json | 6a5e6807430507ff3b0e3103b1c6b7beae636b53cc1e35a2526b396053657c29 |
+| manifests/code90-heretic-public-base-math-mlp-c1-v1.json（ROOT起点） | 3f1726215e4213aeb5eb7fcc74656df212563519842764cb153b694bb84987e5 |
+| heretic-public-base-math-mlp-c1-v1/verify-completion.json | 81c1f6a3d244b63eb58e2872d2a89ae4d75f2dbd2df531dbbfab05cf4853126f |
+| 同freeze.json | 760b72570a03d178a58ce8d14fc36e5ffd8cc92321fe035c22ed477f91b8c76d |
+| 同historical-I-mlp-expected.json | 2ef6ec2113c5ec6d51aef235083dd44464fef8e179a784fce3148af33e4a4e00 |
+| 同historical-I-mlp-after-create.json | 75cec5d4a4ce52084455ed4f95574e11cf0abbf09ca83f625b4fe285b298cf7c |
+| 同completed-operation.json | 555448a847e18edc7aa57a8cfc152e900f35b40030c8eb8760c0fcddcdadad5d |
+| heretic-public-base-math-mlp-c1-v1/deployment-smoke-launch.json | c4b6ceaf4cac4bece0f46c879c25e249ef100c98982f9cf7de415a9698fd3bad |
+| 同smoke-numeric-summary.json | 040de0c33b5a62858f042ba23b048ae2832710dea5d6cf31bd11aef362d6c303 |
