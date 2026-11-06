@@ -137,3 +137,26 @@ Validation used tiny CPU BF16 tensors, including a joint native/matrix set,
 a different second candidate, and an injected forward failure. All six replay
 tests passed in a CPU container with no exposed GPU. No real Gemma replay was
 run to claim validation of this newly added matrix path.
+
+### Public answer boundary revision
+
+The shared chat frame now records `schema_version: 2` and
+`frame_protocol: gemma4-public-answer-v2-forced-empty-thought`. The pinned Gemma
+ON generation template stops at `<|turn>model\n`; its system `<|think|>` flag
+alone does not place the next token after a thought. The replay explicitly
+appends `<|channel>thought\n<channel|>`, the empty-thought boundary emitted by
+the official OFF generation template, while retaining the ON system prefix.
+There is no separate final-channel token in this template. This is a forced
+empty-thought diagnostic condition, not ordinary free-thinking generation.
+Only the public correct/foil answer tokens enter the objective; no thought
+content is read, generated, or scored.
+
+Historical unversioned frames stopped at assistant start. Their artifacts and
+source snapshots remain intact, but they are not evidence of post-thought
+public-answer likelihood. The new frame hashes and policy metadata differ,
+so an old fixed `frame_evidence` is rejected. Rebuild explicit frame evidence
+and collect new derivatives after checking the official whole-model logits
+against the custom head/softcap path. Do not combine old and new gradient
+arrays or compare absolute likelihoods across frame or batching conditions as
+if those conditions were identical. The quantitative effect of the boundary
+and BF16-versus-FP32 softcap arithmetic requires the separate bounded diagnostic.

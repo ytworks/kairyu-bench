@@ -1,5 +1,12 @@
 # Signed module donor proposals, 2026-11-06
 
+**Later framing correction:** the analytical measurements below used a
+thinking-enabled assistant-start prefix, not an established public final-answer
+continuation. Their margin/NLL interpretations are conditional on that old
+frame. The subsequent positive-v2 proposals were retired before application;
+see the [retirement record](2026-11-06-positive-correct-donor-amendment.md#retirement-of-the-intended-proxy).
+Actual official WSP scores are unaffected. Numeric history below is preserved.
+
 Four of six fixed structural plans produced bounded **continuous** proposals.
 No official score is inferred from these vectors. They were fitted to all 34
 authored calibration folds; those folds are not held out. Actual BF16 finite
@@ -138,8 +145,60 @@ ratio_to_unit_donor = norm / np.linalg.norm(cost)
 # Binding fits have predicted_response - minimum_delta <= 1e-6.
 ```
 
-The next measurement is one matched base/four-candidate/restored-base RAM
-sequence using actual BF16 bytes and all 34 public-answer folds. Margin,
+At that stage, the planned next measurement was one matched
+base/four-candidate/restored-base RAM sequence using actual BF16 bytes and all
+34 authored-answer folds in the old assistant-start frame. Margin,
 correct-answer NLL, endpoint full-vocabulary KL, actual changed elements and
 actual weight L2 must all be reported, including regressions. The fitted proxy
 does not replace the official four-source WSP coding score.
+
+## Actual BF16 finite evidence and objective amendment
+
+The second RAM run ended at its time budget after **two of four** candidate
+sweeps (1,222.2 seconds including recovery). Balanced and numerical algorithms
+have complete 34-fold measurements. Attention interfaces and late compensation
+remain unmeasured, not failed candidates or zero scores. All 410 matrices were
+restored with exact readback; restored-base margin, correct NLL and endpoint KL
+differences were all zero. Source continuity passed.
+
+| Measured candidate | Actual changed values | Actual BF16 L2 | Actual / continuous L2 | Primary margin delta | Primary correct NLL delta | Correct NLL worsened folds | Max endpoint KL |
+|---|---:|---:|---:|---:|---:|---:|---:|
+| Balanced | 943,283,732 | .620959 | .847928 | +.022706 | +.090879 | 33/34 | .039737 |
+| Numerical algorithms | 1,135,409,924 | .710553 | .848004 | +.028762 | +.108608 | 32/34 | .050669 |
+
+Primary means weight the ten folds of code, implementation, algorithm and the
+two science purposes equally. Within that old frame, positive margin is
+favorable to the fitted objective and **positive NLL is unfavorable**; neither
+is a measurement of the intended final-answer distribution. KL is full-vocabulary at the first/last correct-answer positions,
+not over an entire generated response. These are authored teacher-forced
+measurements, not WSP scores.
+
+| Purpose | Balanced margin delta (fold0/fold1) | Numerical margin delta (fold0/fold1) |
+|---|---|---|
+| Code | −.012275 / +.142604 | +.021920 / +.164558 |
+| Implementation | +.006879 / +.042728 | +.009627 / +.043923 |
+| Algorithm | +.011781 / −.001765 | +.009009 / +.002543 |
+| Science numerical | +.008536 / +.012607 | +.010950 / +.019622 |
+| Science contracts | +.006513 / +.009449 | +.001521 / +.003950 |
+
+Numerical algorithms has the stronger primary margin pattern (10/10 positive
+folds versus 8/10), while balanced changes fewer values, has lower L2/KL and
+smaller average correct-NLL deterioration. Both improve the margin partly by
+making the foil less likely: correct-answer likelihood generally becomes
+worse. Neither establishes an official coding gain. Only 22/34 original fitted
+constraints hold in actual BF16 response for either candidate; prediction RMSE
+is .113424 and .163973 respectively. The numerical candidate also loses lookup
+margin on both folds and non-call margin on both folds. Balanced loses tools
+fold1, general/Japanese averages and fact-retention average.
+
+This evidence motivated an explicitly **adaptive** objective amendment:
+collect positive-direction correct-answer log-probability sensitivities,
+retaining the same good+foil forward batch and using the existing margin
+gradients as separately labeled guards. It does not create a new blanket
+zero-regression rule. The fixed four specs and their records remain unchanged.
+
+The independent numeric comparison is
+`donor-module-actual-finite-comparison.json`; it records requested4/completed2,
+the original TimeoutError, both unmeasured IDs, all 34 fold diagnostics,
+input SHA values and the exact restoration proof. No model or benchmark call
+was made to produce that comparison.

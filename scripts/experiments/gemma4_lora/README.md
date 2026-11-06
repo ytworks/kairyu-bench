@@ -142,6 +142,14 @@ it does not silently substitute approximate factor arithmetic.
 
 ## Full-projection continuous donor direction collection
 
+**Framing qualification (2026-11-06):** historical `chat-public-answer`
+collections scored authored tokens at the thinking-enabled assistant start.
+The mode name did not establish a final-answer channel. Their results remain
+conditional on that old frame; do not advance the retired positive-v2 plans.
+See the [retirement and evidence limits](../../../docs/experiments/2026-11-06-positive-correct-donor-amendment.md#retirement-of-the-intended-proxy).
+A corrected framing contract and its oracle must be verified before new
+collections can support a new plan. Official WSP measurements remain valid.
+
 `donor_direction.py` reuses the same explicit calibration cases, official HF
 model loader and public-answer objective as the native/matrix recipes. It
 adds one zero scalar gate to each of the 410 text projections:
@@ -272,3 +280,68 @@ a fresh manifest exclusively. Failure cleanup removes only the directory inode
 created by that operation. Verification regenerates every edited span and
 checks both full trees. The read-only audit records source stat continuity and
 does not claim a newly computed full-source hash.
+
+## Adaptive objective amendment: correct-answer likelihood
+
+After a measured candidate improved correct-minus-foil margins while worsening
+correct-answer NLL in 33 of 34 fitted folds, the collector gained an explicit
+`--objective correct-logprob` mode. This is an adaptive amendment motivated by
+those diagnostics, not a new holdout or a guarantee against regressions.
+
+The default remains `--objective margin` and uses the original implementation.
+The new mode is restricted to `--mode chat-public-answer`. It keeps the exact
+good+foil forward batch, frame, padding, softcapping and token normalization of
+the margin objective, but its loss selects only the mean log probability of
+the authored good continuation. Increasing this objective decreases NLL for
+that exact forced continuation and frame; it does not by itself establish
+improved public final answers or coding performance. It uses one VJP per one-case microbatch, without retaining
+a graph for a second backward pass. No reasoning content, reference solution
+or benchmark answer is introduced.
+
+Use a fresh collection directory. Summary and provenance explicitly record
+`objective`; the new arrays use `gradient-correct-logprob-*` names, and zero-gate
+checks compare the selected objective against the unchanged original model.
+Optional references use `expected_correct_logprob`, never
+`expected_margin`. The profile tool must also receive
+`--objective correct-logprob`; its default expects margin, so the existing
+margin-only solver rejects a correct-likelihood collection.
+
+```sh
+# All usual pinned checkpoint, cases, donor and cost arguments still apply.
+python scripts/experiments/gemma4_lora/donor_direction.py ... \
+  --mode chat-public-answer --objective correct-logprob --output NEW_COLLECTION
+python scripts/experiments/gemma4_lora/profile_donor_directions.py \
+  --collection NEW_COLLECTION --objective correct-logprob --output NEW_PROFILE.json
+```
+
+The tiny CPU fixture verifies exact zero-gate identity, the unchanged
+good+foil batch shape, an independent correct-token log-softmax oracle, and
+rank-16 directional derivatives against literal autograd and central finite
+differences. Future joint constraints may combine separately labeled margin
+and correct-likelihood gradients under declared tradeoffs; this extension
+does not alter existing candidate specs or automatically adopt any candidate.
+
+### Positive correct-answer likelihood amendment
+
+[The paired-objective solver](solve_positive_module_directions.py) fits six fixed signed donor scopes to explicit correct-logprob gains and separate margin floors. It requires matching 42-fold collections and a pinned caller review, retains the original coefficient/norm bounds, and creates only continuous proposals. See the [objective-amendment evidence and recipe](../../../docs/experiments/2026-11-06-positive-correct-donor-amendment.md) for units, allowed losses, the 120-second CPU limit and the old 34-fold NLL audit. The historical positive-v2 six proposals are retired for the intended final-answer proxy; their stored numeric results remain unchanged. New actual BF16 response and official WSP remain separate gates.
+
+### Explicit serial answer batching
+
+`donor_direction.py --answer-batching serial --max-cases-per-microbatch 1`
+uses the same single-answer helper as the native collector. Each original
+good/foil pair determines a fixed padded width; all answer tokens remain in
+the loss. Margin uses a positive correct-answer VJP and a negative foil VJP,
+freeing each graph before the next forward; correct-logprob uses only the
+correct-answer VJP. Each answer's zero-gate output is compared with its
+unmodified-model output. The FP32 gate derivatives accumulate in an FP32 fold
+buffer and are serialized as an F64 array.
+
+The default `paired` path retains its good+foil batch and existing FP64
+microbatch accumulation. Provenance, runtime and fold metadata distinguish
+answer batching, accumulation precision and baseline/gradient forward counts.
+Serial is restricted to chat frames and one case per microbatch. Matching
+mathematical objectives does not imply paired/serial BF16 numerical identity;
+original objective values must agree in the actual matched conditions before
+combining native and donor derivatives. The framing qualification above still
+applies: selecting serial does not by itself repair or establish a final-answer
+frame.

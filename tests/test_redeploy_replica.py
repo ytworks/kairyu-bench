@@ -4,6 +4,7 @@ from __future__ import annotations
 import copy
 import importlib.util
 import json
+import os
 from pathlib import Path
 from types import SimpleNamespace
 import tempfile
@@ -64,7 +65,7 @@ class ReplicaRecipeTest(unittest.TestCase):
         with self.assertRaises(ValueError):
             invoke(changed)
 
-    def test_frozen_identity_rejects_changed_file_with_same_size(self):
+    def test_frozen_identity_rejects_changed_frozen_stat_with_same_size(self):
         with tempfile.TemporaryDirectory() as temporary:
             root = Path(temporary)
             candidate = root / "weights"
@@ -79,7 +80,11 @@ class ReplicaRecipeTest(unittest.TestCase):
             }))
             args = SimpleNamespace(candidate=candidate, freeze=proof)
             self.assertEqual(tool.identity(args)["tree_sha256"], tool.digest(rows))
+            frozen_stat = weight.stat()
             weight.write_bytes(b"other")
+            # Two writes can share a filesystem timestamp tick. This is a
+            # saved-stat continuity check, not a fresh content-hash check.
+            os.utime(weight, ns=(frozen_stat.st_atime_ns, frozen_stat.st_mtime_ns + 1_000_000_000))
             with self.assertRaisesRegex(ValueError, "frozen inventory"):
                 tool.identity(args)
 

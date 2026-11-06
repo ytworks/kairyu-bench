@@ -664,7 +664,9 @@ def sample(name: str, rng: np.random.Generator, trial: int) -> tuple[tuple, np.n
     return args, np.asarray(ref, dtype=np.float64)
 
 
-def execute(case: Case, *, foil: bool, seed: int, trials: int) -> dict:
+def execute(
+    case: Case, *, foil: bool, seed: int, trials: int, sample_fn=sample
+) -> dict:
     namespace = {}
     code = case.code(foil=foil)
     exec(compile(code, "<author-owned-science-case>", "exec"), namespace)
@@ -674,7 +676,7 @@ def execute(case: Case, *, foil: bool, seed: int, trials: int) -> dict:
     rng = np.random.default_rng(seed)
     failures = []
     for trial in range(trials):
-        args, reference = sample(case.name, rng, trial)
+        args, reference = sample_fn(case.name, rng, trial)
         copied = [v.copy() if isinstance(v, np.ndarray) else v for v in args]
         try:
             with np.errstate(all="raise"):
@@ -699,7 +701,9 @@ def execute(case: Case, *, foil: bool, seed: int, trials: int) -> dict:
     }
 
 
-def validate(cases: list[Case], *, seed: int = 20261106, trials: int = 8) -> dict:
+def validate(
+    cases: list[Case], *, seed: int = 20261106, trials: int = 8, sample_fn=sample
+) -> dict:
     if not 4 <= trials <= 100:
         raise ValueError("trials must be between 4 and 100")
     ids = [c.name for c in cases]
@@ -711,8 +715,12 @@ def validate(cases: list[Case], *, seed: int = 20261106, trials: int = 8) -> dic
         case_seed = seed + int.from_bytes(
             hashlib.sha256(case.name.encode()).digest()[:4], "big"
         )
-        correct = execute(case, foil=False, seed=case_seed, trials=trials)
-        foil = execute(case, foil=True, seed=case_seed, trials=trials)
+        correct = execute(
+            case, foil=False, seed=case_seed, trials=trials, sample_fn=sample_fn
+        )
+        foil = execute(
+            case, foil=True, seed=case_seed, trials=trials, sample_fn=sample_fn
+        )
         if correct["failed"] or not foil["failed"]:
             raise ValueError(
                 f"authored validation failed: {case.name}: correct={correct}, foil={foil}"
@@ -758,11 +766,20 @@ def training_payload(cases: list[Case]) -> dict:
     return output
 
 
-def write_bundle(output: Path, *, seed: int = 20261106, trials: int = 8) -> dict:
+def write_bundle(
+    output: Path,
+    *,
+    seed: int = 20261106,
+    trials: int = 8,
+    cases: list[Case] | None = None,
+    sample_fn=sample,
+    source_paths: tuple[Path, ...] = (),
+    authoring: str | None = None,
+) -> dict:
     if os.path.lexists(output):
         raise FileExistsError(output)
-    cases = catalog()
-    validation = validate(cases, seed=seed, trials=trials)
+    cases = catalog() if cases is None else cases
+    validation = validate(cases, seed=seed, trials=trials, sample_fn=sample_fn)
     train = [c for c in cases if c.split == "train"]
     transfer = [c for c in cases if c.split == "transfer"]
     assert set(c.name for c in train).isdisjoint(c.name for c in transfer)
@@ -774,7 +791,8 @@ def write_bundle(output: Path, *, seed: int = 20261106, trials: int = 8) -> dict
         "training_families": [c.name for c in train],
         "transfer_families": [c.name for c in transfer],
         "family_disjoint": True,
-        "authoring": "New equations/contracts authored for this tool; no benchmark corpus imported.",
+        "authoring": authoring
+        or "New equations/contracts authored for this tool; no benchmark corpus imported.",
         "transfer_contract": "Do not pass transfer-cases.json to a gradient collector, fit coefficients, or train weights on it. Repeated use makes it known calibration, not pristine evidence.",
         "limits": [
             "Distinct authored problem families share mathematical primitives; disjoint names are not a proof of statistical independence.",
@@ -784,6 +802,11 @@ def write_bundle(output: Path, *, seed: int = 20261106, trials: int = 8) -> dict
         ],
         "validation": validation,
     }
+    if source_paths:
+        metadata["additional_sources"] = [
+            {"name": path.name, "sha256": hashlib.sha256(path.read_bytes()).hexdigest()}
+            for path in source_paths
+        ]
     output.mkdir(parents=True)
     payloads = {
         "train-cases.json": training_payload(train),

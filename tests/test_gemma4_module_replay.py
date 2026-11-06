@@ -33,7 +33,9 @@ class PublicAnswerMetricTest(unittest.TestCase):
         import torch
         class Net:
             config = SimpleNamespace(final_logit_softcapping=3.)
+            seen = []
             def __call__(self, input_ids, **kwargs):
+                self.seen.append(tuple(input_ids.shape))
                 return SimpleNamespace(last_hidden_state=torch.nn.functional.one_hot(input_ids, 4).float())
         net = Net()
         head = torch.nn.Linear(4, 4, bias=False)
@@ -61,6 +63,13 @@ class PublicAnswerMetricTest(unittest.TestCase):
             return all_rows
         old = oracle()
         base = evaluate(store_base=True)
+        serial = PublicAnswerEvaluator(net, head, SimpleNamespace(pad_token_id=0),
+                                       {"science": [rows]}, "cpu", answer_batching="serial")
+        net.seen.clear()
+        serial_base = serial(store_base=True)
+        self.assertEqual(net.seen, [(1, 3), (1, 3), (1, 4), (1, 4)])
+        np.testing.assert_allclose(serial_base["values"]["science"][0], base["values"]["science"][0], atol=1e-7)
+        np.testing.assert_allclose(serial_base["correct_nll"], base["correct_nll"], atol=1e-7)
         np.testing.assert_allclose(base["values"]["science"][0],
                                    [a[0][0] - a[1][0] for a in old], atol=1e-7)
         self.assertAlmostEqual(base["correct_nll"][0], -np.mean([a[0][0] for a in old]), places=6)
@@ -70,6 +79,9 @@ class PublicAnswerMetricTest(unittest.TestCase):
             head.weight[2, 1] += .2
         new = oracle()
         changed = evaluate()
+        serial_changed = serial()
+        for key in ("means", "correct_nll", "kl"):
+            np.testing.assert_allclose(serial_changed[key], changed[key], atol=1e-7)
         expected_kl = []
         for before, after in zip(old, new, strict=True):
             ref, cur = before[0][1], after[0][1]
@@ -83,6 +95,11 @@ class PublicAnswerMetricTest(unittest.TestCase):
             head.weight.copy_(original)
         evaluate.deadline = lambda: (_ for _ in ()).throw(TimeoutError("expired"))
         restored = evaluate(recovery=True)
+        serial.deadline = evaluate.deadline
+        serial_restored = serial(recovery=True)
+        self.assertEqual(serial_restored["values"], serial_base["values"])
+        self.assertEqual(serial_restored["correct_nll"], serial_base["correct_nll"])
+        self.assertEqual(serial_restored["kl"], [0.])
         self.assertEqual(restored["values"], base["values"])
         self.assertEqual(restored["correct_nll"], base["correct_nll"])
         self.assertEqual(restored["kl"], [0.])
@@ -106,84 +123,105 @@ class ModuleRamTest(unittest.TestCase):
 
     def test_six_exact_candidates_cached_once_and_late_failure_restores_bits(self):
         import torch
-        with tempfile.TemporaryDirectory() as temporary:
-            root = Path(temporary)
-            names = ["model.language_model.layers.0.mlp.up_proj.weight",
-                     "model.language_model.layers.1.self_attn.o_proj.weight"]
-            values = np.array([[1., -0., -1., .125], [2., -2., .5, -.5], [4., .25, -4., .0625]], np.float32)
-            values = np.tile(values, (86, 1))[:257]
-            raw = (values.view(np.uint32) >> 16).astype("<u2")
-            weights(root / "model.safetensors", {n: ("BF16", (257, 4), raw.tobytes()) for n in names})
-            checkpoint = Checkpoint(root)
-            params = {n: torch.from_numpy(raw.copy()).view(torch.bfloat16) for n in names}
-            mapping = [{"tensor": n, "shape": [257, 4], "lora_A": "A", "lora_B": "B"} for n in names]
-            a = np.full((16, 4), 1 / 8, np.float32)
-            b = np.full((257, 16), 1 / 16, np.float32)
-            calls = []
-            def delta_block(av, bv):
-                calls.append(1)
-                return (bv @ av) * np.float32(2)
-            def metrics(records):
-                return {"changed_elements": sum(r["changed_count"] for r in records),
-                        "changed_tensors": sum(r["changed_count"] > 0 for r in records),
-                        "delta_l2": math.hypot(*(r["delta_l2"] for r in records))}
-            module = SimpleNamespace(BLOCK_ROWS=128, delta_block=delta_block, merge_block=self.ops.merge1,
-                                     metrics=metrics, dense=SimpleNamespace(tensor=lambda _, h, o, name: {"A": a, "B": b}[name]))
-            coefficients = [-.25, -.125, 0., .0625, .125, .25]
-            recipes = {f"c{i}": {"donor_path": "unused", "module_coefficients": {names[0]: c, names[1]: -c}}
-                       for i, c in enumerate(coefficients)}
-            candidates = [{"id": name, "recipe": recipe} for name, recipe in recipes.items()]
-            cache = tool.StreamedModuleEdits(checkpoint, params, mapping, recipes, module, {}, 0,
-                                            maximum_bytes=raw.size * 2 * 6)
-            seen = []
-            transfers = {"read": 0, "write_verify": 0}
-            raw_method, copy_method = cache.raw, cache.copy_and_check
-            def tracked_read(tensor):
-                transfers["read"] += 1
-                return raw_method(tensor)
-            def tracked_write(tensor, bits):
-                transfers["write_verify"] += 1
-                return copy_method(tensor, bits)
-            cache.raw, cache.copy_and_check = tracked_read, tracked_write
-            def evaluate(**flags):
-                current = {n: raw_method(p).copy() for n, p in params.items()}
-                if not flags.get("store_base") and not flags.get("recovery"):
-                    index = len(seen)
-                    c = coefficients[index]
-                    for n, coefficient in ((names[0], c), (names[1], -c)):
-                        expected = raw.copy() if coefficient == 0 else self.ops.merge1(raw, (b @ a) * np.float32(2), coefficient)[0]
-                        np.testing.assert_array_equal(current[n], expected)
-                        record = cache.receipts[f"c{index}"]["edits"][names.index(n)]
-                        self.assertEqual(record["candidate_tensor_sha256"], hashlib.sha256(expected.tobytes()).hexdigest())
-                    seen.append(current)
-                return current
-            _, results, repeat, failure = replay_sequence(candidates, cache.apply, evaluate, lambda *args: None)
-            self.assertIsNone(failure)
-            self.assertEqual(len(results), 6)
-            self.assertEqual(len(calls), 6)  # two matrices, three unchanged 128-row GEMM blocks each
-            self.assertEqual(transfers, {"read": 16, "write_verify": 14})  # matrix transfers, never row-block transfers
-            self.assertEqual(sum(v.nbytes for v in cache.originals.values()) + sum(v.nbytes for v in cache.deltas.values()), raw.size * 2 * 6)
-            for value in repeat.values():
-                np.testing.assert_array_equal(value, raw)  # includes negative-zero bits
-            count = 0
-            def fail_late(**flags):
-                nonlocal count
-                if not flags.get("store_base") and not flags.get("recovery"):
-                    count += 1
-                    if count == 5:
-                        raise MemoryError("synthetic late forward allocation")
-                return True
-            _, completed, repeated, failure = replay_sequence(candidates, cache.apply, fail_late, lambda *args: None)
-            self.assertEqual(len(completed), 4)
-            self.assertTrue(repeated)
-            self.assertIsInstance(failure, MemoryError)
-            self.assertIsNone(failure.__traceback__)
-            for p in params.values():
-                np.testing.assert_array_equal(cache.raw(p), raw)
-            self.assertTrue(cache.restoration["readback_exact"])
-            checkpoint.assert_stable()
-            with self.assertRaisesRegex(ValueError, "host cache"):
-                tool.StreamedModuleEdits(checkpoint, params, mapping, recipes, module, {}, 0, maximum_bytes=1)
+        for device_proof in ("roundtrip", "staged-int16"):
+            with self.subTest(device_proof=device_proof), tempfile.TemporaryDirectory() as temporary:
+                root = Path(temporary)
+                names = ["model.language_model.layers.0.mlp.up_proj.weight",
+                         "model.language_model.layers.1.self_attn.o_proj.weight"]
+                values = np.array([[1., -0., -1., .125], [2., -2., .5, -.5], [4., .25, -4., .0625]], np.float32)
+                values = np.tile(values, (86, 1))[:257]
+                raw = (values.view(np.uint32) >> 16).astype("<u2")
+                weights(root / "model.safetensors", {n: ("BF16", (257, 4), raw.tobytes()) for n in names})
+                checkpoint = Checkpoint(root)
+                params = {n: torch.from_numpy(raw.copy()).view(torch.bfloat16) for n in names}
+                mapping = [{"tensor": n, "shape": [257, 4], "lora_A": "A", "lora_B": "B"} for n in names]
+                a = np.full((16, 4), 1 / 8, np.float32)
+                b = np.full((257, 16), 1 / 16, np.float32)
+                calls = []
+                def delta_block(av, bv):
+                    calls.append(1)
+                    return (bv @ av) * np.float32(2)
+                def metrics(records):
+                    return {"changed_elements": sum(r["changed_count"] for r in records),
+                            "changed_tensors": sum(r["changed_count"] > 0 for r in records),
+                            "delta_l2": math.hypot(*(r["delta_l2"] for r in records))}
+                module = SimpleNamespace(BLOCK_ROWS=128, delta_block=delta_block, merge_block=self.ops.merge1,
+                                         metrics=metrics, dense=SimpleNamespace(tensor=lambda _, h, o, name: {"A": a, "B": b}[name]))
+                coefficients = [-.25, -.125, 0., .0625, .125, .25]
+                recipes = {f"c{i}": {"donor_path": "unused", "module_coefficients": {names[0]: c, names[1]: -c}}
+                           for i, c in enumerate(coefficients)}
+                candidates = [{"id": name, "recipe": recipe} for name, recipe in recipes.items()]
+                cache = tool.StreamedModuleEdits(checkpoint, params, mapping, recipes, module, {}, 0,
+                                                maximum_bytes=raw.size * 2 * 6, device_proof=device_proof)
+                seen = []
+                transfers = {"read": 0, "write_verify": 0}
+                raw_method, copy_method = cache.raw, cache.copy_and_check
+                def tracked_read(tensor):
+                    transfers["read"] += 1
+                    return raw_method(tensor)
+                def tracked_write(tensor, bits):
+                    transfers["write_verify"] += 1
+                    return copy_method(tensor, bits)
+                cache.raw, cache.copy_and_check = tracked_read, tracked_write
+                def evaluate(**flags):
+                    current = {n: raw_method(p).copy() for n, p in params.items()}
+                    if not flags.get("store_base") and not flags.get("recovery"):
+                        index = len(seen)
+                        c = coefficients[index]
+                        for n, coefficient in ((names[0], c), (names[1], -c)):
+                            expected = raw.copy() if coefficient == 0 else self.ops.merge1(raw, (b @ a) * np.float32(2), coefficient)[0]
+                            np.testing.assert_array_equal(current[n], expected)
+                            record = cache.receipts[f"c{index}"]["edits"][names.index(n)]
+                            self.assertEqual(record["candidate_tensor_sha256"], hashlib.sha256(expected.tobytes()).hexdigest())
+                        seen.append(current)
+                    return current
+                _, results, repeat, failure = replay_sequence(candidates, cache.apply, evaluate, lambda *args: None)
+                self.assertIsNone(failure)
+                self.assertEqual(len(results), 6)
+                self.assertEqual(len(calls), 6)  # two matrices, three unchanged 128-row GEMM blocks each
+                self.assertEqual(transfers, {"read": 16 if device_proof == "roundtrip" else 0, "write_verify": 14})  # matrix transfers, never row-block transfers
+                self.assertEqual(sum(v.nbytes for v in cache.originals.values()) + sum(v.nbytes for v in cache.deltas.values()), raw.size * 2 * 6)
+                for value in repeat.values():
+                    np.testing.assert_array_equal(value, raw)  # includes negative-zero bits
+                count = 0
+                def fail_late(**flags):
+                    nonlocal count
+                    if not flags.get("store_base") and not flags.get("recovery"):
+                        count += 1
+                        if count == 5:
+                            raise MemoryError("synthetic late forward allocation")
+                    return True
+                _, completed, repeated, failure = replay_sequence(candidates, cache.apply, fail_late, lambda *args: None)
+                self.assertEqual(len(completed), 4)
+                self.assertTrue(repeated)
+                self.assertIsInstance(failure, MemoryError)
+                self.assertIsNone(failure.__traceback__)
+                for p in params.values():
+                    np.testing.assert_array_equal(cache.raw(p), raw)
+                self.assertTrue(cache.restoration["storage_bytes_exact"])
+                self.assertEqual(cache.restoration["proof_method"], device_proof)
+                if device_proof == "roundtrip":
+                    self.assertTrue(cache.restoration["readback_exact"])
+                else:
+                    self.assertNotIn("readback_exact", cache.restoration)
+                for receipt in cache.receipts.values():
+                    self.assertTrue(receipt["actual_ram_storage_bytes_verified"])
+                    self.assertEqual(receipt["actual_ram_readback_verified"], device_proof == "roundtrip")
+                    self.assertEqual(receipt["device_proof"], device_proof)
+                if device_proof == "staged-int16":
+                    bad_params = {name: value.clone() for name, value in params.items()}
+                    bad_params[names[0]].view(torch.int16)[0, 0] ^= 1
+                    before_bad = bad_params[names[0]].clone()
+                    bad = tool.StreamedModuleEdits(checkpoint, bad_params, mapping, recipes, module, {}, 0,
+                                                   maximum_bytes=raw.size * 2 * 6, device_proof=device_proof)
+                    with self.assertRaisesRegex(ValueError, "device int16"):
+                        bad.prepare()
+                    torch.testing.assert_close(bad_params[names[0]], before_bad, rtol=0, atol=0)
+                    self.assertFalse(bad.ready)
+                    self.assertFalse(bad.originals)
+                checkpoint.assert_stable()
+                with self.assertRaisesRegex(ValueError, "host cache"):
+                    tool.StreamedModuleEdits(checkpoint, params, mapping, recipes, module, {}, 0, maximum_bytes=1)
 
 
 if __name__ == "__main__":

@@ -67,3 +67,17 @@ class DonorProfileTest(unittest.TestCase):
         np.save(self.collection / "g0.npy", np.array([2., -1., 1.]), allow_pickle=False)
         with self.assertRaisesRegex(ValueError, "zero-cost"):
             profile.analyze(self.collection)
+
+    def test_correct_objective_requires_explicit_expectation_and_matching_provenance(self):
+        self.summary["objective"] = "correct-logprob"
+        self.summary["zero_alpha_checks"]["max_absolute_objective_difference"] = 0.
+        self.summary["zero_alpha_checks"].pop("max_absolute_margin_difference")
+        (self.collection / "summary.json").write_text(json.dumps(self.summary))
+        (self.collection / "provenance.json").write_text(json.dumps({"mode": "chat-public-answer", "objective": "correct-logprob"}))
+        with self.assertRaisesRegex(ValueError, "objective"):
+            profile.analyze(self.collection)  # The old margin solver uses this default.
+        result, _ = profile.analyze(self.collection, expected_objective="correct-logprob")
+        self.assertEqual(result["objective"], "correct-logprob")
+        (self.collection / "provenance.json").write_text(json.dumps({"mode": "chat-public-answer", "objective": "margin"}))
+        with self.assertRaisesRegex(ValueError, "objective"):
+            profile.analyze(self.collection, expected_objective="correct-logprob")

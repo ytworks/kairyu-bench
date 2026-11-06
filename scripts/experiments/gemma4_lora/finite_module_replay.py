@@ -150,10 +150,13 @@ def preflight(args, module):
 
 
 class StreamedModuleEdits:
-    """One original and one FP32 delta cache, with exact GPU/CPU BF16 readback."""
+    """One original/delta cache with an explicit all-element storage proof."""
     def __init__(self, checkpoint, params, mapping, recipes, module, header, offset,
-                 *, maximum_bytes, deadline=lambda: None, progress=lambda **fields: None):
+                 *, maximum_bytes, deadline=lambda: None, progress=lambda **fields: None, device_proof="roundtrip"):
         import torch
+        if device_proof not in {"roundtrip", "staged-int16"}:
+            raise ValueError("unsupported device storage proof")
+        self.device_proof = device_proof
         self.torch, self.checkpoint, self.params = torch, checkpoint, params
         self.mapping = json.loads(json.dumps(mapping))
         self.recipes = json.loads(json.dumps(recipes))
@@ -165,7 +168,9 @@ class StreamedModuleEdits:
         self.originals, self.deltas, self.original_sha, self.original_ss = {}, {}, {}, {}
         self.ready = False
         self.receipts = {}
-        self.restoration = {"readback_exact": False, "matrices": 0}
+        self.restoration = {"storage_bytes_exact": False, "proof_method": device_proof, "matrices": 0}
+        if device_proof == "roundtrip":
+            self.restoration["readback_exact"] = False
         for item in mapping:
             name, shape = item["tensor"], tuple(item["shape"])
             param = params[name]
@@ -186,7 +191,8 @@ class StreamedModuleEdits:
             self.deadline()
             # One device transfer per matrix; retain a private host copy even
             # when the CPU fixture's .cpu() would otherwise alias its parameter.
-            original = self.raw(self.params[name]).copy()
+            original = (self.raw(self.params[name]).copy() if self.device_proof == "roundtrip"
+                        else np.empty((rows, columns), dtype=np.uint16))
             delta = np.empty((rows, columns), np.float32)
             a = self.module.dense.tensor(donor, self.header, self.offset, item["lora_A"])
             b = self.module.dense.tensor(donor, self.header, self.offset, item["lora_B"])
@@ -196,7 +202,9 @@ class StreamedModuleEdits:
                 stop = min(rows, first + self.module.BLOCK_ROWS)
                 raw = self.checkpoint.read_raw(name, first * columns, (stop - first) * columns)
                 block = np.frombuffer(raw, "<u2").reshape(stop - first, columns)
-                if not np.array_equal(original[first:stop], block):
+                if self.device_proof == "staged-int16":
+                    original[first:stop] = block
+                elif not np.array_equal(original[first:stop], block):
                     raise ValueError("loaded source matrix bytes differ from attested checkpoint")
                 delta[first:stop] = self.module.delta_block(a, b[first:stop])
                 if not np.isfinite(delta[first:stop]).all():
@@ -206,6 +214,8 @@ class StreamedModuleEdits:
                     raise ValueError("nonfinite original matrix")
                 squares.append(float(np.sum(values * values)))
                 hasher.update(raw)
+            if self.device_proof == "staged-int16":
+                self.staged_check(self.params[name], original, write=False)
             # Publish only fully initialized originals; a failed cache build has
             # not changed model weights and can safely restore this partial set.
             original.flags.writeable = delta.flags.writeable = False
@@ -215,7 +225,20 @@ class StreamedModuleEdits:
         self.checkpoint.assert_stable()
         self.ready = True
 
+    def staged_check(self, target, bits, *, write):
+        torch = self.torch
+        staging = torch.from_numpy(np.array(bits, dtype=np.uint16, copy=True)).view(torch.bfloat16).to(device=target.device)
+        if write:
+            target.copy_(staging, non_blocking=False)
+        if not torch.equal(target.view(torch.int16), staging.view(torch.int16)):
+            raise ValueError("device int16 storage bytes differ from deterministic CPU target")
+        # CPU target SHA plus equality of every device storage element. This
+        # intentionally does not describe a D2H readback hash.
+        return memoryview(bits).cast("B")
+
     def copy_and_check(self, target, bits):
+        if self.device_proof == "staged-int16":
+            return self.staged_check(target, bits, write=True)
         torch = self.torch
         host = torch.from_numpy(np.array(bits, dtype=np.uint16, copy=True)).view(torch.bfloat16)
         target.copy_(host, non_blocking=False)
@@ -230,8 +253,10 @@ class StreamedModuleEdits:
             with torch.no_grad():
                 for name, original in self.originals.items():
                     self.copy_and_check(self.params[name], original)
-            self.restoration = {"readback_exact": True, "matrices": len(self.originals),
-                                "all_target_matrices": self.ready}
+            self.restoration = {"storage_bytes_exact": True, "proof_method": self.device_proof,
+                                "matrices": len(self.originals), "all_target_matrices": self.ready}
+            if self.device_proof == "roundtrip":
+                self.restoration["readback_exact"] = True
             return
         identifier = candidate["id"]
         if candidate["recipe"] != self.recipes.get(identifier):
@@ -267,12 +292,16 @@ class StreamedModuleEdits:
                 del target_bits
                 records.append(dict(item, coefficient=value, entry_kind="lora_matrix",
                                     source_tensor_sha256=self.original_sha[name],
-                                    candidate_tensor_sha256=hasher.hexdigest(), changed_count=changed,
+                                    candidate_tensor_sha256=hasher.hexdigest(),
+                                    candidate_hash_origin=("cpu_target_verified_by_device_int16_equality" if self.device_proof == "staged-int16" else "device_to_host_readback"),
+                                    changed_count=changed,
                                     changed_byte_count=bytechanged, source_l2=math.sqrt(self.original_ss[name]),
                                     delta_l2=math.sqrt(math.fsum(squares)), maximum_absolute_delta=maximum))
         metrics = self.module.metrics(records)
         self.receipts[identifier] = {"id": identifier, "edits": records, **metrics,
-                                    "actual_ram_readback_verified": True, "seconds": time.monotonic() - started}
+                                    "actual_ram_readback_verified": self.device_proof == "roundtrip",
+                                    "actual_ram_storage_bytes_verified": True, "device_proof": self.device_proof,
+                                    "seconds": time.monotonic() - started}
         self.progress(phase="applied", candidate=identifier, **metrics)
 
 
@@ -327,6 +356,9 @@ def run(args, module, prepared):
                   "prior_source_attestation": plan["checkpoint_attestation"],
                   "full_source_rehashed_here": False, "host_cache_estimate_bytes": estimate,
                   "memory_budget": memory_budget,
+                  "device_proof": args.device_proof,
+                  "device_proof_contract": ("CPU target SHA plus all-element device int16 equality; no D2H hash"
+                                            if args.device_proof == "staged-int16" else "full device-to-host bytes compared and hashed"),
                   "transfer_granularity": "one complete BF16 matrix; all CPU GEMM/merge blocks remain 128 rows",
                   "maximum_transient_transfer_bytes": max(math.prod(row["shape"]) * 2 for row in mapping) * 4,
                   "numeric_recipe": candidates[0]["recipe"],
@@ -343,8 +375,9 @@ def run(args, module, prepared):
     params = {"model.language_model." + name: value for name, value in net.named_parameters()}
     replay = StreamedModuleEdits(checkpoint, params, mapping, {c["id"]: c["recipe"] for c in candidates},
                                 module, header, offset, maximum_bytes=args.maximum_host_cache_gib * GIB,
-                                deadline=deadline, progress=note)
-    evaluator = PublicAnswerEvaluator(net, head, tokenizer, frames, args.device, deadline)
+                                deadline=deadline, progress=note, device_proof=args.device_proof)
+    evaluator = PublicAnswerEvaluator(net, head, tokenizer, frames, args.device, deadline,
+                                      answer_batching=args.answer_batching)
     def on_result(identifier, result):
         save(args.output / (identifier + ".json"), result)
         save(args.output / "ram-weight-receipts.json", replay.receipts)
@@ -362,7 +395,7 @@ def run(args, module, prepared):
         nll_error = float(np.max(np.abs(np.array(repeat["correct_nll"]) - base["correct_nll"])))
         kl_error = max(repeat["kl"])
         restoration.update(max_margin_error=margin_error, max_correct_nll_error=nll_error, max_kl=kl_error,
-                           matched=restoration["readback_exact"] and margin_error <= 1e-4
+                           matched=restoration["storage_bytes_exact"] and margin_error <= 1e-4
                            and nll_error <= 1e-4 and kl_error <= 1e-6)
     stable = True
     try:
@@ -386,7 +419,7 @@ def run(args, module, prepared):
                                 "correct_nll_delta": (np.array(result["correct_nll"]) - base["correct_nll"]).tolist(),
                                 "kl_base_to_candidate": result["kl"]})
     status = "completed" if failure is None and restoration["matched"] and len(results) == len(candidates) else "incomplete"
-    summary = {"status": status, "labels": [f"{g}-{i}" for g, fs in frames.items() for i in range(len(fs))],
+    summary = {"status": status, "device_proof": args.device_proof, "answer_batching": args.answer_batching, "labels": [f"{g}-{i}" for g, fs in frames.items() for i in range(len(fs))],
                "candidates": diagnostics, "base_restoration": restoration, "source_stable": stable,
                "error_type": None if failure is None else type(failure).__name__,
                "elapsed_seconds": time.monotonic() - started,
@@ -417,6 +450,10 @@ def main(argv=None):
     parser.add_argument("--maximum-seconds", type=int, default=1200)
     parser.add_argument("--maximum-host-cache-gib", type=float, default=192)
     parser.add_argument("--device", choices=["cuda:0"], default="cuda:0")
+    parser.add_argument("--answer-batching", choices=("paired", "serial"), default="paired",
+                        help="serial: one public answer per forward, with each correct/foil pair's shared padding width")
+    parser.add_argument("--device-proof", choices=("roundtrip", "staged-int16"), default="roundtrip",
+                        help="staged-int16 proves CPU target SHA by all-element device equality; default retains full D2H readback")
     parser.add_argument("--gpu-exclusive-approved", action="store_true")
     parser.add_argument("--run", action="store_true")
     args = parser.parse_args(argv)
@@ -426,7 +463,9 @@ def main(argv=None):
     prepared = preflight(args, module)
     if not args.run:
         print(json.dumps({"status": "preview", "candidates": len(prepared[2]), "matrices": len(prepared[3]),
-                          "host_cache_estimate_bytes": prepared[-1], "model_calls": 0, "checkpoint_writes": 0}))
+                          "host_cache_estimate_bytes": prepared[-1], "device_proof": args.device_proof,
+                          "answer_batching": args.answer_batching,
+                          "model_calls": 0, "checkpoint_writes": 0}))
         return 0
     def interrupted(signum, frame):
         raise InterruptedError(f"module replay interrupted by signal {signum}")

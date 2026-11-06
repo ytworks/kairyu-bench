@@ -24,6 +24,8 @@ def load(name):
     spec = importlib.util.spec_from_file_location("purpose_" + name, RECIPES / (name + ".py"))
     module = importlib.util.module_from_spec(spec)
     modules = {"recipe_common": COMMON} if name != "recipe_common" else {}
+    if "OBJECTIVES" in globals():
+        modules["objective_variants"] = OBJECTIVES
     if "JOINT" in globals():
         modules["joint"] = JOINT
     with patch.dict(sys.modules, modules):
@@ -32,6 +34,7 @@ def load(name):
 
 
 COMMON = load("recipe_common")
+OBJECTIVES = load("objective_variants")
 MATRIX = load("matrix")
 NATIVE = load("native")
 JOINT = load("joint")
@@ -126,20 +129,27 @@ assert 'transformers' not in sys.modules
     def test_chat_matrix_frame_packing_and_no_truncation(self):
         class Tokenizer:
             chat_template = "fixture official thinking template"
-            def apply_chat_template(self, messages, *, tokenize, enable_thinking):
+            def apply_chat_template(self, messages, *, tokenize, enable_thinking, add_generation_prompt=False):
                 self.assert_flags = (tokenize, enable_thinking)
-                return "<|turn>user\n" + messages[0]["content"] + "<|turn>model\n<|think|>\n" + messages[1]["content"] + "<|turn>"
+                prefix = ("<|turn>system\n<|think|>\n<turn|>\n" if enable_thinking else "")
+                prefix += "<|turn>user\n" + messages[0]["content"] + "<turn|>\n<|turn>model\n"
+                if add_generation_prompt:
+                    return prefix + ("" if enable_thinking else "<|channel>thought\n<channel|>")
+                return prefix + messages[1]["content"] + "<turn|>"
             def encode(self, text, add_special_tokens=False):
                 return [ord(character) for character in text]
         tokenizer = Tokenizer()
         cases = {"science": [[
             {"id": "short-a", "prompt": "p" * 100, "correct": "same good", "foil": "same bad"},
             {"id": "short-b", "prompt": "p" * 110, "correct": "same other good", "foil": "same other bad"},
-            {"id": "long", "prompt": "p" * 400, "correct": "same good", "foil": "same bad"}]]}
+            {"id": "long", "prompt": "p" * 350, "correct": "same good", "foil": "same bad"}]]}
         prepared, frame = COMMON.prepare(tokenizer, cases, "chat-public-answer")
         rows = prepared["science"][0]
         self.assertEqual(tokenizer.assert_flags, (False, True))
         self.assertTrue(frame["enable_thinking"])
+        self.assertTrue(frame["forced_empty_thought"])
+        self.assertEqual(frame["schema_version"], 2)
+        self.assertTrue("".join(map(chr, rows[0][1])).endswith("<|channel>thought\n<channel|>"))
         self.assertEqual(rows[0][2], [ord(c) for c in "same good"])
         self.assertEqual(rows[0][2][0], rows[0][3][0])  # Later answer tokens must distinguish them.
         packed = MATRIX.checked_batches(rows, "chat-public-answer")
@@ -301,6 +311,26 @@ class PurposeTorchFixtures(unittest.TestCase):
                 total += value
         for total, expected in zip(native_sums, gradients, strict=True):
             torch.testing.assert_close(total, expected, rtol=2e-5, atol=1e-7)
+        # Mathematical objective/gradient oracle for serial one-answer graphs.
+        width = max(len(row[1]) + max(len(row[2]), len(row[3])) for row in rows)
+        for kind in ("margin", "correct-logprob"):
+            fn = COMMON.objective if kind == "margin" else OBJECTIVES.correct_logprob_objective
+            values = fn(torch, reference, head, tokenizer, rows, "chat-public-answer", "cpu")
+            expected = torch.autograd.grad(values.mean(), [reference.first.weight, reference.last.weight])
+            serial = [torch.zeros_like(value) for value in expected]
+            observed = []
+            for row in rows:
+                total = 0.
+                for answer, sign in ((("correct", 1.), ("foil", -1.)) if kind == "margin" else (("correct", 1.),)):
+                    value = OBJECTIVES.single_answer_logprob_objective(torch, reference, head, tokenizer, row, answer, "chat-public-answer", "cpu", width)
+                    terms = torch.autograd.grad(value.sum() * sign / len(rows), [reference.first.weight, reference.last.weight])
+                    for acc, term in zip(serial, terms, strict=True):
+                        acc += term.float()
+                    total += sign * float(value.detach()[0])
+                observed.append(total)
+            np.testing.assert_allclose(observed, values.detach().numpy(), rtol=1e-6, atol=3e-7)
+            for actual, oracle in zip(serial, expected, strict=True):
+                torch.testing.assert_close(actual, oracle, rtol=2e-5, atol=1e-7)
         epsilon = 1e-3
         with torch.no_grad():
             old = net.first.weight[0, 1].clone()
@@ -312,6 +342,93 @@ class PurposeTorchFixtures(unittest.TestCase):
         self.assertAlmostEqual(float(sums["first"][0]), float((plus - minus) / (2 * epsilon)), delta=3e-5)
         self.assertTrue(all(value.grad is None for value in net.parameters()))
         self.assertTrue(all(not value._forward_hooks for value in net.modules()))
+
+    def test_native_correct_logprob_collects_separate_loss_and_restores_on_reference_failure(self):
+        torch.manual_seed(32)
+        class Net(torch.nn.Module):
+            def __init__(self):
+                super().__init__()
+                self.embedding = torch.nn.Embedding(7, 3, dtype=torch.bfloat16)
+                self.norm = torch.nn.Module()
+                self.norm.register_parameter("weight", torch.nn.Parameter(torch.tensor([1., 1.5, .75], dtype=torch.bfloat16)))
+                self.layers = []
+                self.events = []
+                self.config = SimpleNamespace(final_logit_softcapping=3.)
+            def forward(self, input_ids, **kwargs):
+                self.events.append(("forward", tuple(input_ids.shape)))
+                hidden = self.embedding(input_ids) * self.norm.weight
+                if hidden.requires_grad:
+                    hidden.register_hook(lambda unused: self.events.append(("backward", None)))
+                return SimpleNamespace(last_hidden_state=hidden)
+        net = Net()
+        head = torch.nn.Linear(3, 7, bias=False, dtype=torch.bfloat16)
+        net.requires_grad_(False)
+        head.requires_grad_(False)
+        model = SimpleNamespace(model=SimpleNamespace(language_model=net), get_output_embeddings=lambda: head)
+        tokenizer = SimpleNamespace(pad_token_id=0)
+        rows = [("a", [1, 2], [2, 3, 2], [2, 4]), ("b", [2, 1], [3, 4], [3, 1, 2])]
+        name = "model.language_model.norm.weight"
+        original = net.norm.weight.detach().float().numpy().copy()
+        checkpoint = SimpleNamespace(read=lambda key: original.copy() if key == name else self.fail(key))
+        for kind, layout in [(kind, layout) for kind in ("margin", "correct-logprob") for layout in ("paired", "serial")]:
+            objective = COMMON.objective if kind == "margin" else OBJECTIVES.correct_logprob_objective
+            expected_gradient = torch.zeros_like(net.norm.weight, dtype=torch.float32)
+            expected_values = {}
+            net.norm.weight.requires_grad_(True)
+            for batch in COMMON.objective_batches(rows, "chat-public-answer", 1):
+                if layout == "paired":
+                    values = objective(torch, net, head, tokenizer, batch, "chat-public-answer", "cpu")
+                    gradient, = torch.autograd.grad(values.sum() / len(rows), [net.norm.weight])
+                    expected_gradient += gradient.float()
+                    expected_values.update({row[0]: float(value) for row, value in zip(batch, values.detach(), strict=True)})
+                else:
+                    row = batch[0]
+                    expected_values[row[0]] = 0.
+                    width = len(row[1]) + max(len(row[2]), len(row[3]))
+                    for answer, sign in ((("correct", 1.), ("foil", -1.)) if kind == "margin" else (("correct", 1.),)):
+                        values = OBJECTIVES.single_answer_logprob_objective(torch, net, head, tokenizer, row, answer, "chat-public-answer", "cpu", width)
+                        gradient, = torch.autograd.grad(values.sum() * sign / len(rows), [net.norm.weight])
+                        expected_gradient += gradient.float()
+                        expected_values[row[0]] += sign * float(values.detach()[0])
+            net.norm.weight.requires_grad_(False)
+            reference_key = "expected_margin" if kind == "margin" else "expected_correct_logprob"
+            cases = {"science": [[{"id": row[0], reference_key: expected_values[row[0]]} for row in rows]]}
+            if kind == "correct-logprob":
+                for row in cases["science"][0]:
+                    row["expected_margin"] = 999.  # Must not interpret this as the selected objective.
+            for fail in (False, True):
+                with self.subTest(objective=kind, layout=layout, failure=fail), tempfile.TemporaryDirectory() as temporary:
+                    args = SimpleNamespace(output=Path(temporary), mode="chat-public-answer", device="cpu",
+                                           virtual=False, max_cases_per_microbatch=1, objective=kind, answer_batching=layout, reference_tolerance=0.)
+                    supplied = copy.deepcopy(cases)
+                    if fail:
+                        supplied["science"][0][0][reference_key] += 1.
+                    net.events.clear()
+                    with patch.object(COMMON, "load_model", return_value=(torch, tokenizer, model)), \
+                         patch.object(COMMON, "prepare", return_value=({"science": [rows]}, {})), \
+                         patch.object(COMMON, "assert_inputs"), \
+                         patch.object(COMMON, "transformers_version", return_value="fixture"):
+                        if fail:
+                            with self.assertRaisesRegex(ValueError, "reference"):
+                                NATIVE.collect(args, checkpoint, supplied, {})
+                        else:
+                            report = NATIVE.collect(args, checkpoint, supplied, {})
+                            self.assertEqual(report["objective_kind"], kind)
+                            self.assertEqual(report["answer_batching"], layout)
+                            record = report["folds"][0]
+                            selected = "mean_margin" if kind == "margin" else "mean_correct_logprob"
+                            self.assertAlmostEqual(record[selected], np.mean(list(expected_values.values())))
+                            self.assertNotIn("mean_margin" if kind != "margin" else "mean_correct_logprob", record)
+                            self.assertEqual(record["reference_cases"], 2)
+                            self.assertEqual(record["microbatches"], 2)
+                            with np.load(Path(temporary) / "gradient-science-0.npz", allow_pickle=False) as saved:
+                                np.testing.assert_array_equal(saved[name], expected_gradient.numpy())
+                    count = 4 if layout == "serial" and kind == "margin" else 2
+                    self.assertEqual([event[0] for event in net.events], ["forward", "backward"] * count)
+                    self.assertTrue(all(shape == (1 if layout == "serial" else 2, 5) for event, shape in net.events if event == "forward"))
+                    np.testing.assert_array_equal(net.norm.weight.detach().float().numpy(), original)
+                    self.assertFalse(net.norm.weight.requires_grad)
+                    self.assertIsNone(net.norm.weight.grad)
 
     def test_virtual_group_gain_derivative_and_norm_cost(self):
         inputs = torch.tensor([[1., 2., 3., 4.]])

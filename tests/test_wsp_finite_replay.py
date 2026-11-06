@@ -10,11 +10,41 @@ import unittest
 from pathlib import Path
 
 from kairyu_bench.wsp.weights.checkpoint import Checkpoint
-from kairyu_bench.wsp.weights.finite_replay import ParameterEdits, batches, load_plan, replay_sequence
+from kairyu_bench.wsp.weights.finite_replay import ParameterEdits, batches, load_plan, prepare_frames, replay_sequence
 from test_wsp_weights import weights
 
 
 class ReplayTests(unittest.TestCase):
+    def test_public_answer_requires_explicit_empty_thought_boundary(self) -> None:
+        class Tokenizer:
+            chat_template = "canonical-control-contract fixture"
+            wrong_off = False
+            def apply_chat_template(self, messages, *, tokenize, enable_thinking, add_generation_prompt=False):
+                prefix = ("<|turn>system\n<|think|>\n<turn|>\n" if enable_thinking else "")
+                prefix += "<|turn>user\n" + messages[0]["content"] + "<turn|>\n<|turn>model\n"
+                if add_generation_prompt:
+                    return prefix + ("" if enable_thinking or self.wrong_off else "<|channel>thought\n<channel|>")
+                return prefix + messages[1]["content"] + "<turn|>"
+            def encode(self, text, add_special_tokens=False):
+                return list(text.encode())
+        tokenizer = Tokenizer()
+        cases = {"code": [[{"id": "public", "prompt": "return sum", "correct": "x + y", "foil": "x - y"}]]}
+        prepared, proof = prepare_frames(tokenizer, cases)
+        _, prefix, good, bad = prepared["code"][0][0]
+        old_prefix = tokenizer.apply_chat_template(
+            [{"role": "user", "content": "return sum"}], tokenize=False,
+            enable_thinking=True, add_generation_prompt=True)
+        self.assertEqual(bytes(prefix).decode(), old_prefix + "<|channel>thought\n<channel|>")
+        self.assertEqual(bytes(good), b"x + y")
+        self.assertEqual(bytes(bad), b"x - y")
+        self.assertNotEqual(proof["frames"]["code"][0][0]["prefix_sha256"], hashlib.sha256(old_prefix.encode()).hexdigest())
+        self.assertEqual(proof["frame_protocol"], "gemma4-public-answer-v2-forced-empty-thought")
+        self.assertTrue(proof["forced_empty_thought"])
+        self.assertEqual(proof["schema_version"], 2)
+        tokenizer.wrong_off = True
+        with self.assertRaisesRegex(ValueError, "boundary contract"):
+            prepare_frames(tokenizer, cases)
+
     def test_base_candidates_base_order_and_failure_restore(self) -> None:
         calls = []
         candidates = [{"id": f"candidate-{i}"} for i in range(6)]

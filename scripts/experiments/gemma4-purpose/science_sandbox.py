@@ -145,12 +145,14 @@ def pack(value):
     return value
 
 
-def prepare(case, code: str, seed: int, trials: int) -> tuple[dict, list]:
+def prepare(
+    case, code: str, seed: int, trials: int, sample_fn=science_cases.sample
+) -> tuple[dict, list]:
     seed += int.from_bytes(hashlib.sha256(case.name.encode()).digest()[:4], "big")
     rng = np.random.default_rng(seed)
     packed, expected = [], []
     for trial in range(trials):
-        args, reference = science_cases.sample(case.name, rng, trial)
+        args, reference = sample_fn(case.name, rng, trial)
         packed.append([pack(value) for value in args])
         expected.append(reference)
     return {
@@ -420,7 +422,12 @@ class Docker:
             self.cleanup(name, nonce)
 
 
-def read_inputs(cases_path: Path, responses_path: Path):
+def read_inputs(
+    cases_path: Path,
+    responses_path: Path,
+    case_module=science_cases,
+    catalog_revision: int = 1,
+):
     case_bytes, case_receipt = capture(cases_path, 8 * 1024 * 1024)
     response_bytes, response_receipt = capture(responses_path, 16 * 1024 * 1024)
     data, responses = json.loads(case_bytes), json.loads(response_bytes)
@@ -439,9 +446,12 @@ def read_inputs(cases_path: Path, responses_path: Path):
     else:
         mapping = data.get("cases", data)
         rows = [row for folds in mapping.values() for fold in folds for row in fold]
-    catalog = {
-        "science-" + c.name: c for c in science_cases.catalog() if c.split == split
-    }
+    cases = (
+        case_module.catalog()
+        if case_module is science_cases
+        else case_module.catalog(revision=catalog_revision)
+    )
+    catalog = {"science-" + c.name: c for c in cases if c.split == split}
     if len(rows) != len(catalog) or {row["id"] for row in rows} != set(catalog):
         raise ValueError("requires the complete authored split")
     for row in rows:
@@ -523,6 +533,9 @@ def save(path: Path, data: dict) -> None:
 def main(argv=None, docker_factory=Docker):
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--cases", required=True, type=Path)
+    parser.add_argument(
+        "--catalog", choices=("basic", "advanced", "advanced-v2"), default="basic"
+    )
     parser.add_argument("--responses", required=True, type=Path)
     parser.add_argument("--output", required=True, type=Path)
     parser.add_argument("--docker-socket", required=True, type=Path)
@@ -548,14 +561,28 @@ def main(argv=None, docker_factory=Docker):
         raise ValueError("resource bounds outside allowed range")
     if os.path.lexists(args.output):
         raise FileExistsError(args.output)
-    catalog, answers, generation, inputs = read_inputs(args.cases, args.responses)
-    for source in (Path(__file__), Path(science_cases.__file__)):
+    case_module = science_cases
+    if args.catalog in ("advanced", "advanced-v2"):
+        import advanced_science_cases
+
+        case_module = advanced_science_cases
+    catalog, answers, generation, inputs = read_inputs(
+        args.cases,
+        args.responses,
+        case_module=case_module,
+        catalog_revision=2 if args.catalog == "advanced-v2" else 1,
+    )
+    sources = [Path(__file__), Path(science_cases.__file__)]
+    if case_module is not science_cases:
+        sources.append(Path(case_module.__file__))
+    for source in sources:
         _, receipt = capture(source, 1024 * 1024)
         inputs.append(receipt)
     report = {
         "schema_version": 1,
         "status": "preview",
         "split": next(iter(catalog.values())).split,
+        "catalog": args.catalog,
         "generation": generation,
         "inputs": inputs,
         "seed": args.seed,
@@ -630,7 +657,9 @@ def main(argv=None, docker_factory=Docker):
                     item.update(status="format_or_syntax_error", passed=False)
                 else:
                     item["code_sha256"] = sha(code.encode())
-                    payload, expected = prepare(case, code, args.seed, args.trials)
+                    payload, expected = prepare(
+                        case, code, args.seed, args.trials, sample_fn=case_module.sample
+                    )
                     began = time.monotonic()
                     try:
                         item.update(compare(docker.run(payload), expected))

@@ -77,6 +77,7 @@ def profile(summary, costs, gradients):
                   "derivatives": gradients[:, i].tolist(), "per_unit_weight_l2": normalized[:, i].tolist(),
                   "worst_fold_per_unit_weight_l2": float(normalized[:, i].min())} for i in order[:20]]
     return {"schema_version": 1, "status": "completed", "mode": summary["mode"],
+            "objective": summary.get("objective", "margin"),
             "directions": n, "folds": fold_rows, "purposes": purposes,
             "uniform_all_direction_weight_l2": float(np.linalg.norm(costs)),
             "all_fold_signs": sign_counts(gradients), "all_positive_ranked_by_worst_normalized_fold": strongest,
@@ -93,7 +94,7 @@ def profile(summary, costs, gradients):
                        "Do not mix raw and chat modes, different frames, sources or computation conventions."]}
 
 
-def analyze(collection):
+def analyze(collection, *, expected_objective="margin"):
     collection = collection.resolve()
     files = [collection / name for name in ("summary.json", "coverage.json", "provenance.json", "unit-gate-weight-l2.npy")]
     if any(p.stat().st_size > 16 * 1024**2 for p in files):
@@ -101,14 +102,19 @@ def analyze(collection):
     hashes = {str(p): sha(p) for p in files}
     summary, coverage, provenance = [json.loads((collection / name).read_text())
                                     for name in ("summary.json", "coverage.json", "provenance.json")]
+    objective = summary.get("objective", "margin")
+    if (expected_objective not in {"margin", "correct-logprob"} or objective != expected_objective
+            or provenance.get("objective", "margin") != objective):
+        raise ValueError("collection objective differs from explicit expected objective")
     checks = summary.get("zero_alpha_checks", {})
-    if (not np.isfinite(checks.get("max_absolute_margin_difference", float("inf")))
+    difference = checks.get("max_absolute_objective_difference", checks.get("max_absolute_margin_difference", float("inf")))
+    if (not np.isfinite(difference)
             or not np.isfinite(checks.get("tolerance", float("nan")))
             or checks.get("tolerance", -1) < 0
             or summary.get("status") != "completed" or not summary.get("source_values_unchanged")
             or summary.get("mode") != provenance.get("mode") or summary.get("coverage") != coverage
             or not checks.get("every_microbatch_compared")
-            or checks.get("max_absolute_margin_difference", float("inf")) > checks.get("tolerance", 0)):
+            or difference > checks.get("tolerance", 0)):
         raise ValueError("completed source-preserving, mode-matched zero-gate collection required")
     n = len(coverage["entries"])
     if not 1 <= n <= 4096 or not 1 <= len(summary["folds"]) <= 128:
@@ -137,13 +143,14 @@ def analyze(collection):
 
 def main(argv=None):
     parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--objective", choices=("margin", "correct-logprob"), default="margin")
     parser.add_argument("--collection", type=Path, required=True)
     parser.add_argument("--output", type=Path, required=True)
     args = parser.parse_args(argv)
     try:
         if args.output.exists() or args.output.is_symlink() or args.output.resolve().is_relative_to(args.collection.resolve()):
             raise ValueError("output must be fresh and outside the collection")
-        result, provenance = analyze(args.collection)
+        result, provenance = analyze(args.collection, expected_objective=args.objective)
         protected = [provenance.get("checkpoint", {}).get("path"), provenance.get("donor", {}).get("identity", {}).get("path")]
         if any(args.output.resolve().is_relative_to(Path(p).resolve()) for p in protected if p):
             raise ValueError("output overlaps a checkpoint input")

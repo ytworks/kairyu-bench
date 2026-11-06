@@ -15,6 +15,8 @@ import numpy as np
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "gemma4-purpose"))
 import recipe_common as common  # noqa: E402
+import objective_variants as objectives  # noqa: E402
+from objective_variants import correct_logprob_objective, objective_references  # noqa: E402
 
 from kairyu_bench.wsp.weights.checkpoint import Checkpoint  # noqa: E402
 
@@ -129,7 +131,18 @@ def zero_gate_function(torch):
     return ZeroGate
 
 
+
 def collect(args, checkpoint, cases, provenance, donor, entries):
+    objective = getattr(args, "objective", "margin")
+    if objective not in {"margin", "correct-logprob"} or objective == "correct-logprob" and args.mode != "chat-public-answer":
+        raise ValueError("unsupported objective/frame combination")
+    answer_batching = getattr(args, "answer_batching", "paired")
+    if (answer_batching not in {"paired", "serial"} or
+            answer_batching == "serial" and args.mode != "chat-public-answer"):
+        raise ValueError("serial answers require chat-public-answer")
+    if getattr(args, "max_cases_per_microbatch", 1) != 1:
+        raise ValueError("donor collection requires one case per microbatch")
+    objective_fn = common.objective if objective == "margin" else correct_logprob_objective
     torch, tokenizer, model = common.load_model(args)
     net, head = model.model.language_model, model.get_output_embeddings()
     if any(getattr(module, "gradient_checkpointing", False) for module in net.modules()):
@@ -184,42 +197,75 @@ def collect(args, checkpoint, cases, provenance, donor, entries):
             for fold, rows in enumerate(folds):
                 accumulated = np.zeros(len(entries), dtype=np.float64)
                 measured, base_measured = {}, {}
-                for batch in packed[purpose][fold]:
+                serial_accumulated = torch.zeros_like(gate, dtype=torch.float32) if answer_batching == "serial" else None
+                forward_count = 0
+                def observe(evaluate, sign=1.):
+                    nonlocal overall_difference, all_exact, forward_count
                     if gate._version != gate_version or bool(torch.count_nonzero(gate.detach())):
                         raise ValueError("only unchanged zero gates are supported")
                     state["enabled"] = False
                     with torch.inference_mode():
-                        baseline = common.objective(torch, net, head, tokenizer, batch, args.mode, args.device).detach().clone()
+                        baseline = evaluate().detach().clone()
                     state["enabled"], state["calls"] = True, {}
-                    margins = common.objective(torch, net, head, tokenizer, batch, args.mode, args.device)
+                    values = evaluate()
+                    forward_count += 1
                     if set(state["calls"]) != set(modules):
                         raise ValueError("a donor projection did not execute")
-                    if not bool(torch.isfinite(baseline).all()) or not bool(torch.isfinite(margins).all()):
-                        raise ValueError("nonfinite zero-gate margin")
-                    difference = float((margins.detach() - baseline).abs().max())
+                    if not bool(torch.isfinite(baseline).all()) or not bool(torch.isfinite(values).all()):
+                        raise ValueError("nonfinite zero-gate objective")
+                    difference = float((values.detach() - baseline).abs().max())
                     overall_difference = max(overall_difference, difference)
-                    all_exact = all_exact and torch.equal(margins.detach(), baseline)
+                    all_exact = all_exact and torch.equal(values.detach(), baseline)
                     if difference > args.reference_tolerance:
-                        raise ValueError("zero-gate margin differs from unmodified model")
-                    derivative, = torch.autograd.grad(margins.sum() / len(rows), gate)
-                    values = derivative.detach().cpu().numpy()
-                    if not np.isfinite(values).all():
+                        raise ValueError("zero-gate objective differs from unmodified model")
+                    derivative, = torch.autograd.grad(values.sum() * sign / len(rows), gate)
+                    if not bool(torch.isfinite(derivative).all()):
                         raise ValueError("nonfinite donor gate derivative")
-                    accumulated += values.astype(np.float64)
-                    measured.update({row[0]: float(value) for row, value in zip(batch, margins.detach().cpu(), strict=True)})
-                    base_measured.update({row[0]: float(value) for row, value in zip(batch, baseline.cpu(), strict=True)})
-                    del margins, baseline, derivative
-                reference = common.check_references(cases[purpose][fold], measured, args.reference_tolerance)
+                    if serial_accumulated is None:
+                        accumulated[:] += derivative.detach().cpu().numpy().astype(np.float64)
+                    else:
+                        serial_accumulated.add_(derivative.detach().float())
+                    observed = values.detach().cpu().tolist()
+                    original = baseline.cpu().tolist()
+                    del values, baseline, derivative  # Release each answer graph before the next forward.
+                    return observed, original
+                for batch in packed[purpose][fold]:
+                    if len(batch) != 1:
+                        raise ValueError("donor collection requires exactly one prepared case")
+                    if answer_batching == "paired":
+                        observed, original = observe(lambda: objective_fn(
+                            torch, net, head, tokenizer, batch, args.mode, args.device))
+                        measured.update({row[0]: float(value) for row, value in zip(batch, observed, strict=True)})
+                        base_measured.update({row[0]: float(value) for row, value in zip(batch, original, strict=True)})
+                    else:
+                        row = batch[0]
+                        width = len(row[1]) + max(len(row[2]), len(row[3]))
+                        selections = (("correct", 1.), ("foil", -1.)) if objective == "margin" else (("correct", 1.),)
+                        measured[row[0]] = base_measured[row[0]] = 0.
+                        for answer_kind, sign in selections:
+                            observed, original = observe(lambda: objectives.single_answer_logprob_objective(
+                                torch, net, head, tokenizer, row, answer_kind, args.mode, args.device, width), sign)
+                            measured[row[0]] += sign * float(observed[0])
+                            base_measured[row[0]] += sign * float(original[0])
+                if serial_accumulated is not None:
+                    accumulated = serial_accumulated.detach().cpu().numpy().astype(np.float64)
+                if not np.isfinite(accumulated).all():
+                    raise ValueError("nonfinite accumulated donor derivative")
+                reference = objective_references(cases[purpose][fold], measured, args.reference_tolerance, objective)
                 if any(p.grad is not None or p.requires_grad for p in model.parameters()):
                     raise ValueError("unexpected model parameter gradients")
                 if any(a.grad is not None or b.grad is not None or a.requires_grad or b.requires_grad for a, b in factors.values()):
                     raise ValueError("unexpected donor factor gradients")
-                file = args.output / f"gradient-{purpose}-{fold}.npy"
+                prefix = "gradient" if objective == "margin" else "gradient-correct-logprob"
+                file = args.output / f"{prefix}-{purpose}-{fold}.npy"
                 np.save(file, accumulated, allow_pickle=False)
                 record = {"purpose": purpose, "fold": fold, "examples": len(rows), "microbatches": len(packed[purpose][fold]),
-                          "mean_margin": float(np.mean(list(measured.values()))),
-                          "margins": [{"id": row[0], "margin": measured[row[0]], "unmodified_margin": base_measured[row[0]]} for row in rows],
+                          "answer_batching": answer_batching, "objective_forward_count": forward_count,
+                          "zero_gate_baseline_forward_count": forward_count,
                           "file": file.name, "directional_derivative_l2": float(np.linalg.norm(accumulated)), **reference}
+                key = "margin" if objective == "margin" else "correct_logprob"
+                record["mean_" + key] = float(np.mean(list(measured.values())))
+                record[key + "s"] = [{"id": row[0], key: measured[row[0]], "unmodified_" + key: base_measured[row[0]]} for row in rows]
                 records.append(record)
                 common.save(args.output / "progress.json", {"completed_folds": len(records), "last": record})
         common.assert_inputs(checkpoint, provenance)
@@ -231,21 +277,28 @@ def collect(args, checkpoint, cases, provenance, donor, entries):
                 raise ValueError("source parameter changed")
         if gate._version != gate_version or bool(torch.count_nonzero(gate.detach())):
             raise ValueError("zero gates changed")
-        summary = {"status": "completed", "mode": args.mode, "coverage": coverage, "folds": records,
-                   "zero_alpha_checks": {"all_exact": all_exact, "max_absolute_margin_difference": overall_difference,
+        summary = {"status": "completed", "mode": args.mode, "objective": objective, "answer_batching": answer_batching, "coverage": coverage, "folds": records,
+                   "zero_alpha_checks": {"all_exact": all_exact, "max_absolute_objective_difference": overall_difference,
+                                         **({"max_absolute_margin_difference": overall_difference} if objective == "margin" else {}),
                                          "tolerance": args.reference_tolerance, "every_microbatch_compared": True},
                    "seconds": time.monotonic() - start, "source_values_unchanged": True,
                    "runtime": {"torch": torch.__version__, "transformers": common.transformers_version(),
                                "device": args.device, "source_dtype": "BF16", "factor_compute_dtype": "FP32",
                                "gates_dtype": "FP32", "attention": "eager", "max_cases_per_microbatch": 1,
-                               "gradient_checkpointing": False,
-                               "arithmetic": "zero-gate identity forward; FP32 2B(Ax) recomputed in backward, FP32 upstream product, FP64 sum then FP32 gate derivative; FP64 microbatch accumulation",
+                               "gradient_checkpointing": False, "objective": objective,
+                               "answer_batching": answer_batching,
+                               "gradient_accumulation_dtype": "FP32" if answer_batching == "serial" else "FP64",
+                               "objective_forward_layout": ("one case/answer at original pair padding width; immediate selected-answer VJP"
+                                                            if answer_batching == "serial" else "unchanged good+foil batch/padding; one selected-objective VJP"),
+                               "arithmetic": ("zero-gate identity forward; FP32 2B(Ax) recomputed in backward, FP32 upstream product, FP64 sum then FP32 gate derivative; "
+                                              + ("FP32 answer-VJP fold accumulation, saved F64" if answer_batching == "serial" else "FP64 microbatch accumulation")),
                                "gpu_peak_allocated_GiB": torch.cuda.max_memory_allocated() / 2**30 if args.device != "cpu" else None,
                                "gpu_peak_reserved_GiB": torch.cuda.max_memory_reserved() / 2**30 if args.device != "cpu" else None},
                    "candidate_selection": False, "new_checkpoints": 0, "wsp_calls": 0,
                    "limits": ["First-order sensitivity of an explicit continuous zero-gate computation, not the derivative of discrete BF16 weight editing.",
                               "Unmerged additive output and merged BF16 weights have different rounding; actual finite checks are required.",
                               "Authored calibration only, not a capability or benchmark score.",
+                              "Serial and paired batching/gradient accumulation are distinct numerical conditions; compare original objective values before combining collections.",
                               "No claim about donor training-base identity or training/evaluation overlap.",
                               "Source disk stat continuity, model tensor version counters and explicit probe bytes checked; no fresh full source payload hash."]}
         common.save(args.output / "summary.json", summary)
@@ -259,13 +312,29 @@ def collect(args, checkpoint, cases, provenance, donor, entries):
 def main(argv=None):
     parser = common.parser(__doc__, chat=True)
     parser.set_defaults(max_cases_per_microbatch=1)
+    parser.add_argument("--objective", choices=("margin", "correct-logprob"), default="margin",
+                        help="Mean correct-answer logP to maximize, or legacy correct-minus-foil margin; separate collections.")
+    parser.add_argument("--answer-batching", choices=("paired", "serial"), default="paired",
+                        help="serial: fixed paired padding, one answer/VJP at a time and FP32 fold accumulation; paired default unchanged")
     parser.add_argument("--donor-spec", type=Path, required=True)
     parser.add_argument("--unit-costs", type=Path, required=True)
     parser.add_argument("--unit-costs-sha256", required=True)
     args = parser.parse_args(argv)
     if args.max_cases_per_microbatch != 1:
         parser.error("this bounded collector requires --max-cases-per-microbatch 1")
+    if args.objective == "correct-logprob" and args.mode != "chat-public-answer":
+        parser.error("correct-logprob requires --mode chat-public-answer")
+    if args.answer_batching == "serial" and args.mode != "chat-public-answer":
+        parser.error("serial answers require --mode chat-public-answer")
     checkpoint, cases, provenance = common.preflight(args, Path(__file__))
+    objectives.pin_objective(provenance, args.mode, args.objective)
+    provenance["objective"] = args.objective
+    provenance["answer_batching"] = args.answer_batching
+    provenance["gradient_accumulation_dtype"] = "FP32" if args.answer_batching == "serial" else "FP64"
+    if args.answer_batching == "serial":
+        provenance["objective_forward_layout"] = "one case/answer per forward and immediate VJP; original paired-pack padding; good-minus-foil or good-only"
+
+    objectives.attach_correct_references(args.cases, cases, provenance, args.objective)
     donor, entries = adapter_preflight(args, checkpoint, provenance)
     if not args.run:
         print(json.dumps(provenance, indent=2))

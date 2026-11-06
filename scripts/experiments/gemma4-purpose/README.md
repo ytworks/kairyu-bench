@@ -374,3 +374,170 @@ reasoning本文・raw response・HTTP error本文は保存しません。usage�
 未着手futureを取り消しますが、実行中HTTPは個別timeoutまで待つ場合があります。
 このutilityはAPI呼出しだけで、code実行・重み変更・WSP採点をしません。
 生成結果はscience_sandbox.pyへ別途渡します。
+
+## code90: advanced 自作科学校正
+
+advanced_science_cases.py は、公開dev課題の失敗概念を参考に新しく書いた
+16学習case＋8転移caseです。既存science_cases.pyの24caseと学習/転移分類は
+変更していません。元benchmarkの参照実装・test・goldを取り込まず、
+新しい式、入力契約、実装、数値検証を定義しています。dev-informedな校正であり、
+独立した未見評価や公式WSP scoreではありません。
+
+学習は4目的×4case、各目的2fold×2caseです。
+
+| 目的 | 自作の実装要素 |
+|---|---|
+| state | リセット付き統計、逐次affine状態、容量/供給/流出の保存、ノルム制限付き反復更新 |
+| counting | 重複イベントの保持、同値を含む辞書順top-k、等号/ゼロ費用を含む予算、境界を含む格子点計数 |
+| simulation | 対エネルギーと力、周期的kick→drift、複数壁反射、非弾性衝突の運動量と散逸 |
+| probability | 外部乱数を注入した採用/拒否連鎖、非復元抽出、区分密度のCDF、log生存確率 |
+
+転移8caseはSchur補完、吸収連鎖の時間、障害物経路数、Hermite値/微分、
+rank-one逆行列更新、Poisson-binomial分布、Heun step-doubling、whiten/recolorです。
+単なる学習caseの変数名変更ではありませんが、数学的primitiveは共有し、
+family名の分離だけで統計的独立性を保証しません。旧transfer8も新transfer8も
+gradientへ渡さず、転移の失敗をそのまま学習caseへ転記しません。
+繰り返し選抜に使った転移集合は既見校正として扱います。
+
+~~~bash
+python scripts/experiments/gemma4-purpose/advanced_science_cases.py
+python scripts/experiments/gemma4-purpose/advanced_science_cases.py \
+  --write --output /nvme/fresh-advanced-science
+~~~
+
+既存のCase、正/foil検証、split exporterを再利用します。correctは一般的な
+計算手順で、乱数seedや期待値を埋め込んでいません。新しい数値入力・異なるshape・
+float32/float64入力・等値/端点・ゼロ/非ゼロ等の有限条件で、
+float64出力、shape、有限性、数値一致、入力非変更を検証します。
+期待値は独立loop、解析的恒等式、または別のsolverから算出します。
+それぞれのfoilは一般手順の1箇所を誤らせ、最低1条件で落ちることを必須にします。
+この検証は全入力の正しさの証明ではなく、NumPy以外の複雑な科学依存や
+長いmulti-file工程を網羅しません。
+
+今回の8入力/caseの検証でcorrectは24×8すべて成功し、全24foilに失敗がありました。
+別seedのCPU契約検査も通過しています。公式Gemma tokenizerと
+chat-public-answer frameによる学習16caseのprefix＋correct/foilは最大288tokensで、
+512token上限内です。モデルやtokenizer/templateを変える場合は再測定し、
+超過を切り捨てません。テストコードはteacher-forcing入力へ含めません。
+
+science_generate.pyは同じtrain mapping/transfer envelopeをそのまま受け、
+correct/foilをAPIへ送りません。実行は既存science_sandbox.pyに
+明示的なcatalog選択を追加するだけです。
+
+~~~bash
+python scripts/experiments/gemma4-purpose/science_sandbox.py \
+  --catalog advanced \
+  --cases /nvme/fresh-advanced-science/transfer-cases.json \
+  --responses /nvme/advanced-generation/transfer-responses.json \
+  --docker-socket /nvme/docker/run/docker.sock --daemon-id EXPECTED_ID \
+  --image sha256:EXISTING_IMAGE_ID --output /nvme/fresh-advanced-execution
+~~~
+
+既定catalogはbasicです。catalogと全splitの公開caseが完全一致しなければ拒否し、
+任意のPython moduleや外部のreferenceコードはロードしません。隔離条件・数値判定・
+unknown扱い・preview/Docker 0・source/hash照合は既存実行器と共通です。
+revision1（既定の --revision 1 / sandbox --catalog advanced）は保持します。
+元モデルの公開回答を24件だけ生成し、隔離CPU実行したrevision1の生結果は
+学習14/16、転移7/8、計21/24、unknown0でした。各8入力で177/192条件が成功しています。
+しかし予算caseの公開文は「昇順」と書きながら入力が未整列で、Schur caseは
+行列ブロックの寸法を明示していませんでした。この2件の失敗を能力低下の
+根拠にはしません。生結果は変更せず、事後の条件明確な部分集合は別診断として
+学習14/15、転移7/7と記録します。この除外は生成前の独立な評価設計ではありません。
+残る反射caseの1入力の数値不一致は、float32の中間計算精度が原因の可能性が
+ありますが、厳密な原因を再実行で確定してはいません。
+
+--revision 2 / sandbox --catalog advanced-v2 は2問の公開文だけを明確化します。
+予算caseは未整列入力を昇順ソートしてからprefixを選ぶこと、Schur caseは
+非スカラーの各ブロック寸法、右辺ベクトル、連結した一次元出力を明示します。
+全24件のcorrect/foil、数値入力生成、期待値、許容誤差は変更しません。
+revision1のtrain/transfer出力は元artifactとbyte一致を確認しています。
+v2は別出力へ保存し、旧結果をv2採点に読み替えません。
+
+~~~bash
+python scripts/experiments/gemma4-purpose/advanced_science_cases.py \
+  --revision 2 --write --output /nvme/fresh-advanced-science-v2
+# 生成は同じscience_generate.pyへv2 casesを明示する。
+# 実行時は science_sandbox.py --catalog advanced-v2 を使用する。
+~~~
+
+旧120件＋新学習16件の136件を使用する場合も、revisionを固定した別入力にします。
+転移8件は引き続きgradientから除きます。新版の生成、実行、gradientの実施状況は
+それぞれのreceiptで区別し、旧版の結果で新版の改善を主張しません。
+
+### Native correct-answer log probability
+
+Native scalar/vector collection additionally accepts
+`native.py --mode chat-public-answer --objective correct-logprob`.
+The default remains `--objective margin`, including the existing raw-next-token
+mode. The opt-in objective maximizes the mean token log probability of each
+public correct answer. It retains the same correct/foil forward rows, padding,
+official chat frame, softcap, microbatch partition, and original fold denominator;
+foil likelihood is not part of the selected loss.
+
+The shared `objective_variants.py` implementation is pinned in input provenance.
+Only `expected_correct_logprob` is a reference for the new objective;
+`expected_margin` retains its old meaning and is not reinterpreted. New records
+use `correct_logprobs` / `mean_correct_logprob` and
+`objective_kind: correct-logprob`, while legacy records retain their margin keys.
+These native BF16-autograd derivatives are neither finite BF16 edit effects nor
+free-generation accuracy. Existing margin-only joint solvers are not connected
+to the new arrays: a downstream consumer must explicitly require the matching
+objective, source, frame, case split, and fold layout before using them.
+
+
+For long native calibration sequences, opt in to
+`--answer-batching serial --max-cases-per-microbatch 1`. This supports
+chat-public-answer native parameters only (`--virtual` is rejected).
+Each correct/foil answer keeps the original pack padding width and every
+original token. Margin collection evaluates correct then foil in separate
+forward/VJP passes; correct-logprob needs only the correct pass.
+Each answer gradient is converted to FP32 before accumulation with the original
+fold denominator, and its graph is freed before the next answer. No case is
+excluded or truncated. Provenance and fold records label this layout and the
+actual forward count. The mathematical objective is unchanged, but BF16
+batch shape and gradient reduction can differ from paired collection; the
+tool does not claim bitwise paired/serial gradients. Paired remains the default,
+including the donor collector. New data must be distinguished from earlier
+paired measurements.
+
+## Public-answer boundary diagnostic
+
+旧chat-public-answer frameは、公式templateのenable_thinking=trueを使っていたが、
+そのprefixはsystem内のthink flagとassistant-startで終わっていた。
+assistantのthought終了を含まず、答案を応答開始へ直置きする条件付き尤度だった。
+この条件と実生成の公開finalを同一視しない。旧成果物を変更せず保持する。
+
+共有prepare_framesの新版はframe_protocol=
+gemma4-public-answer-v2-forced-empty-thoughtを明記する。
+公式templateがthinking OFF生成prefixで使う空thought区間
+<|channel>thought\n<channel|>を、ONのassistant-startへ明示的に追加する。
+public本文は閉じ記号の直後に続く。これは思考本文を生成・保存しない
+teacher-forced条件であり、通常の思考ON生成で得た思考文脈の再現ではない。
+旧frame証拠を新版の微分/予測へ混ぜない。今回の136caseでは新旧の答案token列は
+同一で、prefixは4tokens増加、最大509tokensとなった。
+
+public_answer_diagnostic.pyは、明示した自作caseを最大3件だけ使って境界と
+logit計算を切り分ける。既定previewはモデル読込み・forward・出力作成0。
+--run時も生成をせず、正答tokenの尤度・順位と差の数値だけを保存する。
+
+~~~bash
+python scripts/experiments/gemma4-purpose/public_answer_diagnostic.py \
+  --checkpoint MODEL --cases AUTHORED_CASES_JSON \
+  --checkpoint-attestation ATTESTATION --attestation-sha256 SHA256 \
+  --case-id AUTHORED_CASE_ID --output FRESH_DIRECTORY
+# 明示GPU承認後だけ --device cuda:0 --gpu-exclusive-approved --run
+~~~
+
+各caseを旧assistant-start/新forced-public-boundary、padding0/+8で測り、
+公式Gemma4ForConditionalGeneration全体のlogitsとtext submodel+lm_headを照合する。
+公式HFのhead dtypeのままsoftcapする経路と、旧customのFP32へupcastしてから
+softcapする経路を別に記録する。異なるdtype間のbit一致を誤って要求しない。
+同じanswer token位置と内容を使い、frameやpaddingの差を分離する。
+最大512tokensで超過は拒否し、切り捨てない。既定120秒のbudgetは各forward前の
+dispatch検査であり、モデル読込みや実行中forwardを中断するhard deadlineではない。
+
+元checkpointは書き換えず、既存attestationとstat継続性を確認する。
+fresh outputへ数値reportを保存し、失敗はincompleteとexception型だけを記録する。
+診断の通過はコード能力向上でもWSP scoreでもなく、旧微分や候補を正当化しない。
+
+実際の3問で公式whole-modelとの一致と境界の量的影響を確認した記録は、[公開回答frame監査](../../../docs/experiments/2026-11-06-public-answer-frame-audit.md)を参照してください。旧frameを新版の結果として再解釈しません。

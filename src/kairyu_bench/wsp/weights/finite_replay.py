@@ -189,7 +189,18 @@ def replay_sequence(
     return baseline, results, repeat, failure
 
 
+PUBLIC_ANSWER_FRAME_PROTOCOL = "gemma4-public-answer-v2-forced-empty-thought"
+EMPTY_THOUGHT_BOUNDARY = "<|channel>thought\n<channel|>"
+
+
 def prepare_frames(tokenizer: Any, cases: dict[str, Any]) -> tuple[dict[str, Any], dict[str, Any]]:
+    """Condition public tokens on an explicitly empty thought under thinking ON.
+
+    The ON generation template leaves the model at its assistant start, where
+    it can begin a thought. Append the same empty-thought closure that the
+    official OFF generation template emits. This is an explicit diagnostic
+    intervention, not an unchanged free-thinking ON response.
+    """
     prepared: dict[str, Any] = {}
     frames: dict[str, Any] = {}
     for group, folds in cases.items():
@@ -200,9 +211,17 @@ def prepare_frames(tokenizer: Any, cases: dict[str, Any]) -> tuple[dict[str, Any
             rows, frame_rows = [], []
             for case in fold:
                 prefixes, answers = [], []
+                user = {"role": "user", "content": case["prompt"].strip()}
+                generation = tokenizer.apply_chat_template(
+                    [user], tokenize=False, enable_thinking=True, add_generation_prompt=True)
+                off_generation = tokenizer.apply_chat_template(
+                    [user], tokenize=False, enable_thinking=False, add_generation_prompt=True)
+                model_start = "<|turn>model\n"
+                if (not generation.endswith(model_start) or "<|think|>" not in generation
+                        or not off_generation.endswith(model_start + EMPTY_THOUGHT_BOUNDARY)):
+                    raise ValueError("official empty-thought public boundary contract mismatch")
                 for key in ("correct", "foil"):
                     answer = case[key].strip()
-                    user = {"role": "user", "content": case["prompt"].strip()}
                     rendered = tokenizer.apply_chat_template(
                         [user, {"role": "assistant", "content": answer}],
                         tokenize=False, enable_thinking=True)
@@ -213,8 +232,9 @@ def prepare_frames(tokenizer: Any, cases: dict[str, Any]) -> tuple[dict[str, Any
                     if skeleton.count(marker) != 1:
                         raise ValueError("ambiguous public answer boundary")
                     prefix, suffix = skeleton.split(marker)
-                    if rendered != prefix + answer + suffix or "<|think|>" not in prefix or "<|turn>model" not in prefix:
+                    if rendered != prefix + answer + suffix or prefix != generation:
                         raise ValueError("official thinking frame mismatch")
+                    prefix += EMPTY_THOUGHT_BOUNDARY
                     pids = tokenizer.encode(prefix, add_special_tokens=False)
                     ids = tokenizer.encode(prefix + answer, add_special_tokens=False)
                     if ids[:len(pids)] != pids or len(ids) <= len(pids):
@@ -230,9 +250,11 @@ def prepare_frames(tokenizer: Any, cases: dict[str, Any]) -> tuple[dict[str, Any
                     "foil_tokens": len(answers[1])})
             prepared[group].append(rows)
             frames[group].append(frame_rows)
-    return prepared, {"template_sha256": hashlib.sha256(str(tokenizer.chat_template).encode()).hexdigest(),
-        "enable_thinking": True,
-        "scope": "user and assistant public content via official template, answer tokens only, closing-turn tokens excluded; no thought generated or scored",
+    return prepared, {"schema_version": 2, "frame_protocol": PUBLIC_ANSWER_FRAME_PROTOCOL,
+        "template_sha256": hashlib.sha256(str(tokenizer.chat_template).encode()).hexdigest(),
+        "enable_thinking": True, "forced_empty_thought": True,
+        "public_boundary": EMPTY_THOUGHT_BOUNDARY,
+        "scope": "official ON generation prefix plus explicit OFF-template empty-thought boundary; only public answer tokens scored, closing-turn tokens excluded; no thought read, generated, or scored; not free-thinking ON generation",
         "frames": frames}
 
 
@@ -244,7 +266,11 @@ class PublicAnswerEvaluator:
     remain in host RAM, and no free generation or acceptance decision occurs.
     """
     def __init__(self, net: Any, head: Any, tokenizer: Any, prepared: dict[str, Any],
-                 device: str, deadline: Callable[[], None] = lambda: None) -> None:
+                 device: str, deadline: Callable[[], None] = lambda: None,
+                 answer_batching: str = "paired") -> None:
+        if answer_batching not in {"paired", "serial"}:
+            raise ValueError("answer batching must be paired or serial")
+        self.answer_batching = answer_batching
         import torch
         self.torch, self.net, self.head = torch, net, head
         self.tokenizer, self.prepared, self.device = tokenizer, prepared, device
@@ -264,7 +290,10 @@ class PublicAnswerEvaluator:
                 values[group], auxiliary[group] = [], []
                 for fold_index, rows in enumerate(folds):
                     fold_values, fold_aux = {}, {}
-                    for batch_index, batch in enumerate(batches(rows)):
+                    packed = batches(rows)
+                    if self.answer_batching == "serial":
+                        packed = [[row] for batch in packed for row in batch]
+                    for batch_index, batch in enumerate(packed):
                         if not recovery:
                             deadline()
                         seq, targets, lengths = [], [], []
@@ -276,13 +305,26 @@ class PublicAnswerEvaluator:
                         width = max(map(len, seq))
                         ids = torch.tensor([s + [tokenizer.pad_token_id] * (width - len(s)) for s in seq], device=device)
                         mask = torch.tensor([[1] * len(s) + [0] * (width - len(s)) for s in seq], device=device)
-                        hidden = net(input_ids=ids, attention_mask=mask, use_cache=False, return_dict=True).last_hidden_state
-                        selected = torch.cat([hidden[i, p - 1:len(seq[i]) - 1] for i, p in enumerate(lengths)])
-                        logits = head(selected).float()
-                        if cap:
-                            logits = cap * torch.tanh(logits / cap)
+                        if self.answer_batching == "serial":
+                            answer_logp = []
+                            for i, prefix_length in enumerate(lengths):
+                                hidden = net(input_ids=ids[i:i + 1], attention_mask=mask[i:i + 1],
+                                             use_cache=False, return_dict=True).last_hidden_state
+                                selected = hidden[0, prefix_length - 1:len(seq[i]) - 1]
+                                logits = head(selected).float()
+                                if cap:
+                                    logits = cap * torch.tanh(logits / cap)
+                                answer_logp.append(torch.log_softmax(logits, -1))
+                            full_logp = torch.cat(answer_logp)
+                            del answer_logp
+                        else:
+                            hidden = net(input_ids=ids, attention_mask=mask, use_cache=False, return_dict=True).last_hidden_state
+                            selected = torch.cat([hidden[i, p - 1:len(seq[i]) - 1] for i, p in enumerate(lengths)])
+                            logits = head(selected).float()
+                            if cap:
+                                logits = cap * torch.tanh(logits / cap)
+                            full_logp = torch.log_softmax(logits, -1)
                         answer = torch.tensor([t for reply in targets for t in reply], device=device)
-                        full_logp = torch.log_softmax(logits, -1)
                         logp = full_logp.gather(1, answer[:, None]).flatten()
                         means, positions, position_cases, at = [], [], [], 0
                         for reply_index, reply in enumerate(targets):
