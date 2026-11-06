@@ -133,3 +133,7 @@ with one 120-second analytic stage and one 180-second BF16 stage per method.
 Completed candidates receive the existing exact numeric postcheck; failed
 stages remain in the batch report. There is no replacement optimizer, model
 call, automatic retry or adoption. See the [functional-target guide](../wsp-shared-science-code-groups.md).
+
+The [official overlay owner](scripts/screen-matrix-overlays-official.py) and [guide](../wsp-overlay-official-screen.md) preserve the fixed dev90 runner and scoring while evaluating explicit logical overlay identities. Each of two rounds has a fresh control run, symmetric numeric observers and actual runner/source capture. The control server persists between rounds. The first AN–AS batch is running; physical saved-weight confirmation is still required before adoption.
+
+The [authored finite owner recipe](scripts/replay-ad-authored-finite.py) and [guide](../wsp-authored-finite-owner.md) retain the executed AN–AS host binding. The publication is AST-equivalent after import/unused-alias normalization, with no repeated GPU run. Its actual six finite results and restoration proof remain separate from exploratory official overlays and physical-checkpoint adoption.
