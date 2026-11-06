@@ -64,3 +64,7 @@ The [science recipe guide](../scripts/experiments/gemma4-purpose/README.md) incl
 The same guide documents current/legacy attention geometry, one-case gradient accumulation and native/matrix joint proposals. [Stored donor alignment](../scripts/experiments/gemma4_lora/README.md) compares saved BF16 bytes with sampled scientific derivatives; it cannot infer the full donor direction from those cells. See the [code90 protocol](experiments/2026-11-06-code90-plan.md), [GPU pilot and actual failures](experiments/2026-11-06-science-matrix-pilot.md), and [candidate-method review](experiments/anonymous-science-candidate-review-2026-11-06.md).
 
 The [J final comparison](experiments/2026-11-06-weighted-reasoning-c1-review.md) separates saved calls from the source-defined startup probe and process counters. The [fixed B+H composition plan](experiments/2026-11-06-native-coherent-splice-k.md) records contemporaneous four-arm comparisons; its implementation proof does not establish a score gain.
+
+The [lossless text adapter extractor](wsp-text-adapter-extraction.md) explicitly partitions text and vision factors, preserves raw F32/BF16 bytes and unchanged config, and distinguishes original repository payloads from derived text-only exports. It creates no checkpoint or benchmark call.
+
+The [K1 exported-text trial record](experiments/2026-11-06-k1-exported-text-c1-review.md) records the actual lossless F32 selection, 499-test CPU validation and fixed-unit cross-base recipe; checkpoint quality and official scores remain separate outcomes.
