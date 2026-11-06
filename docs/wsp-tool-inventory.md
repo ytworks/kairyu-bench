@@ -117,3 +117,5 @@ The [authored finite owner](wsp-authored-finite-owner.md) publishes the executed
 The [sparse delta geometry guide](wsp-sparse-delta-geometry.md) compares explicit same-parent BF16 changes using declared numeric costs. Overlapping absolute set-values are not additive composition; geometry does not establish functional independence or authorize edits.
 
 The [saved-finalist confirmation guide](wsp-saved-finalist-confirmation.md) documents the reviewed physical save/verify/deploy and matched ordinary dev90 recipes. Exploratory overlay gains do not skip saved-byte verification or fresh ordinary-serving comparison; source parent and protected service identities remain explicit.
+
+- [Ordinary full14 finalist comparison](wsp-ordinary-full14-finalists.md): prepared ordinary TP2 fresh-control comparison for one or two saved finalists; fixed778 cohort, symmetric numeric observers and writable-results mount proof. Not executed.
