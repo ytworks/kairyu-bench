@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Numeric postcheck of fixed proposal artifacts against their recorded AC source arrays."""
+"""Numeric postcheck of fixed proposal artifacts against their recorded current-parent source arrays."""
 
 from pathlib import Path
 import argparse
@@ -37,6 +37,9 @@ def main():
     }
     for item in roster["rows"]:
         inputs.add(Path(item["plan"]).resolve())
+        planned_input = json.loads(Path(item["plan"]).read_text())
+        if "prospective_method" in planned_input:
+            inputs.add(Path(planned_input["prospective_method"]["path"]).resolve())
         report_path = Path(item["output"]) / "report.json"
         if report_path.is_file():
             inputs.add(report_path.resolve())
@@ -89,14 +92,29 @@ def main():
             or checkpoint_path in args.output.resolve().parents
         ):
             raise ValueError("output overlaps checkpoint")
-        policy = plan["eight_method_policy"]
+        if "prospective_method" in plan:
+            prospective = plan["prospective_method"]
+            policy_path = Path(prospective["path"])
+            if pins[str(policy_path.resolve())] != prospective["sha256"]:
+                raise ValueError("prospective policy pin differs")
+            policy = json.loads(policy_path.read_text())["common"]
+        else:
+            policy = plan["eight_method_policy"]
+            if policy["protocol"] != "eight_dependency_sets_v1":
+                raise ValueError("declared eight-set fixed policy required")
         if (
-            policy["protocol"] != "eight_dependency_sets_v1"
-            or policy["actual_declared_weighted_l2_cap"] != 1.0
+            policy["actual_declared_weighted_l2_cap"] != 1.0
             or policy["relative_radius"] != 0.025
             or policy["absolute_radius"] != 1e-6
         ):
-            raise ValueError("declared eight-set fixed budget required")
+            raise ValueError("declared fixed budget required")
+        for candidate in plan["candidates"]:
+            if candidate["rounding"] != {
+                "relative_radius": 0.025,
+                "absolute_radius": 1e-6,
+                "rounds": 16,
+            }:
+                raise ValueError("candidate rounding differs from policy")
 
         out = Path(item["output"])
         rp = out / "report.json"
@@ -188,6 +206,20 @@ def main():
             excess = 0
             maxexcess = 0.0
             for edit in spec["edits"]:
+                if "indices" in edit:
+                    if plan.get("eligible_blocks") == ["matrix"]:
+                        raise ValueError("native edit in matrix-only plan")
+                    if (
+                        plan.get("native_tensors") is not None
+                        and edit["tensor"] not in plan["native_tensors"]
+                    ):
+                        raise ValueError("protected native tensor changed")
+                elif plan.get("matrix_families") is not None:
+                    match = re.search(
+                        r"\.(q|k|v|o|gate|up|down)_proj\.weight$", edit["tensor"]
+                    )
+                    if match is None or match.group(1) not in plan["matrix_families"]:
+                        raise ValueError("ineligible matrix family changed")
                 n = edit["tensor"]
                 isnative = "indices" in edit
                 block = "native" if isnative else "matrix"
@@ -304,12 +336,12 @@ def main():
 
     value = {
         "status": "completed",
-        "parent": "current AC",
+        "parent": roster["parent"],
         "model_calls": 0,
         "adopted": False,
         "scope": "Independent exact selected-source BF16 counts/norms. 84 predictions are retained from the pinned existing solver; no new solve or model.",
         "limitations": [
-            "Metric-specific F cap is not comparable to unscaled relative cap.",
+            "A block-scaled metric cap is not comparable to unscaled relative cap.",
             "Family masks and eligible-dependent targets do not imply dominance or functional independence.",
             "Continuous-box excess after nearest BF16 is reported, not silently clipped.",
         ],

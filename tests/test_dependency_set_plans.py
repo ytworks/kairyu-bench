@@ -19,6 +19,23 @@ class DependencyPlanTests(unittest.TestCase):
         f = fixtures.NativeCoupledTests("runTest")
         f.setUp()
         self.addCleanup(f.doCleanups)
+        # Two distinct native layers let the science binder freeze the last
+        # layer while retaining an earlier responsive native tensor.
+        names = {
+            f.norm: "model.language_model.layers.0.input_layernorm.weight",
+            f.scalar: "model.language_model.layers.1.layer_scalar",
+        }
+        for directory in f.directories.values():
+            path = Path(directory)
+            coverage = json.loads((path / "coverage.json").read_text())
+            for tensor in coverage["tensors"]:
+                tensor["name"] = names[tensor["name"]]
+            (path / "coverage.json").write_text(json.dumps(coverage))
+            for filename in ("source-native-values.npz", "gradient.npz"):
+                with np.load(path / filename, allow_pickle=False) as values:
+                    renamed = {names[key]: values[key].copy() for key in values.files}
+                np.savez(path / filename, **renamed)
+        f.norm, f.scalar = names[f.norm], names[f.scalar]
         entries = f.mixed_fixture()
         core = ["code", "implementation", "workflow", "algorithm"]
         science = [
@@ -203,3 +220,95 @@ class DependencyPlanTests(unittest.TestCase):
             BUILDER.build(args)
         self.assertFalse((args.output / "plan-roster.json").exists())
         self.assertEqual({p: f.sha(p) for p in f.checkpoint.files}, before)
+
+        # Reuse the same completed tiny observations to bind the prospective
+        # science policy. This runs no solver and exercises derived targets.
+        science_builder = load("prepare_science_dependency_plans")
+        review_value = json.loads(review.read_text())
+        review_value["response"] = {
+            "reviews": [dict(label=label) for label in "ABCDEFGH"]
+        }
+        review.write_text(json.dumps(review_value))
+        common = dict(
+            unselected_LL_and_margin_lower=-0.002,
+            actual_declared_weighted_l2_cap=1.0,
+            relative_radius=0.025,
+            absolute_radius=1e-6,
+        )
+        methods = {"A": {"owner": "separate carried-edit tool"}}
+        for label in "BCDEFGH":
+            methods[label] = dict(
+                eligible_blocks=["native"] if label == "G" else ["native", "matrix"],
+                matrix_families=[] if label == "G" else ["o", "gate", "up", "down"],
+                primary_purposes=science,
+                secondary_ll_purposes=core,
+                primary_ll_multiplier=0.125 if label == "H" else 0.25,
+                primary_margin_multiplier=0.25 if label == "G" else 0.0625,
+                secondary_ll_multiplier=0.0625,
+                freeze_final_norm_and_last_layer_native=label in "BEG",
+            )
+        policy = dict(
+            parent_state=dict(sha256=f.sha(parent)),
+            common=common,
+            methods=methods,
+        )
+        method_path = f.root / "science-method.json"
+        method_path.write_text(json.dumps(policy))
+        science_output = f.root / "science-output"
+        science_args = argparse.Namespace(
+            repo=args.repo,
+            observation=observation,
+            output=science_output,
+            parent_sha=f.sha(parent),
+            review=review,
+            review_sha=f.sha(review),
+            method=method_path,
+            method_sha=f.sha(method_path),
+        )
+        forbidden = f.checkpoint.path / "forbidden-output"
+        science_args.output = forbidden
+        with self.assertRaisesRegex(ValueError, "output overlaps input"):
+            science_builder.build(science_args)
+        self.assertFalse(forbidden.exists())
+        science_args.output = science_output
+        science_builder.build(science_args)
+        science_plans = {
+            label: json.loads((science_output / "plans" / f"{label}.json").read_text())
+            for label in "BCDEFGH"
+        }
+        for label in "BEG":
+            self.assertEqual(science_plans[label]["native_tensors"], [f.norm])
+            self.assertNotIn(f.scalar, science_plans[label]["native_tensors"])
+        science_prep = json.loads((science_output / "preparation.json").read_text())
+        self.assertAlmostEqual(science_prep["H_scales"]["native"], 2.0)
+        self.assertAlmostEqual(science_prep["H_scales"]["matrix"], np.sqrt(1e12 + 1.0))
+        science_rows = science_plans["G"]["candidates"][0]["constraints"]
+        selected_ll = next(
+            r
+            for r in science_rows
+            if r["purpose"] == science[0] and r["objective"] == "correct-logprob"
+        )
+        selected_margin = next(
+            r
+            for r in science_rows
+            if r["purpose"] == science[0] and r["objective"] == "margin"
+        )
+        self.assertAlmostEqual(selected_ll["minimum_delta"], 0.001)
+        self.assertGreater(selected_margin["minimum_delta"], 0.001)
+        self.assertEqual({p: f.sha(p) for p in f.checkpoint.files}, before)
+        self.assertFalse((science_output / "proposals").exists())
+        saved_science = {
+            p.relative_to(science_output): f.sha(p)
+            for p in science_output.rglob("*")
+            if p.is_file()
+        }
+        with self.assertRaisesRegex(ValueError, "fresh output"):
+            science_builder.build(science_args)
+        self.assertEqual(
+            saved_science,
+            {
+                p.relative_to(science_output): f.sha(p)
+                for p in science_output.rglob("*")
+                if p.is_file()
+            },
+        )
