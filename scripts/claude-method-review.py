@@ -43,7 +43,7 @@ def validate_prompt(raw: bytes) -> str:
     return prompt
 
 
-def parse_stream(raw: str, expected_model: str, labels: str) -> dict[str, Any]:
+def parse_stream(raw: str, expected_model: str, labels: str, *, allow_text_review: bool = False) -> dict[str, Any]:
     if len(raw.encode()) > 8 * 1024**2:
         raise ValueError("unexpectedly large CLI stream")
     models: set[str] = set()
@@ -93,7 +93,12 @@ def parse_stream(raw: str, expected_model: str, labels: str) -> dict[str, Any]:
         and isinstance(usage.get(expected_model), dict)
         and usage[expected_model].get("canonicalModel", expected_model) == expected_model
     )
-    verified = final.get("is_error") is False and identity_match and label_match and tool_uses == 0
+    successful_identity = final.get("is_error") is False and identity_match and tool_uses == 0
+    text_usable = (
+        allow_text_review and len(labels) == 1 and not label_match and successful_identity
+        and isinstance(answer, str) and bool(answer.strip()) and len(answer.encode("utf-8")) <= 65536
+    )
+    verified = successful_identity and (label_match or text_usable)
     safe_usage = {
         model: {key: value for key, value in values.items() if key in USAGE_FIELDS}
         for model, values in usage.items() if isinstance(values, dict)
@@ -102,6 +107,10 @@ def parse_stream(raw: str, expected_model: str, labels: str) -> dict[str, Any]:
         "assistant_models": sorted(models), "model_usage": safe_usage,
         "verified_requested_model": verified, "is_error": final.get("is_error"),
         "labels_match": label_match, "tool_uses": tool_uses, "event_types": kinds,
+        "review_format": "public_final_text" if text_usable else ("json_reviews" if label_match else "unusable"),
+        "review_usable": verified,
+        "review_context_label": labels if text_usable else None,
+        "public_final_text": answer if text_usable else None,
         # Preserve only final, requested review fields, never raw failed/error output.
         "response": {key: response[key] for key in RESPONSE_FIELDS if key in response}
         if isinstance(response, dict) else None,
@@ -116,11 +125,18 @@ def review(args: argparse.Namespace) -> dict[str, Any]:
         raise ValueError("labels must be unique uppercase letters")
     if not re.fullmatch(r"[A-Za-z0-9][A-Za-z0-9.-]{1,100}", args.model):
         raise ValueError("use an explicit model identifier")
+    allow_text_review = getattr(args, "allow_text_review", False)
+    if allow_text_review and len(args.labels) != 1:
+        raise ValueError("--allow-text-review requires exactly one label")
+    fallback_model = getattr(args, "fallback_model", None)
+    if fallback_model is not None and fallback_model != args.model:
+        raise ValueError("--fallback-model must exactly match --model")
     if not 1 <= args.timeout_seconds <= 900 or not 0 < args.max_budget_usd <= 100:
         raise ValueError("timeout or budget is outside the bounded range")
     preview = {
         "mode": "send" if args.send else "preview_only", "prompt_sha256": digest,
         "prompt_bytes": len(raw), "requested_model": args.model, "labels": args.labels,
+        "fallback_model": fallback_model, "allow_text_review": allow_text_review,
         "anonymity": "pattern lint only; caller must review every prompt byte for private identifiers and measurements",
     }
     if not args.send:
@@ -142,6 +158,8 @@ def review(args: argparse.Namespace) -> dict[str, Any]:
         "--effort", "high", "--max-budget-usd", str(args.max_budget_usd),
         "--system-prompt", SYSTEM_PROMPT,
     ]
+    if fallback_model is not None:
+        command.extend(["--fallback-model", fallback_model])
     env = os.environ.copy()
     env["TMPDIR"] = str((args.output / "tmp").resolve())
     env["XDG_CACHE_HOME"] = str((args.output / "cache").resolve())
@@ -149,7 +167,7 @@ def review(args: argparse.Namespace) -> dict[str, Any]:
     receipt: dict[str, Any] = {
         **preview, "schema_version": 1, "started_at": timestamp(),
         "scope": "anonymous public-method design only; not an actual-candidate measurement review",
-        "verified_requested_model": False, "fallback_model": None,
+        "verified_requested_model": False,
         "controls": {"safe_mode": True, "restricted": True, "tools": [], "mcp_servers": [],
                      "session_persistence": False, "custom_generic_system_prompt": True},
         "raw_stream_persisted": False, "thinking_blocks_persisted": False, "environment_persisted": False,
@@ -162,8 +180,11 @@ def review(args: argparse.Namespace) -> dict[str, Any]:
         receipt["returncode"] = process.returncode
         receipt["stderr_bytes"] = len(process.stderr.encode())
         receipt["stderr_sha256"] = hashlib.sha256(process.stderr.encode()).hexdigest()
-        receipt.update(parse_stream(process.stdout, args.model, args.labels))
+        receipt.update(parse_stream(process.stdout, args.model, args.labels, allow_text_review=allow_text_review))
         receipt["verified_requested_model"] &= process.returncode == 0
+        receipt["review_usable"] &= process.returncode == 0
+        if process.returncode != 0:
+            receipt["public_final_text"] = None
     except (OSError, subprocess.TimeoutExpired, ValueError, KeyError, TypeError) as error:
         # Do not persist exception messages: they can include command/output/authentication data.
         receipt["error_class"] = type(error).__name__
@@ -181,7 +202,9 @@ def main() -> int:
     parser.add_argument("--output", type=Path, required=True)
     parser.add_argument("--claude-binary", type=Path, default=Path("claude"))
     parser.add_argument("--model", default="claude-opus-5-5")
+    parser.add_argument("--fallback-model", help="Optional explicit fallback; must exactly match --model. Actual model verification remains mandatory.")
     parser.add_argument("--labels", default="ABCDEFGH")
+    parser.add_argument("--allow-text-review", action="store_true", help="Single-label only: accept bounded successful nonconforming final text (including other JSON shapes) with strict model identity; strict JSON reviews remain the default.")
     parser.add_argument("--timeout-seconds", type=int, default=300)
     parser.add_argument("--max-budget-usd", type=float, default=2)
     parser.add_argument("--send", action="store_true")
@@ -191,7 +214,7 @@ def main() -> int:
         result = review(args)
     except (OSError, ValueError) as error:
         parser.error(str(error))
-    print(json.dumps({key: value for key, value in result.items() if key != "response"}, ensure_ascii=False))
+    print(json.dumps({key: value for key, value in result.items() if key not in {"response", "public_final_text"}}, ensure_ascii=False))
     return 0 if not args.send or result["verified_requested_model"] else 1
 
 

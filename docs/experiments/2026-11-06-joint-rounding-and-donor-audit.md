@@ -1,6 +1,6 @@
 # JOINT の丸め後実測と一様 donor の既存評価（2026-11-06）
 
-JOINT は正解文の teacher-forced 対数尤度を module-only balanced より広く改善した。しかし公式コード能力の改善はまだ未確認であり、次の確認は同条件の公式 dev90 とするのが妥当である。balanced は校正改善後の公式 dev90 で元モデルを上回らなかった。本記録は数値メタデータと自作校正だけを扱い、benchmark の生成コード・隠れた推論・正解実装を読んでいない。
+JOINT は正解文の teacher-forced 対数尤度を module-only balanced より広く改善したが、公式 dev90 は元モデル72.575397%に対して70.492063%（−2.083333pp）となり、不採用とした。balanced に続き、自作校正の改善が公式コード成績へ移らなかった。本記録は数値メタデータと自作校正だけを扱い、benchmark の生成コード・隠れた推論・正解実装を読んでいない。
 
 ## JOINT の実体と同じ元重みに対する診断
 
@@ -24,7 +24,7 @@ donor の連続予測 ΔL2 は 0.059170802、native を含む予測は 0.0591727
 
 module は410行列の CPU target SHA と全要素 device-int16 equality、native は92 tensor の選択座標を D2H で照合した。module の証明を D2H hash と呼ばない。終了時は両成分を元へ復元し、410行列の byte equality と再測定 margin / NLL / 診断 KL の差0、source continuity を確認した。監査側の新しいモデル呼出しは0である。
 
-## 残る弱点と次に測るもの
+## 有限測定で残った弱点
 
 JOINT の主要18 fold（code、implementation、algorithm、科学6目的）は全て正解 LL が上がった。科学12 fold の ΔLL は +0.002570〜+0.029931、平均 +0.011541。しかし科学 margin は12中6 foldで低下し、tool_call と tool_arguments も各2 foldとも margin が低下した。正解文を読みやすくする方向と、誤答を排除する方向は同じではない。
 
@@ -41,7 +41,54 @@ instruction と reasoning の同じ fold は balanced にも残った。lookup �
 
 [public-final frame の監査](2026-11-06-public-answer-frame-audit.md)で修正した明示的な空 thought 境界を使っている。自由生成でモデルが実際に考えた文脈とは異なる。84制約の未達25件は予測と有限差の不一致として報告し、ユーザーが許容した能力間 tradeoff を否定する新しい全非退行 gate にはしない。
 
-次は同じ選択90問・生成設定・runtime で JOINT を公式 dev90 に一度当て、4 source の得失を元モデルと balanced に対して比較する。SciCode の部分点・timeout と LCB / MBPP の得失を個別に残す。dev90 の改善は、既に成績を見た known64 で code >90 を満たしたことにも、新しい未見集合への転移にもならない。公式結果がまだない時点で JOINT の採用・accuracy を記載しない。
+この有限測定後、同じ選択90問・生成設定・runtimeでJOINTの公式dev90を1回測定した。結果は次節のとおりで、元モデルを上回らなかった。dev90は、既に成績を見たknown64でのcode >90判定とも、新しい未見集合への確認とも異なる。有限測定の数値と原本は保持し、公式失点に合わせて予測値を修正していない。
+
+## JOINT の公式 dev90 結果
+
+run は `gemma4-code90-public-final-joint-c32-dev30-code-20261106`。
+元モデル `gemma4-code90-original-base-c32-dev30-code-20261106` と完全に同じ90 ID、
+manifest・tier30/dev・model IDで、全90採点・未採点0・応答エラー0。
+公式codeは4 sourceを等重みにした平均で、全項目を一括した正解率ではない。
+
+| Source | 問数 | 元モデル | JOINT |
+|---|---:|---:|---:|
+| HumanEval+ | 30 | 28 / 30 | 28 / 30 |
+| MBPP+ | 30 | 23 / 30 | 22 / 30 |
+| LiveCodeBench | 20 | 16 / 20 | 15 / 20 |
+| SciCode | 10 | 40.301587% | 40.301587% |
+| **公式code（4 source平均）** | **90** | **72.575397%** | **70.492063%** |
+
+差は−2.083333pp、公式paired bootstrap 95% CIは **[−5.416667, 0.000000]pp**
+（2,000 resamples、seed=20261104）。新gain0、loss2で、
+`livecodebench:arc195_b` と `mbpp-plus:Mbpp/641` が1→0。他88項目の点は同じだった。
+SciCodeは10問それぞれの部分点が同値であり、全stepを一括した率へ置き換えない。
+
+| 実行量 | 元モデル | JOINT |
+|---|---:|---:|
+| 記録API呼出し | 119 | 119 |
+| 入力token | 97,703 | 96,166 |
+| 出力token | 336,625 | 345,689 |
+| stop / length終了 | 119 / 0 | 119 / 0 |
+| run開始→完了のwall秒 | 394.1 | 340.153 |
+
+JOINTは07:08:29.853→07:14:10.006 UTCに完了した。wallはload・生成・採点を含む全体時間であり、
+各段階を別に足し合わせない。SciCode10項目は39個のAPI呼出しを持つため、
+aggregate sample数を119回のleaf API呼出し数と混同しない。これらはagent tool手数ではない。
+
+実runnerのimage IDは `9aca43ac343d0b2c15012d8bdd249452fb5a20e68ee2c8fe89054855bdae3e43`。
+`kairyu-bench:code90-5e3f2df` のruntime Config SHAと16層RootFS SHAは既存5e3 runner証拠に一致した。
+元dev90固有のCID記録は残っておらず、同archive/CLIと既知の元full14 image証拠までが確認範囲。
+現在の測定は単一TP2の直接endpointで、mixed gateway経由ではない。
+他replicaの停止はownerが事前に記録した予定状態であり、このrunの障害と扱わない。
+
+失点の具体的な構文・アルゴリズム原因は未分類。追加のcanonical itemから診断field名だけを
+確認する操作も、自動承認reviewが生成内容を含むitemの読取として実行前に拒否した。
+その後は既存の数値集計だけを使い、本文読取・迂回・再採点は行っていない。
+**balancedのSciCode35.3 timeoutをJOINTにも起きたものとして転記しない。**
+
+証拠は `positive-final-v1/joint-dev90-{evidence,final-summary,progress,runner-evidence,parity,diagnostic-access-block}.json`。
+公式evidence SHA256は `217dc675d5cf1ecef69cdddfd0a6267ce2fb54397a51473c6de852c86db21506`。
+known64での>90達成や全14領域overallは、このcodeのみの測定から主張できない。
 
 ## balanced で実際に起きたこと
 
@@ -89,7 +136,7 @@ v1の21/24にはbudget入力順とSchur寸法の曖昧なpromptが含まれ、v2
 
 cached [固定公開card](https://huggingface.co/Tsunamayo7/gemma4-31b-ja-agent-coder/blob/b07b0f2a87a0ff83802e6dc6b7228bab5af55aea/README.md)はQLoRA NF4・1,546独自訓練例を宣言する。元モデル名は一致するが正確な訓練base revisionは不明で、訓練データ・評価harnessは公開されていない。作者の12カテゴリ9.4→10.0は宣言された自己評価であり、WSP / DeepSWEの改善証拠ではない。独自tool formatと公式Gemma parserの差、vision除外、量子化baseでの学習も、text BF16 mergeへの転移の限界に含める。
 
-## JOINT に公式利得がなかった場合の別仮説
+## JOINT の公式利得がなかった後の別仮説
 
 大量の符号付き係数を再探索するより、**学習されたtext donor全体の相対係数を保つ、一つの小さい正の一様係数**を対照にする仮説が区別しやすい。これは400以上の係数を自作短文proxyへ合わせる方法と異なる。`.25/1` の再試行ではなく、例えば既存CPU監査のある `1/16` を一つだけ選ぶなら、実 ΔL2 1.888537、変更4,328,720,639要素、丸め前方向とのcosine 0.712784という費用と歪みが既知で、公式WSPは未測定である。新しいspec・重み・実行は本監査では作っていない。
 

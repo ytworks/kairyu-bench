@@ -69,25 +69,37 @@ class ClaudeMethodReviewTests(unittest.TestCase):
                 reviewer.review(options)
             execute.assert_not_called()
             self.assertFalse(options.output.exists())
+            options.approved_prompt_sha256 = hashlib.sha256(options.prompt.read_bytes()).hexdigest()
+            options.fallback_model = "claude-opus-4-8"
+            with patch.object(reviewer.subprocess, "run") as execute, self.assertRaises(ValueError):
+                reviewer.review(options)
+            execute.assert_not_called()
+            self.assertFalse(options.output.exists())
 
     def test_verified_identity_and_no_hidden_or_environment_persistence(self):
-        with tempfile.TemporaryDirectory() as directory:
-            options = args(Path(directory), send=True)
-            process = subprocess.CompletedProcess([], 0, events(), "authentication secret never persisted")
-            with patch.object(reviewer.subprocess, "run", return_value=process) as execute:
-                result = reviewer.review(options)
-            self.assertTrue(result["verified_requested_model"])
-            command = execute.call_args.args[0]
-            self.assertEqual(command[command.index("--tools") + 1], "")
-            self.assertIn("--safe-mode", command)
-            self.assertIn("--restricted", command)
-            self.assertIn("--strict-mcp-config", command)
-            self.assertNotIn("--fallback-model", command)
-            receipt = (options.output / "receipt.json").read_text()
-            for forbidden in ["HIDDEN_BLOCK", "NOT_PERSISTED", "/private/machine", "authentication secret"]:
-                self.assertNotIn(forbidden, receipt)
-            with self.assertRaises(FileExistsError):
-                reviewer.review(options)
+        for fallback in (None, "claude-opus-5-5"):
+            with self.subTest(fallback=fallback), tempfile.TemporaryDirectory() as directory:
+                options = args(Path(directory), send=True)
+                options.fallback_model = fallback
+                process = subprocess.CompletedProcess([], 0, events(), "authentication secret never persisted")
+                with patch.object(reviewer.subprocess, "run", return_value=process) as execute:
+                    result = reviewer.review(options)
+                self.assertTrue(result["verified_requested_model"])
+                self.assertEqual(result["fallback_model"], fallback)
+                command = execute.call_args.args[0]
+                self.assertEqual(command[command.index("--tools") + 1], "")
+                self.assertIn("--safe-mode", command)
+                self.assertIn("--restricted", command)
+                self.assertIn("--strict-mcp-config", command)
+                if fallback is None:
+                    self.assertNotIn("--fallback-model", command)
+                else:
+                    self.assertEqual(command[command.index("--fallback-model") + 1], fallback)
+                receipt = (options.output / "receipt.json").read_text()
+                for forbidden in ["HIDDEN_BLOCK", "NOT_PERSISTED", "/private/machine", "authentication secret"]:
+                    self.assertNotIn(forbidden, receipt)
+                with self.assertRaises(FileExistsError):
+                    reviewer.review(options)
 
     def test_wrong_model_tool_call_and_alias_usage_fail_closed(self):
         self.assertFalse(reviewer.parse_stream(events("another-model"), "claude-opus-5-5", "ABCDEFGH")["verified_requested_model"])
@@ -95,6 +107,64 @@ class ClaudeMethodReviewTests(unittest.TestCase):
         stream = events().replace('"canonicalModel": "claude-opus-5-5"', '"canonicalModel": "another-model"')
         self.assertFalse(reviewer.parse_stream(stream, "claude-opus-5-5", "ABCDEFGH")["verified_requested_model"])
         self.assertFalse(reviewer.parse_stream(events(), "claude-opus-5-5", "AB")["verified_requested_model"])
+        mixed = json.dumps({"type": "assistant", "message": {"model": "claude-opus-4-8", "content": []}}) + "\n" + events()
+        self.assertFalse(reviewer.parse_stream(mixed, "claude-opus-5-5", "ABCDEFGH")["verified_requested_model"])
+
+    def test_single_label_final_text_requires_successful_exclusive_identity(self):
+        for model, is_error, tool, rc, accepted in [
+            ("claude-opus-5-5", False, False, 0, True),
+            ("claude-opus-4-8", False, False, 0, False),
+            ("claude-opus-5-5", True, False, 0, False),
+            ("claude-opus-5-5", False, True, 0, False),
+            ("claude-opus-5-5", False, False, 1, False),
+        ]:
+            with self.subTest(model=model, error=is_error, tool=tool, rc=rc), tempfile.TemporaryDirectory() as directory:
+                options = args(Path(directory), send=True)
+                options.labels = "H"
+                options.allow_text_review = True
+                rows = [json.loads(line) for line in events(tool=tool).splitlines()]
+                rows.insert(1, {"type": "assistant", "message": {"model": model, "content": []}})
+                rows[-1]["is_error"] = is_error
+                rows[-1]["result"] = "A coherent direction is testable; actual coding scores must decide."
+                stream = "\n".join(json.dumps(row) for row in rows)
+                process = subprocess.CompletedProcess([], rc, stream, "")
+                with patch.object(reviewer.subprocess, "run", return_value=process):
+                    result = reviewer.review(options)
+                self.assertEqual(result["verified_requested_model"], accepted)
+                self.assertEqual(result["review_usable"], accepted)
+                self.assertFalse(result["labels_match"])
+                self.assertEqual(result["public_final_text"], rows[-1]["result"] if accepted else None)
+                if accepted:
+                    self.assertEqual(result["review_format"], "public_final_text")
+                    self.assertEqual(result["review_context_label"], "H")
+                self.assertFalse(reviewer.parse_stream(stream, options.model, "H")["verified_requested_model"])
+                self.assertIsNone(reviewer.parse_stream(stream, options.model, "AB", allow_text_review=True)["public_final_text"])
+        for answer in ('{"method_review": "A coherent direction merits measured comparison."}', '{}', '[]'):
+            with self.subTest(nonconforming_json=answer), tempfile.TemporaryDirectory() as directory:
+                options = args(Path(directory), send=True)
+                options.labels = "H"
+                options.allow_text_review = True
+                rows = [json.loads(line) for line in events().splitlines()]
+                rows[-1]["result"] = answer
+                stream = "\n".join(json.dumps(row) for row in rows)
+                process = subprocess.CompletedProcess([], 0, stream, "")
+                with patch.object(reviewer.subprocess, "run", return_value=process):
+                    result = reviewer.review(options)
+                self.assertTrue(result["verified_requested_model"])
+                self.assertFalse(result["labels_match"])
+                self.assertEqual(result["review_format"], "public_final_text")
+                self.assertEqual(result["public_final_text"], answer)
+                self.assertFalse(reviewer.parse_stream(stream, options.model, "H")["verified_requested_model"])
+                rows.insert(1, {"type": "assistant", "message": {"model": "claude-opus-4-8", "content": []}})
+                mixed = "\n".join(json.dumps(row) for row in rows)
+                self.assertIsNone(reviewer.parse_stream(mixed, options.model, "H", allow_text_review=True)["public_final_text"])
+        with tempfile.TemporaryDirectory() as directory:
+            options = args(Path(directory), send=True)
+            options.allow_text_review = True
+            with patch.object(reviewer.subprocess, "run") as execute, self.assertRaises(ValueError):
+                reviewer.review(options)
+            execute.assert_not_called()
+            self.assertFalse(options.output.exists())
 
     def test_timeout_is_recorded_without_raw_output_or_retry(self):
         with tempfile.TemporaryDirectory() as directory:
