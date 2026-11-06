@@ -76,3 +76,9 @@ The [paired score-only contrast tool](wsp-paired-score-contrast.md) adds explici
 The focused BF16 footprint tool passed three behavior fixtures and an actual 1,188-tensor scan in 83.388 seconds (different scope from comprehensive statistics; official-run overlap disclosed). Its [guide](checkpoint-delta-footprint.md#actual-public-base-validation-2026-11-06) records the prior-hash/stat proof, imported-reader pin and nonfinite semantics. The subsequent complete CPU check passed 506 collected tests (454 pass, 52 optional skips), Ruff and mypy73 with unchanged source hashes; all earlier validation counts remain historical records.
 
 The [native faststore](wsp-native-faststore.md) adds an opt-in byte-preserving repack and fixed prelinked slots for cumulative scalar/vector edits. Shared payload links are created before freezing and never changed during a generation; private native files receive fresh byte verification while bulk shards retain explicitly labeled prior-hash/inode/stat proof. Existing editor/pool defaults are unchanged. The new two-generation fixture and complete 510-test CPU suite (458 pass, 52 optional skips), Ruff/mypy74/data/shell checks passed with unchanged source hashes; real checkpoint preparation and timing remain pending.
+
+The purpose matrix collector's optional correct-logprob/serial/coherent-triplet
+mode and the coupled adapter's explicit v2 native-plus-O/MLP plan are documented
+in [the coupled-objective guide](wsp-native-coupled-objectives.md#optional-native-plus-sampled-matrix-plan).
+They reuse the existing objective, optimizer, BF16 editor and sparse finite
+replay; Q/K/V are observed but excluded from v2 edits. Legacy defaults remain.

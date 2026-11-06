@@ -14,6 +14,7 @@ import sys
 import numpy as np
 
 import joint
+import matrix as matrix_recipe
 from kairyu_bench.wsp.weights.checkpoint import Checkpoint
 
 OBJECTIVES = ("correct-logprob", "margin")
@@ -53,8 +54,9 @@ def prepare(path):
     """Validate the whole checkpoint, cohorts and columns before reading gradients."""
     pins = {}
     plan = document(path, pins)
-    if plan.get("schema_version") != 1 or plan.get("kind") != "native_coupled_objectives_v1":
-        raise ValueError("explicit native coupled-objectives plan required")
+    mixed = plan.get("schema_version") == 2 and plan.get("kind") == "native_matrix_coupled_objectives_v2"
+    if not mixed and (plan.get("schema_version") != 1 or plan.get("kind") != "native_coupled_objectives_v1"):
+        raise ValueError("explicit supported coupled-objectives plan required")
     source = plan["checkpoint"]
     checkpoint = Checkpoint(source["path"])
     current = checkpoint.identity(hash_files=False)
@@ -84,57 +86,108 @@ def prepare(path):
               if n.startswith("model.language_model.") and len(t.shape) <= 1 and t.floating}
     if not native or any(t.dtype != "BF16" for t in native.values()):
         raise ValueError("complete finite BF16 native layout required")
+    matrices = {n: t for n, t in checkpoint.tensors.items() if matrix_recipe.PATTERN.fullmatch(n)}
     collections = {}
-    for objective in OBJECTIVES:
-        directory = Path(plan["collections"][objective]).resolve()
-        summary = document(directory / "summary.json", pins)
-        provenance = document(directory / "provenance.json", pins)
-        coverage = document(directory / "coverage.json", pins)
-        frames = document(directory / "frame-evidence.json", pins)
-        if (summary.get("status") != "completed" or summary.get("candidate_selection") is not False
-                or summary.get("source_values_unchanged") is not True
-                or summary.get("mode") != "chat-public-answer" or provenance.get("mode") != summary["mode"]
-                or summary.get("objective_kind") != objective or provenance.get("objective_kind") != objective
-                or summary.get("answer_batching") != "serial" or provenance.get("answer_batching") != "serial"
-                or provenance.get("virtual_unit_gains") is not False
-                or provenance.get("max_cases_per_microbatch") != 1):
-            raise ValueError("completed matched serial native objective required")
-        if (provenance.get("checkpoint") != current
-                or provenance.get("attestation_receipt_sha256") != ref["sha256"]
-                or provenance["input_sha256"].get(str(cases_path)) != case_ref["sha256"]):
-            raise ValueError("collection full checkpoint or cases identity differs")
-        entries = coverage["tensors"]
-        expected = sorted((n, list(t.shape), "torch.bfloat16", "native") for n, t in native.items())
-        actual = sorted((e["name"], e["shape"], e["dtype"], e["kind"]) for e in entries)
-        if (actual != expected or coverage.get("native_tensors") != len(native)
-                or coverage.get("native_coordinates") != sum(t.numel for t in native.values())
-                or coverage.get("virtual_coordinates") != 0 or coverage.get("virtual_tensors") != 0):
-            raise ValueError("complete native tensor columns differ")
-        if (frames.get("schema_version") != 2
-                or frames.get("frame_protocol") != "gemma4-public-answer-v2-forced-empty-thought"
-                or frames.get("forced_empty_thought") is not True):
-            raise ValueError("explicit public-answer frame v2 required")
-        records = summary["folds"]
-        if [(r["purpose"], r["fold"]) for r in records] != labels:
-            raise ValueError("complete ordered fold cohort differs")
-        field, value = ("correct_logprobs", "correct_logprob") if objective == "correct-logprob" else ("margins", "margin")
-        for record, (purpose, fold) in zip(records, labels, strict=True):
-            ids = [row["id"] for row in cases[purpose][fold]]
-            if (record["examples"] != len(ids) or [r["id"] for r in record[field]] != ids
-                    or [r["id"] for r in frames["frames"][purpose][fold]] != ids
-                    or not np.isfinite([r[value] for r in record[field]]).all()):
-                raise ValueError("per-case cohort or finite objective differs")
-        collections[objective] = {"path": directory, "summary": summary, "provenance": provenance,
-                                  "frames": frames, "coverage": coverage}
-    left, right = (collections[o] for o in OBJECTIVES)
-    if left["frames"] != right["frames"] or left["coverage"] != right["coverage"]:
-        raise ValueError("objective frame/columns differ")
-    for key in ("threads", "seed", "max_cases_per_microbatch", "input_sha256", "input_stat", "calibration_scope"):
-        if left["provenance"][key] != right["provenance"][key]:
-            raise ValueError("objective collector input/runtime differs: " + key)
-    for key in ("torch", "transformers", "weight_dtype", "attention", "gradients", "max_cases_per_microbatch"):
-        if left["summary"]["runtime"].get(key) != right["summary"]["runtime"].get(key):
-            raise ValueError("objective numerical runtime differs: " + key)
+    families = ("native", "matrix") if mixed else ("native",)
+    for family in families:
+        for objective in OBJECTIVES:
+            key = objective if family == "native" else "matrix:" + objective
+            refs = plan["collections"][family] if mixed else plan["collections"]
+            directory = Path(refs[objective]).resolve()
+            summary = document(directory / "summary.json", pins)
+            provenance = document(directory / "provenance.json", pins)
+            coverage = document(directory / "coverage.json", pins)
+            frames = document(directory / "frame-evidence.json", pins)
+            if (summary.get("status") != "completed" or summary.get("candidate_selection") is not False
+                    or summary.get("source_values_unchanged") is not True
+                    or summary.get("mode") != "chat-public-answer" or provenance.get("mode") != summary["mode"]
+                    or summary.get("objective_kind") != objective or provenance.get("objective_kind") != objective
+                    or summary.get("answer_batching") != "serial" or provenance.get("answer_batching") != "serial"
+                    or provenance.get("max_cases_per_microbatch") != 1):
+                raise ValueError("completed matched serial objective required")
+            if (provenance.get("checkpoint") != current
+                    or provenance.get("attestation_receipt_sha256") != ref["sha256"]
+                    or provenance["input_sha256"].get(str(cases_path)) != case_ref["sha256"]):
+                raise ValueError("collection full checkpoint or cases identity differs")
+            if family == "native":
+                expected = sorted((n, list(t.shape), "torch.bfloat16", "native") for n, t in native.items())
+                actual = sorted((e["name"], e["shape"], e["dtype"], e["kind"]) for e in coverage["tensors"])
+                if (actual != expected or coverage.get("native_tensors") != len(native)
+                        or coverage.get("native_coordinates") != sum(t.numel for t in native.values())
+                        or coverage.get("virtual_coordinates") != 0 or coverage.get("virtual_tensors") != 0
+                        or provenance.get("virtual_unit_gains") is not False):
+                    raise ValueError("complete native tensor columns differ")
+            else:
+                entries = coverage["entries"]
+                if (not matrices or any(t.dtype != "BF16" or len(t.shape) != 2 for t in matrices.values())
+                        or len(entries) != len(matrices) or {e["tensor"] for e in entries} != set(matrices)
+                        or coverage.get("sampled_matrices") != len(entries)
+                        or coverage.get("sampled_coordinates") != sum(e["count"] for e in entries)
+                        or coverage.get("sampling_mode") != "mlp-triplets"
+                        or provenance.get("sampling_mode") != "mlp-triplets"):
+                    raise ValueError("complete coherent sampled matrix columns required")
+                for entry in entries:
+                    match = matrix_recipe.PATTERN.fullmatch(entry["tensor"])
+                    if (entry["shape"] != list(matrices[entry["tensor"]].shape)
+                            or type(entry["count"]) is not int or not 1 <= entry["count"] <= 512
+                            or entry["family"] != match[3] or entry["layer"] != int(match[1])):
+                        raise ValueError("matrix header/column layout differs")
+                if summary["runtime"].get("gradient_checkpointing") is not False:
+                    raise ValueError("matrix recomputation is unsupported")
+            if (frames.get("schema_version") != 2
+                    or frames.get("frame_protocol") != "gemma4-public-answer-v2-forced-empty-thought"
+                    or frames.get("forced_empty_thought") is not True):
+                raise ValueError("explicit public-answer frame v2 required")
+            records = summary["folds"]
+            if [(r["purpose"], r["fold"]) for r in records] != labels:
+                raise ValueError("complete ordered fold cohort differs")
+            field, value = ("correct_logprobs", "correct_logprob") if objective == "correct-logprob" else ("margins", "margin")
+            for record, (purpose, fold) in zip(records, labels, strict=True):
+                ids = [row["id"] for row in cases[purpose][fold]]
+                if (record["examples"] != len(ids) or [r["id"] for r in record[field]] != ids
+                        or [r["id"] for r in frames["frames"][purpose][fold]] != ids
+                        or not np.isfinite([r[value] for r in record[field]]).all()):
+                    raise ValueError("per-case cohort or finite objective differs")
+            collections[key] = {"path": directory, "summary": summary, "provenance": provenance,
+                                "frames": frames, "coverage": coverage, "family": family}
+        left, right = (collections[o if family == "native" else "matrix:" + o] for o in OBJECTIVES)
+        if left["frames"] != right["frames"] or left["coverage"] != right["coverage"]:
+            raise ValueError("objective frame/columns differ")
+        for key in ("threads", "seed", "max_cases_per_microbatch", "input_sha256", "input_stat", "calibration_scope"):
+            if left["provenance"][key] != right["provenance"][key]:
+                raise ValueError("objective collector input/runtime differs: " + key)
+        for key in ("torch", "transformers", "weight_dtype", "attention", "gradients",
+                    "gradient_accumulation", "gradient_checkpointing", "max_cases_per_microbatch"):
+            if left["summary"]["runtime"].get(key) != right["summary"]["runtime"].get(key):
+                raise ValueError("objective numerical runtime differs: " + key)
+    if mixed:
+        tolerance = plan.get("baseline_tolerance")
+        if type(tolerance) not in (int, float) or not np.isfinite(tolerance) or tolerance < 0:
+            raise ValueError("explicit finite nonnegative cross-collector baseline tolerance required")
+        for objective in OBJECTIVES:
+            n, m = collections[objective], collections["matrix:" + objective]
+            if n["frames"] != m["frames"]:
+                raise ValueError("native/matrix frames differ")
+            for key in ("threads", "seed", "max_cases_per_microbatch", "calibration_scope"):
+                if n["provenance"][key] != m["provenance"][key]:
+                    raise ValueError("native/matrix input/runtime differs: " + key)
+            for key in ("torch", "transformers", "weight_dtype", "attention", "max_cases_per_microbatch"):
+                if n["summary"]["runtime"].get(key) != m["summary"]["runtime"].get(key):
+                    raise ValueError("native/matrix numerical runtime differs: " + key)
+            # Different entry scripts/gradient accumulation are explicit, not falsely equal.
+            for collection in (n, m):
+                for filename, expected_sha in collection["provenance"]["input_sha256"].items():
+                    capture(Path(filename), pins, expected_sha)
+            shared = set(n["provenance"]["input_sha256"]) & set(m["provenance"]["input_sha256"])
+            if any(n["provenance"]["input_sha256"][key] != m["provenance"]["input_sha256"][key] for key in shared):
+                raise ValueError("shared collector implementation/input pins differ")
+            field, value = ("correct_logprobs", "correct_logprob") if objective == "correct-logprob" else ("margins", "margin")
+            errors = [abs(a[value] - b[value])
+                      for nr, mr in zip(n["summary"]["folds"], m["summary"]["folds"], strict=True)
+                      for a, b in zip(nr[field], mr[field], strict=True)]
+            m["baseline_max_abs_difference"] = max(errors, default=0.)
+            if m["baseline_max_abs_difference"] > tolerance:
+                raise ValueError("native/matrix baseline objective differs")
     methods = plan["candidates"]
     if not isinstance(methods, list) or not 1 <= len(methods) <= 2:
         raise ValueError("one or two fixed purpose sets required")
@@ -156,6 +209,11 @@ def prepare(path):
                 or metric["type"] == "relative" and (type(metric.get("floor")) not in (int, float)
                     or not np.isfinite(metric["floor"]) or metric["floor"] <= 0)):
             raise ValueError("explicit positive cost metric required")
+        if mixed:
+            scales = metric.get("block_scales", {})
+            if (set(scales) != {"native", "matrix"} or any(type(v) not in (int, float)
+                    or not np.isfinite(v) or v <= 0 for v in scales.values())):
+                raise ValueError("explicit positive native/matrix block cost scales required")
         rounding = method["rounding"]
         if (set(rounding) != {"relative_radius", "absolute_radius", "rounds"}
                 or any(type(rounding[k]) not in (int, float) or not np.isfinite(rounding[k]) or rounding[k] < 0
@@ -167,6 +225,8 @@ def prepare(path):
                         Path(joint.finite_response.__file__), Path(joint.common.finite_replay.__file__),
                         Path(sys.modules[Checkpoint.__module__].__file__)):
         capture(source_file, pins)
+    if mixed:
+        capture(Path(matrix_recipe.__file__), pins)
     stable(checkpoint, pins)
     return checkpoint, plan, collections, labels, pins
 
@@ -193,61 +253,132 @@ def solve(path, output, *, write_spec=False, maximum_seconds=120):
     signal.alarm(maximum_seconds)
     started = time.monotonic()
     try:
-        loaded = []
-        for objective in OBJECTIVES:
+        mixed = plan["schema_version"] == 2
+        loaded = {}
+        for key, collection in collections.items():
             constraints = [{"purpose": p, "fold": f, "minimum_delta": 0.} for p, f in labels]
-            data = joint.read_collection(collections[objective]["path"], {"constraints": constraints})
+            data = joint.read_collection(collection["path"], {"constraints": constraints})
             base, g, _, layout, coords, _, hashes, _, _ = data
-            if coords is not None:
-                raise ValueError("native-only source required")
             for p, digest in hashes.items():
                 capture(Path(p), pins, digest)
-            # The original NPZ tensor shapes/keys must agree, not merely flattened lengths.
-            with np.load(collections[objective]["path"] / "source-native-values.npz", allow_pickle=False) as arrays:
-                if set(arrays.files) != {e["tensor"] for e in layout} or any(
-                        arrays[e["tensor"]].shape != checkpoint.tensors[e["tensor"]].shape for e in layout):
-                    raise ValueError("native source array shape mismatch")
-            for record in collections[objective]["summary"]["folds"]:
-                with np.load(collections[objective]["path"] / record["file"], allow_pickle=False) as arrays:
+            if collection["family"] == "native":
+                if coords is not None:
+                    raise ValueError("native-only source required")
+                with np.load(collection["path"] / "source-native-values.npz", allow_pickle=False) as arrays:
                     if set(arrays.files) != {e["tensor"] for e in layout} or any(
                             arrays[e["tensor"]].shape != checkpoint.tensors[e["tensor"]].shape for e in layout):
-                        raise ValueError("native gradient array columns/shape mismatch")
-            loaded.append((base, g, layout))
-        base, _, layout = loaded[0]
-        if loaded[1][2] != layout or not np.array_equal(
-                base.astype(np.float32).view(np.uint32), loaded[1][0].astype(np.float32).view(np.uint32)):
-            raise ValueError("objective native source bytes/columns differ")
-        gradient = np.vstack([data[1] for data in loaded])
+                        raise ValueError("native source array shape mismatch")
+                for record in collection["summary"]["folds"]:
+                    with np.load(collection["path"] / record["file"], allow_pickle=False) as arrays:
+                        if set(arrays.files) != {e["tensor"] for e in layout} or any(
+                                arrays[e["tensor"]].shape != checkpoint.tensors[e["tensor"]].shape for e in layout):
+                            raise ValueError("native gradient array columns/shape mismatch")
+            else:
+                with np.load(collection["path"] / "sample-plan.npz", allow_pickle=False) as arrays:
+                    if set(arrays.files) != {"coordinates", "source_values"}:
+                        raise ValueError("unexpected matrix sample-plan arrays")
+                expected = matrix_recipe.mlp_triplet_samples(checkpoint.tensors, collection["provenance"]["seed"])
+                cursor = 0
+                for entry in layout:
+                    count = entry["count"]
+                    if entry["tensor"] in expected and not np.array_equal(coords[cursor:cursor + count], expected[entry["tensor"]][0]):
+                        raise ValueError("MLP coordinates do not share the declared hidden-unit sample")
+                    cursor += count
+            loaded[key] = (base, g, layout, coords)
+        for family in (("native", "matrix") if mixed else ("native",)):
+            first, second = (loaded[o if family == "native" else "matrix:" + o] for o in OBJECTIVES)
+            if (first[2] != second[2] or not np.array_equal(first[3], second[3])
+                    or not np.array_equal(first[0].astype(np.float32).view(np.uint32),
+                                          second[0].astype(np.float32).view(np.uint32))):
+                raise ValueError("objective source bytes/columns differ")
+        base, _, layout, _ = loaded[OBJECTIVES[0]]
+        layout = [dict(e, coordinates=None, block="native") for e in layout]
+        native_count = len(base)
+        gradient = np.vstack([loaded[o][1] for o in OBJECTIVES])
+        scope = None
+        if mixed:
+            matrix_base, _, matrix_layout, coords = loaded["matrix:" + OBJECTIVES[0]]
+            active, cursor = [], 0
+            for entry in matrix_layout:
+                match = matrix_recipe.PATTERN.fullmatch(entry["tensor"])
+                count = entry["count"]
+                if match[3] in {"o", "gate", "up", "down"}:
+                    active.extend(range(cursor, cursor + count))
+                    layout.append(dict(entry, coordinates=coords[cursor:cursor + count], block="matrix"))
+                cursor += count
+            if not active:
+                raise ValueError("explicit O plus complete MLP active matrix columns required")
+            if len({e["tensor"] for e in layout}) != len(layout):
+                raise ValueError("native and matrix tensor columns overlap")
+            active = np.asarray(active, dtype=np.int64)
+            base = np.concatenate([base, matrix_base[active]])
+            gradient = np.hstack([gradient, np.vstack([loaded["matrix:" + o][1][:, active] for o in OBJECTIVES])])
+            scope = {"native_columns": native_count, "observed_matrix_columns": len(matrix_base),
+                     "active_matrix_columns": len(active), "excluded_qkv_columns": len(matrix_base) - len(active),
+                     "active_matrix_families": ["o", "gate", "up", "down"],
+                     "baseline_max_abs_difference": {o: collections["matrix:" + o]["baseline_max_abs_difference"] for o in OBJECTIVES},
+                     "gradient_methods": {"native": collections[OBJECTIVES[0]]["summary"]["runtime"].get("gradients"),
+                                          "matrix": collections["matrix:" + OBJECTIVES[0]]["summary"]["runtime"].get("gradient_accumulation")}}
         methods, specs = [], []
         for method in plan["candidates"]:
             lower = np.asarray([r["minimum_delta"] for r in method["constraints"]], dtype=np.float64)
             metric = method["cost_metric"]
             cost = np.ones_like(base) if metric["type"] == "euclidean" else 1 / np.maximum(np.abs(base), metric["floor"])
+            if mixed:
+                cost[:native_count] *= metric["block_scales"]["native"]
+                cost[native_count:] *= metric["block_scales"]["matrix"]
             values, report = joint.quantized_proposal(base, gradient, lower, cost, **method["rounding"])
-            edits, cursor = [], 0
+            edits, realized_support, cursor = [], [], 0
             for entry in layout:
                 count = entry["count"]
                 indices = np.flatnonzero(values[cursor:cursor+count].astype(np.float64) != base[cursor:cursor+count])
                 if indices.size:
-                    edits.append({"tensor": entry["tensor"], "indices": indices.tolist(),
+                    coordinates = entry["coordinates"]
+                    edits.append({"tensor": entry["tensor"],
+                                  ("indices" if coordinates is None else "coordinates"):
+                                      indices.tolist() if coordinates is None else coordinates[indices].tolist(),
                                   "set_values": values[cursor+indices].tolist()})
+                if entry["block"] == "matrix":
+                    delta_part = values[cursor:cursor + count].astype(np.float64) - base[cursor:cursor + count]
+                    realized_support.append({"tensor": entry["tensor"], "sampled": count, "changed": len(indices),
+                                             "unchanged_after_rounding": count - len(indices),
+                                             "delta_l2": float(np.linalg.norm(delta_part)),
+                                             "weighted_delta_l2": float(np.linalg.norm(cost[cursor:cursor + count] * delta_part))})
                 cursor += count
-            changed = sum(len(e["indices"]) for e in edits)
+            changed = sum(len(e["set_values"]) for e in edits)
             if changed > 1_000_000:
                 raise ValueError("actual changed coordinates exceed one million; no silent trimming")
             report.update(id=method["id"], constraints=method["constraints"], cost_metric=metric,
                           changed_elements=changed, changed_tensors=len(edits),
                           represented_source_l2=float(np.linalg.norm(base)),
-                          norm_scope="all selected native tensors; not the whole model",
+                          norm_scope="all native plus sampled O/MLP coordinates; not whole matrix norms" if mixed else "all selected native tensors; not the whole model",
                           spec_emitted=bool(write_spec and edits))
+            if mixed:
+                compatibility = joint.editor_compatibility(edits, allow_batched_matrix=True)
+                if not compatibility["spec_emission_allowed"]:
+                    raise ValueError("matrix proposal exceeds existing editor bounds")
+                delta = values.astype(np.float64) - base
+                report.update(column_scope=scope, editor_compatibility=compatibility,
+                              cost_convention="minimize ||diag(existing coordinate cost * explicit block scale) delta||_2 squared",
+                              realized_blocks={name: {"changed_elements": int(np.count_nonzero(delta[section])),
+                                                       "delta_l2": float(np.linalg.norm(delta[section])),
+                                                       "weighted_delta_l2": float(np.linalg.norm(cost[section] * delta[section]))}
+                                               for name, section in (("native", slice(None, native_count)),
+                                                                     ("matrix", slice(native_count, None)))},
+                              matrix_any_changed=bool(np.any(delta[native_count:] != 0)),
+                              realized_matrix_support=realized_support)
             methods.append(report)
             if write_spec and edits:
                 specs.append({"id": method["id"], "edits": edits,
                               "base_tree_sha256": plan["checkpoint"]["tree_sha256"],
                               "source_checkpoint": str(checkpoint.path),
                               "hypothesis": "Coupled authored public-answer local-gradient proposal; finite response unmeasured."})
+        if mixed:
+            sample_sha = pins[str((collections["matrix:" + OBJECTIVES[0]]["path"] / "sample-plan.npz").resolve())][0]
+            for spec in specs:
+                spec.update(matrix_batch=True, matrix_sample_plan_sha256=sample_sha)
         stable(checkpoint, pins)
-        result = {"schema_version": 1, "status": "local_proposals", "methods": methods,
+        result = {"schema_version": plan["schema_version"], "status": "local_proposals", "methods": methods,
                   "source_checkpoint": plan["checkpoint"], "parent_state": plan.get("parent_state"),
                   "source_sha256": {p: digest for p, (digest, _) in pins.items()},
                   "source_stat": {p: state for p, (_, state) in pins.items()},
@@ -273,7 +404,7 @@ def main(argv=None):
     parser.add_argument("--plan", type=Path, required=True)
     parser.add_argument("--output", type=Path, required=True)
     parser.add_argument("--run", action="store_true", help="run the bounded CPU solver; default metadata-only preview")
-    parser.add_argument("--write-spec", action="store_true", help="with --run, publish exact BF16 native specs")
+    parser.add_argument("--write-spec", action="store_true", help="with --run, publish exact BF16 specs in the explicitly selected plan scope")
     parser.add_argument("--maximum-seconds", type=int, default=120)
     args = parser.parse_args(argv)
     if not 1 <= args.maximum_seconds <= 600 or args.write_spec and not args.run:

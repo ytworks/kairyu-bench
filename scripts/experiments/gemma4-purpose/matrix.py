@@ -11,6 +11,7 @@ import time
 import numpy as np
 
 import recipe_common as common
+import objective_variants as variants
 
 PATTERN = re.compile(r"^model\.language_model\.layers\.(\d+)\.(self_attn|mlp)\.(q|k|v|o|gate|up|down)_proj\.weight$")
 
@@ -99,6 +100,38 @@ def sample(name: str, shape: tuple[int, int], kind: str, layer: int, config: dic
     return np.asarray(cells, dtype=np.int64), strata
 
 
+def mlp_triplet_samples(tensors, seed):
+    """One fixed hidden-unit set per complete gate/up/down triplet."""
+    layers = {}
+    for name, tensor in tensors.items():
+        match = PATTERN.fullmatch(name)
+        if match and match[3] in {"gate", "up", "down"}:
+            layers.setdefault(int(match[1]), {})[match[3]] = (name, tuple(tensor.shape))
+    result = {}
+    for layer, entries in sorted(layers.items()):
+        if set(entries) != {"gate", "up", "down"}:
+            raise ValueError("coherent sampling requires complete MLP triplets")
+        gate, up, down = (entries[k][1] for k in ("gate", "up", "down"))
+        if len(gate) != 2 or gate != up or down != (gate[1], gate[0]):
+            raise ValueError("MLP triplet shapes must be [hidden,input], [hidden,input], [input,hidden]")
+        def selected(size, bands, label):
+            if size < bands:
+                raise ValueError("MLP is too small for coherent 512-cell sampling")
+            key = f"{seed}/mlp-triplets/{layer}/{label}".encode()
+            rng = np.random.default_rng(int.from_bytes(hashlib.sha256(key).digest()[:8], "little"))
+            return [int(rng.integers(i * size // bands, (i + 1) * size // bands)) for i in range(bands)]
+        hidden = selected(gate[0], 16, "hidden")
+        inputs = selected(gate[1], 32, "input")
+        outputs = selected(down[0], 32, "output")
+        for kind, (name, _) in entries.items():
+            cells = ([(r, h) for r in outputs for h in hidden] if kind == "down"
+                     else [(h, c) for h in hidden for c in inputs])
+            result[name] = (np.asarray(cells, dtype=np.int64),
+                            {"shared_hidden_indices": hidden, "input_indices": inputs,
+                             "output_indices": outputs, "coherence": "gate/up rows equal down columns"})
+    return result
+
+
 def factor_derivative(upstream, selected_inputs, rows):
     """FP32 products, FP64 token/batch accumulation; inputs were gathered at sampled columns."""
     import torch
@@ -114,7 +147,8 @@ def checked_batches(rows, mode, max_cases_per_microbatch=None):
     return common.objective_batches(rows, mode, max_cases_per_microbatch)
 
 
-def batch_derivatives(torch, net, head, tokenizer, rows, mode, device, plans, modules, fold_examples, verify_names):
+def batch_derivatives(torch, net, head, tokenizer, rows, mode, device, plans, modules, fold_examples, verify_names,
+                      *, objective=None, loss_sign=1.):
     """One eager forward/backward, with the shared objective and explicit fold weight."""
     captured, embedding, probes, calls, hooks = {}, [], {}, {}, []
     def embed_hook(module, inputs, output):
@@ -146,10 +180,10 @@ def batch_derivatives(torch, net, head, tokenizer, rows, mode, device, plans, mo
         hooks.append(net.embed_tokens.register_forward_hook(embed_hook))
         for name, module in modules.items():
             hooks.append(module.register_forward_hook(factory(name)))
-        margins = common.objective(torch, net, head, tokenizer, rows, mode, device)
+        margins = (objective or common.objective)(torch, net, head, tokenizer, rows, mode, device)
         if len(embedding) != 1:
             raise ValueError("expected exactly one embedding forward per microbatch")
-        derivatives = torch.autograd.grad(margins.sum() / fold_examples, [embedding[0], *probes.values()])
+        derivatives = torch.autograd.grad(margins.sum() * loss_sign / fold_examples, [embedding[0], *probes.values()])
         if set(captured) != set(plans):
             raise ValueError("a sampled projection did not participate")
         checks = {}
@@ -164,9 +198,49 @@ def batch_derivatives(torch, net, head, tokenizer, rows, mode, device, plans, mo
             hook.remove()
 
 
+def objective_derivatives(torch, net, head, tokenizer, rows, mode, device, plans, modules,
+                          fold_examples, verify_names, *, objective_kind="margin", answer_batching="paired"):
+    """Reuse one-forward hooks; serial graphs are released before the next answer."""
+    objective = common.objective if objective_kind == "margin" else variants.correct_logprob_objective
+    if answer_batching == "paired":
+        values, captured, checks = batch_derivatives(
+            torch, net, head, tokenizer, rows, mode, device, plans, modules, fold_examples,
+            verify_names, objective=objective)
+        return values, captured, checks, 1
+    if answer_batching != "serial" or mode != "chat-public-answer":
+        raise ValueError("serial matrix answers require chat-public-answer")
+    width = max(len(row[1]) + max(len(row[2]), len(row[3])) for row in rows)
+    selections = (("correct", 1.), ("foil", -1.)) if objective_kind == "margin" else (("correct", 1.),)
+    captured, checks, measured, forwards = {}, {}, [], 0
+    for row in rows:
+        total = 0.
+        for answer, sign in selections:
+            def single(t, n, h, tok, batch, m, d):
+                return variants.single_answer_logprob_objective(t, n, h, tok, batch[0], answer, m, d, width)
+            values, gradients, verified = batch_derivatives(
+                torch, net, head, tokenizer, [row], mode, device, plans, modules, fold_examples,
+                verify_names if forwards == 0 else set(), objective=single, loss_sign=sign)
+            total += sign * float(values[0])
+            for name, value in gradients.items():
+                captured[name] = captured.get(name, 0) + value
+            checks.update(verified)
+            forwards += 1
+            del values, gradients
+        measured.append(total)
+    return torch.tensor(measured, dtype=torch.float32, device=device), captured, checks, forwards
+
+
 def collect(args, checkpoint, cases, provenance):
     from safetensors import safe_open
 
+    objective_kind = getattr(args, "objective", "margin")
+    answer_batching = getattr(args, "answer_batching", "paired")
+    sampling_mode = getattr(args, "sampling_mode", "independent")
+    if (objective_kind not in {"margin", "correct-logprob"} or answer_batching not in {"paired", "serial"}
+            or sampling_mode not in {"independent", "mlp-triplets"}
+            or args.mode != "chat-public-answer" and (objective_kind != "margin" or answer_batching != "paired")):
+        raise ValueError("invalid matrix objective/batching/sampling combination")
+    coherent = mlp_triplet_samples(checkpoint.tensors, args.seed) if sampling_mode == "mlp-triplets" else {}
     torch, tokenizer, model = common.load_model(args)
     net, head = model.model.language_model, model.get_output_embeddings()
     config = net.config.to_dict()
@@ -186,7 +260,8 @@ def collect(args, checkpoint, cases, provenance):
         module = net.get_submodule(name.removeprefix("model.language_model.").removesuffix(".weight"))
         if type(module) is not torch.nn.Linear or module.weight.dtype != torch.bfloat16 or tuple(module.weight.shape) != tensor.shape:
             raise ValueError("loaded projection does not match checkpoint metadata")
-        rc, strata = sample(name, tuple(module.weight.shape), kind, layer, config, args.seed)
+        rc, strata = (coherent[name] if name in coherent else
+                      sample(name, tuple(module.weight.shape), kind, layer, config, args.seed))
         rows = torch.as_tensor(rc[:, 0].copy(), dtype=torch.long, device=args.device)
         columns = torch.as_tensor(rc[:, 1].copy(), dtype=torch.long, device=args.device)
         values = module.weight.detach()[rows, columns].float().cpu()
@@ -204,7 +279,7 @@ def collect(args, checkpoint, cases, provenance):
     names = list(plans)
     np.savez_compressed(args.output / "sample-plan.npz",
                         coordinates=np.concatenate(coordinates), source_values=np.concatenate(original_values))
-    coverage = {"text_layers": len(net.layers), "sampled_matrices": len(entries),
+    coverage = {"sampling_mode": sampling_mode, "text_layers": len(net.layers), "sampled_matrices": len(entries),
                 "families": dict(Counter(e["family"] for e in entries)),
                 "sampled_coordinates": len(entries) * 512, "coordinates_per_matrix": 512, "seed": args.seed,
                 "represented_matrix_elements": sum(int(np.prod(e["shape"])) for e in entries),
@@ -217,13 +292,15 @@ def collect(args, checkpoint, cases, provenance):
     for group, folds in prepared.items():
         for fold, rows in enumerate(folds):
             accumulated = {name: torch.zeros(512, dtype=torch.float64, device=args.device) for name in names}
-            measured = {}
+            measured, forward_count = {}, 0
             packed = packed_folds[group][fold]
             for batch_index, batch in enumerate(packed):
                 verify_names = {names[0], names[-1]} if not records and batch_index == 0 else set()
-                margins, captured, verified = batch_derivatives(
+                margins, captured, verified, forwards = objective_derivatives(
                     torch, net, head, tokenizer, batch, args.mode, args.device,
-                    plans, modules, len(rows), verify_names)
+                    plans, modules, len(rows), verify_names,
+                    objective_kind=objective_kind, answer_batching=answer_batching)
+                forward_count += forwards
                 checks.update(verified)
                 for name in names:
                     accumulated[name] += captured[name]
@@ -232,12 +309,15 @@ def collect(args, checkpoint, cases, provenance):
             values = torch.cat([accumulated[name] for name in names]).float().cpu().numpy()
             if not np.isfinite(values).all() or any(p.grad is not None for p in net.parameters()):
                 raise ValueError("nonfinite derivatives or unexpected full parameter gradients")
-            reference = common.check_references(cases[group][fold], measured, args.reference_tolerance)
+            reference = variants.objective_references(cases[group][fold], measured, args.reference_tolerance, objective_kind)
             file = args.output / f"gradient-{group}-{fold}.npy"
             np.save(file, values, allow_pickle=False)
+            value_key = "margin" if objective_kind == "margin" else "correct_logprob"
             record = {"purpose": group, "fold": fold, "examples": len(rows),
-                      "microbatches": len(packed), "mean_margin": float(np.mean(list(measured.values()))),
-                      "margins": [{"id": row[0], "margin": measured[row[0]]} for row in rows], "file": file.name,
+                      "microbatches": len(packed), "mean_" + value_key: float(np.mean(list(measured.values()))),
+                      ("margins" if objective_kind == "margin" else "correct_logprobs"):
+                          [{"id": row[0], value_key: measured[row[0]]} for row in rows], "file": file.name,
+                      "answer_batching": answer_batching, "model_forward_count": forward_count,
                       "sample_gradient_l2": float(np.linalg.norm(values.astype(np.float64))), **reference}
             records.append(record)
             common.save(args.output / "progress.json", {"completed_folds": len(records), "last": record})
@@ -247,9 +327,11 @@ def collect(args, checkpoint, cases, provenance):
         sampled_rows, columns = plans[name]
         if not np.array_equal(modules[name].weight.detach()[sampled_rows, columns].float().cpu().numpy(), original_values[index]):
             raise ValueError("collector changed sampled source weights")
-    result = {"status": "completed", "mode": args.mode, "coverage": coverage, "folds": records,
+    result = {"status": "completed", "mode": args.mode, "objective_kind": objective_kind,
+              "answer_batching": answer_batching, "coverage": coverage, "folds": records,
               "zero_additive_checks": checks, "seconds": time.monotonic() - start,
-              "objective": ("mean correct-minus-foil public-answer mean log probability" if args.mode == "chat-public-answer"
+              "objective": ("mean correct-answer token log probability (maximize)" if objective_kind == "correct-logprob" else
+                            "mean correct-minus-foil public-answer mean log probability" if args.mode == "chat-public-answer"
                             else "mean first distinguishing next-token softcapped logit margin"),
               "runtime": {"torch": torch.__version__, "transformers": common.transformers_version(), "device": args.device,
                           "weight_dtype": "BF16", "attention": "eager", "gradient_checkpointing": False,
@@ -269,8 +351,20 @@ def collect(args, checkpoint, cases, provenance):
 def main(argv=None):
     parser = common.parser(__doc__, chat=True)
     parser.set_defaults(mode="raw-next-token")
+    parser.add_argument("--objective", choices=("margin", "correct-logprob"), default="margin")
+    parser.add_argument("--answer-batching", choices=("paired", "serial"), default="paired")
+    parser.add_argument("--sampling-mode", choices=("independent", "mlp-triplets"), default="independent",
+                        help="mlp-triplets shares stratified hidden-unit indices across gate/up/down; attention unchanged")
     args = parser.parse_args(argv)
+    if args.mode != "chat-public-answer" and (args.objective != "margin" or args.answer_batching != "paired"):
+        parser.error("correct-logprob and serial require chat-public-answer")
     checkpoint, cases, provenance = common.preflight(args, Path(__file__))
+    variants.pin_objective(provenance, args.mode, args.objective)
+    variants.attach_correct_references(args.cases, cases, provenance, args.objective)
+    provenance.update(answer_batching=args.answer_batching, sampling_mode=args.sampling_mode)
+    if args.answer_batching == "serial":
+        provenance["objective_forward_layout"] = ("one case/answer per forward and immediate VJP; original paired-pack token padding width; "
+                                                  "good-minus-foil or good-only; FP32 factors and FP64 sums")
     if not args.run:
         import json
         print(json.dumps(provenance, indent=2))

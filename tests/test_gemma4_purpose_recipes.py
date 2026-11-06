@@ -26,6 +26,8 @@ def load(name):
     modules = {"recipe_common": COMMON} if name != "recipe_common" else {}
     if "OBJECTIVES" in globals():
         modules["objective_variants"] = OBJECTIVES
+    if "MATRIX" in globals():
+        modules["matrix"] = MATRIX
     if "JOINT" in globals():
         modules["joint"] = JOINT
     with patch.dict(sys.modules, modules):
@@ -221,6 +223,22 @@ assert 'transformers' not in sys.modules
                     if kind == "o":
                         counts = np.bincount(coords[:, 1] // (shape[1] // strata["input_heads"]))
                         self.assertEqual(set(counts), {512 // strata["input_heads"]})
+        triplets = {f"model.language_model.layers.{layer}.mlp.{kind}_proj.weight":
+                    SimpleNamespace(shape=shape)
+                    for layer in (0, 5) for kind, shape in
+                    (("gate", (21504, 5376)), ("up", (21504, 5376)), ("down", (5376, 21504)))}
+        coherent = MATRIX.mlp_triplet_samples(triplets, 0)
+        for layer in (0, 5):
+            prefix = f"model.language_model.layers.{layer}.mlp."
+            gate, up, down = [coherent[prefix + k + "_proj.weight"][0] for k in ("gate", "up", "down")]
+            np.testing.assert_array_equal(gate, up)
+            np.testing.assert_array_equal(np.unique(gate[:, 0]), np.unique(down[:, 1]))
+            self.assertEqual(len(set(map(tuple, gate))), 512)
+            self.assertEqual(len(set(map(tuple, down))), 512)
+        damaged = dict(triplets)
+        damaged["model.language_model.layers.0.mlp.down_proj.weight"] = SimpleNamespace(shape=(5376, 21503))
+        with self.assertRaisesRegex(ValueError, "triplet shapes"):
+            MATRIX.mlp_triplet_samples(damaged, 0)
         with self.assertRaisesRegex(ValueError, "does not match configured heads"):
             MATRIX.sample("wrong", (4096, 5376), "k", 5, current, 0)
         with self.assertRaises(ValueError):
@@ -284,24 +302,47 @@ class PurposeTorchFixtures(unittest.TestCase):
         reference.last.weight.requires_grad_(True)
         full = COMMON.objective(torch, reference, head, tokenizer, rows, "chat-public-answer", "cpu")
         gradients = torch.autograd.grad(full.mean(), [reference.first.weight, reference.last.weight])
-        for limit in (None, 1):
-            sums = {name: torch.zeros(4, dtype=torch.float64) for name in modules}
-            measured = {}
-            packed = MATRIX.checked_batches(rows, "chat-public-answer", limit)
-            self.assertEqual(len(packed), 2 if limit is None else 3)
-            for index, batch in enumerate(packed):
-                margins, captured, checks = MATRIX.batch_derivatives(
-                    torch, net, head, tokenizer, batch, "chat-public-answer", "cpu",
-                    plans, modules, len(rows), set(modules) if index == 0 else set())
-                if index == 0:
-                    self.assertEqual(sum(item["cells"] for item in checks.values()), 8)
-                for name in sums:
-                    sums[name] += captured[name]
-                measured.update({row[0]: value for row, value in zip(batch, margins, strict=True)})
-            torch.testing.assert_close(torch.stack([measured[row[0]] for row in rows]), full.detach(), rtol=1e-6, atol=2e-7)
-            for name, gradient in zip(plans, gradients, strict=True):
-                r, c = plans[name]
-                torch.testing.assert_close(sums[name].float(), gradient[r, c], rtol=2e-5, atol=1e-7)
+        for objective_kind in ("margin", "correct-logprob"):
+            objective = COMMON.objective if objective_kind == "margin" else OBJECTIVES.correct_logprob_objective
+            oracle_values = objective(torch, reference, head, tokenizer, rows, "chat-public-answer", "cpu")
+            oracle_gradients = torch.autograd.grad(oracle_values.mean(), [reference.first.weight, reference.last.weight])
+            for batching in ("paired", "serial"):
+                for limit in (None, 1):
+                    sums = {name: torch.zeros(4, dtype=torch.float64) for name in modules}
+                    measured = {}
+                    packed = MATRIX.checked_batches(rows, "chat-public-answer", limit)
+                    self.assertEqual(len(packed), 2 if limit is None else 3)
+                    for index, batch in enumerate(packed):
+                        margins, captured, checks, forwards = MATRIX.objective_derivatives(
+                            torch, net, head, tokenizer, batch, "chat-public-answer", "cpu",
+                            plans, modules, len(rows), set(modules) if index == 0 else set(),
+                            objective_kind=objective_kind, answer_batching=batching)
+                        self.assertEqual(forwards, 1 if batching == "paired" else len(batch) * (2 if objective_kind == "margin" else 1))
+                        if index == 0:
+                            self.assertEqual(sum(item["cells"] for item in checks.values()), 8)
+                        for name in sums:
+                            sums[name] += captured[name]
+                        measured.update({row[0]: value for row, value in zip(batch, margins, strict=True)})
+                    torch.testing.assert_close(torch.stack([measured[row[0]] for row in rows]), oracle_values.detach(), rtol=1e-6, atol=2e-7)
+                    for name, gradient in zip(plans, oracle_gradients, strict=True):
+                        r, c = plans[name]
+                        torch.testing.assert_close(sums[name].float(), gradient[r, c], rtol=2e-5, atol=1e-7)
+            # FP32 log-probability subtraction needs a resolvable finite-difference step.
+            epsilon = 1e-2
+            with torch.no_grad():
+                old = net.first.weight[0, 1].clone()
+                net.first.weight[0, 1] = old + epsilon
+                plus = objective(torch, net, head, tokenizer, rows, "chat-public-answer", "cpu").mean()
+                net.first.weight[0, 1] = old - epsilon
+                minus = objective(torch, net, head, tokenizer, rows, "chat-public-answer", "cpu").mean()
+                net.first.weight[0, 1] = old
+            self.assertAlmostEqual(float(sums["first"][0]), float((plus - minus) / (2 * epsilon)), delta=3e-5)
+        with unittest.mock.patch.object(OBJECTIVES, "single_answer_logprob_objective", side_effect=ValueError("forward failed")):
+            with self.assertRaisesRegex(ValueError, "forward failed"):
+                MATRIX.objective_derivatives(torch, net, head, tokenizer, rows, "chat-public-answer", "cpu",
+                                             plans, modules, len(rows), set(modules),
+                                             objective_kind="correct-logprob", answer_batching="serial")
+        self.assertTrue(all(not value._forward_hooks for value in net.modules()))
         # Native collector's shared batching and original fold denominator retain the same objective.
         native_sums = [torch.zeros_like(reference.first.weight), torch.zeros_like(reference.last.weight)]
         for batch in COMMON.objective_batches(rows, "chat-public-answer", 1):
@@ -331,15 +372,6 @@ class PurposeTorchFixtures(unittest.TestCase):
             np.testing.assert_allclose(observed, values.detach().numpy(), rtol=1e-6, atol=3e-7)
             for actual, oracle in zip(serial, expected, strict=True):
                 torch.testing.assert_close(actual, oracle, rtol=2e-5, atol=1e-7)
-        epsilon = 1e-3
-        with torch.no_grad():
-            old = net.first.weight[0, 1].clone()
-            net.first.weight[0, 1] = old + epsilon
-            plus = COMMON.objective(torch, net, head, tokenizer, rows, "chat-public-answer", "cpu").mean()
-            net.first.weight[0, 1] = old - epsilon
-            minus = COMMON.objective(torch, net, head, tokenizer, rows, "chat-public-answer", "cpu").mean()
-            net.first.weight[0, 1] = old
-        self.assertAlmostEqual(float(sums["first"][0]), float((plus - minus) / (2 * epsilon)), delta=3e-5)
         self.assertTrue(all(value.grad is None for value in net.parameters()))
         self.assertTrue(all(not value._forward_hooks for value in net.modules()))
 

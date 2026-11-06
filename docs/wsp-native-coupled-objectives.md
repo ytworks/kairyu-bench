@@ -110,3 +110,84 @@ correct NLL is an increase in correct-answer log probability. Diagnostic KL is
 limited to the correct continuation's first/last token positions, not the entire
 generated trajectory. Compare the initial baseline with the frozen matched
 collector values before interpreting changes.
+
+## Optional native plus sampled-matrix plan
+
+Schema version 2, kind native_matrix_coupled_objectives_v2, keeps the same CLI
+and candidate bounds but supplies four directories:
+
+~~~json
+{
+  "schema_version": 2,
+  "kind": "native_matrix_coupled_objectives_v2",
+  "collections": {
+    "native": {"correct-logprob": "NATIVE_LL", "margin": "NATIVE_MARGIN"},
+    "matrix": {"correct-logprob": "MATRIX_LL", "margin": "MATRIX_MARGIN"}
+  },
+  "baseline_tolerance": 0.000001
+}
+~~~
+
+The remaining checkpoint, cases, optional parent_state, candidates and rounding
+fields are required as in v1. baseline_tolerance is an explicit predeclared
+absolute tolerance in answer-token log-probability units. The adapter compares
+every corresponding native/matrix baseline case value and reports the maximum
+difference. It rejects mismatched whole checkpoints, attestation, cases, frames,
+cohorts, serial layout, threads, seed, packing or numerical runtime. Within each
+collector family, both objectives must have identical column/source metadata.
+The entry scripts differ between families; all recorded input hashes are pinned
+individually and shared dependencies must agree.
+
+Collect the matrix pair on the same current parent as the native pair:
+
+~~~bash
+python scripts/experiments/gemma4-purpose/matrix.py --checkpoint CURRENT_PARENT --cases AUTHORED_CASES --checkpoint-attestation ATTESTATION --attestation-sha256 SHA256 --mode chat-public-answer --objective correct-logprob --answer-batching serial --sampling-mode mlp-triplets --max-cases-per-microbatch 1 --threads 4 --seed 0 --output FRESH_MATRIX_LL
+# Repeat with --objective margin and a different output.
+# The authorized owner adds its device, GPU handoff and --run flags.
+~~~
+
+mlp-triplets selects 16 stratified hidden indices per layer, shared by gate/up
+rows and down columns. Gate and up use the same 32 stratified input indices;
+down uses 32 stratified output rows. Each Cartesian sample has 512 cells.
+Complete shapes must be [H,D], [H,D], [D,H]. The sample is fixed by seed and
+layer before observing gradients. Existing Q/K/V/O head sampling is unchanged;
+no aligned residual-row claim is made for O. The default sampler remains
+independent, and margin/paired/raw-next-token defaults are unchanged.
+
+Both matrix objectives include all public answer tokens with the same pair
+padding. Serial margin takes separate correct and foil VJPs with opposite signs;
+correct-logprob takes only the correct VJP. Existing hooks, eight zero-additive
+coordinate checks, FP32 factor products and FP64 accumulation are retained.
+Native gradients use their existing BF16 VJP and FP32 accumulation; this is an
+explicit derivative-method difference, not a bit-parity claim.
+
+V2 observes the complete matrix inventory but searches only O and complete
+gate/up/down support plus the complete native inventory. Q/K/V columns are
+diagnostic and never enter the solver or emitted edits. Corresponding LL and
+margin matrix samples must match exactly, and MLP coordinates are checked
+against the declared coherent sample. For Gemma 4 31B this is 421 native tensors,
+410 observed matrices, 240 active matrices and 170 diagnostic-only matrices.
+
+Each v2 cost_metric additionally requires explicit positive
+block_scales: {"native": ..., "matrix": ...}. Existing relative coordinate cost
+is 1/max(abs(current_parent_value), floor); block scales multiply that cost.
+The existing solver minimizes the squared L2 norm of cost times the realized
+delta. These are parameter-space costs, not activation/Fisher estimates or
+measured capability. No scale is selected automatically.
+
+The adapter horizontally joins native and active matrix columns, then stacks
+the correct-logprob and margin fold rows. Existing minimum-step and single-BF16
+realization code is reused. Reports give absolute and weighted realized norms
+by block and matrix, actual changed counts, and sampled cells unchanged after
+rounding (including cells with no proposed change). Shared support does not
+imply that all three MLP matrices receive nonzero realized edits. A native-only
+realization is reported as such; no epsilon edits or rescaling retry is added.
+
+Mixed specs retain native indices and matrix coordinates with explicit
+matrix_batch and sampled-plan SHA. Limits remain 512 cells per matrix, 262,144
+matrix coordinates and 1,000,000 total actual changes. The existing
+gemma4_sparse_bf16 finite architecture supports both in one candidate and
+restores their union. Its pinned spec contains the exact coordinates; the
+adapter/owner pins the sampled-plan bytes, while the finite runner does not
+independently reinterpret that sampled plan. No fresh full-weight hash or new
+finite numerical kernel is implied.

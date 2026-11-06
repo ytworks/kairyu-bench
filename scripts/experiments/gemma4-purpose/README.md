@@ -545,3 +545,19 @@ fresh outputへ数値reportを保存し、失敗はincompleteとexception型だ�
 ## Coupled native objectives
 
 [propose_native_objectives.py](propose_native_objectives.py) combines matched native correct-logprob and margin collections using the existing local-gradient solver. The [input and finite-replay guide](../../../docs/wsp-native-coupled-objectives.md) specifies full-checkpoint identity, serial cohort matching, explicit permitted losses, BF16 realization and selected-word restoration proof. Default preview reads metadata only. The same native values from different full checkpoints do not establish matching gradients; collect again after promoting a new incumbent.
+
+### Coherent sampled matrices with both public-answer objectives
+
+matrix.py also accepts --objective correct-logprob and --answer-batching serial,
+using the same objective helpers and pair padding as native collection.
+--sampling-mode mlp-triplets fixes shared hidden indices across gate/up rows
+and down columns, with 512 sampled cells per matrix. Attention sampling and all
+legacy defaults remain unchanged. The sampled derivatives still pass the
+existing eight zero-additive coordinate probes.
+
+The explicit v2 plan in propose_native_objectives.py matches four collections
+on one complete current-parent identity, concatenates native and sampled O/MLP
+columns, and reuses the existing two-objective optimizer/BF16 rounding.
+Q/K/V remain diagnostic-only. Costs, permitted losses and block scales are
+explicit owner inputs; actual matrix participation after rounding is reported
+without forcing nonzero triplets. See the [v2 input and proof contract](../../../docs/wsp-native-coupled-objectives.md#optional-native-plus-sampled-matrix-plan).

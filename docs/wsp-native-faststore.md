@@ -114,6 +114,14 @@ ctime/nlink continuity, private byte-corruption rejection, matrix-scope rejectio
 and a failed claimed slot that retains its shared link. No full-model repack or
 performance measurement is implied by these CPU fixtures.
 
+A separate tiny CPU consumer check used the generated header with two tensors
+(142 bytes total). Safetensors 0.8.0 safe_open and Transformers 5.20.2
+load_state_dict, using Torch 2.14.0+cu130, accepted the file without an optional
+__metadata__ header. Names, dtypes, shapes, signed-zero/NaN/Inf raw words all
+matched. Evidence SHA256:
+f24ab1f29023860b008f804adf517bacf387cc4aeaab93ae7de3db811c95b8cf.
+This did not load a model or read a live checkpoint.
+
 The motivating header-only observation found 421 text native tensors occupying
 2,663,032 bytes in two approximately 62.55 GB shards. The one-time preparation
 still reads/writes the full model and needs one additional physical copy.
@@ -125,3 +133,10 @@ The complete CPU integration check passed 510 tests (458 passed, 52 optional
 skips), whole-tree Ruff, mypy over 74 source files, model-comparison data checks,
 and syntax checks for 31 shell scripts. Source hashes were unchanged throughout.
 The check used no model or GPU; actual large-checkpoint preparation is pending.
+
+
+The first real preparation was deferred when the next accepted experiment
+selected sparse matrix edits as well as native values. Matrix changes lie
+outside this store generation's isolated selection; a native-only repack would
+not accelerate that experiment. The prepared generation remains uncreated,
+rather than implying that its full-model equivalence or speedup was measured.
