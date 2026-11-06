@@ -1,6 +1,6 @@
 # M: 公開改変baseと固定adapterの4条件比較・事前契約（2026-11-06）
 
-**事前に固定した方法・入力を保持し、実施状況を末尾に追補する。Mの公式能力結果はまだない。**
+**固定4条件の公式dev90は全360項目の採点が完了した。Pを次の作業モデルとして保持し、Mには更新しない。事前契約と途中記録は保持し、最終結果・方針変更を末尾に追補した。**
 [Lの公式dev90](2026-11-06-k1-exported-text-c1-review.md)はfresh original比−3.517857 pp、
 出力token約1.47倍で不採用だった。次は係数を探索せず、同じexported-unit text LoRAの
 効果が公開改変baseに依存するかを4条件で区別する。
@@ -253,3 +253,76 @@ base norm／relative norm／direction cosineはこのfocused観測では未計�
 | 同original-versus-public-summary.json | f54297e99764964a9236d64df8ade2a4fae12b491bb1df3df545f96f479ca7db |
 | 同original-versus-public-D-scope-supplement.json | 507d170cb2a969279cd9e9d100e763d8bf9fa4cfc658ac991a8c9cab4a6a48f3 |
 | 同numeric-independent-review.json | 22c800e26fa287bc3a76c05ef7f898258f97057a55a0f300503d0994eec0960c |
+
+## 最終追補：4条件の公式結果と作業モデル更新（2026-11-06）
+
+全4条件がcompleted、各90項目採点・未採点0・記録chat API calls119。
+HE30／MBPP30／LCB20／SciCode10を同じmanifestで比較した。
+以下は公式source等重みのcodeであり、項目数による加重平均や全領域overallではない。
+SciCodeの部分点をそのまま保持した。
+
+| 条件 | HE | MBPP | LCB | SciCode | code | report wall秒 | 記録output tokens |
+|---|---:|---:|---:|---:|---:|---:|---:|
+| O: original | 93.333333 | 73.333333 | 80.000000 | 38.079365 | 71.186508 | 336.5 | 343,128 |
+| L: O+D | 96.666667 | 80.000000 | 70.000000 | 25.634921 | 68.075397 | 831.4 | 614,190 |
+| P: 公開base | 100.000000 | 80.000000 | 75.000000 | 40.301587 | 73.825397 | 324.6 | 316,109 |
+| M: P+D | 90.000000 | 86.666667 | 65.000000 | 29.968254 | 67.908730 | 841.4 | 524,575 |
+
+| 比較 | 差（pp） | 95% CI（pp） |
+|---|---:|---:|
+| P−O | +2.638889 | [-1.666667, +6.944444] |
+| M−O（事前指定primary） | -3.277778 | [-9.416667, +2.500000] |
+| M−P（事前指定secondary／作業更新判断） | -5.916667 | [-12.500000, +0.250000] |
+| (M−P)−(L−O)（探索的interaction） | -2.805556 | [-11.000000, +4.833333] |
+
+公式pairは既存比較器のsource層化paired bootstrap（2,000回、seed20261104）を使った。
+interactionも同じ全90行について各source内のrow抽出を4条件で共有し、
+独立pairの分散を足していない。単回生成に条件付けた探索的比較であり、
+反復生成の揺れや真の学習base、moduleの因果的寄与を証明しない。
+CIは判断に付随する不確実性であり、今回の作業モデル更新に有意差を追加要求しない。
+
+P−OではHE151・HE95・MBPP641・MBPP801が成功へ変わり、LCB abc399_cを失った。
+SciCode72は5/9から7/9へ改善した。
+M−PではMBPP103・126とLCB abc399_cを得たが、HE116・151・95、
+LCB3777・abc390_g・arc195_bを失い、SciCode14・35・58の部分点も低下した。
+部分点の正負と公式0.5閾値flipの件数は同じ指標として扱わない。
+
+ユーザーは「改善したら改善後から積み上げる」と明示したため、
+P（73.825397）を現在の作業モデルへ更新した。
+M（67.908730）はP比−5.916667 ppなので更新せず、以後はPの保存weightsから積み上げる。
+事前指定の科学的primary M−Oは書き換えず、既にsecondaryとして指定していたM−Pを
+作業モデル更新の比較にも使う。多少の他領域損失を許容する方針を維持し、
+全領域非退行やCI下限が正という新しい条件は課さない。
+
+時系列は分けて残す。Mのreport終了は12:27:26.463233 UTCで、
+方針監査12:28:24／M score初回閲覧12:28:35より前に結果は存在していた。
+ユーザー指示はその初回閲覧より前だったが、恒久的な方針・working stateの保存は
+全4report完成後である。「M結果が存在する前の事前登録」とは述べない。
+Pのknown64・full14・DeepSWE確認は未実施で、90超達成やHF適格を意味しない。
+
+今後の作成元はworking-incumbent.jsonのSHAとcheckpoint path/treeで固定する。
+現在のtreeは3dfb3bd1db0ab2ba4fff843616bb0d3109e0b97a6c9349658620908f2a24bebc、
+freeze SHAは104de676cd416ada1842649cf3f2d8e35d81bfac353238b530885f3f25645c45。
+original Oは不変の参照として保持する。全期間の条件別スコアは
+[全公式スコア台帳](2026-11-06-all-official-scores.md)、運用方針は
+[コード90計画の追補](2026-11-06-code90-plan.md)を参照する。
+
+4条件のrunnerは取得済み範囲でRootFSの16 layersとImage.Configが一致した。
+wrapper build由来のimage ID差はそのまま記録し、取得していなかった全HostConfigや
+重複environment keyの事後確認を推測で補っていない。
+CPU weight scanとCIが実行時間に重なったため、wall差をweightsだけによる速度差としない。
+serving counterは各120完了で、公式119 callsとの差1件・入力21／出力1 tokenは
+別のwrapper readiness requestに対応する。counterだけから全itemへの帰属や他client不在を証明しない。
+
+対象run ID：
+
+- gemma4-code90-original-base-c32-dev30-code-pairm-20261106
+- gemma4-code90-k1-exported-text-c1-c32-dev30-code-pairm-20261106
+- gemma4-code90-heretic-public-base-c32-dev30-code-pairm-20261106
+- gemma4-code90-heretic-public-base-k1-c1-c32-dev30-code-pairm-20261106
+
+| 最終証拠（同analysis起点） | SHA256 |
+|---|---|
+| base-alignment-fourway-m-v1/official-fourway-summary.json | 51fade1ed59521995d748bc0bb219e303d323fee62778ced518daad4b0647073 |
+| working-incumbent-policy-v1.json | 068993d7db2d7d5c44c4d7d955da2123daaa91cb580c872be8534cf2439cc51d |
+| working-incumbent.json | 609190932c606e5b9219be072344f68fd2b8e2fdb695109eec63581ed8a75f21 |
