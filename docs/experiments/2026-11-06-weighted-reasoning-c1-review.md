@@ -1,6 +1,6 @@
 # J: weighted-reasoning donor の単一係数試行と保存重み検証（2026-11-06）
 
-J は、repository-repair の成功履歴で学習された LoRA を係数1で元の Gemma 4 31B BF16 へ移す、固定した1試行である。短い科学関数の代理指標や math 最終答案とは異なる学習方向を調べる。**本記録は試行前の根拠・固定条件と完了した保存重み検証であり、能力改善・90超・採用を示す結果ではない。**
+J は、repository-repair の成功履歴で学習された LoRA を係数1で元の Gemma 4 31B BF16 へ移す、固定した1試行である。短い科学関数の代理指標や math 最終答案とは異なる学習方向を調べる。**保存重み検証とfresh originalとの公式dev90比較まで完了した。codeは69.103175→72.158730（+3.055556 pp、95% CIは0を跨ぐ）。既存B/H/Iを上回る新固有成功は確認できず、90超・安定した改善・採用を主張しない。**
 
 ## 公開学習情報と移植の留保
 
@@ -85,11 +85,11 @@ module単位の最大相対L2はL37 gateの0.200388%、続いてL40 gate 0.18586
 **保存／連続norm比は大きさの比であり、方向保持率・忠実度・丸め誤差norm・能力保持率ではない。**
 分子はFP32演算後の実BF16差分、分母はFP64 factor-Gramの連続方向であり、保存後cosineは未測定である。
 
-## 配信後の固定評価計画
+## 配信前に固定した評価条件
 
 固定smokeは自作advanced-v2のtrain16＋transfer8、native thinking ON、既存official sampling/tokenizer/template、seed0、max_tokens32768。historical original-v2の23/24は構造的な破損検出の参照で、fresh pairedな因果比較ではない。転移8件はgradientに使わないが、既に既知のvalidationである。既定の停止条件はoriginal比でformat/syntax/missing/execution-unknownが2件以上増える、またはcapに達しusable finalが無い場合。semantic pass率で係数調整しない。thought channel開閉や独立reasoning token数は既存generatorで未計測。
 
-その後の公式評価はfresh originalとのdev30 code90同時比較を準備済み。HE30 / MBPP30 / LCB20 / SciCode10、各direct TP2 endpoint、chat32 / logprob8 / agent1、固定bench source `5e3f2df0c7f455013af3fa2d7abb3719858f808f`、同manifest・native ON・公式sampling/caps/scoringを維持する。dev90はknown64の90超確認や全14領域評価と同一ではない。code各source、課題別得失、形式・cap・時間・不確実性を報告し、少量の他領域損失を自動棄却条件にしない。
+その後、下記条件でfresh originalとのdev30 code90同時比較を実施した。HE30 / MBPP30 / LCB20 / SciCode10、各direct TP2 endpoint、chat32 / logprob8 / agent1、固定bench source `5e3f2df0c7f455013af3fa2d7abb3719858f808f`、同manifest・native ON・公式sampling/caps/scoringを維持する。dev90はknown64の90超確認や全14領域評価と同一ではない。code各source、課題別得失、形式・cap・時間・不確実性を報告し、少量の他領域損失を自動棄却条件にしない。
 
 先行balanced候補は公式dev90で71.3254対original72.5754となり不採用。容量確保のため、そのcheckpointディレクトリ12file（62,578,686,256 B、約58.28 GiB）のみを退役した。manifest、spec、benchmark結果は保持。cleanup receiptはmount参照0と削除後不在を記録し、空き容量は345,306,976,256→407,885,709,312 B。Jの作成・配信状態とは別の記録である。
 
@@ -130,10 +130,111 @@ module単位の最大相対L2はL37 gateの0.200388%、続いてL40 gate 0.18586
 | `cleanup-balanced-candidate-20261106.json` | `d486423fcc8476af251a0a3ec95b3987234e714fc9c58cf1fe175b85b23b118f` |
 | `additional-donor-search-v2/followup-three/summary.json` | `656be477d8a6035b01667945b5f2f91eb873697159035966137c87c711291224` |
 
-再利用toolの範囲は [inventory](reusable-tool-inventory.md) を参照。保存BF16変更数・normは本記録の完了済みCPU検証として示した。配信後のsmoke・公式結果は、これらの重み検証と区別して追記する。
+再利用toolの範囲は [inventory](reusable-tool-inventory.md) を参照。保存BF16変更数・normは本記録の完了済みCPU検証として示した。配信後のsmoke・公式結果は、これらの重み検証と区別して次節以降に記録した。
 
 ## Native ON確認と公式比較開始
 
 固定advanced-v2の24呼出しは全てstopで終了し、24/24が実行まで進んだ。train15/16＋transfer8/8=23/24で、過去original-v2と同じ反射壁課題だけが失敗した。形式失敗・unknownは0。入力2,864 token、出力49,375 token（元参照43,599）であり、独立した思考token数ではない。これは構造上の確認で、能力改善やfreshな因果比較とはしない。
 
-`weighted-reasoning-c1-v1/smoke-numeric-summary.json` と `structural-smoke-decision.json` に数値とSHAを保存した。新しいserving-counter toolの全489件CPU CI通過後、2026-11-06 09:29:59 UTCにJ/元の開始前counterを取得し、両方running/waiting=0を確認。直後に未変更の公式dev90をdirectTP2/c32で開始した。終了後にprocess counter差分と保存sampleの数値を区別して照合する。結果が出るまでは採用・90達成・合成効果を主張しない。
+`weighted-reasoning-c1-v1/smoke-numeric-summary.json` と `structural-smoke-decision.json` に数値とSHAを保存した。新しいserving-counter toolの全489件CPU CI通過後、2026-11-06 09:29:59 UTCにJ/元の開始前counterを取得し、両方running/waiting=0を確認。直後に未変更の公式dev90をdirectTP2/c32で開始した。終了後のprocess counter差分と保存sampleの数値を区別して照合した。この開始記録に対応する完了結果を次節に示す。採用・90達成・合成効果は主張しない。
+
+## 完了した公式dev90比較
+
+2026-11-06 09:30:04 UTCに同時開始し、Jは09:35:55、fresh originalは09:36:36に完了。
+両側90項目を正式採点し、未採点・response errorは0だった。主比較は今回のfresh originalであり、
+過去originalやB/H/Iは履歴の文脈に限る。codeは4 sourceの等重み平均で、90問の単純正解率ではない。
+
+| 公式指標 | Fresh original | J | 差 |
+|---|---:|---:|---:|
+| Code source平均 | 69.103175 | 72.158730 | +3.055556 pp |
+| HumanEval+ | 29/30 | 30/30 | +1問 |
+| MBPP+ | 22/30 | 22/30 | 0 |
+| LiveCodeBench | 14/20 | 15/20 | +1問 |
+| SciCode（各問題のstep率の平均） | 36.412698% | 40.301587% | +3.888889 pp |
+
+公式paired bootstrapのcode差95% CIは **[−1.944444, +8.472222] pp**（2,000 resamples、
+seed 20261104）で0を跨ぐ。閾値を跨ぐbinary flipは3獲得・1喪失、
+fractional scoreを含む数値変化は4増加・2低下だった。
+**known64確認や全14分野評価ではなく、90超や安定した改善・採用を示したとはしない。**
+
+| 項目ID | Fresh original → J | 履歴上の留保 |
+|---|---:|---|
+| HumanEval/151 | 0 → 1 | 調べた元モデル3回は0。B/H/Iにも同じ成功がある |
+| LCB abc390_g | 0 → 1 | 旧originalとBに成功済み。回復であり新固有能力ではない |
+| LCB abc399_c | 0 → 1 | 旧original3回はいずれも1 |
+| LCB 3777 | 1 → 0 | 旧originalには1と0の両方。B/Hは1、Iは0 |
+| SciCode14 | 1/2 → 1 | 旧originalに1の成功済み |
+| SciCode72 | 8/9 → 7/9 | 今回のfresh originalから低下。partialを全成功・全失敗としない |
+
+HE95は今回のfresh originalもJも1なので、H/Iで見た同項目の利得を今回二重計上しない。
+JとIは89/90項目の数値が同じで、差はabc390_gの0→1だけだった。
+Hからはabc390_gを回復する一方3777を失い、同じcode72.158730になった。
+Bからは3777とMBPP641を失い、Sci35が1/3→2/3になり、code差は−1.25 pp。
+**JがB/H/Iの全てを上回る新固有項目は0**。
+これは保存された同90項目の記述的比較であり、Bの主参照は編集済みh0397、
+H/Iの主参照は別時刻のoriginalである。異なるbaseline差を一つの因果効果にまとめない。
+本文・非公開テスト・推論を読んでおらず、個別失敗原因はこの数値から推定しない。
+
+### 使用量と実runtime
+
+| 保存された数値 | Fresh original | J |
+|---|---:|---:|
+| Run wall秒（開始から正式完了） | 392.110 | 350.719 |
+| 記録leaf model calls | 119 | 119 |
+| Input tokens | 97,341 | 95,611 |
+| Output tokens | 345,494 | 368,026 |
+| 保存finish stop / length | 119 / 0 | 119 / 0 |
+
+119はHE30＋MBPP30＋LCB20＋SciCode39の保存call数である。
+agent手数や独立したHTTP retry回数ではなく、outputは思考と公開回答を分離した量ではない。
+
+開始前／終了後のprocess counterでは、両側ともstop +119、length +1、
+abort/error/repetition +0、process-start同一、running/waitingは前後0。
+Jのprompt/generation差分は95,632 / 368,027、元は97,362 / 345,495で、
+双方とも保存call合計よりprompt21 / generation1 token多い。
+この追加終了は保存benchmarkのlength終了と同一視せず、counterだけからretryや項目帰属を確定しない。
+counter区間は約498.8秒であり、上表のrun wallとは別の観測窓である。
+
+生存中に両runnerを採取し、同じOCI image
+`13efaa7acd6105cd8c20e5a2905b4657d014301713627aa62eab3f55d94f56f1`、
+image runtime Config SHA `6a7c464d0db594fcc94700c46de0d815902ff1448696017e91074dccf2aec927`、
+16 layer列SHA `e38fde5af3b85b4cc8d37ce7559e04753c231300fab215152409e5d44e776e7d`
+を確認した。Config/layer列はH/I記録とも一致するが、今回のOCI image IDは再buildで別である。
+直接endpoint以外の公式command、source archive5e3、manifest、source選択、
+concurrency、mount/resource条件など14項目の照合は全PASS。
+raw command・環境値・response本文・log本文はrunner証拠に保存していない。
+
+Run IDs:
+
+- J: `gemma4-code90-weighted-reasoning-c1-c32-dev30-code-20261106`
+- Fresh original: `gemma4-code90-original-base-c32-dev30-code-pairj-20261106`
+
+数値原本は `weighted-reasoning-c1-v1/dev90-evidence.json`、
+集約と14 parity checksは `dev90-final-summary.json`、
+counter原本／差分は同ディレクトリの `serving-counters/` に保持した。
+これらは既存公式採点の読取・比較であり、追加モデル呼出し・再採点・重み変更は行っていない。
+
+### 採点分離と追加process eventのsource監査
+
+結果の一致がcache混入によるものかを、固定source5e3の実装だけで確認した。
+`wsp/run.py:107–108` は新runディレクトリを排他的に作り、outcomes/scoredをrun内に保持する。
+`wsp/sources/__init__.py:91–120` は各scorer呼出しでfreshな
+`TemporaryDirectory(prefix="wsp-score-")` のinput/outputを用いる。
+HE/MBPPはそのrunのsampleをsanitizeしてcheck_correctnessへ渡し、
+LCBは現在のjob列を採点してstrict zipで戻す。
+SciCodeはsampleごとにprevious/filesを初期化し、採点時にもfreshな
+`wsp-scicode-` ディレクトリとposition/sample/step固有のファイルを使う。
+確認したadapter/scorer経路にはmodel_idで回答・成績を共有するcacheは無く、
+固定dataset/expected dataの共用と生成結果の共用を区別できた。
+外部依存の全実装や実回答bytesを再監査したものではなく、同じ正誤を同じ生成内容とも解釈しない。
+
+追加1completionについては、`wsp/cli.py:165` がrun作成前に
+`TargetClient.discover_chat_model()` を呼び、
+`target.py:11,70–103` が固定の**max_tokens=1** chat capability probeを送る。
+これは保存119 callsに含まれない具体的なsource経路であり、
+両側に同じprompt+21/generation+1/length+1があった観測と整合する。
+counter単独から個々のrequestやretry不在を証明したとはしない。
+source9ファイルのSHAと参照行、未確認範囲は
+`weighted-reasoning-c1-v1/scoring-isolation-and-startup-probe-audit.json`
+（SHA `4709f80a6497ab7db08f9560b61a50e42bef16918075bacc2ffe4ce50a6c7991`）
+へ保存した。新規モデル呼出し・採点・test実行・source変更は0。

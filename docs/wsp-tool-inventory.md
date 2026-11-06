@@ -16,6 +16,7 @@ private runtime configuration and model reasoning are separate artifacts.
 | Matched cost metrics on saved local gradients | [cost comparison](../scripts/experiments/gemma4-purpose/compare_costs.py) | Identical constraints, explicit near-zero floors, output-name collision checks; no new forward |
 | Saved finite-response analysis and quantized joint-set proposals | [finite-response guide](wsp-finite-response.md) | Endpoint secants, active-cone projection and Pareto reports are predictions, not scores |
 | Original-base composition | [composition](../src/kairyu_bench/wsp/weights/composition.py) | Report overlap, cancellation and actual BF16 deltas; no assumed additive benefit |
+| Exact composition of verified saved checkpoints | [byte-splice composer](../scripts/experiments/compose-verified-checkpoints.py), [guide](wsp-checkpoint-composition.md) | Disjoint full-tensor bytes, full/partial virtual reversion, fresh output hashes; no GEMM or rerounding and no assumed functional additivity |
 | Fixed native/sparse-matrix RAM replay | [finite replay](../src/kairyu_bench/wsp/weights/finite_replay.py) | Original → up to eight fixed native/matrix sets → restored original; no persistent weight writes or automatic adoption |
 | Live activation collection and benchmark/request joins | [observation package](../src/kairyu_bench/wsp/observe/), [guide](wsp-weight-observation.md) | TP, call/trial identity, missing data, drop counts and incomplete capture status remain visible |
 | Large offline activation overview | [report generator](../src/kairyu_bench/wsp/observe/report.py) | Task-wise compressed loading, bounded cache, explicit errors; all tasks retained |
@@ -25,7 +26,6 @@ private runtime configuration and model reasoning are separate artifacts.
 | Recorded operational item exclusions | [WSP CLI](../src/kairyu_bench/wsp/cli.py), [guide](wsp.md) | Explicit selected IDs recorded in run metadata; manifest and scoring rules unchanged; compare common scored items with disclosed denominator |
 | Baseline observation analysis | [experiment analysis recipe](experiments/2026-11-06-observed-gemma-analysis.py) | One-pass read of retained capture; associations are not edit directions |
 | Repeated WSP gain/loss ranges and DeepSWE trial usage | [evidence recipes](experiments/scripts/README.md) | Official scoring is reused; fractional changes, retry UUIDs, steps and missing usage are preserved; opt-in bounded first-info metadata adds agent-recorded API counters separately from steps |
-
 | Serving counter baselines and deltas | [tool](../scripts/experiments/serving-counters.py), [guide](wsp-serving-counters.md) | Whitelisted process counters; resets/missing series explicit; no per-item, retry or thought-token attribution |
 
 The source migration also covers the reusable parts of the original
@@ -62,3 +62,5 @@ The opt-in sampled-matrix editor and finite replay support 512 coordinates per m
 The [science recipe guide](../scripts/experiments/gemma4-purpose/README.md) includes executable author-owned train/transfer cases, preview-first public-answer generation, and restricted CPU-container execution. Generation records the declared checkpoint and decoding frame, persists public answers and numeric usage only, and does not establish serving identity by itself. The sandbox keeps expected values outside the generated-code process and reports infrastructure failures as unknown. Neither result is a WSP score.
 
 The same guide documents current/legacy attention geometry, one-case gradient accumulation and native/matrix joint proposals. [Stored donor alignment](../scripts/experiments/gemma4_lora/README.md) compares saved BF16 bytes with sampled scientific derivatives; it cannot infer the full donor direction from those cells. See the [code90 protocol](experiments/2026-11-06-code90-plan.md), [GPU pilot and actual failures](experiments/2026-11-06-science-matrix-pilot.md), and [candidate-method review](experiments/anonymous-science-candidate-review-2026-11-06.md).
+
+The [J final comparison](experiments/2026-11-06-weighted-reasoning-c1-review.md) separates saved calls from the source-defined startup probe and process counters. The [fixed B+H composition plan](experiments/2026-11-06-native-coherent-splice-k.md) records contemporaneous four-arm comparisons; its implementation proof does not establish a score gain.
