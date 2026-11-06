@@ -191,3 +191,21 @@ restores their union. Its pinned spec contains the exact coordinates; the
 adapter/owner pins the sampled-plan bytes, while the finite runner does not
 independently reinterpret that sampled plan. No fresh full-weight hash or new
 finite numerical kernel is implied.
+
+### Explicit matrix-only eligibility
+
+A v2 plan may set eligible_blocks to ["matrix"]. If omitted, the existing
+["native", "matrix"] behavior remains unchanged; v1 does not accept this field.
+All four matched collections and all 84-style objective rows are still
+validated. Native columns are removed from the source-value vector, gradient
+matrix and output layout before optimization and BF16 realization. This is
+exact ineligibility, not a very large diagonal cost.
+
+The active matrix scope remains O plus complete coherent MLP support; Q/K/V
+remain excluded. Emission rejects any native or Q/K/V edit in matrix-only mode.
+Reports distinguish observed native columns from zero eligible native columns,
+and native realized count/norm are zero. The existing editor's untouched-byte
+verification preserves native values, including signed zero, in saved output.
+This does not force a feasible result or nonzero matrix entries: predictions,
+missed bounds and absent participation remain explicit. A matrix-only solve is
+a separately declared hypothesis, not an automatic retry of a mixed result.

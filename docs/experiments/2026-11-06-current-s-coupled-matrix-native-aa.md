@@ -76,3 +76,35 @@ analysis/code90-resume-20261106/からの相対パス。既存回答・問題・
 完了summary SHA24ca2e9ec381900cc93995e4b3022eef21ca9b09e3fb664b7fb2cddab4b61621、completion7d792ce68e992cae80d0522d05f08daf81ef8a59ac248b0c6275a16f5134b5e8、postchecksa8a85283f9d9bd047010b71c8970b0cdfebc61fc0553c09f0965c32ff916e647、独立数値review4aed13610cf2d09e43a26b10ebb398c746763d189fe2c244f16589a3e1cc6496。
 
 AAの84制約は固定式へ新Sのheadroomだけを代入し、独立再計算で一致した。plan SHA40fae9d8152e5730e765bb5a6ed91062069eb9404d5065b113c79d76e3fc05f8、独立plan review4857ab00dccc63fee4653c1e31f89e8a1437752d85f8b92cfbda1284b35fdbd8。上限300秒・1候補・再試行なしのCPU計算を開始した。AAの有限応答、保存checkpoint、公式accuracyは未実施で、Sの採用状態は変わらない。
+
+## AA完了：行列仮説未実現のため保留
+
+CPU計算は1回、wall 44.976秒（report内部44.607秒）で終了した。16補正roundのうち既存基準が選んだround15では、native 59要素／46 tensors／31層＋最終normのみが変化し、matrixは全240行列で0要素だった。実supportの各行のchangedとspecを独立照合した。raw ΔL2は1.1465662028600414、相対費用付きΔL2は0.04144787661827626。84局所制約中13が未達、最大shortfallは0.008940654918551446で、predicted_constraints_satisfied=falseを保持する。
+
+採用済みSのsource-native snapshotとspecの実BF16差分を再集計した。重み本体の再走査やモデル実行は行っていない。
+
+| native family | 変更要素 | tensors | raw ΔL2²比率 | 相対費用付きΔL2²比率 |
+|---|---:|---:|---:|---:|
+| 最終norm |3|1|80.8234%|7.0623%|
+| post-feedforward norm |6|4|19.1192%|13.4498%|
+| layer scalar |22|22|0.0259%|41.7554%|
+| Q norm |11|7|0.0162%|12.7724%|
+| post-attention norm |3|2|0.0139%|4.1552%|
+| pre-feedforward norm |1|1|0.0012%|0.9166%|
+| K norm |13|9|0.0002%|19.8883%|
+
+最終normの3要素とlayer59 post-feedforward normの3要素がraw ΔL2²の約99.91%を占める一方、相対費用ではlayer scalarの比重が最大になる。単位・元値の大きさが異なる二つの幾何を区別し、機能的寄与・logit温度・能力改善の因果とは解釈しない。
+
+事前の「matrix参加が消えた場合は広い仮説未実現」という規則に従い、rootはAAを保留した。GPU有限応答、保存checkpoint、公式runはいずれも0で、accuracy failureを観測したわけではない。epsilon編集、再solve、amplitude gridは行わず、採用済みS（state1049）を保持する。
+
+証跡は current-s-coupled-matrix-native-aa-v1/ 下の proposals/report.json（SHA5c515e731e3c39b996118ae92524122fb0d98d9ddc482e71ed8e0d1fca844a8d）、spec（SHAbd1252df175c4749b74a904974282f669f4c364d21a8d11555ba79c75ac5a014）、selection-decision.json（SHAa8fdc572b2ef6ffae4c1d0038e252fe73f3030113a95cdccfa8d1225c1f9d825）。
+
+## 別仮説ABの予算診断（未solve）
+
+採用済みnativeを完全固定し、同じS観測のO＋MLPだけで連成するABはAAとは別の編集支持仮説である。ただし、同じ局所下限とrelative radius .025／absolute radius 1e−6のまま計算する案には到達可能性の不足がある。
+
+既存BF16変換を用い、各座標の許容端点 d− = round(S−radius)−S、d＋ = round(S＋radius)−S を求め、各rowについて sum(max(gᵢd−ᵢ, gᵢd＋ᵢ)) を計算した。122,880の全座標に非ゼロのBF16端点はあるが、この独立row最大値さえprimary correct-LLの11行でtarget .01に届かない。不足はimplementation両fold、algorithm両fold、numerics両fold、contracts両fold、advanced_state両fold、workflow fold0で、最小上限はalgorithmの.001956（targetの19.56%）だった。
+
+この上限は各rowで別の最良方向を許すため、通過しても共通解や実行改善は保証しない。一方、下回るrowがある以上、同じboxと線形下限のmatrix-only solveは満たせない。これは局所線形問題の必要条件で、行列編集一般や非線形の能力向上が不可能という主張ではない。現条件のAB solveは開始しない。連続最小費用解から一つのradiusを定める案も含め、予算の再設計は別の方法判断として扱い、AAを遡って調整しない。
+
+独立監査 actual-footprint-and-matrix-feasibility.json（SHAd72f6edde071b19e34278b3c03e67cff1f72c48a497f65ad9c8d2be0420ae76f）は0.382秒、既存snapshotとgradient arrayのみを使用した。新しいsolver、数値kernel、モデルcall、checkpointは作成していない。方法レビュー用の匿名案は未送信として別保存し、私的測定値・座標・case本文を含めない。

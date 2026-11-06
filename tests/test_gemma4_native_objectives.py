@@ -197,6 +197,35 @@ class NativeCoupledTests(unittest.TestCase):
         self.assertEqual(saved.read_raw(qname), self.checkpoint.read_raw(qname))
         self.assertEqual(saved.read_raw(self.scalar), bytes.fromhex("0080"))
         self.assertEqual({p: self.sha(p) for p in self.checkpoint.files}, before)
+        # A new, explicit matrix-only hypothesis keeps all native source bytes fixed.
+        self.plan["eligible_blocks"] = ["matrix"]
+        self.plan["candidates"][0]["id"] = "matrix-only"
+        margin_dir = Path(self.plan["collections"]["matrix"]["margin"])
+        gradient = np.load(margin_dir / "gradient.npy", allow_pickle=False)
+        up = next(e for e in entries if e["family"] == "up")
+        gradient[up["start"]] = 1.
+        np.save(margin_dir / "gradient.npy", gradient)
+        plan_path = self.root / "matrix-only-plan.json"
+        plan_path.write_text(json.dumps(self.plan))
+        output = self.root / "matrix-only-proposal"
+        report = COUPLED.solve(plan_path, output, write_spec=True)
+        actual = report["methods"][0]
+        spec_path = output / "matrix-only.json"
+        spec = json.loads(spec_path.read_text())
+        self.assertTrue(actual["predicted_constraints_satisfied"])
+        self.assertEqual(actual["column_scope"]["native_columns"], 0)
+        self.assertEqual(actual["column_scope"]["observed_native_columns"], 3)
+        self.assertEqual(actual["realized_blocks"]["native"],
+                         {"changed_elements": 0, "delta_l2": 0., "weighted_delta_l2": 0.})
+        self.assertTrue(spec["edits"])
+        self.assertTrue(all("coordinates" in e and ".q_proj." not in e["tensor"] for e in spec["edits"]))
+        candidate, manifest = self.root / "matrix-only-saved", self.root / "matrix-only-saved.json"
+        editor.create(self.checkpoint.path, candidate, spec_path, manifest, apply=True, reserve_bytes=0)
+        editor.verify(manifest)
+        saved = Checkpoint(candidate)
+        for name in (self.norm, self.scalar, qname):
+            self.assertEqual(saved.read_raw(name), self.checkpoint.read_raw(name))
+        self.assertEqual({p: self.sha(p) for p in self.checkpoint.files}, before)
 
     def test_rejects_full_checkpoint_mismatch_even_with_same_native_values_and_bad_cohort(self):
         path = Path(self.directories["margin"]) / "provenance.json"

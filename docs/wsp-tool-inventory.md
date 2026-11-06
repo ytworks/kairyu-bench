@@ -82,3 +82,8 @@ mode and the coupled adapter's explicit v2 native-plus-O/MLP plan are documented
 in [the coupled-objective guide](wsp-native-coupled-objectives.md#optional-native-plus-sampled-matrix-plan).
 They reuse the existing objective, optimizer, BF16 editor and sparse finite
 replay; Q/K/V are observed but excluded from v2 edits. Legacy defaults remain.
+
+The same v2 coupled adapter accepts explicit matrix-only block eligibility:
+native columns are excluded before solving, with unchanged default behavior
+and existing saved-output byte verification. This is an opt-in hypothesis,
+not an automatic additional search.

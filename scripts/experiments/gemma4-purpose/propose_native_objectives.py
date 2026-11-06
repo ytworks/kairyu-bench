@@ -57,6 +57,10 @@ def prepare(path):
     mixed = plan.get("schema_version") == 2 and plan.get("kind") == "native_matrix_coupled_objectives_v2"
     if not mixed and (plan.get("schema_version") != 1 or plan.get("kind") != "native_coupled_objectives_v1"):
         raise ValueError("explicit supported coupled-objectives plan required")
+    if "eligible_blocks" in plan and not mixed:
+        raise ValueError("explicit block eligibility requires the v2 plan")
+    if mixed and plan.get("eligible_blocks", ["native", "matrix"]) not in (["native", "matrix"], ["matrix"]):
+        raise ValueError("eligible_blocks must be native+matrix or matrix only")
     source = plan["checkpoint"]
     checkpoint = Checkpoint(source["path"])
     current = checkpoint.identity(hash_files=False)
@@ -319,6 +323,16 @@ def solve(path, output, *, write_spec=False, maximum_seconds=120):
                      "baseline_max_abs_difference": {o: collections["matrix:" + o]["baseline_max_abs_difference"] for o in OBJECTIVES},
                      "gradient_methods": {"native": collections[OBJECTIVES[0]]["summary"]["runtime"].get("gradients"),
                                           "matrix": collections["matrix:" + OBJECTIVES[0]]["summary"]["runtime"].get("gradient_accumulation")}}
+        eligible_blocks = plan.get("eligible_blocks", ["native", "matrix"]) if mixed else ["native"]
+        if mixed and eligible_blocks == ["matrix"]:
+            # Exact exclusion: these variables never enter optimization or BF16 realization.
+            observed_native_count = native_count
+            base = base[native_count:]
+            gradient = gradient[:, native_count:]
+            layout = [entry for entry in layout if entry["block"] == "matrix"]
+            native_count = 0
+            scope.update(observed_native_columns=observed_native_count, native_columns=0,
+                         excluded_native_columns=observed_native_count, eligible_blocks=eligible_blocks)
         methods, specs = [], []
         for method in plan["candidates"]:
             lower = np.asarray([r["minimum_delta"] for r in method["constraints"]], dtype=np.float64)
@@ -351,9 +365,16 @@ def solve(path, output, *, write_spec=False, maximum_seconds=120):
             report.update(id=method["id"], constraints=method["constraints"], cost_metric=metric,
                           changed_elements=changed, changed_tensors=len(edits),
                           represented_source_l2=float(np.linalg.norm(base)),
-                          norm_scope="all native plus sampled O/MLP coordinates; not whole matrix norms" if mixed else "all selected native tensors; not the whole model",
+                          norm_scope=("sampled O/MLP coordinates only; native excluded" if mixed and native_count == 0 else
+                                      "all native plus sampled O/MLP coordinates; not whole matrix norms" if mixed else
+                                      "all selected native tensors; not the whole model"),
                           spec_emitted=bool(write_spec and edits))
             if mixed:
+                if eligible_blocks == ["matrix"] and any("indices" in edit or
+                        not matrix_recipe.PATTERN.fullmatch(edit["tensor"]) or
+                        matrix_recipe.PATTERN.fullmatch(edit["tensor"])[3] not in {"o", "gate", "up", "down"}
+                        for edit in edits):
+                    raise ValueError("ineligible native/QKV edit escaped matrix-only columns")
                 compatibility = joint.editor_compatibility(edits, allow_batched_matrix=True)
                 if not compatibility["spec_emission_allowed"]:
                     raise ValueError("matrix proposal exceeds existing editor bounds")

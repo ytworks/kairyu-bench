@@ -561,3 +561,9 @@ columns, and reuses the existing two-objective optimizer/BF16 rounding.
 Q/K/V remain diagnostic-only. Costs, permitted losses and block scales are
 explicit owner inputs; actual matrix participation after rounding is reported
 without forcing nonzero triplets. See the [v2 input and proof contract](../../../docs/wsp-native-coupled-objectives.md#optional-native-plus-sampled-matrix-plan).
+
+V2 also supports explicit eligible_blocks: ["matrix"] to keep the accepted
+parent's entire native block fixed. Native columns are absent from optimization
+and output, while both objective row sets and the same four-collection identity
+checks remain. Defaults are unchanged; no large-cost masking or forced edits
+are used. Saved-output regression checks cover native/QKV bytes and BF16 sets.
