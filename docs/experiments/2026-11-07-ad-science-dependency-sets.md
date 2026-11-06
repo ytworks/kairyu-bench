@@ -101,3 +101,78 @@ Evidence under current-ad-af-ag-dev90-v1:
 | working-decision.json | 3d780adc1f9ad6e49d9d29356c0631aa64d4216110359308d91bdc3e52cabb27 |
 
 The [complete score ledger](2026-11-06-all-official-scores.md) now contains128 records, preserving the previous125 row objects exactly.
+
+## Expanded library cohort: AH–AM finite outcomes
+
+The next batch kept the accepted AD checkpoint and replaced no earlier training object. Eight new library/helper families supplied two variants each: **16 new cases**, appended to the exact136-case cohort for152 cases, still21 purposes/42 folds. A separate eight-family transfer suite is excluded from gradients. See the [training](../wsp-library-science-training.md), [transfer/executor](../wsp-library-transfer-cases.md), and [shared science/code group](../wsp-shared-science-code-groups.md) guides. These authored tasks contain no official benchmark content; repeated numerical trials are not independent language tasks.
+
+Fresh AD native/matrix correct-LL and margin collections all completed. Their152-case frames matched; cross-family correct LL was exact and maximum per-case margin discrepancy was9.536743e-7, within the predeclared1e-6 tolerance. All136 inherited per-case values exactly matched the preceding AD collections. The16 new cases therefore change the calibration mixture explicitly, rather than replacing old observations. Source and checkpoint pins stayed unchanged, and the exact AF0 container was restored.
+
+The prospective AH–AM policy used only O/MLP matrices, with accepted native and Q/K/V weights fixed. AH allowed all60 layer groups; the other five selected13/9/13/8/11 groups from fresh fold agreement for distinct science/code/repair purposes. The same exact-name mask governed target norms and optimization. Six proposals ran once in66.097s, with no retry or rescale. Their actual raw L2 values were0.011685–0.015375; every nonzero proposal was within the separately declared relative-weighted cap2. Predicted misses were0/6/9/3/0/0, not an accuracy or admission gate. Nearest-BF16 continuous-box excess counts28/40/61/29/27/31 were retained.
+
+One shared-load finite replay then measured all six independently from AD in189.441s. It checked230 tensors/12,729 selected union values across base, six candidates and restored base. All selected-word hashes matched the precomputed expectations; restored NLL, margin and KL errors were exactly zero. Baseline correct-LL fold error was zero and margin case error9.536743e-7. This proves the selected application/restoration boundary, not a new full-model hash.
+
+| Candidate | BF16 changes | Relative weighted L2 | Core3 LL / margin | Science6 LL / margin | Actual misses /84 |
+|---|---:|---:|---:|---:|---:|
+| AH | 5,676 | 0.532982 | +0.001767 / −0.055885 | −0.001058 / −0.000792 | 41 |
+| AI | 3,222 | 0.475243 | +0.005253 / −0.082872 | +0.000422 / +0.002254 | 39 |
+| AJ | 3,457 | 0.541037 | −0.050488 / −0.155510 | −0.001596 / +0.000486 | 39 |
+| AK | 3,185 | 0.440723 | +0.001272 / −0.033450 | −0.000919 / +0.001535 | 29 |
+| AL | 2,370 | 0.423309 | +0.021650 / +0.145166 | −0.000048 / −0.000028 | 33 |
+| AM | 3,101 | 0.452048 | −0.110156 / −0.248316 | +0.001926 / +0.001622 | 44 |
+
+Core3 is code/implementation/algorithm; Science6 is the six existing scientific purposes. Both equally weight purposes and their two folds. Correct LL is negative NLL; foil LL is correct LL minus margin. AL's code-purpose result was+0.059802 LL/+0.438180 margin, with nearly flat science means. AI/AM improved the science means slightly but lost code margin; AM also lost code LL. No arm demonstrates scientific execution improvement from these proxies. Per-case margins permit exact old136/new16 splits; per-case correct LL is not exported, so an old/new LL decomposition is unavailable.
+
+The owner restored the exact AF0 container at22:09:06.369 UTC with source, parent and serving closure. Root selected all six for a subsequent native-ON transfer screen; at this update, its execution results are pending. No increment is adopted, no official score is added, and AD remains unchanged. The transfer screen is an execution measurement with contextual tradeoffs, not an eight-of-eight or universal no-loss gate.
+
+### Target-scale lesson and an unexecuted alternative
+
+The normalized targets requested very small functional proxy changes. AH's selected science LL target averaged0.0002027 nat/token, with margin0.0000604; AI–AM science LL means were0.0000490–0.0000814 and margin0.0000175–0.0000271. Science targets used only0.0031%–0.0505% of baseline LL headroom; the10% headroom ceiling never bound. Realized weighted norms used21%–27% of cap2. A larger cap alone would not enlarge a minimum-norm solution's requested gain.
+
+The per-weight inverse-magnitude metric has median cost105.7 and99th percentile5,768.1 on the122,880 eligible sampled values. Only7 values (0.0057%) hit the1e-6 floor. Thus the floor itself is not established as the cause of weak science effects; broader metric weighting and normalized-target scale are separate questions. Moreover, small edits already produced large, sometimes opposite-sign code responses. Increasing their amplitude is not justified merely by small norm or small scientific targets.
+
+A separate **prospective, unexecuted** calculation considered Euclidean raw cost, core/science LL targets of1% baseline headroom, margin+0.01 nat/token, raw L2 cap1 and coordinate box max(0.10×|source|,1e-5). Individual raw-norm lower bounds were at most0.6083, but13 of36 positive rows exceeded even their individual continuous-box support, by up to3.8117×. Cost substitution cannot repair that box limitation. These are necessary feasibility bounds only; joint conflicts, retention rows and BF16 realization remain unresolved. No solve/spec/model was run, no current target or radius changed, and no AH–AM candidate was amplified. Any next functional-target, metric or radius policy must be declared prospectively and assessed against actual finite and execution outcomes.
+
+Evidence (all paths relative to A):
+
+| Artifact | SHA256 |
+|---|---|
+| library-science-training-v1/train-cases.json | 475b1b3a8c88ca8602c9f3078d635aa0f867aa9669166fdbc5a278f6579b2016 |
+| current-ad-expanded-purpose-observation-v1/independent-numeric-review.json | 7f89df2dda09e6c5d14c9e779760a2440046639c9420697f35bb49abb61ab3b6 |
+| current-ad-library-joint-v1/method-policy.json | 4b39720a59c6adba590c08edcb58e5da9cbdae52c4d58f56c57895c2412687b4 |
+| current-ad-library-joint-v1/numeric-postcheck.json | d1c2deebb41245f9fe20fecbe26f46779a319d2adf33018c7882bd85293993c6 |
+| current-ad-library-six-finite-v1/numeric-final-summary.json | e0543ad2ea39e8d509abc44ac9731d2e80d1760a595efa5f7e02de56981f205f |
+| current-ad-library-six-finite-v1/independent-numeric-review.json | 4438b4087ce849c648b86cf90f08c9cfb5ad7ca264cf04e7bc02618caab7567f |
+| current-ad-library-six-finite-v1/completion.json | acc9c106ee4f9db6d5e7409ad7c4a5ad8fa74a197e00dd66f5e815d6f4c5aace |
+| current-ad-library-six-finite-v1/postchecks.json | 5bebcb667afc6870ac1b861533d8a1747aec0776fb140c06379dd90249143ea5 |
+| current-ad-library-joint-v1/target-scale-audit.json | 945d9ba501b5a4af0d44681661f3b1e30f32bc55160d91208b2a7f8962df3620 |
+| current-ad-library-joint-v1/euclidean-functional-target-feasibility.json | a06618b5f2b810b933c4e92584899cfe46a8c46187e33fc41648724788987e52 |
+
+## Ordinary transfer screen: no gain over the matched control
+
+The six AH–AM overlays were each evaluated on the eight separate library-transfer families, using ordinary native-thinking generation and the existing CPU executor. These cases were excluded from the 152-case gradient cohort; after this screen they are used evaluation evidence, not an unseen holdout. Two rounds retained the same temporary AD control process and evaluated three candidates per round. All selected target words matched the planned overlay on every rank, including the draft-bypass checks. This is selected-word evidence, not a full GPU-state hash or generated-output equivalence claim.
+
+| Round | Arm | Cases passed | Trials passed | Output tokens |
+|---|---|---:|---:|---:|
+| 1 | AD control | 7/8 | 56/64 | 17,577 |
+| 1 | AH | 7/8 | 56/64 | 18,040 |
+| 1 | AI | 7/8 | 56/64 | 18,568 |
+| 1 | AJ | 7/8 | 56/64 | 19,853 |
+| 2 | AD control | 7/8 | 56/64 | 16,800 |
+| 2 | AK | 6/8 | 48/64 | 18,619 |
+| 2 | AL | 7/8 | 56/64 | 20,016 |
+| 2 | AM | 7/8 | 56/64 | 20,250 |
+
+All 64 generation requests finished with stop; generation errors and unknown execution outcomes were zero. Each arm used 1,132 input tokens. Every arm failed all eight trials of filter-state-response; AK additionally failed all eight symbolic-axis-jacobian trials. No candidate gained a case over its round's control. Independent numeric recomputation checked case/trial counts, usage, finish reasons and matched gain/loss IDs without reading generated responses.
+
+A read-only check of the authored filter prompt, sampler and reference found no concrete contract mismatch: history is latest-first, the recurrence divides by a[0], frequencies are radians per sample, and the return contains filtered samples plus real/imaginary frequency response, not a final filter state. The common failure therefore remains an observed execution failure with unknown cause. No active task or oracle was changed.
+
+The two controls had identical binary outcomes on all eight cases, but none of their eight generated-code hashes matched. Seed and serving settings therefore do not establish exact output determinism. The screen made no official benchmark calls and wrote no checkpoint payloads. Its owner ran for 685.831 seconds and restored all four original container IDs healthy at 22:28:58.680 UTC, with final source/serving checks passing.
+
+Root advanced **AL only** to a physical saved-weight official comparison, combining its positive code finite response with the absence of a new transfer loss. AL did not improve this transfer score and is **not adopted** at this stage. AD remains the accepted parent; no new official score is claimed. Neither raising the slack parameter-cost cap nor amplifying these completed deltas follows from this result. The functional-target/metric/radius alternatives above remain prospective.
+
+The exercised screen owner and the separate, still-unexecuted TP2×DP2 full14 recipe are documented in [bounded evaluation owners](../wsp-bounded-gpu-evaluation-owners.md). They preserve the difference between a screening result, a saved-weight official result and a working-adoption decision.
+
+Evidence relative to A: current-ad-library-overlay-screen-v1/numeric-summary.json SHA256 2ba543be9c84dd8b19e7ccca841e77c84c67c980275c68ef562a7270e9fbd0c6; completion.json b3ac854aa7e35230812f7ede1a87538f25d4af5a6d7e4c55eb48a6c53789382b; postchecks.json 22e4588174fb462883fbdd49c9e1ce6929c7d3551063b03be1862c4507228e1e.
+
+After AL was healthy, root removed only the retired AF checkpoint payload (62,546,338,264 bytes); all AF metadata/results were retained and no service was changed. This was storage housekeeping, not deletion of an unsuccessful trial. Receipt: cleanup-retired-af-root-receipt-20261107.json SHA256 b189fc084b47df14fdc901a9fd0d9f1c04208df3569fac4779389e06ccd4ea51.
