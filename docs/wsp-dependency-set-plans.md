@@ -25,3 +25,5 @@ One tiny end-to-end fixture protects source propagation, F normalization, scope-
 Teacher-forced empty-thought objectives do not establish native-ON generation accuracy. Assess scientific LL/margin and related-purpose losses explicitly; do not rank solely by ordinary coding LL or infer parameter-family causality.
 
 Validation: one end-to-end fixture plus the full CPU suite passed (514 collected, 461 passed, 53 optional skips; whole Ruff, mypy74, data and shell31). Source hashes were unchanged during checks. The [selected-source postcheck](wsp-dependency-proposal-postcheck.md) independently reconstructs realized norms/counts and retains both declared and unscaled metrics.
+
+The optional --native-tensors NAME [NAME ...] argument applies an exact observed-name allowlist to native-bearing plans. The builder uses the proposer's shared native-column selector before dual-norm and native block-sensitivity calculations, and records the scope in policy and plans. Matrix-only plans omit the native field. Default construction is unchanged; this option does not choose new scientific objectives or execute a solver.

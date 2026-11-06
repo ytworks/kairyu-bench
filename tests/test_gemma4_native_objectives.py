@@ -228,6 +228,37 @@ class NativeCoupledTests(unittest.TestCase):
         self.assertEqual({p: self.sha(p) for p in self.checkpoint.files}, before)
 
 
+        # A protected norm stays byte-exact even though its gradient could satisfy
+        # the margin. Both objectives instead use the eligible matrix coordinates.
+        self.plan["eligible_blocks"] = ["native", "matrix"]
+        self.plan["native_tensors"] = [self.scalar]
+        self.plan["candidates"][0]["id"] = "protected-norm"
+        protected_plan = self.root / "protected-norm-plan.json"
+        protected_plan.write_text(json.dumps(self.plan))
+        protected_output = self.root / "protected-norm-proposal"
+        protected_report = COUPLED.solve(protected_plan, protected_output, write_spec=True)
+        self.assertTrue(protected_report["methods"][0]["predicted_constraints_satisfied"])
+        self.assertEqual(protected_report["methods"][0]["native_scope"],
+                         {"observed_columns": 3, "eligible_columns": 1,
+                          "eligible_tensors": [self.scalar]})
+        protected_spec = protected_output / "protected-norm.json"
+        self.assertTrue(all(edit["tensor"] != self.norm for edit in
+                            json.loads(protected_spec.read_text())["edits"]))
+        protected_saved, protected_manifest = self.root / "protected-saved", self.root / "protected.json"
+        editor.create(self.checkpoint.path, protected_saved, protected_spec, protected_manifest,
+                      apply=True, reserve_bytes=0)
+        editor.verify(protected_manifest)
+        self.assertEqual(Checkpoint(protected_saved).read_raw(self.norm),
+                         self.checkpoint.read_raw(self.norm))
+        self.assertEqual({p: self.sha(p) for p in self.checkpoint.files}, before)
+        # Typoed exact names fail before any gradient or output work.
+        self.plan["native_tensors"] = [self.norm + ".typo"]
+        protected_plan.write_text(json.dumps(self.plan))
+        with self.assertRaisesRegex(ValueError, "native_tensors"):
+            COUPLED.prepare(protected_plan)
+        self.plan.pop("native_tensors")
+        self.plan["eligible_blocks"] = ["matrix"]
+
         # Explicit Q-only scope selects Q cells and leaves every other byte intact.
         self.plan["matrix_families"] = ["q"]
         self.plan["candidates"][0]["id"] = "q-only"

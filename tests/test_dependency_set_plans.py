@@ -194,3 +194,12 @@ class DependencyPlanTests(unittest.TestCase):
             saved,
             {p.relative_to(output): f.sha(p) for p in output.rglob("*") if p.is_file()},
         )
+
+        # Excluding the only responsive native tensor must also remove it from
+        # derived-target normalization, not merely from the downstream solve.
+        args.output = f.root / "native-filtered"
+        args.native_tensors = [f.scalar]
+        with self.assertRaisesRegex(ValueError, "F block scale undefined"):
+            BUILDER.build(args)
+        self.assertFalse((args.output / "plan-roster.json").exists())
+        self.assertEqual({p: f.sha(p) for p in f.checkpoint.files}, before)

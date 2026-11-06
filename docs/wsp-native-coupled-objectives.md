@@ -211,3 +211,9 @@ missed bounds and absent participation remain explicit. A matrix-only solve is
 a separately declared hypothesis, not an automatic retry of a mixed result.
 
 The v2 plan optionally accepts matrix_families, a nonempty unique allowlist from q, k, v, o, gate, up, down. Omission preserves the O/MLP scope. Only selected sampled columns enter the existing optimizer and BF16 realization; excluded families remain byte unchanged. The report distinguishes all excluded matrix columns from excluded Q/K/V columns. Q/K/V sampling is not a matched attention-head circuit, and MLP shared-hidden sampling does not force all three matrices to change. This changes eligibility only, not the solver, cost formula, editor limits, or finite evaluation.
+
+### Optional exact native-tensor scope
+
+Both native-only v1 and mixed v2 plans may set native_tensors to a nonempty, unique list of exact observed native tensor names. Omission retains all native tensors. Unknown names, duplicates, empty lists and a native list on a matrix-only plan are rejected. Full checkpoint and complete native observation validation still precede proposal construction; the allowlist removes whole tensor columns from source values, both objective gradients, cost, optimization and BF16 realization. Excluded native tensors cannot appear in an emitted edit. Reports distinguish observed from eligible native coordinates. Eligibility does not establish what excluded tensors cause.
+
+The shared select_native_columns helper also serves normalized-target preparation. A target's dual norm is calculated after the same mask and declared block scaling. Existing default numerical kernels and collector semantics are unchanged. Existing tiny end-to-end fixtures save and verify a protected native norm while eligible matrices satisfy both objectives, and reject a derived-target preparation whose only responsive native tensor was excluded; no new test methods are added.

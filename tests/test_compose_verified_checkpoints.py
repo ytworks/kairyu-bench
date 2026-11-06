@@ -8,6 +8,7 @@ import json
 from pathlib import Path
 import shutil
 import struct
+import sys
 import tempfile
 import types
 import unittest
@@ -22,6 +23,13 @@ SPEC = importlib.util.spec_from_file_location(
 )
 compose = importlib.util.module_from_spec(SPEC)
 SPEC.loader.exec_module(compose)
+
+REBASE_SPEC = importlib.util.spec_from_file_location(
+    "sparse_rebase_fixture",
+    ROOT / "scripts/experiments/gemma4-purpose/rebase_sparse_composition.py",
+)
+rebase = importlib.util.module_from_spec(REBASE_SPEC)
+REBASE_SPEC.loader.exec_module(rebase)
 
 
 def save(path, value):
@@ -175,6 +183,102 @@ class ComposeVerifiedTests(unittest.TestCase):
 
     def run_compose(self, apply=True):
         return compose.compose(self.plan_path, self.plan_pin["sha256"], apply=apply)
+
+    def test_sparse_rebase_preserves_parent_increment_and_rejects_whole_conflict(self):
+        def freeze(root, name):
+            inventory = files(root)
+            path = self.work / (name + "-freeze.json")
+            return save(path, {
+                "checkpoint_path": str(root),
+                "all_checkpoint_files": inventory,
+                "candidate_inventory_stat": compose.common.inventory(root),
+                "control_tree_sha256": compose.common.canonical(inventory),
+            })
+
+        original = freeze(self.base, "original")
+        parent = freeze(self.b, "parent")
+        source_spec = {
+            "id": "earlier",
+            "source_checkpoint": str(self.base),
+            "base_tree_sha256": compose.common.canonical(files(self.base)),
+            "matrix_batch": True,
+            "matrix_sample_plan_sha256": "a" * 64,
+            "edits": [
+                {"tensor": self.linear, "coordinates": [[0, 0], [0, 1]],
+                 "set_values": [1.5, -0.0]},
+                {"tensor": "untouched", "indices": [0, 1],
+                 "set_values": [-0.0, 2.0]},
+            ],
+        }
+        spec_path = self.work / "earlier.json"
+        pin = save(spec_path, source_spec)
+
+        def invoke(output, *, parent_pin=parent, spec_pin=pin, cap=2, write=False):
+            argv = [
+                "rebase_sparse_composition.py",
+                "--spec", spec_pin["path"], "--spec-sha", spec_pin["sha256"],
+                "--source-freeze", original["path"],
+                "--source-freeze-sha", original["sha256"],
+                "--parent-freeze", parent_pin["path"],
+                "--parent-freeze-sha", parent_pin["sha256"],
+                "--output", str(output), "--candidate-id", "rebased",
+                "--relative-floor", "0.1", "--weighted-cap", str(cap),
+            ] + (["--write-spec"] if write else [])
+            with patch.object(sys, "argv", argv), contextlib.redirect_stdout(io.StringIO()):
+                rebase.main()
+
+        out = self.work / "rebased-metadata"
+        invoke(out)
+        self.assertFalse(out.exists())
+        for forbidden in (self.base / "metadata", self.b / "metadata"):
+            with self.assertRaises(ValueError):
+                invoke(forbidden, write=True)
+            self.assertFalse(forbidden.exists())
+        with self.assertRaisesRegex(ValueError, "cap"):
+            invoke(out, cap=1, write=True)
+        self.assertFalse(out.exists())
+
+        ambiguous = json.loads(json.dumps(source_spec))
+        ambiguous["edits"][0]["set_values"][0] = 1.5 + 2**-30
+        ambiguous_pin = save(self.work / "ambiguous.json", ambiguous)
+        with self.assertRaises(ValueError):
+            invoke(out, spec_pin=ambiguous_pin, write=True)
+        self.assertFalse(out.exists())
+
+        conflict = self.work / "conflicting-parent"
+        shutil.copytree(self.b, conflict)
+        tensor = Checkpoint(conflict).tensors["untouched"]
+        with (conflict / tensor.relative_shard).open("r+b") as stream:
+            stream.seek(tensor.offset)
+            stream.write(struct.pack("<H", 0))  # -0 to +0: numerically equal, different source word.
+        conflict_pin = freeze(conflict, "conflicting")
+        with self.assertRaisesRegex(ValueError, "entire edit rejected"):
+            invoke(out, parent_pin=conflict_pin, write=True)
+        self.assertFalse(out.exists())
+
+        invoke(out, write=True)
+        report = json.loads((out / "report.json").read_text())
+        self.assertEqual(report["changed_elements"], 3)
+        self.assertEqual(report["edited_tensors"], 2)
+        self.assertAlmostEqual(report["raw_delta_l2"], 5.25**0.5)
+        self.assertEqual(report["weighted_delta_l2"], 1.5)
+        saved = self.work / "rebased-checkpoint"
+        manifest = self.work / "rebased-manifest.json"
+        editor.create(self.b, saved, out / "spec.json", manifest, apply=True)
+        editor.verify(manifest)
+        reader = Checkpoint(saved)
+        expected = {
+            self.linear: struct.pack("<4H", 0x3FC0, 0x8000, 0x4040, 0x4080),
+            "untouched": struct.pack("<2H", 0x8000, 0x4000),
+        }
+        current = Checkpoint(self.b)
+        for name, tensor in reader.tensors.items():
+            actual = reader.read_raw(name, 0, tensor.numel)
+            self.assertEqual(actual, expected.get(
+                name, current.read_raw(name, 0, tensor.numel)
+            ))
+        for root in (self.base, self.b):
+            self.assertEqual(files(root), self.original[str(root)])
 
     def test_preview_exact_splice_and_redeploy_freeze(self):
         with patch.object(

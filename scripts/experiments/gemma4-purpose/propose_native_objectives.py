@@ -61,6 +61,37 @@ def matrix_families(plan):
     return values
 
 
+
+def native_names(plan, available):
+    """Exact-name opt-in; whole native observation validation remains mandatory."""
+    if "native_tensors" not in plan:
+        return set(available)
+    values = plan["native_tensors"]
+    if (not isinstance(values, list) or not values
+            or any(type(value) is not str or value not in available for value in values)
+            or len(set(values)) != len(values)):
+        raise ValueError("native_tensors must be a nonempty unique observed-native allowlist")
+    if plan.get("eligible_blocks") == ["matrix"]:
+        raise ValueError("native_tensors requires eligible native columns")
+    return set(values)
+
+
+def select_native_columns(plan, base, gradient, layout):
+    """Shared column mask for solving and normalized-target preparation."""
+    names = native_names(plan, {entry["tensor"] for entry in layout})
+    if "native_tensors" not in plan:
+        return base, gradient, layout
+    active, selected, cursor = [], [], 0
+    for entry in layout:
+        count = entry["count"]
+        if entry["tensor"] in names:
+            active.extend(range(cursor, cursor + count))
+            selected.append(entry)
+        cursor += count
+    indices = np.asarray(active, dtype=np.int64)
+    return base[indices], gradient[:, indices], selected
+
+
 def prepare(path):
     """Validate the whole checkpoint, cohorts and columns before reading gradients."""
     pins = {}
@@ -105,6 +136,7 @@ def prepare(path):
               if n.startswith("model.language_model.") and len(t.shape) <= 1 and t.floating}
     if not native or any(t.dtype != "BF16" for t in native.values()):
         raise ValueError("complete finite BF16 native layout required")
+    native_names(plan, native)
     matrices = {n: t for n, t in checkpoint.tensors.items() if matrix_recipe.PATTERN.fullmatch(n)}
     collections = {}
     families = ("native", "matrix") if mixed else ("native",)
@@ -311,9 +343,12 @@ def solve(path, output, *, write_spec=False, maximum_seconds=120):
                                           second[0].astype(np.float32).view(np.uint32))):
                 raise ValueError("objective source bytes/columns differ")
         base, _, layout, _ = loaded[OBJECTIVES[0]]
+        observed_native_count = len(base)
+        gradient = np.vstack([loaded[o][1] for o in OBJECTIVES])
+        base, gradient, layout = select_native_columns(plan, base, gradient, layout)
+        selected_native_names = {entry["tensor"] for entry in layout}
         layout = [dict(e, coordinates=None, block="native") for e in layout]
         native_count = len(base)
-        gradient = np.vstack([loaded[o][1] for o in OBJECTIVES])
         scope = None
         if mixed:
             matrix_base, _, matrix_layout, coords = loaded["matrix:" + OBJECTIVES[0]]
@@ -345,7 +380,6 @@ def solve(path, output, *, write_spec=False, maximum_seconds=120):
         eligible_blocks = plan.get("eligible_blocks", ["native", "matrix"]) if mixed else ["native"]
         if mixed and eligible_blocks == ["matrix"]:
             # Exact exclusion: these variables never enter optimization or BF16 realization.
-            observed_native_count = native_count
             base = base[native_count:]
             gradient = gradient[:, native_count:]
             layout = [entry for entry in layout if entry["block"] == "matrix"]
@@ -378,14 +412,19 @@ def solve(path, output, *, write_spec=False, maximum_seconds=120):
                                              "delta_l2": float(np.linalg.norm(delta_part)),
                                              "weighted_delta_l2": float(np.linalg.norm(cost[cursor:cursor + count] * delta_part))})
                 cursor += count
+            if any("indices" in edit and edit["tensor"] not in selected_native_names for edit in edits):
+                raise ValueError("ineligible native tensor escaped selected columns")
             changed = sum(len(e["set_values"]) for e in edits)
             if changed > 1_000_000:
                 raise ValueError("actual changed coordinates exceed one million; no silent trimming")
             report.update(id=method["id"], constraints=method["constraints"], cost_metric=metric,
                           changed_elements=changed, changed_tensors=len(edits),
+                          native_scope={"observed_columns": observed_native_count,
+                                        "eligible_columns": native_count,
+                                        "eligible_tensors": sorted(selected_native_names) if native_count else []},
                           represented_source_l2=float(np.linalg.norm(base)),
                           norm_scope=("sampled eligible matrix coordinates only; native excluded" if mixed and native_count == 0 else
-                                      "all native plus sampled eligible matrix coordinates; not whole matrix norms" if mixed else
+                                      "eligible native plus sampled eligible matrix coordinates; not whole matrix norms" if mixed else
                                       "all selected native tensors; not the whole model"),
                           spec_emitted=bool(write_spec and edits))
             if mixed:

@@ -106,9 +106,76 @@ analysis/code90-resume-20261106/vllm-sparse-overlay-validation-v1/gpu-completion
 A separate CPU-only check of the installed vLLM config writer reproduced
 PermissionError for UID 1003 at /.config/vllm/usage_stats.json; writing under
 an owned NVMe config directory succeeded. This establishes a writable-config
-requirement, not the cause of the discarded startup failure. A prepared,
-unexecuted owner revision sets XDG_CONFIG_HOME and VLLM_CONFIG_ROOT to that
-dedicated directory for every arm. It also saves a bounded private startup log
-before cleanup and publishes only fixed assertion messages, error classes,
-flags, and container exit status. No plugin, numerical kernel, or image change
-was made, and no GPU retry is implied by these diagnostic changes.
+requirement, not the cause of the discarded startup failure. The second
+authorized owner revision applied XDG_CONFIG_HOME and VLLM_CONFIG_ROOT
+uniformly and preserved a bounded private pre-generation startup log before
+cleanup. Public receipts expose only fixed assertion messages, error classes,
+flags, and container exit status; raw startup logs remain private.
+
+That second run also failed in the first ordinary saved-S arm, with exit code
+1, no OOM, PermissionError/RuntimeError, and errno 13 at /.cache. Installed
+source inspection identified FlashInfer's import-time workspace creation:
+flashinfer/jit/core.py calls os.makedirs(FLASHINFER_WORKSPACE_DIR), while
+flashinfer/jit/env.py derives its cache from FLASHINFER_WORKSPACE_BASE or
+Path.home(), followed by .cache/flashinfer. This path does not use
+XDG_CACHE_HOME. The same O2 container was restored at
+2026-11-06T20:09:46.823691Z; the owner's protected-service/source checks passed.
+Completed arms, generated cases, and selected-word proofs were all zero.
+The completion is vllm-sparse-overlay-validation-v2/gpu-completion.json
+(SHA-256 48398e5bfa9973acac073352aac632825fb0ae80e4a9ed2b38a42ebe6f24348b);
+startup-path-diagnosis.json pins the installed source evidence
+(SHA-256 0e408b154d56c5f9247868f4eddd71e5bff34d0c4a71c31b4cdd362e880f2285).
+These findings establish the v2 permission failure, not the unknown v1 cause.
+The v2 window overlapped AD full14; neither run supports an uncontended timing
+claim.
+
+The prepared v3 owner adds only FLASHINFER_WORKSPACE_BASE under its fresh,
+owned NVMe cache, uniformly for every arm, retaining v2 diagnostics and
+independent cleanup/restoration. A single installed-image CPU check as UID
+1003, runc, network none, and no GPU/server successfully imported FlashInfer
+and wrote a marker in the actual derived workspace in 3.64 seconds. Evidence:
+vllm-sparse-overlay-validation-v3/cpu-flashinfer-import-check.json
+(SHA-256 3ec90e6372654c65e7b58ecc620523618ec8a5e640159be9bcd423db70d8149e).
+No plugin, numerical kernel, image, or root-user fallback changed. This CPU
+check alone does not establish real GPU loading or output parity.
+
+After AD adoption, the explicitly authorized v3 run completed all four arms on
+the same image with TP2 and fixed MTP4. It restored the same O2 container at
+2026-11-06T20:44:51.592421Z, after 823.625 seconds overall. AD1, AC3, embeddings,
+source identities, and the named parallel observation's AE0 fixed
+ID/configuration/mount identity passed the owner's final checks. The only
+parallel exception was AE0's running/health lifecycle; no checkpoint mutation
+or automatic retry occurred.
+
+Both nonempty target-rank aggregates agreed on all 6,978 selected BF16 words
+after TP, and both ranks recorded the pinned draft bypass. The empty overlay
+covered zero selected words and remains explicitly not a full-model GPU hash.
+The fixed authored numeric comparison was:
+
+| Arm | Passed cases | Passed numeric trials | Output tokens |
+|---|---:|---:|---:|
+| Saved S, ordinary loader | 8/8 | 64/64 | 11,473 |
+| Saved S, empty overlay | 8/8 | 64/64 | 12,952 |
+| Saved AC, ordinary loader | 8/8 | 64/64 | 15,084 |
+| S plus AC sparse overlay | 7/8 | 56/64 | 13,560 |
+
+All 32 calls finished with stop; each arm used 952 input tokens. The nonempty
+overlay's whiten-recolor case failed all eight numeric trials while the saved
+AC arm passed them. Exact generated output parity was not established: code
+hashes matched 3/8 cases for the empty pair and 0/8 for the nonempty pair.
+The word proof and successful model loading must therefore be distinguished
+from the observed functional mismatch. One stochastic, batched comparison
+does not identify the mismatch's cause or establish universal equivalence.
+The authored cases had historical exposure; no held-out capability claim is
+made. Shared compilation cache and concurrent observation also prevent an
+uncontended speed claim.
+
+The completion is vllm-sparse-overlay-validation-v3/gpu-completion.json
+(SHA-256 55ca961ee39916df1aa3e7bc00f1b291b1296916a8be01c998fb100c5e4152dc).
+The final numeric receipt is gpu-closure-numeric-v2.json
+(SHA-256 af5eee3ab286e33efb75ca8b4e41cda432459e0322aff0799965825b1fdca311).
+It preserves the first derived summary and uses the actual input_tokens,
+output_tokens, tests_passed and tests_total report fields. No generated
+answer or reasoning body was inspected for these summaries. Future trials
+still require their own exact source/overlay identity and owner binding;
+the physical saved-checkpoint path remains available.

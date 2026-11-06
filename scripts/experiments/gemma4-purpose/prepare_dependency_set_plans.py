@@ -167,6 +167,8 @@ def build(args):
             H="O-MLP-margin",
         ),
     )
+    if getattr(args, "native_tensors", None) is not None:
+        policy["native_tensors"] = args.native_tensors
     args.output.mkdir()
     write(
         args.output / "method-decision.json",
@@ -205,6 +207,8 @@ def build(args):
             )
         ],
     )
+    if getattr(args, "native_tensors", None) is not None:
+        baseplan["native_tensors"] = args.native_tensors
     bootstrap = args.output / "metadata-input-plan.json"
     write(bootstrap, baseplan)
     checkpoint, _, collections, actual_labels, pins = adapter.prepare(bootstrap)
@@ -244,6 +248,8 @@ def build(args):
                     raise ValueError("objective base/layout mismatch")
                 source_equal[family] = True
             previous = current
+            if family == "native":
+                base, g, _ = adapter.select_native_columns(baseplan, base, g, layout)
             scale = np.maximum(np.abs(base), 1e-6)
             if family == "native":
                 normsq[(family, objective)] = np.array(
@@ -370,6 +376,8 @@ def build(args):
             metric = dict(type="relative", floor=1e-6)
         else:
             plan["eligible_blocks"] = ["native", "matrix"] if use_native else ["matrix"]
+            if not use_native:
+                plan.pop("native_tensors", None)
             plan["matrix_families"] = families
             metric = dict(
                 type="relative", floor=1e-6, block_scales=dict(native=sn, matrix=sm)
@@ -471,4 +479,6 @@ if __name__ == "__main__":
     p.add_argument("--parent-sha", required=True)
     p.add_argument("--review", type=Path, required=True)
     p.add_argument("--review-sha", required=True)
+    p.add_argument("--native-tensors", nargs="+",
+                   help="Optional exact observed native tensor names for native-bearing plans.")
     build(p.parse_args())
