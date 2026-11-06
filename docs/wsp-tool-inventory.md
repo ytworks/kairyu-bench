@@ -68,3 +68,5 @@ The [J final comparison](experiments/2026-11-06-weighted-reasoning-c1-review.md)
 The [lossless text adapter extractor](wsp-text-adapter-extraction.md) explicitly partitions text and vision factors, preserves raw F32/BF16 bytes and unchanged config, and distinguishes original repository payloads from derived text-only exports. It creates no checkpoint or benchmark call.
 
 The [K1 exported-text trial record](experiments/2026-11-06-k1-exported-text-c1-review.md) records the actual lossless F32 selection, 499-test CPU validation and fixed-unit cross-base recipe; checkpoint quality and official scores remain separate outcomes.
+
+The [paired score-only contrast tool](wsp-paired-score-contrast.md) adds explicitly weighted multi-arm contrasts with shared source-stratified row draws, preserving covariance. It reads SHA-pinned numeric exports only and does not alter official scoring or declare adoption. The subsequent full CPU check passed 503 collected tests (451 pass, 52 optional skips), Ruff and mypy73 with unchanged source hashes; the earlier 499-test extraction result remains its separate historical validation.
