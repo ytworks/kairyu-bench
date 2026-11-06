@@ -3,6 +3,8 @@
 from __future__ import annotations
 
 import contextlib
+import copy
+import hashlib
 import importlib
 import io
 import json
@@ -22,18 +24,19 @@ import numpy as np
 SCRIPTS = Path(__file__).resolve().parents[1] / "scripts/experiments/gemma4_lora"
 
 
-def safefile(path, tensors):
+def safefile(path, tensors, dtype="BF16"):
     header, chunks, cursor = {}, [], 0
     for key, value in sorted(tensors.items()):
         value = np.ascontiguousarray(value, dtype=np.float32)
         bits = value.view(np.uint32)
-        raw = (
-            ((bits + np.uint32(0x7FFF) + ((bits >> 16) & 1)) >> 16)
-            .astype("<u2")
-            .tobytes()
-        )
+        if dtype == "BF16":
+            raw = ((bits + np.uint32(0x7FFF) + ((bits >> 16) & 1)) >> 16).astype("<u2").tobytes()
+        elif dtype == "F32":
+            raw = value.astype("<f4").tobytes()
+        else:
+            raise ValueError("fixture dtype")
         header[key] = {
-            "dtype": "BF16",
+            "dtype": dtype,
             "shape": list(value.shape),
             "data_offsets": [cursor, cursor + len(raw)],
         }
@@ -185,6 +188,15 @@ class LoraRecipeTests(unittest.TestCase):
             self.recipe.verify(self.manifest)
         self.assertEqual(record["changed_elements"], 1640)
         self.assertAlmostEqual(record["delta_l2"], math.sqrt(1640) / 64)
+        # Independent old-r16 byte oracle: every factor product is exactly 1/64.
+        old = np.array([[1.0, -1.0], [0.25, -0.25]], np.float32)
+        value = np.add(old, np.float32(1/64), dtype=np.float32).view(np.uint32)
+        expected = ((value + np.uint32(0x7FFF) + ((value >> 16) & 1)) >> 16).astype("<u2").tobytes()
+        for entry in record["edits"]:
+            with (self.dest/entry["shard"]).open("rb") as stream:
+                stream.seek(entry["offset"])
+                self.assertEqual(stream.read(entry["size"]), expected)
+        self.assertEqual(record["recipe"]["version"], 1)
         self.assertEqual(self.recipe.tree(self.base)[1], self.spec["base_tree_sha256"])
         untouched = self.dest / "tokenizer_config.json"
         original = untouched.read_bytes()
@@ -204,6 +216,122 @@ class LoraRecipeTests(unittest.TestCase):
             stream.write(b"\0\0")
         with self.assertRaises(ValueError):
             self.recipe.verify(self.manifest)
+
+    def _f32_factors(self, alpha=256):
+        donor = Path(self.spec["donor_path"])
+        h, _ = self.recipe.header(donor)
+        factors = {}
+        for name in h:
+            if name == "__metadata__":
+                continue
+            value = np.zeros((128, 2) if ".lora_A." in name else (2, 128), np.float32)
+            if ".lora_A." in name:
+                value[0] = [1.003, -1.003]
+            else:
+                value[:, 0] = 1 / (256 * (alpha / 128))
+            factors[name] = value
+        safefile(donor, factors, "F32")
+        config_path = Path(self.spec["donor_config_path"])
+        config = json.loads(config_path.read_text())
+        config.update(r=128, lora_alpha=alpha, peft_type="LORA")
+        config_path.write_text(json.dumps(config))
+        self.spec["donor_config_sha256"] = self.recipe.digest(config_path)
+        self._pin_f32(factors)
+        return factors
+
+    def _pin_f32(self, factors):
+        donor = Path(self.spec["donor_path"])
+        safefile(donor, factors, "F32")
+        _, offset = self.recipe.header(donor)
+        with donor.open("rb") as stream:
+            stream.seek(8)
+            header_sha = hashlib.sha256(stream.read(offset-8)).hexdigest()
+        self.spec["donor_sha256"] = self.recipe.digest(donor)
+        self.spec["factor_format"] = {"version": 2, "rank": 128, "dtype": "F32", "header_sha256": header_sha}
+        self.spec_path.write_text(json.dumps(self.spec))
+
+    def test_f32_rank128_preserves_factors_scale_and_exact_created_words(self):
+        old = np.array([[1.0, -1.0], [0.25, -0.25]], np.float32)
+        def rounded(value):
+            bits = value.view(np.uint32)
+            return ((bits + np.uint32(0x7FFF) + ((bits >> 16) & 1)) >> 16).astype("<u2")
+        for alpha in (256, 64):
+            with self.subTest(alpha=alpha):
+                factors = self._f32_factors(alpha)
+                self.dest = self.work / f"candidate-{alpha}"
+                self.manifest = self.work / f"manifest-{alpha}.json"
+                with contextlib.redirect_stdout(io.StringIO()):
+                    record = self.recipe.create(self.base, self.dest, self.spec_path, self.manifest)
+                    self.recipe.verify(self.manifest)
+                recipe = record["recipe"]
+                self.assertEqual((recipe["version"], recipe["r"], recipe["scale"]), (2, 128, alpha/128))
+                entry = record["edits"][0]
+                a, b = (factors[entry[key]] for key in ("lora_A", "lora_B"))
+                delta = np.multiply(b @ a, np.float32(alpha/128), dtype=np.float32)
+                # One nonzero rank term permits an independent FP64 scalar oracle;
+                # cast before the scale operation to retain the declared F32 order.
+                product_oracle = np.array(
+                    [[float(b[row, 0]) * float(a[0, col]) for col in range(2)]
+                     for row in range(2)], dtype=np.float32)
+                np.testing.assert_array_equal(
+                    delta, np.multiply(product_oracle, np.float32(alpha/128), dtype=np.float32))
+                expected = rounded(np.add(old, delta, dtype=np.float32)).tobytes()
+                aq = (rounded(a).astype(np.uint32) << 16).view(np.float32)
+                bq = (rounded(b).astype(np.uint32) << 16).view(np.float32)
+                downcast = rounded(np.add(old, (bq @ aq)*np.float32(alpha/128), dtype=np.float32)).tobytes()
+                self.assertNotEqual(expected, downcast)
+                for entry in record["edits"]:
+                    with (self.dest/entry["shard"]).open("rb") as stream:
+                        stream.seek(entry["offset"])
+                        self.assertEqual(stream.read(entry["size"]), expected)
+                self.assertEqual(self.recipe.tree(self.base)[1], self.spec["base_tree_sha256"])
+
+    def test_extended_format_rejects_wrappers_bad_pins_shapes_and_payload(self):
+        factors = self._f32_factors()
+        with self.assertRaisesRegex(ValueError, "dense-only opt-in"):
+            self.recipe.validated_recipe(self.base, self.spec)
+        module = importlib.import_module("module_lora_recipe")
+        with self.assertRaisesRegex(ValueError, "dense-only opt-in"):
+            module.validated_recipe(self.base, dict(self.spec, schema_version=3, kind=module.KIND))
+        self.spec["native_edits"] = [{"tensor": "model.language_model.norm.weight", "scale": 1.01}]
+        self.spec_path.write_text(json.dumps(self.spec))
+        with self.assertRaises(subprocess.CalledProcessError):
+            self._native_create()
+        self.assertFalse(self.dest.exists())
+        self.spec.pop("native_edits")
+        original = copy.deepcopy(self.spec)
+        for change in ({"rank": 257}, {"dtype": "F16"}, {"header_sha256": "0"*64}):
+            self.spec = copy.deepcopy(original)
+            self.spec["factor_format"].update(change)
+            with self.assertRaises(ValueError):
+                self.recipe.validated_recipe(self.base, self.spec, allow_factor_format=True)
+        self.spec = original
+        for flag in ("use_dora", "use_rslora", "modules_to_save"):
+            path = Path(self.spec["donor_config_path"])
+            raw = path.read_bytes()
+            config = json.loads(raw)
+            config[flag] = True if flag != "modules_to_save" else ["lm_head"]
+            path.write_text(json.dumps(config))
+            self.spec["donor_config_sha256"] = self.recipe.digest(path)
+            with self.assertRaises(ValueError):
+                self.recipe.validated_recipe(self.base, self.spec, allow_factor_format=True)
+            path.write_bytes(raw)
+            self.spec["donor_config_sha256"] = self.recipe.digest(path)
+        for kind in ("transpose", "extra", "nonfinite"):
+            with self.subTest(kind=kind):
+                changed = {k: v.copy() for k, v in factors.items()}
+                first = next(iter(changed))
+                if kind == "transpose":
+                    changed[first] = changed[first].T
+                elif kind == "extra":
+                    changed["unexpected.lora_A.weight"] = np.ones((1, 1), np.float32)
+                else:
+                    changed[first][0, 0] = np.inf
+                self._pin_f32(changed)
+                with self.assertRaises(ValueError):
+                    self.recipe.create(self.base, self.dest, self.spec_path, self.manifest)
+                self.assertFalse(self.dest.exists())
+                self.assertFalse(self.manifest.exists())
 
     def test_verify_rejects_source_changed_during_regeneration(self):
         with contextlib.redirect_stdout(io.StringIO()):

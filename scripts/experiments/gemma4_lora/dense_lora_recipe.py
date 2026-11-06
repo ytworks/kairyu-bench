@@ -113,18 +113,19 @@ def header(path):
 def tensor(path, h, offset, name):
     item = h[name]
     a, b = item["data_offsets"]
-    if item["dtype"] != "BF16" or b - a != 2 * math.prod(item["shape"]):
-        raise ValueError("BF16 tensor size mismatch")
+    width = {"BF16": 2, "F32": 4}.get(item["dtype"])
+    if width is None or b - a != width * math.prod(item["shape"]):
+        raise ValueError("BF16/F32 tensor size mismatch")
     with path.open("rb") as f:
         f.seek(offset + a)
         buf = f.read(b - a)
     if len(buf) != b - a:
         raise ValueError("short tensor")
-    value = (
-        (np.frombuffer(buf, dtype="<u2").astype(np.uint32) << 16)
-        .view(np.float32)
-        .reshape(item["shape"])
-    )
+    if item["dtype"] == "BF16":
+        value = (np.frombuffer(buf, dtype="<u2").astype(np.uint32) << 16).view(np.float32)
+    else:
+        value = np.frombuffer(buf, dtype="<f4")  # Preserve exported F32 factors; no BF16 conversion.
+    value = value.reshape(item["shape"])
     if not np.isfinite(value).all():
         raise ValueError("nonfinite adapter tensor")
     return value
@@ -143,13 +144,29 @@ def implementation():
     }
 
 
-def validated_recipe(base, spec):
+def validated_recipe(base, spec, *, allow_factor_format=False):
     if (
         spec.get("schema_version") != 2
         or spec.get("kind") != KIND
         or spec.get("scope") != "native_text410"
     ):
         raise ValueError("unsupported recipe kind/scope")
+    factor_format = spec.get("factor_format")
+    extended = "factor_format" in spec
+    if extended:
+        if not allow_factor_format:
+            raise ValueError("factor_format requires explicit dense-only opt-in")
+        if (not isinstance(factor_format, dict)
+                or set(factor_format) != {"version", "rank", "dtype", "header_sha256"}
+                or type(factor_format["version"]) is not int or factor_format["version"] != 2
+                or type(factor_format["rank"]) is not int or not 1 <= factor_format["rank"] <= 256
+                or factor_format["dtype"] not in {"BF16", "F32"}
+                or not isinstance(factor_format["header_sha256"], str)
+                or not re.fullmatch("[0-9a-f]{64}", factor_format["header_sha256"])
+                or spec.get("native_edits") or spec.get("companion_required")):
+            raise ValueError("invalid or unsupported dense-only factor_format v2")
+    rank = factor_format["rank"] if extended else 16
+    factor_dtype = factor_format["dtype"] if extended else "BF16"
     donor = Path(spec["donor_path"]).resolve()
     config_path = Path(spec["donor_config_path"]).resolve()
     if donor.is_relative_to(base) or config_path.is_relative_to(base):
@@ -166,8 +183,8 @@ def validated_recipe(base, spec):
         raise ValueError("coefficient must be exactly representable FP32 in (0,1]")
     config = read(config_path)
     for key, value in {
-        "r": 16,
-        "lora_alpha": 32,
+        "r": rank,
+        **({} if extended else {"lora_alpha": 32}),
         "use_rslora": False,
         "use_dora": False,
         "fan_in_fan_out": False,
@@ -182,7 +199,47 @@ def validated_recipe(base, spec):
         or config.get("lora_bias")
     ):
         raise ValueError("unsupported adapter modification")
+    alpha = config.get("lora_alpha")
+    scale_value = SCALE
+    if extended:
+        unsupported = ("use_qalora", "use_bdlora", "alora_invocation_tokens", "layer_replication",
+                       "target_parameters", "trainable_token_indices", "arrow_config", "corda_config",
+                       "loftq_config", "lora_ga_config", "megatron_config", "monteclora_config",
+                       "velora_config", "ensure_weight_tying")
+        if (config.get("peft_type") != "LORA" or type(config.get("r")) is not int
+                or type(alpha) not in (int, float) or not math.isfinite(alpha) or alpha <= 0
+                or any(config.get(key) for key in unsupported)):
+            raise ValueError("unsupported ordinary LoRA factor configuration")
+        with np.errstate(over="ignore", under="ignore"):
+            scale_value = float(np.float32(alpha / rank))
+        if not math.isfinite(scale_value) or scale_value <= 0:
+            raise ValueError("alpha/r must give a finite positive FP32 scale")
     h, off = header(donor)
+    if extended:
+        with donor.open("rb") as stream:
+            stream.seek(8)
+            actual_header_sha = hashlib.sha256(stream.read(off - 8)).hexdigest()
+        if actual_header_sha != factor_format["header_sha256"]:
+            raise ValueError("adapter header SHA mismatch")
+        intervals = []
+        for name, value in h.items():
+            if name == "__metadata__":
+                continue
+            shape = value["shape"]
+            lo, hi = value["data_offsets"]
+            if (value["dtype"] != factor_dtype or len(shape) != 2
+                    or any(type(v) is not int or v <= 0 for v in shape)
+                    or type(lo) is not int or type(hi) is not int or lo < 0
+                    or hi-lo != {"BF16": 2, "F32": 4}[factor_dtype] * math.prod(shape)):
+                raise ValueError("adapter factor extent/dtype mismatch")
+            intervals.append((lo, hi))
+        previous = 0
+        for lo, hi in sorted(intervals):
+            if lo != previous:
+                raise ValueError("adapter factor spans overlap or leave undeclared bytes")
+            previous = hi
+        if off + previous != donor.stat().st_size:
+            raise ValueError("adapter payload size mismatch")
     index = read(base / "model.safetensors.index.json")["weight_map"]
     for name in set(index.values()):
         rel = Path(name)
@@ -218,15 +275,15 @@ def validated_recipe(base, spec):
         if (
             entry["dtype"] != "BF16"
             or len(shape) != 2
-            or h[name]["shape"] != [16, shape[1]]
-            or h[bname]["shape"] != [shape[0], 16]
+            or h[name]["shape"] != [rank, shape[1]]
+            or h[bname]["shape"] != [shape[0], rank]
         ):
             raise ValueError("rank/shape/dtype mapping")
         if any(type(v) is not int or v <= 0 for v in shape) or entry["data_offsets"][
             1
         ] - entry["data_offsets"][0] != 2 * math.prod(shape):
             raise ValueError("base tensor extent mismatch")
-        if h[name]["dtype"] != "BF16" or h[bname]["dtype"] != "BF16":
+        if h[name]["dtype"] != factor_dtype or h[bname]["dtype"] != factor_dtype:
             raise ValueError("adapter dtype")
         mapping.append(
             {
@@ -254,6 +311,10 @@ def validated_recipe(base, spec):
     }
     if seen != expected:
         raise ValueError("recipe does not cover exact base projection set")
+    if extended and set(h) - {"__metadata__"} != {
+        name for row in mapping for name in (row["lora_A"], row["lora_B"])
+    }:
+        raise ValueError("factor_format v2 requires exactly 820 text factors; extra tensors refused")
     spans = {}
     for x in mapping:
         lo = x["offset"]
@@ -276,9 +337,9 @@ def validated_recipe(base, spec):
         "donor_repo": spec["donor_repo"],
         "donor_revision": spec["donor_revision"],
         "coefficient": c,
-        "r": 16,
-        "alpha": 32,
-        "scale": SCALE,
+        "r": rank,
+        "alpha": alpha,
+        "scale": scale_value,
         "mapping_sha256": jsonhash(mapping),
         "block_rows": BLOCK_ROWS,
         "scope": "native_text410_vision_excluded",
@@ -286,7 +347,23 @@ def validated_recipe(base, spec):
         "cpu_threads": 4,
         **implementation(),
     }
+    if extended:
+        recipe.update(
+            version=2, factor_format=dict(factor_format), factor_dtype=factor_dtype,
+            adapter_header_sha256=actual_header_sha,
+            merge_arithmetic="F32 factors preserved, or BF16 factors exactly decoded to F32; FP32 np.matmul(B_block,A), FP32 multiply by FP32(alpha/r), FP32 multiply by coefficient, separate FP32 add to original BF16 W converted to FP32, ties-to-even BF16 once; no FMA contraction in merge loop.",
+        )
     return recipe, mapping, h, off
+
+
+def materialization_recipe(base, spec):
+    """Only the standalone dense path may opt into newer factor formats."""
+    if "factor_format" in spec:
+        if spec.get("native_edits") or spec.get("companion_required"):
+            raise ValueError("factor_format v2 is not supported by native/module/joint wrappers")
+        return validated_recipe(base, spec, allow_factor_format=True)
+    # Preserve the existing optional-native handler's two-argument contract.
+    return validated_recipe(base, spec)
 
 
 def entries(base, candidate, recipe, mapping, h, off, write=False):
@@ -328,7 +405,7 @@ def entries(base, candidate, recipe, mapping, h, off, write=False):
                 if len(raw) != count * 2:
                     raise ValueError("short source block")
                 original = np.frombuffer(raw, dtype="<u2").reshape(-1, cols)
-                delta = (B[first : first + len(original)] @ A) * np.float32(SCALE)
+                delta = (B[first : first + len(original)] @ A) * np.float32(recipe["scale"])
                 merged, stats, counts = merge1(original, delta, recipe["coefficient"])
                 expected = merged.astype("<u2", copy=False).tobytes()
                 target.seek(position)
@@ -459,7 +536,7 @@ def verify(manifest):
     spec_path = Path(record["spec_path"])
     if digest(spec_path) != record["spec_sha256"] or read(spec_path) != record["spec"]:
         raise ValueError("spec file changed")
-    recipe, mapping, h, off = validated_recipe(base, record["spec"])
+    recipe, mapping, h, off = materialization_recipe(base, record["spec"])
     if recipe != record["recipe"]:
         raise ValueError("recipe provenance/implementation changed")
     source_rows, source_hash = tree(base)
@@ -490,7 +567,7 @@ def verify(manifest):
         raise ValueError("candidate file hash list differs")
     if target_hash != record["candidate_tree_sha256"]:
         raise ValueError("candidate full tree hash mismatch")
-    final_recipe, final_mapping, _, _ = validated_recipe(base, record["spec"])
+    final_recipe, final_mapping, _, _ = materialization_recipe(base, record["spec"])
     if final_recipe != recipe or final_mapping != mapping:
         raise ValueError("recipe provenance changed during verification")
     if digest(spec_path) != record["spec_sha256"] or read(manifest) != record:
@@ -532,7 +609,7 @@ def create(base, dest, spec_path, manifest, *, min_free_gib=0.0):
         raise ValueError("new disjoint candidate/manifest required")
     if manifest.is_relative_to(base) or manifest.is_relative_to(dest):
         raise ValueError("manifest must remain external")
-    recipe, mapping, h, off = validated_recipe(base, spec)
+    recipe, mapping, h, off = materialization_recipe(base, spec)
     source_rows, source_hash = tree(base)
     if source_hash != spec["base_tree_sha256"]:
         raise ValueError("base full hash differs from pinned source")
@@ -603,7 +680,7 @@ def create(base, dest, spec_path, manifest, *, min_free_gib=0.0):
         # Recheck provenance snapshots after the long merge, before publication.
         if spec_path.read_bytes() != spec_bytes:
             raise ValueError("spec changed during recipe creation")
-        final_recipe, final_mapping, _, _ = validated_recipe(base, spec)
+        final_recipe, final_mapping, _, _ = materialization_recipe(base, spec)
         if final_recipe != recipe or final_mapping != mapping:
             raise ValueError(
                 "donor/config/implementation changed during recipe creation"
@@ -681,7 +758,7 @@ def main():
                 raise ValueError("new disjoint candidate/manifest required")
             if manifest.is_relative_to(base) or manifest.is_relative_to(dest):
                 raise ValueError("manifest must remain external")
-            recipe, mapping, _, _ = validated_recipe(base, read(a.spec))
+            recipe, mapping, _, _ = materialization_recipe(base, read(a.spec))
             print(
                 json.dumps(
                     {

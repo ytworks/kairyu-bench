@@ -2,8 +2,10 @@
 
 These are the reusable numerical tools from the recorded Gemma 4 experiment.
 They are deliberately narrower than the architecture-independent weight reader:
-ordinary BF16 LoRA, rank 16, alpha 32, and the exact 410 text projections across
-60 layers. Vision factors are inspected but never merged. They do not infer
+the default recipe uses ordinary BF16 LoRA, rank 16, alpha 32, and the exact
+410 text projections across 60 layers. The standalone dense path also accepts
+the explicit factor-format v2 below. Legacy vision factors are inspected but
+never merged. They do not infer
 coding relevance, run a benchmark, download a donor, select a candidate, or
 change a serving model.
 
@@ -48,6 +50,46 @@ The recipe rejects unsupported ranks, mappings, DoRA/RSLoRA, extra saved modules
 invalid spans, or provenance hash mismatches. The declaration of a donor
 repository is provenance metadata; these offline tools do not authenticate its
 training data or establish evaluation non-overlap.
+
+## Explicit factor-format v2 (standalone dense only)
+
+Keep the schema-2 dense kind and add the following declaration to opt into
+ordinary LoRA factors exported as BF16 or F32, with one uniform rank from 1
+through 256:
+
+```json
+"factor_format": {
+  "version": 2,
+  "rank": 128,
+  "dtype": "F32",
+  "header_sha256": "SHA256_OF_EXACT_SAFETENSORS_JSON_HEADER_BYTES"
+}
+```
+
+The header digest covers the raw JSON header bytes after the eight-byte length,
+including header padding. Full donor and config hashes remain required.
+The config rank must match; positive finite `lora_alpha / r` is converted once
+to FP32 and that explicit scale is recorded. F32 factors are read as F32 without
+first rounding them to BF16. Factor orientation is A=(rank,input), B=(output,rank);
+the existing double-prefix PEFT names must map to all 410 original BF16 text
+matrices. This opt-in rejects extra tensors, holes/overlap in the adapter
+payload, saved modules, alternate LoRA variants, and nonuniform rank/alpha.
+It supports ordinary BA semantics, not quantized-base reconstruction.
+
+The numeric order remains fixed: 128-row FP32 B@A, separate FP32 scale multiply,
+then the existing coefficient multiply/add and one BF16 ties-to-even rounding.
+The kernel and operation wrapper are unchanged. Without `factor_format`, the
+rank-16/alpha-32/BF16 route and its exact saved bytes remain unchanged.
+
+Only `dense_lora_recipe.py` create/verify opt into this format.
+`validated_recipe(..., allow_factor_format=False)` rejects it by default, so
+existing native, per-module, joint, and diagnostic wrappers cannot silently use
+their rank-16 or scale-2 assumptions on new factors. No native edits can be mixed
+into this format. Use the existing
+[CPU verified freeze bridge](../../../docs/wsp-dense-checkpoint-freeze.md)
+after materialization. A new manifest pins the changed recipe implementation;
+old manifests and historical verification receipts retain their original code
+identity and must not be reinterpreted as new-format evidence.
 
 ## Materialize and verify
 

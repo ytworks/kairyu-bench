@@ -86,3 +86,7 @@ The final frame/serial/headroom snapshot passed **453 collected tests: 403 passe
 ### Saved verification and joint replay validation
 
 The saved-checkpoint verifier, joint native/donor proposal and one-shot residual repair, direction probes, and optional joint RAM replay passed the complete CPU suite: **466 collected, 414 passed, 52 optional-dependency skips**, whole-tree Ruff and mypy over 73 source files. Source hashes were unchanged during the checks (analysis/code90-resume-20261106/cpu-integration-joint-v1/ci-results.json). The persistent balanced checkpoint was actually verified against all 410 measured tensors and all 12 files, then evaluated with the official dev90 protocol; it did not improve the official score and is not adopted. The joint candidate is still an experiment.
+
+## Cross-donor factor-space observation
+
+The generic CPU-only [LoRA direction observer](../lora-direction-comparison.md) compares explicitly aligned ordinary LoRA factors of different ranks and F32/BF16 dtypes without dense updates or model calls. It uses FP64 Gram products, records all input pins and exclusions, and separates unrounded direction geometry from actual BF16 effects. Three contract fixtures and an independent review passed before the [two-donor actual observation](2026-11-06-two-donor-factor-observation.md); the measured 410-module comparison took 15.232 seconds. This does not establish capability complementarity.
