@@ -104,7 +104,37 @@ thinking生成後の答えと異なり、両foldをfitした制約達成も未�
 コードを主とする実際の得失で判断する方針と、他領域の多少の損失を許容する方針は維持する。
 旧frameの6案を復活させたり、既見集合を未見と呼び直したりしない。
 
-追加receipt: analysis/code90-resume-20261106/opus-final-frame-amendment-review/receipt.json。  
-prompt SHA256: 8c1a6cf4b12b0a28ae1737d6f5a46ce582b8912a00e22d50d6d86a80945fcef2。  
+追加receipt: analysis/code90-resume-20261106/opus-final-frame-amendment-review/receipt.json。
+prompt SHA256: 8c1a6cf4b12b0a28ae1737d6f5a46ce582b8912a00e22d50d6d86a80945fcef2。
 receipt SHA256: 8b8e7191f9c9822dec2ee528cce534fc2b51260d5d9bac45c5f38fc707eab026。
+
+## 丸め後nativeを固定するjoint残差補正（匿名案G）
+
+追加のGレビューは、nativeの実BF16値を固定し、元の制約からその線形寄与を引いた
+残差をdonor係数だけで一度解き直す一般手法を対象とした。実候補の成績・重み・問題・答案は
+送っていない。receiptはverified_requested_model=true、labels_match=true、
+assistant_models/model_usageともclaude-opus-5-5、ラベルG、tools0、returncode0。
+65.825秒、$0.132968。inputTokens2、cacheCreationInputTokens1,860、
+outputTokens5,904、cacheReadInputTokens0。原本は変更していない。
+
+有用な助言は、連続解の残差、native丸め、donor丸め後の実効果、コード実行成績を
+混同しないことだった。固定nativeを二重に加えず、donor係数はFP32で保持し、
+関数としての相互作用は共同の実重みで測る。両foldへのfitやendpoint KLだけから
+汎化・全出力分布の安定性を主張しない。
+
+costの一般的なcross-term懸念は、この構成では**各donor行列に1方向だけ**で、
+別行列およびnative tensorは互いに異なるため、連続重み空間の成分間内積は0となる。
+したがって連続donorのノルムはsqrt(sum(c_i² ||D_i||_F²))であり、
+実nativeノルムとの二乗和も正しい。ただしdonorのBF16丸め後はこの連続ノルムと別である。
+tensor非重複は機能的な効果の加法性を保証しない。
+
+「実BF16で全84proxy制約を満たさなければ一律棄却」という回答は提案であり、
+ユーザーの採用条件には置き換えない。元の目標・実測の不足・関連能力の損失を
+隠さず報告し、コードを主とする実行成績と許容tradeoffで判断する。
+事前の巨大な丸め再計算、部分ごとの追加forward、温度基準なども必須化しない。
+候補の数値的な未収束は、証明された数学的不可能性とは区別する。
+
+receipt: analysis/code90-resume-20261106/opus-joint-round-repair-review/receipt.json。
+prompt SHA256: 97e01cf791843aff36360cb21bacacceaa15524f7059cad387feac34d1ae7246。
+receipt SHA256: b32ad391477d63065c952a666d2e767d7331b613dfcff6a5c86d2fa20d8e33a9。
 

@@ -166,3 +166,191 @@ A separate retirement receipt records the untouched plan, report and six spec
 hashes and the stopped advancement decision. The original numeric artifacts
 remain available for diagnosis; no candidate is silently removed or relabeled
 inside those historical files.
+
+## Corrected-frame joint native/donor CPU diagnostic
+
+The new forced-empty-thought v2 frame was checked against the official model
+forward on three authored cases. Fresh serial native and donor collections
+then agreed exactly on every original per-case margin and correct-logprob
+(136 cases, 42 fitted folds). This establishes matched numerical conditions,
+not equivalence to normal generated thinking. The fresh 42 fold-average
+correct-logprob headrooms ranged from 0.5257765 to 23.9091438, so none reached
+the predeclared saturation threshold of 0.004.
+
+The separate headroom-aware six-method plan uses
+`target=min(tau,0.25*headroom)` for primary correct-logprob, or zero at the
+saturation threshold; tau is 0.01, with predeclared 0.02 emphasis scopes.
+Primary margins must remain nonnegative; related/general floors preserve the
+explicit moderate tradeoffs. The same coefficient box of ±0.25 and continuous
+weight L2 radius of 1 are retained. These are experimental bounds, not user
+requirements. The CPU solve took 3.03 seconds. Balanced (L2 0.4832525) and MLP
+(0.9842717) passed the existing FP32 postcheck and were selected for actual
+finite measurement. Science, algorithm, attention and late failed that
+numerical postcheck by approximately 1.08e−7, 2.28e−10, 1.13e−10 and 7.26e−10,
+respectively. Those small residuals are numerical rejections, **not** proofs
+of infeasibility or evidence of worse model ability. No thresholds or saved
+results were silently changed to admit them.
+
+A single additional balanced joint relaxation used all 1,331,516 native
+coordinates (421 tensors) and 410 donor projection directions. The tensor sets
+are disjoint: native raw-weight deltas have unit cost, and donor FP32 gates
+have cost equal to their full continuous matrix-direction norm. The existing
+minimum-step solver was called once with the same 84 constraints. Native
+values were then rounded from the original BF16 values once; donor gates were
+rounded only to FP32. This is a hybrid local prediction, not a measured joint
+model response, and donor BF16 weight rounding remains unmeasured.
+
+The diagnostic completed in 15.18 seconds. Continuous L2 was 0.0004959151;
+after native rounding, 8,369 values changed, native L2 was 0.0004827585 and
+donor continuous L2 was 9.32e−7. Hybrid L2 was 0.0004827594. Native rounding
+had relative error 0.414 and direction cosine 0.9123. Of the 84 constraints,
+26 failed the postcheck; the largest shortfall was 0.0069690 (code fold 0
+margin). Several primary correct-logprob gains became approximately
+0.0090–0.0095 instead of the requested 0.01. The continuous solution also
+retained a 6.64e−8 unscaled residual, so it is not presented as an exact
+feasibility or optimality certificate. This single proposal is **not eligible
+for joint finite replay**; no automatic repair solve, amplitude sweep, checkpoint,
+or model execution was part of that call.
+
+The reusable [joint diagnostic recipe](../../scripts/experiments/gemma4_lora/propose_joint_native_donor.py)
+accepts explicit collection and plan paths, verifies source/frame/objective
+identity and per-case original values, and saves proposal arrays and a report
+to a fresh directory. Rejected proposals remain inspectable. The result does
+not prove that native/donor joint edits cannot work, and it does not alter the
+separate balanced/MLP donor finite experiment or any official WSP score.
+
+### One explicit frozen-native residual repair
+
+After reviewing that rejection, the owner authorized one separate CPU repair:
+freeze those same 8,369 native BF16 changes and solve only the donor gates for
+`original_lower_bound - G_native @ frozen_native_delta`. The original 84
+constraints, ±0.25 donor box and total L2 radius of 1 remained unchanged.
+There was no native rescaling or re-rounding, target relaxation, clipping or
+second repair solve. The original rejected report and its source snapshot are
+preserved.
+
+The residual solve took 9.73 seconds. It passed the existing postcheck after
+FP32 gate conversion: maximum shortfall 2.85e−11, maximum absolute coefficient
+0.0324870, donor continuous L2 0.05917080 and combined hybrid L2 0.05917277.
+Native L2 remained 0.0004827585 and the native-value byte hash stayed identical.
+The predicted code correct-logprob gains were 0.02733 and 0.02351 for the two
+fitted folds. These are local forced-empty-thought predictions, **not** an
+actual NLL improvement or an official code score. The continuous residual
+solve itself retained a 7.24e−11 raw constraint residual, within the stated
+1e−10 postcheck tolerance; it is not an exact global optimum certificate.
+
+The tool exports two specs labeled `joint_component_only_prediction`, both
+bound to the same report hash and marked `companion_required=true`. They must
+be applied together for the proposed experiment. The norm uses disjoint
+physical tensors and counts the native stored differences exactly, but the
+donor contribution is still continuous: actual donor BF16 rounding, finite
+nonlinear interaction, full-model NLL/margin/KL, source restoration, and official
+coding performance remain separate measurements. No model or checkpoint was
+created by this CPU analysis.
+
+### Broader donor direction and native-only repair sanity check
+
+A separate CPU-only check used the same matched final-frame derivatives. It
+examined uniform positive donor coefficients independently of the earlier
+L2≤1 trust choice; that radius is not a user requirement.
+
+| Uniform coefficient | Continuous L2 | Primary correct-LL positive folds | Primary mean correct-LL prediction | Primary margin positive folds |
+|---:|---:|---:|---:|---:|
+| 0.05 | 1.706125 | 18/18 | +0.048195 | 3/18 |
+| 0.10 | 3.412250 | 18/18 | +0.096391 | 3/18 |
+| 0.25 | 8.530626 | 18/18 | +0.240977 | 3/18 |
+
+The full uniform donor direction norm is 34.1225023. Correct-LL is positive
+on 13/14 related folds, but their margins decline on 12/14. At coefficient
+0.05, one lookup fold has predicted correct-LL loss 6.3361 and the instruction
+purpose mean declines by 0.00621. At 0.25, two predicted absolute log
+probabilities exceed zero, an impossible value that demonstrates failure of
+that local extrapolation. These are directional predictions, not applied
+weights or performance. The positive primary derivative alone does not
+justify another unfiltered full merge or an amplitude sweep.
+
+The same CPU call made one native-only residual correction from the initial
+joint proposal's native BF16 values, without donor gates. It changed 8,386
+native values (1,244 differ from the previous proposal), with actual native L2
+0.0005067123. Maximum constraint shortfall fell from 0.0069686 to 0.0063918,
+about 8.3%, but 26/84 constraints still failed. Continuous-solve residual was
+6.55e−8; native once-rounding remained consequential despite a 0.9951 cosine
+to the cumulative continuous delta. No additional repair iteration followed.
+The combined CPU analysis took 10.61 seconds and made no model calls.
+
+The more useful immediate experiment is the separately qualified frozen-native
+plus donor residual proposal, whose hybrid local norm is 0.05917, followed by
+actual generation and official coding measurements if its finite response is
+useful. These diagnostics do not establish that tiny targets or this one donor
+are sufficient. A stronger target, a different donor direction, or a genuinely
+BF16-aware native method would be a new explicit hypothesis, rather than
+silently repeating the failed continuous native correction.
+
+## Official dev90 result of the new-frame balanced donor proposal
+
+The balanced candidate completed the unchanged archived-5e3 official WSP
+30-minute **dev code subset**: 90 items from all four code sources. Both it and
+the original-model reference have 90 scored items, zero unscored items and no
+recorded generation errors. This is not the known 64-item target confirmation
+set and not a 14-area overall score.
+
+| Official source | Original model | Balanced donor |
+|---|---:|---:|
+| HumanEval+ | 28/30 | 28/30 |
+| MBPP+ | 23/30 | 23/30 |
+| LiveCodeBench | 16/20 | 15/20 |
+| SciCode, mean per-problem step fraction | 40.301587% | 40.301587% |
+| **WSP code, equal source mean** | **72.575397** | **71.325397** |
+
+The standard paired comparison gives **−1.25 percentage points**, 95% bootstrap
+CI **[−5.00, +1.6667] pp** (2,000 resamples, existing fixed seed). There were
+exactly three changed item scores: `livecodebench:abc395_c` and
+`mbpp-plus:Mbpp/641` were lost, while `mbpp-plus:Mbpp/801` was gained. The
+MBPP gain/loss cancel in its source score; the LCB loss causes the code decline.
+MBPP/801 has varied in earlier runs, so this is not evidence of a newly stable
+capability or a causal benefit. The candidate is not adopted and is not being
+advanced to known64, full14 or DeepSWE on this result. Code-over-90 remains
+unfinished. Positive forced-empty-thought diagnostic averages did not transfer
+to an official score improvement.
+
+| Recorded execution | Original | Balanced |
+|---|---:|---:|
+| Wall seconds | 394.1 | 640.8 |
+| Load seconds, included in wall | 7.1 | 7.3 |
+| Generation seconds, included in wall | 324.1 | 324.4 |
+| Recorded model calls | 119 | 119 |
+| Input tokens | 97,703 | 96,775 |
+| Output tokens | 336,625 | 340,643 |
+| Finish reason `length` | 0 | 0 |
+
+Calls count individual recorded leaves, including SciCode's 39 calls, rather
+than its ten aggregate samples; all 119 calls in both runs ended with
+`stop`. These are benchmark-recorded calls, not independent HTTP telemetry.
+There are no agent/tool steps in this four-source subset; calls and token counts
+are not relabeled as such steps. All selected item IDs, manifest SHA, samples
+and token caps are unchanged, with native thinking enabled as before.
+
+SciCode passed 19/39 steps in both runs; that pooled count is diagnostic and is
+not its official mean-per-problem score. Sanitized saved diagnostics show that
+step 35.3 changed from an AssertionError hint after 3.25 seconds to a
+**302.56-second step timeout**; both outcomes are false. Step 58.5 changed from
+an AssertionError hint to a TypeError hint, also false in both runs. The
+unchanged WSP scorer has an eight-worker pool and a 300-second timeout per step;
+its environment precheck also has a 300-second limit. This is the same pinned
+WSP setting for both models. Exception names are allowlisted stderr hints,
+not a causal diagnosis. The timeout is a scored test failure, not an unscored
+infrastructure error. No elapsed-time inference, repair, or rerun changed it.
+
+The running candidate's actual container, image, runtime configuration and
+16 filesystem-layer digests were captured before exit. They match the saved
+original full14 runtime configuration/layers. Both dev90 commands use the
+same immutable 5e3 source archive and argument policy. A dedicated historical
+original-dev90 container receipt is unavailable, so exact per-run historical
+container/image identity is not claimed. Environment secrets, model reasoning,
+test bodies and reference implementations are not included in these records.
+
+The stored LiveCodeBench detail for abc395_c exposes only its pass boolean,
+so this report does not assert a specific algorithmic or formatting cause.
+SciCode 35.3's timeout establishes the observed execution outcome, not its
+root-cause code. Generated-code content was not inspected for this report;
+no hidden reasoning, reference implementation or test body was used.

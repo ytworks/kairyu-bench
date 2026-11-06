@@ -3,6 +3,7 @@ from __future__ import annotations
 
 import hashlib
 import importlib.util
+import json
 import math
 import os
 from pathlib import Path
@@ -222,6 +223,132 @@ class ModuleRamTest(unittest.TestCase):
                 checkpoint.assert_stable()
                 with self.assertRaisesRegex(ValueError, "host cache"):
                     tool.StreamedModuleEdits(checkpoint, params, mapping, recipes, module, {}, 0, maximum_bytes=1)
+
+
+@unittest.skipUnless(TORCH, "optional Torch CPU joint restoration contract")
+class JointRamTest(unittest.TestCase):
+    def test_native_and_module_bits_metrics_and_both_partial_failure_restorations(self):
+        import torch
+        for failure_mode in ("none", "native_apply", "module_apply", "native_restore"):
+            with self.subTest(failure_mode=failure_mode), tempfile.TemporaryDirectory() as temporary:
+                root = Path(temporary)
+                matrix, norm = "model.language_model.layers.0.mlp.up_proj.weight", "model.language_model.norm.weight"
+                initial = np.array([1., -0.], np.float32)
+                bits = (initial.view(np.uint32) >> 16).astype("<u2")
+                weights(root / "model.safetensors", {
+                    matrix: ("BF16", (1, 2), bits.tobytes()), norm: ("BF16", (2,), bits.tobytes())})
+                checkpoint = Checkpoint(root)
+                params = {matrix: torch.from_numpy(bits.copy()).view(torch.bfloat16).reshape(1, 2),
+                          norm: torch.from_numpy(bits.copy()).view(torch.bfloat16)}
+                spec = {"id": "native", "edits": [{"tensor": norm, "indices": [0], "_flat_indices": [0],
+                                                 "set_values": [1.5]}],
+                        "_verified_metrics": {"changed_elements": 1, "changed_tensors": 1, "delta_l2": .5}}
+                component = {"spec": spec, "spec_sha256": "a" * 64}
+                candidate = {"id": "joint", "native_component": component}
+                calls = []
+                class Modules:
+                    mapping = [{"tensor": matrix}]
+                    receipts = {}
+                    restoration = {}
+                    def apply(self, value):
+                        calls.append("module_restore" if value is None else "module_apply")
+                        params[matrix].copy_(torch.from_numpy(bits.copy()).view(torch.bfloat16).reshape(1, 2))
+                        if value is None:
+                            self.restoration = {"storage_bytes_exact": True, "matrices": 1}
+                            return
+                        params[matrix][0, 0] = 1.25
+                        if failure_mode == "module_apply":
+                            raise RuntimeError("partial module apply")
+                        self.receipts["joint"] = {"changed_elements": 1, "changed_tensors": 1, "delta_l2": .25,
+                                                  "actual_ram_storage_bytes_verified": True}
+                modules = Modules()
+                joint = tool.JointEdits(modules, checkpoint, [candidate], params, "cpu")
+                native_apply = joint.native.apply
+                native_modified = False
+                def native(value):
+                    nonlocal native_modified
+                    calls.append("native_restore" if value is None else "native_apply")
+                    native_apply(value)
+                    if value is not None:
+                        native_modified = True
+                        if failure_mode == "native_apply":
+                            raise RuntimeError("partial native apply")
+                    elif native_modified and failure_mode == "native_restore":
+                        raise RuntimeError("native restore verification failure")
+                joint.native.apply = native
+                def evaluate(**flags):
+                    if not flags.get("store_base") and not flags.get("recovery"):
+                        self.assertEqual(float(params[norm][0]), 1.5)
+                        self.assertEqual(float(params[matrix][0, 0]), 1.25)
+                    return True
+                _, completed, repeated, error = replay_sequence([candidate], joint.apply, evaluate, lambda *args: None)
+                for name in (matrix, norm):
+                    np.testing.assert_array_equal(joint.raw(params[name]).reshape(-1), bits)
+                self.assertEqual(calls[-2:], ["native_restore", "module_restore"])
+                if failure_mode == "none":
+                    self.assertIsNone(error)
+                    self.assertEqual(len(completed), 1)
+                    receipt = joint.receipts["joint"]
+                    self.assertEqual(receipt["changed_elements"], 2)
+                    self.assertAlmostEqual(receipt["delta_l2"], math.hypot(.5, .25))
+                    self.assertEqual(receipt["native"]["edits"][0]["after_hex"], "c03f")
+                    self.assertTrue(joint.restoration["storage_bytes_exact"])
+                else:
+                    self.assertIsInstance(error, RuntimeError)
+                self.assertEqual(repeated, None if failure_mode == "native_restore" else True)
+                with self.assertRaisesRegex(ValueError, "tensor overlap"):
+                    modules.mapping = [{"tensor": norm}]
+                    tool.JointEdits(modules, checkpoint, [candidate], params, "cpu")
+
+    def test_native_plan_reuses_exact_loader_and_rejects_frame_or_companion_mismatch(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            base = root / "base"
+            base.mkdir()
+            norm = "model.language_model.norm.weight"
+            matrix = "model.language_model.layers.0.mlp.up_proj.weight"
+            raw = (np.array([1.], np.float32).view(np.uint32) >> 16).astype("<u2").tobytes()
+            weights(base / "model.safetensors", {norm: ("BF16", (1,), raw), matrix: ("BF16", (1, 1), raw)})
+            (base / "model.safetensors.index.json").write_text(json.dumps(
+                {"weight_map": {norm: "model.safetensors", matrix: "model.safetensors"}}))
+            checkpoint = Checkpoint(base)
+            def document(name, value):
+                path = root / name
+                path.write_text(json.dumps(value))
+                return {"path": str(path), "sha256": tool.sha(path)}
+            plan = {field: document(field + ".json", checkpoint.identity(hash_files=True)
+                                    if field == "checkpoint_attestation" else {})
+                    for field in ("cases", "frame_evidence", "checkpoint_attestation")}
+            plan["checkpoint_index_sha256"] = tool.sha(base / "model.safetensors.index.json")
+            report = document("joint-report.json", {"fixed": True})
+            spec = {"id": "native", "edits": [{"tensor": norm, "indices": [0], "set_values": [1.5]}],
+                    "companion_required": True, "joint_report_path": report["path"],
+                    "joint_report_sha256": report["sha256"]}
+            spec_ref = document("native.json", spec)
+            module_spec = {"base_tree_sha256": "b" * 64, "companion_required": True,
+                           "joint_report_path": report["path"], "joint_report_sha256": report["sha256"]}
+            native_plan = dict(plan, schema_version=1, architecture="gemma4_native_bf16",
+                               base_tree_sha256="b" * 64,
+                               candidates=[{"id": "native", "spec": spec_ref["path"], "sha256": spec_ref["sha256"]}])
+            def check(value=native_plan, module=module_spec, mapping=None):
+                reference = document("native-plan.json", value)
+                row = {"native_component": {"plan": reference["path"], "sha256": reference["sha256"]}}
+                hashes, states = {}, {}
+                result = tool.native_component(row, module, plan, checkpoint,
+                                               mapping or [{"tensor": matrix}], hashes, states)
+                self.assertIn(report["path"], hashes)
+                self.assertIn(spec_ref["path"], states)
+                return result
+            result = check()
+            self.assertEqual(result["spec"]["_verified_metrics"]["delta_l2"], .5)
+            with self.assertRaisesRegex(ValueError, "source/frame/cases"):
+                check(dict(native_plan, frame_evidence=document("other-frame.json", {})))
+            with self.assertRaisesRegex(ValueError, "tensor overlap"):
+                check(mapping=[{"tensor": norm}])
+            with self.assertRaisesRegex(ValueError, "report mismatch"):
+                check(module=dict(module_spec, joint_report_sha256="c" * 64))
+            with self.assertRaisesRegex(ValueError, "companion missing"):
+                tool.native_component({}, module_spec, plan, checkpoint, [], {}, {})
 
 
 if __name__ == "__main__":

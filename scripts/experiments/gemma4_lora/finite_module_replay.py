@@ -20,7 +20,7 @@ import numpy as np
 
 from kairyu_bench.wsp.weights.checkpoint import Checkpoint
 from kairyu_bench.wsp.weights.finite_replay import (
-    PublicAnswerEvaluator, prepare_frames, replay_sequence,
+    ParameterEdits, PublicAnswerEvaluator, load_plan, prepare_frames, replay_sequence,
 )
 
 GIB = 2**30
@@ -57,6 +57,61 @@ def save(path, value):
     temporary = path.with_suffix(".tmp")
     temporary.write_text(json.dumps(value, indent=2, allow_nan=False) + "\n")
     temporary.replace(path)
+
+
+def native_component(row, spec, plan, checkpoint, mapping, hashes, states):
+    """Validate an optional fixed native plan against the same module context."""
+    reference = row.get("native_component")
+    if reference is None:
+        if spec.get("companion_required"):
+            raise ValueError("required native companion missing")
+        return None
+    path = Path(reference["plan"]).resolve()
+    initial = state(path)
+    native_plan, digest = captured(path, reference["sha256"])
+    if (native_plan.get("architecture") != "gemma4_native_bf16"
+            or len(native_plan.get("candidates", [])) != 1
+            or native_plan.get("checkpoint_index_sha256") != plan["checkpoint_index_sha256"]
+            or native_plan.get("base_tree_sha256") != spec["base_tree_sha256"]):
+        raise ValueError("native companion requires one native spec and the same source")
+    for field in ("cases", "frame_evidence", "checkpoint_attestation"):
+        left, right = native_plan[field], plan[field]
+        if Path(left["path"]).resolve() != Path(right["path"]).resolve() or left["sha256"] != right["sha256"]:
+            raise ValueError("native companion source/frame/cases differ")
+    item = native_plan["candidates"][0]
+    spec_path = Path(item["spec"]).resolve()
+    spec_state = state(spec_path)
+    raw_spec, spec_digest = captured(spec_path, item["sha256"])
+    checked_plan, specs, checked_hashes = load_plan(path, checkpoint)
+    if (checked_plan != native_plan or state(path) != initial or state(spec_path) != spec_state
+            or sha(path) != digest or sha(spec_path) != spec_digest):
+        raise ValueError("native companion changed during validation")
+    native = specs[0]
+    expected = json.loads(json.dumps(raw_spec))
+    expected["_verified_metrics"] = native["_verified_metrics"]
+    for edit in expected["edits"]:
+        edit["_flat_indices"] = edit["indices"]
+    if expected != native:
+        raise ValueError("native validated bytes differ")
+    if {e["tensor"] for e in native["edits"]} & {e["tensor"] for e in mapping}:
+        raise ValueError("native/module tensor overlap")
+    if spec.get("companion_required") or native.get("companion_required"):
+        if not spec.get("companion_required") or not native.get("companion_required"):
+            raise ValueError("both joint components must require their companion")
+        for key in ("joint_report_path", "joint_report_sha256"):
+            if not spec.get(key) or spec[key] != native.get(key):
+                raise ValueError("joint component report mismatch")
+        report_path = Path(spec["joint_report_path"]).resolve()
+        states[str(report_path)] = state(report_path)
+        _, report_digest = captured(report_path, spec["joint_report_sha256"])
+        checked_hashes[str(report_path)] = report_digest
+    for filename, value in checked_hashes.items():
+        if filename in hashes and hashes[filename] != value:
+            raise ValueError("native/module input digest conflict")
+        hashes[filename] = value
+        states[filename] = state(Path(filename))
+    return {"spec": native, "spec_path": str(spec_path), "spec_sha256": spec_digest,
+            "plan_path": str(path), "plan_sha256": digest}
 
 
 def preflight(args, module):
@@ -116,10 +171,11 @@ def preflight(args, module):
             common_mapping, common_recipe, header, offset = mapping, common, h, off
         elif mapping != common_mapping or common != common_recipe:
             raise ValueError("all fixed candidates must share source/donor/numerical implementation")
+        native = native_component(row, spec, plan, checkpoint, mapping, hashes, all_states)
         all_states.update(input_states)
         candidates.append({"id": identifier, "spec": spec, "recipe": recipe,
                            "spec_path": str(path), "spec_sha256": row["sha256"],
-                           "prepared": prepared})
+                           "prepared": prepared, "native_component": native})
     assert common_mapping is not None and common_recipe is not None
     code_paths = [Path(__file__).resolve(), Path(module.__file__).resolve(),
                   Path(__import__("kairyu_bench.wsp.weights.finite_replay", fromlist=["x"]).__file__).resolve(),
@@ -305,6 +361,102 @@ class StreamedModuleEdits:
         self.progress(phase="applied", candidate=identifier, **metrics)
 
 
+class JointEdits:
+    """Compose disjoint native coordinates with module edits; restore both."""
+    def __init__(self, modules, checkpoint, candidates, params, device):
+        self.modules, self.checkpoint, self.params = modules, checkpoint, params
+        specs = [c["native_component"]["spec"] for c in candidates if c.get("native_component")]
+        # ParameterEdits keys by ID: conflicting duplicate IDs cannot be hidden.
+        known = {}
+        for spec in specs:
+            if spec["id"] in known and known[spec["id"]] != spec:
+                raise ValueError("conflicting native component IDs")
+            known[spec["id"]] = spec
+        if {e["tensor"] for spec in specs for e in spec["edits"]} & {e["tensor"] for e in modules.mapping}:
+            raise ValueError("native/module tensor overlap")
+        self.native = ParameterEdits(checkpoint, list(known.values()), params, device)
+        self.receipts, self.restoration = {}, {"storage_bytes_exact": False}
+        for name, indices in self.native.indices.items():
+            source = checkpoint.read_indices(name, indices.cpu().tolist()).astype(np.float32)
+            bits = (source.view(np.uint32) >> 16).astype(np.uint16)
+            if not np.array_equal(bits, self.raw(self.native.originals[name])):
+                raise ValueError("native source BF16 storage differs")
+        self.native_receipt(None)
+
+    @staticmethod
+    def raw(tensor):
+        return tensor.detach().view(__import__("torch").int16).cpu().numpy().view(np.uint16).copy()
+
+    def native_receipt(self, spec):
+        edits = {} if spec is None else {e["tensor"]: e for e in spec["edits"]}
+        records = []
+        for name, indices in self.native.indices.items():
+            before = self.raw(self.native.originals[name])
+            expected = before.copy()
+            edit = edits.get(name)
+            if edit is not None:
+                lookup = {index: i for i, index in enumerate(indices.cpu().tolist())}
+                values = (np.asarray(edit["set_values"], np.float32).view(np.uint32) >> 16).astype(np.uint16)
+                for index, value in zip(edit["_flat_indices"], values, strict=True):
+                    expected[lookup[index]] = value
+            actual = self.raw(self.params[name].detach().view(-1).index_select(0, indices))
+            if not np.array_equal(actual, expected):
+                raise ValueError("native actual BF16 coordinate bytes differ")
+            old = (before.astype(np.uint32) << 16).view(np.float32).astype(np.float64)
+            new = (actual.astype(np.uint32) << 16).view(np.float32).astype(np.float64)
+            delta = new - old
+            records.append({"tensor": name, "indices": indices.cpu().tolist(),
+                            "source_selected_bytes_sha256": hashlib.sha256(before.tobytes()).hexdigest(),
+                            "candidate_selected_bytes_sha256": hashlib.sha256(actual.tobytes()).hexdigest(),
+                            "before_hex": before.tobytes().hex(), "after_hex": actual.tobytes().hex(),
+                            "changed_count": int(np.count_nonzero(delta)),
+                            "delta_l2": float(np.linalg.norm(delta))})
+        result = {"id": None if spec is None else spec["id"], "edits": records,
+                  "changed_elements": sum(r["changed_count"] for r in records),
+                  "changed_tensors": sum(r["changed_count"] > 0 for r in records),
+                  "delta_l2": math.hypot(*(r["delta_l2"] for r in records)),
+                  "actual_ram_storage_bytes_verified": True,
+                  "proof_method": "selected_coordinate_device_to_host_readback",
+                  "scope": "All selected native union coordinates; other native coordinates are not written."}
+        if spec is not None:
+            expected_metrics = spec["_verified_metrics"]
+            if (result["changed_elements"] != expected_metrics["changed_elements"]
+                    or result["changed_tensors"] != expected_metrics["changed_tensors"]
+                    or not math.isclose(result["delta_l2"], expected_metrics["delta_l2"], rel_tol=1e-12, abs_tol=1e-15)):
+                raise ValueError("native actual metrics differ from validated source delta")
+        return result
+
+    def apply(self, candidate):
+        if candidate is None:
+            self.restoration = {"storage_bytes_exact": False}
+            native_receipt = None
+            try:
+                self.native.apply(None)
+                native_receipt = self.native_receipt(None)
+            finally:
+                # A failure in either component must never skip the other.
+                self.modules.apply(None)
+            self.restoration = dict(self.modules.restoration, native=native_receipt,
+                                    storage_bytes_exact=self.modules.restoration["storage_bytes_exact"]
+                                    and native_receipt["actual_ram_storage_bytes_verified"])
+            return
+        component = candidate.get("native_component")
+        native_spec = component["spec"] if component else None
+        self.native.apply(native_spec)
+        native_receipt = self.native_receipt(native_spec)
+        self.modules.apply(candidate)
+        module_receipt = self.modules.receipts[candidate["id"]]
+        self.receipts[candidate["id"]] = {
+            "id": candidate["id"], "kind": "disjoint_native_module_joint",
+            "module": module_receipt, "native": native_receipt,
+            "native_spec_sha256": None if component is None else component["spec_sha256"],
+            "changed_elements": module_receipt["changed_elements"] + native_receipt["changed_elements"],
+            "changed_tensors": module_receipt["changed_tensors"] + native_receipt["changed_tensors"],
+            "delta_l2": math.hypot(module_receipt["delta_l2"], native_receipt["delta_l2"]),
+            "tensor_disjoint": True, "actual_ram_storage_bytes_verified": True,
+            "scope": "Combined Frobenius norm/count from disjoint actual module and native changes."}
+
+
 def run(args, module, prepared):
     import torch
     from transformers import AutoTokenizer, Gemma4ForConditionalGeneration
@@ -356,7 +508,7 @@ def run(args, module, prepared):
                   "prior_source_attestation": plan["checkpoint_attestation"],
                   "full_source_rehashed_here": False, "host_cache_estimate_bytes": estimate,
                   "memory_budget": memory_budget,
-                  "device_proof": args.device_proof,
+                  "device_proof": args.device_proof, "answer_batching": args.answer_batching,
                   "device_proof_contract": ("CPU target SHA plus all-element device int16 equality; no D2H hash"
                                             if args.device_proof == "staged-int16" else "full device-to-host bytes compared and hashed"),
                   "transfer_granularity": "one complete BF16 matrix; all CPU GEMM/merge blocks remain 128 rows",
@@ -373,9 +525,15 @@ def run(args, module, prepared):
     model.requires_grad_(False)
     net, head = model.model.language_model, model.get_output_embeddings()
     params = {"model.language_model." + name: value for name, value in net.named_parameters()}
+    if any(c.get("native_component") for c in candidates):
+        for i, layer in enumerate(net.layers):
+            if hasattr(layer, "layer_scalar"):
+                params[f"model.language_model.layers.{i}.layer_scalar"] = layer.layer_scalar
     replay = StreamedModuleEdits(checkpoint, params, mapping, {c["id"]: c["recipe"] for c in candidates},
                                 module, header, offset, maximum_bytes=args.maximum_host_cache_gib * GIB,
                                 deadline=deadline, progress=note, device_proof=args.device_proof)
+    if any(c.get("native_component") for c in candidates):
+        replay = JointEdits(replay, checkpoint, candidates, params, args.device)
     evaluator = PublicAnswerEvaluator(net, head, tokenizer, frames, args.device, deadline,
                                       answer_batching=args.answer_batching)
     def on_result(identifier, result):

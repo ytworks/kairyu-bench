@@ -211,3 +211,25 @@ margin/NLL contributions, per-case and per-fold means, and the diagnostic KL
 positions remain unchanged. This matches the serial collector layout; it does
 not imply numeric equivalence to paired or differently padded execution.
 The selected layout is recorded in preview, provenance, and summary.
+
+
+### Optional fixed native component
+
+Each module candidate may add native_component: {"plan": "...", "sha256": "..."}.
+That native plan contains exactly one gemma4_native_bf16 candidate and uses the
+same source index/control-tree, attestation, public cases, and frame evidence.
+The existing native replay validator and ParameterEdits apply exact BF16
+values. Native tensors must be disjoint from every module projection. Components
+marked companion_required must both reference the same SHA-pinned joint report;
+running such a module component alone is rejected.
+
+Every candidate starts from the original values. Native and module changes are
+active together for the same evaluator sweep. Final recovery attempts both
+components even if applying or restoring either fails, and still requires the
+restored-base forward check. Joint receipts retain separate module tensor proofs
+and native selected-coordinate D2H byte proofs, plus the sum of actual changed
+counts and the hypotenuse of actual delta norms (valid because tensors are
+disjoint). They are explicitly marked disjoint_native_module_joint; a
+module-only persistent-checkpoint verifier must not treat them as its own
+schema. The existing module-only path, paired default, and numerical kernel are
+unchanged. Provenance records the explicit answer_batching mode.

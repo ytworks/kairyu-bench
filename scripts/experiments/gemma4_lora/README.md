@@ -345,3 +345,65 @@ original objective values must agree in the actual matched conditions before
 combining native and donor derivatives. The framing qualification above still
 applies: selecting serial does not by itself repair or establish a final-answer
 frame.
+
+### One bounded joint native/donor diagnostic
+
+`propose_joint_native_donor.py` reuses the minimum-step solver for one balanced
+proposal from matching headroom-aware donor plans and serial native collections.
+It requires identical forced-empty-thought frames, original per-case objectives,
+source identity, and disjoint native/donor weight tensors. Native raw-coordinate
+cost is 1; donor gate cost is the full continuous matrix-direction norm. It
+rounds only native values to BF16, keeps donor coefficients FP32, and rechecks
+all 84 declared constraints, the coefficient box and the hybrid norm. Failed
+postchecks do not trigger clipping, another solve, or automatic adoption.
+
+```sh
+python scripts/experiments/gemma4_lora/propose_joint_native_donor.py \
+  --plans HEADROOM_PLANS_JSON --native-margin NATIVE_MARGIN_COLLECTION \
+  --native-correct NATIVE_CORRECT_LL_COLLECTION --output FRESH_DIRECTORY
+```
+
+The 120-second bounded CPU analysis saves arrays plus a report, not a checkpoint
+or an editor spec. Its norm combines actual native BF16 differences and
+continuous donor matrix differences; donor weight rounding and joint model
+response still require a separate matched finite evaluation. It reads authored
+calibration metadata/gradients, never benchmark answers or hidden reasoning.
+See the [joint diagnostic outcome](../../../docs/experiments/2026-11-06-positive-correct-donor-amendment.md#corrected-frame-joint-nativedonor-cpu-diagnostic).
+
+An explicit `--repair-report FIRST_REJECTED_REPORT` performs one additional
+donor-only residual solve while retaining the saved native BF16 values exactly.
+It never recursively repairs a repair or changes targets. Both proposal and
+repair retain the coefficient/norm checks. To export required-together native
+and donor component specs from an eligible saved repair without another solve:
+
+```sh
+python scripts/experiments/gemma4_lora/propose_joint_native_donor.py \
+  --plans HEADROOM_PLANS_JSON --export-report ELIGIBLE_REPAIR_REPORT \
+  --output FRESH_COMPONENT_DIRECTORY
+```
+
+Exports pin the report, source arrays and recipe hashes; all 410 donor
+coefficients, including zeros, are explicit. They remain jointly qualified
+prediction-only components, not independently validated candidates.
+
+### Broader-direction sanity and one native-only correction
+
+`probe_direction_alternatives.py` reads the same frozen plan and matched
+collections. It reports local predictions for uniform positive donor
+coefficients 0.05/0.10/0.25 without treating the old L2≤1 experiment radius as a
+user requirement. Primary/related/other results, exact continuous norm and
+impossible predicted logP>0 are explicit; these amplitudes are never applied.
+It also performs one native-only residual solve from the first rejected joint
+proposal, then checks a new once-rounded BF16 native delta against all original
+84 constraints. It does not repeat corrections or repair its own output.
+
+```sh
+python scripts/experiments/gemma4_lora/probe_direction_alternatives.py \
+  --plans HEADROOM_PLANS_JSON --native-margin NATIVE_MARGIN_COLLECTION \
+  --native-correct NATIVE_CORRECT_LL_COLLECTION \
+  --native-proposal-report FIRST_REJECTED_JOINT_REPORT --output FRESH_DIRECTORY
+```
+
+The output is metadata and a selected-native-value array, not a model or an
+adopted spec. The one native solve has a 120-second CPU budget. All measured
+model performance and actual dense BF16 rounding remain separate.
