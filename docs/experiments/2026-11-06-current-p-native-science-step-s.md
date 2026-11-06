@@ -1,6 +1,6 @@
 # S：採用済みPへの科学native増分と公式比較（2026-11-06）
 
-Sはfresh Pとの公式dev90で **72.575397→74.242063、+1.666667 pp**。paired 95% CIは[−1.666667,+6.250000] pp。LCBの2問を得てMBPPの1問を失い、SciCodeは不変だった。科学校正proxyの改善を科学コード能力の改善とは読まない。Sはまだ採用せず、Pを作業親として保持し、Sの全14領域評価を実行中である。既知64問で90超、未知確認、DeepSWE/HFの達成ではない。
+Sはfresh Pとの公式dev90で **72.575397→74.242063、+1.666667 pp**。paired 95% CIは[−1.666667,+6.250000] pp。LCBの2問を得てMBPPの1問を失い、SciCodeは不変だった。科学校正proxyの改善を科学コード能力の改善とは読まない。全14領域の歴史P比較はoverall78.475099→78.129386（−0.345713 pp、95% CI[−2.120989,+1.419686]）。関連領域の損失を明示してSを次の作業親へ採用した。既知64問で90超、未知確認、DeepSWE/HFの達成ではない。
 
 ## 親と固定編集
 
@@ -53,9 +53,35 @@ Run IDs:
 
 ## 全14領域確認と次方法
 
-S full14はgemma4-code90-candidate-s-c32-dev10-full14-20261106、公式開始15:26:48.295975 UTC、tier10/dev778項目。15:28:29 UTCの台帳snapshotではrunning、reportなし、score未確定。codeは26項目でSciCodeを含まず、dev90と点数を直接比較しない。P保持確認との関連領域得失を見てrootが判断する。S採用はまだ行っていない。
+S full14はgemma4-code90-candidate-s-c32-dev10-full14-20261106、公式開始15:26:48.295975 UTC、終了2026-11-06T15:53:34.085041Z。tier10/dev778項目すべて採点、未採点0。746 capability＋32 probeの同じ固定集合を歴史Pと比較した。codeはHE10＋MBPP10＋LCB6の26項目でSciCodeを含まず、dev90と点数を直接比較しない。
 
-方法Zは実測した少数の有限応答を使う合成と、実BF16 deltaのGram費用を組み合わせる案。匿名公開一般方法だけをOpus5.5へ1回送り、actual assistant/model usageとも5.5のみ、labelZ／tools0／fallbackなし、49.1768秒・$0.108556で検証済み。負係数・打消し・非線形性・親変更・一度のBF16丸めを別々に扱う助言を記録した。係数boxは測定endpointのconvex hullと同義でなく、Gram費用は丸め後の実normとも同義でない。追加half-scaleや生成思考context校正は任意助言で、必須化・実行していない。Zのsolve／spec／候補／GPU0。Sの結果と採用親が確定するまで進めない。
+| 領域 | P % | S % | 差 pp |
+|---|---:|---:|---:|
+| knowledge | 90.000000 | 91.666667 | +1.666667 |
+| expert | 87.500000 | 87.500000 | +0.000000 |
+| facts | 72.500000 | 72.500000 | +0.000000 |
+| math | 95.625000 | 98.750000 | +3.125000 |
+| code | 87.777778 | 84.444444 | -3.333333 |
+| instructions | 92.083333 | 92.083333 | +0.000000 |
+| tools | 80.000000 | 75.000000 | -5.000000 |
+| agents | 50.000000 | 50.000000 | +0.000000 |
+| long-context | 87.627943 | 81.377943 | -6.250000 |
+| reasoning | 76.956522 | 74.130435 | -2.826087 |
+| commonsense | 63.000000 | 63.000000 | +0.000000 |
+| multilingual | 82.247475 | 77.525253 | -4.722222 |
+| vision | 75.000000 | 87.500000 | +12.500000 |
+| safety | 58.333333 | 58.333333 | +0.000000 |
+| **Overall（14領域等重み）** | **78.475099** | **78.129386** | **-0.345713** |
+
+実数scoreの23変更は10 gain／13 loss。code26のlossはMBPP792で、dev90のMBPP641とは別。BFCLのlive_irrelevance_287-69-0／multi_turn_long_context_155を失った。reasoningはBBEH nycc:018を得てMuSR murder_mysteries:205を失い、HMMT6は0.5→1の部分点改善。RULER fwe:131072:005とJAMC geography00039は各1件のtruncated/emptyに対応する。全変更IDは数値証拠に保存し、本文から原因を推測しない。
+
+公式chat562／logprob3062 calls、source報告token合計input1,404,485／output1,083,163、wall1605.4秒（load108.9秒を含む）。agent steps/API/token未計測はnullで、上記を全process trafficとしない。歴史Pとは別windowで、RootFS16／Image.Config／archive76・installed82 source/resourceの一致を確認したが、image ID／HostConfig hash差とPの旧installed package inventory欠測を残す。CPU CIの重複もあり、重みの速度因果効果は主張しない。
+
+rootはfresh dev90の利得と、全14領域の近い総合値・混合した得失を総合してSを作業親へ採用した。tools−5、long−6.25、reasoning−2.8261、multilingual−4.7222、code26−3.3333 ppは受け入れた既知の損失であり、消去しない。CIを追加gateにせず、全般的改善・90達成・HF公開条件達成とはしていない。次候補はPのattention編集とSの6,911 native変更を含む**完全な保存S**から積み上げる。
+
+採用state SHA1049e67a536317876716b516f6abe90b8b0770d5a011e080340a5a8b12ae561a、decision SHA6c5bfbe6d7b1adbd3f780561eb8d87cd4ef80f136266120ee60367dac4fe1ce5。元P2666は履歴へ保存。S tree60520…／freezea978…の全9stat継続を確認し、採用時の新しい重み計算・full hash再走査は行っていない。旧P/R勾配は履歴であり、Sへ付け替えない。
+
+方法Zは実測した少数の有限応答を使う合成と、実BF16 deltaのGram費用を組み合わせる案。匿名公開一般方法だけをOpus5.5へ1回送り、actual assistant/model usageとも5.5のみ、labelZ／tools0／fallbackなし、49.1768秒・$0.108556で検証済み。負係数・打消し・非線形性・親変更・一度のBF16丸めを別々に扱う助言を記録した。係数boxは測定endpointのconvex hullと同義でなく、Gram費用は丸め後の実normとも同義でない。追加half-scaleや生成思考context校正は任意助言で、必須化・実行していない。Zのsolve／spec／候補／GPU0。S採用後もZの候補作成は未実施。次方法は注意出力とMLP対応単位＋nativeの連成を検討し、Sのtools／long／reasoningの損失も目的へ含める。
 
 [全公式スコア台帳](2026-11-06-all-official-scores.md)へ本ペアを追加した。
 
@@ -75,3 +101,8 @@ S full14はgemma4-code90-candidate-s-c32-dev10-full14-20261106、公式開始15:
 | 同standing-root-decision.json | d8802a7886a6db7dd481276f6ccbcff6416c05aa8723276cdd5155e2eb4fcc5f |
 | opus-finite-response-composition-z-review/receipt.json | 3043a6200029043e7c98c5f2e7e64b355baae0d990fc657200a81cc4c1e50c94 |
 | 同method-summary.json | 9a4e9a6df9d654dc94140b7e8be4ba753262a8adbf223c18d68f99a237c3f04c |
+| candidate-s-retention-full14-v1/final-summary.json | 3f88274a1de75ba0cfd43a98ff254f4ec2f3fc957559053fdde5fecd7b1f408b |
+| 同historical-parent-evidence.json | 27247039de24e5b1df6f7a05675e8f83e568ff19139e9e00c27a22e7e5a0f7c7 |
+| 同independent-net-purpose-review.json | 4032427e9139bb1e92f4a215ca4dcb4a61c80f13cedc759684e63ffbb3bd581d |
+| 同postchecks.json | aef48a1d12180c2dba34c51dde221f9bd54fe4a70ba2ace28103e1387a070c31 |
+| 同protocol-parity.json | e59bb834225abf518959038da37136b42c02cbc42c354c28fb7162bdbf1f0267 |
