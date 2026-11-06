@@ -62,6 +62,44 @@ def matrix_families(plan):
 
 
 
+
+def matrix_names(plan, available):
+    """Optional exact observed scope; selected MLP groups remain complete."""
+    allowed = set(matrix_families(plan))
+    available = set(available)
+    eligible = {name for name in available if matrix_recipe.PATTERN.fullmatch(name)[3] in allowed}
+    if "matrix_tensors" not in plan:
+        return eligible
+    values = plan["matrix_tensors"]
+    if (not isinstance(values, list) or not values
+            or any(type(value) is not str or value not in eligible for value in values)
+            or len(set(values)) != len(values)):
+        raise ValueError("matrix_tensors must be a nonempty unique observed eligible-matrix allowlist")
+    names = set(values)
+    for name in names:
+        match = matrix_recipe.PATTERN.fullmatch(name)
+        if match[3] in {"gate", "up", "down"}:
+            stem = name.rsplit(".", 2)[0]
+            group = {stem + "." + kind + "_proj.weight" for kind in ("gate", "up", "down")}
+            if not group <= names:
+                raise ValueError("matrix_tensors requires complete gate/up/down tensor groups")
+    return names
+
+
+def matrix_column_indices(plan, layout):
+    """Share one scope between the solve and normalized target construction."""
+    names = matrix_names(plan, {entry["tensor"] for entry in layout})
+    active, selected, cursor = [], [], 0
+    for entry in layout:
+        count = entry["count"]
+        if entry["tensor"] in names:
+            active.extend(range(cursor, cursor + count))
+            selected.append(entry)
+        cursor += count
+    if not active:
+        raise ValueError("explicit eligible matrix scope has no observed columns")
+    return np.asarray(active, dtype=np.int64), selected
+
 def native_names(plan, available):
     """Exact-name opt-in; whole native observation validation remains mandatory."""
     if "native_tensors" not in plan:
@@ -99,7 +137,7 @@ def prepare(path):
     mixed = plan.get("schema_version") == 2 and plan.get("kind") == "native_matrix_coupled_objectives_v2"
     if not mixed and (plan.get("schema_version") != 1 or plan.get("kind") != "native_coupled_objectives_v1"):
         raise ValueError("explicit supported coupled-objectives plan required")
-    if "matrix_families" in plan and not mixed:
+    if ("matrix_families" in plan or "matrix_tensors" in plan) and not mixed:
         raise ValueError("matrix family eligibility requires the v2 plan")
     if mixed:
         matrix_families(plan)
@@ -138,6 +176,8 @@ def prepare(path):
         raise ValueError("complete finite BF16 native layout required")
     native_names(plan, native)
     matrices = {n: t for n, t in checkpoint.tensors.items() if matrix_recipe.PATTERN.fullmatch(n)}
+    if mixed:
+        matrix_names(plan, matrices)
     collections = {}
     families = ("native", "matrix") if mixed else ("native",)
     for family in families:
@@ -352,17 +392,15 @@ def solve(path, output, *, write_spec=False, maximum_seconds=120):
         scope = None
         if mixed:
             matrix_base, _, matrix_layout, coords = loaded["matrix:" + OBJECTIVES[0]]
-            active, cursor = [], 0
+            active, selected_matrix_layout = matrix_column_indices(plan, matrix_layout)
+            selected_matrix_names = {entry["tensor"] for entry in selected_matrix_layout}
             allowed_families = matrix_families(plan)
+            cursor = 0
             for entry in matrix_layout:
-                match = matrix_recipe.PATTERN.fullmatch(entry["tensor"])
                 count = entry["count"]
-                if match[3] in allowed_families:
-                    active.extend(range(cursor, cursor + count))
+                if entry["tensor"] in selected_matrix_names:
                     layout.append(dict(entry, coordinates=coords[cursor:cursor + count], block="matrix"))
                 cursor += count
-            if not active:
-                raise ValueError("explicit eligible matrix scope has no observed columns")
             if len({e["tensor"] for e in layout}) != len(layout):
                 raise ValueError("native and matrix tensor columns overlap")
             active = np.asarray(active, dtype=np.int64)
@@ -372,8 +410,9 @@ def solve(path, output, *, write_spec=False, maximum_seconds=120):
                      "active_matrix_columns": len(active), "excluded_matrix_columns": len(matrix_base) - len(active),
                      "excluded_qkv_columns": sum(e["count"] for e in matrix_layout
                                                  if matrix_recipe.PATTERN.fullmatch(e["tensor"])[3] in {"q", "k", "v"}
-                                                 and matrix_recipe.PATTERN.fullmatch(e["tensor"])[3] not in allowed_families),
+                                                 and e["tensor"] not in selected_matrix_names),
                      "active_matrix_families": allowed_families,
+                     "eligible_matrix_tensors": sorted(selected_matrix_names),
                      "baseline_max_abs_difference": {o: collections["matrix:" + o]["baseline_max_abs_difference"] for o in OBJECTIVES},
                      "gradient_methods": {"native": collections[OBJECTIVES[0]]["summary"]["runtime"].get("gradients"),
                                           "matrix": collections["matrix:" + OBJECTIVES[0]]["summary"]["runtime"].get("gradient_accumulation")}}
@@ -430,7 +469,7 @@ def solve(path, output, *, write_spec=False, maximum_seconds=120):
             if mixed:
                 if any(("indices" in edit and eligible_blocks == ["matrix"]) or
                        ("coordinates" in edit and (not matrix_recipe.PATTERN.fullmatch(edit["tensor"]) or
-                        matrix_recipe.PATTERN.fullmatch(edit["tensor"])[3] not in allowed_families))
+                        edit["tensor"] not in selected_matrix_names))
                        for edit in edits):
                     raise ValueError("ineligible native/matrix family escaped selected columns")
                 compatibility = joint.editor_compatibility(edits, allow_batched_matrix=True)

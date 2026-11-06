@@ -94,6 +94,8 @@ class NativeCoupledTests(unittest.TestCase):
             area = "mlp" if kind in {"gate", "up", "down"} else "self_attn"
             name = f"model.language_model.layers.0.{area}.{kind}_proj.weight"
             tensors[name] = ("BF16", shape, bytes.fromhex("803f") * int(np.prod(shape)))
+        tensors["model.language_model.layers.1.self_attn.o_proj.weight"] = (
+            "BF16", (32, 32), bytes.fromhex("803f") * 1024)
         weights(self.checkpoint.path / "model.safetensors", tensors)
         self.checkpoint = Checkpoint(self.checkpoint.path)
         identity = self.checkpoint.identity()
@@ -258,6 +260,35 @@ class NativeCoupledTests(unittest.TestCase):
             COUPLED.prepare(protected_plan)
         self.plan.pop("native_tensors")
         self.plan["eligible_blocks"] = ["matrix"]
+
+        # Exact tensor scope excludes a much larger competing gradient in another
+        # layer of the same matrix family. All unselected saved bytes stay exact.
+        onames = sorted(e["tensor"] for e in entries if e["family"] == "o")
+        self.plan["matrix_tensors"] = [onames[0]]
+        self.plan["candidates"][0]["id"] = "one-output-group"
+        for directory in self.plan["collections"]["matrix"].values():
+            target = Path(directory) / "gradient.npy"
+            values = np.load(target, allow_pickle=False)
+            for entry in entries:
+                if entry["tensor"] in onames:
+                    values[entry["start"]] = 1. if entry["tensor"] == onames[0] else 1e6
+            np.save(target, values)
+        restricted_plan = self.root / "selected-matrix-plan.json"
+        restricted_plan.write_text(json.dumps(self.plan))
+        restricted_output = self.root / "selected-matrix-proposal"
+        selected_report = COUPLED.solve(restricted_plan, restricted_output, write_spec=True)
+        self.assertTrue(selected_report["methods"][0]["predicted_constraints_satisfied"])
+        restricted_spec = restricted_output / "one-output-group.json"
+        self.assertEqual([e["tensor"] for e in json.loads(restricted_spec.read_text())["edits"]], [onames[0]])
+        selected_saved, selected_manifest = self.root / "selected-matrix-saved", self.root / "selected-matrix.json"
+        editor.create(self.checkpoint.path, selected_saved, restricted_spec, selected_manifest,
+                      apply=True, reserve_bytes=0)
+        editor.verify(selected_manifest)
+        saved = Checkpoint(selected_saved)
+        for name in self.checkpoint.tensors:
+            self.assertEqual(saved.read_raw(name) == self.checkpoint.read_raw(name), name != onames[0])
+        self.assertEqual({p: self.sha(p) for p in self.checkpoint.files}, before)
+        self.plan.pop("matrix_tensors")
 
         # Explicit Q-only scope selects Q cells and leaves every other byte intact.
         self.plan["matrix_families"] = ["q"]

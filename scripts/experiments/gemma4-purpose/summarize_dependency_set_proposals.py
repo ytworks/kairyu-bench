@@ -97,17 +97,37 @@ def main():
             policy_path = Path(prospective["path"])
             if pins[str(policy_path.resolve())] != prospective["sha256"]:
                 raise ValueError("prospective policy pin differs")
-            policy = json.loads(policy_path.read_text())["common"]
+            document = json.loads(policy_path.read_text())
+            if "realized_weighted_cap" in document:
+                if (document["parent_state"] != plan.get("parent_state")
+                        or document.get("native_frozen") is not True
+                        or plan.get("eligible_blocks") != ["matrix"]):
+                    raise ValueError("shared-code policy parent or native scope differs")
+                cap = document["realized_weighted_cap"]
+                if type(cap) not in (int, float) or not math.isfinite(cap) or cap <= 0:
+                    raise ValueError("positive finite prospective cost cap required")
+                for candidate in plan["candidates"]:
+                    declared = [row for row in document["methods"] if row["id"] == candidate["id"]]
+                    if (len(declared) != 1 or declared[0]["rounding"] != candidate["rounding"]
+                            or declared[0]["matrix_families"] != plan["matrix_families"]
+                            or candidate["cost_metric"] != dict(type="relative",
+                                floor=declared[0]["relative_floor"],
+                                block_scales=dict(native=1., matrix=1.))):
+                        raise ValueError("shared-code candidate differs from prospective policy")
+                policy = dict(actual_declared_weighted_l2_cap=cap, relative_radius=.025,
+                              absolute_radius=1e-6)
+            else:
+                policy = document["common"]
+                if policy["actual_declared_weighted_l2_cap"] != 1.:
+                    raise ValueError("legacy fixed cost cap differs")
         else:
             policy = plan["eight_method_policy"]
-            if policy["protocol"] != "eight_dependency_sets_v1":
+            if (policy["protocol"] != "eight_dependency_sets_v1"
+                    or policy["actual_declared_weighted_l2_cap"] != 1.):
                 raise ValueError("declared eight-set fixed policy required")
-        if (
-            policy["actual_declared_weighted_l2_cap"] != 1.0
-            or policy["relative_radius"] != 0.025
-            or policy["absolute_radius"] != 1e-6
-        ):
-            raise ValueError("declared fixed budget required")
+        cap = policy["actual_declared_weighted_l2_cap"]
+        if policy["relative_radius"] != 0.025 or policy["absolute_radius"] != 1e-6:
+            raise ValueError("declared fixed rounding budget required")
         for candidate in plan["candidates"]:
             if candidate["rounding"] != {
                 "relative_radius": 0.025,
@@ -220,6 +240,9 @@ def main():
                     )
                     if match is None or match.group(1) not in plan["matrix_families"]:
                         raise ValueError("ineligible matrix family changed")
+                if ("coordinates" in edit and plan.get("matrix_tensors") is not None
+                        and edit["tensor"] not in plan["matrix_tensors"]):
+                    raise ValueError("ineligible exact matrix tensor changed")
                 n = edit["tensor"]
                 isnative = "indices" in edit
                 block = "native" if isnative else "matrix"
@@ -313,8 +336,8 @@ def main():
                 metric=metric,
                 continuous_box_excess_count=excess,
                 maximum_continuous_box_excess=maxexcess,
-                eligible_for_finite=weighted <= 1.0 and sum(counts.values()) > 0,
-                metric_cap=1.0,
+                eligible_for_finite=weighted <= cap and sum(counts.values()) > 0,
+                metric_cap=cap,
                 both_blocks_changed=all(v > 0 for v in counts.values()),
                 block_collapse=(
                     plan.get("eligible_blocks") == ["native", "matrix"]

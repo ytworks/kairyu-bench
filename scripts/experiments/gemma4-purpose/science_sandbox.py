@@ -65,7 +65,7 @@ with open("/dev/null", "w") as quiet, contextlib.redirect_stdout(quiet), context
             args = [decode(v) for v in packed]
             copies = [v.copy() if isinstance(v, np.ndarray) else v for v in args]
             try:
-                with np.errstate(all="raise"):
+                with np.errstate(all="raise", under="ignore" if payload.get("allow_underflow") is True else "raise"):
                     out = solve(*args)
                 unchanged = all(not isinstance(a, np.ndarray) or np.array_equal(a, b)
                                 for a, b in zip(copies, args))
@@ -159,6 +159,11 @@ def prepare(
         "code": code,
         "parameters": case.parameters.split(", "),
         "trials": packed,
+        **(
+            {"allow_underflow": True}
+            if getattr(case, "allow_underflow", False) is True
+            else {}
+        ),
     }, expected
 
 
@@ -534,7 +539,15 @@ def main(argv=None, docker_factory=Docker):
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--cases", required=True, type=Path)
     parser.add_argument(
-        "--catalog", choices=("basic", "advanced", "advanced-v2"), default="basic"
+        "--catalog",
+        choices=(
+            "basic",
+            "advanced",
+            "advanced-v2",
+            "library-train-v1",
+            "library-transfer-v1",
+        ),
+        default="basic",
     )
     parser.add_argument("--responses", required=True, type=Path)
     parser.add_argument("--output", required=True, type=Path)
@@ -566,6 +579,14 @@ def main(argv=None, docker_factory=Docker):
         import advanced_science_cases
 
         case_module = advanced_science_cases
+    elif args.catalog == "library-train-v1":
+        import library_train_cases
+
+        case_module = library_train_cases
+    elif args.catalog == "library-transfer-v1":
+        import library_transfer_cases
+
+        case_module = library_transfer_cases
     catalog, answers, generation, inputs = read_inputs(
         args.cases,
         args.responses,
