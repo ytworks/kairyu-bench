@@ -58,3 +58,21 @@ analysis/code90-resume-20261106/からの相対パス。既存回答・問題・
 
 
 2026-11-06 16:24:49 UTC、固定済みSの4段階観測ownerを起動し、native correct-logprob収集の開始を確認した。候補AAの重み編集・公式評価はまだ行っていない。plan SHA a98a5aa8125a3daecc63dcda15ad85834819f3e4fd0f80577c945c0ee2d8d954、runtime SHA 81ec55172c2be0ed67e15fd84cbd5d6e461390fed8067b2828ea462056a98a0c。起動前の4 CPUメタデータ確認、実Torch CPU13件、独立レビュー、全CPU検証510件（458成功・52 optional skip）を通過した。全CI証跡SHA e91a22fe63841405185003f2b449d4ead9705ed273eea0d1d18a27e859d40c5b。結果は未確定のまま記録する。
+
+
+## Sの新規観測完了と候補計算開始
+
+4収集すべて42/42foldが終了し、全体478.435秒（実計算263.128秒）で同じO2 CIDのhealthy復帰まで完了した。Sの9ファイル、state1049、6 source pins、S/P/R/embedding各サービスは不変。モデル重みの編集はない。
+
+| 収集 | 実forward数 | 計算秒 | 最大reserved GiB |
+|---|---:|---:|---:|
+| native correct-LL |136|57.829|84.19|
+| native margin |272|87.433|84.95|
+| matrix correct-LL |136|45.047|79.82|
+| matrix margin |272|72.819|80.65|
+
+同じS・frame・136caseで、native/matrix間のcorrect-LL差は0、margin最大差は9.5367431640625e-7で事前固定1e-6以内。matrixのmarginはnative値をFP32へ保存した値と全caseで一致し、この保存境界を数値差として残す。以前のS有限応答との42fold NLLも完全一致した。これは観測の整合性であり、能力向上の証拠ではない。
+
+完了summary SHA24ca2e9ec381900cc93995e4b3022eef21ca9b09e3fb664b7fb2cddab4b61621、completion7d792ce68e992cae80d0522d05f08daf81ef8a59ac248b0c6275a16f5134b5e8、postchecksa8a85283f9d9bd047010b71c8970b0cdfebc61fc0553c09f0965c32ff916e647、独立数値review4aed13610cf2d09e43a26b10ebb398c746763d189fe2c244f16589a3e1cc6496。
+
+AAの84制約は固定式へ新Sのheadroomだけを代入し、独立再計算で一致した。plan SHA40fae9d8152e5730e765bb5a6ed91062069eb9404d5065b113c79d76e3fc05f8、独立plan review4857ab00dccc63fee4653c1e31f89e8a1437752d85f8b92cfbda1284b35fdbd8。上限300秒・1候補・再試行なしのCPU計算を開始した。AAの有限応答、保存checkpoint、公式accuracyは未実施で、Sの採用状態は変わらない。
