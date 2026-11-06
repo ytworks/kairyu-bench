@@ -135,7 +135,7 @@ S=numerics/contracts/advanced_state、U=implementation/algorithm/workflow、全4
 
 current-p-native-su-proposals-v1/plan.json SHA 44b9b81dfc9f3366ea1595e1f1b757319fb31f005cbf08c1659ed9b7220e1807を先に固定し、metadata preview後14:40:58.406 UTCに一度だけCPU計算を開始した。CPU8–15／BLAS2／budget300秒、grid・自動再試行なし。保存collectorのfinite source214b3c7e…と現在9a5fb90f…は異なるfingerprintであり、後者のserial/threads/seed設定とselected-word検査の追加を明示する。frame/objective計算は変更しておらず、同一実装だったと遡及しない。結果を次に記す。
 
-### P起点S/UのCPU結果（実応答未測定）
+### P起点S/UのCPU結果（この段階では実応答未測定）
 
 83.9932秒で終了、process returncode0。各案1回、grid・再solve・追加GPU観測0。全入力source/hash/stat、P9file stat、current state2666c542…の継続一致を確認した。
 
@@ -153,3 +153,63 @@ current-p-native-su-proposals-v1/plan.json SHA 44b9b81dfc9f3366ea1595e1f1b757319
 | current-p-native-su-proposals-v1/solve-completion.json | b47611bc67ef82fc5dfa3ccc1aa112aeb2511341c4af733a056a20352925cc29 |
 | current-p-native-su-proposals-v1/proposals/current-p-science-coupled-s.json | 168e4851418cbc209f47e50881bcf3fb235c51ce29ed50af525584a3aaf40c0d |
 | current-p-native-su-proposals-v1/proposals/current-p-implementation-coupled-u.json | efd4bc3b23dc0608e90a96167393a4b73175656c17ba704b3856ed9da6454cad |
+
+## P起点S/Uの実BF16有限応答と選択
+
+2026-11-06 UTC、P→S→U→Pの固定136例／42foldを一度ずつ実測した。native ON設定に明示した空thoughtを閉じたteacher-forced public-answer診断であり、自由生成・コード実行・公式スコアではない。91.6384秒、追加gradient／生成token0。初期Pのcorrect-LLは保存collectorと全foldで一致し、margin差はfold最大4.97e−7／case最大9.54e−7。復帰Pのmargin／NLL／sampled KLは初期Pとの差0だった。
+
+保存P値と固定specから、96 tensor／11,417 union座標のindicesとBF16 word SHAを独立再構成し、base／S／U／restoredの全4組と一致した。これは選択座標の実GPU→CPU readback証明であり、全モデルRAM hashではない。checkpointのfull hashは既存証拠を継承し、P全9file stat／全入力source pin継続を確認した。14:54:47.980564 UTCに同じO2 CIDの復帰が完了し、全4serving／embedding identityの事後確認もPASS。
+
+| 候補 | 主目的6fold Δcorrect-LL平均（正） | 主目的Δmargin平均（正） | 全42fold LL 正/負 | 全42fold margin 正/負 | 実応答の旧局所下限未達 |
+|---|---:|---:|---:|---:|---:|
+| S | +0.0112496（6/6） | +0.0001721（5/6） | 31/11 | 20/22 | 18/84 |
+| U | +0.0099814（6/6） | +0.0036761（4/6） | 34/8 | 19/23 | 19/84 |
+
+予測では両案とも84制約を満たしたが、実応答はS18／U19制約で下限を下回った（比較許容1e−9、最大shortfall .1817758／.1803574）。LL／marginの平均絶対予測誤差はS .0437189／.0451078、U .0544903／.0613693。小さいnative gain値のBF16編集でも局所線形近似の誤差を無視できない。未達数は予測の限界を示す診断であり、全領域無損失の採用gateへ置き換えない。
+
+下表は各目的2foldの実平均。Δcorrect-LLは高いほど正解継続の尤度が高い、Δmarginはcorrect−foilの差。単位は保存されたlogprobでありaccuracy ppではない。
+
+| 目的 | S Δcorrect-LL | S Δmargin | U Δcorrect-LL | U Δmargin |
+|---|---:|---:|---:|---:|
+| code | -0.0563070 | +0.1577064 | +0.1229571 | +0.3477875 |
+| tools | +0.0059757 | -0.0803791 | +0.0628167 | +0.0363319 |
+| instruction | +0.0900005 | +0.0369348 | -0.0158924 | -0.0304075 |
+| general | +0.0043226 | +0.0245481 | +0.1141008 | -0.0165187 |
+| reasoning | +0.0374709 | -0.0274173 | -0.0976585 | -0.1283215 |
+| lookup | +0.1535933 | +0.1224430 | +0.0425950 | -0.0997062 |
+| japanese | +0.1256127 | -0.0304756 | +0.5095863 | +0.3950408 |
+| implementation | +0.0048410 | -0.0063833 | +0.0116347 | -0.0033310 |
+| workflow | -0.0010604 | +0.0127802 | +0.0099937 | +0.0150896 |
+| tool_call | +0.0053093 | -0.0129671 | -0.0295186 | -0.0169305 |
+| tool_no_call | +0.0201861 | +0.0076910 | +0.0275915 | +0.0133332 |
+| tool_arguments | +0.0111116 | -0.0004649 | +0.0053295 | +0.0039804 |
+| algorithm | +0.0027737 | -0.0012285 | +0.0083157 | -0.0007302 |
+| referent | +0.0210687 | -0.0141629 | +0.0058291 | -0.0078038 |
+| fact_retention | -0.0129335 | -0.0047531 | +0.0120852 | +0.0013579 |
+| science_numerics | +0.0120399 | +0.0019112 | +0.0077095 | +0.0028248 |
+| science_contracts | +0.0107273 | +0.0018132 | +0.0052144 | -0.0037148 |
+| science_advanced_state | +0.0109817 | -0.0032080 | +0.0081578 | -0.0009968 |
+| science_advanced_counting | +0.0059452 | -0.0011213 | +0.0000723 | -0.0011937 |
+| science_advanced_simulation | +0.0052110 | +0.0012493 | +0.0113175 | +0.0024770 |
+| science_advanced_probability | +0.0113396 | -0.0042145 | +0.0122102 | -0.0087128 |
+
+Sはnumerics／contractsのmarginが両foldで正、stateはfold0 −.0097543／fold1 +.0033384。全選択LLは正だが、general fold0 LL−.1917758／margin−.1601967、tools平均margin−.0803791などの損失を保持する。instruction実平均はLL+.0900005／margin+.0369348で、事前予測の低下とは異なった。Uは選択LL全6foldが正でも、implementation fold1 margin−.0072971、algorithm fold0−.0034987、reasoning平均LL−.0976585／margin−.1283215、instruction平均LL−.0158924／margin−.0304075となった。
+
+rootは科学目的を優先し、Sのみを先に実体化・公式native ON比較へ進めると決定した。Uは推論／指示の実proxy損失から保留し、公式accuracy失敗とは判定していない。再scale・再solve・S/Uの単純加算は行わない。Sの能力改善、90達成、採用はこの測定から主張しない。
+
+KLはcorrect answerの最初／最後のtoken位置だけの診断で、全出力分布が安定した証明ではない。生成中thought contextを含まないproxyとの隔たり、21目的にXSTest安全性がないことも残る。
+
+### 実編集の分布
+
+固定specのBF16 target−保存P native値をFP64集計した0.254秒のCPU監査では、Sは45層／86tensor／6,911座標、Uは50層／95tensor／9,448座標に分散した。SのΔnorm²はpost-attention norm52.9131%／post-FFN norm47.0869%、Uは50.4329%／49.5670%。pre-FFN normはS2座標／U3座標のみで、input／q/k norm／layer scalar／final normは不変。分布から目的や層の因果的役割・機能的一貫性を断定しない。
+
+共有変更は85tensor／4,942座標、union11,417座標。共有座標のうち同符号2,806／逆符号2,136、同じtarget1,263。全座標のdelta内積4.9422449688e−8、cosine＝内積/(||ΔS||₂||ΔU||₂)＝.2505227663で、同じ親からの二方向をそのまま積み重ねる根拠にはならない。新親を採用した場合はその親で目的観測をやり直す。保存native範囲のsource L2は70,134.9939で、input/pre-FFN normにnorm²の99.8672%が偏る。相対normを能力差や全checkpoint normに読み替えない。
+
+| 追加証拠（analysis/code90-resume-20261106/起点） | SHA256 |
+|---|---|
+| current-p-native-su-proposals-v1/edit-footprint.json | 824688582e76e565e8623ee390bb38abc3a1bb9d2a878bb9129ce6025d47c205 |
+| current-p-native-su-finite-v1/replay/summary.json | 4c0f9c869e10bbc9996ad97893c70cf74a28096840499a0c453cd6c9c185a637 |
+| current-p-native-su-finite-v1/replay/selected-byte-proofs.json | fbf1eb9d3a07f0b3016df0e16d20e88e954bd49fb532025fbc94075c7967e3f9 |
+| current-p-native-su-finite-v1/independent-numeric-review.json | 9729a7cd951aeffc23044f70595535977345afbbe88560acd4911ea8a72895f2 |
+| current-p-native-su-finite-v1/completion.json | b6c2f25c719ab78ecb8e39e8957bcc44f7a35034d16c55370e11d3e4f3a36d79 |
+| current-p-native-su-finite-v1/postchecks.json | b12e09ef2a934d32629a1370e94cd60bf8121805f1fad05b3cf3dfe555655319 |
