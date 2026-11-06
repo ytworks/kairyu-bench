@@ -17,31 +17,34 @@ from test_wsp_weights import weights
 class ReplayTests(unittest.TestCase):
     def test_base_candidates_base_order_and_failure_restore(self) -> None:
         calls = []
+        candidates = [{"id": f"candidate-{i}"} for i in range(6)]
         def apply(candidate):
             calls.append(("apply", None if candidate is None else candidate["id"]))
         def evaluate(**flags):
             calls.append(("evaluate", flags))
             return {"value": len(calls)}
         baseline, results, repeat, failure = replay_sequence(
-            [{"id": "one"}, {"id": "two"}], apply, evaluate,
+            candidates, apply, evaluate,
             lambda name, result: calls.append(("save", name)))
         self.assertIsNotNone(baseline)
-        self.assertEqual(len(results), 2)
+        self.assertEqual(len(results), 6)
         self.assertIsNotNone(repeat)
         self.assertIsNone(failure)
-        self.assertEqual([c[1] for c in calls if c[0] == "apply"], [None, "one", "two", None])
+        self.assertEqual([c[1] for c in calls if c[0] == "apply"],
+                         [None, *[c["id"] for c in candidates], None])
         calls.clear()
         def broken(**flags):
-            if not flags.get("store_base") and not flags.get("recovery"):
-                raise MemoryError("synthetic allocation error")
+            if not flags.get("store_base") and not flags.get("recovery") and calls[-1] == ("apply", "candidate-4"):
+                raise MemoryError("synthetic late allocation error")
             return {"base": True}
         _, results, repeat, failure = replay_sequence(
-            [{"id": "one"}, {"id": "two"}], apply, broken, lambda *args: None)
-        self.assertEqual(results, [])
+            candidates, apply, broken, lambda *args: None)
+        self.assertEqual(len(results), 4)
         self.assertIsNotNone(repeat)
         self.assertIsInstance(failure, MemoryError)
         self.assertIsNone(failure.__traceback__)
-        self.assertEqual([c[1] for c in calls if c[0] == "apply"], [None, "one", None])
+        self.assertEqual([c[1] for c in calls if c[0] == "apply"],
+                         [None, *[c["id"] for c in candidates[:5]], None])
 
     def test_initial_base_failure_and_writer_failure_restore(self) -> None:
         calls = []
@@ -142,6 +145,10 @@ class SparseReplayTests(unittest.TestCase):
             {"id": "other", "edits": [
                 {"tensor": self.matrix, "coordinates": [[1, 2]], "set_values": [6.0625]}]},
         ]
+        self.documents.extend(
+            {"id": f"later-{i}", "edits": [
+                {"tensor": self.matrix, "coordinates": [[1, 2]], "set_values": [6.125 + i * .0625]}]}
+            for i in range(4))
         self.plan = {"schema_version": 1, "architecture": "gemma4_sparse_bf16",
                      "checkpoint_index_sha256": self.digest(index),
                      "checkpoint_attestation": {"path": str(receipt), "sha256": self.digest(receipt)},
@@ -195,11 +202,22 @@ class SparseReplayTests(unittest.TestCase):
         wrong["edits"][0]["_flat_indices"] = [0, 1]
         with self.assertRaisesRegex(ValueError, "unchanged preverified"):
             state.apply(wrong)
-        def evaluate(**flags):
-            if not flags.get("store_base") and not flags.get("recovery"):
-                raise RuntimeError("synthetic forward failure")
+        def successful(**flags):
             return [value.clone() for value in params.values()]
-        _, _, repeated, failure = replay_sequence(specs, state.apply, evaluate, lambda *args: None)
+        _, results, repeated, failure = replay_sequence(specs, state.apply, successful, lambda *args: None)
+        self.assertEqual(len(results), 6)
+        self.assertIsNone(failure)
+        self.assertTrue(all(torch.equal(params[key], value) for key, value in pristine.items()))
+        candidate_calls = 0
+        def evaluate(**flags):
+            nonlocal candidate_calls
+            if not flags.get("store_base") and not flags.get("recovery"):
+                candidate_calls += 1
+                if candidate_calls == 5:
+                    raise RuntimeError("synthetic late forward failure")
+            return [value.clone() for value in params.values()]
+        _, results, repeated, failure = replay_sequence(specs, state.apply, evaluate, lambda *args: None)
+        self.assertEqual(len(results), 4)
         self.assertIsInstance(failure, RuntimeError)
         self.assertIsNotNone(repeated)
         self.assertTrue(all(torch.equal(params[key], value) for key, value in pristine.items()))

@@ -52,8 +52,8 @@ def load_plan(path: Path, checkpoint: Checkpoint) -> tuple[dict[str, Any], list[
     if plan.get("schema_version") != 1 or plan.get("architecture") not in {"gemma4_native_bf16", "gemma4_sparse_bf16"}:
         raise ValueError("unsupported finite replay plan")
     entries = plan.get("candidates")
-    if not isinstance(entries, list) or not 1 <= len(entries) <= 3:
-        raise ValueError("one through three fixed candidate specs required")
+    if not isinstance(entries, list) or not 1 <= len(entries) <= 8:
+        raise ValueError("one through eight fixed candidate specs required")
     hashes = {str(path.resolve()): _sha(path), str(Path(__file__).resolve()): _sha(Path(__file__)),
               str(Path(checkpoint_reader.__file__).resolve()): _sha(Path(checkpoint_reader.__file__))}
     for field in ("cases", "frame_evidence"):
