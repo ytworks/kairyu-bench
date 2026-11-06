@@ -1,7 +1,7 @@
 # Gemma4公式スコア全実行台帳（2026-11-06）
 
-snapshot: 2026-11-06T21:32:18.526514+00:00。WSP **128 runs**（completed123、partial4、running1＝旧保存記録のみ、現在の稼働を意味しない）。
-今回のfresh AD対AF/AGの完了3件を追加した。旧125行の全fieldは完全一致で保持し、過去snapshotの進行中記述は当時の記録として残す。AF・AGはfresh ADを下回り不採用、追加full14なし。working modelはAD、積み上げP→S→AC→ADを維持する。AD採用時のfresh dev90は+2.416667pp、歴史AC対full14 overallは−1.358562ppであり、全分野改善とは呼ばない。
+snapshot: 2026-11-06T22:50:14.467974+00:00。WSP **130 runs**（completed125、partial4、running1＝旧保存記録のみ、現在の稼働を意味しない）。
+今回のfresh AD対ALの完了2件を追加した。旧128行の全fieldは完全一致で保持し、過去snapshotの進行中記述は当時の記録として残す。ALはfresh ADを3.333333pp下回り不採用、追加full14なし。working modelはAD、積み上げP→S→AC→ADを維持する。AD採用時のfresh dev90は+2.416667pp、歴史AC対full14 overallは−1.358562ppであり、全分野改善とは呼ばない。
 新規採点・モデル実行なし。指定したNVMe resultsとlegacy resultsの直下run.json/report.jsonだけを採録した。
 5つのDeepSWE runはWSP台帳から分離し、完了・取消結果を代表表へ併記する。元R1/R2はincompleteで、この台帳から完成した点を捏造しない。
 公式reportから値を転記し、欠測は「—」。表は小数6桁表示、sourceの未丸め値はcatalog JSONに残す。
@@ -5105,3 +5105,27 @@ Rootは両増分を退け、AD state7d65d218…を変更せず保持する。AF/
 | preservation.json | 6b1869818425424ee4d55201655e7b6253b814b6c353123f8ba89cd2ba6f5f46 |
 
 最終summary53bee6345ab4d88b120ca41a378d3b7446a3fdab962322e9019161c7695bd19b、postchecks4bb86167ea493d1bee920c92125d30f5d4acd175810b0733536edcb7ce1f2f5a。Root-delegated decision 3d780adc1f9ad6e49d9d29356c0631aa64d4216110359308d91bdc3e52cabb27。
+
+
+## v10追加2実行：fresh AD対AL（130 runs）
+
+旧v9の128 row objectsは全field完全一致。保存run/reportのみを既存exporterで追記し、125 completed・4 partial・歴史的未完了1。新規採点・モデル呼出しはない。
+
+| Run ID | Code90 % | 対fresh AD差 pp | 95% CI pp | 採点 / 未採点 |
+|---|---:|---:|---|---:|
+| gemma4-code90-current-ad-c32-dev30-code-pairal-20261107 | 72.158730 | — | — | 90 / 0 |
+| gemma4-code90-library-al-c32-dev30-code-20261107 | 68.825397 | −3.333333 | [−7.500000, 0.000000] | 90 / 0 |
+
+AD→ALはHE28/30→27/30、MBPP24/30→24/30、LCB15/20→13/20、SciCode40.301587%→同値。4source等重み、SciCode部分点を維持。3 loss / 0 gain（HumanEval/95、LCB3789、arc195_b）で、rootはAL不採用・full14なしとしAD7d65を維持した。以前のAD74.242063を今回のfresh対照へ代用しない。
+
+正式APIは各119、再試行・error・未採点・truncated・emptyは0。input/outputはAD94,930/330,234、AL96,408/329,144。wall366.8/398.8秒、agent stepsは未測定。Process counter各119stop+1lengthと正式callsの差はstartup1request/input21/output1に一致し、lengthを問題単位の打切りへ帰属させない。実OCI/source82/observer設定/親・配信identityの閉鎖確認はPASS。
+
+| v10 Artifact | SHA256 |
+|---|---|
+| catalog.json | 18587ed75f9f76a2705c1cd6030b0629afd8140a6ec06dbdeaf43a4ff8f403a9 |
+| coverage.json | 5d3ff481e45f3407d16313df20a326d23c0df268b00ed3fe53f1d426e39023d7 |
+| runs.csv | f3642f710d9ef7c6779fe407c4f7dfbfe476dbe771e268998a08c0db3a784782 |
+| source-scores.csv | de09f294325ef52acc95b1a9bc09cb87de91b328bafb7da24dec6ffc44fc0d5a |
+| preservation.json | 852c14f0ea0ebe76fa39e5d94728721f072eacc8256e16ba795e50b7fae6ff7f |
+
+最終summary 7ecd713717bfba6be7b2991a68deb0e7162d04993c13f8b906a73b2e0a961a87、postchecks 1730289eb9d7acc56b8611698a43151fe020b2e1b444b9fb938fbfd4b836cb75、root-delegated working-decision 83334222eeeb350ff843176964fbf40a17aa3b6d358c3fe62e52f890ad31da65。詳細は[science実験記録](2026-11-07-ad-science-dependency-sets.md)。

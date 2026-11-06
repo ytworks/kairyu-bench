@@ -1,5 +1,7 @@
 # Fresh AD science dependency sets
 
+The later saved AL comparison is also complete: AL scored 68.825397 against fresh AD 72.158730 (−3.333333pp). Root rejected AL and selected no full14; accepted AD7d65 remains unchanged. The positive code finite response and tied transfer8 score did not transfer to official coding gains.
+
 The fresh official AD/AF/AG comparison is complete: AF scored 72.658730 and AG 73.408730 against the same-window AD74.242063. Root rejected both increments, kept AD unchanged, and selected no additional full14 run. The scientific calibration gains below did not produce a net coding gain.
 
 AD is the cumulative working parent after P → S → AC → AD. Its state is `7d65d2181d53b7c67a005e4bfaf3a17739dd9617d6abfa61b2ba2bdb523110fb`, tree `27629fd3cd4c7573ca535832ce4e97cb8bc10b28ddd3f6f12ddf1b194633b1e8`, and freeze `19809b2b9226f660d6c5d6d6600539035848cf4fc8af4d1fe6d2fda8bf05b16a`. Its accepted coding gain does not imply all-area improvement; the AD adoption record retains the historical full14 losses and long-context truncation liabilities.
@@ -176,3 +178,37 @@ The exercised screen owner and the separate, still-unexecuted TP2×DP2 full14 re
 Evidence relative to A: current-ad-library-overlay-screen-v1/numeric-summary.json SHA256 2ba543be9c84dd8b19e7ccca841e77c84c67c980275c68ef562a7270e9fbd0c6; completion.json b3ac854aa7e35230812f7ede1a87538f25d4af5a6d7e4c55eb48a6c53789382b; postchecks.json 22e4588174fb462883fbdd49c9e1ce6929c7d3551063b03be1862c4507228e1e.
 
 After AL was healthy, root removed only the retired AF checkpoint payload (62,546,338,264 bytes); all AF metadata/results were retained and no service was changed. This was storage housekeeping, not deletion of an unsuccessful trial. Receipt: cleanup-retired-af-root-receipt-20261107.json SHA256 b189fc084b47df14fdc901a9fd0d9f1c04208df3569fac4779389e06ccd4ea51.
+
+
+## Saved AL and fresh official AD/AL: rejected
+
+AL was materialized once from the accepted AD checkpoint after all four screen containers were restored. The ordinary sparse editor wrote 2,370 BF16 values across 32 O/MLP tensors, raw delta L2=0.011685250252939646. One independent full-file verification checked all nine files, virtual parent restoration and the exact selected targets against the measured finite union. Create took 208.731s, verify 160.580s, and deployment 111.901s. The resulting physical tree is e89f4534b6a606c2626bbeb55aabf13a178c66e5ea050c724abfa01c32219968. The 80 GiB reserve was rechecked; no cache cleanup was needed. Only rejected AF's gemma0 serving slot changed.
+
+The saved AL0 and unchanged AD1 then ran one fresh matched official dev30 code90 pair. Both used immutable runner 5e3f2df, native thinking ON, TP2/MTP4, chat concurrency 32, unchanged sampler/caps, and identical prompt-free RequestRecorder policies with separate capture directories. No additional authored smoke was inserted.
+
+| Source / metric | Fresh AD | AL | AL − AD |
+|---|---:|---:|---:|
+| HumanEval+ | 28/30 | 27/30 | −1 item |
+| MBPP+ | 24/30 | 24/30 | 0 |
+| LiveCodeBench | 15/20 | 13/20 | −2 items |
+| SciCode, partial credit % | 40.301587 | 40.301587 | 0pp |
+| Equal-source code % | 72.158730 | 68.825397 | −3.333333pp |
+
+The unchanged official paired bootstrap gives 95% CI[−7.5,0]pp, seed 20261104 / 2,000 resamples. There were three losses and no gains: HumanEval/95, LiveCodeBench 3789 and arc195_b. Both arms scored all 90 items with no unknown, truncated or empty result. These IDs come from the approved numeric exporter; generated solutions, benchmark prompts and hidden reasoning were not inspected, so no algorithmic failure cause is asserted.
+
+Each arm recorded 119 formal HTTP attempts and 119 logical calls: HE 30, MBPP 30, LCB 20, SciCode 39. Retries and request errors were zero; agent-step counts are unavailable. Official input/output totals were 94,930/330,234 for AD and 96,408/329,144 for AL. Generation took 302.5/334.1s and total wall 366.8/398.8s; these are observed timings, not a causal speed claim. The process counter for each arm had 119 stop and one length event; its extra request / input 21 / output 1 is startup-sized and is not assigned to an official item's finish reason.
+
+Actual runner image/RootFS/Image.Config, normalized command, noncredential environment, installed 82 source/resources and packages matched. Observer bind paths were normalized explicitly. Parent state, checkpoint stats and serving identities passed final closure. AD remains the cumulative P→S→AC→AD working model. Root rejected AL, scheduled no AL full14, and did not infer ability from the finite or eight-task screen. Code>90 remains unmet.
+
+Evidence relative to A:
+
+| Artifact | SHA256 |
+|---|---|
+| current-ad-library-finalist-al-materialization-v1/run/completion.json | dbb9a50929e07dc1bcf0a36263990a87ce130b45e6cf5690cf515b9bd81c4047 |
+| current-ad-library-finalist-al-materialization-v1/run/freeze.json | cb218f885943fd386e112a6dced210a68f3bc07647578330417db5a3be7aaa5a |
+| current-ad-al-dev90-v1/final-summary.json | 7ecd713717bfba6be7b2991a68deb0e7162d04993c13f8b906a73b2e0a961a87 |
+| current-ad-al-dev90-v1/al-versus-ad-evidence.json | 03d78c8678af5fbde40df3a6324a84817618a3e568be2ec60a248a287dce565b |
+| current-ad-al-dev90-v1/postchecks.json | 1730289eb9d7acc56b8611698a43151fe020b2e1b444b9fb938fbfd4b836cb75 |
+| current-ad-al-dev90-v1/working-decision.json | 83334222eeeb350ff843176964fbf40a17aa3b6d358c3fe62e52f890ad31da65 |
+
+The complete ledger now contains 130 official run records, preserving all 128 previous row objects exactly. The two new run IDs are gemma4-code90-current-ad-c32-dev30-code-pairal-20261107 and gemma4-code90-library-al-c32-dev30-code-20261107.
