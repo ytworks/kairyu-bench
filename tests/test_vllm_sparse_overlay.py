@@ -3,6 +3,7 @@ from __future__ import annotations
 
 import copy
 import importlib.util
+import os
 import sys
 import tempfile
 import unittest
@@ -10,11 +11,20 @@ from pathlib import Path
 from types import SimpleNamespace
 
 PLUGIN = Path(__file__).resolve().parents[1] / "scripts/experiments/vllm_sparse_overlay/src"
-sys.path.insert(0, str(PLUGIN))
+INSTALLED_ROOT = os.environ.get("KAIRYU_OVERLAY_INSTALLED_ROOT")
+if not INSTALLED_ROOT:
+    sys.path.insert(0, str(PLUGIN))
 from kairyu_sparse_overlay.core import (  # noqa: E402
     FORMAT, VLLM_FILES, canonical, digest, implementation_identity,
 )
-sys.path.pop(0)
+if INSTALLED_ROOT:
+    for module in ("kairyu_sparse_overlay.core", "kairyu_bench.wsp.weights.checkpoint",
+                   "kairyu_bench.wsp.weights.editor"):
+        origin = Path(sys.modules[module].__file__).resolve()
+        if not origin.is_relative_to(Path(INSTALLED_ROOT).resolve()):
+            raise RuntimeError(f"installed-only smoke imported a source fallback: {module}")
+else:
+    sys.path.pop(0)
 
 AVAILABLE = all(importlib.util.find_spec(name) is not None for name in ("torch", "safetensors", "vllm"))
 

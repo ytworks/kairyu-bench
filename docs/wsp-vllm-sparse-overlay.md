@@ -64,3 +64,21 @@ Before any real candidate trial, a separately authorized rollout must:
 4. Retain the saved-checkpoint fallback. A real model startup, loaded-word validation, and ordinary generation have not yet been performed for this plugin.
 
 The potential saving is the full candidate copy and its subsequent verification scan. Base checkpoint loading and GPU allocation still occur. Each edited tensor gets one private clone (approximately 220.5 MiB for the largest current Gemma4 MLP matrix). A consuming loop may retain the previous clone while the generator allocates the next, so two adjacent clones per rank can overlap (approximately 882 MiB across TP2 for two largest clones per rank), in addition to ordinary loader/model memory. Actual loader peak memory and any speed improvement remain unmeasured. Matrix changes remain incompatible with the native-only faststore generation described separately.
+
+## Offline image staging
+
+The optional [staging helper](../scripts/experiments/vllm_sparse_overlay/stage_image.py) performs no Docker or model actions. Preview with an existing local Python environment that provides pip and modern setuptools; the current audited af9 image provides both, while the lightweight managed test environment does not provide pip:
+
+    python -B scripts/experiments/vllm_sparse_overlay/stage_image.py --output /owned/nvme/fresh-stage
+
+After reviewing the reported input bundle SHA, the same command with --expected-input-sha256 SHA --apply builds exactly two universal pure-Python wheels with existing local pip and setuptools (including its bundled bdist_wheel command) (--no-index, --no-deps, --no-build-isolation) and installs them into its owned context. It refuses root execution, existing outputs, source drift, non-pure wheels, and installed Python byte changes. A failure preserves its owned staging directory; no hidden retry occurs.
+
+The support wheel copies only the actual three package initializers plus checkpoint.py/editor.py from this revision, byte for byte. It is a deliberately limited serving dependency, not an installed complete benchmark runner. No benchmark datasets or generated answers enter the context. Before building, verify that the base image has no conflicting kairyu_bench package or reconcile that namespace explicitly; never let an accidental import fallback hide the limited dependency.
+
+The [Dockerfile](../scripts/experiments/vllm_sparse_overlay/Dockerfile) has no RUN instruction. It only copies the preinstalled Python tree and the existing tiny smoke fixture, preserves the base entrypoint/Cmd, and sets USER 1003:1003. The owner must first verify its BASE_IMAGE reference equals the reviewed immutable base image ID and later record the resulting new image ID. Existing images and containers remain unchanged.
+
+The built-image CPU smoke reuses the existing E2E with KAIRYU_OVERLAY_INSTALLED_ROOT=/opt/kairyu-sparse-overlay, no repository/PYTHONPATH mount, no network, and no GPU devices:
+
+    python -B -m unittest discover -s /opt/kairyu-sparse-overlay-smoke -p test_vllm_sparse_overlay.py -v
+
+In this mode plugin-source fallback is disabled and the imported plugin/reader/editor must all resolve inside the staged installed root. Record actual source hashes, entrypoint metadata, package versions, and the iterator/TP-boundary result. Passing the source-tree fixture alone does not establish installed-wheel compatibility. Staging, image building, this isolated smoke, and actual model rollout remain separate explicitly authorized actions.
