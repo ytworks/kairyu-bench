@@ -100,6 +100,16 @@ Kairyu の API は `prompt_logprobs` を上流 vLLM へ渡さないため、対�
 
 API の通信障害で採点できなかった項目は `unscored` として記録され、状態は `partial` になります（推測の0点にはしません）。
 
+SciCode の今後の実行では、`items.jsonl` の `detail.samples[].step_diagnostics` に、
+ステップ番号・正誤、終了コード、timeout、実行秒、既知の Python 例外class名、
+stdout/stderr のbyte数と SHA-256を保存します。例外classは stderr の末尾から
+固定allowlistで拾った手掛かりで、原因の確定ではありません。本文・メッセージ・
+コード・テストはこの診断に保存しません。通常終了のstreamは従来のtext captureを
+UTF-8へ再encodeした長さ/hash、timeoutで得たbytesはそのままで、違いを
+`representation` に記録します。得られなかったstream/終了コードはnullです。
+採点・300秒上限・実行内容は変えず、過去runの不足した診断を推測で補いません。
+
+
 ## 問題リストの作り方（校正）
 
 1. `wsp pool --output pool.json`: 各出典の dev・test から、60分版の目標数の1.5倍ずつを層別に取ります（エージェント作業は過去の実行で短かった課題が候補: `src/kairyu_bench/data/wsp/agent-candidates.json`）。続けて `wsp prepare --manifest pool.json` で、その候補のエージェント課題を用意します。
