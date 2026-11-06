@@ -1,0 +1,66 @@
+# Load-time sparse BF16 overlay experiment
+
+This optional, separately installed vLLM plugin avoids creating a new full checkpoint for a sparse trial. It is a CPU-tested experiment, not an enabled serving path. It does not change an already loaded model. Existing saved-checkpoint creation, verification, and deployment remain the defaults.
+
+The implementation uses vLLM's formal vllm.general_plugins entrypoint and register_model_loader extension. SparseOverlayLoader subclasses DefaultModelLoader; it delegates file discovery, tensor loading, model construction, TP loading, and postprocessing. It wraps the ordinary safetensors iterator and clones only each edited complete CPU BF16 tensor before replacing the explicitly selected raw words. No FP32 conversion of a whole tensor, new merge kernel, model class replacement, or monkeypatch is involved.
+
+## Supported boundary
+
+The initial target is dense BF16 Gemma4ForConditionalGeneration, TP1 or TP2, PP1/DP1, without runtime LoRA, quantization, expert parallelism, or secondary checkpoint sources. Only model.language_model.layers.N.self_attn.o_proj.weight and the three MLP gate/up/down matrices can be edited. Existing editor validation enforces exact BF16 values, coordinates, non-noop edits, and coordinate budgets (512 per tensor; the explicit sampled-matrix batch contract for larger totals). Native vectors, Q/K/V, embeddings, vision tensors, and all other tensors pass through unchanged.
+
+The spec must declare the exact saved logical parent path and full-file tree. This version does not accept an unmaterialized overlay as its next parent. A future promotion would first materialize and verify the accepted candidate using the existing editor.
+
+Target and MTP draft are distinct, explicitly pinned local checkpoint directories. The draft path is an unchanged iterator bypass, with its own prior full-file hash/stat proof and per-rank bypass receipt. An unknown checkpoint invocation fails. The plugin retains the ordinary draft model loading and embedding-sharing behavior; it does not apply the target overlay to MTP.
+
+## Plan and identity
+
+The owner supplies --load-format kairyu_sparse_bf16_v1 and a --model-loader-extra-config JSON object containing only overlay_plan (absolute path) and overlay_plan_sha256. The small plan/spec/proof files are SHA-pinned and checked again after loading. All paths must be canonical and free of symlinks.
+
+Container paths must use the same canonical declarations as the plan, proofs, and spec. The current serving example's /model aliases cannot be substituted for host checkpoint paths without changing this binding. A future owner should mount the source, draft, plan, and proof files at their identical absolute paths and pass matching model arguments, or design a separately verified path projection. This plugin does not silently translate aliases.
+
+The plan schema is:
+
+- schema_version: 1, kind: "kairyu_sparse_bf16_v1".
+- physical_source and draft_bypass: {path, tree_sha256, proof: {path, sha256}}.
+- Each proof uses the existing freeze projection: checkpoint_path, control_tree_sha256, status beginning with verified, sorted all_checkpoint_files rows {path,size,sha256}, and candidate_inventory_stat keyed by relative filename. Required stat values are device, inode, size, mtime_ns, and ctime_ns. Additional provenance in an existing freeze is retained in that pinned file.
+- logical_parent: {path, tree_sha256}, equal to this saved physical source.
+- spec: {path, sha256}: existing sparse schema-1 edits with explicit coordinates and set_values, plus source_checkpoint and base_tree_sha256. An explicitly empty edits list is the baseline mode.
+- tensor_parallel_size: 1 or 2.
+- receipt_directory: a fresh owner-created directory outside both checkpoints.
+- implementation_sha256: exactly core.implementation_identity() (plugin files plus existing reader/editor).
+- vllm_source_sha256: exactly the installed files listed by core.VLLM_FILES. The loader rejects any source drift. The CPU test used the audited vLLM 0.33.0 installation; this is not a version-agnostic mapping claim.
+
+The owner must derive the proof projection from actual prior full-hash verification, pin the current incumbent state, and confirm its saved path/tree before launch. The plugin recomputes the small inventory tree from those prior file hashes and checks all current file stats; it does **not** rehash the large shards. Source proof is explicitly prior_full_file_sha256_plus_exact_current_stat.
+
+logical_overlay_sha256 hashes the logical parent, exact spec, plugin implementation, and contract version. It is separate from physical_checkpoint_tree_sha256, which continues to describe the unchanged saved source. No receipt calls the physical base the saved overlay candidate or claims a fresh full-model hash. Launch/deploy attribution must carry this logical identity rather than reuse the base tree as the candidate identity. No existing deployment helper has been adapted automatically.
+
+## Post-TP proof
+
+Raw iterator hashes alone are insufficient. After the normal loader and weight postprocessing complete, every rank reads the selected raw BF16 words from the actual model parameters:
+
+- Gate/up source rows map to the rank's packed gate_up_proj rows, including the distinct gate/up offsets.
+- Down/o source columns map to the corresponding row-parallel rank's local columns.
+- Exact local parameter names, shapes, BF16 dtype, and divisibility are checked.
+
+The readback transfers selected words once per tensor. All ranks exchange their proof records through the existing TP CPU process group. Every rank checks the same complete rank set, plan/logical identity, unique coordinate ownership, coverage, and exact expected uint16 values before returning the model. A local readback error is carried into that collective so other ranks reject it too.
+
+Fresh target-rank-N.json files contain the all-rank proof and draft_bypass-rank-N.json files record the explicit bypass. Existing files are never overwritten. The owner must require every expected target and draft receipt, matching the command/image/plan and successful engine readiness. A source/iteration failure before the collective remains an ordinary worker startup failure; the owner must terminate the failed launch, not retry within the same receipt directory.
+
+The proof covers selected coordinates, not an independent complete-model GPU hash. Empty-overlay proofs contain zero selected coordinates and must not be represented as full-model parity evidence.
+
+## CPU validation and future rollout
+
+One E2E fixture writes tiny real BF16 safetensors, uses the installed DefaultModelLoader iterator through the custom subclass, simulates the reviewed TP2 gate/up packing and down/o partition boundary with Torch tensors, and validates all-rank readback. It checks source bytes/stat preservation, signed-zero preservation in untouched native/Q tensors, exact private target words, corrupted post-TP word rejection, missing/duplicate coverage rejection, pinned draft bypass, empty-overlay object identity, and wrong logical parent rejection. This is not a full vLLM engine or GPU test.
+
+The test requires the existing audited vLLM/Torch CPU environment; it skips in the lightweight repository environment. Run it without GPU devices or network:
+
+    python -B -m unittest discover -s tests -p test_vllm_sparse_overlay.py -v
+
+Before any real candidate trial, a separately authorized rollout must:
+
+1. Install this package and the pinned benchmark reader/editor package into a new image using --no-deps; do not modify a running image/container. Enable only the intended general plugin.
+2. Compare ordinary saved-source loading with an explicitly empty overlay under identical image/runtime/model/MTP/TP/sampling settings. Pin the ordinary loader to safetensors with lazy strategy, matching the plugin’s internal strategy; do not leave an auto-format difference unrecorded. Check the all-rank startup records, selected diagnostic word mapping, and fixed authored numeric output parity; record the limits of any nondeterministic output comparison.
+3. For one small nonempty overlay, verify every selected word after TP, full receipt/source continuity, and ordinary readiness. Run both comparison arms using the same plugin/image (empty versus nonempty).
+4. Retain the saved-checkpoint fallback. A real model startup, loaded-word validation, and ordinary generation have not yet been performed for this plugin.
+
+The potential saving is the full candidate copy and its subsequent verification scan. Base checkpoint loading and GPU allocation still occur. Each edited tensor gets one private clone (approximately 220.5 MiB for the largest current Gemma4 MLP matrix). A consuming loop may retain the previous clone while the generator allocates the next, so two adjacent clones per rank can overlap (approximately 882 MiB across TP2 for two largest clones per rank), in addition to ordinary loader/model memory. Actual loader peak memory and any speed improvement remain unmeasured. Matrix changes remain incompatible with the native-only faststore generation described separately.
