@@ -92,3 +92,30 @@ These are genuine measured proxy tradeoffs, not execution or official-score resu
 The owner restored the exact AL0 container healthy at 23:07:10.219893 UTC. Source pins, all parent checkpoint stats and protected serving identities passed closure. Ordinary native-thinking evaluation remains a separate subsequent measurement.
 
 Evidence relative to A: current-ad-functional-six-finite-v1/replay/summary.json SHA256 baa57ec39bdf8d537ccaa81df18010da2f08018f64cd5d5e013c5f23ddd02ead; numeric-final-summary.json 3fab7ab83a3453bea77106b2f99ea52450ceb9b7dbf9d5315f82065d512776c8; independent-numeric-review.json 98d533192257f8c9f04b7d9b798560e65524728b21e26da49e0256dc871c4442; completion.json 782f3e653c2318068412aa741ab0b2cac75abce7de896fda36148fa249156e94; postchecks.json ecd4385e654b14185400168d21bca923c7ef08c5c7867ab9fc446ca3980cfc01.
+
+## Exploratory official overlay results
+
+One two-round screen completed with the immutable official dev/tier30 code90 runner. These are logical overlays on AD, not six saved physical checkpoints. The same empty-control server remained loaded, but each round used a fresh control run; candidates are compared only within their own round.
+
+| Round | Arm | Code (%) | Difference from round control (pp) | HumanEval+ /30 | MBPP+ /30 | LiveCodeBench /20 | SciCode (%) |
+|---|---|---:|---:|---:|---:|---:|---:|
+| 1 | CONTROL | 72.158730 | +0.000000 | 29 | 23 | 15 | 40.301587 |
+| 1 | AN | 74.242063 | +2.083333 | 29 | 24 | 16 | 40.301587 |
+| 1 | AO | 71.325397 | -0.833333 | 28 | 23 | 15 | 40.301587 |
+| 1 | AP | 71.742063 | -0.416667 | 28 | 25 | 14 | 40.301587 |
+| 2 | CONTROL | 73.769841 | +0.000000 | 29 | 24 | 15 | 43.412698 |
+| 2 | AQ | 72.436508 | -1.333333 | 28 | 24 | 15 | 41.412698 |
+| 2 | AR | 74.742063 | +0.972222 | 29 | 24 | 16 | 42.301587 |
+| 2 | AS | 71.325397 | -2.444444 | 28 | 23 | 15 | 40.301587 |
+
+All eight reports scored 90 items with zero unknown, truncated or empty outcomes. Each arm recorded 119 formal chat calls and no recorded retry/error:952 calls total, separate from startup probes. Process intervals contain 120 successes (119 stop, 1 length), +21 prompt/+1 output token above formal traces; this is startup-sized traffic, not evidence of formal-item truncation. Agent steps are unavailable, not equated with HTTP calls.
+
+AN's paired code difference is +2.083333pp (95% bootstrap CI−1.666667..+6.25), with gains HumanEval/152, livecodebench:arc195_b and Mbpp/641, and loss HumanEval/95. AR gains +0.972222pp (CI−2.222222..+4.583333): gains HumanEval/116 and livecodebench:abc399_c, losses HumanEval/152 and SciCode72 (8/9→7/9). AN's SciCode score is unchanged; AR loses 1.111111 SciCode percentage points against its own round's control. The empty control itself varied 72.158730→73.769841 despite using the same server, so cross-round absolute ranking is not a matched effect.
+
+Root selected AN and AR for physical save/verification and a fresh ordinary-serving AD/AN/AR comparison. This is not adoption or a >90 claim; AD remains the accepted parent. No significance or zero-loss gate was added.
+
+The executing owner omitted its working-directory setting, so the immutable wrapper did not mount the requested results path. Explicitly authorized opaque copying preserved all four original round-one reports. Before round-two finalization, exact item/Markdown paths and atomic JSON temporary paths were routed to already-mounted task storage, with responses mirrored separately. No generated bodies were inspected, no scoring/model source changed, and no report reconstruction or benchmark rerun occurred. The future published owner fixes its working directory and checks actual writable output-mount mapping; it is distinct from the frozen executing source.
+
+All four exact original containers were restored healthy at 2026-11-06T23:35:37.827730Z, with unchanged AD state/checkpoint and protected services. Owner time was 1460.585 s; artifact-preservation IO overlapped execution, so no uncontended latency comparison is claimed. Within each round the actual runner image IDs match. Across rounds IDs differ, while RootFS, image-config hash, normalized command, noncredential environment, runtime, Python/packages and all 82 installed source files match exactly.
+
+Evidence: A/current-ad-functional-overlay-dev90-v1/numeric-final-summary.json SHA256 a750513f9f9f4b018c88ad6a9e0e0b3350827af1282bbe9e46f5be5e0081b52f; completion.json SHA256 9745550da9742a87813267497886fd81e1c2a7537c950136677d36d081d72a21. Round-one original-report preservation d88baf487fd2e6d4e98c98447f9f21d0cf1f6c14493b9a58f5f723325a18657f; round-two routing b73ffc7d89e2426cfc948798a75bbdb6d24cec0594f3818902290c3ea209e8fb.

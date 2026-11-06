@@ -794,6 +794,21 @@ def discover_owned_official(row, environment):
     ]
 
 
+def require_results_mount(container):
+    """Require real host persistence, not merely identical mounts across arms."""
+    requested = Path(plan["official"]["results_dir"])
+    for mount in container["Mounts"]:
+        destination = Path(mount["Destination"])
+        if (
+            mount["Type"] == "bind"
+            and mount["RW"]
+            and requested.is_relative_to(destination)
+            and Path(mount["Source"]) / requested.relative_to(destination) == requested
+        ):
+            return
+    raise OwnerCheckError("official result directory lacks its writable host bind")
+
+
 def capture_official(rows, deadline):
     pending = {row["run_id"]: row for row in rows}
     image_parity = []
@@ -827,6 +842,7 @@ def capture_official(rows, deadline):
             need(cmd == row["command"][1:], "official runner command differs")
             row["runner_container_id"] = item["Id"]
             publish()
+            require_results_mount(item)
             im = subprocess.run(
                 ["docker", "image", "inspect", item["Image"]],
                 capture_output=True,
@@ -1045,6 +1061,8 @@ def official_round(number, arms, current, deadline):
                 stderr=subprocess.STDOUT,
                 start_new_session=True,
                 env={**os.environ, **plan["official"].get("environment", {})},
+                # The immutable wrapper bind-mounts its caller directory.
+                cwd=plan["official"]["results_dir"],
             )
         children.append(child)
         group.append(child)

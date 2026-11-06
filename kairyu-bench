@@ -17,6 +17,39 @@ DOCKER_SOCKET=${KAIRYU_BENCH_DOCKER_SOCKET:-/var/run/docker.sock}
 # working directory, so relative paths in arguments (manifests, result
 # directories to compare) read and write the host's files.
 CALLER_DIR=$(pwd -P)
+# An explicit results path can be outside both the checkout and calling
+# directory. Canonicalize the forwarded path and bind that exact host directory.
+# Rotate the original arguments once so quoting and argument order are retained.
+if [ "${1:-}" = run ] || { [ "${1:-}" = wsp ] && [ "${2:-}" = run ]; }; then
+    RESULTS_NEXT=0
+    argument_count=$#
+    while [ "$argument_count" -gt 0 ]; do
+        argument=$1
+        shift
+        argument_count=$((argument_count - 1))
+        if [ "$RESULTS_NEXT" = 1 ]; then
+            case "$argument" in
+                ""|--*) echo "kairyu-bench: --results-dir needs a path" >&2; exit 2 ;;
+            esac
+            results_path=$argument
+            RESULTS_NEXT=0
+        else
+            case "$argument" in
+                --results-dir) RESULTS_NEXT=1; set -- "$@" "$argument"; continue ;;
+                --results-dir=*) results_path=${argument#--results-dir=} ;;
+                *) set -- "$@" "$argument"; continue ;;
+            esac
+        fi
+        [ -n "$results_path" ] || { echo "kairyu-bench: --results-dir needs a path" >&2; exit 2; }
+        mkdir -p -- "$results_path"
+        RESULTS_DIR=$(CDPATH= cd -- "$results_path" && pwd -P)
+        case "$argument" in
+            --results-dir=*) set -- "$@" "--results-dir=$RESULTS_DIR" ;;
+            *) set -- "$@" "$RESULTS_DIR" ;;
+        esac
+    done
+    [ "$RESULTS_NEXT" = 0 ] || { echo "kairyu-bench: --results-dir needs a path" >&2; exit 2; }
+fi
 OBSERVE_DIR=
 OBSERVE_NEXT=0
 if [ "${1:-}" = wsp ] && [ "${2:-}" = run ]; then
@@ -43,6 +76,10 @@ command -v docker >/dev/null 2>&1 || {
 }
 
 mkdir -p "$RESULTS_DIR" "$CACHE_DIR"
+RESULTS_MOUNT=$RESULTS_DIR
+if [ "$RESULTS_DIR" = "$CALLER_DIR" ] || [ "$RESULTS_DIR" = "$OBSERVE_DIR" ] || [ "$RESULTS_DIR" = "$CACHE_DIR" ]; then
+    RESULTS_MOUNT=
+fi
 [ -S "$DOCKER_SOCKET" ] || {
     echo "kairyu-bench: Docker socket not found: $DOCKER_SOCKET" >&2
     exit 2
@@ -60,7 +97,7 @@ exec docker run --rm --privileged \
     -v "$CALLER_DIR:$CALLER_DIR" \
     ${OBSERVE_DIR:+-v "$OBSERVE_DIR:$OBSERVE_DIR"} \
     -w "$CALLER_DIR" \
-    -v "$RESULTS_DIR:$RESULTS_DIR" \
+    ${RESULTS_MOUNT:+-v "$RESULTS_MOUNT:$RESULTS_MOUNT"} \
     -v "$CACHE_DIR:$CACHE_DIR" \
     -e "KAIRYU_BENCH_RESULTS_DIR=$RESULTS_DIR" \
     -e "KAIRYU_BENCH_CACHE_DIR=$CACHE_DIR" \

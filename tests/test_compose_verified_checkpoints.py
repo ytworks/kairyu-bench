@@ -14,6 +14,8 @@ import types
 import unittest
 from unittest.mock import patch
 
+import numpy as np
+
 from kairyu_bench.wsp.weights import editor
 from kairyu_bench.wsp.weights.checkpoint import Checkpoint
 
@@ -30,6 +32,13 @@ REBASE_SPEC = importlib.util.spec_from_file_location(
 )
 rebase = importlib.util.module_from_spec(REBASE_SPEC)
 REBASE_SPEC.loader.exec_module(rebase)
+
+GEOMETRY_SPEC = importlib.util.spec_from_file_location(
+    "sparse_geometry_fixture",
+    ROOT / "scripts/experiments/gemma4-purpose/compare_sparse_delta_sets.py",
+)
+geometry = importlib.util.module_from_spec(GEOMETRY_SPEC)
+GEOMETRY_SPEC.loader.exec_module(geometry)
 
 
 def save(path, value):
@@ -277,6 +286,69 @@ class ComposeVerifiedTests(unittest.TestCase):
             self.assertEqual(actual, expected.get(
                 name, current.read_raw(name, 0, tensor.numel)
             ))
+        for root in (self.base, self.b):
+            self.assertEqual(files(root), self.original[str(root)])
+
+        # The read-only geometry path binds source snapshots and absolute specs,
+        # reporting common-support and full-union norms without a merged edit.
+        obs = self.work / "observed"
+        collections = {}
+        for family in ("native", "matrix"):
+            collections[family] = {}
+            for objective in ("correct-logprob", "margin"):
+                folder = obs / (family + "-" + objective)
+                folder.mkdir(parents=True)
+                collections[family][objective] = str(folder)
+        matrix = Path(collections["matrix"]["correct-logprob"])
+        coverage = matrix / "coverage.json"
+        save(coverage, {"entries": [{"tensor": self.linear, "start": 0, "count": 4}]})
+        sample = matrix / "sample-plan.npz"
+        np.savez(sample, coordinates=np.array([[0, 0], [0, 1], [1, 0], [1, 1]]),
+                 source_values=np.array([1., 2., 3., 4.]))
+        source_identity = {"path": str(self.base),
+                           "tree_sha256": compose.common.canonical(files(self.base))}
+        comparison_rows = []
+        for identifier, positions, values, norm in (
+                ("left", [[0, 0], [0, 1]], [2., 1.], 2**.5),
+                ("right", [[0, 0], [0, 1], [1, 0]], [3., 3., 4.], 6**.5)):
+            plan_pin = save(self.work / (identifier + "-plan.json"), {
+                "checkpoint": source_identity, "collections": collections})
+            spec_pin = save(self.work / (identifier + "-spec.json"), {
+                "id": identifier, "source_checkpoint": str(self.base),
+                "base_tree_sha256": source_identity["tree_sha256"],
+                "edits": [{"tensor": self.linear, "coordinates": positions, "set_values": values}]})
+            comparison_rows.append(dict(id=identifier, status="exact_spec_postchecked",
+                plan=plan_pin["path"], plan_sha256=plan_pin["sha256"],
+                spec=spec_pin["path"], spec_sha256=spec_pin["sha256"],
+                actual_changed=len(positions), raw_delta_l2=norm))
+        checked = self.work / "geometry-input.json"
+        check_pin = save(checked, {"parent": {"fixture": True}, "results": comparison_rows,
+            "input_sha256": {str(p): compose.common.sha(p) for p in (coverage, sample)}})
+        before = {str(p): compose.common.sha(p) for p in (coverage, sample)}
+        destination = self.work / "geometry.json"
+        measured = geometry.compare(checked, check_pin["sha256"], destination)
+        pair = measured["pairs"][0]
+        self.assertEqual((pair["overlap"], pair["union"], pair["same_sign"],
+                          pair["opposite_sign"], pair["exact_opposite_cancellation"]), (2, 3, 1, 1, 1))
+        self.assertAlmostEqual(pair["raw_cosine"], 1 / 12**.5)
+        self.assertAlmostEqual(pair["common_raw_cosine"], 1 / 10**.5)
+        self.assertEqual(measured["candidate_or_spec_writes"], 0)
+        self.assertFalse(measured["merged_values_computed"])
+        for source in (self.base, obs / "matrix-margin"):
+            forbidden = source / "new-output/report.json"
+            with self.assertRaisesRegex(ValueError, "overlaps"):
+                geometry.compare(checked, check_pin["sha256"], forbidden)
+            self.assertFalse(forbidden.parent.exists())
+        changed_plan = json.loads(Path(comparison_rows[1]["plan"]).read_text())
+        changed_plan["checkpoint"]["tree_sha256"] = "f" * 64
+        changed_pin = save(Path(comparison_rows[1]["plan"]), changed_plan)
+        comparison_rows[1]["plan_sha256"] = changed_pin["sha256"]
+        mismatch = save(checked, {"parent": {"fixture": True}, "results": comparison_rows,
+            "input_sha256": {str(p): compose.common.sha(p) for p in (coverage, sample)}})
+        with self.assertRaisesRegex(ValueError, "different source snapshots"):
+            geometry.compare(checked, mismatch["sha256"], self.work / "mixed-source.json")
+        self.assertFalse((self.work / "mixed-source.json").exists())
+        self.assertEqual(before, {str(p): compose.common.sha(p) for p in (coverage, sample)})
         for root in (self.base, self.b):
             self.assertEqual(files(root), self.original[str(root)])
 

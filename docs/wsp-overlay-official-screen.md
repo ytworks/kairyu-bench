@@ -84,7 +84,27 @@ confirmation or an unseen holdout.
 
 The new owner has passed syntax, Ruff and a default unbound preview with zero
 Docker, model or service operations. The first authorized execution started on 2026-11-06 at 23:11:17 UTC for
-AN–AS, after the completed six-candidate finite replay. At publication its
-official evaluation and restoration are pending. Prior transfer-screen evidence
+AN–AS, after the completed six-candidate finite replay. All eight original reports and same-CID restoration subsequently completed;
+the result and recovery limits are recorded in the
+[functional experiment](experiments/2026-11-07-ad-functional-targets.md). Prior transfer-screen evidence
 does not substitute for this official-owner closure. Its known numeric report fields were checked against the completed AD/AL pair.
 The archived runner and scoring sources are unchanged.
+
+## Output persistence correction
+
+The first executing owner (1d8977f3) omitted the official subprocess working
+directory. The immutable wrapper mounted its caller directory, leaving the
+requested result path inside the runner. Round-one original reports were
+preserved by explicitly authorized opaque copies into the mounted observer
+storage; no answer bodies were inspected and no reports were reconstructed.
+For round two, before finalization, root authorized exact output-path routing:
+items/Markdown and the atomic JSON temporary paths point into the mounted
+recovery directory. Its separate response mirror excludes all routed files.
+This affects artifact storage, not generation or scoring. The active source and
+plan pins remain unchanged; all-four restoration completed at 2026-11-06T23:35:37.827730Z.
+
+Future published dispatch uses the results directory itself as its working
+directory. Actual OCI capture also requires a writable bind that covers the
+requested result path and maps it to that same host path. Equal mounts across
+arms alone are insufficient. The source change is for future execution; it
+is not represented as the bytes used by the active batch.

@@ -30,6 +30,8 @@ Kairyu互換APIを、公式実装に基づく14種類のベンチマークで評
 ./kairyu-bench compare results/<baseline-run> results/<candidate-run>
 ```
 
+`run` と `wsp run` の `--results-dir PATH`（`--results-dir=PATH` も可）は、指定先をホスト上に作成し、同じ絶対パスでrunnerへ書き込み可能にmountします。作業ディレクトリやcheckoutの外でも結果はrunnerの終了後に残ります。相対パスは呼び出し元を基準に解決し、指定がなければ従来どおりrepository内の `results/` を使います。
+
 認証が必要なAPIでは環境変数を使います。
 
 ```sh

@@ -3,6 +3,8 @@ from __future__ import annotations
 import os
 import subprocess
 import socket
+import sys
+import textwrap
 import tempfile
 import unittest
 from pathlib import Path
@@ -107,6 +109,89 @@ class HostEntrypointTest(unittest.TestCase):
             )
             self.assertIn("-e HF_TOKEN", calls[1])
             self.assertTrue(calls[1].endswith("kairyu-bench:local list"))
+
+
+    def test_explicit_results_survive_runner_removal_outside_calling_directory(self) -> None:
+        # The fake daemon exposes only the declared binds. An unmounted output
+        # goes to its temporary container filesystem and disappears on exit.
+        with tempfile.TemporaryDirectory() as directory:
+            temp = Path(directory)
+            caller = temp / "caller"
+            caller.mkdir()
+            fake_docker = temp / "docker"
+            fake_docker.write_text(
+                f"#!{sys.executable}\n" + textwrap.dedent(r"""
+                    import argparse
+                    import json
+                    import os
+                    import sys
+                    import tempfile
+                    from pathlib import Path
+
+                    args = sys.argv[1:]
+                    if args[0] == "build":
+                        raise SystemExit(0)
+                    assert args[0] == "run"
+                    image = args.index("fake-results-runner")
+                    options, command = args[:image], args[image + 1:]
+                    mounts = []
+                    for index, value in enumerate(options):
+                        if value == "-v":
+                            source, destination, *mode = options[index + 1].split(":")
+                            assert mode != ["ro"]
+                            mounts.append((Path(source), Path(destination)))
+                    assert len({destination for _, destination in mounts}) == len(mounts)
+                    cwd = Path(options[options.index("-w") + 1])
+                    parser = argparse.ArgumentParser(add_help=False)
+                    parser.add_argument("--results-dir", type=Path, required=True)
+                    parsed, rest = parser.parse_known_args(command)
+                    assert rest in (["wsp", "run", "https://example.invalid/v1"],
+                                    ["run", "https://example.invalid/v1"])
+                    requested = parsed.results_dir
+                    if not requested.is_absolute():
+                        requested = cwd / requested
+                    requested = Path(os.path.normpath(requested))
+                    with tempfile.TemporaryDirectory() as ephemeral:
+                        target = Path(ephemeral) / "unmounted"
+                        for source, destination in sorted(mounts, key=lambda row: len(row[1].parts)):
+                            if requested == destination or destination in requested.parents:
+                                target = source / requested.relative_to(destination)
+                        target = target / "finished"
+                        target.mkdir(parents=True, exist_ok=True)
+                        (target / "run.json").write_text(json.dumps({"status": "completed"}))
+                        (target / "items.jsonl").write_text('{"score": 1}\n')
+                        (target / "report.json").write_text('{"completed": true}\n')
+                """),
+                encoding="utf-8",
+            )
+            fake_docker.chmod(0o755)
+            env = {**os.environ, "PATH": f"{temp}:{os.environ['PATH']}",
+                   "KAIRYU_BENCH_IMAGE": "fake-results-runner",
+                   "KAIRYU_BENCH_CACHE_DIR": str(temp / "cache")}
+            with socket.socket(socket.AF_UNIX) as docker_socket:
+                socket_path = temp / "docker.sock"
+                docker_socket.bind(str(socket_path))
+                env["KAIRYU_BENCH_DOCKER_SOCKET"] = str(socket_path)
+                cases = (
+                    (["wsp", "run"], temp / "durable results" / "absolute",
+                     ["--results-dir", str(temp / "durable results" / "absolute")]),
+                    (["run"], temp / "durable results" / "relative",
+                     ["--results-dir=../durable results/relative"]),
+                    (["wsp", "run"], caller, ["--results-dir", "."]),
+                )
+                for command, output, options in cases:
+                    with self.subTest(command=command, options=options):
+                        result = subprocess.run(
+                            [str(ROOT / "kairyu-bench"), *command, "https://example.invalid/v1", *options],
+                            cwd=caller, env=env, text=True, capture_output=True, check=False,
+                        )
+                        self.assertEqual(result.returncode, 0, result.stderr)
+                        self.assertEqual((output / "finished" / "run.json").read_text(),
+                                         '{"status": "completed"}')
+                        self.assertEqual((output / "finished" / "items.jsonl").read_text(),
+                                         '{"score": 1}\n')
+                        self.assertEqual((output / "finished" / "report.json").read_text(),
+                                         '{"completed": true}\n')
 
 
 if __name__ == "__main__":
