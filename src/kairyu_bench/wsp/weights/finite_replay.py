@@ -379,6 +379,7 @@ class ParameterEdits:
         self.specs = {spec["id"]: json.loads(json.dumps(spec, allow_nan=False)) for spec in specs}
         self.originals: dict[str, Any] = {}
         self.indices: dict[str, Any] = {}
+        self.positions: dict[str, dict[int, int]] = {}
         names = sorted({e["tensor"] for spec in specs for e in spec["edits"]})
         for name in names:
             param = params[name]
@@ -389,24 +390,43 @@ class ParameterEdits:
             device_indices = torch.tensor(indices, dtype=torch.long, device=device)
             selected = param.detach().view(-1).index_select(0, device_indices)
             value = selected.float().cpu().numpy()
-            if not np.array_equal(value, checkpoint.read_indices(name, indices)):
+            source = checkpoint.read_indices(name, indices).astype(np.float32)
+            if not np.array_equal(value.view(np.uint32), source.view(np.uint32)):
                 raise ValueError("loaded selected coordinates differ from original checkpoint")
             self.indices[name] = device_indices
+            self.positions[name] = {index: offset for offset, index in enumerate(indices)}
             self.originals[name] = selected.cpu().clone()
 
-    def apply(self, spec: Any | None) -> None:
+    def apply(self, spec: Any | None) -> dict[str, Any]:
         torch = self.torch
         if spec is not None and spec != self.specs.get(spec.get("id")):
             raise ValueError("RAM application requires an unchanged preverified fixed spec")
+        expected = {name: original.clone() for name, original in self.originals.items()}
         with torch.no_grad():
             for name, original in self.originals.items():
                 self.params[name].view(-1).index_copy_(0, self.indices[name], original.to(self.device))
             if spec is not None:
                 for edit in spec["edits"]:
-                    p = self.params[edit["tensor"]].view(-1)
+                    name = edit["tensor"]
+                    p = self.params[name].view(-1)
                     indices = torch.tensor(edit["_flat_indices"], dtype=torch.long, device=self.device)
-                    values = torch.tensor(edit["set_values"], dtype=torch.bfloat16, device=self.device)
-                    p.index_copy_(0, indices, values)
+                    target_values = torch.tensor(edit["set_values"], dtype=torch.bfloat16, device="cpu")
+                    p.index_copy_(0, indices, target_values.to(self.device))
+                    positions = [self.positions[name][index] for index in edit["_flat_indices"]]
+                    expected[name][positions] = target_values
+            proof = []
+            for name, original in self.originals.items():
+                actual = self.params[name].detach().view(-1).index_select(0, self.indices[name]).cpu()
+                raw = actual.view(torch.int16).numpy().tobytes()
+                target = expected[name].view(torch.int16).numpy().tobytes()
+                if raw != target:
+                    raise ValueError("selected BF16 application/restoration byte mismatch: " + name)
+                proof.append({"tensor": name, "selected_count": original.numel(),
+                              "indices_sha256": hashlib.sha256(self.indices[name].cpu().numpy().astype("<i8").tobytes()).hexdigest(),
+                              "original_bf16_sha256": hashlib.sha256(original.view(torch.int16).numpy().tobytes()).hexdigest(),
+                              "actual_bf16_sha256": hashlib.sha256(raw).hexdigest()})
+        return {"method": "selected_bf16_cpu_readback", "storage_bytes_exact": True,
+                "scope": "union of selected edit coordinates; not a full-model hash", "tensors": proof}
 
 
 def run(args: argparse.Namespace) -> dict[str, Any]:
@@ -429,9 +449,9 @@ def run(args: argparse.Namespace) -> dict[str, Any]:
         raise ValueError("finite output must be fresh")
     output.mkdir(parents=True, exist_ok=True)
     started = time.monotonic()
-    torch.set_num_threads(6)
+    torch.set_num_threads(args.threads)
     torch.set_num_interop_threads(1)
-    torch.manual_seed(20261105)
+    torch.manual_seed(args.seed)
     torch.backends.cuda.matmul.allow_tf32 = False
     torch.backends.cudnn.benchmark = False
     def note(phase: str, **fields: Any) -> None:
@@ -452,6 +472,7 @@ def run(args: argparse.Namespace) -> dict[str, Any]:
         "runner_sha256": _sha(Path(__file__)), "checkpoint_identity": checkpoint.identity(hash_files=False),
         "expected_base_tree_sha256": plan["base_tree_sha256"], "full_tree_rehashed_here": False,
         "dtype": "BF16 weights; FP32 softcap/log-softmax", "attention": "eager",
+        "answer_batching": args.answer_batching, "threads": args.threads, "seed": args.seed,
         "scope": "Matched teacher-forced public-answer diagnostics only; no free generation or benchmark score.",
     })
     _save(output / "frame-evidence.json", frame)
@@ -467,10 +488,21 @@ def run(args: argparse.Namespace) -> dict[str, Any]:
     edits_state = ParameterEdits(checkpoint, specs, params, args.device)
     if any(p.requires_grad for p in model.parameters()):
         raise ValueError("all gradients must be disabled")
+    byte_proofs: dict[str, Any] = {}
+    base_applications = 0
     def apply(spec: Any | None) -> None:
-        edits_state.apply(spec)
+        nonlocal base_applications
+        proof = edits_state.apply(spec)
         torch.cuda.synchronize()
-    evaluate = PublicAnswerEvaluator(net, head, tokenizer, prepared, args.device, deadline)
+        if spec is None:
+            name = "base" if base_applications == 0 else "restored_base"
+            base_applications += 1
+        else:
+            name = spec["id"]
+        byte_proofs[name] = proof
+        _save(output / "selected-byte-proofs.json", byte_proofs)
+    evaluate = PublicAnswerEvaluator(net, head, tokenizer, prepared, args.device, deadline,
+                                    answer_batching=args.answer_batching)
     records: dict[str, Any] = {}
     def on_result(identifier: str, result: Any) -> None:
         records[identifier] = result
@@ -482,6 +514,8 @@ def run(args: argparse.Namespace) -> dict[str, Any]:
         torch.cuda.empty_cache()
     baseline, results, repeat, failure = replay_sequence(specs, apply, evaluate, on_result, before_restore)
     restoration: dict[str, Any] = {"attempted": True, "forward_completed": repeat is not None, "matched": False}
+    restoration.update(storage_bytes_exact=byte_proofs.get("restored_base", {}).get("storage_bytes_exact", False),
+                       byte_proof_method="selected_bf16_cpu_readback")
     if baseline is not None and repeat is not None:
         margin_error = max(abs(a - b) for group, folds in baseline["values"].items()
                            for av, bv in zip(folds, repeat["values"][group]) for a, b in zip(av, bv))
@@ -507,6 +541,7 @@ def run(args: argparse.Namespace) -> dict[str, Any]:
             failure = error
     report = {"status": "completed" if failure is None and restoration["matched"] else "incomplete",
         "labels": labels, "candidates": diagnostics, "base_restoration": restoration,
+        "answer_batching": args.answer_batching, "selected_byte_proofs": byte_proofs,
         "source_stable": source_stable, "error_type": None if failure is None else type(failure).__name__,
         "elapsed_seconds": time.monotonic() - started, "gpu_peak_allocated_GiB": torch.cuda.max_memory_allocated() / 2**30,
         "gpu_peak_reserved_GiB": torch.cuda.max_memory_reserved() / 2**30,
@@ -531,8 +566,14 @@ def main() -> None:
     parser.add_argument("--output", type=Path, required=True)
     parser.add_argument("--device", choices=["cuda:0"], default="cuda:0")
     parser.add_argument("--maximum-seconds", type=int, default=600)
+    parser.add_argument("--answer-batching", choices=("paired", "serial"), default="paired",
+                        help="serial keeps one case's good/foil padded width and forwards each answer separately")
+    parser.add_argument("--threads", type=int, default=6)
+    parser.add_argument("--seed", type=int, default=20261105)
     parser.add_argument("--gpu-exclusive-approved", action="store_true")
     args = parser.parse_args()
+    if not 1 <= args.threads <= 64:
+        parser.error("threads must be 1..64")
     if not 120 <= args.maximum_seconds <= 1200:
         parser.error("maximum-seconds must be 120..1200")
     def interrupted(signum: int, frame: Any) -> None:

@@ -157,7 +157,7 @@ class SparseReplayTests(unittest.TestCase):
         raw = (np.arange(1, 7, dtype=np.float32).view(np.uint32) >> 16).astype("<u2").tobytes()
         weights(self.model / "model.safetensors", {
             self.matrix: ("BF16", (2, 3), raw),
-            self.norm: ("BF16", (2,), b"\x80\x3f\x00\x40"),
+            self.norm: ("BF16", (2,), b"\x80\x3f\x00\x80"),
         })
         index = self.model / "model.safetensors.index.json"
         index.write_text(json.dumps({"weight_map": {
@@ -173,7 +173,8 @@ class SparseReplayTests(unittest.TestCase):
                 {"tensor": self.matrix, "coordinates": [[0, 2], [1, 0]], "set_values": [3.03125, 4.0625]},
                 {"tensor": self.norm, "indices": [0], "set_values": [1.0078125]}]},
             {"id": "other", "edits": [
-                {"tensor": self.matrix, "coordinates": [[1, 2]], "set_values": [6.0625]}]},
+                {"tensor": self.matrix, "coordinates": [[1, 2]], "set_values": [6.0625]},
+                {"tensor": self.norm, "indices": [1], "set_values": [.0078125]}]},
         ]
         self.documents.extend(
             {"id": f"later-{i}", "edits": [
@@ -218,16 +219,27 @@ class SparseReplayTests(unittest.TestCase):
         import torch
         _, specs, _ = load_plan(self.plan_path, self.checkpoint)
         params = {self.matrix: torch.arange(1, 7, dtype=torch.bfloat16).reshape(2, 3),
-                  self.norm: torch.tensor([1, 2], dtype=torch.bfloat16)}
+                  self.norm: torch.tensor([1, -0.], dtype=torch.bfloat16)}
         pristine = {key: value.clone() for key, value in params.items()}
+        # A decoded equality check would incorrectly accept +0 in place of source -0.
+        params[self.norm][1] = 0.
+        with self.assertRaisesRegex(ValueError, "differ from original"):
+            ParameterEdits(self.checkpoint, specs, params, "cpu")
+        params[self.norm][1] = -0.
         state = ParameterEdits(self.checkpoint, specs, params, "cpu")
-        state.apply(specs[0])
+        proof = state.apply(specs[0])
+        self.assertTrue(proof["storage_bytes_exact"])
+        self.assertEqual(proof["method"], "selected_bf16_cpu_readback")
         self.assertEqual(float(params[self.matrix][0, 2]), 3.03125)
         self.assertEqual(float(params[self.norm][0]), 1.0078125)
         state.apply(specs[1])
         self.assertEqual(float(params[self.matrix][0, 2]), 3.)
         self.assertEqual(float(params[self.matrix][1, 2]), 6.0625)
-        self.assertTrue(torch.equal(params[self.norm], pristine[self.norm]))
+        self.assertEqual(float(params[self.norm][1]), .0078125)
+        restored = state.apply(None)
+        self.assertTrue(all(row["actual_bf16_sha256"] == row["original_bf16_sha256"]
+                            for row in restored["tensors"]))
+        self.assertTrue(torch.equal(params[self.norm].view(torch.int16), pristine[self.norm].view(torch.int16)))
         wrong = copy.deepcopy(specs[0])
         wrong["edits"][0]["_flat_indices"] = [0, 1]
         with self.assertRaisesRegex(ValueError, "unchanged preverified"):
@@ -237,7 +249,7 @@ class SparseReplayTests(unittest.TestCase):
         _, results, repeated, failure = replay_sequence(specs, state.apply, successful, lambda *args: None)
         self.assertEqual(len(results), 6)
         self.assertIsNone(failure)
-        self.assertTrue(all(torch.equal(params[key], value) for key, value in pristine.items()))
+        self.assertTrue(all(torch.equal(params[key].view(torch.int16), value.view(torch.int16)) for key, value in pristine.items()))
         candidate_calls = 0
         def evaluate(**flags):
             nonlocal candidate_calls
@@ -250,8 +262,8 @@ class SparseReplayTests(unittest.TestCase):
         self.assertEqual(len(results), 4)
         self.assertIsInstance(failure, RuntimeError)
         self.assertIsNotNone(repeated)
-        self.assertTrue(all(torch.equal(params[key], value) for key, value in pristine.items()))
-        self.assertEqual(sum(value.numel() for value in state.originals.values()), 4)
+        self.assertTrue(all(torch.equal(params[key].view(torch.int16), value.view(torch.int16)) for key, value in pristine.items()))
+        self.assertEqual(sum(value.numel() for value in state.originals.values()), 5)
         self.checkpoint.assert_stable()
 
 

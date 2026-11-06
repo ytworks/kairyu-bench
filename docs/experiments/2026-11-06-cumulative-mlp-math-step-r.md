@@ -1,6 +1,7 @@
 # R: 現作業モデルのattentionを保持するMLP数学方向（2026-11-06）
 
-**公式dev90でfresh P73.269841→R73.626984（+0.357143 pp）。Rを作業モデルへ昇格し、次の編集元をRの保存weightsへ更新した。90点目標は未達。**
+**全14領域の得失を確認し、Rの暫定採用を撤回した。改善済みPを維持して次の編集を積み上げる。90点目標は未達。**
+公式dev90はfresh P73.269841→R73.626984（+0.357143 pp）だったが、後続full14では全体78.475099→76.382319、推論・長文・code等が低下した。以下には暫定採用と撤回の両方を時系列の証拠として残す。
 [公式N−P](2026-11-06-incumbent-coherent-step-n.md)はfresh P74.242063に対しN71.603175、
 差−2.638889 pp（95% CI [−7.083333,+1.111111]）で、Nを採らずPを保持する判断となった。
 R作成時の親はPで、その時点のstate SHAは3bc3b04014732f799987888d171d4f70116724af3e31147aa243095950a5294c。
@@ -11,7 +12,7 @@ Pの73.8254→74.2421は重み不変の再測定差であり、新しい重み�
 
 ツールのCPU suiteは507件収集、455 pass／52 optional skip、失敗0。前版506件から、r128/F32の範囲指定作成→独立verify→freezeと対象外byte保持を検証する1件を追加した。既定の410行列経路も維持し、Ruff／mypy73もPASS。証跡はanalysis/code90-resume-20261106/cpu-integration-structured-mlp-scope-v1/ci-results.json（SHA256 5a47f8fe58ec82f525b62f13c36afc11cd215f6839ab55893268a167b1d7b229）。これはツールの動作確認で、Rの能力確認ではない。
 
-## 公式比較と累積更新
+## 公式dev90比較と暫定採用の記録
 
 両runは同じ90項目を全件採点し、未採点0、正式chat119 callsずつ。
 native ON、公式sampler/caps、c32、TP2/MTP4、固定source5e3を維持した。
@@ -37,13 +38,13 @@ SciCodeの部分点増加をbinary flipへ置き換えない。
 入力21／出力1 tokenは起動確認であり、採点対象の打切りではない。
 wallはこの実行窓の観測で、隔離された速度効果とは扱わない。
 
-次の入力はcheckpoints/code90-heretic-public-base-math-mlp-c1-v1、
+暫定採用時の次入力はcheckpoints/code90-heretic-public-base-math-mlp-c1-v1、
 tree ea3d27ababa4f189fb5058c5055492ddad42180ec619c80d5a427baccea9cbee。
-current working-incumbent.jsonはc0e271c4811d2e60b856e58dd6c7940fef10b6593454ef8554efcb2932a89d49、
+その時点のworking-incumbent.jsonはc0e271c4811d2e60b856e58dd6c7940fef10b6593454ef8554efcb2932a89d49、
 作業更新判断はheretic-public-base-math-mlp-c1-v1/working-decision.json
 （SHA197caa94f18184f09002e51434e9194a5f1cf074937d09718d86c0c92a18e62b）。
 作成時の親P state3bcはhistoryへ保存した。
-Pで測った微分は歴史資料とし、次の編集に現在の微分を用いるにはRで再観測する。
+この暫定採用中はP微分を流用せず、Rで2目的を再観測しR由来S/Uを計算した。R由来S/Uの有限応答・生成評価は実行していない。撤回後は完全なP保存重みの不変性を確認し、既存P観測に基づいて別のP由来S/Uを計算する。
 全14領域、known64、DeepSWE、HF適格はこのdev90更新とは別に確認する。
 過去のP−original差と今回のR−P差を、異なる実行窓をまたいで加算しない。
 
@@ -52,6 +53,28 @@ Pで測った微分は歴史資料とし、次の編集に現在の微分を用�
 r-vs-current-p-evidence.json
 （SHAebde5a3a1dedbbb5c8929d3a674f5358b6b7096c9da9c17abbaa2464af00d483）。
 本節の相対artifact pathはanalysis/code90-resume-20261106/を起点とする。
+
+## 全14領域の結果とR追加分の撤回
+
+778/778採点、未採点0。全体はP78.475099→R76.382319、差−2.092780 pp、paired95% CI [−4.265873,−0.096748] pp。比較Pは歴史runであり同時実行対照ではないが、実runner RootFS16layers・Image.Config・全installed82 source/resource bytes・保存runtime設定の一致を確認した。共有GPU/CPU/NVMe作業との重複があり、wall差をモデルだけの速度効果とはしない。
+
+| 領域 | P | R | 差pp |
+|---|---:|---:|---:|
+| 全体 | 78.475099 | 76.382319 | −2.092780 |
+| code（26項目、SciCodeなし） | 87.777778 | 84.444444 | −3.333333 |
+| 数学 | 95.625000 | 98.750000 | +3.125000 |
+| 推論 | 76.956522 | 64.782609 | −12.173913 |
+| 長文 | 87.627943 | 81.377943 | −6.250000 |
+| 常識 | 63.000000 | 64.000000 | +1.000000 |
+| XSTest | 21/36 | 20/36 | −2.777778 |
+
+knowledge−3.333333、multilingual−3.055556、facts−2.5 pp、expert・instruction・tools・agents・visionは純差0。変更25項目は9 gain（HMMTの半点増を含む）／16 loss。codeのlossはMBPP792、推論はBBEH disambiguation119とMuSR murder205/object187、長文はRULER fwe32768:013。RULERとTriviaQAにtruncated/emptyが各1件あり、Pは0件だった。logprob等の非適用・未計測nullを0へ置き換えない。Rの正式chat557／logprob3062 calls、wall1481.9秒（load105.2秒は内数）。通信error／abort0と答案の打切りは別の観測である。
+
+dev90の小幅なcode利得に対して、codingにも関係する推論・長文・別code cohortの損失が大きいと判断し、R追加分を退けた。これは全領域無損失や有意差の新しいgateではなく、目的に沿う得失判断である。originalへ戻す判断ではなく、既に採用したPの58 attention変更を維持する。
+
+現在のP stateは2666c54246852bf328be8b6293ff3402f011403fc27ad28113c5bcddaf923c99、tree3dfb3bd1db0ab2ba4fff843616bb0d3109e0b97a6c9349658620908f2a24bebc。Pの全9file statを既存attestation87975545…と再照合した。R state c0e…と全結果・仮説はhistoryに保存し、R計算済みS/UをPへ貼り替えない。既存P観測からP用S/Uを新規計算する。R有限応答の起動は自動承認審査で拒否され、model/service操作0。R撤回後にこの不要となったrunを再試行していない。
+
+証拠：incumbent-r-retention-full14-v1/final-summary.json（SHAdb693d71de3180fe49910d9a89cf07c494771a1f2e37dfc4c41fbd2750969095）、同historical-parent-evidence.json（d70b61f07ef45776427cbf0f2c582364cb86007458a0b7eed3c59be9fc190eda）、heretic-public-base-math-mlp-c1-v1/working-retention-decision.json（1619f5487e92716434641797eb93971a4ad88e181ccc9f105d96f5d788b1e528）。
 
 ## 保存重みの作成と独立検証
 
@@ -86,6 +109,8 @@ IとRは同じmath factor・係数1・128-row FP32演算・NumPy/BLAS/kernel条�
 Rの180行列のsource SHA、完成target SHA、変更数はIのMLP180と全て一致した。
 この照合はRのMLP構成を確認するもので、Iのattentionや能力scoreをRへ引き継ぐ証拠ではない。
 RのattentionはPの保存値を保持する。
+
+original→Pの58 attention行列とP→Rの180 MLP行列は重ならないため、既存のexact差分からRの累積変更は238 tensor、6,473,994,931要素、original比ΔL2 25.695807972794と算出できる。これは保存済み証拠の合成で、新たな全payload走査や能力効果の推定ではない。変更要素数の小ささと数値差分normの小ささは別の尺度として扱う。
 
 gemma-3だけをRへ置き換え、N／P／original／embeddingの設定・identityを保持した。
 配信後の固定24問authored smokeは完了し、**R20/24対current parent P21/24**。
@@ -182,7 +207,7 @@ implementationの公式実行結果である。
 ただしPで既に観測された大きな領域損失も累積記録から消さない。
 CIは不確実性を示すが追加の有意差gateではない。
 current-parent-relativeの暫定更新と、最終90点超／一般化／DeepSWE／HFの達成は区別する。
-R作成のspec/比較planは当時のP stateに束縛した。今後のspec/比較planは更新済みR stateと直前の継続性確認に束縛する。
+R作成のspec/比較planは当時のP stateに束縛した。今後のspec/比較planはR撤回後のP state2666c542…と直前の継続性確認に束縛する。
 
 ## 証拠
 

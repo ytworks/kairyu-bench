@@ -541,3 +541,7 @@ fresh outputへ数値reportを保存し、失敗はincompleteとexception型だ�
 診断の通過はコード能力向上でもWSP scoreでもなく、旧微分や候補を正当化しない。
 
 実際の3問で公式whole-modelとの一致と境界の量的影響を確認した記録は、[公開回答frame監査](../../../docs/experiments/2026-11-06-public-answer-frame-audit.md)を参照してください。旧frameを新版の結果として再解釈しません。
+
+## Coupled native objectives
+
+[propose_native_objectives.py](propose_native_objectives.py) combines matched native correct-logprob and margin collections using the existing local-gradient solver. The [input and finite-replay guide](../../../docs/wsp-native-coupled-objectives.md) specifies full-checkpoint identity, serial cohort matching, explicit permitted losses, BF16 realization and selected-word restoration proof. Default preview reads metadata only. The same native values from different full checkpoints do not establish matching gradients; collect again after promoting a new incumbent.

@@ -1,6 +1,6 @@
 # Gemma4公式スコア全実行台帳（2026-11-06）
 
-snapshot: 2026-11-06T13:20:07.886341+00:00。WSP **112 runs**（completed107、partial4、保存metadataがrunningの旧run1）。
+snapshot: 2026-11-06T14:36:01.112056+00:00。WSP **115 runs**（completed110、partial4、保存metadataがrunningの旧run1）。
 新規採点・モデル実行なし。指定したNVMe resultsとlegacy resultsの直下run.json/report.jsonだけを採録した。
 5つのDeepSWE runはWSP台帳から分離し、完了・取消結果を代表表へ併記する。元R1/R2はincompleteで、この台帳から完成した点を捏造しない。
 公式reportから値を転記し、欠測は「—」。表は小数6桁表示、sourceの未丸め値はcatalog JSONに残す。
@@ -36,16 +36,19 @@ partialのoverallは公開表で空欄にし、reportの元値はcatalogのrepor
 | L＝original＋K1 text c1・初回 | 67.1825 | fresh original | 70.7004 | −3.5179 | 同時ペア |
 | O・Mの4条件窓 | 71.1865 | — | — | — | 新しい同時対照 |
 | L・Mの4条件窓 | 68.0754 | O | 71.1865 | −3.1111 | 再測定 |
-| P＝公開改変base・元protocol | 73.8254 | O | 71.1865 | +2.6389 | 現working incumbent |
+| P＝公開改変base・元protocol | 73.8254 | O | 71.1865 | +2.6389 | 初回working採用、R撤回後に再び現親 |
 | M＝P＋同じK1 text c1 | 67.9087 | P | 73.8254 | −5.9167 | 積み上げでは悪化、Pを保持 |
 | P・Nの同時対照 | 74.2421 | — | — | — | 同じPのfresh再測定、重み更新ではない |
 | N＝P＋K1 text1/16 | 71.6032 | fresh P | 74.2421 | −2.6389 | 同時ペア、Nを採らずPを保持 |
+| P・Rの同時対照 | 73.2698 | — | — | — | 同じPのfresh再測定 |
+| R＝P＋math MLP全層c1 | 73.6270 | fresh P | 73.2698 | +0.3571 | 一時昇格、後続full14退行で撤回 |
 
 M−Oは−3.2778pp。Pのworking採用はユーザーの「改善後から積み上げる」方針による。
 最終code>90達成、未知集合への汎化、統計的確定とは別である。
 各窓のoriginalは69.10〜72.58など変動しており、異なる窓の差を同時比較として扱わない。
 M窓のM−O差は−3.2778pp、CI[−9.4167,+2.5000]。M−P差は−5.9167pp、CI[−12.5000,+0.2500]。CIをworking採用の追加gateにしない。
 N−fresh Pは−2.6389pp、CI[−7.0833,+1.1111]。Pの73.8254→74.2421は同じ保存重みの再生成窓の差であり、追加の重み改善ではない。
+R−fresh Pは+0.3571429pp、CI[−2.142857,+2.857143]。HE95 loss、MBPP641 gain、SciCode80は2/7→3/7。ユーザーの積み上げ方針で一時Rへ更新したが、後続full14のnet lossでR増分を退け、同一保存Pへ復帰した。微小差・不確実性を能力改善の確定としない。R full14は後続snapshotで778/778採点完了し、overall76.3823193／code84.4444444。
 
 ### 既知64問：HE20＋MBPP20＋LCB14＋SciCode10
 
@@ -71,6 +74,7 @@ tier10のcodeはHE10＋MBPP10＋LCB6、SciCodeなし。dev/testと実行窓も�
 | B vs fresh original full dev10 | 87.7778 → 84.4444 | 80.4638 → 79.2920 |
 | H vs fresh original full dev10 | 87.7778 → 84.4444 | 80.1642 → 81.9725 |
 | P保持確認 vs 歴史original | 87.7778 → 87.7778 | 80.1642 → 78.4751 |
+| R保持確認 vs 歴史P | 87.7778 → 84.4444 | 78.4751 → 76.3823 |
 
 P保持確認は778/778採点。対originalは歴史比較で、overall差−1.6891pp、CI[−4.2426,+0.9258]。
 safetyはXSTest36件の31/36→21/36（−27.7778pp、11 loss／1 gain）であり、他分野の利得とともに退行を明示する。
@@ -92,7 +96,7 @@ safetyはXSTest36件の31/36→21/36（−27.7778pp、11 loss／1 gain）であ�
 0397ではF2P625→473、P2P226,371→78,067の退行もあり、同点のみをもって改善としない。
 
 
-## 全runの候補・protocol・code・overall
+## v2までの112 runの候補・protocol・code・overall
 
 ### calibration_subset (8 runs)
 
@@ -4851,4 +4855,38 @@ B73.4087の同時対照は0397であり、後日original72.5754を同時対照�
 | source-scores.csv | cbe01ff4fe001131857d3e23f3c3386f6fda9d44907712dee0b79b72374daea0 |
 | refresh-validation.json | 5c99a6a06067d419cd9cc2459f192c5b0dab6898654f18cb91a243916cd19319 |
 
-これはsnapshotであり、後続試行は別の更新として記録する。originalは不変の参照として残し、現working incumbentはP。MとNが各同窓Pを下回ったためPを保持する。Nの正式判定と状態pinは[Nの記録](2026-11-06-incumbent-coherent-step-n.md)を参照。
+これはsnapshotであり、後続試行は別の更新として記録する。originalは不変の参照として残す。MとNではPを保持し、Rのdev90改善で一時更新したが、full14のnet lossにより現working incumbentを同一保存Pへ戻した。originalへ戻していない。[Nの記録](2026-11-06-incumbent-coherent-step-n.md)と[Rの記録](2026-11-06-cumulative-mlp-math-step-r.md)を参照。
+
+## v3追加3実行と保存証跡
+
+旧112行は全fieldが完全一致し、別artifact all-scores-20261106-v3/へ3行だけ追加した。v1/v2は不変。読取エラー／metadata不一致0。初回v3ではR full14がrunningだった。終了後は別v3-finalへ再採録し、他114行の全field一致・Rの1行だけcompletedへの遷移を検証した。旧v3原本も保持する。
+
+| Run ID | 状態 | protocol | 項目 / 採点 / 未採点 | code % | overall % |
+|---|---|---|---:|---:|---:|
+| gemma4-code90-heretic-public-base-math-mlp-c1-c32-dev30-code-20261106 | completed | code90_dev30 | 90 / 90 / 0 | 73.626984 | — |
+| gemma4-code90-heretic-public-base-c32-dev30-code-pairr-20261106 | completed | code90_dev30 | 90 / 90 / 0 | 73.269841 | — |
+| gemma4-code90-incumbent-r-c32-dev10-full14-20261106 | completed | full14_tier10 | 778 / 778 / 0 | 84.444444 | 76.382319 |
+
+| v3 Artifact | SHA256 |
+|---|---|
+| catalog.json | c7cd64071ed4d7e119b14e6ab06b4b10a46d3d0f3b478b8b4a79169c80710e5c |
+| coverage.json | 14f6b6353ac454f9d69e37663775b97ae0e0be1f5346707dfd4c611ea165edf7 |
+| runs.csv | 47d3054c4d590b6c6fb4f1ce6816e2d31658c07dd5efc8b3fe4b04cbb5e6d961 |
+| source-scores.csv | e9f6acd34c61f0dcb8053deba24dcb1ed7000328685215749231617f6f27449b |
+| append-validation.json | 5e9b737803eae1c0359911480058e219c7d2cb3b3eb4051833600dfb829affd4 |
+
+一時R採用時のstate SHA c0e271c4811d2e60b856e58dd6c7940fef10b6593454ef8554efcb2932a89d49は履歴として保持。S/Uのlocal-gradient予測は公式scoreへ追加しない。[Rの目的別観測](2026-11-06-current-r-purpose-observation.md)は別種の診断として記録する。
+
+終了確認版 all-scores-20261106-v3-final/。R full14の終了は14:33:58.879312 UTC、report SHA c0a78d4488a5df88afb4108153bd7adb42decf795e5893485614639e8ae32ccc。R/Pは異時点の固定cohort比較であり、重みだけの因果差・速度差とはしない。tier10 code26にはSciCodeがなく、dev90や既知64とは比較しない。
+
+| v3-final Artifact | SHA256 |
+|---|---|
+| catalog.json | 38f47cffd5e36ec3794854ffe5e99c3ffc0fd035a284ef2d5c7d99f8f2d184bf |
+| coverage.json | 4ce5b2ba5707ef43bc546cb844bf651b10d19f35336ccecde55e2914a6e21fab |
+| runs.csv | 17e54be4701b94bf5bf4c3e961fb3f34e9e1d842ebf5625b4016874011f05bb4 |
+| source-scores.csv | e2f43ec7a18aacdbd48c50cf2175c800655bad62fc62acf0e22f0c748f3855d7 |
+| terminal-validation.json | ba1bc55bbe39a6a7e8c234d38e152db96b24b77bf10d08478cfdd3bde59262f9 |
+
+R full14 closure SHA db693d71de3180fe49910d9a89cf07c494771a1f2e37dfc4c41fbd2750969095：歴史P比overall−2.0927795 pp、CI[−4.26587,−.09675]、25 changed（9 gain／16 loss）。この得失を受けownerはR増分を不採用とした。P復帰後の新state pinはowner記録を参照し、全公式score行は採用判断に合わせて書き換えない。
+
+最新作業親の正式状態はP：working-incumbent.json SHA 2666c54246852bf328be8b6293ff3402f011403fc27ad28113c5bcddaf923c99。R増分の撤回decision SHA 1619f5487e92716434641797eb93971a4ad88e181ccc9f105d96f5d788b1e528。これは既存Pへの復帰で新たな重み改善ではなく、v3-final取得時のR採用状態は履歴として残す。
