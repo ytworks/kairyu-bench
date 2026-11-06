@@ -337,6 +337,7 @@ class DeepSWEJobTest(unittest.TestCase):
         peak = 0
         calls = Counter()
         events = []
+        second_refilled = asyncio.Event()
 
         async def fake_execution(trial):
             nonlocal active, peak
@@ -345,8 +346,15 @@ class DeepSWEJobTest(unittest.TestCase):
             active += 1
             peak = max(peak, active)
             events.append(("start", task))
+            if task.endswith("task-c") and calls[task] == 2:
+                second_refilled.set()
             await trial._invoke_hooks(TrialEvent.START)
-            await asyncio.sleep(0.03 if task.endswith("task-a") else 0.001)
+            if task.endswith("task-a") and calls[task] == 2:
+                # Hold the slot until the real queue refills its peer. A fixed
+                # 30 ms sleep races hook/file I/O on a loaded CI worker.
+                await asyncio.wait_for(second_refilled.wait(), timeout=5)
+            else:
+                await asyncio.sleep(0.03 if task.endswith("task-a") else 0.001)
             fail = task.endswith("task-b") and calls[task] == 1
             now = datetime.now(timezone.utc)
             payload = {
