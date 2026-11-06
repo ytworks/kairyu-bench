@@ -209,3 +209,5 @@ verification preserves native values, including signed zero, in saved output.
 This does not force a feasible result or nonzero matrix entries: predictions,
 missed bounds and absent participation remain explicit. A matrix-only solve is
 a separately declared hypothesis, not an automatic retry of a mixed result.
+
+The v2 plan optionally accepts matrix_families, a nonempty unique allowlist from q, k, v, o, gate, up, down. Omission preserves the O/MLP scope. Only selected sampled columns enter the existing optimizer and BF16 realization; excluded families remain byte unchanged. The report distinguishes all excluded matrix columns from excluded Q/K/V columns. Q/K/V sampling is not a matched attention-head circuit, and MLP shared-hidden sampling does not force all three matrices to change. This changes eligibility only, not the solver, cost formula, editor limits, or finite evaluation.

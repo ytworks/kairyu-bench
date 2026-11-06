@@ -50,6 +50,17 @@ def stable(checkpoint, pins):
         raise ValueError("coupled proposal input changed")
 
 
+
+def matrix_families(plan):
+    """Explicit v2 scope; omission preserves historical O/MLP behavior."""
+    values = plan.get("matrix_families", ["o", "gate", "up", "down"])
+    if (not isinstance(values, list) or not values
+            or any(type(value) is not str or value not in {"q", "k", "v", "o", "gate", "up", "down"}
+                   for value in values) or len(set(values)) != len(values)):
+        raise ValueError("matrix_families must be a nonempty unique supported-family allowlist")
+    return values
+
+
 def prepare(path):
     """Validate the whole checkpoint, cohorts and columns before reading gradients."""
     pins = {}
@@ -57,6 +68,10 @@ def prepare(path):
     mixed = plan.get("schema_version") == 2 and plan.get("kind") == "native_matrix_coupled_objectives_v2"
     if not mixed and (plan.get("schema_version") != 1 or plan.get("kind") != "native_coupled_objectives_v1"):
         raise ValueError("explicit supported coupled-objectives plan required")
+    if "matrix_families" in plan and not mixed:
+        raise ValueError("matrix family eligibility requires the v2 plan")
+    if mixed:
+        matrix_families(plan)
     if "eligible_blocks" in plan and not mixed:
         raise ValueError("explicit block eligibility requires the v2 plan")
     if mixed and plan.get("eligible_blocks", ["native", "matrix"]) not in (["native", "matrix"], ["matrix"]):
@@ -303,23 +318,27 @@ def solve(path, output, *, write_spec=False, maximum_seconds=120):
         if mixed:
             matrix_base, _, matrix_layout, coords = loaded["matrix:" + OBJECTIVES[0]]
             active, cursor = [], 0
+            allowed_families = matrix_families(plan)
             for entry in matrix_layout:
                 match = matrix_recipe.PATTERN.fullmatch(entry["tensor"])
                 count = entry["count"]
-                if match[3] in {"o", "gate", "up", "down"}:
+                if match[3] in allowed_families:
                     active.extend(range(cursor, cursor + count))
                     layout.append(dict(entry, coordinates=coords[cursor:cursor + count], block="matrix"))
                 cursor += count
             if not active:
-                raise ValueError("explicit O plus complete MLP active matrix columns required")
+                raise ValueError("explicit eligible matrix scope has no observed columns")
             if len({e["tensor"] for e in layout}) != len(layout):
                 raise ValueError("native and matrix tensor columns overlap")
             active = np.asarray(active, dtype=np.int64)
             base = np.concatenate([base, matrix_base[active]])
             gradient = np.hstack([gradient, np.vstack([loaded["matrix:" + o][1][:, active] for o in OBJECTIVES])])
             scope = {"native_columns": native_count, "observed_matrix_columns": len(matrix_base),
-                     "active_matrix_columns": len(active), "excluded_qkv_columns": len(matrix_base) - len(active),
-                     "active_matrix_families": ["o", "gate", "up", "down"],
+                     "active_matrix_columns": len(active), "excluded_matrix_columns": len(matrix_base) - len(active),
+                     "excluded_qkv_columns": sum(e["count"] for e in matrix_layout
+                                                 if matrix_recipe.PATTERN.fullmatch(e["tensor"])[3] in {"q", "k", "v"}
+                                                 and matrix_recipe.PATTERN.fullmatch(e["tensor"])[3] not in allowed_families),
+                     "active_matrix_families": allowed_families,
                      "baseline_max_abs_difference": {o: collections["matrix:" + o]["baseline_max_abs_difference"] for o in OBJECTIVES},
                      "gradient_methods": {"native": collections[OBJECTIVES[0]]["summary"]["runtime"].get("gradients"),
                                           "matrix": collections["matrix:" + OBJECTIVES[0]]["summary"]["runtime"].get("gradient_accumulation")}}
@@ -365,16 +384,16 @@ def solve(path, output, *, write_spec=False, maximum_seconds=120):
             report.update(id=method["id"], constraints=method["constraints"], cost_metric=metric,
                           changed_elements=changed, changed_tensors=len(edits),
                           represented_source_l2=float(np.linalg.norm(base)),
-                          norm_scope=("sampled O/MLP coordinates only; native excluded" if mixed and native_count == 0 else
-                                      "all native plus sampled O/MLP coordinates; not whole matrix norms" if mixed else
+                          norm_scope=("sampled eligible matrix coordinates only; native excluded" if mixed and native_count == 0 else
+                                      "all native plus sampled eligible matrix coordinates; not whole matrix norms" if mixed else
                                       "all selected native tensors; not the whole model"),
                           spec_emitted=bool(write_spec and edits))
             if mixed:
-                if eligible_blocks == ["matrix"] and any("indices" in edit or
-                        not matrix_recipe.PATTERN.fullmatch(edit["tensor"]) or
-                        matrix_recipe.PATTERN.fullmatch(edit["tensor"])[3] not in {"o", "gate", "up", "down"}
-                        for edit in edits):
-                    raise ValueError("ineligible native/QKV edit escaped matrix-only columns")
+                if any(("indices" in edit and eligible_blocks == ["matrix"]) or
+                       ("coordinates" in edit and (not matrix_recipe.PATTERN.fullmatch(edit["tensor"]) or
+                        matrix_recipe.PATTERN.fullmatch(edit["tensor"])[3] not in allowed_families))
+                       for edit in edits):
+                    raise ValueError("ineligible native/matrix family escaped selected columns")
                 compatibility = joint.editor_compatibility(edits, allow_batched_matrix=True)
                 if not compatibility["spec_emission_allowed"]:
                     raise ValueError("matrix proposal exceeds existing editor bounds")

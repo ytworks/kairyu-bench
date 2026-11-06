@@ -61,7 +61,7 @@ Before any real candidate trial, a separately authorized rollout must:
 1. Install this package and the pinned benchmark reader/editor package into a new image using --no-deps; do not modify a running image/container. Enable only the intended general plugin.
 2. Compare ordinary saved-source loading with an explicitly empty overlay under identical image/runtime/model/MTP/TP/sampling settings. Pin the ordinary loader to safetensors with lazy strategy, matching the plugin’s internal strategy; do not leave an auto-format difference unrecorded. Check the all-rank startup records, selected diagnostic word mapping, and fixed authored numeric output parity; record the limits of any nondeterministic output comparison.
 3. For one small nonempty overlay, verify every selected word after TP, full receipt/source continuity, and ordinary readiness. Run both comparison arms using the same plugin/image (empty versus nonempty).
-4. Retain the saved-checkpoint fallback. A real model startup, loaded-word validation, and ordinary generation have not yet been performed for this plugin.
+4. Retain the saved-checkpoint fallback. Successful real model startup, loaded-word validation, and ordinary generation remain required; the first attempted rollout described below did not reach readiness.
 
 The potential saving is the full candidate copy and its subsequent verification scan. Base checkpoint loading and GPU allocation still occur. Each edited tensor gets one private clone (approximately 220.5 MiB for the largest current Gemma4 MLP matrix). A consuming loop may retain the previous clone while the generator allocates the next, so two adjacent clones per rank can overlap (approximately 882 MiB across TP2 for two largest clones per rank), in addition to ordinary loader/model memory. Actual loader peak memory and any speed improvement remain unmeasured. Matrix changes remain incompatible with the native-only faststore generation described separately.
 
@@ -82,3 +82,33 @@ The built-image CPU smoke reuses the existing E2E with KAIRYU_OVERLAY_INSTALLED_
     python -B -m unittest discover -s /opt/kairyu-sparse-overlay-smoke -p test_vllm_sparse_overlay.py -v
 
 In this mode plugin-source fallback is disabled and the imported plugin/reader/editor must all resolve inside the staged installed root. Record actual source hashes, entrypoint metadata, package versions, and the iterator/TP-boundary result. Passing the source-tree fixture alone does not establish installed-wheel compatibility. Staging, image building, this isolated smoke, and actual model rollout remain separate explicitly authorized actions.
+
+## Recorded installed-image and first rollout evidence
+
+The offline staged image sha256:33025e08d05ed9f79ba0f4fa34a62bb005e6404c3aa70af20ade5e73c1e88602
+preserved the pinned af9 base layers and ran as UID 1003. The installed-only CPU
+E2E passed once in 9.571 seconds; all plugin/reader/editor imports resolved to
+/opt/kairyu-sparse-overlay. Repository CI passed 513 collected tests
+(460 passed, 53 optional skips), with unchanged checked source pins. The
+optional installed-image test is reported separately from those skipped tests.
+
+The first authorized four-arm rollout on 2026-11-06 UTC failed while loading
+the first ordinary saved-S arm, before readiness or generation. The owner
+recorded only ValueError and removed its temporary container, so the original
+startup cause is unknown. It restored the same original O2 container and
+checked the protected services and source state. No selected-word proof or
+functional parity result was produced; the failure does not establish an
+overlay numerical mismatch. The current accepted AC checkpoint was unchanged.
+The preserved receipt is
+analysis/code90-resume-20261106/vllm-sparse-overlay-validation-v1/gpu-completion.json
+(SHA-256 994cfe8e0cc6847b92fb95076a3e7fd241299321b41db1f561827d5b07c99c95).
+
+A separate CPU-only check of the installed vLLM config writer reproduced
+PermissionError for UID 1003 at /.config/vllm/usage_stats.json; writing under
+an owned NVMe config directory succeeded. This establishes a writable-config
+requirement, not the cause of the discarded startup failure. A prepared,
+unexecuted owner revision sets XDG_CONFIG_HOME and VLLM_CONFIG_ROOT to that
+dedicated directory for every arm. It also saves a bounded private startup log
+before cleanup and publishes only fixed assertion messages, error classes,
+flags, and container exit status. No plugin, numerical kernel, or image change
+was made, and no GPU retry is implied by these diagnostic changes.

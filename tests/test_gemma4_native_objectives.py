@@ -227,6 +227,37 @@ class NativeCoupledTests(unittest.TestCase):
             self.assertEqual(saved.read_raw(name), self.checkpoint.read_raw(name))
         self.assertEqual({p: self.sha(p) for p in self.checkpoint.files}, before)
 
+
+        # Explicit Q-only scope selects Q cells and leaves every other byte intact.
+        self.plan["matrix_families"] = ["q"]
+        self.plan["candidates"][0]["id"] = "q-only"
+        qentry = next(e for e in entries if e["family"] == "q")
+        for directory in self.plan["collections"]["matrix"].values():
+            target = Path(directory) / "gradient.npy"
+            values = np.zeros_like(np.load(target, allow_pickle=False))
+            values[qentry["start"]] = 1.
+            np.save(target, values)
+        qplan = self.root / "q-only-plan.json"
+        qplan.write_text(json.dumps(self.plan))
+        report = COUPLED.solve(qplan, self.root / "q-only-proposal", write_spec=True)
+        self.assertEqual(report["methods"][0]["column_scope"]["active_matrix_families"], ["q"])
+        self.assertEqual(report["methods"][0]["column_scope"]["excluded_qkv_columns"], 0)
+        qspec = self.root / "q-only-proposal/q-only.json"
+        self.assertEqual([e["tensor"] for e in json.loads(qspec.read_text())["edits"]], [qname])
+        candidate, manifest = self.root / "q-only-saved", self.root / "q-only-saved.json"
+        editor.create(self.checkpoint.path, candidate, qspec, manifest, apply=True, reserve_bytes=0)
+        editor.verify(manifest)
+        saved = Checkpoint(candidate)
+        self.assertNotEqual(saved.read_raw(qname), self.checkpoint.read_raw(qname))
+        for name in self.checkpoint.tensors:
+            if name != qname:
+                self.assertEqual(saved.read_raw(name), self.checkpoint.read_raw(name))
+        for invalid in ([], ["q", "q"], ["unknown"], [True]):
+            self.plan["matrix_families"] = invalid
+            qplan.write_text(json.dumps(self.plan))
+            with self.assertRaisesRegex(ValueError, "matrix_families"):
+                COUPLED.prepare(qplan)
+
     def test_rejects_full_checkpoint_mismatch_even_with_same_native_values_and_bad_cohort(self):
         path = Path(self.directories["margin"]) / "provenance.json"
         original = json.loads(path.read_text())
