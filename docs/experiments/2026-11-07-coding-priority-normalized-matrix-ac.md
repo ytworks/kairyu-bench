@@ -3,10 +3,11 @@
 AC changes the direction and purpose targets after [AB was held](2026-11-07-matrix-only-derived-radius-ab.md);
 it is not a scaled AB checkpoint. It reuses the four matched observations of
 adopted S and preserves every accepted native parameter and Q/K/V matrix.
-The owner selected AC for one saved checkpoint and fresh matched native-ON
-dev90 trial after its finite coding signal improved. **AC is not adopted and
-has no official score yet.** S remains the working incumbent; its recorded
-dev90 score is 74.24206349, below the goal of 90.
+The fresh matched native-ON dev90 trial improved from S 73.26984127 to AC
+73.82539683 (+0.55555556 points). **AC is not adopted; its full14 retention run
+is in progress.** S remains the working incumbent. S's earlier 74.24206349
+score is a historical measurement, not this trial's fresh control; the goal
+of 90 remains unmet.
 
 The source state is
 1049e67a536317876716b516f6abe90b8b0770d5a011e080340a5a8b12ae561a,
@@ -106,12 +107,12 @@ below are nats per answer token, not benchmark points.
 | Japanese | +0.840002 | +0.996757 |
 
 The stronger coding signal warrants a native-ON execution trial while retaining
-the instruction/tools/lookup liabilities. It does not justify adoption before
-that result. The finite response is in-sample and differs substantially from
+the instruction/tools/lookup liabilities. It did not establish adoption from the proxy; the official comparison and
+broad retention decision are separate. The finite response is in-sample and differs substantially from
 linear predictions; its forced-empty-thought condition differs from ordinary
 native thinking. Diagnostic KL samples only the first and last correct-answer
-token positions. No new official score or claim of general science ability
-follows from these measurements.
+token positions. No official score or claim of general science ability follows from these
+proxy measurements alone. The subsequent native-ON result is recorded below.
 
 ## Evidence
 
@@ -143,3 +144,57 @@ cpu-integration-normalized-objective-targets-v1/ci-results.json,
 SHA 28d7f52667f04d1f85913611fae922414d075733f06f3ee71ac3a69f93acdfad.
 The run started after AC finite restoration; it overlapped checkpoint copying
 on separate CPU cores with shared storage, so no isolated latency claim is made.
+
+
+## Completed fresh dev90 and pending broad retention
+
+The same official four-source cohort, archived source, native-ON sampler and
+direct TP2/concurrency32 settings produced the following completed comparison:
+
+| Source | Fresh S | AC |
+|---|---:|---:|
+| HumanEval+ | 30/30 | 30/30 |
+| MBPP+ | 23/30 | 24/30 |
+| LiveCodeBench | 16/20 | 15/20 |
+| SciCode mean | 36.412698% | 40.301587% |
+| Equal-source code score | 73.269841 | 73.825397 |
+
+The difference is +0.55555556 points, paired 95% CI
+[-3.194444, +4.583333]. Both arms scored all90 items with no unknowns.
+Changed score IDs are MBPP Mbpp/641:0→1, LiveCodeBench arc195_b:1→0,
+SciCode14:0.5→1, and SciCode72:8/9→7/9. Partial science scores are retained;
+these are two gains and two losses, not four binary accuracy flips.
+
+Each arm recorded119 formal chat calls, all stop, with no errors, scored
+truncations or empty answers. S/AC recorded301,580/309,700 output tokens and
+330.130/345.485 seconds from run start to finish. Each process counter also
+included one startup probe (21 input/1 output token, length finish), separate
+from those formal calls. Counts are not tool steps, and wall times are not an
+isolated causal performance measurement.
+
+S remains the parent at state1049e67a…; its earlier74.2421 measurement must not
+replace the fresh73.2698 control. AC's score is not yet a net-purpose adoption
+decision. Root selected one full14 retention run against historical S's same
+778-item protocol, without repeating the official coding pair.
+
+The full14 wrapper started2026-11-06T18:21:37Z (ownerPID2215962,
+benchmarkPID2216154), run
+gemma4-code90-candidate-ac-c32-dev10-full14-20261107.
+It keeps tier10/dev, chat32/logprob8/agent1, official caps/sampler and source
+unchanged. Its control is historical S full14, not a fresh concurrent S run;
+actual runner image/config/layers, installed source/packages and timing
+overlap must be compared in the final report. The active run's score is unknown.
+
+Additional evidence:
+- current-s-code-priority-ac-v1/dev90-final-summary.json:
+  94631713082699f1a46812c503cc5afd375f08995a05ee9011703ca48660367b.
+- candidate-ac-retention-full14-v1/plan.json:
+  375c2825119d572c2bde961cca9d9e51c2aff88ebeb69fd08b885974c2411021.
+- candidate-ac-retention-full14-v1/root-decision.json:
+  299247e3919ff05964eb8677412b0ce38306af0c37e35f64bc06ee7a23c9e422.
+- Historical S candidate-s-retention-full14-v1/final-summary.json:
+  3f88274a1de75ba0cfd43a98ff254f4ec2f3fc957559053fdde5fecd7b1f408b.
+
+The [official ledger](2026-11-06-all-official-scores.md) preserves the historical
+windows. The [efficiency note](2026-11-07-iteration-efficiency-notes.md) records
+future batch/reuse options only; it did not change this trial.

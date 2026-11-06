@@ -1,6 +1,7 @@
 # Gemma4公式スコア全実行台帳（2026-11-06）
 
-snapshot: 2026-11-06T16:00:02.806769+00:00。WSP **118 runs**（completed113、partial4、running1＝旧保存記録のみ、現在の稼働を意味しない）。
+snapshot: 2026-11-06T18:23:26.667465+00:00。WSP **120 runs**（completed115、partial4、running1＝旧保存記録のみ、現在の稼働を意味しない）。
+進行中のAC full14は120件に含めず別記する。未知のscoreを旧未完了記録と混同しない。
 新規採点・モデル実行なし。指定したNVMe resultsとlegacy resultsの直下run.json/report.jsonだけを採録した。
 5つのDeepSWE runはWSP台帳から分離し、完了・取消結果を代表表へ併記する。元R1/R2はincompleteで、この台帳から完成した点を捏造しない。
 公式reportから値を転記し、欠測は「—」。表は小数6桁表示、sourceの未丸め値はcatalog JSONに残す。
@@ -44,6 +45,8 @@ partialのoverallは公開表で空欄にし、reportの元値はcatalogのrepor
 | R＝P＋math MLP全層c1 | 73.6270 | fresh P | 73.2698 | +0.3571 | 一時昇格、後続full14退行で撤回 |
 | P・Sの同時対照 | 72.5754 | — | — | — | 同じPのfresh再測定 |
 | S＝P＋科学native連成 | 74.2421 | fresh P | 72.5754 | +1.6667 | LCB2 gain／MBPP1 loss、Sci不変、full14得失を受けworking採用 |
+| S・ACの同時対照 | 73.2698 | — | — | — | 同じSのfresh再測定、重み変更ではない |
+| AC＝S＋code優先matrix小変化 | 73.8254 | fresh S | 73.2698 | +0.5556 | MBPP1 gain／LCB1 loss／Sci部分得失、full14進行中・未採用 |
 
 M−Oは−3.2778pp。Pのworking採用はユーザーの「改善後から積み上げる」方針による。
 最終code>90達成、未知集合への汎化、統計的確定とは別である。
@@ -4936,3 +4939,35 @@ fresh all-scores-20261106-v4-final/へrun/reportのみを再採録。旧v4の117
 | preservation-validation.json | b6e2dfe93a86855acdc78837497f583514c2b3c9e816dc41426258384cce0ada |
 
 S full14 final-summary SHA3f88274a1de75ba0cfd43a98ff254f4ec2f3fc957559053fdde5fecd7b1f408b、独立数値確認 SHA4032427e9139bb1e92f4a215ca4dcb4a61c80f13cedc759684e63ffbb3bd581d。詳細は[S実験記録](2026-11-06-current-p-native-science-step-s.md)。
+
+
+## v5追加2実行：ACとfresh S
+
+all-scores-20261106-v5/へ既存numeric exporterを再利用した。旧v4-finalの118行は全field完全一致、新しいcompleted2行だけを追加。全120件（completed115／partial4／歴史的recorded-running1）、読取エラー・metadata不一致0。明示した2つの20261107 run IDだけを追加対象とし、run.json/report.json以外の本文は読んでいない。
+
+| Run ID | 状態 | 項目 / 採点 / 未採点 | Code % |
+|---|---|---:|---:|
+| gemma4-code90-current-s-code-priority-ac-c32-dev30-code-20261107 | completed | 90 / 90 / 0 | 73.825397 |
+| gemma4-code90-current-s-c32-dev30-code-pairac-20261107 | completed | 90 / 90 / 0 | 73.269841 |
+
+fresh S73.269841→AC73.825397、差+0.555556 pp、paired CI[-3.194444,+4.583333]。旧S74.2421は別窓であり対照に代用しない。両90採点、119formal stop、error/trunc/empty0。MBPP641 gain、LCB arc195_b loss、Sci14 +0.5、Sci72 −1/9。ACはfull14 retentionへ進んだが未採用、作業親S1049を保持。
+
+| Source | Fresh S score | AC score | denominator |
+|---|---:|---:|---:|
+| HumanEval+ | 1.000000 | 1.000000 | 30 |
+| MBPP+ | 0.766667 | 0.800000 | 30 |
+| LiveCodeBench | 0.800000 | 0.750000 | 20 |
+| SciCode | 0.364127 | 0.403016 | 10 |
+
+このsnapshotで進行中なのは gemma4-code90-candidate-ac-c32-dev10-full14-20261107（778件）。120行の歴史的未完了1件とは別に active-run-separate.json へ保存し、scoreはunknownとした。開始18:21:37Z、既存S full14の歴史対照だけを利用する。全14結果・採用判断は完成後に追記し、未知値を遡って捏造しない。
+
+| v5 Artifact | SHA256 |
+|---|---|
+| catalog.json | 3db7ed6285dc6b48780eaa594cd6de286967a5e4895cc3ba0f6fb64bc762a6d9 |
+| coverage.json | 8108b514e794fee8b5cc01f980ba623aa861114aa3472d11e67e822b0e574dd6 |
+| runs.csv | 073cbaeb905342ce421f6528b04fbc8b0514b25d03b54c886434e3035dc1b225 |
+| source-scores.csv | 659d2378fde9c93c930e8af9608406c00afb07777d38abb4086aba0dfba4ceef |
+| preservation-validation.json | 4b5c10f0ccaaabf0c57d685b45e1c59d8447d5c6843cb8611427dbe63642198c |
+| active-run-separate.json | 9a9e040317bf244f54e5e38d6f4c8d1ea5a54748a98f3f6d0d64097223d5157c |
+
+AC official closure SHA94631713082699f1a46812c503cc5afd375f08995a05ee9011703ca48660367b。詳細は[AC実験記録](2026-11-07-coding-priority-normalized-matrix-ac.md)。
