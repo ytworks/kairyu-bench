@@ -1,5 +1,7 @@
 # Fresh AD science dependency sets
 
+The fresh official AD/AF/AG comparison is complete: AF scored 72.658730 and AG 73.408730 against the same-window AD74.242063. Root rejected both increments, kept AD unchanged, and selected no additional full14 run. The scientific calibration gains below did not produce a net coding gain.
+
 AD is the cumulative working parent after P → S → AC → AD. Its state is `7d65d2181d53b7c67a005e4bfaf3a17739dd9617d6abfa61b2ba2bdb523110fb`, tree `27629fd3cd4c7573ca535832ce4e97cb8bc10b28ddd3f6f12ddf1b194633b1e8`, and freeze `19809b2b9226f660d6c5d6d6600539035848cf4fc8af4d1fe6d2fda8bf05b16a`. Its accepted coding gain does not imply all-area improvement; the AD adoption record retains the historical full14 losses and long-context truncation liabilities.
 
 All artifact paths below are under `analysis/code90-resume-20261106/`. No benchmark problem, answer, generated solution, or hidden reasoning was used to construct these methods.
@@ -61,3 +63,41 @@ Evidence: current-ad-eight-finite-v1/independent-numeric-review.json SHA d7f20b9
 The finite owner restored the exact AE0 container at 21:00:27.098361 UTC. Completion SHA eee43ad027f38d776ca33841b7001cedd0e391bc5a39803f40145a87f31e6ecd and postchecks SHA 10a93736ac4a4f660ad35ab947f2237d9a814762a48672b278f3f82257af0c5b confirm unchanged source/input pins, adopted AD state, and all nine checkpoint file stats. The later portable-tool CPU CI started after this lifecycle closed; no finite timing comparison is inferred.
 
 Validation: the final portable source passed the standard whole CPU suite, 515 collected = 462 passed + 53 optional-dependency skips, with whole-tree Ruff, mypy74, data checks and 31 shell checks passing. Source hashes were unchanged. Receipt cpu-integration-science-dependency-plans-v1/ci-results.json SHA 3edadfd534a8a947dc5fab2a0e0e6d9b8ee6544ade369ad90dae6a4255a3ebe0. The existing builder test method was extended; no test method or real model/proposal execution was added.
+
+## Saved-weight official comparison: both increments rejected
+
+AF and AG were independently copied from the complete accepted AD checkpoint, verified once against their manifests, and matched to the exact finite selected-word targets. AF contains 3,299 native changes across360 tensors (raw L2 6.873206); AG contains192,015 changes across618 tensors, including482 native and191,533 sampled matrix values (raw L2 1.670320). The physical freeze trees are496886f1… andb5c80f1e…, respectively. AD1 remained the control while AF replaced idle AE0 and AG replaced idle AC3. These saves did not reset or alter AD.
+
+The one fresh three-arm dev30 run used unchanged official source5e3f2df, native ON, TP2/MTP4, chat concurrency32, logprob concurrency8 and agent concurrency1. The same90 items comprise HE30, MBPP30, LCB20 and SciCode10; their four source means have equal weight. All90 were scored in each arm, with unknown0 and no source truncation or empty outcomes.
+
+| Source | Fresh AD | AF: scientific native B | AG: coupled scientific H |
+|---|---:|---:|---:|
+| HumanEval+ | 29/30 | 29/30 | 28/30 |
+| MBPP+ | 24/30 | 23/30 | 24/30 |
+| LiveCodeBench | 16/20 | 15/20 | 16/20 |
+| SciCode mean | 40.301587% | 42.301587% | 40.301587% |
+| Equal-source code score | 74.242063 | 72.658730 | 73.408730 |
+| Difference from fresh AD, pp | — | −1.583333 | −0.833333 |
+| Paired95% CI, pp | — | [−5.750000,+2.166667] | [−2.500000,0.000000] |
+
+AF gained HumanEval152 and SciCode58 (0.8→1), but lost HumanEval95, LiveCodeBench abc390_g and MBPP641. This is two numeric gains and three losses; the official0.5-crossing count is one gain and three losses. AG's only score change was HumanEval95 (1→0). SciCode partial credit remains numeric. Historical AD73.825397 is not substituted for this fresh74.242063 control.
+
+The existing prompt-free RequestRecorder was enabled identically with separate capture directories in all arms. Each recorded119 completed HTTP attempts and119 logical calls, with retry/error0: HE30, MBPP30, LCB20, and SciCode39 calls over10 items. The recorded input/output totals exactly matched official reports: AD94,417/342,082; AF96,204/337,346; AG93,709/339,360. Calls are not agent steps; step counts remain unavailable. Process deltas add only the separate startup request, input21/output1. Their119 stop and one length event are process-level counts, not item-level finish attribution.
+
+Generation times were337.1/294.2/292.2s and total walls400.1/357.3/537.3s for AD/AF/AG. AG's additional wall time occurred after its formal responses completed; the safe metadata does not identify a particular slow scorer or failure cause. No raw answer/log inspection or causal speed conclusion was added.
+
+All three actual runner images, RootFS/Image.Config, normalized commands, noncredential environment hashes, installed82 source/resources and packages matched. Mount comparison explicitly normalized each arm's observer directory. Full raw HostConfig hash equality is not asserted. Closed parent state/checkpoint stats and serving identities matched the frozen inputs. No additional inference smoke, model retry or regrading was used.
+
+Root rejected AF and AG on this fresh comparison and retained AD state7d65d218… unchanged. Neither receives full14 or working adoption. The broader cumulative lineage remains P→S→AC→AD, and the code>90 objective remains unmet. Calibration likelihood/margin changes are neither execution accuracy nor evidence that native or matrix families caused the particular official losses.
+
+Evidence under current-ad-af-ag-dev90-v1:
+
+| Artifact | SHA256 |
+|---|---|
+| final-summary.json | 53bee6345ab4d88b120ca41a378d3b7446a3fdab962322e9019161c7695bd19b |
+| postchecks.json | 4bb86167ea493d1bee920c92125d30f5d4acd175810b0733536edcb7ce1f2f5a |
+| af-versus-ad-evidence.json | d979d020a273330e5d7e096d9154951b492a3b8222ff404fa499dfb65df992fa |
+| ag-versus-ad-evidence.json | bc33921d6a91ef1c2200fd2ced3ecc185ce5bef2f20292da1420f31da64c7dc3 |
+| working-decision.json | 3d780adc1f9ad6e49d9d29356c0631aa64d4216110359308d91bdc3e52cabb27 |
+
+The [complete score ledger](2026-11-06-all-official-scores.md) now contains128 records, preserving the previous125 row objects exactly.

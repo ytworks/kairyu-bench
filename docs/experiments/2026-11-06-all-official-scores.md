@@ -1,7 +1,7 @@
 # Gemma4公式スコア全実行台帳（2026-11-06）
 
-snapshot: 2026-11-06T20:31:14.710715+00:00。WSP **125 runs**（completed120、partial4、running1＝旧保存記録のみ、現在の稼働を意味しない）。
-今回のAD full14完了1件を追加した。旧124行の全fieldは完全一致で保持し、過去snapshotの進行中記述は当時の記録として残す。現在のworking modelはAD、積み上げはP→S→AC→AD。fresh dev90は+2.416667pp、歴史AC対full14 overallは−1.358562ppであり、全分野改善とは呼ばない。
+snapshot: 2026-11-06T21:32:18.526514+00:00。WSP **128 runs**（completed123、partial4、running1＝旧保存記録のみ、現在の稼働を意味しない）。
+今回のfresh AD対AF/AGの完了3件を追加した。旧125行の全fieldは完全一致で保持し、過去snapshotの進行中記述は当時の記録として残す。AF・AGはfresh ADを下回り不採用、追加full14なし。working modelはAD、積み上げP→S→AC→ADを維持する。AD採用時のfresh dev90は+2.416667pp、歴史AC対full14 overallは−1.358562ppであり、全分野改善とは呼ばない。
 新規採点・モデル実行なし。指定したNVMe resultsとlegacy resultsの直下run.json/report.jsonだけを採録した。
 5つのDeepSWE runはWSP台帳から分離し、完了・取消結果を代表表へ併記する。元R1/R2はincompleteで、この台帳から完成した点を捏造しない。
 公式reportから値を転記し、欠測は「—」。表は小数6桁表示、sourceの未丸め値はcatalog JSONに残す。
@@ -50,6 +50,9 @@ partialのoverallは公開表で空欄にし、reportの元値はcatalogのrepor
 | AC・AD/AEの同時対照 | 71.4087 | — | — | — | 同じACのfresh再測定、旧73.8254を代用しない |
 | AD＝AC＋native依存セット | 73.8254 | fresh AC | 71.4087 | +2.4167 | full14退行とRULER cap2件を明示してworking採用 |
 | AE＝AC＋repair matrix | 72.1587 | fresh AC | 71.4087 | +0.7500 | 未採用 |
+| AD・AF/AGの同時対照 | 74.2421 | — | — | — | 同じADのfresh再測定、旧73.8254を代用しない |
+| AF＝AD＋科学nativeセットB | 72.6587 | fresh AD | 74.2421 | −1.5833 | Sci +2pp、LCB/MBPP各1 loss、不採用 |
+| AG＝AD＋科学連成セットH | 73.4087 | fresh AD | 74.2421 | −0.8333 | HE1 loss、他3source同点、不採用 |
 
 M−Oは−3.2778pp。Pのworking採用はユーザーの「改善後から積み上げる」方針による。
 最終code>90達成、未知集合への汎化、統計的確定とは別である。
@@ -5074,3 +5077,31 @@ state7d65d2181d53b7c67a005e4bfaf3a17739dd9617d6abfa61b2ba2bdb523110fb、decision
 | preservation.json | 4105512ea7167edffd3a48230541f41f370a2124af015c1772dccd283fd61328 |
 
 最終summary40e5dc1f93a98a2172c0655ab90e340455ee197ea4365fd89633ccd4fe4d8798。詳細は[8候補・AD full14実験記録](2026-11-07-eight-current-parent-dependency-sets.md)。
+
+## v9追補：fresh AD対AF/AG、両増分を不採用（128 runs）
+
+旧v8の125行は全field完全一致。追加3runはすべて90/90採点・未採点0。保存run/reportのみを既存exporterで追記し、新規採点・モデル呼出しはない。
+
+| Run ID | Code90 % | 対fresh AD差 pp | 95% CI pp | 状態 |
+|---|---:|---:|---|---|
+| gemma4-code90-current-ad-c32-dev30-code-pairafag-20261107 | 74.242063 | — | — | completed |
+| gemma4-code90-finalist-af-c32-dev30-code-20261107 | 72.658730 | −1.583333 | [−5.750000, +2.166667] | completed |
+| gemma4-code90-finalist-ag-c32-dev30-code-20261107 | 73.408730 | −0.833333 | [−2.500000, 0.000000] | completed |
+
+4source等重み。AD/AF/AGのHEは29/29/28（各30）、MBPP24/23/24（各30）、LCB16/15/16（各20）、SciCode平均40.301587/42.301587/40.301587%。AFはHE152 gain・HE95 loss、LCBabc390_g loss、MBPP641 loss、Sci58 0.8→1。AGはHE95の1→0だけが異なる。Sciの部分点を二値化していない。過去AD73.825397は今回の対照に代用しない。
+
+既存のprompt-free RequestRecorderを全arm同一policyで初めて有効化し、各119 HTTP attempts＝119 logical calls、retry/error0を確認。内訳HE30、MBPP30、LCB20、SciCode39 calls（10項目）。agent stepsは未測定で、API callsを手順数と呼ばない。正式input/output tokensはAD94,417/342,082、AF96,204/337,346、AG93,709/339,360。全source truncated/empty0。processとの差は各startup1 request・input21/output1で、item単位のfinish reasonは推定しない。wall400.1/357.3/537.3秒、因果的な速度比較ではない。
+
+全3runnerの実image・RootFS・Image.Config・正規化command・非credential環境・82 installed source/resource・packagesが一致。独立observer directoryを正規化したmountsを確認し、raw HostConfig hashの完全一致は主張しない。親ADのstate/statと各serving identityは閉鎖時も一致した。
+
+Rootは両増分を退け、AD state7d65d218…を変更せず保持する。AF/AGのfull14・採用は行わない。90目標は未達。次の観測も完全保存ADから行い、棄却候補や旧親の導関数を新親のものとして流用しない。
+
+| v9 Artifact | SHA256 |
+|---|---|
+| catalog.json | 6df331ca7af15f5c91c115e28b71aa2d4225d3f65908f6cfc4a52c6970e122cf |
+| coverage.json | b146f5f44d377abcdb1988e78bf63b944f22cb14e3cc25b2c648c8ceef12d0e1 |
+| runs.csv | 14151e87ecc1b52da79963e38488e75ed074d7e841f3721383752dab4f9e3219 |
+| source-scores.csv | 1d587a38ff37f0bab67e97e7a4f9291df998103c9debb271bfd8e43b2ea4debb |
+| preservation.json | 6b1869818425424ee4d55201655e7b6253b814b6c353123f8ba89cd2ba6f5f46 |
+
+最終summary53bee6345ab4d88b120ca41a378d3b7446a3fdab962322e9019161c7695bd19b、postchecks4bb86167ea493d1bee920c92125d30f5d4acd175810b0733536edcb7ce1f2f5a。Root-delegated decision 3d780adc1f9ad6e49d9d29356c0631aa64d4216110359308d91bdc3e52cabb27。
