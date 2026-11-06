@@ -55,7 +55,7 @@ RAMのprovenanceが記録した絶対ファイルとSHAに一致する必要が�
 
 ## 検証
 
-4つのCPU契約テストでは、410個の小さい実safetensors行列と、非ゼロ1・ゼロ409の
+6つのCPU契約テストでは、410個の小さい実safetensors行列と、非ゼロ1・ゼロ409の
 manifest/RAM fixtureを使用する。保存tensorと追加metadataの実不一致、ゼロ行の欠落、
 変更数・証跡種別・kernel・SHA・未完了・source stat不一致を拒否し、
 生成freezeが既存redeployのidentity検査に通ることを確認する。
@@ -76,3 +76,26 @@ analysis/code90-resume-20261106/positive-final-v1/balanced-materialization/
 freeze SHA256はc565a707765b6f8f89ed71300e5067c858f6e7a92e9a3f4108163e2029851835。
 この確認は保存バイトの一致であり、開始されたdev90の得点や能力改善を意味しない。
 
+
+## nativeとmoduleの共同保存物
+
+schema4 `joint_native_module_recipe_v1` のmanifestには、同じdonor specに加え、
+元baseからのnative scalar/vector編集とその共同reportのSHAが含まれる。
+上のCLIへ `--native-spec NATIVE.json --native-spec-sha256 NATIVE_SHA` を追加する。
+module-onlyのschema3経路と数値実装5ファイルは変更しない。共同creator/editor/checkpointの
+別fingerprintも現在のsourceと照合する。
+
+- 全410行列は従来のstaged-int16証拠で確認する。nativeは**選択座標をGPUから
+  読み戻した**別証拠であり、両方を同じ証明方式と呼ばない。
+- native spec、RAMの選択indices/before/afterバイト、元checkpointの選択値、
+  復帰後の元バイトが一致することを要求する。元native全tensorにその編集だけを
+  当てた期待値を作り、creatorのfull tensor SHAと実保存tensorを照合する。
+  これにより、選択外の座標や負ゼロのバイト変更も検出する。
+- native/moduleのtensor名と物理spanの重複を拒否する。合計変更数は和、実ΔL2は
+  二乗和の平方根。連続donor係数の予測コストと実BF16の合計ΔL2を混同しない。
+- freezeは従来のredeploy契約を保持し、native spec SHA、両componentの実変更数/ΔL2、
+  native全tensor検証の件数を追加する。GEMM・モデル呼出し・重み書込みは0。
+
+追加2つのCPUテストは、410行列＋2native vectorの合成保存物を用いる。
+正しい合計コストとfreeze、復帰証拠欠落・spec不一致・重複/未知entry・合計値不一致、
+選択外の負ゼロ破損を検証する。実共同保存物の完了は別のowner実行証跡で確認する。

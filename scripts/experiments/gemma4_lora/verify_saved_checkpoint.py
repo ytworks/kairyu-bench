@@ -5,6 +5,7 @@ from __future__ import annotations
 import argparse
 from datetime import datetime, timezone
 import hashlib
+import importlib.util
 import json
 import math
 import os
@@ -24,6 +25,7 @@ MAPPING_KEYS = ("tensor", "shard", "offset", "size", "dtype", "shape", "lora_A",
 COUNTS = ("changed_count", "changed_byte_count")
 METRICS = ("source_l2", "delta_l2", "maximum_absolute_delta")
 IMPLEMENTATIONS = {"module_lora_recipe.py", "dense_lora_recipe.py", "bf16_lora_ops.py", "bf16_lora_kernel.cpp", "compiled_kernel"}
+JOINT_KIND = "joint_native_module_recipe_v1"
 
 
 def canonical(value):
@@ -126,6 +128,161 @@ def close(a, b):
             and math.isclose(a, b, rel_tol=1e-10, abs_tol=1e-12))
 
 
+def joint_inputs(args, documents, paths, states, planned):
+    """Pin the companion and its creator independently of the numerical recipe."""
+    m, spec, prov = (documents[k] for k in ("manifest", "spec", "provenance"))
+    native_path = getattr(args, "native_spec", None)
+    native_sha = getattr(args, "native_spec_sha256", None)
+    if native_path is None or native_sha is None:
+        raise ValueError("joint verification requires native spec and explicit SHA")
+    reference = planned.get("native_component", {})
+    additions = {"native_spec": (native_path, native_sha),
+                 "native_plan": (Path(reference["plan"]), reference["sha256"]),
+                 "joint_report": (Path(spec["joint_report_path"]), spec["joint_report_sha256"])}
+    for key, (path, digest) in additions.items():
+        if prov["input_sha256"].get(str(path.resolve())) != digest:
+            raise ValueError("joint replay input pin mismatch")
+        documents[key], states[str(path.resolve())] = captured(path, digest)
+        paths[key] = path, digest
+    native, native_plan, report = (documents[k] for k in additions)
+    if (m["native_spec"] != native or m["native_spec_sha256"] != native_sha
+            or Path(m["native_spec_path"]).resolve() != native_path.resolve()
+            or m.get("tensor_disjoint") is not True
+            or native.get("schema_version", 1) != 1 or native.get("kind") is not None or not native.get("companion_required")
+            or not spec.get("companion_required")):
+        raise ValueError("joint native manifest/spec binding mismatch")
+    for key in ("joint_report_path", "joint_report_sha256"):
+        if not spec.get(key) or spec[key] != native.get(key) or spec[key] != m.get(key):
+            raise ValueError("joint report binding mismatch")
+    if (Path(report["source_checkpoint"]).resolve() != Path(m["source"]).resolve()
+            or report.get("disjoint_weight_tensors") is not True):
+        raise ValueError("joint report source/disjointness mismatch")
+    expected = {"id": native["id"], "spec": str(native_path.resolve()), "sha256": native_sha}
+    candidates = native_plan.get("candidates", [])
+    if (native_plan.get("architecture") != "gemma4_native_bf16" or len(candidates) != 1
+            or any(candidates[0].get(k) != v for k, v in expected.items())
+            or native_plan.get("base_tree_sha256") != spec["base_tree_sha256"]
+            or native_plan.get("checkpoint_index_sha256") != documents["plan"].get("checkpoint_index_sha256")):
+        raise ValueError("joint native plan mismatch")
+    for key in ("cases", "frame_evidence", "checkpoint_attestation"):
+        if native_plan.get(key) != documents["plan"].get(key):
+            raise ValueError("joint native frame/source differs")
+    implementations = m["joint_implementation_files"]
+    if set(implementations) != {"joint_module_recipe.py", "editor.py", "checkpoint.py"}:
+        raise ValueError("joint implementation inventory mismatch")
+    code_paths = {"joint_module_recipe.py": args.implementation_dir / "joint_module_recipe.py"}
+    for name in ("editor", "checkpoint"):
+        found = importlib.util.find_spec("kairyu_bench.wsp.weights." + name)
+        if found is None or found.origin is None:
+            raise ValueError("joint implementation unavailable")
+        code_paths[name + ".py"] = Path(found.origin)
+    for name, path in code_paths.items():
+        if sha(path) != implementations[name]:
+            raise ValueError("joint implementation SHA mismatch")
+        paths["joint_code_" + name] = path, implementations[name]
+        states[str(path.resolve())] = stamp(path)
+
+
+def bf16_words(raw):
+    if len(raw) % 2:
+        raise ValueError("whole BF16 words required")
+    values = [struct.unpack("<f", struct.pack("<I", word << 16))[0]
+              for (word,) in struct.iter_unpack("<H", raw)]
+    if not all(math.isfinite(value) for value in values):
+        raise ValueError("finite native BF16 values required")
+    return values
+
+
+def native_rows(documents, source, saved, module_rows):
+    """Reconstruct full native tensors from selected RAM words, without GEMM."""
+    m, spec = documents["manifest"], documents["native_spec"]
+    joint = documents["ram"][documents["spec"]["id"]]
+    receipt = joint["native"]
+    restoration = documents["summary"]["base_restoration"].get("native", {})
+    proof = "selected_coordinate_device_to_host_readback"
+    if (joint.get("kind") != "disjoint_native_module_joint" or joint.get("tensor_disjoint") is not True
+            or joint.get("actual_ram_storage_bytes_verified") is not True
+            or joint.get("native_spec_sha256") != m["native_spec_sha256"]
+            or receipt.get("id") != spec["id"]
+            or receipt.get("actual_ram_storage_bytes_verified") is not True or receipt.get("proof_method") != proof
+            or restoration.get("actual_ram_storage_bytes_verified") is not True
+            or restoration.get("proof_method") != proof or restoration.get("id") is not None
+            or restoration.get("changed_elements") != 0 or restoration.get("changed_tensors") != 0
+            or restoration.get("delta_l2") != 0):
+        raise ValueError("joint native actual byte/restoration proof required")
+    edits, rows, restored = (records(container, label) for container, label in
+                             ((spec["edits"], "native spec"), (receipt["edits"], "native RAM"),
+                              (restoration["edits"], "native restore")))
+    creator = records([r for r in m["edits"] if r.get("entry_kind") == "native_sparse_bytes"], "native creator")
+    if not edits or set(edits) != set(rows) or set(rows) != set(restored) or set(rows) != set(creator) or set(rows) & set(module_rows):
+        raise ValueError("native/module exact disjoint coverage mismatch")
+    if sum(len(r["indices"]) for r in rows.values()) > 1_000_000:
+        raise ValueError("native coordinate budget exceeded")
+    verified = {}
+    for name, row in rows.items():
+        edit, other, restore, tensor = edits[name], creator[name], restored[name], source.tensors[name]
+        indices = row["indices"]
+        if (tensor.dtype != "BF16" or len(tensor.shape) > 1 or tensor.nbytes > MAX_JSON
+                or not name.startswith("model.language_model.")
+                or set(edit) != {"tensor", "indices", "set_values"}
+                or not indices or any(type(i) is not int or not 0 <= i < tensor.numel for i in indices)
+                or indices != sorted(set(indices)) or edit["indices"] != indices
+                or len(edit["set_values"]) != len(indices)):
+            raise ValueError("native exact scalar/vector indices required")
+        old, new = bytes.fromhex(row["before_hex"]), bytes.fromhex(row["after_hex"])
+        if len(old) != 2 * len(indices) or len(new) != len(old):
+            raise ValueError("native selected byte size mismatch")
+        for key, raw in (("source_selected_bytes_sha256", old), ("candidate_selected_bytes_sha256", new)):
+            if hashlib.sha256(raw).hexdigest() != row[key]:
+                raise ValueError("native selected byte SHA mismatch")
+        if (restore["indices"] != indices or restore["before_hex"] != row["before_hex"]
+                or restore["after_hex"] != row["before_hex"] or restore["changed_count"] != 0
+                or restore["delta_l2"] != 0
+                or restore["source_selected_bytes_sha256"] != row["source_selected_bytes_sha256"]
+                or restore["candidate_selected_bytes_sha256"] != row["source_selected_bytes_sha256"]):
+            raise ValueError("native restoration differs from original selected bytes")
+        expected_words = bytearray()
+        for value in edit["set_values"]:
+            if type(value) not in (float, int) or not math.isfinite(value):
+                raise ValueError("finite native set_values required")
+            bits = struct.unpack("<I", struct.pack("<f", value))[0]
+            if bits & 65535 or struct.unpack("<f", struct.pack("<I", bits))[0] != value:
+                raise ValueError("native set_values must already be exact BF16")
+            expected_words.extend(struct.pack("<H", bits >> 16))
+        if bytes(expected_words) != new:
+            raise ValueError("native spec differs from RAM bytes")
+        original = source.read_raw(name, 0, tensor.numel)
+        expected_full = bytearray(original)
+        if b"".join(original[2*i:2*i+2] for i in indices) != old:
+            raise ValueError("native original selected bytes mismatch")
+        for j, i in enumerate(indices):
+            expected_full[2*i:2*i+2] = new[2*j:2*j+2]
+        before_values, after_values = bf16_words(original), bf16_words(expected_full)
+        changed = [i for i, (a, b) in enumerate(zip(before_values, after_values, strict=True)) if a != b]
+        metrics = {"changed_count": len(changed),
+                   "changed_byte_count": sum(original[i:i+2] != expected_full[i:i+2] for i in range(0, len(original), 2)),
+                   "source_l2": math.hypot(*before_values),
+                   "delta_l2": math.hypot(*(b-a for a, b in zip(before_values, after_values, strict=True))),
+                   "maximum_absolute_delta": max(abs(b-a) for a, b in zip(before_values, after_values, strict=True))}
+        full_row = {"tensor": name, "shard": tensor.relative_shard, "offset": tensor.offset,
+                    "size": tensor.nbytes, "dtype": tensor.dtype, "shape": list(tensor.shape),
+                    "source_tensor_sha256": hashlib.sha256(original).hexdigest(),
+                    "candidate_tensor_sha256": hashlib.sha256(expected_full).hexdigest(),
+                    "before_hex": original.hex(), "after_hex": expected_full.hex(),
+                    "selected_indices": indices, "changed_indices": changed,
+                    "entry_kind": "native_sparse_bytes", **metrics}
+        if (any(other.get(k) != v for k, v in full_row.items() if k not in METRICS)
+                or any(not close(other.get(k), full_row[k]) for k in METRICS)
+                or row["changed_count"] != len(changed) or not close(row["delta_l2"], metrics["delta_l2"])):
+            raise ValueError("native creator/spec/RAM full tensor disagreement")
+        verified[name] = full_row
+    if (receipt["changed_elements"] != sum(r["changed_count"] for r in verified.values())
+            or receipt["changed_tensors"] != sum(r["changed_count"] > 0 for r in verified.values())
+            or not close(receipt["delta_l2"], math.hypot(*(r["delta_l2"] for r in verified.values())))):
+        raise ValueError("native aggregate actual BF16 metrics mismatch")
+    return verified
+
+
 def prepare(args):
     paths = {
         "manifest": (args.manifest, args.manifest_sha256), "spec": (args.spec, args.spec_sha256),
@@ -148,8 +305,9 @@ def prepare(args):
         raise ValueError("source/candidate overlap")
     if Path(m["candidate"]).resolve() != candidate or Path(m["spec_path"]).resolve() != args.spec.resolve():
         raise ValueError("manifest candidate/spec path mismatch")
-    if (m.get("kind") != "module_lora_recipe_v1" or m.get("schema_version") != 3
-            or spec.get("kind") != m["kind"] or spec.get("schema_version") != 3
+    joint = m.get("kind") == JOINT_KIND and m.get("schema_version") == 4
+    if ((not joint and (m.get("kind") != "module_lora_recipe_v1" or m.get("schema_version") != 3))
+            or spec.get("kind") != "module_lora_recipe_v1" or spec.get("schema_version") != 3
             or spec.get("scope") != "native_text410" or spec.get("native_edits")
             or m["spec_sha256"] != args.spec_sha256 or m["spec"] != spec):
         raise ValueError("exact module recipe manifest/spec required")
@@ -168,6 +326,11 @@ def prepare(args):
             or prov["plan_sha256"] != args.plan_sha256 or prov.get("device_proof") != "staged-int16"
             or plan.get("architecture") != "gemma4_module_lora_bf16"):
         raise ValueError("selected candidate/plan/provenance mismatch")
+    if joint:
+        joint_inputs(args, documents, paths, states, planned[0])
+    elif (getattr(args, "native_spec", None) is not None or getattr(args, "native_spec_sha256", None) is not None
+          or planned[0].get("native_component") or spec.get("companion_required")):
+        raise ValueError("native companion requires a joint manifest")
     for path, expected in ((args.plan, args.plan_sha256), (args.spec, args.spec_sha256),
                            (args.source_attestation, args.source_attestation_sha256)):
         if prov["input_sha256"].get(str(path.resolve())) != expected:
@@ -175,7 +338,8 @@ def prepare(args):
     for row in (plan["checkpoint_attestation"], prov["prior_source_attestation"]):
         if Path(row["path"]).resolve() != args.source_attestation.resolve() or row["sha256"] != args.source_attestation_sha256:
             raise ValueError("source attestation pin mismatch")
-    receipt = ram[spec["id"]]
+    total_receipt = ram[spec["id"]]
+    receipt = total_receipt["module"] if joint else total_receipt
     if (receipt.get("id") != spec["id"] or receipt.get("device_proof") != "staged-int16"
             or receipt.get("actual_ram_storage_bytes_verified") is not True
             or receipt.get("actual_ram_readback_verified") is not False or receipt.get("actual_bf16_metrics") is not True):
@@ -228,7 +392,12 @@ def prepare(args):
     names = {n for n in source.tensors if PROJECTION.fullmatch(n)}
     if len(names) != 410 or {int(PROJECTION.fullmatch(n).group(1)) for n in names} != set(range(60)):
         raise ValueError("exact text410 across 60 layers required")
-    rows, active = records(receipt["edits"], "RAM"), records(m["edits"], "creator")
+    allowed_kinds = {"lora_matrix", "native_sparse_bytes"} if joint else {"lora_matrix"}
+    if any(row.get("entry_kind") not in allowed_kinds for row in m["edits"]):
+        raise ValueError("unknown creator entry kind")
+    records(m["edits"], "creator")
+    rows = records(receipt["edits"], "RAM")
+    active = records([r for r in m["edits"] if r["entry_kind"] == "lora_matrix"], "creator")
     if set(rows) != names or set(coefs) != names or set(active) != {n for n in names if coefs[n] != 0}:
         raise ValueError("active/zero-omitted projection coverage mismatch")
     mapping = []
@@ -255,14 +424,36 @@ def prepare(args):
             raise ValueError("zero coefficient must preserve source tensor")
     if canonical(mapping) != recipe["mapping_sha256"]:
         raise ValueError("full mapping hash mismatch")
-    for container in (m, receipt):
+    for container in (receipt,):
         if (container.get("actual_bf16_metrics") is not True
                 or container["changed_elements"] != sum(r["changed_count"] for r in rows.values())
                 or container["changed_tensors"] != sum(r["changed_count"] > 0 for r in rows.values())
                 or container["changed_byte_elements"] != sum(r["changed_byte_count"] for r in rows.values())
                 or not close(container["delta_l2"], math.hypot(*(r["delta_l2"] for r in rows.values())))):
             raise ValueError("aggregate actual BF16 metrics mismatch")
-    if selected[0]["changed_elements"] != receipt["changed_elements"] or not close(selected[0]["delta_l2"], receipt["delta_l2"]):
+    if joint:
+        rows.update(native_rows(documents, source, saved, rows))
+        # Physical tensor spans must also be disjoint, not merely their names.
+        spans = {}
+        for row in rows.values():
+            spans.setdefault(row["shard"], []).append((row["offset"], row["offset"] + row["size"]))
+        for ranges in spans.values():
+            stop = 0
+            for lo, hi in sorted(ranges):
+                if lo < stop:
+                    raise ValueError("joint native/module tensor byte spans overlap")
+                stop = hi
+    count = sum(r["changed_count"] for r in rows.values())
+    tensors = sum(r["changed_count"] > 0 for r in rows.values())
+    delta = math.hypot(*(r["delta_l2"] for r in rows.values()))
+    if (m.get("actual_bf16_metrics") is not True or m["changed_elements"] != count
+            or m["changed_tensors"] != tensors
+            or m["changed_byte_elements"] != sum(r["changed_byte_count"] for r in rows.values())
+            or not close(m["delta_l2"], delta)
+            or total_receipt["changed_elements"] != count or total_receipt["changed_tensors"] != tensors
+            or not close(total_receipt["delta_l2"], delta)):
+        raise ValueError("combined actual BF16 metrics mismatch")
+    if selected[0]["changed_elements"] != total_receipt["changed_elements"] or not close(selected[0]["delta_l2"], total_receipt["delta_l2"]):
         raise ValueError("selected finite metrics mismatch")
     protected = [source_path, candidate, args.replay.resolve(), *map(Path, states)]
     out = args.output.resolve()
@@ -291,7 +482,7 @@ def verify(args):
     started = time.monotonic()
     docs, paths, states, source, saved, before, source_before, expected, source_files, rows = prepare(args)
     if not args.apply:
-        return {"status": "preview", "candidate": str(saved.path), "matrices": 410,
+        return {"status": "preview", "candidate": str(saved.path), "matrices": 410, "native_tensors": len(rows) - 410,
                 "candidate_files": len(expected), "candidate_payload_hashed": False, "output_written": False}
     actual = {}
     for name, row in rows.items():
@@ -352,6 +543,18 @@ def verify(args):
                        "Stat continuity is not a fresh source payload hash and cannot detect every same-tick or privileged change.",
                        "Weight-byte equivalence is not a coding or generalization result. No deployment is performed."],
     }
+    if docs["manifest"]["kind"] == JOINT_KIND:
+        receipt = docs["ram"][docs["spec"]["id"]]
+        result.update(native_spec_path=str(args.native_spec.resolve()), native_spec_sha256=args.native_spec_sha256,
+                      joint_implementation=docs["manifest"]["joint_implementation_files"],
+                      component_actual_metrics={key: {field: receipt[key][field] for field in
+                                                ("changed_elements", "changed_tensors", "delta_l2")}
+                                                for key in ("module", "native")})
+        result["verification"].update(all_native_selected_ram_bytes_match=True,
+                                      all_native_full_tensors_match=True,
+                                      native_tensors=len(rows)-410, native_module_disjoint=True)
+        result["proof_method"] = ("Module CPU target SHA plus recorded all-element device int16 equality; "
+                                  "native selected-coordinate device-to-host receipt plus full native tensor reconstruction.")
     publish(args.output, result)
     return result
 
@@ -365,6 +568,8 @@ def main(argv=None):
         parser.add_argument("--" + field + "-sha256", required=True)
     for field in ("summary", "provenance", "ram"):
         parser.add_argument("--" + field + "-sha256", required=True)
+    parser.add_argument("--native-spec", type=Path, help="required only for a joint schema4 manifest")
+    parser.add_argument("--native-spec-sha256")
     parser.add_argument("--implementation-dir", type=Path, default=Path(__file__).resolve().parent)
     parser.add_argument("--output", type=Path, required=True)
     parser.add_argument("--apply", action="store_true", help="hash saved bytes and publish a fresh freeze; no weight writes")

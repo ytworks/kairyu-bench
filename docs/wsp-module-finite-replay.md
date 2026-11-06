@@ -233,3 +233,34 @@ disjoint). They are explicitly marked disjoint_native_module_joint; a
 module-only persistent-checkpoint verifier must not treat them as its own
 schema. The existing module-only path, paired default, and numerical kernel are
 unchanged. Provenance records the explicit answer_batching mode.
+
+
+### Persisting the fixed native/module pair
+
+The narrow creator reuses the frozen module recipe and native editor; it does
+not modify serving or produce model answers:
+
+    python scripts/experiments/gemma4_lora/joint_module_recipe.py create SOURCE CANDIDATE \
+      --spec DONOR_SPEC --native-spec NATIVE_SPEC --manifest MANIFEST
+
+This previews by default. Add --apply and an explicit --min-free-gib reserve to
+create a new independent checkpoint. Both unchanged component specs must require
+each other and pin the same source-bound joint report. The native set_values
+must already be exact finite BF16 words, on scalar/vector tensors disjoint from
+all 410 projections. There is no additional rounding of those native values.
+
+Schema 4, kind joint_native_module_recipe_v1, keeps the donor spec and numerical
+recipe intact and adds native_spec/native_spec_sha256 plus separate creator
+implementation fingerprints. Its edit list contains lora_matrix entries and
+native_sparse_bytes full-tensor spans, including before/after words and hashes.
+All other file bytes are compared with the original, every output file has an
+independent inode, and full source/candidate file hashes are recorded. Publication
+is exclusive; failures before publishing clean up the newly created candidate,
+while an exception after its own manifest was published preserves that completed
+candidate.
+
+Run in the same pinned CPU image, BLAS/thread settings and compiled kernel as
+the RAM measurement. Before deployment, the saved-checkpoint verifier must
+compare actual saved 410 matrix hashes and all native bytes against the final
+joint RAM receipt, plus the complete file inventory. Neither a matching
+coefficient map nor a creator manifest alone proves RAM-to-disk equivalence.

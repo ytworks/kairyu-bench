@@ -4,6 +4,7 @@ from __future__ import annotations
 import copy
 import importlib.util
 import json
+import math
 from pathlib import Path
 import struct
 import tempfile
@@ -123,6 +124,145 @@ class SavedModuleTests(unittest.TestCase):
             setattr(self.args, field + "_sha256", tool.sha(getattr(self.args, field)))
         for key, name in (("summary", "summary.json"), ("provenance", "provenance.json"), ("ram", "ram-weight-receipts.json")):
             setattr(self.args, key + "_sha256", tool.sha(self.replay/name))
+
+    def make_joint(self):
+        names = ["model.language_model.layers.0.pre_feedforward_layernorm.weight",
+                 "model.language_model.layers.1.post_attention_layernorm.weight"]
+        header = {n: {"dtype": "BF16", "shape": [3], "data_offsets": [6*i, 6*i+6]} for i, n in enumerate(names)}
+        encoded = json.dumps(header).encode()
+        prefix = struct.pack("<Q", len(encoded)) + encoded
+        original = struct.pack("<HHH", 0x3f80, 0x8000, 0x4040) * 2  # 1, -0, 3
+        edited = struct.pack("<HHH", 0x4000, 0x8000, 0x4040) * 2
+        (self.source / "native.safetensors").write_bytes(prefix + original)
+        (self.candidate / "native.safetensors").write_bytes(prefix + edited)
+        index = {"weight_map": {**dict.fromkeys(self.names, "weights.safetensors"),
+                                 **dict.fromkeys(names, "native.safetensors")}}
+        for directory in (self.source, self.candidate):
+            self.write(directory / "model.safetensors.index.json", index)
+        source, saved = Checkpoint(self.source), Checkpoint(self.candidate)
+        self.write(self.attestation, {"checkpoint": source.identity(hash_files=True)})
+        self.native_path, self.native_plan, self.joint_report = (self.root / n for n in
+                                                               ("native.json", "native-plan.json", "joint.json"))
+        self.write(self.joint_report, {"source_checkpoint": str(self.source), "disjoint_weight_tensors": True})
+        binding = {"companion_required": True, "joint_report_path": str(self.joint_report),
+                   "joint_report_sha256": tool.sha(self.joint_report)}
+        native = {"id": "native", "edits": [
+            {"tensor": n, "indices": [0], "set_values": [2.]} for n in names], **binding}
+        self.write(self.native_path, native)
+        self.spec.update(binding, base_tree_sha256=tool.canonical(self.tree(self.source)))
+        self.write(self.spec_path, self.spec)
+        creator_rows, native_rows = [], []
+        for n in names:
+            t = saved.tensors[n]
+            old, new = original[:6], edited[:6]
+            creator_rows.append({"tensor": n, "shard": t.relative_shard, "offset": t.offset, "size": t.nbytes,
+                                 "dtype": "BF16", "shape": [3], "entry_kind": "native_sparse_bytes",
+                                 "before_hex": old.hex(), "after_hex": new.hex(), "selected_indices": [0], "changed_indices": [0],
+                                 "source_tensor_sha256": tool.hashlib.sha256(old).hexdigest(),
+                                 "candidate_tensor_sha256": tool.hashlib.sha256(new).hexdigest(),
+                                 "changed_count": 1, "changed_byte_count": 1, "source_l2": math.sqrt(10.),
+                                 "delta_l2": 1., "maximum_absolute_delta": 1.})
+            native_rows.append({"tensor": n, "indices": [0], "before_hex": old[:2].hex(), "after_hex": new[:2].hex(),
+                                "source_selected_bytes_sha256": tool.hashlib.sha256(old[:2]).hexdigest(),
+                                "candidate_selected_bytes_sha256": tool.hashlib.sha256(new[:2]).hexdigest(),
+                                "changed_count": 1, "delta_l2": 1.})
+        native_receipt = {"id": "native", "edits": native_rows, "changed_elements": 2, "changed_tensors": 2,
+                          "delta_l2": math.sqrt(2.), "actual_ram_storage_bytes_verified": True,
+                          "proof_method": "selected_coordinate_device_to_host_readback"}
+        restoration = copy.deepcopy(native_receipt)
+        restoration.update(id=None, changed_elements=0, changed_tensors=0, delta_l2=0.)
+        for row in restoration["edits"]:
+            row.update(after_hex=row["before_hex"], candidate_selected_bytes_sha256=row["source_selected_bytes_sha256"],
+                       changed_count=0, delta_l2=0.)
+        self.ram = {"fixture": {"id": "fixture", "kind": "disjoint_native_module_joint", "module": self.ram["fixture"],
+                                "native": native_receipt, "native_spec_sha256": tool.sha(self.native_path),
+                                "changed_elements": 3, "changed_tensors": 3, "delta_l2": math.sqrt(3.),
+                                "tensor_disjoint": True, "actual_ram_storage_bytes_verified": True}}
+        joint_code = self.implementation / "joint_module_recipe.py"
+        joint_code.write_text("fixture joint creator\n")
+        joint_hashes = {"joint_module_recipe.py": tool.sha(joint_code)}
+        for name in ("editor", "checkpoint"):
+            joint_hashes[name + ".py"] = tool.sha(Path(importlib.util.find_spec("kairyu_bench.wsp.weights." + name).origin))
+        self.manifest_doc.update(schema_version=4, kind=tool.JOINT_KIND, spec=self.spec, spec_sha256=tool.sha(self.spec_path),
+                                 native_spec=native, native_spec_path=str(self.native_path), native_spec_sha256=tool.sha(self.native_path),
+                                 joint_report_path=str(self.joint_report), joint_report_sha256=tool.sha(self.joint_report),
+                                 joint_implementation_files=joint_hashes, tensor_disjoint=True,
+                                 source_files=self.tree(self.source), source_tree_sha256=tool.canonical(self.tree(self.source)),
+                                 candidate_files=self.tree(self.candidate), candidate_tree_sha256=tool.canonical(self.tree(self.candidate)),
+                                 changed_elements=3, changed_tensors=3, changed_byte_elements=3, delta_l2=math.sqrt(3.))
+        self.manifest_doc["edits"] += creator_rows
+        pin = {"path": str(self.attestation), "sha256": tool.sha(self.attestation)}
+        native_plan = {"architecture": "gemma4_native_bf16", "base_tree_sha256": self.spec["base_tree_sha256"],
+                       "checkpoint_attestation": pin, "candidates": [
+                           {"id": "native", "spec": str(self.native_path), "sha256": tool.sha(self.native_path)}]}
+        self.write(self.native_plan, native_plan)
+        plan = {"architecture": "gemma4_module_lora_bf16", "checkpoint_attestation": pin,
+                "candidates": [{"id": "fixture", "spec": str(self.spec_path), "sha256": tool.sha(self.spec_path),
+                                "native_component": {"plan": str(self.native_plan), "sha256": tool.sha(self.native_plan)}}]}
+        self.write(self.plan, plan)
+        self.prov.update(plan_sha256=tool.sha(self.plan), prior_source_attestation=pin,
+                         declared_control_tree_sha256=self.spec["base_tree_sha256"])
+        for path in (self.plan, self.spec_path, self.attestation, self.native_path, self.native_plan, self.joint_report):
+            self.prov["input_sha256"][str(path)] = tool.sha(path)
+        self.summary["base_restoration"]["native"] = restoration
+        self.summary["candidates"][0].update(spec_sha256=tool.sha(self.spec_path), changed_elements=3, delta_l2=math.sqrt(3.))
+        self.args.native_spec, self.args.native_spec_sha256 = self.native_path, tool.sha(self.native_path)
+        self.save_joint()
+
+    def save_joint(self):
+        self.write(self.manifest, self.manifest_doc)
+        self.write(self.replay / "provenance.json", self.prov)
+        self.write(self.replay / "ram-weight-receipts.json", self.ram)
+        self.write(self.replay / "summary.json", self.summary)
+        self.pins()
+
+    def test_joint_freeze_covers_native_full_tensor_and_component_costs(self):
+        self.make_joint()
+        self.args.apply = False
+        self.assertEqual(tool.verify(self.args)["native_tensors"], 2)
+        self.args.apply = True
+        result = tool.verify(self.args)
+        self.assertEqual(len(result["tensor_sha256"]), 412)
+        self.assertEqual(result["changed_elements"], 3)
+        self.assertEqual(result["delta_l2"], math.sqrt(3.))
+        self.assertEqual(result["component_actual_metrics"]["native"]["changed_elements"], 2)
+        self.assertTrue(result["verification"]["all_native_full_tensors_match"])
+        self.assertEqual(result["control_tree_sha256"], self.manifest_doc["candidate_tree_sha256"])
+        self.assertEqual(result["gemm_calls"], 0)
+
+    def test_joint_incomplete_proof_companion_mismatch_and_unselected_corruption_reject(self):
+        self.make_joint()
+        original = copy.deepcopy((self.manifest_doc, self.ram, self.summary))
+        for mutation in ("restore", "native_byte", "overlap", "aggregate", "unknown_entry"):
+            with self.subTest(mutation=mutation):
+                self.manifest_doc, self.ram, self.summary = copy.deepcopy(original)
+                if mutation == "restore":
+                    self.summary["base_restoration"]["native"]["edits"].pop()
+                elif mutation == "native_byte":
+                    self.ram["fixture"]["native"]["edits"][0]["after_hex"] = "4040"
+                elif mutation == "overlap":
+                    self.manifest_doc["edits"][-1]["tensor"] = self.names[0]
+                elif mutation == "aggregate":
+                    self.manifest_doc["delta_l2"] = 2.
+                else:
+                    self.manifest_doc["edits"][-1]["entry_kind"] = "unknown"
+                self.save_joint()
+                with self.assertRaises(ValueError):
+                    tool.verify(self.args)
+                self.assertFalse(self.output.exists())
+        self.manifest_doc, self.ram, self.summary = copy.deepcopy(original)
+        self.save_joint()
+        self.args.native_spec_sha256 = "0" * 64
+        with self.assertRaises(ValueError):
+            tool.verify(self.args)
+        self.args.native_spec_sha256 = tool.sha(self.native_path)
+        t = Checkpoint(self.candidate).tensors["model.language_model.layers.0.pre_feedforward_layernorm.weight"]
+        with (self.candidate / t.relative_shard).open("r+b") as stream:
+            stream.seek(t.offset + 2)  # untouched negative-zero coordinate
+            stream.write(struct.pack("<H", 0))
+        with self.assertRaisesRegex(ValueError, "persisted tensor"):
+            tool.verify(self.args)
+        self.assertFalse(self.output.exists())
 
     def test_preview_then_saved_freeze_covers_zero_omitted_and_redeploy_contract(self):
         self.args.apply = False
