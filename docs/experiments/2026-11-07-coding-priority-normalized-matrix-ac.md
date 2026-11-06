@@ -4,10 +4,11 @@ AC changes the direction and purpose targets after [AB was held](2026-11-07-matr
 it is not a scaled AB checkpoint. It reuses the four matched observations of
 adopted S and preserves every accepted native parameter and Q/K/V matrix.
 The fresh matched native-ON dev90 trial improved from S 73.26984127 to AC
-73.82539683 (+0.55555556 points). **AC is not adopted; its full14 retention run
-is in progress.** S remains the working incumbent. S's earlier 74.24206349
-score is a historical measurement, not this trial's fresh control; the goal
-of 90 remains unmet.
+73.82539683 (+0.55555556 points). The completed historical-S full14 comparison
+also improved overall by 0.80555556 points. **Root adopted AC as the next working
+incumbent**, accepting the documented knowledge, facts and vision losses.
+S's earlier 74.24206349 score is a historical measurement, not this trial's
+fresh control; the goal of 90 remains unmet.
 
 The source state is
 1049e67a536317876716b516f6abe90b8b0770d5a011e080340a5a8b12ae561a,
@@ -146,7 +147,7 @@ The run started after AC finite restoration; it overlapped checkpoint copying
 on separate CPU cores with shared storage, so no isolated latency claim is made.
 
 
-## Completed fresh dev90 and pending broad retention
+## Completed fresh dev90
 
 The same official four-source cohort, archived source, native-ON sampler and
 direct TP2/concurrency32 settings produced the following completed comparison:
@@ -172,10 +173,10 @@ included one startup probe (21 input/1 output token, length finish), separate
 from those formal calls. Counts are not tool steps, and wall times are not an
 isolated causal performance measurement.
 
-S remains the parent at state1049e67a…; its earlier74.2421 measurement must not
-replace the fresh73.2698 control. AC's score is not yet a net-purpose adoption
-decision. Root selected one full14 retention run against historical S's same
-778-item protocol, without repeating the official coding pair.
+At dev90 closure, S remained the parent at state1049e67a…; its earlier74.2421
+measurement did not replace the fresh73.2698 control. Root selected one full14
+retention run against historical S's same778-item protocol, without repeating
+the official coding pair. The subsequent adoption decision is recorded below.
 
 The full14 wrapper started2026-11-06T18:21:37Z (ownerPID2215962,
 benchmarkPID2216154), run
@@ -183,7 +184,8 @@ gemma4-code90-candidate-ac-c32-dev10-full14-20261107.
 It keeps tier10/dev, chat32/logprob8/agent1, official caps/sampler and source
 unchanged. Its control is historical S full14, not a fresh concurrent S run;
 actual runner image/config/layers, installed source/packages and timing
-overlap must be compared in the final report. The active run's score is unknown.
+overlap were checked in the final report. The run completed at
+2026-11-06T18:45:30.425646Z; no score was assigned while it was running.
 
 Additional evidence:
 - current-s-code-priority-ac-v1/dev90-final-summary.json:
@@ -198,3 +200,75 @@ Additional evidence:
 The [official ledger](2026-11-06-all-official-scores.md) preserves the historical
 windows. The [efficiency note](2026-11-07-iteration-efficiency-notes.md) records
 future batch/reuse options only; it did not change this trial.
+
+
+## Completed full14 and working adoption
+
+All778 items were scored:746 capability items and32 separate distribution
+probes, with no unscored items. The official equal-area overall changed from
+historical S78.129386 to AC78.934942, +0.805556 points,
+95% CI[-1.059524,+2.805556]. There were11 score gains and6 losses.
+The tier10 code score84.444444→87.777778 covers only26 items
+(HE10/MBPP10/LCB6), excludes SciCode, and is not the four-source dev90 result.
+
+| Area | Historical S % | AC % | Difference pp |
+|---|---:|---:|---:|
+| knowledge | 91.666667 | 90.000000 | -1.666667 |
+| expert | 87.500000 | 87.500000 | +0.000000 |
+| facts | 72.500000 | 70.000000 | -2.500000 |
+| math | 98.750000 | 98.750000 | +0.000000 |
+| code | 84.444444 | 87.777778 | +3.333333 |
+| instructions | 92.083333 | 95.416667 | +3.333333 |
+| tools | 75.000000 | 77.500000 | +2.500000 |
+| agents | 50.000000 | 50.000000 | +0.000000 |
+| long-context | 81.377943 | 87.627943 | +6.250000 |
+| reasoning | 74.130435 | 79.130435 | +5.000000 |
+| commonsense | 63.000000 | 64.000000 | +1.000000 |
+| multilingual | 77.525253 | 77.803030 | +0.277778 |
+| vision | 87.500000 | 81.250000 | -6.250000 |
+| safety | 58.333333 | 58.333333 | +0.000000 |
+
+The gains include MBPP792, one BFCL item, IFBench182, one net MuSR item and
+one RULER item. Knowledge, facts and vision each lost one item. Multilingual
+scores include a JAMC loss and a MMLU-ProX-JA gain; they are not uniformly
+improved. Safety remained21/36 on XSTest, not a claim of safety improvement.
+
+The run recorded554 chat client calls (472 stop,81 tool_calls,1 length),
+1,363,254 input and1,082,378 output tokens;3062 logprob client calls are
+separate. One JAMC length/empty result remains scored. Agent steps/API/token
+counts are unknown in the available record and were not inferred from process
+counter excess. Elapsed time was1429.834 seconds (reported wall1429.5 seconds);
+the CPU-only overlay CI overlapped on shared host resources, so no causal
+speed claim is made.
+
+The same cohort, archived source,82 installed source/resource hashes, package
+versions, Python, RootFS layers, Image.Config and normalized observed runtime
+settings matched historical S. Image IDs and complete HostConfig hashes differ
+and remain preserved. This supports a matching-protocol historical comparison,
+not a fresh concurrent control or statistical certainty.
+
+Root adopted AC after considering both the fresh dev90 gain and broader
+purpose tradeoffs. Knowledge−1.666667, facts−2.5 and vision−6.25 points are
+explicitly accepted; there is no new universal no-loss or significance gate.
+The complete saved AC checkpoint is the next source:
+tree d34fcba755eefa6e451521f81a589484bd6eb7368f831e6620a5577d4ff87e85,
+freeze e8a7fd4a04d14f54702265e3f734ac32801772443d154fa94b1a89d9d9825192,
+current state f0a5c61bdbcf6cdba3b71db6487c786d5af004bbc2b31a8c67ed0a9b72ccd324.
+The previous S state1049e67a… is archived intact. S derivatives are now
+historical; any new gradient proposal must reobserve AC rather than relabel
+the old S observations. This working adoption does not establish code>90,
+final known64 confirmation, current-model DeepSWE success or publication eligibility.
+
+Final evidence (private archive-relative paths):
+- candidate-ac-retention-full14-v1/final-summary.json:
+  dc02a16cac4fe8b2a6ebab89981227df7b54a3df35c048a7cde7d7a31638001c.
+- candidate-ac-retention-full14-v1/comparison-evidence.json:
+  7d466cefa5b7c034d1e4406274dc1ea3f7cea6dca137a3b093282f1a859ff7f0.
+- candidate-ac-retention-full14-v1/postchecks.json:
+  72fa5624e2763ea1bbab356efca302ff3dbb6956faedb4707433d4250479fa55.
+- candidate-ac-retention-full14-v1/historical-protocol-parity.json:
+  9ed705cd4d263ef5193e63330b5e93a5d977576831788a7ae180b60824d2263d.
+- current-s-code-priority-ac-v1/working-decision.json:
+  01f9d37092b6c51c54e26b1281b044052cae8aa856cd6018b7317773933cc9ac.
+- candidate-ac-retention-full14-v1/independent-numeric-review.json:
+  9908e7ff26f6fcbdcddc00ed895fcf2968375341cc2c224c5ac0e17a8076a346.
