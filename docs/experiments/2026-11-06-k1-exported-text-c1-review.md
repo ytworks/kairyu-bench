@@ -1,6 +1,6 @@
 # L: K1 の保存text因子を係数1で移す固定試行（2026-11-06）
 
-Lは、公開K1 adapterのtext因子だけをbyte同一で取り出し、exported coefficient 1で元Gemma 4 31B BF16へ移す一つの固定試行である。**全499件CPU CI、実text因子抽出、固定specのCPU previewを完了した。owner承認でモデルのCPU作成・検証工程へ進んでいるが、保存後変更量・freeze・配信・公式成績はまだ確定していない。** K（B＋H byte合成）とは別の候補である。
+Lは、公開K1 adapterのtext因子だけをbyte同一で取り出し、exported coefficient 1で元Gemma 4 31B BF16へ移す一つの固定試行である。**全499件CPU CI、実text因子抽出、固定specのCPU作成・独立CPU検証を完了した。実BF16変更は410 tensor／23,862,088,988値、Δ L2は42.46527094830241。保存重みは検証済みだが、authored smokeは21/24でhistorical originalの23/24を下回った。公式dev90ペアも完了し、Lは67.182540、fresh original比−3.517857 pp（95% CI −11.875000〜+4.107143）だった。code90未達・不採用とし、別基点との組合せ仮説はMで分離して検討する。** K（B＋H byte合成）とは別の候補である。
 
 ## 公開由来と基点の限界
 
@@ -46,7 +46,7 @@ vision378因子の数値は調べていない。H比較のnormは原donorの係�
 係数1は学習済みのexported operating pointをそのまま最初の仮説にする選択である。
 元BF16で最適な係数とは主張せず、保守的係数とのgrid比較や目的別の係数再fitを追加しない。
 実BF16では要素の丸め消失や変位の分布が変わるため、
-保存後の実変更数・Δ L2・対象元重みとの比を作成後に別途記録する。
+保存後の実変更数・Δ L2・対象projection内の変更率は末尾に別途記録した。
 保存／連続norm比は方向cosine・保持率・丸め誤差normではない。
 
 ## lossless text選択の契約
@@ -133,7 +133,7 @@ dev90は繰り返し利用した開発集合で、既知64のcode90超という�
 | 同independent-summary.json | 7b9a15b8bc2183bfe0070ddb61121a91c984bc3ddd81f8dac21d0829df2e4736 |
 
 派生payloadの実抽出後SHAと固定specは次節に記録した。
-保存checkpoint作成・verify・配信・smoke・公式scoreの完了値は、各操作の完了証跡で追記する。
+保存checkpoint作成・verifyの完了値は末尾に追記した。配信・smokeの評価と公式scoreはそれぞれ別の証跡・判定で記録する。
 この文書統合では既存Python/testsや稼働中のbenchmarkを変更していない。
 
 
@@ -160,7 +160,7 @@ Heretic基点の宣言もそのまま残している。
 固定specはcoefficient1、F32 r32、alpha32/scale1、scope native_text410。
 元公開payloadと派生payloadを別のprovenance欄へ保存し、
 元full/header/configと派生full/header/extraction receiptを混同しない。
-保持410 pairsはmapping数であり、実BF16変更tensor数・変更要素数をまだ表さない。
+previewでの保持410 pairsはmapping数であり、それだけでは実BF16変更tensor数・変更要素数を表さない。後続の実作成値は末尾の表で区別する。
 元treeはcab440f871a32b5ea1c12364db7dd35ac8768a83b413ca24bbc18d6478eccbd9。
 
 既存dense factor-format v2のCPU previewは **1.6878秒** で成功した。
@@ -171,5 +171,238 @@ preview時checkpoint write / model callは0。
 ownerはこのspecでCPU作成＋既存CPU verifyを1回ずつ行うことを承認した。
 固定af9 image、UID1003、runc、network none、CPU0–7、BLAS4を継承し、
 数値kernelやrecipeを新しく変更しない。
-作成・freezeの完了証跡がまだ無い段階を、配信可能・検証済みと扱わない。
-新しいモデル生成や公式成績をこの抽出成功から主張しない。
+preview段階を検証済みcheckpointと扱わず、後続の全CPU verify完了後にfreezeを公開した。
+新しいモデル生成や公式成績を抽出成功・重み検証から主張しない。
+
+## 実CPU作成・保存検証の完了
+
+既存dense recipeによる作成は **431.380300秒**、独立CPU verifyは
+**299.582166秒** で、各1回・両exit0で完了した。
+新規の数値実装や追加振幅試行はなく、固定F32因子と係数1を同じkernelで使用した。
+元checkpointと候補はそれぞれ全12ファイルのhashを確認し、
+全410対象をCPUで再生成して保存BF16 bytesと照合した。
+非対象spanと前後inventory/statも全PASSだった。
+
+これは「CPU recipe regenerated against persisted BF16 bytes」の証明であり、
+RAM/GPU上の候補との比較、D2H readback、モデルforwardの証明ではない。
+検証はcheckpointを書き換えず、GPU/model callsは0。
+freeze公開後にownerへ配信工程を引き継いだ。
+
+| 保存後の実測 | 値 |
+|---|---:|
+| 保持対象 / 実変更tensor | 410 / 410 |
+| 元BF16と値が異なる要素 | 23,862,088,988 |
+| 対象410 projectionの全要素 | 29,286,727,680 |
+| 上記対象内の変更率 | 81.477484% |
+| 保存Δ L2 | 42.46527094830241 |
+
+変更率の分母は対象projection内の要素であり、全モデルparameter数ではない。
+同じoriginalからの保存Δ L2はHの22.4858倍、Iの13.9939倍、Jの16.4843倍だった。
+これらは既存manifestのmetadata比較で、追加payload走査は0。
+能力比・方向保持率・丸め誤差率ではなく、historical H/I/Jの現在の配信可用性も示さない。
+公開連続方向のnormと保存後のnormは別の値として保持する。
+
+| 完了証拠（k1-exported-text-c1-v1/以下） | SHA256 |
+|---|---|
+| create-completion.json | 2a71ce63dfe3f6b707622b23b727533e8a631b76ac8c8ea21540c3c7c5e86880 |
+| verify-completion.json | 8b24cb88ccd5f612cdd33dc5f4d3b3e30266c47d4c7900025ef40e3333473720 |
+| 作成manifest | 534fbcd4bd29ec8458bd231904362fbc5c1d44e1780b9cdff97ac082d9b57f21 |
+| 候補全file tree | f8f936eee95316d560361b5301a1bde8a892138f0907084eb7569242eefc7f90 |
+| freeze.json | 9dad2d445ee4ccab1ea2d4bd92da21c9d911d73a018c5f8798bff66b7054526d |
+| verified-handoff.json | a47972e2d782cb384cf8b6940067f7b2b7c86dd01a60d9292395bab0693c396a |
+| saved-footprint-comparison.json | ec7b3b4420fdaacfd61844b808070243fd548bb8706bd6b31e4846f59efa55c1 |
+
+### 起動前guardの形式違いと修正
+
+初回の配信前guardはOpusのtext-fallback専用review_context_labelを要求したが、
+実L receiptは正常なjson_reviewsで、labels=L、labels_match=true、
+review_context_label=nullだった。レビュー失敗やモデル不一致ではなく、
+呼出し側が正常JSONとtext fallbackのschemaを混同した運用不具合である。
+
+AssertionErrorで配信・モデル処理前に停止し、失敗receiptを保持した。
+guardを実形式のlabels／labels_match／review_formatへ修正し、
+verified_requested_model、review_usable、tools0の要求は維持した。
+実receipt受理と誤label・不一致・text形式・未検証・使用不可・tools使用の拒否を
+CPU fixtureで確認し、独立読取レビューでも実receiptとの対応を確認した。
+この修正にモデル再作成・再verify・追加Opus問い合わせは不要だった。
+
+修正版pipelineはPID965025で開始した。これはruntime orchestrationだけの修正で、
+499件CIに束縛されたWのPython/testsや数値recipeを変更していない。
+前節は保存検証の範囲を記録する。配信後のsmokeと公式評価の進行は以下に分けて記録する。
+
+| 運用証拠（同フォルダ） | SHA256 |
+|---|---|
+| deployment-smoke-preflight-failed-01.json | 08b1533c531c0498412d7cef9fc6e07e3f0fcb108f3f76373414225675781c08 |
+| deployment-pipeline-launch-v2.json | 90ca4114d818fb58e6d1030207db7ec3ea7891d3aec8dc614aea0947c9f315c1 |
+| dev90-pair-json-review-guard-validation.json | 55e2791cbfe7de2642ccf37b004476a6d8b234f427243f27d5127feee2090243 |
+
+後続dev90-pair runtimeの同形式guard修正版SHAは
+d5a647d7ad884bbd3f06482ce47bf6975e18cd84f0d762e6c38e452e53e817d1。
+その後のdense source形式guard修正と公式ペアの開始証跡を以下に記録する。
+
+## 配信後のauthored smokeと公式ペア開始
+
+Lの配信と固定advanced-v2 24件の生成・sandbox実行が完了した。
+同じcase/seed/validatorと生成設定を用いたが、originalはhistorical referenceであり、
+この比較をfresh causalな重み改善とはしない。
+
+| 数値観測 | Historical original-v2 | L |
+|---|---:|---:|
+| Train | 15/16 | 14/16 |
+| Transfer | 8/8 | 7/8 |
+| 合計成功 | 23/24 | 21/24 |
+| Unknown | 0 | 0 |
+| 生成finish stop | 24 | 24 |
+| Input tokens | 2,864 | 2,864 |
+| Output tokens | 43,599 | 89,912 |
+
+新規成功0、喪失2。categorical-without-replacementは8数値trial中7件でruntime失敗、
+obstacle-lattice-pathsはformat_or_syntax_errorだった。
+既に失敗していたreflecting-wall-flightは、originalの1/8 numeric失敗に対してLは8/8失敗。
+この数値metadataから生成本文の具体的原因は推定しない。
+正常にstopした生成でも、コード形式・実行・数値要件の成功は保証されない。
+
+出力tokenは約 **2.06225倍** だった。これは保存された総出力の比で、
+思考token／公開回答を分離した測定ではなく、品質向上を意味しない。
+今回の事前構造停止規則は「追加format/syntax/missing/execution-unknownが2件以上、
+またはcapでusable finalが無い場合」であり、追加構造1、unknown0、cap0のため未発火だった。
+categoricalのruntime test失敗は採点可能な意味的失敗であり、execution-unknownとは区別する。
+
+rootは不利なsmoke結果を保持したまま、**既定条件の公式dev90ペアを一度だけ実行する**
+判断を記録した。これは改善認定・採用・full14への許可ではない。
+smokeに応じた係数変更や回答を使った修正は行っていない。
+
+### 2件目の起動前形式guard修正
+
+公式ペアのbindで、dense schema2の元file一覧がsource_files[].sha256であるのに、
+native用のfiles[].source_sha256を参照するruntime側の誤りがKeyErrorで検出された。
+モデル・API・scorer呼出し前の失敗であり、重みを再作成・再検証しなかった。
+
+実dense schemaへ合わせ、さらに12行をpath順にcanonicalizeしたfull source treeが
+検証済みoriginal treeと一致する条件を追加した。
+独立読取レビューでも実manifestの12 source_filesとdigest一致を確認した。
+WのPython/tests・数値recipe・公式scorerは変更せず、499件CIの対象sourceは保持した。
+最終runtime SHAはf23bd30d3b4c89a124cfc4dfc6ee63e04943a447fc52d62bde2cc570e25ec6fa。
+
+### 公式dev90の開始記録
+
+2026-11-06 **11:03:22 UTC** に2 childを起動し、
+run metadataは両方11:03:26 UTC開始・runningを記録した。
+Lはgemma-0、fresh originalはgemma-2の別direct TP2 endpoint、各c32／MTP4。
+native ONと公式default sampling、tokenizer/template/caps/scorerを保持し、
+固定source5e3f2df、同じHE30／MBPP30／LCB20／SciCode10を使用した。
+
+| Arm | Run ID |
+|---|---|
+| L | gemma4-code90-k1-exported-text-c1-c32-dev30-code-pairl-20261106 |
+| Original | gemma4-code90-original-base-c32-dev30-code-pairl-20261106 |
+
+両runのtier30/dev、90項目、manifest
+a3a0b60e0872a38c6b1abf7e97d7fe729fabf9e25cd3f09a3da9544b9ca39b5b、
+model IDとそれぞれの意図したtree labelを確認した。
+開始前counter・実CID/配信構成・元weights statをbindingへ固定し、
+終了後に保存callとdiscovery probeを区別して照合する。
+開始時点では成績を推定せず、以下の終了証跡で結果を確定した。
+
+| 証拠（k1-exported-text-c1-v1/以下） | SHA256 |
+|---|---|
+| smoke-numeric-summary.json | ce4a8a9ee27310a763972debb6a70de6ec08fb5d771173366d8bee91556a3863 |
+| structural-smoke-decision.json | 48f431d800db11bdde599f76672e24306129db444e53ee9536c565cbdde0a52a |
+| dev90-pair-dense-source-guard-fix.json | 93c7568ff4ed6db02079f1cce70ab7aa9ddceb8c37b2a9cb587c373f90339f8d |
+| dev90-pair-plan.json | 48df4b1f444167971980e21240c0e5ffa2ace7abc671d9a3697b6325e62eaf54 |
+| dev90-pair-binding.json | a578708b993e4feee06691f30c524b90e61599db0ee9b1422d027449587fe91f |
+| dev90-pair-launch.json | 303cd33c69bf02102e711faf9571106c8401ff4044926af6f3a337041e7ff814 |
+
+## 公式dev90の最終結果：不採用
+
+Lとfresh originalは各90/90採点・未採点0、合計180採点でcompletedになった。
+同じ90 ID、manifest、source、runtime/配信identityと終了時継続を確認した。
+公式codeは4-source等重み平均であり、90問の単純正解率ではない。
+SciCode10問は各問のstep成功率平均を保持する。
+
+| 指標 | Fresh original | L | 差 (pp) |
+|---|---:|---:|---:|
+| HE+ (30問) | 29/30 | 29/30 | 0 |
+| MBPP+ (30問) | 23/30 | 22/30 | −3.333333 |
+| LCB (20問) | 15/20 | 15/20 | 0 |
+| SciCode mean (10問) | 34.468254% | 23.730159% | −10.738095 |
+| 公式code | 70.700397% | 67.182540% | **−3.517857** |
+
+既存公式paired比較の95% CIは **[−11.875000, +4.107143] pp**、
+2000 resamples・seed20261104。全90件がpairedで、partialはcode以外13領域が
+未測定であることを示す。overallはnullのままで、欠測を0にしていない。
+単回の不確実性を残すが、この測定でLの純改善は示されなかった。
+
+### 課題別の実数得失
+
+HEは全問同値。二値80問ではoriginal67成功→L66成功、獲得2・喪失3だった。
+SciCodeは部分点を含む獲得3・喪失2、残5問同値。
+既存公式の0.5境界flipは全90問で獲得4・喪失5であり、
+実数差の獲得5・喪失5や完全成功数とは異なる定義である。
+
+| 変化したID | Original | L |
+|---|---:|---:|
+| LCB/3777 | 0 | 1 |
+| LCB/abc390_g | 1 | 0 |
+| Mbpp/607 | 1 | 0 |
+| Mbpp/641 | 0 | 1 |
+| Mbpp/792 | 1 | 0 |
+| SciCode/14 | 1 | 0 |
+| SciCode/35 | 1/3 | 2/3 |
+| SciCode/46 | 1/4 | 1/2 |
+| SciCode/58 | 4/5 | 0 |
+| SciCode/80 | 2/7 | 3/7 |
+
+この表は保存されたID・scoreだけから作り、問題本文、生成final、
+hidden reasoning、goldを分析していない。喪失原因を重みの特定要素へ帰属しない。
+
+### 生成・使用量と起動probeの分離
+
+| 記録値 | Fresh original | L |
+|---|---:|---:|
+| 保存chat calls / logprob calls | 119 / 0 | 119 / 0 |
+| 保存input tokens | 96,661 | 91,862 |
+| 保存output tokens | 343,116 | 505,277 |
+| report generation seconds | 318.5 | 808.8 |
+| report wall seconds | 382.0 | 854.3 |
+| 開始→終了の実時刻差 (s) | 382.057530 | 854.312411 |
+| 終了UTC | 11:09:48.665598 | 11:17:40.920228 |
+
+開始は双方2026-11-06 11:03:26 UTC。L出力tokenは約1.47261倍、report wallは約2.23639倍だった。
+思考／公開回答tokenを分離した値ではなく、単回のruntime・採点時間を含むwall比である。
+
+processは各120終了、保存119 callsとの差は各prompt21／completion1 tokenで、
+固定のmax_tokens=1起動discovery probeと一致する。
+originalはprocess stop119＋length1で、probeを除くと保存生成は全119stop。
+Lはprocess stop118＋length2なので、probeを除いても**実生成1件のlength終了が残る**。
+Lの全capをprobe扱いして消してはいけない。
+
+LのSciCode reportはtruncated_rate=0.1、empty_rate=0.0256410256、
+他sourceは両rateとも0だった。originalは全sourceで両rate0。
+process error/abort/repetitionは双方0、process start identity不変・counter比較可能。
+これらは独立HTTP retryや別clientの不存在、思考token数の証明ではなく、
+保存callsとprocess counterを同じ指標へ読み替えない。
+
+### 次の仮説との境界
+
+**Lは不採用、code90未達。** rootの正式判断はfull14・DeepSWE・HFにも進めず、Mを別の診断仮説として検討する。
+学習基点が未知のHeretic derivativeであるため、O+Dの失敗だけで
+同じDがその公開base上でも無効と結論しない。一方、base不一致が今回の原因だとも断定しない。
+
+次の[M事前契約](2026-11-06-public-base-alignment-fourway-m.md)は、
+original O、O+D（L）、公開改変base P単独、P+Dを同じ元protocolで比較する。
+これは係数gridやLの採点変更ではなく、base効果とadapter/base相互作用を分離する別仮説である。
+真のtraining revisionや著者の推論protocol再現は未確認のまま保持する。
+
+| 最終証跡（k1-exported-text-c1-v1/以下） | SHA256 |
+|---|---|
+| root-final-decision.json | 3f5d7c022cbccaad22b89629eae88fbe23b07339cad42568715472e821f7be92 |
+| dev90-pair-final-summary.json | ef270535e19af2e9174987c33ee601e3ab42ed3f625a57c05d0753585aee92e2 |
+| dev90-l-versus-base-evidence.json | c8f8bacf0f6910f332e2a1b8faf9a81f249cea0f6bb9e82c9436130ca1bce9da |
+| dev90-pair-numeric-evidence.json | d4ed348f1841016fda2235a6cfc5ac2522f408bdc3c2079ca71e1a2e302d658c |
+| dev90-runner-parity.json | a6b323aad8c2b416dfee07ea92c4d022789715b4745c90dd8d0729202d07a54a |
+| serving-counters/l-diff.json | eb8f02ff0ba19141a630fb6d0bbe6b708c3f2c8e4bee93a458ac6a7b03816228 |
+| serving-counters/base-diff.json | 56a775530598d256815ca800058f9aa01c30b3a2e9eb8a5e560253b416a869aa |
+
+独立レビューで全90 IDとofficial capability値、source平均、公式flip、
+二値80件とSciCode部分点の整合を確認した。新規採点・bootstrap再実行・モデル呼出しは0。
