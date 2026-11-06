@@ -26,6 +26,8 @@ private runtime configuration and model reasoning are separate artifacts.
 | Baseline observation analysis | [experiment analysis recipe](experiments/2026-11-06-observed-gemma-analysis.py) | One-pass read of retained capture; associations are not edit directions |
 | Repeated WSP gain/loss ranges and DeepSWE trial usage | [evidence recipes](experiments/scripts/README.md) | Official scoring is reused; fractional changes, retry UUIDs, steps and missing usage are preserved; opt-in bounded first-info metadata adds agent-recorded API counters separately from steps |
 
+| Serving counter baselines and deltas | [tool](../scripts/experiments/serving-counters.py), [guide](wsp-serving-counters.md) | Whitelisted process counters; resets/missing series explicit; no per-item, retry or thought-token attribution |
+
 The source migration also covers the reusable parts of the original
 `edit_checkpoint`, dense/native LoRA recipes and BF16 kernel, purpose-dependency
 collectors, joint solver, verified shard pool, restoration/provenance helpers,

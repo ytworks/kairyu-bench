@@ -90,3 +90,7 @@ The saved-checkpoint verifier, joint native/donor proposal and one-shot residual
 ## Cross-donor factor-space observation
 
 The generic CPU-only [LoRA direction observer](../lora-direction-comparison.md) compares explicitly aligned ordinary LoRA factors of different ranks and F32/BF16 dtypes without dense updates or model calls. It uses FP64 Gram products, records all input pins and exclusions, and separates unrounded direction geometry from actual BF16 effects. Three contract fixtures and an independent review passed before the [two-donor actual observation](2026-11-06-two-donor-factor-observation.md); the measured 410-module comparison took 15.232 seconds. This does not establish capability complementarity.
+
+## Serving counter baselines
+
+The [counter snapshot/diff tool](../wsp-serving-counters.md) keeps a bounded whitelist of process metrics, refuses identity changes and observed resets, and reports missing series as unknown. Its nine CPU fixtures include the actual vLLM label schema (including repetition), exact large-counter subtraction, and source-field filtering. The complete CPU suite passed **489 collected: 437 passed, 52 optional skips**, with whole-tree Ruff, mypy73 and unchanged source hashes. The first actual J/fresh-original pre-run captures both confirmed zero running/waiting requests; later deltas remain endpoint aggregates rather than per-item or retry evidence.
