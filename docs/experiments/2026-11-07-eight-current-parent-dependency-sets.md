@@ -1,6 +1,8 @@
 # Eight dependency-set alternatives from accepted AC
 
-The parent remains accepted AC, state SHA `f0a5c61bdbcf6cdba3b71db6487c786d5af004bbc2b31a8c67ed0a9b72ccd324`, tree `d34fcba755eefa6e451521f81a589484bd6eb7368f831e6620a5577d4ff87e85`. Labels A–H below identify this batch’s method groups, not earlier historical checkpoints with the same letters. These are alternatives from one parent, not additive components. Prior S gradients are not reused.
+AD is now the adopted working parent: fresh matched dev90 gained +2.416667 pp, while historical full14 overall fell −1.358562 pp. Root accepted this coding-priority tradeoff with the RULER cap losses explicitly retained; this is not an all-area improvement or a >90 result. The cumulative lineage is P → S → AC → AD, and the next derivatives must be measured at AD.
+
+This batch started from accepted AC, state SHA `f0a5c61bdbcf6cdba3b71db6487c786d5af004bbc2b31a8c67ed0a9b72ccd324`, tree `d34fcba755eefa6e451521f81a589484bd6eb7368f831e6620a5577d4ff87e85`. Labels A–H below identify this batch’s method groups, not earlier historical checkpoints with the same letters. These are alternatives from one parent, not additive components. Prior S gradients are not reused.
 
 Fresh observation ran on 2026-11-06 from 18:58:57.804 to 19:04:14.912 UTC (about 317.108s), then restored the same P1 container. Native correct-LL/margin took 58.30/94.37s; matrix correct-LL/margin took 46.05/92.82s in parallel family chains. All four used 136 authored cases, 42 folds, serial answers and the same forced-empty-thought frame. Native coverage is 421 tensors/1,331,516 coordinates; matrix coverage is 410 tensors/209,920 sampled coordinates. Timings do not establish a speedup over earlier observations of different parents.
 
@@ -50,7 +52,7 @@ Utility is 0.75 times the mean of four core purposes plus 0.25 times the mean of
 
 A raised all four core and all six science purpose LL means (38/42 positive LL folds), but core margin fell because foil LL rose more. Code LL folds were +0.918488 and −0.826291; code margin mean was −0.587304. Science margin improved in five of six purposes. G raised all three repair LL means and core mean LL/margin, while science mean LL/margin fell and five of six science LL means declined. This is a tradeoff, not evidence that the native or matrix family causes a particular capability.
 
-Root selected A as finalist **AD** and G as **AE** for one fresh three-arm official comparison against AC. CPU save-only owners started at 19:33:20 UTC; copying and later official results remain pending in this record. AC remains the working parent. No rescale, re-solve or blind sum was performed, and proxy misses were not relabeled as official accuracy failures.
+Root selected A as finalist **AD** and G as **AE** for one fresh three-arm official comparison against AC. CPU save-only owners started at 19:33:20 UTC. Both checkpoints were subsequently verified and deployed; their completed official comparison and AD retention decision are recorded below. No rescale, re-solve or blind sum was performed, and proxy misses were not relabeled as official accuracy failures.
 
 Independent arithmetic reproduced all seven raw fold deltas, 21-purpose means, group means, utility and 84-bound miss counts. Baseline correct-LL fold difference was zero; margin maxima were 9.536743164e−7 per case and 3.495564052e−7 per fold. Finite exports only fold NLL, so per-case correct-LL parity is unmeasured. The selected-byte audit covers 26,022 union coordinates in 712 tensors through nine applications (base, seven alternatives, restored base); all selected words matched. This is not a full-model GPU hash. Restored margin/NLL/KL were exactly zero and source/stat/service closure passed.
 
@@ -96,7 +98,7 @@ Recorded input/output tokens were AC93,564/323,716, AD96,181/332,608 and AE91,73
 
 Independent review recomputed four-source means, all90 paired score identities, partial science deltas, changed items and usage sums from safe numeric exports. Official bootstrap seed20261104/resamples2000 and recorded intervals matched the unchanged comparison API. Both intervals cross zero; no new significance, universal no-loss or code-only adoption gate is imposed.
 
-Root selected **AD for one full14 retention run**, owner launched19:55:19.895 UTC and child launcher recorded19:55:20.420 UTC. The run is gemma4-code90-candidate-ad-c32-dev10-full14-20261107,778 items with concurrency32. Historical accepted AC full14 overall78.934942 is the retention reference, not a fresh concurrent control. The broader result is pending; **AC remains the working incumbent and neither AD nor AE is adopted here**. Related-capability gains and losses remain relevant under the cumulative net-purpose policy.
+Root selected **AD for one full14 retention run**, owner launched19:55:19.895 UTC and child launcher recorded19:55:20.420 UTC. The run is gemma4-code90-candidate-ad-c32-dev10-full14-20261107,778 items with concurrency32. Historical accepted AC full14 overall78.934942 is the retention reference, not a fresh concurrent control. The completed broader result and root's subsequent AD adoption are recorded below. AE was not adopted. Related-capability gains and losses remain relevant under the cumulative policy.
 
 Evidence relative to A:
 
@@ -104,4 +106,46 @@ Evidence relative to A:
 - ad-versus-ac-evidence.json: 4c012f3b433ef36ffd240741b5b26c73716cc0fd92fbfb4446a3d3c69e7dfec4; ae-versus-ac-evidence.json: 349b5c4a24f898716f1bcfbe98d2044f5ecfc187bc61e8c69fca362147daf621.
 - postchecks.json: 55f1e5cb3f7a17cd8e1e1197594a2d408d63c3867dbcbda9b14e4a38e943fae6; independent-numeric-review.json: 8ada72828f6083cd6f33f0a04124b748859c31aaf6b1155c7d9740dfe8785d04.
 - candidate-ad-retention-full14-v1/plan.json: 3702fa90bc4d9e53fb5354424431c4c5446be028914331ee38a6786fb1cc3525; live launch snapshot: a904fe1592ae90d249b5669547681c9e1510a86f17a796386747d4a80bb4a914.
-- [All-score ledger](2026-11-06-all-official-scores.md) v7 contains124 records, with every prior121 row preserved; the live AD full14 is listed separately.
+- [All-score ledger](2026-11-06-all-official-scores.md) v8 contains125 records, with every prior124 row preserved; completed AD full14 is the sole added row.
+
+## Completed AD retention and cumulative adoption
+
+AD finished at 20:25:43.592 UTC on 2026-11-06. All778 records were scored:746 capability items plus32 separate probes, with no unknown scores. Overall was **77.576379**, compared with historical accepted AC **78.934942**: **−1.358562 pp**, official paired95% CI[−3.863950,+0.925866]. This is a fixed-cohort historical comparison, not a fresh concurrent full14 control. There were21 numeric item-score gains and27 losses.
+
+| Area | Historical AC | AD | Difference (pp) |
+|---|---:|---:|---:|
+| knowledge | 90.000000 | 90.000000 | +0.000000 |
+| expert | 87.500000 | 81.250000 | -6.250000 |
+| facts | 70.000000 | 67.500000 | -2.500000 |
+| math | 98.750000 | 97.500000 | -1.250000 |
+| code | 87.777778 | 87.777778 | +0.000000 |
+| instructions | 95.416667 | 95.416667 | +0.000000 |
+| tools | 77.500000 | 75.000000 | -2.500000 |
+| agents | 50.000000 | 50.000000 | +0.000000 |
+| long-context | 87.627943 | 75.127943 | -12.500000 |
+| reasoning | 79.130435 | 76.956522 | -2.173913 |
+| commonsense | 64.000000 | 63.000000 | -1.000000 |
+| multilingual | 77.803030 | 83.484848 | +5.681818 |
+| vision | 81.250000 | 87.500000 | +6.250000 |
+| safety | 58.333333 | 55.555556 | -2.777778 |
+
+The long-context loss is entirely RULER8/8→6/8; MRCR remained unchanged. The lost IDs were ruler:fwe:131072:005 and ruler:fwe:32768:013. Both recorded16,384 output tokens, versus historical AC1,488 and1,426. Official RULER truncated and empty rates were both2/8. Individual finish flags were not exported by the safe evidence helper; no response or reasoning body was inspected to assign a cause. Other reported chat sources had zero truncated/empty rates; logprob and TerminalBench rates were unavailable.
+
+GPQA fell14/16→13/16 (0018 lost), BFCL31/40→30/40 (two losses/one gain), and BBEH18/23→17/23. MuSR stayed8/10 with one gain/one loss. TerminalBench remained1/2 with the same rewards: install-windows-3.11=0 and portfolio-optimization=1. Its recorded elapsed times were288.737 and501.482s; agent steps, per-agent API calls/tokens and error details were not exported and remain unknown.
+
+Formal client totals were563 chat calls and3,062 logprob calls. Safe recorded token sums were1,410,852 input and1,148,623 output; report wall time was1,820.0s. Process counters include startup, max1/logprob and agent traffic and are not substituted for formal calls or individual finish reasons. The O2-only overlay setup attempt overlapped20:06:38.966–20:09:46.824, failed before generation and restored O2; no uncontended timing claim is made.
+
+Selected AD serving identity, saved-file stat identity and the pre-adoption AC state remained unchanged through closure. Historical/current82 installed source/resource hashes, package inventories, RootFS, image Config and captured normalized runtime/semantic mounts matched. Opaque image IDs and full HostConfig hashes differed; the historical full HostConfig body was unavailable, so unrecorded fields are not asserted equal.
+
+At20:28:39.665 UTC, root adopted AD as the next working parent under the authorized cumulative coding-priority policy. The fresh dev90 MBPP/LCB/SciCode gains were accepted together with the HumanEval loss and the historical full14 losses above. This is an explicit tradeoff: overall did not improve. AC is retained as rollback, and long-context, tools and knowledge repair are priorities for the next AD-based increments. No universal zero-loss or significance gate was added. Known64 confirmation, current-parent DeepSWE and the code>90 target remain outstanding.
+
+Working state SHA:7d65d2181d53b7c67a005e4bfaf3a17739dd9617d6abfa61b2ba2bdb523110fb; decision current-ad-adoption-v1/working-decision.json:d5834a0cb19ebbf81ba951343a6420cc0df0d07433eb09ee9e9ad2e0dc6ac4ff. Next proposals must use the complete saved AD checkpoint and fresh AD derivatives; the AC gradients in this experiment are historical.
+
+An existing --observe-config client-recorder template is prepared for future matched arms but was unused here. It records bounded prompt-free completed-attempt metadata; it does not supply active-request starts, scored-item events or agent steps. No official source code or current run was changed.
+
+Final evidence relative to A:
+
+- candidate-ad-retention-full14-v1/final-summary.json:40e5dc1f93a98a2172c0655ab90e340455ee197ea4365fd89633ccd4fe4d8798; postchecks.json:e93985f619317bd3ecd7df9cd772dd159ef3bdfac8bfe9ab8966f40662f06b84.
+- historical-parent-evidence.json:1976632d7de61a31afb7ae56a70d43ea8b6e3e9847b4774ac2e54aff6dfbdc91; retention-loss-detail.json:be08a74864320fcc7b64db5fdcb17ae6d194ed4b8e577995ec303c4a01541b5b.
+- Official report SHA:36fd3350bd40bbda0394fe19a5383b83b251941efd9643bb9ae4f06214fd62e3; timing-overlap.json:b0322efd0334632c2c8105d1e14b743e1fe8feb5c6d4eafac9b7a7f14ab35cd6.
+- official-numeric-observer-template-v1/readiness.json:ba1a8edac296ba961a32e10d0e7799dd8d5a8dc02ff410ea2811f5eb4500d977 (prepared only).

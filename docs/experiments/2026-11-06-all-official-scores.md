@@ -1,7 +1,7 @@
 # Gemma4公式スコア全実行台帳（2026-11-06）
 
-snapshot: 2026-11-06T19:56:11.723241+00:00。WSP **124 runs**（completed119、partial4、running1＝旧保存記録のみ、現在の稼働を意味しない）。
-今回のAC/AD/AE dev90完了3件を追加した。旧121行の全fieldをそのまま保持し、過去snapshotの進行中記述は当時の記録として残す。現在のworking modelはAC。AD full14は別途稼働中で、この124件には含めない。
+snapshot: 2026-11-06T20:31:14.710715+00:00。WSP **125 runs**（completed120、partial4、running1＝旧保存記録のみ、現在の稼働を意味しない）。
+今回のAD full14完了1件を追加した。旧124行の全fieldは完全一致で保持し、過去snapshotの進行中記述は当時の記録として残す。現在のworking modelはAD、積み上げはP→S→AC→AD。fresh dev90は+2.416667pp、歴史AC対full14 overallは−1.358562ppであり、全分野改善とは呼ばない。
 新規採点・モデル実行なし。指定したNVMe resultsとlegacy resultsの直下run.json/report.jsonだけを採録した。
 5つのDeepSWE runはWSP台帳から分離し、完了・取消結果を代表表へ併記する。元R1/R2はincompleteで、この台帳から完成した点を捏造しない。
 公式reportから値を転記し、欠測は「—」。表は小数6桁表示、sourceの未丸め値はcatalog JSONに残す。
@@ -47,6 +47,9 @@ partialのoverallは公開表で空欄にし、reportの元値はcatalogのrepor
 | S＝P＋科学native連成 | 74.2421 | fresh P | 72.5754 | +1.6667 | LCB2 gain／MBPP1 loss、Sci不変、full14得失を受けworking採用 |
 | S・ACの同時対照 | 73.2698 | — | — | — | 同じSのfresh再測定、重み変更ではない |
 | AC＝S＋code優先matrix小変化 | 73.8254 | fresh S | 73.2698 | +0.5556 | MBPP1 gain／LCB1 loss／Sci部分得失、full14 net gain確認後working採用 |
+| AC・AD/AEの同時対照 | 71.4087 | — | — | — | 同じACのfresh再測定、旧73.8254を代用しない |
+| AD＝AC＋native依存セット | 73.8254 | fresh AC | 71.4087 | +2.4167 | full14退行とRULER cap2件を明示してworking採用 |
+| AE＝AC＋repair matrix | 72.1587 | fresh AC | 71.4087 | +0.7500 | 未採用 |
 
 M−Oは−3.2778pp。Pのworking採用はユーザーの「改善後から積み上げる」方針による。
 最終code>90達成、未知集合への汎化、統計的確定とは別である。
@@ -82,6 +85,7 @@ tier10のcodeはHE10＋MBPP10＋LCB6、SciCodeなし。dev/testと実行窓も�
 | R保持確認 vs 歴史P | 87.7778 → 84.4444 | 78.4751 → 76.3823 |
 | S保持確認 vs 歴史P | 87.7778 → 84.4444 | 78.4751 → 78.1294 |
 | AC保持確認 vs 歴史S | 84.4444 → 87.7778 | 78.1294 → 78.9349 |
+| AD保持確認 vs 歴史AC | 87.7778 → 87.7778 | 78.9349 → 77.5764 |
 
 P保持確認は778/778採点。対originalは歴史比較で、overall差−1.6891pp、CI[−4.2426,+0.9258]。
 safetyはXSTest36件の31/36→21/36（−27.7778pp、11 loss／1 gain）であり、他分野の利得とともに退行を明示する。
@@ -5044,3 +5048,29 @@ AD/AEのworking採用はまだなく、AC state f0a5c61b…を保持する。こ
 | preservation.json | 0b2c7a0eb873036c7cf4485eabbc9d07f77ddd01bc4009e9c6d7fd315577f4a1 |
 
 3arm final-summary SHA 9a0c02af5c33b8b3ff9b1d58cc1e7aa8d38d9d2b8d35bbee77196766a3173564、独立数値review SHA 8ada72828f6083cd6f33f0a04124b748859c31aaf6b1155c7d9740dfe8785d04。詳細は[8候補・3arm実験記録](2026-11-07-eight-current-parent-dependency-sets.md)。
+
+## v8追加1実行：AD full14完了・得失を明示したworking採用
+
+旧v7の124行は全field完全一致。既存numeric exporterでADの保存run/reportだけを追記し、全125件（completed120／partial4／歴史的未完了1）、読取エラー・metadata不一致0。新規採点やモデル呼出しはない。
+
+| Run ID | 状態 | 項目 / 採点 / 未採点 | Code26 % | Overall % |
+|---|---|---:|---:|---:|
+| gemma4-code90-candidate-ad-c32-dev10-full14-20261107 | completed | 778 / 778 / 0 | 87.777778 | 77.576379 |
+
+歴史AC78.934942→AD77.576379、−1.358562pp、CI[−3.863950,+0.925866]。746capability＋32probe、21gain／27loss。Code26は同点でSciCodeを含まず、fresh dev90の+2.416667ppとは別の測定。RULER8→6（長文領域−12.5pp）、GPQA14→13、BFCL31→30、BBEH18→17に対し、多言語+5.681818pp・vision+6.25pp。RULER失敗2件は各16,384出力、sourceのtruncated/emptyは各2/8。原因を回答本文から調べたとはしない。
+
+563formal chat／3,062logprob calls、記録input1,410,852/output1,148,623、wall1,820s。TerminalBench1/2は同じ報酬0/1、steps/API/tokens/error詳細はunknown。歴史比較のruntime留保、並行O2ツール準備のI/O重複、全source差は実験記録に保持する。
+
+Rootはfresh coding gainと上記の損失を合わせてADをworking採用。積み上げP→S→AC→ADを保持し、次は完全保存ADと新しいADの導関数を使う。全14overall改善、全分野改善、90達成とは主張しない。ACはrollbackとして保持、known64とcurrent DeepSWEは未実施。
+
+state7d65d2181d53b7c67a005e4bfaf3a17739dd9617d6abfa61b2ba2bdb523110fb、decisiond5834a0cb19ebbf81ba951343a6420cc0df0d07433eb09ee9e9ad2e0dc6ac4ff。
+
+| v8 Artifact | SHA256 |
+|---|---|
+| catalog.json | 46196e9a7e87c69bdbe232ec088d3dff5995a7e5c29b1cee0adb652fdaaf0086 |
+| coverage.json | 7b71bafd03e03346c2e382d19b303b55bc048bb6ae991017424d2ac90df533ea |
+| runs.csv | 5f1a4ae3ea1a40037e29c9415eac74acfd4ee004972953f38bacc0ec1c39f4f4 |
+| source-scores.csv | f77a3df6de79e52b6e951ed297435f015465affc8dd91196ad016e44614a6b69 |
+| preservation.json | 4105512ea7167edffd3a48230541f41f370a2124af015c1772dccd283fd61328 |
+
+最終summary40e5dc1f93a98a2172c0655ab90e340455ee197ea4365fd89633ccd4fe4d8798。詳細は[8候補・AD full14実験記録](2026-11-07-eight-current-parent-dependency-sets.md)。
