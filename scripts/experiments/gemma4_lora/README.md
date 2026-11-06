@@ -139,3 +139,136 @@ native norm edits can coexist structurally, but their joint finite outcome
 still requires separate measurement. Donor training-base and data-overlap
 uncertainties remain. If the stored checkpoint was retired, this tool refuses;
 it does not silently substitute approximate factor arithmetic.
+
+## Full-projection continuous donor direction collection
+
+`donor_direction.py` reuses the same explicit calibration cases, official HF
+model loader and public-answer objective as the native/matrix recipes. It
+adds one zero scalar gate to each of the 410 text projections:
+
+`y = W x + gate * 2 B(A x)`, with rank 16 and LoRA alpha 32.
+
+```sh
+python scripts/experiments/gemma4_lora/donor_direction.py \
+  --checkpoint ORIGINAL_BF16_CHECKPOINT \
+  --checkpoint-attestation CONTENT_ATTESTATION.json --attestation-sha256 SHA256 \
+  --cases AUTHORED_TRAIN_CASES.json --mode chat-public-answer \
+  --donor-spec PINNED_DENSE_RECIPE.json \
+  --unit-costs text-410-map.json --unit-costs-sha256 SHA256 \
+  --output FRESH_COLLECTION --device cpu --max-cases-per-microbatch 1
+# Add --run only after reviewing the preview. CUDA also requires
+# --device cuda:0 --gpu-exclusive-approved and the existing exclusive-owner handoff.
+```
+
+The recipe coefficient is ignored: each coordinate represents a unit continuous
+`2BA` direction, starting at gate zero. The pinned original source,
+adapter/config, exact 410-factor mapping, existing unit-cost audit, cases and
+code are identified in provenance. Vision factors are excluded. The unit
+weight-space cost is the existing audit's Frobenius norm of `2BA`, not a
+norm measured from a newly rounded checkpoint; disjoint projection tensors
+make the corresponding continuous Gram matrix diagonal.
+
+The forward returns the original output unchanged at zero. A transparent,
+first-order custom VJP recomputes `2B(Ax)` in FP32 during backward and takes
+its inner product with the upstream gradient (FP32 products, FP64 reduction,
+FP32 gate derivative, FP64 accumulation across one-case microbatches). Source
+weights and donor factors are frozen; there are no factor gradients or full
+parameter gradients. This avoids retaining an expanded FP32 direction at every
+projection. The CPU rank-16 fixture checks the VJP against a literal additive
+autograd graph and central finite differences. Nonzero gates and higher
+derivatives are unsupported.
+
+Every microbatch compares the unmodified public-answer margin with the
+zero-gate margin; both exact equality and maximum error are recorded, and
+differences above the explicit reference tolerance stop the collection.
+All projections must execute once, inputs must remain stable, and hooks are
+removed even after failure. Output includes per-fold 410-dimensional gradient
+arrays, coverage, the pinned unit costs, source continuity checks and runtime
+memory measurements. It never selects a candidate or writes weights.
+
+These are continuous computation-graph sensitivities, **not exact derivatives
+of discrete BF16 weight edits**. Merged BF16 weights and unmerged output
+branches have different rounding. A supported direction still needs a separate
+finite check and official evaluation. Donor training-base and evaluation-data
+overlap remain unknown.
+
+Saved collections can be profiled without a model:
+
+```sh
+python scripts/experiments/gemma4_lora/profile_donor_directions.py \
+  --collection COMPLETED_COLLECTION --output FRESH_PROFILE.json
+```
+
+The profile retains every recorded fold and reports signs, per-layer/family and
+attention/MLP uniform-direction derivatives, cost-normalized sensitivities and
+cross-fold cosine. A zero-cost, zero-gradient direction stays null where a
+ratio is undefined. Common-positive coordinates are ranked descriptively by the
+worst recorded fold per unit continuous weight norm; this does not select a
+candidate, solve a constraint system or establish generalization. Raw and chat
+modes, incomplete collections, changed costs and input/output collisions are
+rejected. No case text, benchmark outcomes or model calls are used.
+
+## Signed module coefficients and fixed continuous plans
+
+`solve_module_directions.py` constructs six explicit structural plans from a
+completed 410-direction, 34-fold collection, then solves each with the existing
+minimum-weight-change diagonal-cost QP. Every plan retains all 34 authored
+folds, including its explicit allowed losses; these fitted folds are **not a
+holdout**. The geometric minimum does not guarantee minimal behavioral change.
+
+```sh
+python scripts/experiments/gemma4_lora/solve_module_directions.py make-plans \
+  --collection COMPLETED_34_FOLD_COLLECTION \
+  --donor-spec PINNED_SCALAR_RECIPE.json --unit-costs text-410-map.json \
+  --output NEW_FIXED_PLANS.json
+python scripts/experiments/gemma4_lora/solve_module_directions.py solve \
+  --plans NEW_FIXED_PLANS.json --output NEW_SOLVE_DIRECTORY
+```
+
+The six plans emphasize balanced coding, scientific contracts, numerical
+algorithms, MLP implementation, attention interfaces, and late-layer
+compensation. Coefficients are signed FP32 numbers with an absolute bound of
+0.25 and a total **continuous** weight Frobenius norm at most 1.0. The metric
+uses the disjoint matrices' existing unit-`2BA` norms. Box limits are additional
+QP constraints, never clipping of an otherwise invalid solution. A small
+predeclared feasibility margin protects FP32 coefficient serialization; the
+original constraints and both limits are checked again afterward. An
+unconstrained minimum already outside the norm limit is recorded and not
+expanded into another solve. Numerical nonconvergence is unresolved, not a
+certificate of infeasibility. No failed plan produces a candidate spec.
+
+Successful output specs use schema 3, kind `module_lora_recipe_v1`, and list all
+410 coefficients, including exact zeros. They pin the source, adapter, unit
+costs and plan. They remain `continuous_prediction_only`: **the coefficients
+are not rounded to BF16** and their predictions are not actual BF16 results.
+
+`module_lora_recipe.py` adds a versioned path while leaving scalar schema 2
+unchanged. Build/select the existing native kernel as described above. Its
+`validated_recipe`, `delta_block`, `merge_block` and `BLOCK_ROWS=128` are shared
+with the RAM finite replay. For each nonzero module, the arithmetic is exactly
+the existing FP32 `(B_block @ A) * 2`, FP32 coefficient multiplication, separate
+FP32 addition to the original BF16 weight, then one ties-to-even BF16 rounding.
+The NumPy/BLAS build, native library and block size are recorded; changing these
+is not assumed bit-identical. Zero coefficients preserve the original bytes,
+including negative zero. A synthetic full-mapping regression verifies that
+uniform 0.25 exactly matches the old scalar recipe.
+
+```sh
+# Stream actual rounding statistics without writing a checkpoint.
+python scripts/experiments/gemma4_lora/module_lora_recipe.py audit ORIGINAL \
+  --spec SELECTED_SPEC.json --output NEW_ACTUAL_BF16_AUDIT.json
+# Default create is a dry run. --apply requires a new destination/manifest.
+python scripts/experiments/gemma4_lora/module_lora_recipe.py create ORIGINAL NEW \
+  --spec SELECTED_SPEC.json --manifest NEW_MANIFEST.json
+python scripts/experiments/gemma4_lora/module_lora_recipe.py verify NEW_MANIFEST.json
+```
+
+Audit/create report actual changed elements, tensor hashes and BF16 delta L2;
+continuous L2 and actual BF16 L2 are distinct. A final candidate requires these
+actual metrics, matched finite response, and official evaluation before any
+adoption claim. Creating weights verifies the full original hash before and
+after, uses private destination files, compares untouched bytes, and publishes
+a fresh manifest exclusively. Failure cleanup removes only the directory inode
+created by that operation. Verification regenerates every edited span and
+checks both full trees. The read-only audit records source stat continuity and
+does not claim a newly computed full-source hash.

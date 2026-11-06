@@ -1,4 +1,4 @@
-"""Finite-only Gemma 4 native/sparse-matrix edit replay: original, <=3 sets, original.
+"""Finite-only Gemma 4 native/sparse-matrix edit replay: original, <=8 sets, original.
 
 Optional torch/transformers dependencies are imported only when explicitly run.
 No checkpoint writes, gradients, free generation, solver, or WSP acceptance gate.
@@ -236,6 +236,94 @@ def prepare_frames(tokenizer: Any, cases: dict[str, Any]) -> tuple[dict[str, Any
         "frames": frames}
 
 
+class PublicAnswerEvaluator:
+    """Shared matched public-answer margin, correct NLL and endpoint-token KL.
+
+    Every answer token contributes to the margin and NLL. Diagnostic full-vocab
+    KL uses only each correct answer's first/last token positions. Base logprobs
+    remain in host RAM, and no free generation or acceptance decision occurs.
+    """
+    def __init__(self, net: Any, head: Any, tokenizer: Any, prepared: dict[str, Any],
+                 device: str, deadline: Callable[[], None] = lambda: None) -> None:
+        import torch
+        self.torch, self.net, self.head = torch, net, head
+        self.tokenizer, self.prepared, self.device = tokenizer, prepared, device
+        self.deadline = deadline
+        self.base_aux: dict[tuple[str, int, int], Any] = {}
+
+    def __call__(self, store_base: bool = False, recovery: bool = False) -> dict[str, Any]:
+        torch, net, head = self.torch, self.net, self.head
+        tokenizer, prepared, device = self.tokenizer, self.prepared, self.device
+        deadline, base_aux = self.deadline, self.base_aux
+        cap = float(net.config.final_logit_softcapping)
+        values: dict[str, Any] = {}
+        auxiliary: dict[str, Any] = {}
+        sweep_started = time.monotonic()
+        with torch.inference_mode():
+            for group, folds in prepared.items():
+                values[group], auxiliary[group] = [], []
+                for fold_index, rows in enumerate(folds):
+                    fold_values, fold_aux = {}, {}
+                    for batch_index, batch in enumerate(batches(rows)):
+                        if not recovery:
+                            deadline()
+                        seq, targets, lengths = [], [], []
+                        for _, prefix, good, bad in batch:
+                            for reply in (good, bad):
+                                seq.append(prefix + reply)
+                                targets.append(reply)
+                                lengths.append(len(prefix))
+                        width = max(map(len, seq))
+                        ids = torch.tensor([s + [tokenizer.pad_token_id] * (width - len(s)) for s in seq], device=device)
+                        mask = torch.tensor([[1] * len(s) + [0] * (width - len(s)) for s in seq], device=device)
+                        hidden = net(input_ids=ids, attention_mask=mask, use_cache=False, return_dict=True).last_hidden_state
+                        selected = torch.cat([hidden[i, p - 1:len(seq[i]) - 1] for i, p in enumerate(lengths)])
+                        logits = head(selected).float()
+                        if cap:
+                            logits = cap * torch.tanh(logits / cap)
+                        answer = torch.tensor([t for reply in targets for t in reply], device=device)
+                        full_logp = torch.log_softmax(logits, -1)
+                        logp = full_logp.gather(1, answer[:, None]).flatten()
+                        means, positions, position_cases, at = [], [], [], 0
+                        for reply_index, reply in enumerate(targets):
+                            means.append(logp[at:at + len(reply)].mean())
+                            if reply_index % 2 == 0:
+                                for position in sorted({at, at + len(reply) - 1}):
+                                    positions.append(position)
+                                    position_cases.append(reply_index // 2)
+                            at += len(reply)
+                        means = torch.stack(means)
+                        margin = (means[::2] - means[1::2]).tolist()
+                        selected_logp = full_logp[positions]
+                        key = (group, fold_index, batch_index)
+                        if store_base:
+                            base_aux[key] = selected_logp.detach().cpu().clone()
+                            kl = torch.zeros(len(positions), device=device)
+                        else:
+                            reference = base_aux[key].to(device)
+                            kl = (reference.exp() * (reference - selected_logp)).sum(-1)
+                            if float(kl.min()) < -1e-4:
+                                raise ValueError("KL numerical consistency failed")
+                            kl = kl.clamp_min(0)
+                        kl_values, nll = kl.tolist(), (-means[::2]).tolist()
+                        for i, row in enumerate(batch):
+                            positions_kl = [v for j, v in enumerate(kl_values) if position_cases[j] == i]
+                            fold_aux[row[0]] = {"kl": sum(positions_kl) / len(positions_kl), "correct_nll": nll[i]}
+                        fold_values.update({row[0]: v for row, v in zip(batch, margin)})
+                        del hidden, selected, logits, full_logp, selected_logp, logp, means, kl
+                        if not store_base:
+                            del reference
+                    values[group].append([fold_values[row[0]] for row in rows])
+                    auxiliary[group].append({key: float(np.mean([fold_aux[row[0]][key] for row in rows]))
+                                             for key in ("kl", "correct_nll")})
+        flat = [float(np.mean(v)) for folds in values.values() for v in folds]
+        aux = {key: [row[key] for folds in auxiliary.values() for row in folds]
+               for key in ("kl", "correct_nll")}
+        if not np.isfinite([*flat, *aux["kl"], *aux["correct_nll"]]).all():
+            raise ValueError("nonfinite finite-replay metrics")
+        return {"values": values, "means": flat, **aux, "seconds": time.monotonic() - sweep_started}
+
+
 class ParameterEdits:
     """Capture only the verified union of edited BF16 coordinates and restore it.
 
@@ -331,84 +419,16 @@ def run(args: argparse.Namespace) -> dict[str, Any]:
         attn_implementation="eager", device_map={"": args.device}).eval()
     model.requires_grad_(False)
     net, head = model.model.language_model, model.get_output_embeddings()
-    cap = float(net.config.final_logit_softcapping)
     params = {"model.language_model." + n: p for n, p in net.named_parameters()}
     for i, layer in enumerate(net.layers):
         params[f"model.language_model.layers.{i}.layer_scalar"] = layer.layer_scalar
     edits_state = ParameterEdits(checkpoint, specs, params, args.device)
     if any(p.requires_grad for p in model.parameters()):
         raise ValueError("all gradients must be disabled")
-    base_aux: dict[tuple[str, int, int], Any] = {}
     def apply(spec: Any | None) -> None:
         edits_state.apply(spec)
         torch.cuda.synchronize()
-    def evaluate(store_base: bool = False, recovery: bool = False) -> dict[str, Any]:
-        values: dict[str, Any] = {}
-        auxiliary: dict[str, Any] = {}
-        sweep_started = time.monotonic()
-        with torch.inference_mode():
-            for group, folds in prepared.items():
-                values[group], auxiliary[group] = [], []
-                for fold_index, rows in enumerate(folds):
-                    fold_values, fold_aux = {}, {}
-                    for batch_index, batch in enumerate(batches(rows)):
-                        if not recovery:
-                            deadline()
-                        seq, targets, lengths = [], [], []
-                        for _, prefix, good, bad in batch:
-                            for reply in (good, bad):
-                                seq.append(prefix + reply)
-                                targets.append(reply)
-                                lengths.append(len(prefix))
-                        width = max(map(len, seq))
-                        ids = torch.tensor([s + [tokenizer.pad_token_id] * (width - len(s)) for s in seq], device=args.device)
-                        mask = torch.tensor([[1] * len(s) + [0] * (width - len(s)) for s in seq], device=args.device)
-                        hidden = net(input_ids=ids, attention_mask=mask, use_cache=False, return_dict=True).last_hidden_state
-                        selected = torch.cat([hidden[i, p - 1:len(seq[i]) - 1] for i, p in enumerate(lengths)])
-                        logits = head(selected).float()
-                        if cap:
-                            logits = cap * torch.tanh(logits / cap)
-                        answer = torch.tensor([t for reply in targets for t in reply], device=args.device)
-                        full_logp = torch.log_softmax(logits, -1)
-                        logp = full_logp.gather(1, answer[:, None]).flatten()
-                        means, positions, position_cases, at = [], [], [], 0
-                        for reply_index, reply in enumerate(targets):
-                            means.append(logp[at:at + len(reply)].mean())
-                            if reply_index % 2 == 0:
-                                for position in sorted({at, at + len(reply) - 1}):
-                                    positions.append(position)
-                                    position_cases.append(reply_index // 2)
-                            at += len(reply)
-                        means = torch.stack(means)
-                        margin = (means[::2] - means[1::2]).tolist()
-                        selected_logp = full_logp[positions]
-                        key = (group, fold_index, batch_index)
-                        if store_base:
-                            base_aux[key] = selected_logp.detach().cpu().clone()
-                            kl = torch.zeros(len(positions), device=args.device)
-                        else:
-                            reference = base_aux[key].to(args.device)
-                            kl = (reference.exp() * (reference - selected_logp)).sum(-1)
-                            if float(kl.min()) < -1e-4:
-                                raise ValueError("KL numerical consistency failed")
-                            kl = kl.clamp_min(0)
-                        kl_values, nll = kl.tolist(), (-means[::2]).tolist()
-                        for i, row in enumerate(batch):
-                            positions_kl = [v for j, v in enumerate(kl_values) if position_cases[j] == i]
-                            fold_aux[row[0]] = {"kl": sum(positions_kl) / len(positions_kl), "correct_nll": nll[i]}
-                        fold_values.update({row[0]: v for row, v in zip(batch, margin)})
-                        del hidden, selected, logits, full_logp, selected_logp, logp, means, kl
-                        if not store_base:
-                            del reference
-                    values[group].append([fold_values[row[0]] for row in rows])
-                    auxiliary[group].append({key: float(np.mean([fold_aux[row[0]][key] for row in rows]))
-                                             for key in ("kl", "correct_nll")})
-        flat = [float(np.mean(v)) for folds in values.values() for v in folds]
-        aux = {key: [row[key] for folds in auxiliary.values() for row in folds]
-               for key in ("kl", "correct_nll")}
-        if not np.isfinite([*flat, *aux["kl"], *aux["correct_nll"]]).all():
-            raise ValueError("nonfinite finite-replay metrics")
-        return {"values": values, "means": flat, **aux, "seconds": time.monotonic() - sweep_started}
+    evaluate = PublicAnswerEvaluator(net, head, tokenizer, prepared, args.device, deadline)
     records: dict[str, Any] = {}
     def on_result(identifier: str, result: Any) -> None:
         records[identifier] = result
