@@ -26,10 +26,27 @@ def write(path, value):
         stream.write("\n")
 
 
+def method_metric(method):
+    """The explicit metric sets both selection geometry and proposal cost."""
+    default = dict(type="relative", floor=method["relative_floor"],
+                   block_scales=dict(native=1., matrix=1.))
+    metric = method.get("cost_metric", default)
+    if (metric != default and metric != dict(type="euclidean",
+                                            block_scales=dict(native=1., matrix=1.))):
+        raise ValueError("unsupported declared matrix cost")
+    return metric
+
+
+def dual_scale(base, method):
+    metric = method_metric(method)
+    return (np.ones_like(base) if metric["type"] == "euclidean"
+            else np.maximum(np.abs(base), metric["floor"]))
+
+
 def agreement(plan, base, gradients, layout, labels, method):
     """Layer groups, using cost-scaled fold gradients; no circuit attribution."""
     active, chosen = adapter.matrix_column_indices(plan, layout)
-    scale = np.maximum(np.abs(base[active]), method["relative_floor"])
+    scale = dual_scale(base[active], method)
     folds = sorted({fold for _, fold in labels})
     positions = {pair: index for index, pair in enumerate(labels)}
     vectors = []
@@ -130,7 +147,13 @@ def build(args):
         if (method["selection"] not in ("all", "fold_agreement")
                 or not np.isfinite(method["relative_floor"]) or method["relative_floor"] <= 0):
             raise ValueError("method selection or cost differs")
-        for key in ("ll_multiplier", "margin_multiplier", "ll_headroom_fraction"):
+        mode = method.get("target_mode", "dual_norm")
+        if mode not in ("dual_norm", "functional"):
+            raise ValueError("unsupported target mode")
+        method_metric(method)
+        target_keys = (("ll_multiplier", "margin_multiplier", "ll_headroom_fraction")
+                       if mode == "dual_norm" else ("ll_headroom_fraction", "margin_target"))
+        for key in target_keys:
             if not np.isfinite(method[key]) or method[key] <= 0:
                 raise ValueError("positive finite target scale required")
         if (not np.isfinite(method["retention_lower"]) or method["retention_lower"] > 0
@@ -149,25 +172,29 @@ def build(args):
                 continue
             plan["matrix_tensors"] = names
         active, selected = adapter.matrix_column_indices(plan, layout)
-        scale = np.maximum(np.abs(base[active]), method["relative_floor"])
+        scale = dual_scale(base[active], method)
         primary = set(method["science_purposes"] + method["code_purposes"]
                       + method["additional_primary_purposes"])
         rows, target_report = [], []
         for objective in adapter.OBJECTIVES:
             norms = np.linalg.norm(gradients[objective][:, active] * scale, axis=1)
-            multiplier = method["ll_multiplier" if objective == "correct-logprob" else "margin_multiplier"]
             for index, (purpose, fold) in enumerate(labels):
                 target = method["retention_lower"]
                 if purpose in primary:
-                    target = multiplier * float(norms[index])
-                    if objective == "correct-logprob":
-                        target = min(target, method["ll_headroom_fraction"] * headroom[index])
+                    if mode == "functional":
+                        target = (method["ll_headroom_fraction"] * headroom[index]
+                                  if objective == "correct-logprob" else method["margin_target"])
+                    else:
+                        multiplier = method["ll_multiplier" if objective == "correct-logprob"
+                                            else "margin_multiplier"]
+                        target = multiplier * float(norms[index])
+                        if objective == "correct-logprob":
+                            target = min(target, method["ll_headroom_fraction"] * headroom[index])
                 row = dict(objective=objective, purpose=purpose, fold=fold, minimum_delta=float(target))
                 rows.append(row)
                 target_report.append(dict(**row, dual_norm=float(norms[index]), primary=purpose in primary))
         plan["candidates"] = [dict(id=method["id"], constraints=rows,
-                                   cost_metric=dict(type="relative", floor=method["relative_floor"],
-                                                    block_scales=dict(native=1., matrix=1.)),
+                                   cost_metric=method_metric(method),
                                    rounding=method["rounding"])]
         plan["prospective_method"] = dict(path=str(args.policy.resolve()), sha256=args.policy_sha)
         plan["fixed_method_inputs"] = {

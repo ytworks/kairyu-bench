@@ -29,8 +29,9 @@ def check_plan(path, expected):
         raise ValueError("explicit plan SHA mismatch")
     if plan.get("eligible_blocks") != ["matrix"] or len(plan["candidates"]) != 1:
         raise ValueError("one strict matrix-only candidate required")
-    policy = plan["analytic_calibration"]
-    if policy != {"calibration_seconds": 120, "candidate_seconds": 180,
+    policy = dict(plan["analytic_calibration"])
+    metric_type = policy.pop("metric", "relative")
+    if metric_type not in {"relative", "euclidean"} or policy != {"calibration_seconds": 120, "candidate_seconds": 180,
                   "fractional_buffer": 1 / 128, "floor": 1e-6,
                   "dual_tolerance": 2e-10, "maximum_iterations": 20000}:
         raise ValueError("fixed analytic stage contract differs")
@@ -48,9 +49,19 @@ def check_plan(path, expected):
     for key in ("constraints", "cost_metric"):
         if method[key] != prior["candidates"][0][key]:
             raise ValueError("predeclared bounds/cost differ")
-    if method["cost_metric"] != {"type": "relative", "floor": 1e-6,
-                                "block_scales": {"native": 1.0, "matrix": 1.0}}:
-        raise ValueError("relative cost contract differs")
+    expected_metric = {"type": metric_type, "block_scales": {"native": 1.0, "matrix": 1.0}}
+    if metric_type == "relative":
+        expected_metric["floor"] = 1e-6
+    if method["cost_metric"] != expected_metric:
+        raise ValueError("analytic cost contract differs")
+    observed = collections["matrix:correct-logprob"]["coverage"]["entries"]
+    active, selected = adapter.matrix_column_indices(plan, observed)
+    reference_active, _ = adapter.matrix_column_indices(prior, observed)
+    if not np.array_equal(active, reference_active):
+        raise ValueError("reference matrix mask differs")
+    if any(adapter.matrix_recipe.PATTERN.fullmatch(row["tensor"])[3]
+           not in {"o", "gate", "up", "down"} for row in selected):
+        raise ValueError("analytic scope permits only O/MLP matrices")
     for filename, old in plan["completed_collection_stat"].items():
         if adapter.stamp(Path(filename)) != tuple(old[k] for k in ("device", "inode", "size", "mtime_ns", "ctime_ns")):
             raise ValueError("completed observation stat changed")
@@ -72,7 +83,7 @@ def matrix_arrays(checkpoint, plan, collections, labels, pins):
             if set(data.files) != {"coordinates", "source_values"}:
                 raise ValueError("unexpected sample arrays")
         expected = adapter.matrix_recipe.mlp_triplet_samples(checkpoint.tensors, collection["provenance"]["seed"])
-        cursor, active, selected = 0, [], []
+        cursor = 0
         for entry in layout:
             count = entry["count"]
             name = entry["tensor"]
@@ -80,12 +91,11 @@ def matrix_arrays(checkpoint, plan, collections, labels, pins):
                 raise ValueError("matrix header shape differs")
             if name in expected and not np.array_equal(coordinates[cursor:cursor+count], expected[name][0]):
                 raise ValueError("coherent MLP coordinates differ")
-            family = adapter.matrix_recipe.PATTERN.fullmatch(name)[3]
-            if family in {"o", "gate", "up", "down"}:
-                active.extend(range(cursor, cursor + count))
-                selected.append(dict(entry, family=family))
             cursor += count
-        loaded.append((base, gradient, layout, coordinates, np.asarray(active), selected))
+        active, selected = adapter.matrix_column_indices(plan, layout)
+        selected = [dict(entry, family=adapter.matrix_recipe.PATTERN.fullmatch(entry["tensor"])[3])
+                    for entry in selected]
+        loaded.append((base, gradient, layout, coordinates, active, selected))
     left, right = loaded
     if (left[2] != right[2] or not np.array_equal(left[3], right[3])
             or not np.array_equal(left[0].astype(np.float32).view(np.uint32), right[0].astype(np.float32).view(np.uint32))):
@@ -100,7 +110,7 @@ def calibration(checkpoint, plan, collections, labels, pins, destination):
     method = plan["candidates"][0]
     lower = np.asarray([row["minimum_delta"] for row in method["constraints"]])
     scale = np.maximum(np.abs(base), 1e-6)
-    cost = 1 / scale
+    cost = np.ones_like(base) if method["cost_metric"]["type"] == "euclidean" else 1 / scale
     step, dual = adapter.joint.minimum_step(gradient, lower, cost, tolerance=2e-10, maximum_iterations=20000)
     prediction = gradient @ step
     norms = np.linalg.norm(gradient / cost, axis=1)
@@ -151,6 +161,10 @@ def calibration(checkpoint, plan, collections, labels, pins, destination):
               "rounded_box_maximum_necessary_shortfall": float(np.maximum(lower-upper, 0).max()),
               "row_bounds_are_necessary_not_joint_sufficient": True,
               "native_edit_columns": 0, "qkv_edit_columns": 0, "matrix_columns": len(base),
+              "observed_matrix_columns": sum(entry["count"] for entry in
+                  collections["matrix:correct-logprob"]["coverage"]["entries"]),
+              "cost_metric": method["cost_metric"],
+              "eligible_matrix_tensors": [entry["tensor"] for entry in layout],
               "layout": layout, "rows": rows, "source_checkpoint": plan["checkpoint"],
               "parent_state": plan.get("parent_state"),
               "source_sha256": {p: record[0] for p, record in pins.items()},
@@ -207,6 +221,14 @@ def main(argv=None):
                     or report["source_checkpoint"] != plan["checkpoint"]
                     or rows != plan["candidates"][0]["constraints"]):
                 raise ValueError("one successful analytic calibration required")
+            _, selected = adapter.matrix_column_indices(
+                plan, collections["matrix:correct-logprob"]["coverage"]["entries"])
+            selected_names = [entry["tensor"] for entry in selected]
+            legacy_metric = {"type": "relative", "floor": 1e-6,
+                             "block_scales": {"native": 1.0, "matrix": 1.0}}
+            if (report.get("cost_metric", legacy_metric) != plan["candidates"][0]["cost_metric"]
+                    or [entry["tensor"] for entry in report["layout"]] != selected_names):
+                raise ValueError("calibration metric or matrix mask differs")
             expected = {"relative_radius": report["derived_relative_radius"],
                         "absolute_radius": report["derived_absolute_radius"], "rounds": 16}
             if plan["candidates"][0]["rounding"] != expected:
@@ -235,8 +257,9 @@ def main(argv=None):
                 spec = json.loads((proposal_dir / (measured["id"] + ".json")).read_bytes())
                 for edit in spec["edits"]:
                     match = adapter.matrix_recipe.PATTERN.fullmatch(edit["tensor"])
-                    if "indices" in edit or not match or match[3] not in {"o", "gate", "up", "down"}:
-                        raise ValueError("native or QKV candidate edit")
+                    if ("indices" in edit or not match or match[3] not in {"o", "gate", "up", "down"}
+                            or edit["tensor"] not in selected_names):
+                        raise ValueError("candidate edit outside analytic matrix mask")
                     for rc, value in zip(edit["coordinates"], edit["set_values"], strict=True):
                         old = lookup[edit["tensor"]][tuple(rc)]
                         radius = max(abs(old) * expected["relative_radius"], expected["absolute_radius"])

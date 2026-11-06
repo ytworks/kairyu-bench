@@ -79,8 +79,21 @@ The published port adds plan fields `repo`, `python`, `results_dir`, and `tools.
 
 ## Source relationship and checks
 
-The published screen is byte-identical to exercised runtime `f8f6c1ad0f1ebc6d2d8278b0c397175c77d99c74a11e29de9cb56f2bbf2a6b45`.
+The screen was exercised as runtime
+`f8f6c1ad0f1ebc6d2d8278b0c397175c77d99c74a11e29de9cb56f2bbf2a6b45`.
+Its published version is
+`f5e7a4ea498cca565644833479931d6cc642fb02433d4dd80a7210f79cafdf3e`:
+Ruff formatting and splitting grouped imports repaired the publication's CI
+failure. Its parsed AST is identical after normalizing that import split.
+The exercised runtime remains preserved separately.
 
-The DP2 port derives from reviewed but unexecuted `cdac49afd3d15f6c958a3f8938559f7eecea1f378b3a0014c2ae282f582fdfdb`. Only path/helper binding, exact-ID lookup, deferred import and flat numeric trial-count fields changed. Mathematics and lifecycle ordering are unchanged.
+The DP2 port derives from reviewed but unexecuted `cdac49afd3d15f6c958a3f8938559f7eecea1f378b3a0014c2ae282f582fdfdb`. Only path/helper binding, exact-ID lookup, deferred import and flat numeric trial-count fields changed. Mathematics and lifecycle ordering are unchanged. The port was then formatted
+from `8021731899fde53d893a8259d5a34e7856dbfd5802eab94a71a316a2ad040956`
+to `958404efe2f5966dce29847a0ee6a7ed9f16612a93a069c8f759b56f28e18439`
+with the same AST-equivalence check. It remains unexecuted.
 
 CPU syntax and both inert previews passed without Docker/model operations. Receipt: analysis/code90-resume-20261106/overlay-owner-publication-v1/validation.json, SHA256 `2f7f99ba7a91749ec8c1485f93dc4f9c2d04c99effbc1ff429f56b1ccc67aa44`. No model reruns or new static-registry tests were added.
+
+The formatting repair passed Ruff for both published scripts without a model
+rerun. The exact before/after hashes and AST check are recorded in
+`analysis/code90-resume-20261106/published-owner-ruff-repair-v1.json`.

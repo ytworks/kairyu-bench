@@ -125,4 +125,11 @@ The combined library/group-tool CPU validation passed 518 collected tests (463 p
 
 ## Bounded evaluation owners
 
-The [matrix-overlay screen](scripts/screen-matrix-overlays.py) is the byte-identical exercised owner for the six-candidate library transfer screen. The [TP2×DP2 full14 pair recipe](scripts/full14-tp2-dp2-pair.py) is a plan-bound portability copy of a prospective owner, with no actual DP2/model evaluation yet. The [shared guide](../wsp-bounded-gpu-evaluation-owners.md) records exact-CID independent restoration, selected-word/draft proof boundaries and explicit authorization. The [experiment result](2026-11-07-ad-science-dependency-sets.md#ordinary-transfer-screen-no-gain-over-the-matched-control) records no transfer improvement, the repeated-control variability and AL's selection for a later saved-weight comparison; it claims no adoption or official-score gain.
+The [matrix-overlay screen](scripts/screen-matrix-overlays.py) is an AST-equivalent formatting copy (after normalizing split imports) of the exercised owner for the six-candidate library transfer screen. The [TP2×DP2 full14 pair recipe](scripts/full14-tp2-dp2-pair.py) is a plan-bound portability copy of a prospective owner, with no actual DP2/model evaluation yet. The [shared guide](../wsp-bounded-gpu-evaluation-owners.md) records exact-CID independent restoration, selected-word/draft proof boundaries and explicit authorization. The [experiment result](2026-11-07-ad-science-dependency-sets.md#ordinary-transfer-screen-no-gain-over-the-matched-control) records no transfer improvement, the repeated-control variability and AL's selection for a later saved-weight comparison; it claims no adoption or official-score gain.
+
+[The derived matrix batch runner](../../scripts/experiments/gemma4-purpose/run_derived_matrix_batch.py)
+orchestrates at most six pinned functional-target plans in two CPU workers,
+with one 120-second analytic stage and one 180-second BF16 stage per method.
+Completed candidates receive the existing exact numeric postcheck; failed
+stages remain in the batch report. There is no replacement optimizer, model
+call, automatic retry or adoption. See the [functional-target guide](../wsp-shared-science-code-groups.md).

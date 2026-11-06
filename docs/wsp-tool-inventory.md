@@ -99,4 +99,13 @@ The combined library/group-tool CPU validation passed 518 collected tests (463 p
 
 ## Bounded GPU evaluation owner recipes
 
-The [owner guide](wsp-bounded-gpu-evaluation-owners.md) covers two explicit-plan recipes: [matrix-overlay transfer screening](experiments/scripts/screen-matrix-overlays.py) and [a TP2×DP2 full14 pair](experiments/scripts/full14-tp2-dp2-pair.py). The screen source is the exact exercised owner: six candidates plus repeated control, 64 ordinary-generation requests, all original containers restored. No candidate exceeded its paired control; these are authored execution outcomes, not official scores. The DP2 recipe has syntax/inert-preview and source-review evidence only; its GPU topology, smoke and full14 execution remain unvalidated. The port adds no solver, sampler change or automatic adoption rule. These publication checks are separate from the preceding 518-test CPU suite.
+The [owner guide](wsp-bounded-gpu-evaluation-owners.md) covers two explicit-plan recipes: [matrix-overlay transfer screening](experiments/scripts/screen-matrix-overlays.py) and [a TP2×DP2 full14 pair](experiments/scripts/full14-tp2-dp2-pair.py). The published screen is a formatting-only copy of the exercised owner, with AST equivalence after splitting imports: six candidates plus repeated control, 64 ordinary-generation requests, all original containers restored. No candidate exceeded its paired control; these are authored execution outcomes, not official scores. The DP2 recipe has syntax/inert-preview and source-review evidence only; its GPU topology, smoke and full14 execution remain unvalidated. The port adds no solver, sampler change or automatic adoption rule. These publication checks are separate from the preceding 518-test CPU suite.
+
+The functional-target extension of the [science/code group builder](wsp-shared-science-code-groups.md)
+keeps requested LL-headroom and margin gains fixed across support and cost
+choices. [run_derived_matrix_batch.py](../scripts/experiments/gemma4-purpose/run_derived_matrix_batch.py)
+runs its pinned reference plans through the existing analytic box derivation,
+BF16 proposal and exact raw-cost postcheck with two bounded CPU workers.
+Per-method failures are retained without retries. It does not run a model or
+adopt weights. The existing builder and derived-box E2Es cover the new
+Euclidean/exact-mask/raw-cap paths through saved checkpoint bytes.

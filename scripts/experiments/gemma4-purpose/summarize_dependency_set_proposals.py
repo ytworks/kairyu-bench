@@ -38,6 +38,13 @@ def main():
     for item in roster["rows"]:
         inputs.add(Path(item["plan"]).resolve())
         planned_input = json.loads(Path(item["plan"]).read_text())
+        for key in ("analytic_report", "reference_plan"):
+            if key in planned_input:
+                ref = planned_input[key]
+                path = Path(ref["path"]).resolve()
+                if sha(path) != ref["sha256"]:
+                    raise ValueError("analytic input pin differs")
+                inputs.add(path)
         if "prospective_method" in planned_input:
             inputs.add(Path(planned_input["prospective_method"]["path"]).resolve())
         report_path = Path(item["output"]) / "report.json"
@@ -92,13 +99,76 @@ def main():
             or checkpoint_path in args.output.resolve().parents
         ):
             raise ValueError("output overlaps checkpoint")
+        cap_metric = "declared_weighted"
+        functional = False
         if "prospective_method" in plan:
             prospective = plan["prospective_method"]
             policy_path = Path(prospective["path"])
             if pins[str(policy_path.resolve())] != prospective["sha256"]:
                 raise ValueError("prospective policy pin differs")
             document = json.loads(policy_path.read_text())
-            if "realized_weighted_cap" in document:
+            if document.get("protocol") == "functional_targets_v1":
+                functional = True
+                cap_metric = "raw"
+                cap = document["realized_raw_cap"]
+                if (type(cap) not in (int, float) or not math.isfinite(cap) or cap <= 0
+                        or document["parent_state"] != plan.get("parent_state")
+                        or document.get("native_frozen") is not True
+                        or plan.get("eligible_blocks") != ["matrix"]):
+                    raise ValueError("functional policy parent, native scope or raw cap differs")
+                for candidate in plan["candidates"]:
+                    declared = [m for m in document["methods"] if m["id"] == candidate["id"]]
+                    if (len(declared) != 1 or declared[0]["target_mode"] != "functional"
+                            or declared[0]["cost_metric"] != candidate["cost_metric"]
+                            or declared[0]["matrix_families"] != plan["matrix_families"]):
+                        raise ValueError("functional candidate differs from declared method")
+                    rounding = declared[0]["rounding"]
+                    if "analytic_report" in plan:
+                        ref = plan["analytic_report"]
+                        report_path = Path(ref["path"]).resolve()
+                        if pins[str(report_path)] != ref["sha256"]:
+                            raise ValueError("analytic report changed")
+                        analytic = json.loads(report_path.read_text())
+                        original = plan["reference_plan"]
+                        original_path = Path(original["path"]).resolve()
+                        if pins[str(original_path)] != original["sha256"]:
+                            raise ValueError("analytic reference plan changed")
+                        reference = json.loads(original_path.read_text())
+                        for key in ("checkpoint", "parent_state", "cases", "collections",
+                                    "matrix_families", "matrix_tensors", "prospective_method"):
+                            if reference.get(key) != plan.get(key):
+                                raise ValueError("analytic reference scope differs")
+                        original_method = reference["candidates"][0]
+                        for key in ("id", "constraints", "cost_metric"):
+                            if candidate[key] != original_method[key]:
+                                raise ValueError("analytic target or metric differs")
+                        expected_names = [
+                            e["tensor"] for e in cov["entries"]
+                            if re.search(r"\.(q|k|v|o|gate|up|down)_proj\.weight$",
+                                         e["tensor"]).group(1) in plan["matrix_families"]
+                            and (plan.get("matrix_tensors") is None
+                                 or e["tensor"] in plan["matrix_tensors"])]
+                        observed_names = [e["tensor"] for e in analytic["layout"]]
+                        case_path = str(Path(plan["cases"]["path"]).resolve())
+                        if (analytic["cost_metric"] != candidate["cost_metric"]
+                                or observed_names != expected_names
+                                or analytic["source_sha256"].get(str(original_path)) != original["sha256"]
+                                or analytic["source_sha256"].get(case_path) != plan["cases"]["sha256"]):
+                            raise ValueError("analytic metric, matrix mask or reference source differs")
+                        rows = [{k: r[k] for k in ("objective", "purpose", "fold", "minimum_delta")}
+                                for r in analytic["rows"]]
+                        if (analytic["status"] != "analytic_calibration_complete"
+                                or analytic["continuous_calls"] != 1
+                                or analytic["source_checkpoint"] != plan["checkpoint"]
+                                or analytic["parent_state"] != plan["parent_state"]
+                                or rows != candidate["constraints"]):
+                            raise ValueError("analytic objective binding differs")
+                        rounding = dict(relative_radius=analytic["derived_relative_radius"],
+                                        absolute_radius=analytic["derived_absolute_radius"], rounds=16)
+                    if rounding != candidate["rounding"]:
+                        raise ValueError("functional rounding differs from declared or derived box")
+                policy = dict(actual_declared_weighted_l2_cap=cap)
+            elif "realized_weighted_cap" in document:
                 if (document["parent_state"] != plan.get("parent_state")
                         or document.get("native_frozen") is not True
                         or plan.get("eligible_blocks") != ["matrix"]):
@@ -126,15 +196,16 @@ def main():
                     or policy["actual_declared_weighted_l2_cap"] != 1.):
                 raise ValueError("declared eight-set fixed policy required")
         cap = policy["actual_declared_weighted_l2_cap"]
-        if policy["relative_radius"] != 0.025 or policy["absolute_radius"] != 1e-6:
-            raise ValueError("declared fixed rounding budget required")
-        for candidate in plan["candidates"]:
-            if candidate["rounding"] != {
-                "relative_radius": 0.025,
-                "absolute_radius": 1e-6,
-                "rounds": 16,
-            }:
-                raise ValueError("candidate rounding differs from policy")
+        if not functional:
+            if policy["relative_radius"] != 0.025 or policy["absolute_radius"] != 1e-6:
+                raise ValueError("declared fixed rounding budget required")
+            for candidate in plan["candidates"]:
+                if candidate["rounding"] != {
+                    "relative_radius": 0.025,
+                    "absolute_radius": 1e-6,
+                    "rounds": 16,
+                }:
+                    raise ValueError("candidate rounding differs from policy")
 
         out = Path(item["output"])
         rp = out / "report.json"
@@ -271,7 +342,8 @@ def main():
                     else 1 / np.maximum(np.abs(base), metric["floor"])
                 )
                 weighted = delta * cost * scales[block]
-                radius = np.maximum(np.abs(base) * 0.025, 1e-6)
+                radius = np.maximum(np.abs(base) * planned["rounding"]["relative_radius"],
+                                    planned["rounding"]["absolute_radius"])
                 ex = np.maximum(np.abs(delta) - radius, 0)
                 excess += int(np.count_nonzero(ex > 0))
                 maxexcess = max(maxexcess, float(ex.max(initial=0)))
@@ -336,8 +408,10 @@ def main():
                 metric=metric,
                 continuous_box_excess_count=excess,
                 maximum_continuous_box_excess=maxexcess,
-                eligible_for_finite=weighted <= cap and sum(counts.values()) > 0,
+                eligible_for_finite=(raw if cap_metric == "raw" else weighted) <= cap
+                                    and sum(counts.values()) > 0,
                 metric_cap=cap,
+                cap_metric=cap_metric,
                 both_blocks_changed=all(v > 0 for v in counts.values()),
                 block_collapse=(
                     plan.get("eligible_blocks") == ["native", "matrix"]

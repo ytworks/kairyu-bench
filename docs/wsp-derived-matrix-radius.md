@@ -8,7 +8,9 @@ checkpoint.
 
 The explicit matrix-only hypothesis freezes accepted native parameters and
 diagnostic Q/K/V columns. It permits sampled attention output coordinates and
-the complete sampled MLP gate/up/down sets. This structural scope does not
+complete sampled MLP gate/up/down sets. The optional exact matrix_tensors mask
+is applied through the same adapter.matrix_column_indices selector used by the
+BF16 proposal; an excluded matrix cannot influence the continuous step or box. This structural scope does not
 guarantee that every permitted matrix receives a nonzero realized change.
 
 ## Two explicit stages
@@ -35,11 +37,16 @@ is no automatic retry, coefficient grid, model measurement or adoption.
 
 The underlying plan is the adapter's schema 2 with eligible_blocks=["matrix"],
 one candidate, complete matched native/matrix correct-logprob and margin
-collections, and relative cost with floor 1e-6 and both block scales 1. The
+collections, and both block scales 1. The legacy cost is relative with floor
+1e-6. An explicit analytic_calibration.metric="euclidean" opts into a candidate
+cost_metric of {"type":"euclidean","block_scales":{"native":1,"matrix":1}}.
+Omitting metric retains the legacy relative policy. The
 reference_plan object supplies path and SHA of the previously fixed plan;
 the old prior_aa_plan spelling is also accepted for replay of archived inputs.
 Checkpoint, cases, optional parent state, collections, baseline tolerance,
-constraints and cost must equal that reference.
+constraints, cost and effective matrix mask must equal that reference. A
+reference with a wider or different exact tensor scope is rejected before
+reading gradients.
 
 The plan also supplies completed_collection_sha256 and
 completed_collection_stat, keyed by absolute input filename. Each stat has
@@ -51,7 +58,8 @@ and source pins; matching only the checkpoint and numerical bounds is insufficie
 Optional fixed_method_inputs
 adds pinned method receipts without requiring a particular host or study.
 
-The explicit analytic_calibration policy is fixed to:
+The existing analytic_calibration policy remains fixed to the following values;
+only the optional metric field ("relative" or "euclidean") is added:
 
 ~~~json
 {
@@ -67,7 +75,8 @@ The explicit analytic_calibration policy is fixed to:
 For incumbent coordinates b and the one continuous minimum-cost step d, the
 published method computes:
 
-- scale_i = max(abs(b_i), 1e-6), cost_i = 1 / scale_i.
+- scale_i = max(abs(b_i), 1e-6).
+- cost_i = 1 / scale_i for relative cost, or 1 for explicit Euclidean cost.
 - rho = max_i(abs(d_i) / scale_i) + 1/128.
 - absolute_radius = max(1e-6, rho * 1e-6).
 - radius_i = max(rho * abs(b_i), absolute_radius).
@@ -78,12 +87,14 @@ ULP** at arbitrary final magnitudes. The existing numerical convergence
 contract and finite-value checks must pass. A failed solver contract is not
 reported as mathematical infeasibility.
 
-The report retains the continuous norms, all predictions, the derived box, and
+The report retains the declared cost, exact eligible tensor names, observed and
+active column counts, continuous norms, all predictions, the derived box, and
 per-row necessary upper bounds from the two realized BF16 endpoints. These row
 bounds are not jointly sufficient. The candidate uses at most 16 existing
 internal BF16 corrections, with every realization anchored to the incumbent.
 Actual values can round outside the continuous box; the audit reports any
-excess instead of silently clipping it.
+excess instead of silently clipping it. Candidate replay binds the analytic
+report to the same cost and exact matrix mask, in addition to its source pins.
 
 A large derived radius weakens the local-gradient interpretation even when the
 aggregate absolute norm looks small. Predicted feasibility is not finite
@@ -107,9 +118,17 @@ directory. A mismatched analytic observation/frame binding is also rejected
 before a quantized proposal starts. The focused fixture, Ruff and mypy pass. Private weights, arrays,
 plans and generated specs are not included in the repository.
 
-Whole CPU validation completed once: 511 collected, 459 passed and 52 optional
+Historical initial-publication CPU validation completed once: 511 collected, 459 passed and 52 optional
 dependency skips; Ruff, mypy over 74 source files, data checks and 31 shell syntax
 checks passed. Numerical source hashes were unchanged during the checks. The
 new script also passed its focused mypy check. The CI evidence is
 cpu-integration-derived-matrix-radius-v1/ci-results.json, SHA
 a56b4a432b151d9b1c305001ffb01eec290dd4f2fdb582d72fd7509c9d05bd13.
+
+The same end-to-end fixture additionally exercises an exact one-matrix mask
+with a much stronger excluded matrix gradient, Euclidean cost at source value
+2, the derived plan through BF16 proposal and actual saved-byte verification,
+and the functional raw-cap postchecker. It rejects a mismatched reference mask
+and preserves every excluded/native/QKV byte. This extends the existing test;
+no static registry tests or real candidate/model calculations are added. Large
+derived radii remain visible without an arbitrary box cap.

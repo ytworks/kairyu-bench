@@ -22,6 +22,11 @@ POSTCHECK = load("summarize_dependency_set_proposals")
 
 class ScienceCodeGroupTest(unittest.TestCase):
     def test_agreement_scope_targets_and_saved_bytes_share_the_same_columns(self):
+        for functional in (False, True):
+            with self.subTest(functional=functional):
+                self.run_scenario(functional)
+
+    def run_scenario(self, functional):
         f = fixtures.NativeCoupledTests("runTest")
         f.setUp()
         self.addCleanup(f.doCleanups)
@@ -77,7 +82,7 @@ class ScienceCodeGroupTest(unittest.TestCase):
                             else "mean_margin"] = baseline
                         if family == "matrix":
                             gradient = np.zeros(sum(e["count"] for e in entries))
-                            gradient[selected["start"]] = 1.
+                            gradient[selected["start"]] = 2. if functional else 1.
                             gradient[excluded["start"]] = 100. if purpose == "science" else -100.
                             row["file"] = f"{purpose}-{fold}.npy"
                             np.save(path / row["file"], gradient)
@@ -114,12 +119,19 @@ class ScienceCodeGroupTest(unittest.TestCase):
             retention_lower=-.002,
             rounding=dict(relative_radius=.025, absolute_radius=1e-6, rounds=16),
         )
+        if functional:
+            method.update(target_mode="functional", ll_headroom_fraction=1/64,
+                          margin_target=1/64, cost_metric=dict(type="euclidean",
+                          block_scales=dict(native=1., matrix=1.)))
+            del method["ll_multiplier"], method["margin_multiplier"]
+        cap_key = "realized_raw_cap" if functional else "realized_weighted_cap"
         policy = f.root / "policy.json"
-        policy.write_text(json.dumps(dict(
-            parent_state=parent_ref, native_frozen=True, realized_weighted_cap=2.,
-            review=dict(path=str(review), sha256=f.sha(review)),
-            methods=[method],
-        )))
+        document = dict(parent_state=parent_ref, native_frozen=True,
+            review=dict(path=str(review), sha256=f.sha(review)), methods=[method],
+            **{cap_key: 2.})
+        if functional:
+            document["protocol"] = "functional_targets_v1"
+        policy.write_text(json.dumps(document))
         output = f.root / "prepared"
         args = argparse.Namespace(
             template=f.plan_path, policy=policy, policy_sha=f.sha(policy),
@@ -138,7 +150,7 @@ class ScienceCodeGroupTest(unittest.TestCase):
         self.assertEqual(plan["eligible_blocks"], ["matrix"])
         self.assertEqual([g["selected"] for g in report["groups"]], [True, False])
         for row in report["targets"]:
-            self.assertEqual(row["dual_norm"], 1.)
+            self.assertEqual(row["dual_norm"], 2. if functional else 1.)
             self.assertEqual(row["minimum_delta"], 1/64)
         proposal = f.root / "proposal"
         solved = BUILDER.adapter.solve(prepared, proposal, write_spec=True)
@@ -168,13 +180,14 @@ class ScienceCodeGroupTest(unittest.TestCase):
 
         accepted = postcheck(prepared, proposal, "cap-two")
         self.assertTrue(accepted["eligible_for_finite"])
-        self.assertEqual(accepted["declared_weighted_delta_l2"], 1/64)
+        self.assertEqual(accepted["declared_weighted_delta_l2"], 1/128 if functional else 1/64)
+        self.assertEqual(accepted["cap_metric"], "raw" if functional else "declared_weighted")
         self.assertEqual(accepted["metric_cap"], 2.)
         # A separately frozen lower-cap policy must reject the same real BF16
         # step. This protects the behavior, not just a displayed cap value.
         lower_policy = f.root / "lower-policy.json"
         document = json.loads(policy.read_text())
-        document["realized_weighted_cap"] = 1/128
+        document[cap_key] = 1/256 if functional else 1/128
         lower_policy.write_text(json.dumps(document))
         lower_args = argparse.Namespace(template=f.plan_path, policy=lower_policy,
             policy_sha=f.sha(lower_policy), output=f.root / "lower-prepared")
@@ -184,8 +197,8 @@ class ScienceCodeGroupTest(unittest.TestCase):
         BUILDER.adapter.solve(lower_plan, lower_proposal, write_spec=True)
         rejected = postcheck(lower_plan, lower_proposal, "cap-small")
         self.assertFalse(rejected["eligible_for_finite"])
-        self.assertEqual(rejected["declared_weighted_delta_l2"], 1/64)
-        self.assertEqual(rejected["metric_cap"], 1/128)
+        self.assertEqual(rejected["declared_weighted_delta_l2"], 1/128 if functional else 1/64)
+        self.assertEqual(rejected["metric_cap"], 1/256 if functional else 1/128)
         saved_path, manifest = f.root / "saved", f.root / "saved.json"
         editor.create(f.checkpoint.path, saved_path, spec, manifest,
                       apply=True, reserve_bytes=0)
