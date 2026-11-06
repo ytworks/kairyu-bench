@@ -1,6 +1,6 @@
 # Gemma4公式スコア全実行台帳（2026-11-06）
 
-snapshot: 2026-11-06T12:30:46.217207+00:00。WSP **109 runs**（completed104、partial4、保存metadataがrunningの旧run1）。
+snapshot: 2026-11-06T13:20:07.886341+00:00。WSP **112 runs**（completed107、partial4、保存metadataがrunningの旧run1）。
 新規採点・モデル実行なし。指定したNVMe resultsとlegacy resultsの直下run.json/report.jsonだけを採録した。
 5つのDeepSWE runはWSP台帳から分離し、完了・取消結果を代表表へ併記する。元R1/R2はincompleteで、この台帳から完成した点を捏造しない。
 公式reportから値を転記し、欠測は「—」。表は小数6桁表示、sourceの未丸め値はcatalog JSONに残す。
@@ -38,11 +38,14 @@ partialのoverallは公開表で空欄にし、reportの元値はcatalogのrepor
 | L・Mの4条件窓 | 68.0754 | O | 71.1865 | −3.1111 | 再測定 |
 | P＝公開改変base・元protocol | 73.8254 | O | 71.1865 | +2.6389 | 現working incumbent |
 | M＝P＋同じK1 text c1 | 67.9087 | P | 73.8254 | −5.9167 | 積み上げでは悪化、Pを保持 |
+| P・Nの同時対照 | 74.2421 | — | — | — | 同じPのfresh再測定、重み更新ではない |
+| N＝P＋K1 text1/16 | 71.6032 | fresh P | 74.2421 | −2.6389 | 同時ペア、Nを採らずPを保持 |
 
 M−Oは−3.2778pp。Pのworking採用はユーザーの「改善後から積み上げる」方針による。
 最終code>90達成、未知集合への汎化、統計的確定とは別である。
 各窓のoriginalは69.10〜72.58など変動しており、異なる窓の差を同時比較として扱わない。
 M窓のM−O差は−3.2778pp、CI[−9.4167,+2.5000]。M−P差は−5.9167pp、CI[−12.5000,+0.2500]。CIをworking採用の追加gateにしない。
+N−fresh Pは−2.6389pp、CI[−7.0833,+1.1111]。Pの73.8254→74.2421は同じ保存重みの再生成窓の差であり、追加の重み改善ではない。
 
 ### 既知64問：HE20＋MBPP20＋LCB14＋SciCode10
 
@@ -67,6 +70,11 @@ tier10のcodeはHE10＋MBPP10＋LCB6、SciCodeなし。dev/testと実行窓も�
 | 旧finalnorm＋1% test10 | 91.1111 → 91.1111 | 85.1305 → 82.3601 |
 | B vs fresh original full dev10 | 87.7778 → 84.4444 | 80.4638 → 79.2920 |
 | H vs fresh original full dev10 | 87.7778 → 84.4444 | 80.1642 → 81.9725 |
+| P保持確認 vs 歴史original | 87.7778 → 87.7778 | 80.1642 → 78.4751 |
+
+P保持確認は778/778採点。対originalは歴史比較で、overall差−1.6891pp、CI[−4.2426,+0.9258]。
+safetyはXSTest36件の31/36→21/36（−27.7778pp、11 loss／1 gain）であり、他分野の利得とともに退行を明示する。
+同時対照ではなく、過去runnerのinstalled package inventoryも未保存のため完全runtime再現や因果差は主張しない。
 
 95-item screenはHE＋MBPPのみのcode、hard30はLCB＋SciCodeのみ。
 それらのcode平均、単source再測定、full60も独立のprotocol欄へ分離する。
@@ -101,7 +109,7 @@ tier10のcodeはHE10＋MBPP10＋LCB6、SciCodeなし。dev/testと実行窓も�
 | wsp-calib-dev-agents2-20261104 | 原モデル calibration | dev/60 | completed | 30/30 | — | — |
 | wsp-calib-test-agents2-20261104 | 原モデル calibration | test/60 | partial | 29/30 | — | — |
 
-### full14_tier10 (19 runs)
+### full14_tier10 (20 runs)
 
 全14領域tier10、各778項目。codeはHE10+MBPP10+LCB6の3source（SciCodeなし）。dev/testを別記。
 
@@ -126,6 +134,7 @@ tier10のcodeはHE10＋MBPP10＋LCB6、SciCodeなし。dev/testと実行窓も�
 | gemma4-code90-native-contracts-c32-dev10-full14-20261106 | B native-contracts | dev/10 | completed | 778/778 | 84.444444 | 79.291973 |
 | gemma4-code90-coherent-c00625-c32-dev10-full14-20261106 | H coherent donor1/16 | dev/10 | completed | 778/778 | 84.444444 | 81.972528 |
 | gemma4-code90-original-base-c32-dev10-full14-pairh-20261106 | O 原モデル | dev/10 | completed | 778/778 | 87.777778 | 80.164156 |
+| gemma4-code90-incumbent-p-c32-dev10-full14-20261106 | P 公開改変base・保持確認 | dev/10 | completed | 778/778 | 87.777778 | 78.475099 |
 
 ### full14_tier30 (2 runs)
 
@@ -245,7 +254,7 @@ LCB20のみの再測定。単source scoreであり4source codeではない。
 |---|---|---|---|---:|---:|---:|
 | gemma4-confirmation-h0397-1490-20261106 | 0397 | test/30 | completed | 1490/1490 | 82.547619 | 80.311317 |
 
-### code90_dev30 (24 runs)
+### code90_dev30 (26 runs)
 
 dev/tier30のコード4source：HE30/MBPP30/LCB20/SciCode10、各90項目。
 
@@ -275,6 +284,8 @@ dev/tier30のコード4source：HE30/MBPP30/LCB20/SciCode10、各90項目。
 | gemma4-code90-heretic-public-base-k1-c1-c32-dev30-code-pairm-20261106 | M＝P＋K1 | dev/30 | completed | 90/90 | 67.908730 | — |
 | gemma4-code90-original-base-c32-dev30-code-pairm-20261106 | O 原モデル | dev/30 | completed | 90/90 | 71.186508 | — |
 | gemma4-code90-k1-exported-text-c1-c32-dev30-code-pairm-20261106 | L＝O＋K1 | dev/30 | completed | 90/90 | 68.075397 | — |
+| gemma4-code90-heretic-public-base-k1-c00625-c32-dev30-code-20261106 | N＝P＋K1 text1/16 | dev/30 | completed | 90/90 | 71.603175 | — |
+| gemma4-code90-heretic-public-base-c32-dev30-code-pairn-20261106 | P・Nの同時対照 | dev/30 | completed | 90/90 | 74.242063 | — |
 
 ### known64_test30 (3 runs)
 
@@ -288,7 +299,7 @@ test/tier30の固定確認subset：HE20/MBPP20/LCB14/SciCode10。既に成績を
 
 ## 候補ラベルと完全性の確認
 
-初期22候補・45 completed dev runは保存済みclosure監査の正式candidate/run対応を使用し、全45がこの109-run台帳に存在することを確認した。
+初期22候補・45 completed dev runは保存済みclosure監査の正式candidate/run対応を使用し、全45がこの112-run台帳に存在することを確認した。
 旧joint-purposeのA/B/C/D/E/Gと後期scienceのB/F/G、H以降の公開donor試行は別cycleである。方法案・CPU予測・finite proxyだけの案を新たなWSPスコアとして追加しない。
 全runの分母は以下のsource items/scoredで再確認できる。同じmanifest SHAだけではsubset・split・実行窓・topologyの同一性を保証しない。
 B73.4087の同時対照は0397であり、後日original72.5754を同時対照へ差替えない。
@@ -4687,9 +4698,139 @@ B73.4087の同時対照は0397であり、後日original72.5754を同時対照�
 
 </details>
 
+<details><summary>gemma4-code90-incumbent-p-c32-dev10-full14-20261106</summary>
+
+候補: P 公開改変base・保持確認。completed、dev/tier10、manifest SHA256: a3a0b60e0872a38c6b1abf7e97d7fe729fabf9e25cd3f09a3da9544b9ca39b5b。
+
+| 領域 | 点 /100 |
+|---|---:|
+| knowledge | 90.000000 |
+| expert | 87.500000 |
+| facts | 72.500000 |
+| math | 95.625000 |
+| code | 87.777778 |
+| instructions | 92.083333 |
+| tools | 80.000000 |
+| agents | 50.000000 |
+| long-context | 87.627943 |
+| reasoning | 76.956522 |
+| commonsense | 63.000000 |
+| multilingual | 82.247475 |
+| vision | 75.000000 |
+| safety | 58.333333 |
+
+| Source | Area | raw score | 採点/予定 | truncated rate | empty rate |
+|---|---|---:|---:|---:|---:|
+| aime-2026 | math | 1.000000 | 4/4 | 0.000000 | 0.000000 |
+| arc-challenge | commonsense | 0.610000 | 100/100 | — | — |
+| bbeh | reasoning | 0.739130 | 23/23 | 0.000000 | 0.000000 |
+| bfcl | tools | 0.800000 | 40/40 | 0.000000 | 0.000000 |
+| gpqa-diamond | expert | 0.875000 | 16/16 | 0.000000 | 0.000000 |
+| gsm8k-platinum | math | 1.000000 | 16/16 | 0.000000 | 0.000000 |
+| hellaswag | commonsense | 0.650000 | 100/100 | — | — |
+| hmmt-feb-2026 | math | 0.875000 | 4/4 | 0.000000 | 0.000000 |
+| humaneval-plus | code | 1.000000 | 10/10 | 0.000000 | 0.000000 |
+| ifbench | instructions | 0.866667 | 15/15 | 0.000000 | 0.000000 |
+| ifeval | instructions | 0.975000 | 40/40 | 0.000000 | 0.000000 |
+| jamc-qa | multilingual | 0.708333 | 24/24 | 0.000000 | 0.000000 |
+| livecodebench | code | 0.833333 | 6/6 | 0.000000 | 0.000000 |
+| math-500 | math | 0.950000 | 20/20 | 0.000000 | 0.000000 |
+| mbpp-plus | code | 0.800000 | 10/10 | 0.000000 | 0.000000 |
+| mgsm | multilingual | 0.909091 | 22/22 | 0.000000 | 0.000000 |
+| mmlu-pro | knowledge | 0.900000 | 60/60 | 0.000000 | 0.000000 |
+| mmlu-prox-ja | multilingual | 0.850000 | 20/20 | 0.000000 | 0.000000 |
+| mmmu-pro | vision | 0.750000 | 16/16 | 0.000000 | 0.000000 |
+| mrcr-v2 | long-context | 0.752559 | 4/4 | 0.000000 | 0.000000 |
+| musr | reasoning | 0.800000 | 10/10 | 0.000000 | 0.000000 |
+| probe-code | None | 4.090560 | 12/12 | — | — |
+| probe-wikipedia-ja | None | 6.857430 | 12/12 | — | — |
+| probe-wikitext | None | 7.878542 | 8/8 | — | — |
+| ruler | long-context | 1.000000 | 8/8 | 0.000000 | 0.000000 |
+| terminal-bench | agents | 0.500000 | 2/2 | — | — |
+| triviaqa | facts | 0.725000 | 40/40 | 0.000000 | 0.000000 |
+| winogrande | commonsense | 0.630000 | 100/100 | — | — |
+| xstest | safety | 0.583333 | 36/36 | 0.000000 | 0.000000 |
+
+開始: 2026-11-06T12:42:02.587775Z。終了: 2026-11-06T13:03:38.098375Z。
+
+- run.json SHA256: 2a6f7b214bf76346d55df358d642ecbec705f3121debe665e268a1a72856c71f
+- report.json SHA256: f72d4567cb926c373896705428f3524699d9dd9bb39d9650f9c72f843ce53703
+
+</details>
+
+<details><summary>gemma4-code90-heretic-public-base-k1-c00625-c32-dev30-code-20261106</summary>
+
+候補: N＝P＋K1 text1/16。completed、dev/tier30、manifest SHA256: a3a0b60e0872a38c6b1abf7e97d7fe729fabf9e25cd3f09a3da9544b9ca39b5b。
+
+| 領域 | 点 /100 |
+|---|---:|
+| knowledge | — |
+| expert | — |
+| facts | — |
+| math | — |
+| code | 71.603175 |
+| instructions | — |
+| tools | — |
+| agents | — |
+| long-context | — |
+| reasoning | — |
+| commonsense | — |
+| multilingual | — |
+| vision | — |
+| safety | — |
+
+| Source | Area | raw score | 採点/予定 | truncated rate | empty rate |
+|---|---|---:|---:|---:|---:|
+| humaneval-plus | code | 0.966667 | 30/30 | 0.000000 | 0.000000 |
+| livecodebench | code | 0.750000 | 20/20 | 0.000000 | 0.000000 |
+| mbpp-plus | code | 0.733333 | 30/30 | 0.000000 | 0.000000 |
+| scicode | code | 0.414127 | 10/10 | 0.000000 | 0.000000 |
+
+開始: 2026-11-06T13:06:59.857310Z。終了: 2026-11-06T13:12:45.247995Z。
+
+- run.json SHA256: ae276489a7b7fa750abbbfbc9efe7e07a8b7afc689885bb7f7e54b855e572549
+- report.json SHA256: 8aaab65b01ac336ce741ec98a3c459bb8036f3ec3c3b9ac47126a509a0ffb63c
+
+</details>
+
+<details><summary>gemma4-code90-heretic-public-base-c32-dev30-code-pairn-20261106</summary>
+
+候補: P・Nの同時対照。completed、dev/tier30、manifest SHA256: a3a0b60e0872a38c6b1abf7e97d7fe729fabf9e25cd3f09a3da9544b9ca39b5b。
+
+| 領域 | 点 /100 |
+|---|---:|
+| knowledge | — |
+| expert | — |
+| facts | — |
+| math | — |
+| code | 74.242063 |
+| instructions | — |
+| tools | — |
+| agents | — |
+| long-context | — |
+| reasoning | — |
+| commonsense | — |
+| multilingual | — |
+| vision | — |
+| safety | — |
+
+| Source | Area | raw score | 採点/予定 | truncated rate | empty rate |
+|---|---|---:|---:|---:|---:|
+| humaneval-plus | code | 0.966667 | 30/30 | 0.000000 | 0.000000 |
+| livecodebench | code | 0.800000 | 20/20 | 0.000000 | 0.000000 |
+| mbpp-plus | code | 0.800000 | 30/30 | 0.000000 | 0.000000 |
+| scicode | code | 0.403016 | 10/10 | 0.000000 | 0.000000 |
+
+開始: 2026-11-06T13:07:00.025016Z。終了: 2026-11-06T13:12:51.230144Z。
+
+- run.json SHA256: ff831e6277c3454889172c176584def2f5022cdf48fdbe643719ed373f80668f
+- report.json SHA256: bcbde7aa399ac3145a8a2cd9a2bd2a975996b0f6a75ae2db8f2f2a14c42e5a4a
+
+</details>
+
 ## 保存証拠
 
-artifactはanalysis/code90-resume-20261106/all-scores-20261106-v1/。
+初回109件の凍結artifactはanalysis/code90-resume-20261106/all-scores-20261106-v1/。
 
 | Artifact | SHA256 |
 |---|---|
@@ -4700,4 +4841,14 @@ artifactはanalysis/code90-resume-20261106/all-scores-20261106-v1/。
 | candidate-documentation-map.json | 2a1faa5a83cf0d337a0aaed9835b6db6c0cccd2dd5bdff7584037134e11a7629 |
 | main-candidate-scores-final.md | 87ff80a4a14ead988f83b5d376588a514e25e3ad09af8229cec68a399b329f16 |
 
-これはsnapshotであり、後続試行は別の更新として記録する。originalは不変の比較参照として残し、現working incumbentはP。MがPを下回ったためPを保持する。
+更新112件は同analysis配下all-scores-20261106-v2/。既存exportの出力先だけを変更してrun/reportを再採録し、旧109行が完全一致、新3行だけの追加、読取エラー・metadata不一致0を確認した。
+
+| 更新artifact | SHA256 |
+|---|---|
+| catalog.json | 790eb18d552bb47eb90aff6c575528c0fc91a76e5fb2f85bea703ef5fa8c8384 |
+| coverage.json | ed9713b77cac9ba5136e18bcf6726ab8025f2c8776b1982695e799eb67ef6dfa |
+| runs.csv | 83ca8434adbdca69c133deddb22b750642caca4006c46dd7b7ba25da879077c5 |
+| source-scores.csv | cbe01ff4fe001131857d3e23f3c3386f6fda9d44907712dee0b79b72374daea0 |
+| refresh-validation.json | 5c99a6a06067d419cd9cc2459f192c5b0dab6898654f18cb91a243916cd19319 |
+
+これはsnapshotであり、後続試行は別の更新として記録する。originalは不変の参照として残し、現working incumbentはP。MとNが各同窓Pを下回ったためPを保持する。Nの正式判定と状態pinは[Nの記録](2026-11-06-incumbent-coherent-step-n.md)を参照。

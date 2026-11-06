@@ -121,6 +121,11 @@ def verify(args):
     rows = sorted(verified["candidate_files"], key=lambda row: row["path"])
     if common.canonical(rows) != verified["candidate_tree_sha256"]:
         raise ValueError("verified candidate tree mismatch")
+    regenerated = len(verified["edits"])
+    structured = verified["recipe"].get("structured_scope")
+    expected = 180 if structured == "mlp_triplets_all_layers" else 410
+    if regenerated != expected:
+        raise ValueError("regenerated projection count differs from the verified scope")
     result = {
         "schema_version": 1, "status": "verified_dense_cpu_recipe",
         "verified_at": datetime.now(timezone.utc).isoformat(),
@@ -135,7 +140,12 @@ def verify(args):
         "numerical_implementation": verified["recipe"],
         "input_sha256": {str(p): h for p, h in pins.items()},
         "proof_method": "CPU dense recipe regenerated against persisted BF16 bytes; no RAM/GPU comparison",
-        "verification": {"all_410_matrices_cpu_regenerated": True,
+        "verified_scope": {"structured_scope": structured,
+                           "validated_projection_count": 410,
+                           "regenerated_projection_count": regenerated,
+                           "zero_coefficient_projection_count": 410 - regenerated,
+                           "zero_scope_and_other_spans_byte_verified": True},
+        "verification": {"all_410_matrices_cpu_regenerated": regenerated == 410,
                          "source_and_candidate_full_file_hashes_verified": True,
                          "untouched_spans_verified": True, "before_after_inventory_stat_equal": True},
         "source_payload_rehashed_here": True, "fresh_candidate_full_hash": True,

@@ -1,6 +1,6 @@
 # N: 改善済みPへ固定K1方向の1/16を積み上げる（2026-11-06）
 
-**CPU作成・独立verify・配信・固定24ケースsmokeは完了。公式N−P scoreは未測定。**
+**公式N−fresh Pまで完了。Nは71.603175、Pは74.242063で、Nへ更新せずPを保持する。**
 起点は[4条件比較で更新したP](2026-11-06-public-base-alignment-fourway-m.md)である。
 original Oへ戻って候補を作り直さず、Pの保存weightsへ固定差分を加える。
 
@@ -66,7 +66,7 @@ CPU作成・検証やGEMMは再実行していない。
 比較親はPの既存21/24（output41,241）、originalの23/24はsecondary歴史参照である。
 case・source・生成設定・sandbox seed/trialsの一致は数値summaryで確認したが、
 Pはfresh同時再生成ではなく、この+1を公式WSPや一般能力の改善としない。
-構造停止条件は非該当で、公式N−Pはまだ開始していない。
+構造停止条件は非該当で、その後の公式N−P結果を末尾へ記録した。
 
 UID1003、固定image、CPU0〜7／BLAS4、128GiB memory、networkなし・GPUなし。
 Pの9ファイル入力はread-only、空き容量reserveは300GiB。
@@ -106,7 +106,9 @@ code scoreだけで決める規則へ拡張しない。多少の関連領域損�
 全領域非退行やCI有意差を追加条件にしない。
 作業更新は最終90点超確認、未知問題への一般化、全領域保持、DeepSWE、HF適格とは別である。
 
-Pの保持状況を測るfull14 dev10・778項目も実行中である。
+Pの保持状況を測るfull14 dev10は778/778採点・未採点0で完了した。
+overall78.47510、code87.77778（SciCodeを含まない26項目）。
+歴史original比overall−1.68906 pp、XSTest31/36→21/36等の損失も保持し、[全台帳](2026-11-06-all-official-scores.md)へ記録する。
 runはgemma4-code90-incumbent-p-c32-dev10-full14-20261106。
 wrapper開始12:41:10.358070 UTC、公式run開始12:42:02.587775 UTCで、
 NのCPU作成開始後に公式runが始まり、その後CPU/NVMe処理が重なった。
@@ -124,7 +126,7 @@ factor抽出とunit試行は[Lの記録](2026-11-06-k1-exported-text-c1-review.m
 
 | 証拠 | SHA256 |
 |---|---|
-| working-incumbent.json | 609190932c606e5b9219be072344f68fd2b8e2fdb695109eec63581ed8a75f21 |
+| 作成時working-incumbent（現在はworking-incumbent-history/p-before-n-609190…json） | 609190932c606e5b9219be072344f68fd2b8e2fdb695109eec63581ed8a75f21 |
 | heretic-public-base-k1-c00625-v1/spec.json | 2d97d005268521d1123e2b604bbdd08e513593318f4abd7a4e9274850ce49472 |
 | 同launch-plan.json | 8091ed26c49d1572c73c7a1d7ebb66213cfef589ffddeb47eafb474bc72c41a3 |
 | 同proposal-n-plan.json | 2c5b5aeb5b876affb5999e654afadf8e975cfe6fa1c2d7e3b37ffe7085f13dac |
@@ -145,3 +147,56 @@ factor抽出とunit試行は[Lの記録](2026-11-06-k1-exported-text-c1-review.m
 | heretic-public-base-k1-c00625-v1/deployment-pipeline-launch-r2.json | a07a595add70f66f52535de2489a0feb22553a19402b2cb702b66fb348d74b2f |
 | heretic-public-base-k1-c00625-v1/deployment-smoke-launch.json | 7fbe7dbf46805f0dc5d8894d8a230294dead2ced0ed1c0ecd679205293491eaa |
 | heretic-public-base-k1-c00625-v1/smoke-numeric-summary.json | ff908d512a810b5e7bec34bb3d96c931064250b698c1822dd8898219bd5194fd |
+
+## 最終追補：公式N−Pと作業モデル保持
+
+同一dev30コード90項目（HE30／MBPP30／LCB20／SciCode10）で双方completed、
+90/90採点・未採点0。既存公式source等重みcodeを比較した。
+
+| 条件 | HE | MBPP | LCB | SciCode | code |
+|---|---:|---:|---:|---:|---:|
+| fresh P | 96.666667 | 80.000000 | 80.000000 | 40.301587 | 74.242063 |
+| N | 96.666667 | 73.333333 | 75.000000 | 41.412698 | 71.603175 |
+
+N−Pは-2.638889 pp、95% CIは
+[-7.083333, +1.111111] pp
+（既存公式paired bootstrap、2,000回、seed20261104）。
+HEは29/30のまま、116を失い95を得た。
+MBPP641／801を失い24/30→22/30、LCB abc390_gを失い16/20→15/20。
+SciCode72は7/9→8/9の部分改善で、他のSciCode項目は同点だった。
+公式0.5閾値flipはgain1／loss4であり、このSciCode部分改善を含む
+生score差の正負とは別の定義である。
+
+| 記録量 | fresh P | N |
+|---|---:|---:|
+| report wall秒 | 351.2 | 345.4 |
+| 記録chat API calls | 119 | 119 |
+| 記録input tokens | 92,513 | 93,210 |
+| 記録output tokens | 318,215 | 324,540 |
+| source truncation／empty | 全source0／0 | 全source0／0 |
+
+serving intervalは各119 stop＋1 lengthで、最後の1件は固定wrapperの
+1-token readiness request。公式119 callsとの差は入力21／出力1 tokenで一致し、
+benchmark itemの打切りとは扱わない。
+終了時のsource weight stat・serving identity・incumbent pin継続性を確認した。
+counterだけから未知の他clientやitem別HTTP回数を証明しない。
+
+事前のparent-relative規則により、Nは作業モデルへ昇格せずPを保持する。
+理由は今回の主比較のnet lossであり、CIの有意差や全分野無損失を新gateにしたものではない。
+自作smokeの+1もこの公式結果を上書きしない。新規にNのfull14／DeepSWE／HFへ進む成果は得ていない。
+rootのworking-decision.jsonでP保持が確定し、working-incumbent.jsonを更新した。
+Pのpath/tree/保存weightsは不変で、73.8254→74.2421は再測定差であり追加の重み改善ではない。
+次の[R構造subset仮説](2026-11-06-cumulative-mlp-math-step-r.md)はこの更新stateからPを固定し、
+作成直前にもSHA/path/tree継続性を確認する。
+
+対象run：
+
+- gemma4-code90-heretic-public-base-c32-dev30-code-pairn-20261106
+- gemma4-code90-heretic-public-base-k1-c00625-c32-dev30-code-20261106
+
+| 最終証拠（同analysis起点） | SHA256 |
+|---|---|
+| heretic-public-base-k1-c00625-v1/n-vs-current-p-evidence.json | a202364f5e2747089234feb631beaadb5a333dec08dddd2b4d77bd3b4becefa3 |
+| 同dev90-final-summary.json | 97140ae8416e4b11bbc4a88e123ebc6c105943d40ca9d52921c26ea6f15530c6 |
+| 同working-decision.json | e4c71e80f5eba7a85d64c9562cf2ef36c92f215ce3e6b1c81de671d58a06dc86 |
+| 更新後working-incumbent.json | 3bc3b04014732f799987888d171d4f70116724af3e31147aa243095950a5294c |

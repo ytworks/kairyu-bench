@@ -165,6 +165,9 @@ def validated_recipe(base, spec, *, allow_factor_format=False):
                 or not re.fullmatch("[0-9a-f]{64}", factor_format["header_sha256"])
                 or spec.get("native_edits") or spec.get("companion_required")):
             raise ValueError("invalid or unsupported dense-only factor_format v2")
+    structured = "structured_scope" in spec or (extended and "module_coefficients" in spec)
+    if structured and (not extended or not allow_factor_format):
+        raise ValueError("structured scope requires standalone factor_format v2")
     rank = factor_format["rank"] if extended else 16
     factor_dtype = factor_format["dtype"] if extended else "BF16"
     donor = Path(spec["donor_path"]).resolve()
@@ -315,6 +318,25 @@ def validated_recipe(base, spec, *, allow_factor_format=False):
         name for row in mapping for name in (row["lora_A"], row["lora_B"])
     }:
         raise ValueError("factor_format v2 requires exactly 820 text factors; extra tensors refused")
+    coefficients = None
+    if structured:
+        coefficients = spec.get("module_coefficients")
+        if (spec.get("structured_scope") != "mlp_triplets_all_layers"
+                or not isinstance(coefficients, dict) or set(coefficients) != seen):
+            raise ValueError("structured scope requires an explicit exact 410-coefficient map")
+        mlp = {f"model.language_model.layers.{layer}.mlp.{role}_proj.weight"
+               for layer in range(60) for role in ("gate", "up", "down")}
+        if not mlp.issubset(seen) or len(mlp) != 180:
+            raise ValueError("structured scope requires every MLP gate/up/down triplet")
+        normalized = {}
+        for name in sorted(seen):
+            value = coefficients[name]
+            expected = c if name in mlp else 0.0
+            if (type(value) not in (int, float) or not math.isfinite(value)
+                    or float(np.float32(value)) != value or value != expected):
+                raise ValueError("MLP coefficients must equal the coherent scalar; all attention coefficients must be zero")
+            normalized[name] = float(value)
+        coefficients = normalized
     spans = {}
     for x in mapping:
         lo = x["offset"]
@@ -353,11 +375,30 @@ def validated_recipe(base, spec, *, allow_factor_format=False):
             adapter_header_sha256=actual_header_sha,
             merge_arithmetic="F32 factors preserved, or BF16 factors exactly decoded to F32; FP32 np.matmul(B_block,A), FP32 multiply by FP32(alpha/r), FP32 multiply by coefficient, separate FP32 add to original BF16 W converted to FP32, ties-to-even BF16 once; no FMA contraction in merge loop.",
         )
+    if structured:
+        recipe.update(
+            structured_scope="mlp_triplets_all_layers",
+            structured_scope_version=1,
+            module_coefficients=coefficients,
+            module_coefficients_sha256=jsonhash(coefficients),
+            validated_projection_count=len(mapping),
+            active_projection_count=180,
+            zero_coefficient_projection_count=len(mapping) - 180,
+            zero_scope_arithmetic="No GEMM/add/rounding for zero coefficients; all non-active bytes are copied and independently compared.",
+        )
     return recipe, mapping, h, off
 
 
+def active_mapping(recipe, mapping):
+    """Keep the complete validated inventory; select only explicit nonzero writes."""
+    if "structured_scope" not in recipe:
+        return mapping
+    return [entry for entry in mapping
+            if recipe["module_coefficients"][entry["tensor"]] != 0]
+
+
 def materialization_recipe(base, spec):
-    """Only the standalone dense path may opt into newer factor formats."""
+    """Only standalone dense materialization opts into factor v2 and structured scope."""
     if "factor_format" in spec:
         if spec.get("native_edits") or spec.get("companion_required"):
             raise ValueError("factor_format v2 is not supported by native/module/joint wrappers")
@@ -367,6 +408,7 @@ def materialization_recipe(base, spec):
 
 
 def entries(base, candidate, recipe, mapping, h, off, write=False):
+    mapping = active_mapping(recipe, mapping)
     donor = Path(recipe["donor_path"])
     records = []
     with ExitStack() as stack:
@@ -547,7 +589,7 @@ def verify(manifest):
         raise ValueError("source full tree hash mismatch")
     if source_rows != record["source_files"]:
         raise ValueError("source file hash list differs")
-    compare_untouched(base, dest, mapping)
+    compare_untouched(base, dest, active_mapping(recipe, mapping))
     rebuilt = entries(base, dest, recipe, mapping, h, off, False)
     metrics(record["edits"], rebuilt)
     if record["changed_byte_elements"] != sum(x["changed_byte_count"] for x in rebuilt):
@@ -613,7 +655,7 @@ def create(base, dest, spec_path, manifest, *, min_free_gib=0.0):
     source_rows, source_hash = tree(base)
     if source_hash != spec["base_tree_sha256"]:
         raise ValueError("base full hash differs from pinned source")
-    touched = {e["shard"] for e in mapping}
+    touched = {e["shard"] for e in active_mapping(recipe, mapping)}
     source_paths = files(base)
     if not math.isfinite(min_free_gib) or min_free_gib < 0:
         raise ValueError("nonnegative disk reserve required")
@@ -647,7 +689,7 @@ def create(base, dest, spec_path, manifest, *, min_free_gib=0.0):
                 {"path": str(rel), "method": method, "size": p.stat().st_size}
             )
         patches = entries(base, dest, recipe, mapping, h, off, True)
-        compare_untouched(base, dest, mapping)
+        compare_untouched(base, dest, active_mapping(recipe, mapping))
         candidate_rows, candidate_hash = tree(dest)
         # Fresh source full hash after writes makes source immutability explicit.
         if tree(base)[1] != source_hash:
@@ -765,7 +807,11 @@ def main():
                         "dry_run": True,
                         "source": str(base),
                         "candidate": str(dest),
-                        "matrices_or_spans": len(mapping),
+                        "matrices_or_spans": len(active_mapping(recipe, mapping)),
+                        **({"validated_projection_count": len(mapping),
+                            "structured_scope": recipe["structured_scope"],
+                            "zero_coefficient_projection_count": len(mapping) - len(active_mapping(recipe, mapping))}
+                           if "structured_scope" in recipe else {}),
                         "copy_bytes": sum(p.stat().st_size for p in files(base)),
                         "min_free_gib": a.min_free_gib,
                         "source_full_hash_verified": False,

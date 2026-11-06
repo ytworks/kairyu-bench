@@ -449,3 +449,34 @@ python scripts/experiments/gemma4_lora/probe_direction_alternatives.py \
 The output is metadata and a selected-native-value array, not a model or an
 adopted spec. The one native solve has a 120-second CPU budget. All measured
 model performance and actual dense BF16 rounding remain separate.
+
+### Standalone MLP triplets with explicit zero attention coefficients
+
+Only `dense_lora_recipe.py` with `factor_format.version=2` accepts
+`structured_scope: "mlp_triplets_all_layers"`. The spec must also contain an
+explicit `module_coefficients` map for the complete validated 410 text
+projections. All 180 gate/up/down projections across the 60 layers must equal
+the single positive FP32 `coefficient`; all 230 attention projections must be
+exact zero. Missing keys, unequal triplet coefficients, nonzero attention, or
+an unsupported scope are rejected before materialization. This is a fixed
+coherent scope, not per-layer coefficient search.
+
+The full mapping, all 820 factors, header/config pins, rank and ordinary-LoRA
+checks still apply. Only the active 180 matrices enter the existing 128-row
+FP32 GEMM and BF16 merge kernel. Zero-scope attention, native parameters and
+other bytes are copied and independently compared without adding zero or
+rounding them; signed zero is preserved. Omitting structured scope retains the
+original full-410 calculation. Module, native, joint and RAM wrappers retain
+their existing factor-format-v2 rejection.
+
+Preview separates `validated_projection_count=410` from the 180 active spans.
+The creator records all coefficients and the active/zero counts. The CPU
+freeze bridge reports `verified_scope.regenerated_projection_count=180`,
+`zero_coefficient_projection_count=230` and
+`all_410_matrices_cpu_regenerated=false`; full-file hashes and untouched-byte
+verification still cover the entire checkpoint. Its status and deployment
+identity format are unchanged. The end-to-end tiny r128/F32 fixture checks
+stored BF16 results, untouched negative zero, source preservation, freeze
+counts and refusal of an out-of-scope byte modification. This fixture is not
+a model-quality measurement. A later candidate must separately pin the active
+incumbent's path, tree and decision receipt before creation.

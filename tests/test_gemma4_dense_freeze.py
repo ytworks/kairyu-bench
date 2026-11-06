@@ -5,12 +5,15 @@ import contextlib
 import importlib
 import importlib.util
 import io
+import json
 from pathlib import Path
 import shutil
 import sys
 from types import SimpleNamespace
 import unittest
 from unittest import mock
+
+import numpy as np
 
 import test_gemma4_lora_recipes as fixtures
 
@@ -66,12 +69,91 @@ class DenseFreezeTests(unittest.TestCase):
         self.assertEqual(result["control_tree_sha256"], self.record["candidate_tree_sha256"])
         self.assertEqual(f.recipe.tree(f.base), source_before)
         self.assertFalse(result["ram_comparison_performed"])
+        self.assertTrue(result["verification"]["all_410_matrices_cpu_regenerated"])
+        self.assertEqual(result["verified_scope"]["regenerated_projection_count"], 410)
         path = Path(__file__).resolve().parents[1] / "docs/experiments/scripts/redeploy-replica.py"
         spec = importlib.util.spec_from_file_location("dense_freeze_consumer", path)
         consumer = importlib.util.module_from_spec(spec)
         spec.loader.exec_module(consumer)
         proof = consumer.identity(SimpleNamespace(candidate=f.dest, freeze=self.output))
         self.assertEqual(proof["tree_sha256"], result["control_tree_sha256"])
+
+    def test_mlp_scope_f32_roundtrip_freeze_and_untouched_signed_zero(self):
+        f, recipe, bridge = self.f, self.recipe, self.bridge
+        factors = f._f32_factors()
+        _, mapping, _, _ = recipe.materialization_recipe(f.base, f.spec)
+        by_name = {row["tensor"]: row for row in mapping}
+        attention = next(name for name in by_name if ".self_attn." in name)
+        native = "model.language_model.norm.weight"
+        index = json.loads((f.base / "model.safetensors.index.json").read_text())["weight_map"]
+
+        def location(name):
+            shard = index[name]
+            header, offset = recipe.header(f.base / shard)
+            lo, hi = header[name]["data_offsets"]
+            return shard, offset + lo, hi - lo
+
+        def raw(root, name):
+            shard, offset, size = location(name)
+            with (root / shard).open("rb") as stream:
+                stream.seek(offset)
+                return stream.read(size)
+
+        # A zero scope must preserve the original negative-zero word without +0.
+        for name in (attention, native):
+            shard, offset, _ = location(name)
+            with (f.base / shard).open("r+b") as stream:
+                stream.seek(offset)
+                stream.write(bytes((0, 128)))
+        f.spec["base_tree_sha256"] = recipe.tree(f.base)[1]
+        f.spec["structured_scope"] = "mlp_triplets_all_layers"
+        f.spec["module_coefficients"] = {
+            name: f.spec["coefficient"] if ".mlp." in name else 0.0 for name in by_name
+        }
+        f.spec_path.write_text(json.dumps(f.spec))
+        source_before = recipe.tree(f.base)
+        untouched_before = {name: raw(f.base, name)
+                            for name in index if name not in by_name or ".self_attn." in name}
+        candidate, manifest = f.work / "mlp-candidate", f.work / "mlp-manifest.json"
+        with contextlib.redirect_stdout(io.StringIO()):
+            record = recipe.create(f.base, candidate, f.spec_path, manifest)
+        self.assertEqual(len(record["edits"]), 180)
+        for name, original in untouched_before.items():
+            self.assertEqual(raw(candidate, name), original)
+        for row in record["edits"]:
+            a, b = (factors[row[key]] for key in ("lora_A", "lora_B"))
+            # Independent one-term product oracle, then the specified F32 operations.
+            product = np.array([[float(b[i, 0]) * float(a[0, j])
+                                 for j in range(a.shape[1])] for i in range(b.shape[0])], np.float32)
+            delta = np.multiply(product, np.float32(2), dtype=np.float32)
+            original = (np.frombuffer(raw(f.base, row["tensor"]), dtype="<u2")
+                        .astype(np.uint32) << 16).view(np.float32).reshape(delta.shape)
+            bits = np.add(original, delta, dtype=np.float32).view(np.uint32)
+            expected = ((bits + np.uint32(0x7fff) + ((bits >> 16) & 1)) >> 16).astype("<u2")
+            self.assertEqual(raw(candidate, row["tensor"]), expected.tobytes())
+        self.args.source, self.args.candidate, self.args.manifest = f.base, candidate, manifest
+        self.args.manifest_sha256 = recipe.digest(manifest)
+        self.args.spec_sha256 = recipe.digest(f.spec_path)
+        self.args.output, self.args.apply = f.work / "mlp-freeze.json", True
+        with mock.patch.object(recipe, "verify", wraps=recipe.verify) as verify:
+            result = bridge.verify(self.args)
+            verify.assert_called_once_with(manifest)
+        self.assertFalse(result["verification"]["all_410_matrices_cpu_regenerated"])
+        self.assertEqual(result["verified_scope"], {
+            "structured_scope": "mlp_triplets_all_layers", "validated_projection_count": 410,
+            "regenerated_projection_count": 180, "zero_coefficient_projection_count": 230,
+            "zero_scope_and_other_spans_byte_verified": True})
+        self.assertEqual(recipe.tree(f.base), source_before)
+        # A bit-only modification outside the scope must fail the same verifier.
+        shard, offset, _ = location(attention)
+        with (candidate / shard).open("r+b") as stream:
+            stream.seek(offset)
+            stream.write(bytes((0, 0)))
+        self.args.output = f.work / "corrupted-mlp-freeze.json"
+        with self.assertRaises(ValueError):
+            bridge.verify(self.args)
+        self.assertFalse(self.args.output.exists())
+        self.assertEqual(recipe.tree(f.base), source_before)
 
     def test_real_payload_or_untouched_corruption_never_publishes(self):
         self.args.apply = True

@@ -3,9 +3,9 @@
 `scripts/experiments/gemma4_lora/verify_dense_checkpoint.py` は、既存の
 `dense_lora_recipe.verify(manifest)` を一度呼び、その戻り値を
 `redeploy-replica.py --freeze` が受け取る証跡へ変換する。対象はschema2の
-一様text410 donorだけで、native/module/joint recipeは対象外。
+一様text410 donorと明示MLP scopeで、native/module/joint recipeは対象外。
 
-数値計算を新たに実装せず、元の検証器の全410行列CPU再生成・保存BF16 byte比較・
+数値計算を新たに実装せず、元の検証器の対象行列CPU再生成（既定410、MLP scopeは180）・保存BF16 byte比較・
 非変更領域照合・source/candidate全ファイルhash確認を使う。GPUのlikelihood測定や
 RAM receiptは不要である。これはCPU recipeと保存重みの一致であり、GPU上のbyte一致・
 能力改善・採用を証明しない。生成済みcandidateとmanifestが先に必要。
@@ -36,3 +36,20 @@ tiny CPU fixtureは既存410行列recipeを再利用し、previewでverifyを呼
 applyで一度呼び配信identityへ接続できること、重み/非変更metadataの不一致、
 検証直後のinput変更とoutput重複を検査する。実checkpointでの使用前に得られる証拠は
 このfixtureの範囲であり、候補の性能値は含まない。
+
+## Explicit MLP scope
+
+The standalone factor-format-v2 recipe additionally supports
+`structured_scope=mlp_triplets_all_layers` with all 410 coefficients explicit:
+180 MLP gate/up/down matrices use the same scalar and 230 attention matrices
+use zero. The existing verifier regenerates only the 180 active matrices;
+all attention, native and other untouched spans are compared byte for byte.
+The numerical kernel and one-verify workflow are unchanged.
+
+For this scope, freeze `verified_scope` distinguishes validated 410,
+regenerated 180 and zero-coefficient 230. The legacy
+`all_410_matrices_cpu_regenerated` flag is false rather than overstating the
+proof. With no structured scope the original 410-matrix path and true flag
+remain. Both paths retain full source/candidate file hashes, stat continuity
+and the same redeploy identity contract. Module/native/joint wrappers are not
+extended by this option.
