@@ -73,3 +73,35 @@ Final finite and publication evidence (relative to A):
 - completion.json: 94ec70ef023f5c5bac8c9d8e243a4ae3ff7e646184664be8174223d36cf236ae; postchecks.json: 8b4d4277ff31ce7b0ddab54b671cbf2506ae479d0ca1ada8b9661a3381e1d395.
 - current-ac-eight-hypotheses-v1/generation-selection-decision.json: 7f64a7065a055739e77e628d005019bbbfe981136fa1ce5a61c4ba0ce054ad8f.
 - cpu-integration-dependency-set-batch-v1/ci-results.json: 62ee25e89b7041422855a7b098c11b9bcb56612b16e36b180f1470795918a814.
+
+## Completed official three-arm comparison
+
+The fresh AC/AD/AE dev30 runs began together at approximately 19:45:09 UTC and all finished by 19:51:09 on 2026-11-06. Each scored all90 items, with119 formal calls and no unknowns or formal truncated/empty results. Existing official scoring, cohort, native-ON behavior and concurrency32 were unchanged; source/runtime/OCI and saved checkpoint closure passed.
+
+| Source | Fresh AC | AD (method A) | AE (method G) |
+|---|---:|---:|---:|
+| HumanEval+ | 30/30 | 29/30 | 30/30 |
+| MBPP+ | 22/30 | 24/30 | 22/30 |
+| LiveCodeBench | 14/20 | 15/20 | 15/20 |
+| SciCode mean | 42.301587% | 43.634921% | 40.301587% |
+| Equal-source code score | 71.408730 | 73.825397 | 72.158730 |
+| Difference from fresh AC (pp) | — | +2.416667 | +0.750000 |
+| Paired95% CI (pp) | — | [−1.333333,+6.666667] | [−3.916667,+5.833333] |
+
+Historical AC73.825397 is not this comparison's control: unchanged accepted AC scored71.408730 in the new window. This observed variation is a reason to retain matched controls and uncertainty, not a new weight-regression estimate.
+
+AD's numeric changes were HumanEval/116 loss; LCB3777 and MBPP641/801 gains; SciCode35 +1/3 and58 −0.2. Thus there were four numeric gains/two losses, distinct from the official0.5-crossing count of three gains/one loss. AE gained LCB3777/abc390_g and MBPP641, lost LCBarc195_b and MBPP792, and lost0.2 on SciCode58: three numeric gains/three losses, distinct from three/two threshold crossings. No benchmark content or generated answer was read to interpret these IDs.
+
+Recorded input/output tokens were AC93,564/323,716, AD96,181/332,608 and AE91,739/321,516. Rounded report wall times were354.6/359.9/355.3s. All process counter totals exceed formal calls by one startup request with21 input/1 output token and a process-level length finish. Formal stop counts were119 each; the startup event is not a scored truncation. Counters do not independently establish absence of all other clients/retries, and119 calls are not claimed agent steps.
+
+Independent review recomputed four-source means, all90 paired score identities, partial science deltas, changed items and usage sums from safe numeric exports. Official bootstrap seed20261104/resamples2000 and recorded intervals matched the unchanged comparison API. Both intervals cross zero; no new significance, universal no-loss or code-only adoption gate is imposed.
+
+Root selected **AD for one full14 retention run**, owner launched19:55:19.895 UTC and child launcher recorded19:55:20.420 UTC. The run is gemma4-code90-candidate-ad-c32-dev10-full14-20261107,778 items with concurrency32. Historical accepted AC full14 overall78.934942 is the retention reference, not a fresh concurrent control. The broader result is pending; **AC remains the working incumbent and neither AD nor AE is adopted here**. Related-capability gains and losses remain relevant under the cumulative net-purpose policy.
+
+Evidence relative to A:
+
+- current-ac-ad-ae-dev90-v1/final-summary.json: 9a0c02af5c33b8b3ff9b1d58cc1e7aa8d38d9d2b8d35bbee77196766a3173564.
+- ad-versus-ac-evidence.json: 4c012f3b433ef36ffd240741b5b26c73716cc0fd92fbfb4446a3d3c69e7dfec4; ae-versus-ac-evidence.json: 349b5c4a24f898716f1bcfbe98d2044f5ecfc187bc61e8c69fca362147daf621.
+- postchecks.json: 55f1e5cb3f7a17cd8e1e1197594a2d408d63c3867dbcbda9b14e4a38e943fae6; independent-numeric-review.json: 8ada72828f6083cd6f33f0a04124b748859c31aaf6b1155c7d9740dfe8785d04.
+- candidate-ad-retention-full14-v1/plan.json: 3702fa90bc4d9e53fb5354424431c4c5446be028914331ee38a6786fb1cc3525; live launch snapshot: a904fe1592ae90d249b5669547681c9e1510a86f17a796386747d4a80bb4a914.
+- [All-score ledger](2026-11-06-all-official-scores.md) v7 contains124 records, with every prior121 row preserved; the live AD full14 is listed separately.

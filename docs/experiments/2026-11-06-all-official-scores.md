@@ -1,7 +1,7 @@
 # Gemma4公式スコア全実行台帳（2026-11-06）
 
-snapshot: 2026-11-06T18:52:09.139231+00:00。WSP **121 runs**（completed116、partial4、running1＝旧保存記録のみ、現在の稼働を意味しない）。
-AC full14完了を追加した。旧120行の全fieldをそのまま保持し、過去snapshotの進行中記述は当時の記録として残す。現在のworking modelはAC。
+snapshot: 2026-11-06T19:56:11.723241+00:00。WSP **124 runs**（completed119、partial4、running1＝旧保存記録のみ、現在の稼働を意味しない）。
+今回のAC/AD/AE dev90完了3件を追加した。旧121行の全fieldをそのまま保持し、過去snapshotの進行中記述は当時の記録として残す。現在のworking modelはAC。AD full14は別途稼働中で、この124件には含めない。
 新規採点・モデル実行なし。指定したNVMe resultsとlegacy resultsの直下run.json/report.jsonだけを採録した。
 5つのDeepSWE runはWSP台帳から分離し、完了・取消結果を代表表へ併記する。元R1/R2はincompleteで、この台帳から完成した点を捏造しない。
 公式reportから値を転記し、欠測は「—」。表は小数6桁表示、sourceの未丸め値はcatalog JSONに残す。
@@ -5006,3 +5006,41 @@ decision01f9d37092b6c51c54e26b1281b044052cae8aa856cd6018b7317773933cc9ac。
 | preservation.json | 5c562b10896e2c0902a1eba7b4ab1a91517055e6b8b9f7d36e362387feac2d40 |
 
 最終summary dc02a16cac4fe8b2a6ebab89981227df7b54a3df35c048a7cde7d7a31638001c。詳細・通信量・runtime留保は[AC実験記録](2026-11-07-coding-priority-normalized-matrix-ac.md)。
+
+## v7追補：fresh AC対AD/AEの同時3条件（124 runs）
+
+既存121行の全fieldは同一。追加した3runはすべて90/90採点、未採点0。
+新規採点は行わず、保存run/reportだけを既存exporterで取得した。
+
+| Run ID | Code90 % | 対fresh AC差 pp | 95% CI pp | 状態 |
+|---|---:|---:|---|---|
+| gemma4-code90-current-ac-c32-dev30-code-pairadae-20261107 | 71.408730 | — | — | completed |
+| gemma4-code90-native-ad-c32-dev30-code-20261107 | 73.825397 | +2.416667 | [-1.333333, +6.666667] | completed |
+| gemma4-code90-repair-ae-c32-dev30-code-20261107 | 72.158730 | +0.750000 | [-3.916667, +5.833333] | completed |
+
+今回のAC71.408730は同じ採用済み重みでのfresh対照であり、過去AC73.825397を代用しない。
+ADはHE29/30、MBPP24/30、LCB15/20、SciCode43.634921%。ACは30/30、22/30、14/20、42.301587%。
+AEは30/30、22/30、15/20、40.301587%。4sourceを等重みにし、SciCode部分点を保持する。
+
+ADはHE116 loss、LCB3777 gain、MBPP641/801 gain、Sci35 +1/3、Sci58 −0.2（実数4gain/2loss、公式0.5-crossingは3gain/1loss）。
+AEはLCB3777/abc390_g gain・arc195_b loss、MBPP641 gain・792 loss、Sci58 −0.2（実数3gain/3loss、公式crossingは3gain/2loss）。
+両CIは0を跨ぐが、追加の有意差・ゼロ損失・code単独の採用gateにはしない。
+
+全arm119正式API calls、正式sourceのtruncated/emptyは0。process counterとの差はstartup1request・input21/output1に一致する。
+記録input/outputはAC93,564/323,716、AD96,181/332,608、AE91,739/321,516。
+wallは丸め済み354.6/359.9/355.3秒で、因果的な速度差とは解釈しない。agent stepsは未測定。
+
+rootはADのfull14保持確認を選択し、2026-11-06 19:55:19.895 UTCにownerを起動した。
+正式runはgemma4-code90-candidate-ad-c32-dev10-full14-20261107、778項目・c32で実行中（launcherの子開始記録19:55:20.420 UTC）。
+比較対象は歴史AC full14 78.934942で、fresh同時full14対照ではない。
+AD/AEのworking採用はまだなく、AC state f0a5c61b…を保持する。このlive runは旧historical unfinished1件と別である。
+
+| v7 Artifact | SHA256 |
+|---|---|
+| catalog.json | 2395f78d67982a76465371b4f9bd50a4090bf14b624c11fd0cb782002d07a1bc |
+| coverage.json | 6b33cf64955f873d73601ceed60c3f89d55012126ce27e0d0fc2995324be8bee |
+| runs.csv | c90ed3e78504a526676105a003ad19b87ee72b9dcd68fcccd951960f83a9b089 |
+| source-scores.csv | bbc7b94657b3a3350d0c7ee1c3a296b54bc567fce0ba0302f2fced7e33dd1080 |
+| preservation.json | 0b2c7a0eb873036c7cf4485eabbc9d07f77ddd01bc4009e9c6d7fd315577f4a1 |
+
+3arm final-summary SHA 9a0c02af5c33b8b3ff9b1d58cc1e7aa8d38d9d2b8d35bbee77196766a3173564、独立数値review SHA 8ada72828f6083cd6f33f0a04124b748859c31aaf6b1155c7d9740dfe8785d04。詳細は[8候補・3arm実験記録](2026-11-07-eight-current-parent-dependency-sets.md)。
