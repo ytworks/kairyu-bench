@@ -1,7 +1,7 @@
 # Gemma4公式スコア全実行台帳（2026-11-06）
 
-snapshot: 2026-11-06T22:50:14.467974+00:00。WSP **130 runs**（completed125、partial4、running1＝旧保存記録のみ、現在の稼働を意味しない）。
-今回のfresh AD対ALの完了2件を追加した。旧128行の全fieldは完全一致で保持し、過去snapshotの進行中記述は当時の記録として残す。ALはfresh ADを3.333333pp下回り不採用、追加full14なし。working modelはAD、積み上げP→S→AC→ADを維持する。AD採用時のfresh dev90は+2.416667pp、歴史AC対full14 overallは−1.358562ppであり、全分野改善とは呼ばない。
+snapshot: 2026-11-06T23:49:19.565420+00:00。WSP **138 runs**（completed133、partial4、running1＝旧保存記録のみ、現在の稼働を意味しない）。
+今回の探索的logical-overlay公式dev90完了8件を追加した。旧130行の全fieldは完全一致で保持し、logical labelを保存候補checkpointのtreeと混同しない。ANとARを物理保存・fresh ordinary比較へ選択した段階で未採用。working modelはAD、積み上げP→S→AC→ADを維持する。既存AL不採用・full14なしの判断も維持する。AD採用時のfresh dev90は+2.416667pp、歴史AC対full14 overallは−1.358562ppであり、全分野改善とは呼ばない。
 新規採点・モデル実行なし。指定したNVMe resultsとlegacy resultsの直下run.json/report.jsonだけを採録した。
 5つのDeepSWE runはWSP台帳から分離し、完了・取消結果を代表表へ併記する。元R1/R2はincompleteで、この台帳から完成した点を捏造しない。
 公式reportから値を転記し、欠測は「—」。表は小数6桁表示、sourceの未丸め値はcatalog JSONに残す。
@@ -5129,3 +5129,35 @@ AD→ALはHE28/30→27/30、MBPP24/30→24/30、LCB15/20→13/20、SciCode40.301
 | preservation.json | 852c14f0ea0ebe76fa39e5d94728721f072eacc8256e16ba795e50b7fae6ff7f |
 
 最終summary 7ecd713717bfba6be7b2991a68deb0e7162d04993c13f8b906a73b2e0a961a87、postchecks 1730289eb9d7acc56b8611698a43151fe020b2e1b444b9fb938fbfd4b836cb75、root-delegated working-decision 83334222eeeb350ff843176964fbf40a17aa3b6d358c3fe62e52f890ad31da65。詳細は[science実験記録](2026-11-07-ad-science-dependency-sets.md)。
+
+## v11追補：AN–ASの探索的official overlay（138 runs）
+
+旧v10の130 row objectsは全field完全一致。追加8runはすべて90/90採点・未採点0。公式run/reportの既存numeric exporterのみで追記し、再採点・追加モデル呼出しはない。overlay labelは論理的な編集identityであり、候補の物理checkpoint treeではない。
+
+| Round | Arm | Run ID | Code % | 同round対照差 pp |
+|---|---|---|---:|---:|
+| 1 | CONTROL | gemma4-code90-ad-functional-overlay-c32-dev30-20261107-r1-control | 72.158730 | — |
+| 1 | AN | gemma4-code90-ad-functional-overlay-c32-dev30-20261107-r1-an | 74.242063 | +2.083333 |
+| 1 | AO | gemma4-code90-ad-functional-overlay-c32-dev30-20261107-r1-ao | 71.325397 | -0.833333 |
+| 1 | AP | gemma4-code90-ad-functional-overlay-c32-dev30-20261107-r1-ap | 71.742063 | -0.416667 |
+| 2 | CONTROL | gemma4-code90-ad-functional-overlay-c32-dev30-20261107-r2-control | 73.769841 | — |
+| 2 | AQ | gemma4-code90-ad-functional-overlay-c32-dev30-20261107-r2-aq | 72.436508 | -1.333333 |
+| 2 | AR | gemma4-code90-ad-functional-overlay-c32-dev30-20261107-r2-ar | 74.742063 | +0.972222 |
+| 2 | AS | gemma4-code90-ad-functional-overlay-c32-dev30-20261107-r2-as | 71.325397 | -2.444444 |
+
+同一empty-control processを維持したが、各roundで新しい対照runを実行した。対照72.158730→73.769841の変動を保持し、異round間の差をmatched gainとしない。AN +2.083333ppとAR +0.972222ppを保存済み重みで確認する段階へ選択した。ARのSciCodeは同round対照比−1.111111ppであり、全source改善ではない。採用・90超達成の主張はない。
+
+全8runでformal chat119件ずつ、合計952件。unknown/truncated/empty、記録retry/errorは0。起動時相当の1 requestは正式件数から分離し、HTTP回数をagent stepsとは呼ばない。
+
+実行ownerの出力mount不備に対し、rootが許可したopaque artifact preservation（round1）と最終出力のmounted先routing（round2）で8件すべてのoriginal final reportを保存した。raw bodyを読まず、report再構築・再採点・モデル再実行なし。全4サービスは同CIDで復帰。修正版公開owner/wrapperは出力mountを明示検証するが、実行済みimmutable sourceは変更していない。回復I/Oの重複があるため単独latency改善は主張しない。
+
+| v11 Artifact | SHA256 |
+|---|---|
+| catalog.json | 9e070278e17a654d22de4cd2179affe425c33d22f7a0d425d6f71416fc5f310d |
+| runs.csv | 16485de8e577e792260acdc1c965fbdfa2b3b904e62fc541b61108a278cc43ee |
+| source-scores.csv | ca82abeb0d1a46f726ebb25601f5d387b717d82654755e2b8a60c113a9877f3f |
+| coverage.json | 55b2e2dc63dac7b6043d4e93b1fcc8fe704240e68abb783bb566f984c558e5c5 |
+| preservation.json | af94abd9a73d1a7925ed82ecf3caee2f4b6b92c8c7320c1637772f42f88cdf89 |
+| export-reproduction.py | 0d62cd62308c95490ae1cdaaa3095c80a7544f12e080620ba7d38472e9ace829 |
+
+最終numeric summary a750513f9f9f4b018c88ad6a9e0e0b3350827af1282bbe9e46f5be5e0081b52f、owner closure 9745550da9742a87813267497886fd81e1c2a7537c950136677d36d081d72a21。[機能target実験記録](2026-11-07-ad-functional-targets.md)にsource得失・復旧範囲を保持した。
