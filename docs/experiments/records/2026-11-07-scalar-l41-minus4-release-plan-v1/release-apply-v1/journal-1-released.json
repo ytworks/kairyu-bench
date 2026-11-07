@@ -1,0 +1,37 @@
+{
+  "free_bytes": 68949667840,
+  "released": [
+    {
+      "bytes": 49784788364,
+      "current_stat": {
+        "ctime_ns": 1793800946809548012,
+        "device": 2306,
+        "gid": 1003,
+        "inode": 181570962,
+        "mode": 33188,
+        "mtime_ns": 1793800946809548012,
+        "nlink": 1,
+        "size": 49784788364,
+        "uid": 1003
+      },
+      "historical_full_sha256": "eeef8791537bc04f110967c513149e037d2a9ae97d49add7291ebfa62806bbfa",
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/checkpoints/scalar-l41-minus4/model-00001-of-00002.safetensors"
+    },
+    {
+      "bytes": 12761549884,
+      "current_stat": {
+        "ctime_ns": 1793800955060271575,
+        "device": 2306,
+        "gid": 1003,
+        "inode": 181570963,
+        "mode": 33188,
+        "mtime_ns": 1793800955060271575,
+        "nlink": 1,
+        "size": 12761549884,
+        "uid": 1003
+      },
+      "historical_full_sha256": "a3ffbcf0fa999836daa46556dc4b7b777de1988c3222314001922bd63255bfc1",
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/checkpoints/scalar-l41-minus4/model-00002-of-00002.safetensors"
+    }
+  ]
+}

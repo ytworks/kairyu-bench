@@ -1,0 +1,28 @@
+{
+  "completed_epoch": 1794059613.0866103,
+  "source_sha256": "a707f10599abb8897d44d62e04c53fe43d19312d6bb0f5b62dcbfbfb733df8fd",
+  "analysis_command": "PYTHONDONTWRITEBYTECODE=1 /mnt/nvme/kairyu/dev-logs/wsp/venv-evalplus/bin/python docs/experiments/scripts/fresh-f04-code-failure-taxonomy-20261107.py",
+  "analysis_exit_code": 0,
+  "analysis_seconds": 1.5487542152404785,
+  "ruff": "PASS",
+  "extra_source": {
+    "path": "/mnt/nvme/kairyu/dev-logs/wsp/venv-evalplus/lib/python3.12/site-packages/evalplus/eval/__init__.py",
+    "sha256": "76857b678cddca08dcaf54d7927b9a77826715cf657654ca5baf6c2b267f4c34",
+    "relevance": "unsafe_execute catches BaseException (including per-test timeout) into generic fail; only outer timeout has distinct status."
+  },
+  "read_limitations": [
+    "Initial guessed paths sources/scicode.py, scorers/livecode_score.py, wsp/code.py and wsp/scoring.py were absent; actual discovered files were read and pinned. No attempted scoring or mutation occurred.",
+    "Some exploratory output was truncated; final extraction reads canonical all items and asserts exact failed scope 13+18 and all39 Sci steps.",
+    "Original scorer subprocess temporary scripts and raw stdout/stderr are not retained in the canonical run. The Sci streams are digests/sizes only; these are not substituted by zero or recreated.",
+    "No F06 result was read for this classification; no new training cases or direction decisions were made."
+  ],
+  "all_31_parse_ok": true,
+  "all_31_stop": true,
+  "scicode_all18_non_timeout": true,
+  "score_model_generated_code_calls": {
+    "score": 0,
+    "model": 0,
+    "generated_code_execution": 0
+  },
+  "report_sha256": "a435a8dd742f2b2e35aea47b76fa8e1f847f28497eaa7533c75a5a80ce86b338"
+}

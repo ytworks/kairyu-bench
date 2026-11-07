@@ -1,0 +1,117 @@
+{
+  "status": "completed_materialization_and_full_verify",
+  "candidate": "F06",
+  "parent": "F04",
+  "v1_failed_create_seconds": 120.14311219099909,
+  "v2": {
+    "status": "completed",
+    "runs": [
+      {
+        "phase": "preview",
+        "command": [
+          "nice",
+          "-n",
+          "15",
+          "ionice",
+          "-c",
+          "3",
+          "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/infra/weight-tools-ci/bin/python",
+          "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/worktrees/kairyu-bench-weight-tools/scripts/experiments/gemma4_lora/dense_lora_recipe.py",
+          "create",
+          "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/checkpoints/fresh-native-relative-f04-faststore-v1/checkpoint",
+          "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/checkpoints/fresh-lora-mbpp-f06-v1/checkpoint",
+          "--spec",
+          "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f04-mbpp-lora-training-v1/work/train-lora/final/merge-spec.json",
+          "--manifest",
+          "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/checkpoints/fresh-lora-mbpp-f06-v1/manifest.json",
+          "--min-free-gib",
+          "5"
+        ],
+        "returncode": 0,
+        "seconds": 0.5201668430818245,
+        "stdout_sha256": "3c6a6650d837ea60a73bc6fd8264b53e34b662e5e50831f8d45cb2392ba3baf9",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "phase": "create",
+        "command": [
+          "nice",
+          "-n",
+          "15",
+          "ionice",
+          "-c",
+          "3",
+          "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/infra/weight-tools-ci/bin/python",
+          "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/worktrees/kairyu-bench-weight-tools/scripts/experiments/gemma4_lora/dense_lora_recipe.py",
+          "create",
+          "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/checkpoints/fresh-native-relative-f04-faststore-v1/checkpoint",
+          "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/checkpoints/fresh-lora-mbpp-f06-v1/checkpoint",
+          "--spec",
+          "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f04-mbpp-lora-training-v1/work/train-lora/final/merge-spec.json",
+          "--manifest",
+          "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/checkpoints/fresh-lora-mbpp-f06-v1/manifest.json",
+          "--min-free-gib",
+          "5",
+          "--apply"
+        ],
+        "returncode": 0,
+        "seconds": 444.0018361079274,
+        "stdout_sha256": "bdabed1803e28eee940979509f7ddf02f105cde262c0b022dc5c0a173e34594c",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "phase": "verify",
+        "command": [
+          "nice",
+          "-n",
+          "15",
+          "ionice",
+          "-c",
+          "3",
+          "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/infra/weight-tools-ci/bin/python",
+          "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/worktrees/kairyu-bench-weight-tools/scripts/experiments/gemma4_lora/dense_lora_recipe.py",
+          "verify",
+          "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/checkpoints/fresh-lora-mbpp-f06-v1/manifest.json"
+        ],
+        "returncode": 0,
+        "seconds": 297.80545275006443,
+        "stdout_sha256": "42140a38d3f2412887952c0dfe836433f0fabb6a8aa68196978eb8e5e479788d",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    ],
+    "seconds_including_wait": 742.8811032039812,
+    "source_unchanged_stat": true,
+    "manifest_sha256": "22b0603cc2dc9a2060c76f8baf99c28eceac08b56116727173bc61a719b5c0d4",
+    "free_after_bytes": 68948848640,
+    "global_lock_acquired": false,
+    "GPU_or_service_operations": 0,
+    "verify_stdout_sha256": "42140a38d3f2412887952c0dfe836433f0fabb6a8aa68196978eb8e5e479788d"
+  },
+  "final_identity_sha256": "50aa8056b9e48257b48c8621396030b4796c2e72d1c94fd8f64ad84a6867bdf7",
+  "record_only_retention_sha256": "1a3ef6c823d2e67d9ac5b0286e60930143820fb1b342f3fdb10592fd22909e20",
+  "retention": {
+    "matrices": 410,
+    "elements": 29286727680,
+    "changed_elements": 8193921391,
+    "changed_fraction_of_same_projection_elements": 0.2797827562208548,
+    "saved_delta_l2": 3.708003317513851,
+    "intended_continuous_delta_l2": 3.848375559335702,
+    "saved_to_intended_norm_ratio": 0.9635242871550505,
+    "same_projection_source_l2": 2651.409589317133,
+    "saved_delta_relative_to_same_projection_source_l2": 0.0013985026426900878,
+    "unchanged_matrices": 0,
+    "direction_cosine": null
+  },
+  "scientific_caveats": [
+    "Saved norm ratio is not direction cosine or a capability metric.",
+    "Whole-checkpoint denominator not measured; 410 projection norm denominator is complete for that scope.",
+    "Post-verify full stat is fresh metadata; full hashes are from existing completed verifier, not another hash pass.",
+    "Original candidate internal verify snapshot was compared but not separately saved."
+  ],
+  "cosine_extra_audit_performed": false,
+  "holdout_NLL_performed": false,
+  "model_calls": 0,
+  "root_requested_scope_completed": true,
+  "source_sha256": "9f48771ebe68a9e4fee23a1bf4d37ed99f544399e0c4a30e48ca8ff3f41c7e0b",
+  "closed_epoch": 1794059543.3651564
+}

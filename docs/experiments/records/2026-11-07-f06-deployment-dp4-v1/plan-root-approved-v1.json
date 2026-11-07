@@ -1,0 +1,131 @@
+{
+  "status": "root_approved_F06_after_saved_verify_and_actual_Opus55_review",
+  "approved_for_apply": true,
+  "service_order": [
+    "gemma-0",
+    "gemma-1",
+    "gemma-2",
+    "gemma-3"
+  ],
+  "python": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/infra/weight-tools-ci/bin/python",
+  "control": "/home/y-takagi/kairyu/examples/gemma-4-31b-8gpu/control.py",
+  "helper_sha256": "2e9da820fe30ba9b2436fb600cf14a533b1c496b2fed48ac3649fffb9d2bc9ae",
+  "owner_sha256": "19ae025add4f2f08705f33f0146f48cc9fa8e92bdb14a8383f46fb7d531e53bc",
+  "source_pins": {
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/worktrees/kairyu-bench-weight-tools/docs/experiments/scripts/redeploy-replica.py": "2e9da820fe30ba9b2436fb600cf14a533b1c496b2fed48ac3649fffb9d2bc9ae",
+    "/home/y-takagi/kairyu/examples/gemma-4-31b-8gpu/control.py": "fc9a78bc232f9cc331926a0737e64f4b4fe14946574f4a02bc1aacb9a800b851",
+    "/home/y-takagi/kairyu/examples/gemma-4-31b-8gpu/compose.yaml": "fe49b81c153f68335ef46e07dc9f9910ee49ee066902e703d11d152c8809c5cb",
+    "/home/y-takagi/kairyu/examples/gemma-4-31b-8gpu/example.json": "99b1863206205abc92f5bde917c607cced03a220bd77323cf264eb781f4aedb7",
+    "/home/y-takagi/kairyu/examples/gemma-4-31b-8gpu/kairyu.yaml": "a28e232f27b89d1acc35e3f5871ccffafd8145211e4ffcb33cc0c6b514fa640d"
+  },
+  "candidate": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/checkpoints/fresh-lora-mbpp-f06-v1/checkpoint",
+  "freeze": {
+    "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f06-lora-deployment-plan-v1/bound-preview-v1/f06-freeze.json",
+    "sha256": "cee54e1c7f79cf2116ea7b6036c9d2d3c0709f83117cb95c270542b616b84221"
+  },
+  "verification": {
+    "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f06-lora-deployment-plan-v1/bound-preview-v1/generic-verification.json",
+    "sha256": "899d41c58da3eb54b8bb76ed105f9ee234fb97b4dccb7466490bd2a11edddda9"
+  },
+  "baseline": {
+    "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f06-lora-deployment-plan-v1/bound-preview-v1/all-chat-before.json",
+    "sha256": "8325010ee026212ab39e8b8bbf979466ace1ee8b2613d32ae6a0fd5fbe45a762"
+  },
+  "protected_before": {
+    "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f06-lora-deployment-plan-v1/bound-preview-v1/protected-before.json",
+    "sha256": "3e5b252c162fff3686a019fdd2adf7d8f49b565755891105a186eec349de0742"
+  },
+  "target_ids": {
+    "gemma-0": "47207dd45c1819d875951e66728310171dc218dfc55b1221054f704c39eb3009",
+    "gemma-1": "d1a79f265949e31778ead91834e6a509d3c66af708dc3d7247eb716caa28cef3",
+    "gemma-2": "07e1b17e7c84d8d178703417bb341c3313653eca7122aba1ad7b3d6d893d5abb",
+    "gemma-3": "41ae0d0831faf5d79939f16ad401da0da8fee0d2d453af12e4e4efd10480f45c"
+  },
+  "protected_ids": [
+    "005b20d4f0adacdc438e2e90f44c9d21579f3d089b366bcfe8af8f0785bde8c3",
+    "0a32557db9cd0bd49fffefea34276c8515021858e3d0115e560ef835f616609a",
+    "149b564776c7bda50b4039b44b0cf52b1178272a481a4c4dee88de2f283ae334",
+    "3257ee5ee6d0fa212bacd64de8b86152ab0be509e0a7d329838193559039dbda",
+    "374e969acaf78f336c638b5bff9ffdde04fd44f9075e45d2cfd54881b556b2c1",
+    "37b84155d0d47c339a8a3f989cf69be74a80a9f7369829db41612a5a77fe481a",
+    "3d62fd16cb139033941f36930a226b197b4512f4d319bc0920ecc3ef0b62a87f",
+    "4ef033809802f99ae4859327cf7350e2dc4c7d657b226a7229914432e0dd0718",
+    "5885c75f79f5396867db6b3518637ca5bcde342dd1fd20f88c89bf69ff42cdff",
+    "61a829c3aaf5c9af66499357d1f55b8f58ad19ef40cb887bbe63a0c4729c10f9",
+    "88943a0985ba97dfb17be6b5fb54040eba2570b70ce05126bd410162d3658ffb",
+    "897103115f63e39d3261f39bf449bfa9258121d270ae700f65c0321837eeec08",
+    "8c1e4b184886cd32d110fab4c4fda7369c445ae910f1e68b8ba4834811921d8d",
+    "b0d4c3e871a7d2a44249318079920bd01f56cb7978b58a19f4245245f140afd6",
+    "b4302da3c2814fa2458ae7e4652b0041af34bd45d6872b86ecd40cfa06bf9985",
+    "bcf8a575872a9ff05a85bfd8b46dbeec3cb9d8bef6a94aded4cb5a12c61bc976",
+    "c672bb052ad042282e2e2ec2e8b65edde8b6c50262bd6dab00da57314e4f8b1b",
+    "c81e36297abd0b0e23fd11ada341ac6845e4446fe34a5f9432de70cbdfa752cc",
+    "ca0ce07ae660af1bb129a129aa538d23206e1d10c4db982ae692618dd852678d",
+    "dbabe7158257d30d26b6f96d51eb17e4a0b6385fcf5d9d90c2182b22aed3d20b",
+    "dfbaee8005646b8369493c56f5daa89251880694970e135209b3416255e57d57",
+    "ed9842852109333c564c5962ada840ea2794720ad613ebc0c8ef96591c816a33",
+    "fbb725752d9e8990506968903bfcb5a406eb56f0bc6c839eb08199c0d05f54f3"
+  ],
+  "previews": {
+    "gemma-0": {
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f06-lora-deployment-plan-v1/bound-preview-v1/gemma-0-preview/receipt.json",
+      "sha256": "7c0aca9071f3066961dc5867b133b287cf543a048a3eac126bf424911e484fc7"
+    },
+    "gemma-1": {
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f06-lora-deployment-plan-v1/bound-preview-v1/gemma-1-preview/receipt.json",
+      "sha256": "c90f3e28d1e06e6b4bb2fbd8ab62725b22ad1f61303a0c5bd5a7695892a27142"
+    },
+    "gemma-2": {
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f06-lora-deployment-plan-v1/bound-preview-v1/gemma-2-preview/receipt.json",
+      "sha256": "be3a6ecfb7c83af9586b20010dad8a2f35c277f1bc7c8622b2703bec8a1954db"
+    },
+    "gemma-3": {
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f06-lora-deployment-plan-v1/bound-preview-v1/gemma-3-preview/receipt.json",
+      "sha256": "5351115c88cceb2de38efdcabd8e99b68f6de7b815856be751ebc79d00756e44"
+    }
+  },
+  "output": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f06-lora-deployment-plan-v1/parallel-apply-v1",
+  "parent_gate": "F04 is current highest completed parent. No parent re-evaluation. Root approval after all64 training, exact sameCID restoration, saved candidate verification, Opus review, fresh27snapshot and four existing guarded previews.",
+  "endpoint_checks_and_served_record": "After all4 candidate closure: existing minimum chat1/logprob4 and atomic serving record, then unchanged full2338 WSP30 with candidate-specific identity only",
+  "expected_previous_cids": {
+    "gemma-0": "47207dd45c1819d875951e66728310171dc218dfc55b1221054f704c39eb3009",
+    "gemma-1": "d1a79f265949e31778ead91834e6a509d3c66af708dc3d7247eb716caa28cef3",
+    "gemma-2": "07e1b17e7c84d8d178703417bb341c3313653eca7122aba1ad7b3d6d893d5abb",
+    "gemma-3": "41ae0d0831faf5d79939f16ad401da0da8fee0d2d453af12e4e4efd10480f45c"
+  },
+  "current_parent_restoration_proof": {
+    "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f05-rejected-f04-restore-v1/restoration-completion.json",
+    "sha256": "c4e3333397a71782293d80972a51e24a8b4874f0322a00980a93d386d809d196"
+  },
+  "required_fresh_binding": [
+    "all64 training summary/export",
+    "current gemma2 StartedAt after training restore",
+    "candidate freeze plus full verification and current stats",
+    "27current members/23protected/4healthy idle",
+    "shared baseline and four existing helper previews",
+    "Opus receipt",
+    "exact root approval"
+  ],
+  "rollback": "Existing parallel owner joins every child and rolls all four back to the single common baseline on any failure; no mixed benchmark",
+  "candidate_identity": {
+    "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f04-mbpp-lora-training-v1/materialization-f06-v2/fullcandidateidentity.json",
+    "sha256": "50aa8056b9e48257b48c8621396030b4796c2e72d1c94fd8f64ad84a6867bdf7"
+  },
+  "materialization": {
+    "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f04-mbpp-lora-training-v1/materialization-f06-v2/completion.json",
+    "sha256": "08f248e42f865ef744670dea710d84b60ccd5e6a09698d5ac30926196343cc39"
+  },
+  "opus_receipt": {
+    "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f06-lora-review-v1/actual-opus55-v1/receipt.json",
+    "sha256": "a6bc33aa9f33648cd42104ef19b11bf8eda9ef21bf0f5b3284b894c7b1b9dbba"
+  },
+  "root_review_decision": {
+    "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f06-lora-review-v1/root-review-decision.json",
+    "sha256": "0bb1c680e96f368306c91a371ec5a51b5819966cddc77f438ed5e3b946063e82"
+  },
+  "training_owner_closure": {
+    "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f04-mbpp-lora-training-v1/completion.json",
+    "sha256": "6b0e332f85075ead1d4e26c3ce3a3e82e7c39ebb7f82146421b91dbaf5a6afa7"
+  },
+  "root_scope": "Only four already-authorized inference replicas; 23 other containers preserved. All-four rollback on failure. No benchmark until consistent F06 chat/logprob identity."
+}

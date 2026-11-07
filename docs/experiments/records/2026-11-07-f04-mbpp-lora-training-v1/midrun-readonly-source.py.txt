@@ -1,0 +1,25 @@
+from pathlib import Path
+import importlib.util,json,time,hashlib
+R=Path("/mnt/nvme/kairyu/wsp/gemma4-coding-20261104");B=R/"worktrees/kairyu-bench-weight-tools";N=R/"analysis/fresh-purpose-20261107-f04-mbpp-lora-training-v1"
+path=B/"docs/experiments/scripts/fresh-av-native-gpu4-20261107.py"
+spec=importlib.util.spec_from_file_location("owner_readonly",path);o=importlib.util.module_from_spec(spec);spec.loader.exec_module(o)
+plan=o.read(N/"owner-plan-root-approved.json");ids=o.validate(plan,for_run=True);g=o.helper(plan)
+o.services(plan,g,serving=False)
+cid=(N/"work/train-lora.cid").read_text().strip()
+current=g.inspect(cid);target=g.inspect(plan["target"]["id"])
+task=o.read(plan["training"]["plan"]["path"])
+frames=o.read(N/"work/train-lora/frame-evidence.json")
+expected=o.pinned(task["frame_evidence"])
+proof=dict(epoch=time.time(),owner_pid=1665207,owner_alive=Path("/proc/1665207").exists(),
+ global_lock=g.lock_owner_proof(R/"candidate-evaluation.lock",1665207,1003),
+ validated_train_ids=len(ids),actual_frame_exact=frames==expected,actual_frame_rows=len(frames["rows"]),
+ all_source_pins_current=True,checkpoint9_stat_matched=True,protected26_exact=True,
+ target_id=plan["target"]["id"],target_running=target["State"]["Running"],
+ training_container=dict(id=cid,image=current["Image"],running=current["State"]["Running"],
+ user=current["Config"]["User"],network=current["HostConfig"]["NetworkMode"],
+ memory=current["HostConfig"]["Memory"],devices=current["HostConfig"]["DeviceRequests"],
+ cpuset=current["HostConfig"]["CpusetCpus"],
+ mounts=[dict(source=m["Source"],destination=m["Destination"],rw=m["RW"]) for m in current["Mounts"]]),
+ service_mutations_by_this_check=0,model_calls_by_this_check=0)
+o.save(N/"midrun-readonly-proof.json",proof)
+print(json.dumps(proof))

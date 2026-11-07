@@ -1,0 +1,56 @@
+{
+  "status": "exact_F04_restored_no_owned_training_container",
+  "epoch": 1794058329.0407457,
+  "target": {
+    "id": "07e1b17e7c84d8d178703417bb341c3313653eca7122aba1ad7b3d6d893d5abb",
+    "image": "sha256:af9e746b913088cbf6c4464a31d6904a6b7e1d3ba62f0895362ddf13595f7abe",
+    "running": true,
+    "health": "healthy",
+    "started_at": "2026-11-07T13:27:43.630832527Z",
+    "config_sha256": "7964d15530a946ef01d78f86fc1ac87a9c7131922d60326ee558dbc12825fbe2",
+    "host_config_sha256": "3f534833b1f266cb71bffff6797e6f89fcbda7ca109ba282fd3442b183b2d1fa",
+    "cpuset": "32-47,96-111",
+    "devices": [
+      {
+        "Driver": "nvidia",
+        "Count": 0,
+        "DeviceIDs": [
+          "4",
+          "5"
+        ],
+        "Capabilities": [
+          [
+            "gpu"
+          ]
+        ],
+        "Options": null
+      }
+    ]
+  },
+  "queues": {
+    "metrics_sha256": "845497db272fc385cf56f641e5a5e7d25b7d3a20232a03850776150c7dd30d19",
+    "queues": {
+      "vllm:num_requests_running": [
+        0.0
+      ],
+      "vllm:num_requests_waiting": [
+        0.0
+      ]
+    }
+  },
+  "protected26_exact": true,
+  "container_count": 27,
+  "owner_pid_exited": true,
+  "old_owner_lock_rows": [],
+  "all_sources_and_nine_checkpoint_stats_matched": true,
+  "service_mutations_by_audit": 0,
+  "model_calls": 0,
+  "completion": {
+    "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f04-mbpp-lora-training-v1/completion.json",
+    "sha256": "6b0e332f85075ead1d4e26c3ce3a3e82e7c39ebb7f82146421b91dbaf5a6afa7"
+  },
+  "summary": {
+    "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f04-mbpp-lora-training-v1/work/train-lora/summary.json",
+    "sha256": "3a62262a726fd3eee67a1d491a755ae3caebc21762024a3ab0246dc0cc2065f1"
+  }
+}

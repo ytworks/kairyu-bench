@@ -1,0 +1,36 @@
+[
+  {
+    "phase": "pilot",
+    "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f04-mbpp-lora-training-v1/work/train-lora/pilot/adapter_model.safetensors",
+    "bytes": 244980744,
+    "sha256_from_export_receipt": "5fc78ca13efa6def79ddbac3af536cf7ef786d77a67b33a91e2c3b7f79c1676a",
+    "receipt_sha256": "dfdae5fd6536dca5574f1d628011df13dea5db4204e1daf01e612913b652db96",
+    "stat": {
+      "dev": 2306,
+      "ino": 182195434,
+      "size": 244980744,
+      "mtime_ns": 1794057649223316251,
+      "ctime_ns": 1794057649223316251,
+      "nlink": 1
+    },
+    "payload_rehashed_here": false,
+    "payload_copied_to_PR": false
+  },
+  {
+    "phase": "final",
+    "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f04-mbpp-lora-training-v1/work/train-lora/final/adapter_model.safetensors",
+    "bytes": 244980744,
+    "sha256_from_export_receipt": "f51ac4a9f95babe0e5651f6f3bbfdfdbb35cc5f1a4bca54d9d63f21f48571644",
+    "receipt_sha256": "3e11d1257791a7d3eb77af07c0bdab099a01b7a50eb68c920afd6ebee9255827",
+    "stat": {
+      "dev": 2306,
+      "ino": 182195555,
+      "size": 244980744,
+      "mtime_ns": 1794058060157140749,
+      "ctime_ns": 1794058060157140749,
+      "nlink": 1
+    },
+    "payload_rehashed_here": false,
+    "payload_copied_to_PR": false
+  }
+]

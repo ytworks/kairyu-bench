@@ -1,0 +1,26 @@
+{
+  "status": "read_only_existing_WSP",
+  "run_id": "gemma4-fresh-f04-dev30-dp4-20261107-v1",
+  "code_items": 90,
+  "code_items_with_reasoning_nodes": 90,
+  "nodes_total": 119,
+  "nodes_nonempty": 119,
+  "code_http_trace_rows": 119,
+  "code_http_trace_ids": 90,
+  "http_trace_rows": 4856,
+  "usage_completion_details_null": 4856,
+  "explicit_reasoning_token_count_observed": false,
+  "limitations": [
+    "reasoning text is returned output, not a proof of internal reasoning",
+    "character and byte lengths are measurable; no per-reasoning token count is saved",
+    "completion_tokens includes combined generated output and cannot isolate reasoning",
+    "nested model_responses may include per-call text; aggregated top-level text is not an extra independent call",
+    "compare exact item/sample/path and call structure; different tool/substep trajectories are not aligned calls"
+  ],
+  "input_pins": {
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/results/gemma4-fresh-f04-dev30-dp4-20261107-v1/items.jsonl": "112225547aa681dad402e7a3e62a2cbcafd15301e84987ad4610f2b08fffba65",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/results/gemma4-fresh-f04-dev30-dp4-20261107-v1/responses.jsonl": "9e17d33c0552396f0f5892615f89f580a1c1df0f26dffd13f42f89c77b9ae81d",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f04-dev30-dp4-v1/http-trace/requests-client.jsonl": "14149424e14e26e6665084e96eff2b5159ab13d1494feb5c305d921e8332d02c"
+  },
+  "model_calls": 0
+}

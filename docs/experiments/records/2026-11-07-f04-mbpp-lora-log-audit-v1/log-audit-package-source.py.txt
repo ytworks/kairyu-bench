@@ -1,0 +1,65 @@
+"""Package complete CPU log analysis, while the separate owner handles serving closure."""
+import gzip
+import hashlib
+import json
+from pathlib import Path
+
+R = Path("/mnt/nvme/kairyu/wsp/gemma4-coding-20261104")
+B = R / "worktrees/kairyu-bench-weight-tools"
+N = R / "analysis/fresh-purpose-20261107-f04-mbpp-lora-training-v1"
+D = N / "log-audit-v1"
+PR = B / "docs/experiments/records/2026-11-07-f04-mbpp-lora-log-audit-v1"
+PR.mkdir(exist_ok=False)
+def sha(raw):
+    return hashlib.sha256(raw).hexdigest()
+summary = json.loads((D / "summary.json").read_text())
+assert summary["status"] == "completed" and summary["repeated_cases"] == 52
+index = []
+for source in [*sorted(p for p in D.iterdir() if p.is_file()), Path(__file__)]:
+    raw = source.read_bytes()
+    compressed = len(raw) > 65536
+    stored = gzip.compress(raw, mtime=0) if compressed else raw
+    target = PR / (source.name + (".gz" if compressed else ""))
+    with target.open("xb") as stream:
+        stream.write(stored)
+    if compressed:
+        assert gzip.decompress(stored) == raw
+    index.append({"file": target.name, "source_path": str(source), "raw_sha256": sha(raw),
+                  "stored_sha256": sha(stored), "raw_bytes": len(raw), "gzip": compressed})
+with (PR / "artifact-index.json").open("x") as stream:
+    json.dump(index, stream, indent=2); stream.write("\n")
+rows = summary["selected_step_summary"]
+table = "\n".join(
+    f"| {x['step']} | {x['preclip_global_factor_gradient_l2']:.9f} | {x['zero_A_gradient_modules']}/{x['zero_B_gradient_modules']} | {x['all410_continuous_delta_l2']:.9f} | {x['max_relative_after']:.9f} | {x['projection_modules']} |"
+    for x in rows
+)
+ce = summary["same_case_CE"]
+doc = f"""# F04 LoRA training log audit: training CE only
+
+The trainer completed **64 optimizer steps / 256 presentations**. The immutable seed0 order covers all204 training IDs exactly once, followed by the same first52 IDs for a second presentation. There are152 single-exposure and52 double-exposure cases; no training ID is missing and no holdout ID is present. Every microbatch CE/ID/target-token count matches its corresponding step row. This audit adds no model forward or gradient call.
+
+For **all52 repeated cases**, second-presentation teacher-forced CE is lower than the first. Equal-example mean CE is **{ce['first']['mean']:.12f} → {ce['second']['mean']:.12f} nat/token**, mean second-minus-first **{ce['delta_second_minus_first']['mean']:.12f}**; median difference **{ce['delta_second_minus_first']['median']:.12f}**, range **[{ce['delta_second_minus_first']['minimum']:.12f}, {ce['delta_second_minus_first']['maximum']:.12f}]**. The separately labeled target-token-weighted means are **{ce['token_weighted_first']:.12f} → {ce['token_weighted_second']:.12f}**. The first occurrences are positions1–52 and the second205–256; each pair is separated by51 optimizer updates. This is in-training fitting of known examples, not held-out loss, free-generation correctness, or a WSP/DeepSWE score. No comparable generation or capability gain is inferred.
+
+Every one of the410 adapted matrices executes exactly four calls per completed step, with A/B factor-coordinate gradient norms recorded before global gradient clipping. All410 modules have both input and output activation aggregates at steps1/4/64, with no missing module record. Step1 A gradients are all zero because B starts at zero; B gradients are nonzero in all410. Step4 and64 have no zero A or B gradient. Full per-module fields—including all zeros and raw activation elements/sum/sum-squares/max—are retained.
+
+| Step | Preclip global A/B gradient L2 | Zero A/B modules | Continuous all410 delta L2 | Largest module relative delta | Projected modules |
+|---:|---:|---:|---:|---:|---:|
+{table}
+
+The radius is **0.005 per full base matrix**. Across all410×64=26240 module-step checks, inward projection occurred **0** times; strict and implementation-tolerance postprojection radius excess counts are both0. Global A/B gradient clipping occurred in **48/64** steps. Final continuous factor-product delta L2 is **3.848375559336**, divided by the quadrature norm **2651.409589317135 of the complete410 targeted base matrices**, giving **0.001451445139**. This denominator is neither a sampled subset nor the entire31B model. The largest final individual-matrix ratio is0.002671172075, below0.005. These are continuous F32 factor-product deltas; saved BF16 merge differences are not measured by these logs.
+
+Activation aggregates span all tokens of four full-sequence calls for a module within one step. Steps1,4,64 have different case IDs and token lengths. Input/output means and RMS are derived separately per module from its own aggregates; no unobserved position is filled with zero, and no different-case activation difference is interpreted as a causal capability change. This record has no per-case/token/TP-rank activation attribution.
+
+Logged training-step durations sum to **{summary['sum_logged_training_step_seconds']:.6f}s**; trainer elapsed time is **{summary['trainer_elapsed_including_load_export_and_pilot_wait']:.6f}s**, including loading/export/pilot wait. The audit itself took **{summary['analysis_seconds']:.6f}s**. Parent weights are reported unchanged by the executed trainer's frozen-state/stat checks, not by a new full payload hash. Runtime restoration is recorded separately by the owner.
+
+[All52 paired rows and TSV, all204 coverage, all410 step1/4/64 statistics and lifetime rows, all64 step summaries, source/input pins and factor receipt hashes](records/2026-11-07-f04-mbpp-lora-log-audit-v1/) are retained. Large JSON is losslessly gzip-compressed and indexed by raw/stored SHA. [The separately packaged raw training logs and owner lifecycle](records/2026-11-07-f04-mbpp-lora-training-v1/) retain original steps, microbatches, summary, provenance, frame/order records, continuation and export receipts. Factor payloads are not copied into Git; their exported SHA, size and current stat are recorded with §payload_rehashed_here=false§.
+
+The reusable read-only recipe is §scripts/experiments/gemma4-purpose/training_log_audit.py --study <completed-study> --output <new-audit-dir>§. Missing final summary defers analysis; a terminal incomplete status is recorded as partial. This new analysis source was added after CPU CI r11; it separately passed syntax/Ruff and the complete actual-log consistency checks. It is not represented as part of the earlier full-suite freeze.
+"""
+doc = doc.replace("§", chr(96))
+path = B / "docs/experiments/2026-11-07-f04-mbpp-lora-training-log-audit.md"
+with path.open("x") as stream:
+    stream.write(doc)
+with (PR / "SHA256SUMS").open("x") as stream:
+    stream.write("".join(sha(p.read_bytes()) + "  " + p.name + "\n" for p in sorted(PR.iterdir()) if p.is_file() and p.name != "SHA256SUMS"))
+print(json.dumps({"document_sha256": sha(path.read_bytes()), "records": len(index), "summary_sha256": sha((D / "summary.json").read_bytes()), "artifact_index_sha256": sha((PR / "artifact-index.json").read_bytes())}))

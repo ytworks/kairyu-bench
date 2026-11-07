@@ -1,0 +1,10 @@
+usage: fresh-av-dev30-progress-20261107.py [-h] --analysis-root ANALYSIS_ROOT
+                                           --run-root RUN_ROOT
+
+Append one monitoring snapshot for an explicitly bound complete-manifest dev30
+run.
+
+options:
+  -h, --help            show this help message and exit
+  --analysis-root ANALYSIS_ROOT
+  --run-root RUN_ROOT

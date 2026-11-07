@@ -1,0 +1,28 @@
+{
+  "epoch": 1794058705.3450737,
+  "status": "prepared_unbound_not_executable",
+  "plan_sha256": "01ab079d90de2b86944eefa88ebd0c13829241d08b2feb5eebc72e2f1c5c46b8",
+  "approved_for_execution": false,
+  "conditions_structurally_match_completed_F04": true,
+  "owner_preview_attempts": 1,
+  "owner_preview_returncode": 1,
+  "owner_preview_missing_binding": "http-trace/capture.json does not exist until verified candidate identity is available",
+  "preview_pass_claim": false,
+  "owner_source_changed": false,
+  "fake_capture_created": false,
+  "automatic_retry": false,
+  "model_GPU_API_service_lock_operations": 0,
+  "baseline_reruns": 0,
+  "pending_fields": [
+    "actual successful F06 checkpoint path, manifest and creation receipts",
+    "full verification receipt and BF16 actual changes",
+    "all checkpoint hash rows and exact current file stat",
+    "F06 spec and final adapter/merge provenance",
+    "actual Opus 5.5 review receipt and root decision",
+    "physical tree and command label",
+    "fresh HTTP trace config and identity check",
+    "four exact healthy ordinary candidate CIDs and per-replica/combined closure",
+    "endpoint chat/logprob identity and normal prior-owner lock release",
+    "root launch authorization"
+  ]
+}

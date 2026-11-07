@@ -430,6 +430,31 @@ class LoraRecipeTests(unittest.TestCase):
             self.call("dense_lora_native_recipe.py", "verify", self.manifest)
 
 
+    def test_readonly_parent_shards_create_verify_without_parent_mutation(self):
+        shards = sorted(self.base.glob("*.safetensors"))
+        for source in shards:
+            source.chmod(0o444)
+
+        def identity(path):
+            info = path.stat()
+            return (
+                info.st_dev, info.st_ino, info.st_mode, info.st_size,
+                info.st_mtime_ns, info.st_ctime_ns, info.st_nlink,
+                info.st_uid, info.st_gid, self.recipe.digest(path),
+            )
+
+        before = {source.name: identity(source) for source in shards}
+        with contextlib.redirect_stdout(io.StringIO()):
+            self.recipe.create(self.base, self.dest, self.spec_path, self.manifest)
+            self.recipe.verify(self.manifest)
+        self.assertEqual(before, {source.name: identity(source) for source in shards})
+        for source in shards:
+            target = self.dest / source.name
+            self.assertFalse(os.path.samefile(source, target))
+            self.assertEqual(target.stat().st_nlink, 1)
+            self.assertTrue(target.stat().st_mode & 0o200)
+            self.assertFalse(source.stat().st_mode & 0o222)
+
     def test_local_training_receipt_opt_in_binds_parent_factors_and_data(self):
         self._f32_factors()
         self.spec.pop("donor_repo")

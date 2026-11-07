@@ -1,0 +1,16 @@
+{
+  "kind": "help_invocation_with_unintended_monitor_append",
+  "reported_invocation": "fresh-av-dev30-progress-20261107.py --help",
+  "reported_epoch": 1794059547.4666736,
+  "verified_line_number": 29,
+  "progress_line_count": 29,
+  "progress_file_sha256_at_inspection": "487aee031f0118ca785a4f0049a56968ecdfba48baa7dd09d1c234ae3fe37011",
+  "line_sha256": "a068413165df643134447a36259f7a35225e55904ff7c12450ad586f2ce6dd84",
+  "old_source_sha256": "86813af47ee869e32dbc90fe48ecdba9bdf7e67746a9751002ce243d2a7388b4",
+  "root_cause": "no argparse; argv ignored and hardcoded old AV monitor executed",
+  "side_effect": "one old-AV progress.jsonl append and read-only metrics requests",
+  "model_generation_or_new_evaluation_calls": 0,
+  "reported_existing_result_scores_unchanged": true,
+  "line_preserved": true,
+  "created_epoch": 1794059753.494914
+}

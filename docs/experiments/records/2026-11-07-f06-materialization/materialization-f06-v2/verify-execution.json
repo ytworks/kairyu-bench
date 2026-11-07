@@ -1,0 +1,19 @@
+{
+  "phase": "verify",
+  "command": [
+    "nice",
+    "-n",
+    "15",
+    "ionice",
+    "-c",
+    "3",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/infra/weight-tools-ci/bin/python",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/worktrees/kairyu-bench-weight-tools/scripts/experiments/gemma4_lora/dense_lora_recipe.py",
+    "verify",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/checkpoints/fresh-lora-mbpp-f06-v1/manifest.json"
+  ],
+  "returncode": 0,
+  "seconds": 297.80545275006443,
+  "stdout_sha256": "42140a38d3f2412887952c0dfe836433f0fabb6a8aa68196978eb8e5e479788d",
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+}

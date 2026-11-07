@@ -1,0 +1,86 @@
+{
+  "training_summary_sha256": "3a62262a726fd3eee67a1d491a755ae3caebc21762024a3ab0246dc0cc2065f1",
+  "trainer_plan_sha256": "5f8de3c395cf249be6d22406f9c0d339c1cf21150a6ea0497967d6805f9b83df",
+  "final_spec_sha256": "44e1928332dc347bfe19048b93ddb837e79f79797d2db807e6230bb52ce78d8d",
+  "final_receipt_sha256": "3e11d1257791a7d3eb77af07c0bdab099a01b7a50eb68c920afd6ebee9255827",
+  "adapter_sha256": "f51ac4a9f95babe0e5651f6f3bbfdfdbb35cc5f1a4bca54d9d63f21f48571644",
+  "free_bytes": 69026975744,
+  "required_free_bytes": 68014454366,
+  "source_before_stat": {
+    "chat_template.jinja": {
+      "device": 2306,
+      "inode": 182193236,
+      "size": 18683,
+      "mtime_ns": 1794050350349847250,
+      "ctime_ns": 1794050350349847250,
+      "nlink": 1
+    },
+    "config.json": {
+      "device": 2306,
+      "inode": 182193237,
+      "size": 4621,
+      "mtime_ns": 1794050350349847250,
+      "ctime_ns": 1794050350349847250,
+      "nlink": 1
+    },
+    "generation_config.json": {
+      "device": 2306,
+      "inode": 182193238,
+      "size": 208,
+      "mtime_ns": 1794050350350847215,
+      "ctime_ns": 1794050350350847215,
+      "nlink": 1
+    },
+    "model.safetensors.index.json": {
+      "device": 2306,
+      "inode": 182193239,
+      "size": 103577,
+      "mtime_ns": 1794050350350847215,
+      "ctime_ns": 1794050350350847215,
+      "nlink": 1
+    },
+    "native.safetensors": {
+      "device": 2306,
+      "inode": 182193240,
+      "size": 2714560,
+      "mtime_ns": 1794050350572839477,
+      "ctime_ns": 1794050350572839477,
+      "nlink": 1
+    },
+    "processor_config.json": {
+      "device": 2306,
+      "inode": 182193241,
+      "size": 1689,
+      "mtime_ns": 1794050350361846832,
+      "ctime_ns": 1794050350361846832,
+      "nlink": 1
+    },
+    "shared.safetensors": {
+      "device": 2306,
+      "inode": 182192842,
+      "size": 62543620336,
+      "mtime_ns": 1794050230365028683,
+      "ctime_ns": 1794050243644565979,
+      "nlink": 17
+    },
+    "tokenizer.json": {
+      "device": 2306,
+      "inode": 182193242,
+      "size": 32169626,
+      "mtime_ns": 1794050350405845298,
+      "ctime_ns": 1794050350405845298,
+      "nlink": 1
+    },
+    "tokenizer_config.json": {
+      "device": 2306,
+      "inode": 182193243,
+      "size": 3082,
+      "mtime_ns": 1794050350569839582,
+      "ctime_ns": 1794050350569839582,
+      "nlink": 1
+    }
+  },
+  "wait_seconds": 0.4882729590171948,
+  "transient_summary_parse_waits": 0,
+  "all_targets_absent": true
+}

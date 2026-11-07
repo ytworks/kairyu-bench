@@ -1,0 +1,17 @@
+{
+  "argv": [
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/infra/weight-tools-ci/bin/python",
+    "-B",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/worktrees/kairyu-bench-weight-tools/docs/experiments/scripts/fresh-scalar-l41-minus4-release-20261107.py",
+    "--plan",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-scalar-l41-minus4-release-plan-v1/release-plan-ready.json",
+    "--plan-sha256",
+    "29ffb3ec92040e911501d51b58c15e855100f483ebf9cbe1d20ea07e75e6aed1",
+    "--expected-wrapper-sha256",
+    "fd3ee92a108eba2c683156400a92d4493cb4ef4929251742d242d7c670d508bc",
+    "--output",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-scalar-l41-minus4-release-plan-v1/release-preview-v1"
+  ],
+  "returncode": 1,
+  "seconds": 0.15926575660705566
+}

@@ -1,0 +1,14 @@
+test_atomic_publication_preserves_foreign_manifest (test_gemma4_lora_recipes.LoraRecipeTests.test_atomic_publication_preserves_foreign_manifest) ... ok
+test_create_verify_and_source_ownership (test_gemma4_lora_recipes.LoraRecipeTests.test_create_verify_and_source_ownership) ... ok
+test_extended_format_rejects_wrappers_bad_pins_shapes_and_payload (test_gemma4_lora_recipes.LoraRecipeTests.test_extended_format_rejects_wrappers_bad_pins_shapes_and_payload) ... ok
+test_f32_rank128_preserves_factors_scale_and_exact_created_words (test_gemma4_lora_recipes.LoraRecipeTests.test_f32_rank128_preserves_factors_scale_and_exact_created_words) ... ok
+test_kernel_rounding_and_realized_audit (test_gemma4_lora_recipes.LoraRecipeTests.test_kernel_rounding_and_realized_audit) ... ok
+test_local_training_receipt_opt_in_binds_parent_factors_and_data (test_gemma4_lora_recipes.LoraRecipeTests.test_local_training_receipt_opt_in_binds_parent_factors_and_data) ... ok
+test_native_scale_composes_from_original (test_gemma4_lora_recipes.LoraRecipeTests.test_native_scale_composes_from_original) ... ok
+test_readonly_parent_shards_create_verify_without_parent_mutation (test_gemma4_lora_recipes.LoraRecipeTests.test_readonly_parent_shards_create_verify_without_parent_mutation) ... ok
+test_verify_rejects_source_changed_during_regeneration (test_gemma4_lora_recipes.LoraRecipeTests.test_verify_rejects_source_changed_during_regeneration) ... ok
+
+----------------------------------------------------------------------
+Ran 9 tests in 3.577s
+
+OK

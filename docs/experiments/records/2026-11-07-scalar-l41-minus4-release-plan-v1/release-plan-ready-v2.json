@@ -1,0 +1,997 @@
+{
+  "status": "ready_for_exact_preview",
+  "approved_for_execution": false,
+  "wrapper_sha256": "171773d155b60ebf9f826e487d56640d5e3dfe168377fdae7b00607d383fbe1d",
+  "helper_sha256": "435e01109887123db12519c100e304fa7bd4f5a71b772e6c96eedce1b130f894",
+  "mandatory_base": "/mnt/nvme/kairyu/model-volumes/gemma-4-31b-8gpu/models/gemma-4-31b-it",
+  "candidate": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/checkpoints/scalar-l41-minus4",
+  "archive": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-scalar-l41-minus4-lossless-v1",
+  "engine_ast_transformation": {
+    "original_source_sha256": "435e01109887123db12519c100e304fa7bd4f5a71b772e6c96eedce1b130f894",
+    "replacements": [
+      {
+        "line": 232,
+        "before": 62546338264,
+        "after": 62546338248
+      }
+    ],
+    "original_ast_sha256": "aff8a3730883045479e757d3c4d2d8ea7a5527b2f17868faacf7a8e23779b641",
+    "transformed_ast_sha256": "dc9b5196efa2ea2b3361ca1c994f26c40d9db385f7c3e8bf56cb05e1f4c10bca",
+    "only_byte_literal_changed": true
+  },
+  "targets": [
+    {
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/checkpoints/scalar-l41-minus4/model-00001-of-00002.safetensors",
+      "current_stat": {
+        "device": 2306,
+        "inode": 181570962,
+        "size": 49784788364,
+        "mtime_ns": 1793800946809548012,
+        "ctime_ns": 1793800946809548012,
+        "mode": 33188,
+        "uid": 1003,
+        "gid": 1003,
+        "nlink": 1
+      },
+      "bytes": 49784788364,
+      "historical_full_sha256": "eeef8791537bc04f110967c513149e037d2a9ae97d49add7291ebfa62806bbfa"
+    },
+    {
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/checkpoints/scalar-l41-minus4/model-00002-of-00002.safetensors",
+      "current_stat": {
+        "device": 2306,
+        "inode": 181570963,
+        "size": 12761549884,
+        "mtime_ns": 1793800955060271575,
+        "ctime_ns": 1793800955060271575,
+        "mode": 33188,
+        "uid": 1003,
+        "gid": 1003,
+        "nlink": 1
+      },
+      "bytes": 12761549884,
+      "historical_full_sha256": "a3ffbcf0fa999836daa46556dc4b7b777de1988c3222314001922bd63255bfc1"
+    }
+  ],
+  "archive_checksum_list_sha256": "cc8c5ddb5549854a326a7f51b5a3a5564e8c23b81e57f86273257d89e1d4b86b",
+  "archive_json_sha256": "d681aff1ee89697c9647ca0063c0be30441e56ce757864a5054aceaa23669d94",
+  "archive_checksum_entries": 110,
+  "read_only_audit": {
+    "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-scalar-l41-minus4-release-plan-v1/release-baseline.json",
+    "sha256": "9171df9a0d93db1b0edf67e06dc4b7f16655a480272305221ae2a94b12c64883"
+  },
+  "protected_checkpoint_inventories": {
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/checkpoints/code90-current-ad-helper-av-v1": {
+      "chat_template.jinja": {
+        "device": 2306,
+        "inode": 181678464,
+        "size": 18683,
+        "mtime_ns": 1794014158733915132,
+        "ctime_ns": 1794014158733915132,
+        "mode": 33152,
+        "uid": 1003,
+        "gid": 1003,
+        "nlink": 1
+      },
+      "config.json": {
+        "device": 2306,
+        "inode": 181678465,
+        "size": 4621,
+        "mtime_ns": 1794014158734915095,
+        "ctime_ns": 1794014158734915095,
+        "mode": 33152,
+        "uid": 1003,
+        "gid": 1003,
+        "nlink": 1
+      },
+      "generation_config.json": {
+        "device": 2306,
+        "inode": 181678466,
+        "size": 208,
+        "mtime_ns": 1794014158734915095,
+        "ctime_ns": 1794014158734915095,
+        "mode": 33152,
+        "uid": 1003,
+        "gid": 1003,
+        "nlink": 1
+      },
+      "model-00001-of-00002.safetensors": {
+        "device": 2306,
+        "inode": 181678467,
+        "size": 49923154850,
+        "mtime_ns": 1794014260450139654,
+        "ctime_ns": 1794014260450139654,
+        "mode": 33152,
+        "uid": 1003,
+        "gid": 1003,
+        "nlink": 1
+      },
+      "model-00002-of-00002.safetensors": {
+        "device": 2306,
+        "inode": 181678468,
+        "size": 12623183414,
+        "mtime_ns": 1794014261005119199,
+        "ctime_ns": 1794014261005119199,
+        "mode": 33152,
+        "uid": 1003,
+        "gid": 1003,
+        "nlink": 1
+      },
+      "model.safetensors.index.json": {
+        "device": 2306,
+        "inode": 181678469,
+        "size": 120246,
+        "mtime_ns": 1794014259954157935,
+        "ctime_ns": 1794014259954157935,
+        "mode": 33152,
+        "uid": 1003,
+        "gid": 1003,
+        "nlink": 1
+      },
+      "processor_config.json": {
+        "device": 2306,
+        "inode": 181678470,
+        "size": 1689,
+        "mtime_ns": 1794014259954157935,
+        "ctime_ns": 1794014259954157935,
+        "mode": 33152,
+        "uid": 1003,
+        "gid": 1003,
+        "nlink": 1
+      },
+      "tokenizer.json": {
+        "device": 2306,
+        "inode": 181678471,
+        "size": 32169626,
+        "mtime_ns": 1794014259991156571,
+        "ctime_ns": 1794014259991156571,
+        "mode": 33152,
+        "uid": 1003,
+        "gid": 1003,
+        "nlink": 1
+      },
+      "tokenizer_config.json": {
+        "device": 2306,
+        "inode": 181678472,
+        "size": 3082,
+        "mtime_ns": 1794014260013155760,
+        "ctime_ns": 1794014260013155760,
+        "mode": 33152,
+        "uid": 1003,
+        "gid": 1003,
+        "nlink": 1
+      }
+    },
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/checkpoints/native-faststore-av-v1": {
+      "base/chat_template.jinja": {
+        "device": 2306,
+        "inode": 182193203,
+        "size": 18683,
+        "mtime_ns": 1794050243404574341,
+        "ctime_ns": 1794050243404574341,
+        "mode": 33152,
+        "uid": 1003,
+        "gid": 1003,
+        "nlink": 1
+      },
+      "base/config.json": {
+        "device": 2306,
+        "inode": 182193204,
+        "size": 4621,
+        "mtime_ns": 1794050243405574306,
+        "ctime_ns": 1794050243405574306,
+        "mode": 33152,
+        "uid": 1003,
+        "gid": 1003,
+        "nlink": 1
+      },
+      "base/generation_config.json": {
+        "device": 2306,
+        "inode": 182193205,
+        "size": 208,
+        "mtime_ns": 1794050243405574306,
+        "ctime_ns": 1794050243405574306,
+        "mode": 33152,
+        "uid": 1003,
+        "gid": 1003,
+        "nlink": 1
+      },
+      "base/model.safetensors.index.json": {
+        "device": 2306,
+        "inode": 182193209,
+        "size": 103577,
+        "mtime_ns": 1794050243643566013,
+        "ctime_ns": 1794050243643566013,
+        "mode": 33152,
+        "uid": 1003,
+        "gid": 1003,
+        "nlink": 1
+      },
+      "base/native.safetensors": {
+        "device": 2306,
+        "inode": 182192840,
+        "size": 2714560,
+        "mtime_ns": 1794050227901114532,
+        "ctime_ns": 1794050227901114532,
+        "mode": 33152,
+        "uid": 1003,
+        "gid": 1003,
+        "nlink": 1
+      },
+      "base/processor_config.json": {
+        "device": 2306,
+        "inode": 182193206,
+        "size": 1689,
+        "mtime_ns": 1794050243406574271,
+        "ctime_ns": 1794050243406574271,
+        "mode": 33152,
+        "uid": 1003,
+        "gid": 1003,
+        "nlink": 1
+      },
+      "base/shared.safetensors": {
+        "device": 2306,
+        "inode": 182192842,
+        "size": 62543620336,
+        "mtime_ns": 1794050230365028683,
+        "ctime_ns": 1794050243644565979,
+        "mode": 33060,
+        "uid": 1003,
+        "gid": 1003,
+        "nlink": 17
+      },
+      "base/tokenizer.json": {
+        "device": 2306,
+        "inode": 182193207,
+        "size": 32169626,
+        "mtime_ns": 1794050243453572634,
+        "ctime_ns": 1794050243453572634,
+        "mode": 33152,
+        "uid": 1003,
+        "gid": 1003,
+        "nlink": 1
+      },
+      "base/tokenizer_config.json": {
+        "device": 2306,
+        "inode": 182193208,
+        "size": 3082,
+        "mtime_ns": 1794050243638566188,
+        "ctime_ns": 1794050243638566188,
+        "mode": 33152,
+        "uid": 1003,
+        "gid": 1003,
+        "nlink": 1
+      },
+      "lock": {
+        "device": 2306,
+        "inode": 182192838,
+        "size": 0,
+        "mtime_ns": 1794050068363671354,
+        "ctime_ns": 1794050068363671354,
+        "mode": 33152,
+        "uid": 1003,
+        "gid": 1003,
+        "nlink": 1
+      },
+      "receipt.json": {
+        "device": 2306,
+        "inode": 182193226,
+        "size": 193508,
+        "mtime_ns": 1794050347984929682,
+        "ctime_ns": 1794050347985929647,
+        "mode": 33152,
+        "uid": 1003,
+        "gid": 1003,
+        "nlink": 1
+      },
+      "slots/slot-002/shared.safetensors": {
+        "device": 2306,
+        "inode": 182192842,
+        "size": 62543620336,
+        "mtime_ns": 1794050230365028683,
+        "ctime_ns": 1794050243644565979,
+        "mode": 33060,
+        "uid": 1003,
+        "gid": 1003,
+        "nlink": 17
+      },
+      "slots/slot-003/shared.safetensors": {
+        "device": 2306,
+        "inode": 182192842,
+        "size": 62543620336,
+        "mtime_ns": 1794050230365028683,
+        "ctime_ns": 1794050243644565979,
+        "mode": 33060,
+        "uid": 1003,
+        "gid": 1003,
+        "nlink": 17
+      },
+      "slots/slot-004/shared.safetensors": {
+        "device": 2306,
+        "inode": 182192842,
+        "size": 62543620336,
+        "mtime_ns": 1794050230365028683,
+        "ctime_ns": 1794050243644565979,
+        "mode": 33060,
+        "uid": 1003,
+        "gid": 1003,
+        "nlink": 17
+      },
+      "slots/slot-005/shared.safetensors": {
+        "device": 2306,
+        "inode": 182192842,
+        "size": 62543620336,
+        "mtime_ns": 1794050230365028683,
+        "ctime_ns": 1794050243644565979,
+        "mode": 33060,
+        "uid": 1003,
+        "gid": 1003,
+        "nlink": 17
+      },
+      "slots/slot-006/shared.safetensors": {
+        "device": 2306,
+        "inode": 182192842,
+        "size": 62543620336,
+        "mtime_ns": 1794050230365028683,
+        "ctime_ns": 1794050243644565979,
+        "mode": 33060,
+        "uid": 1003,
+        "gid": 1003,
+        "nlink": 17
+      },
+      "slots/slot-007/shared.safetensors": {
+        "device": 2306,
+        "inode": 182192842,
+        "size": 62543620336,
+        "mtime_ns": 1794050230365028683,
+        "ctime_ns": 1794050243644565979,
+        "mode": 33060,
+        "uid": 1003,
+        "gid": 1003,
+        "nlink": 17
+      },
+      "slots/slot-008/shared.safetensors": {
+        "device": 2306,
+        "inode": 182192842,
+        "size": 62543620336,
+        "mtime_ns": 1794050230365028683,
+        "ctime_ns": 1794050243644565979,
+        "mode": 33060,
+        "uid": 1003,
+        "gid": 1003,
+        "nlink": 17
+      },
+      "slots/slot-009/shared.safetensors": {
+        "device": 2306,
+        "inode": 182192842,
+        "size": 62543620336,
+        "mtime_ns": 1794050230365028683,
+        "ctime_ns": 1794050243644565979,
+        "mode": 33060,
+        "uid": 1003,
+        "gid": 1003,
+        "nlink": 17
+      },
+      "slots/slot-010/shared.safetensors": {
+        "device": 2306,
+        "inode": 182192842,
+        "size": 62543620336,
+        "mtime_ns": 1794050230365028683,
+        "ctime_ns": 1794050243644565979,
+        "mode": 33060,
+        "uid": 1003,
+        "gid": 1003,
+        "nlink": 17
+      },
+      "slots/slot-011/shared.safetensors": {
+        "device": 2306,
+        "inode": 182192842,
+        "size": 62543620336,
+        "mtime_ns": 1794050230365028683,
+        "ctime_ns": 1794050243644565979,
+        "mode": 33060,
+        "uid": 1003,
+        "gid": 1003,
+        "nlink": 17
+      },
+      "slots/slot-012/shared.safetensors": {
+        "device": 2306,
+        "inode": 182192842,
+        "size": 62543620336,
+        "mtime_ns": 1794050230365028683,
+        "ctime_ns": 1794050243644565979,
+        "mode": 33060,
+        "uid": 1003,
+        "gid": 1003,
+        "nlink": 17
+      },
+      "slots/slot-013/shared.safetensors": {
+        "device": 2306,
+        "inode": 182192842,
+        "size": 62543620336,
+        "mtime_ns": 1794050230365028683,
+        "ctime_ns": 1794050243644565979,
+        "mode": 33060,
+        "uid": 1003,
+        "gid": 1003,
+        "nlink": 17
+      },
+      "slots/slot-014/shared.safetensors": {
+        "device": 2306,
+        "inode": 182192842,
+        "size": 62543620336,
+        "mtime_ns": 1794050230365028683,
+        "ctime_ns": 1794050243644565979,
+        "mode": 33060,
+        "uid": 1003,
+        "gid": 1003,
+        "nlink": 17
+      },
+      "slots/slot-015/shared.safetensors": {
+        "device": 2306,
+        "inode": 182192842,
+        "size": 62543620336,
+        "mtime_ns": 1794050230365028683,
+        "ctime_ns": 1794050243644565979,
+        "mode": 33060,
+        "uid": 1003,
+        "gid": 1003,
+        "nlink": 17
+      }
+    },
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/checkpoints/fresh-native-relative-f04-faststore-v1/checkpoint": {
+      "chat_template.jinja": {
+        "device": 2306,
+        "inode": 182193236,
+        "size": 18683,
+        "mtime_ns": 1794050350349847250,
+        "ctime_ns": 1794050350349847250,
+        "mode": 33152,
+        "uid": 1003,
+        "gid": 1003,
+        "nlink": 1
+      },
+      "config.json": {
+        "device": 2306,
+        "inode": 182193237,
+        "size": 4621,
+        "mtime_ns": 1794050350349847250,
+        "ctime_ns": 1794050350349847250,
+        "mode": 33152,
+        "uid": 1003,
+        "gid": 1003,
+        "nlink": 1
+      },
+      "generation_config.json": {
+        "device": 2306,
+        "inode": 182193238,
+        "size": 208,
+        "mtime_ns": 1794050350350847215,
+        "ctime_ns": 1794050350350847215,
+        "mode": 33152,
+        "uid": 1003,
+        "gid": 1003,
+        "nlink": 1
+      },
+      "model.safetensors.index.json": {
+        "device": 2306,
+        "inode": 182193239,
+        "size": 103577,
+        "mtime_ns": 1794050350350847215,
+        "ctime_ns": 1794050350350847215,
+        "mode": 33152,
+        "uid": 1003,
+        "gid": 1003,
+        "nlink": 1
+      },
+      "native.safetensors": {
+        "device": 2306,
+        "inode": 182193240,
+        "size": 2714560,
+        "mtime_ns": 1794050350572839477,
+        "ctime_ns": 1794050350572839477,
+        "mode": 33152,
+        "uid": 1003,
+        "gid": 1003,
+        "nlink": 1
+      },
+      "processor_config.json": {
+        "device": 2306,
+        "inode": 182193241,
+        "size": 1689,
+        "mtime_ns": 1794050350361846832,
+        "ctime_ns": 1794050350361846832,
+        "mode": 33152,
+        "uid": 1003,
+        "gid": 1003,
+        "nlink": 1
+      },
+      "shared.safetensors": {
+        "device": 2306,
+        "inode": 182192842,
+        "size": 62543620336,
+        "mtime_ns": 1794050230365028683,
+        "ctime_ns": 1794050243644565979,
+        "mode": 33060,
+        "uid": 1003,
+        "gid": 1003,
+        "nlink": 17
+      },
+      "tokenizer.json": {
+        "device": 2306,
+        "inode": 182193242,
+        "size": 32169626,
+        "mtime_ns": 1794050350405845298,
+        "ctime_ns": 1794050350405845298,
+        "mode": 33152,
+        "uid": 1003,
+        "gid": 1003,
+        "nlink": 1
+      },
+      "tokenizer_config.json": {
+        "device": 2306,
+        "inode": 182193243,
+        "size": 3082,
+        "mtime_ns": 1794050350569839582,
+        "ctime_ns": 1794050350569839582,
+        "mode": 33152,
+        "uid": 1003,
+        "gid": 1003,
+        "nlink": 1
+      }
+    }
+  },
+  "unknown_process_visibility_accepted_by_root": true,
+  "legacy_marker_field_note": "original_nine_files is the unchanged engine legacy field name; its actual contents are all12 checkpoint files.",
+  "fresh_verify": {
+    "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-scalar-l41-minus4-lossless-v1/fresh-verify.json",
+    "sha256": "290a6b04c05a37c8dc8f588ea789b0fc383d85c2e51b1095292bc344bf3d1c87"
+  },
+  "root_non_destructive_authorization": "Archive and preview approved; exact2payload release requires subsequent root approval",
+  "reference_visibility_audit": {
+    "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-scalar-l41-minus4-release-plan-v1/read-only-audit.json",
+    "sha256": "620e3da2ed7a2775af05a437960a026c505e275decb8cb0bee82b22637036d53"
+  },
+  "complete_original_inventory": {
+    ".cache/huggingface/.gitignore": {
+      "device": 2306,
+      "inode": 181176094,
+      "size": 1,
+      "mtime_ns": 1793718022220529418,
+      "ctime_ns": 1793718022220529418,
+      "mode": 33188,
+      "uid": 0,
+      "gid": 0,
+      "nlink": 1
+    },
+    ".cache/huggingface/CACHEDIR.TAG": {
+      "device": 2306,
+      "inode": 181176092,
+      "size": 191,
+      "mtime_ns": 1793718022164531334,
+      "ctime_ns": 1793718022164531334,
+      "mode": 33188,
+      "uid": 0,
+      "gid": 0,
+      "nlink": 1
+    },
+    ".cache/huggingface/download/.eval_results/mmmu_pro.yaml.lock": {
+      "device": 2306,
+      "inode": 181176106,
+      "size": 0,
+      "mtime_ns": 1793718022223529316,
+      "ctime_ns": 1793718022223529316,
+      "mode": 33204,
+      "uid": 0,
+      "gid": 0,
+      "nlink": 1
+    },
+    ".cache/huggingface/download/.eval_results/mmmu_pro.yaml.metadata": {
+      "device": 2306,
+      "inode": 181176123,
+      "size": 101,
+      "mtime_ns": 1793718022775510436,
+      "ctime_ns": 1793718022775510436,
+      "mode": 33188,
+      "uid": 0,
+      "gid": 0,
+      "nlink": 1
+    },
+    ".cache/huggingface/download/.gitattributes.lock": {
+      "device": 2306,
+      "inode": 181176100,
+      "size": 0,
+      "mtime_ns": 1793718022181530752,
+      "ctime_ns": 1793718022183530684,
+      "mode": 33204,
+      "uid": 0,
+      "gid": 0,
+      "nlink": 1
+    },
+    ".cache/huggingface/download/.gitattributes.metadata": {
+      "device": 2306,
+      "inode": 181176117,
+      "size": 100,
+      "mtime_ns": 1793718022727512078,
+      "ctime_ns": 1793718022727512078,
+      "mode": 33188,
+      "uid": 0,
+      "gid": 0,
+      "nlink": 1
+    },
+    ".cache/huggingface/download/README.md.lock": {
+      "device": 2306,
+      "inode": 181176104,
+      "size": 0,
+      "mtime_ns": 1793718022220529418,
+      "ctime_ns": 1793718022221529384,
+      "mode": 33204,
+      "uid": 0,
+      "gid": 0,
+      "nlink": 1
+    },
+    ".cache/huggingface/download/README.md.metadata": {
+      "device": 2306,
+      "inode": 181176120,
+      "size": 101,
+      "mtime_ns": 1793718022734511838,
+      "ctime_ns": 1793718022734511838,
+      "mode": 33188,
+      "uid": 0,
+      "gid": 0,
+      "nlink": 1
+    },
+    ".cache/huggingface/download/chat_template.jinja.lock": {
+      "device": 2306,
+      "inode": 181176093,
+      "size": 0,
+      "mtime_ns": 1793718022170531129,
+      "ctime_ns": 1793718022172531060,
+      "mode": 33204,
+      "uid": 0,
+      "gid": 0,
+      "nlink": 1
+    },
+    ".cache/huggingface/download/chat_template.jinja.metadata": {
+      "device": 2306,
+      "inode": 181176113,
+      "size": 101,
+      "mtime_ns": 1793718022686513480,
+      "ctime_ns": 1793718022686513480,
+      "mode": 33188,
+      "uid": 0,
+      "gid": 0,
+      "nlink": 1
+    },
+    ".cache/huggingface/download/config.json.lock": {
+      "device": 2306,
+      "inode": 181176096,
+      "size": 0,
+      "mtime_ns": 1793718022173531026,
+      "ctime_ns": 1793718022175530958,
+      "mode": 33204,
+      "uid": 0,
+      "gid": 0,
+      "nlink": 1
+    },
+    ".cache/huggingface/download/config.json.metadata": {
+      "device": 2306,
+      "inode": 181176115,
+      "size": 101,
+      "mtime_ns": 1793718022719512352,
+      "ctime_ns": 1793718022719512352,
+      "mode": 33188,
+      "uid": 0,
+      "gid": 0,
+      "nlink": 1
+    },
+    ".cache/huggingface/download/generation_config.json.lock": {
+      "device": 2306,
+      "inode": 181176097,
+      "size": 0,
+      "mtime_ns": 1793718022178530855,
+      "ctime_ns": 1793718022181530752,
+      "mode": 33204,
+      "uid": 0,
+      "gid": 0,
+      "nlink": 1
+    },
+    ".cache/huggingface/download/generation_config.json.metadata": {
+      "device": 2306,
+      "inode": 181176122,
+      "size": 101,
+      "mtime_ns": 1793718022763510846,
+      "ctime_ns": 1793718022763510846,
+      "mode": 33188,
+      "uid": 0,
+      "gid": 0,
+      "nlink": 1
+    },
+    ".cache/huggingface/download/model-00001-of-00002.safetensors.lock": {
+      "device": 2306,
+      "inode": 181176099,
+      "size": 0,
+      "mtime_ns": 1793718022181530752,
+      "ctime_ns": 1793718022181530752,
+      "mode": 33204,
+      "uid": 0,
+      "gid": 0,
+      "nlink": 1
+    },
+    ".cache/huggingface/download/model-00001-of-00002.safetensors.metadata": {
+      "device": 2306,
+      "inode": 181176132,
+      "size": 124,
+      "mtime_ns": 1793718102419787894,
+      "ctime_ns": 1793718102419787894,
+      "mode": 33188,
+      "uid": 0,
+      "gid": 0,
+      "nlink": 1
+    },
+    ".cache/huggingface/download/model-00002-of-00002.safetensors.lock": {
+      "device": 2306,
+      "inode": 181176098,
+      "size": 0,
+      "mtime_ns": 1793718022180530787,
+      "ctime_ns": 1793718022183530684,
+      "mode": 33204,
+      "uid": 0,
+      "gid": 0,
+      "nlink": 1
+    },
+    ".cache/huggingface/download/model-00002-of-00002.safetensors.metadata": {
+      "device": 2306,
+      "inode": 181176131,
+      "size": 125,
+      "mtime_ns": 1793718047151676818,
+      "ctime_ns": 1793718047151676818,
+      "mode": 33188,
+      "uid": 0,
+      "gid": 0,
+      "nlink": 1
+    },
+    ".cache/huggingface/download/model.safetensors.index.json.lock": {
+      "device": 2306,
+      "inode": 181176114,
+      "size": 0,
+      "mtime_ns": 1793718022688513412,
+      "ctime_ns": 1793718022688513412,
+      "mode": 33204,
+      "uid": 0,
+      "gid": 0,
+      "nlink": 1
+    },
+    ".cache/huggingface/download/model.safetensors.index.json.metadata": {
+      "device": 2306,
+      "inode": 181176127,
+      "size": 101,
+      "mtime_ns": 1793718023193496139,
+      "ctime_ns": 1793718023193496139,
+      "mode": 33188,
+      "uid": 0,
+      "gid": 0,
+      "nlink": 1
+    },
+    ".cache/huggingface/download/processor_config.json.lock": {
+      "device": 2306,
+      "inode": 181176116,
+      "size": 0,
+      "mtime_ns": 1793718022720512317,
+      "ctime_ns": 1793718022720512317,
+      "mode": 33204,
+      "uid": 0,
+      "gid": 0,
+      "nlink": 1
+    },
+    ".cache/huggingface/download/processor_config.json.metadata": {
+      "device": 2306,
+      "inode": 181176128,
+      "size": 101,
+      "mtime_ns": 1793718023242494463,
+      "ctime_ns": 1793718023242494463,
+      "mode": 33188,
+      "uid": 0,
+      "gid": 0,
+      "nlink": 1
+    },
+    ".cache/huggingface/download/tokenizer.json.lock": {
+      "device": 2306,
+      "inode": 181176118,
+      "size": 0,
+      "mtime_ns": 1793718022728512044,
+      "ctime_ns": 1793718022728512044,
+      "mode": 33204,
+      "uid": 0,
+      "gid": 0,
+      "nlink": 1
+    },
+    ".cache/huggingface/download/tokenizer.json.metadata": {
+      "device": 2306,
+      "inode": 181176130,
+      "size": 125,
+      "mtime_ns": 1793718029571278003,
+      "ctime_ns": 1793718029571278003,
+      "mode": 33188,
+      "uid": 0,
+      "gid": 0,
+      "nlink": 1
+    },
+    ".cache/huggingface/download/tokenizer_config.json.lock": {
+      "device": 2306,
+      "inode": 181176121,
+      "size": 0,
+      "mtime_ns": 1793718022735511804,
+      "ctime_ns": 1793718022735511804,
+      "mode": 33204,
+      "uid": 0,
+      "gid": 0,
+      "nlink": 1
+    },
+    ".cache/huggingface/download/tokenizer_config.json.metadata": {
+      "device": 2306,
+      "inode": 181176129,
+      "size": 101,
+      "mtime_ns": 1793718023251494156,
+      "ctime_ns": 1793718023251494156,
+      "mode": 33188,
+      "uid": 0,
+      "gid": 0,
+      "nlink": 1
+    },
+    ".cache/huggingface/trees/842da3794eaa0b77d5f08bae87a17459d91ff475.json": {
+      "device": 2306,
+      "inode": 181176091,
+      "size": 1938,
+      "mtime_ns": 1793718022159531505,
+      "ctime_ns": 1793718022159531505,
+      "mode": 33152,
+      "uid": 0,
+      "gid": 0,
+      "nlink": 1
+    },
+    ".eval_results/mmmu_pro.yaml": {
+      "device": 2306,
+      "inode": 181176111,
+      "size": 182,
+      "mtime_ns": 1793718022773510504,
+      "ctime_ns": 1793718022773510504,
+      "mode": 33188,
+      "uid": 0,
+      "gid": 0,
+      "nlink": 1
+    },
+    ".gitattributes": {
+      "device": 2306,
+      "inode": 181176109,
+      "size": 1708,
+      "mtime_ns": 1793718022726512112,
+      "ctime_ns": 1793718022726512112,
+      "mode": 33188,
+      "uid": 0,
+      "gid": 0,
+      "nlink": 1
+    },
+    ".kairyu-model-attestation.json": {
+      "device": 2306,
+      "inode": 181176133,
+      "size": 1746,
+      "mtime_ns": 1793718160424806989,
+      "ctime_ns": 1793718160424806989,
+      "mode": 33188,
+      "uid": 0,
+      "gid": 0,
+      "nlink": 1
+    },
+    "README.md": {
+      "device": 2306,
+      "inode": 181176110,
+      "size": 27963,
+      "mtime_ns": 1793718022732511907,
+      "ctime_ns": 1793718022733511873,
+      "mode": 33188,
+      "uid": 0,
+      "gid": 0,
+      "nlink": 1
+    },
+    "chat_template.jinja": {
+      "device": 2306,
+      "inode": 181176107,
+      "size": 18683,
+      "mtime_ns": 1793718022685513514,
+      "ctime_ns": 1793718022686513480,
+      "mode": 33188,
+      "uid": 0,
+      "gid": 0,
+      "nlink": 1
+    },
+    "config.json": {
+      "device": 2306,
+      "inode": 181176108,
+      "size": 4621,
+      "mtime_ns": 1793718022717512420,
+      "ctime_ns": 1793718022717512420,
+      "mode": 33188,
+      "uid": 0,
+      "gid": 0,
+      "nlink": 1
+    },
+    "generation_config.json": {
+      "device": 2306,
+      "inode": 181176112,
+      "size": 208,
+      "mtime_ns": 1793718022761510915,
+      "ctime_ns": 1793718022761510915,
+      "mode": 33188,
+      "uid": 0,
+      "gid": 0,
+      "nlink": 1
+    },
+    "model-00001-of-00002.safetensors": {
+      "device": 2306,
+      "inode": 181176101,
+      "size": 49784788364,
+      "mtime_ns": 1793718096477990897,
+      "ctime_ns": 1793718102417787962,
+      "mode": 33188,
+      "uid": 0,
+      "gid": 0,
+      "nlink": 1
+    },
+    "model-00002-of-00002.safetensors": {
+      "device": 2306,
+      "inode": 181176102,
+      "size": 12761549884,
+      "mtime_ns": 1793718043716794265,
+      "ctime_ns": 1793718047148676921,
+      "mode": 33188,
+      "uid": 0,
+      "gid": 0,
+      "nlink": 1
+    },
+    "model.safetensors.index.json": {
+      "device": 2306,
+      "inode": 181176124,
+      "size": 120246,
+      "mtime_ns": 1793718023192496174,
+      "ctime_ns": 1793718023192496174,
+      "mode": 33188,
+      "uid": 0,
+      "gid": 0,
+      "nlink": 1
+    },
+    "processor_config.json": {
+      "device": 2306,
+      "inode": 181176125,
+      "size": 1689,
+      "mtime_ns": 1793718023240494532,
+      "ctime_ns": 1793718023241494498,
+      "mode": 33188,
+      "uid": 0,
+      "gid": 0,
+      "nlink": 1
+    },
+    "tokenizer.json": {
+      "device": 2306,
+      "inode": 181176119,
+      "size": 32169626,
+      "mtime_ns": 1793718029370284877,
+      "ctime_ns": 1793718029569278071,
+      "mode": 33188,
+      "uid": 0,
+      "gid": 0,
+      "nlink": 1
+    },
+    "tokenizer_config.json": {
+      "device": 2306,
+      "inode": 181176126,
+      "size": 3082,
+      "mtime_ns": 1793718023249494224,
+      "ctime_ns": 1793718023250494190,
+      "mode": 33188,
+      "uid": 0,
+      "gid": 0,
+      "nlink": 1
+    }
+  }
+}

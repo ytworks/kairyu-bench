@@ -1,0 +1,20 @@
+{
+  "v1_failure": {
+    "phase": "create",
+    "returncode": 1,
+    "seconds": 120.14311219099909,
+    "reason": "cp inherited read-only source mode; private target r+b open PermissionError before tensor editing",
+    "candidate_cleanup_by_existing_create": true,
+    "manifest_generated": false,
+    "verify_executed": false,
+    "no_automatic_retry": true
+  },
+  "parent_stat_after_v1_matches_before": true,
+  "parent_payload_rehashed_for_this_check": false,
+  "source_private_target_mode_fix_only": true,
+  "runtime_or_training_math_changed": false,
+  "training_source_input_mismatches": [],
+  "v2_status": "preview_passed_create_running",
+  "snapshot_epoch": 1794058713.1349623,
+  "packaging_initial_error": "JS parser rejected markdown backtick in tool call before any remote operation; corrected quoting only"
+}

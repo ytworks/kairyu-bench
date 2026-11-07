@@ -1,0 +1,28 @@
+{
+  "status": "independently_checked_archive_release",
+  "epoch": 1794059258.0170007,
+  "released_payloads": [
+    "model-00001-of-00002.safetensors",
+    "model-00002-of-00002.safetensors"
+  ],
+  "released_bytes": 62546338248,
+  "metadata_files_preserved": 10,
+  "original_files_stat_preserved": 40,
+  "protected_checkpoint_roots": [
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/checkpoints/code90-current-ad-helper-av-v1",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/checkpoints/native-faststore-av-v1",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/checkpoints/fresh-native-relative-f04-faststore-v1/checkpoint"
+  ],
+  "all27_exact": true,
+  "archive_checksums_verified": 110,
+  "original_source_unmodified": true,
+  "legacy_engine_sha256": "435e01109887123db12519c100e304fa7bd4f5a71b772e6c96eedce1b130f894",
+  "ast_only_budget_literal_changed": true,
+  "release_owner_exited": true,
+  "release_owner_lock_rows": [],
+  "free_bytes": 68949577728,
+  "service_mutations": 0,
+  "model_calls": 0,
+  "receipt_sha256": "4917be66087aab1526e11b6cbe1c37da0a0674ab01c66d253ed14af2754edeed",
+  "marker_sha256": "fb2b0a07cf0571f67b506a95b3b6f288fc515451c72037767bbfb764551924f8"
+}

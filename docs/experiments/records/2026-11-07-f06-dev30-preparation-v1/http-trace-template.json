@@ -1,0 +1,35 @@
+{
+  "schema_version": 1,
+  "capture_id": null,
+  "created_at": null,
+  "observation_mode": "live",
+  "data_kind": "recorded",
+  "output_dir": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f06-dev30-dp4-v1/http-trace",
+  "checkpoint": null,
+  "runtime": {
+    "adapter": "vllm-0.33",
+    "model": "gemma-4-31b",
+    "tp_size": 2,
+    "replicas": 4,
+    "mtp_tokens": 4
+  },
+  "limits": {
+    "gpu_buffer_mib": 256,
+    "storage_bytes": 2147483648,
+    "prefill_positions": 32,
+    "decode_positions": 32
+  },
+  "sampling": {
+    "policy": "first_execution_of_first_unique_positions",
+    "prefill_policy": "first_execution_of_first_unique_positions",
+    "decode_policy": "first_execution_of_first_unique_positions",
+    "requested_offsets": null,
+    "offset_origin": "token_position_minus_prompt_length",
+    "missing_policy": "unobserved_requested_offsets_are_missing_not_zero",
+    "semantic_boundary": "thinking_code_boundary_not_measured",
+    "limits": {
+      "prefill": 32,
+      "decode": 32
+    }
+  }
+}

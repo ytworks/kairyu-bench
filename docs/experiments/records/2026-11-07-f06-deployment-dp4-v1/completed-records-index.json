@@ -1,0 +1,493 @@
+{
+  "source_root": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f06-lora-deployment-plan-v1",
+  "records": [
+    {
+      "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f06-lora-deployment-plan-v1/bind-generic-previews.py",
+      "record": "bind-generic-previews.py",
+      "sha256": "ad7bcd5ef708b109d53cdceb24b5c8686cea45c5c0e0a0ea6f3409879ff6d289",
+      "bytes": 8126
+    },
+    {
+      "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f06-lora-deployment-plan-v1/bind-generic-previews.stderr",
+      "record": "bind-generic-previews.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f06-lora-deployment-plan-v1/bind-generic-previews.stdout",
+      "record": "bind-generic-previews.stdout",
+      "sha256": "750a17a4c21fc56bad8167a954be486e47c1f93b2f7a4ed1af65b03c5922ef9c",
+      "bytes": 2814
+    },
+    {
+      "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f06-lora-deployment-plan-v1/bound-preview-v1/all-chat-before.json",
+      "record": "bound-preview-v1/all-chat-before.json",
+      "sha256": "8325010ee026212ab39e8b8bbf979466ace1ee8b2613d32ae6a0fd5fbe45a762",
+      "bytes": 7974
+    },
+    {
+      "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f06-lora-deployment-plan-v1/bound-preview-v1/f06-freeze.json",
+      "record": "bound-preview-v1/f06-freeze.json",
+      "sha256": "cee54e1c7f79cf2116ea7b6036c9d2d3c0709f83117cb95c270542b616b84221",
+      "bytes": 5563
+    },
+    {
+      "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f06-lora-deployment-plan-v1/bound-preview-v1/four-preview-summary.json",
+      "record": "bound-preview-v1/four-preview-summary.json",
+      "sha256": "c27c0d2b48c876cdddb816720abe6111b7ef76c002e3f9b10a70481d13fcda8e",
+      "bytes": 3016
+    },
+    {
+      "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f06-lora-deployment-plan-v1/bound-preview-v1/gemma-0-command.json",
+      "record": "bound-preview-v1/gemma-0-command.json",
+      "sha256": "dfe6ed95dca1d4025a744647774c93b20825a8e25527c5b869691eff8bdda84a",
+      "bytes": 1034
+    },
+    {
+      "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f06-lora-deployment-plan-v1/bound-preview-v1/gemma-0-preview/receipt.json",
+      "record": "bound-preview-v1/gemma-0-preview/receipt.json",
+      "sha256": "7c0aca9071f3066961dc5867b133b287cf543a048a3eac126bf424911e484fc7",
+      "bytes": 7528
+    },
+    {
+      "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f06-lora-deployment-plan-v1/bound-preview-v1/gemma-0.stderr",
+      "record": "bound-preview-v1/gemma-0.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f06-lora-deployment-plan-v1/bound-preview-v1/gemma-0.stdout",
+      "record": "bound-preview-v1/gemma-0.stdout",
+      "sha256": "4bdaf08b2436624ad7b62e42f3feb89ae2796f57253e19351bd30f7e3c56603f",
+      "bytes": 248
+    },
+    {
+      "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f06-lora-deployment-plan-v1/bound-preview-v1/gemma-1-command.json",
+      "record": "bound-preview-v1/gemma-1-command.json",
+      "sha256": "9ff59fd96a8ca34df567ed8321fa40bd595f90ba0336753a910b236d6df305c5",
+      "bytes": 1034
+    },
+    {
+      "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f06-lora-deployment-plan-v1/bound-preview-v1/gemma-1-preview/receipt.json",
+      "record": "bound-preview-v1/gemma-1-preview/receipt.json",
+      "sha256": "c90f3e28d1e06e6b4bb2fbd8ab62725b22ad1f61303a0c5bd5a7695892a27142",
+      "bytes": 7529
+    },
+    {
+      "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f06-lora-deployment-plan-v1/bound-preview-v1/gemma-1.stderr",
+      "record": "bound-preview-v1/gemma-1.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f06-lora-deployment-plan-v1/bound-preview-v1/gemma-1.stdout",
+      "record": "bound-preview-v1/gemma-1.stdout",
+      "sha256": "cc5bbbd14b3fd04992dbdfe3671fd6f6bc58f4f872a5518053056a815c21684c",
+      "bytes": 248
+    },
+    {
+      "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f06-lora-deployment-plan-v1/bound-preview-v1/gemma-2-command.json",
+      "record": "bound-preview-v1/gemma-2-command.json",
+      "sha256": "52380365e8dddd4ec752809693acc37289c75a806faa70a1d94006d2f6ebed6b",
+      "bytes": 1034
+    },
+    {
+      "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f06-lora-deployment-plan-v1/bound-preview-v1/gemma-2-preview/receipt.json",
+      "record": "bound-preview-v1/gemma-2-preview/receipt.json",
+      "sha256": "be3a6ecfb7c83af9586b20010dad8a2f35c277f1bc7c8622b2703bec8a1954db",
+      "bytes": 7530
+    },
+    {
+      "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f06-lora-deployment-plan-v1/bound-preview-v1/gemma-2.stderr",
+      "record": "bound-preview-v1/gemma-2.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f06-lora-deployment-plan-v1/bound-preview-v1/gemma-2.stdout",
+      "record": "bound-preview-v1/gemma-2.stdout",
+      "sha256": "044dea2e66955db34e43a3ae8da697f0db38ce3d73d3cc91b5a51068b6236173",
+      "bytes": 248
+    },
+    {
+      "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f06-lora-deployment-plan-v1/bound-preview-v1/gemma-3-command.json",
+      "record": "bound-preview-v1/gemma-3-command.json",
+      "sha256": "7ca785e360af9013808b6c198a3a03bdb32259ea841bf6a135e282b1b43c49e2",
+      "bytes": 1034
+    },
+    {
+      "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f06-lora-deployment-plan-v1/bound-preview-v1/gemma-3-preview/receipt.json",
+      "record": "bound-preview-v1/gemma-3-preview/receipt.json",
+      "sha256": "5351115c88cceb2de38efdcabd8e99b68f6de7b815856be751ebc79d00756e44",
+      "bytes": 7531
+    },
+    {
+      "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f06-lora-deployment-plan-v1/bound-preview-v1/gemma-3.stderr",
+      "record": "bound-preview-v1/gemma-3.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f06-lora-deployment-plan-v1/bound-preview-v1/gemma-3.stdout",
+      "record": "bound-preview-v1/gemma-3.stdout",
+      "sha256": "def0036ed25bbe2b13593dd5904394fc493c4a90371a4cec06301a12776d62b3",
+      "bytes": 248
+    },
+    {
+      "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f06-lora-deployment-plan-v1/bound-preview-v1/generic-verification.json",
+      "record": "bound-preview-v1/generic-verification.json",
+      "sha256": "899d41c58da3eb54b8bb76ed105f9ee234fb97b4dccb7466490bd2a11edddda9",
+      "bytes": 1161
+    },
+    {
+      "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f06-lora-deployment-plan-v1/bound-preview-v1/plan-bound-unapproved.json",
+      "record": "bound-preview-v1/plan-bound-unapproved.json",
+      "sha256": "361d57aef4c6a77495f0dd1220259e1ddfd075c4a890e84423ca137c291a8643",
+      "bytes": 8350
+    },
+    {
+      "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f06-lora-deployment-plan-v1/bound-preview-v1/preview-lock-released.json",
+      "record": "bound-preview-v1/preview-lock-released.json",
+      "sha256": "cbc1f70832943a767be0d22f42a49d1500ccd468dbdad33cb09f38b03df7dc69",
+      "bytes": 78
+    },
+    {
+      "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f06-lora-deployment-plan-v1/bound-preview-v1/protected-before.json",
+      "record": "bound-preview-v1/protected-before.json",
+      "sha256": "3e5b252c162fff3686a019fdd2adf7d8f49b565755891105a186eec349de0742",
+      "bytes": 56143
+    },
+    {
+      "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f06-lora-deployment-plan-v1/bound-preview-v1/target-started-at.json",
+      "record": "bound-preview-v1/target-started-at.json",
+      "sha256": "d8ce6e5330d8e052ef76079e2fa6c83159f03641b4be42197ea0b7bb8587cfc6",
+      "bytes": 191
+    },
+    {
+      "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f06-lora-deployment-plan-v1/chat-checkpoint-after.json",
+      "record": "chat-checkpoint-after.json",
+      "sha256": "2f23d9975c3633cb1e1d0d2cc17e67ba63163a04df60c2ea6997822758797f09",
+      "bytes": 1660
+    },
+    {
+      "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f06-lora-deployment-plan-v1/chat-checkpoint-before.json",
+      "record": "chat-checkpoint-before.json",
+      "sha256": "4e4b9a1d6670624cab7e4f53accad87970bf10635599ce2d06a2f6d2b0652552",
+      "bytes": 1676
+    },
+    {
+      "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f06-lora-deployment-plan-v1/endpoint-closure.json",
+      "record": "endpoint-closure.json",
+      "sha256": "1137d4e6f2ba4de6fa2ec141a06e29c8218d67e827a60d3bbd1685ffb191b2ee",
+      "bytes": 3984
+    },
+    {
+      "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f06-lora-deployment-plan-v1/endpoint-command.json",
+      "record": "endpoint-command.json",
+      "sha256": "5a8491ad762b32277c9717b1b7366ed64efd2bbc5faa0b448bd7a4c442fbb13c",
+      "bytes": 1479
+    },
+    {
+      "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f06-lora-deployment-plan-v1/endpoint-execution.json",
+      "record": "endpoint-execution.json",
+      "sha256": "3636c27f084f1ca418ec4f69eb8d9375ff70521ea37ebafb1a23fe0d241df1ce",
+      "bytes": 141
+    },
+    {
+      "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f06-lora-deployment-plan-v1/endpoint-global-keeper.json",
+      "record": "endpoint-global-keeper.json",
+      "sha256": "816551542918e1a61f1a985b18f514fbe7e45619c2da73530b773559726a4915",
+      "bytes": 270
+    },
+    {
+      "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f06-lora-deployment-plan-v1/endpoint-launch-source.py.txt",
+      "record": "endpoint-launch-source.py.txt",
+      "sha256": "b245b973ecd313a7632d15f5ed57a919b4dc32f16dff47e04756504256ed51d0",
+      "bytes": 2073
+    },
+    {
+      "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f06-lora-deployment-plan-v1/endpoint-source.py",
+      "record": "endpoint-source.py",
+      "sha256": "c91bbbc6e49daeefac0240543a2b76f0e04e14046f9e0d79bfcc9422ee5acc91",
+      "bytes": 9157
+    },
+    {
+      "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f06-lora-deployment-plan-v1/endpoint.stderr",
+      "record": "endpoint.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f06-lora-deployment-plan-v1/endpoint.stdout",
+      "record": "final-snapshot-v1/endpoint.stdout",
+      "sha256": "3bb501526dc842eb16b703b6d81d6370d4d09572004f8f75f3c9ff39fe3a5c5b",
+      "bytes": 355
+    },
+    {
+      "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f06-lora-deployment-plan-v1/four-apply-closure.json",
+      "record": "four-apply-closure.json",
+      "sha256": "102d743fbc5ff4c190be6db13c89f076d367f832e05a490eeacd1241351e8098",
+      "bytes": 4126
+    },
+    {
+      "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f06-lora-deployment-plan-v1/gateway-chat-smoke.json",
+      "record": "gateway-chat-smoke.json",
+      "sha256": "a6d4584c6e16572eac868794478e779ae353160a9bcc4d4a27bc29780e6eb031",
+      "bytes": 449
+    },
+    {
+      "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f06-lora-deployment-plan-v1/gemma-0-closure-v1.json",
+      "record": "gemma-0-closure-v1.json",
+      "sha256": "c23fef248eb55ea39d525bb9bb9f9bbd877fe2ace3df82274c16b7574208c553",
+      "bytes": 611
+    },
+    {
+      "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f06-lora-deployment-plan-v1/gemma-0-logprob-smoke.json",
+      "record": "gemma-0-logprob-smoke.json",
+      "sha256": "dd948dcf02de19dca3d2786eca043943cfd6b561435b973b7d338cb3cb864ed2",
+      "bytes": 1285
+    },
+    {
+      "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f06-lora-deployment-plan-v1/gemma-1-closure-v1.json",
+      "record": "gemma-1-closure-v1.json",
+      "sha256": "7f9613b1724cc5eaf46f59e4fa64092ca010ce8b4a90dc1bb2720fade6a42f76",
+      "bytes": 611
+    },
+    {
+      "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f06-lora-deployment-plan-v1/gemma-1-logprob-smoke.json",
+      "record": "gemma-1-logprob-smoke.json",
+      "sha256": "cc49f4a5fcfdeb7cd3d34f7ad40a6a294fb25b9a603431e24704f2bbe3533fa8",
+      "bytes": 1285
+    },
+    {
+      "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f06-lora-deployment-plan-v1/gemma-2-closure-v1.json",
+      "record": "gemma-2-closure-v1.json",
+      "sha256": "d52cc74f86c68fdfeef1d93fa95b7a89de6bcd26539b6e6d51ea439b5e922405",
+      "bytes": 611
+    },
+    {
+      "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f06-lora-deployment-plan-v1/gemma-2-logprob-smoke.json",
+      "record": "gemma-2-logprob-smoke.json",
+      "sha256": "85be4806d8d9e137e897286d3a8c35aa65bc2435ab88065937742c376dce2bcc",
+      "bytes": 1285
+    },
+    {
+      "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f06-lora-deployment-plan-v1/gemma-3-closure-v1.json",
+      "record": "gemma-3-closure-v1.json",
+      "sha256": "6dc3c977cbac6e19db597b8e159958d3f3aa136c001cf41a173e30d8a725571e",
+      "bytes": 611
+    },
+    {
+      "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f06-lora-deployment-plan-v1/gemma-3-logprob-smoke.json",
+      "record": "gemma-3-logprob-smoke.json",
+      "sha256": "b2a9dacd48ab74d3fc98dcf8dd0527c3e98a2610f979492de3afeef00625b965",
+      "bytes": 1285
+    },
+    {
+      "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f06-lora-deployment-plan-v1/global-lock-released.json",
+      "record": "global-lock-released.json",
+      "sha256": "dfe2fe321a8debc13a4e41614723215ea400c8dd7477199602e89e091cc6ab41",
+      "bytes": 280
+    },
+    {
+      "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f06-lora-deployment-plan-v1/parallel-apply-v1/all-helper-results.json",
+      "record": "parallel-apply-v1/all-helper-results.json",
+      "sha256": "a306ddd52715e03d59fd8b6be10d7fe31de2503ac2643aa44a67c52375e347b8",
+      "bytes": 957
+    },
+    {
+      "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f06-lora-deployment-plan-v1/parallel-apply-v1/four-apply-closure.json",
+      "record": "parallel-apply-v1/four-apply-closure.json",
+      "sha256": "560d923e6c640eadfe3a118aeb7a629a632bc78af446d34f2b12c1ebb9940ab2",
+      "bytes": 7878
+    },
+    {
+      "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f06-lora-deployment-plan-v1/parallel-apply-v1/gemma-0-apply/receipt.json",
+      "record": "parallel-apply-v1/gemma-0-apply/receipt.json",
+      "sha256": "e89a07302ee935c6e1600439ca751b96aef4fac54b3f352938fc2ad8eda1658c",
+      "bytes": 9387
+    },
+    {
+      "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f06-lora-deployment-plan-v1/parallel-apply-v1/gemma-0-command.json",
+      "record": "parallel-apply-v1/gemma-0-command.json",
+      "sha256": "4367d91ca73a9acd06d02fd209d5abab25e4ea42731ad34b066b8ce5c8c39e77",
+      "bytes": 996
+    },
+    {
+      "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f06-lora-deployment-plan-v1/parallel-apply-v1/gemma-0-result.json",
+      "record": "parallel-apply-v1/gemma-0-result.json",
+      "sha256": "8ecda16b943154cbfc1618cf75f567c919e69a865d57f2e7dcf35e1d42931746",
+      "bytes": 192
+    },
+    {
+      "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f06-lora-deployment-plan-v1/parallel-apply-v1/gemma-0.stderr",
+      "record": "parallel-apply-v1/gemma-0.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f06-lora-deployment-plan-v1/parallel-apply-v1/gemma-0.stdout",
+      "record": "parallel-apply-v1/gemma-0.stdout",
+      "sha256": "e44ae3ad4492f379233d24d962c500a6756c67f94b3d64161c45c6306aca62dc",
+      "bytes": 249
+    },
+    {
+      "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f06-lora-deployment-plan-v1/parallel-apply-v1/gemma-1-apply/receipt.json",
+      "record": "parallel-apply-v1/gemma-1-apply/receipt.json",
+      "sha256": "2382f3b52ed7ec4183c2c51f05a8113d73488638e6d34076e13dc2faccfba40d",
+      "bytes": 9389
+    },
+    {
+      "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f06-lora-deployment-plan-v1/parallel-apply-v1/gemma-1-command.json",
+      "record": "parallel-apply-v1/gemma-1-command.json",
+      "sha256": "89488a65e3c95f5c5d1d50f5754e8d758dde4cba7410c5c0a9c55f682363e6b6",
+      "bytes": 996
+    },
+    {
+      "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f06-lora-deployment-plan-v1/parallel-apply-v1/gemma-1-result.json",
+      "record": "parallel-apply-v1/gemma-1-result.json",
+      "sha256": "353858c95014950a2dfb5a29ce58f6462f995f43e7ba007a8cdda42a2e4604fe",
+      "bytes": 192
+    },
+    {
+      "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f06-lora-deployment-plan-v1/parallel-apply-v1/gemma-1.stderr",
+      "record": "parallel-apply-v1/gemma-1.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f06-lora-deployment-plan-v1/parallel-apply-v1/gemma-1.stdout",
+      "record": "parallel-apply-v1/gemma-1.stdout",
+      "sha256": "985424ea13d4a67af882a8f47fcd134dd4ec2d829a94c7e37d424d615cda6c6d",
+      "bytes": 249
+    },
+    {
+      "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f06-lora-deployment-plan-v1/parallel-apply-v1/gemma-2-apply/receipt.json",
+      "record": "parallel-apply-v1/gemma-2-apply/receipt.json",
+      "sha256": "825cda94cea34a297b4c2cb5d3bcd94d8d9a83c1c4b55260661f6e9af56deed2",
+      "bytes": 9391
+    },
+    {
+      "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f06-lora-deployment-plan-v1/parallel-apply-v1/gemma-2-command.json",
+      "record": "parallel-apply-v1/gemma-2-command.json",
+      "sha256": "55ac8dad32f9676e3e7e0c4ffbce8866870f4126e04b00aea47c4620ad19ce71",
+      "bytes": 996
+    },
+    {
+      "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f06-lora-deployment-plan-v1/parallel-apply-v1/gemma-2-result.json",
+      "record": "parallel-apply-v1/gemma-2-result.json",
+      "sha256": "99fe1c0fc053119ad3656c5201fc437c2bafef335a4b6f14ed5790e68fdca2d1",
+      "bytes": 192
+    },
+    {
+      "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f06-lora-deployment-plan-v1/parallel-apply-v1/gemma-2.stderr",
+      "record": "parallel-apply-v1/gemma-2.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f06-lora-deployment-plan-v1/parallel-apply-v1/gemma-2.stdout",
+      "record": "parallel-apply-v1/gemma-2.stdout",
+      "sha256": "29e32c460e33bd1a1b6173a5f89cb35e09da7473271c5c816db5ad6b99f9ba77",
+      "bytes": 249
+    },
+    {
+      "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f06-lora-deployment-plan-v1/parallel-apply-v1/gemma-3-apply/receipt.json",
+      "record": "parallel-apply-v1/gemma-3-apply/receipt.json",
+      "sha256": "8da4816cc175b4437822893f8d3977e17c5f83755001298174c769d51ffe9b24",
+      "bytes": 9393
+    },
+    {
+      "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f06-lora-deployment-plan-v1/parallel-apply-v1/gemma-3-command.json",
+      "record": "parallel-apply-v1/gemma-3-command.json",
+      "sha256": "ec7dd6713df881d9bc571cddaea82b48df40887d74ae04d68655f721a533d967",
+      "bytes": 996
+    },
+    {
+      "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f06-lora-deployment-plan-v1/parallel-apply-v1/gemma-3-result.json",
+      "record": "parallel-apply-v1/gemma-3-result.json",
+      "sha256": "9f19c83b12aa15cc6ef01c011304c5ad3fa6065d8aafdea8c0f2f029717735b3",
+      "bytes": 192
+    },
+    {
+      "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f06-lora-deployment-plan-v1/parallel-apply-v1/gemma-3.stderr",
+      "record": "parallel-apply-v1/gemma-3.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f06-lora-deployment-plan-v1/parallel-apply-v1/gemma-3.stdout",
+      "record": "parallel-apply-v1/gemma-3.stdout",
+      "sha256": "2fe6a8007b4f30756653c3196cac99923ae2cfbc950ca1907b6a8ea2f32043db",
+      "bytes": 249
+    },
+    {
+      "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f06-lora-deployment-plan-v1/parallel-apply-v1/lock-released.json",
+      "record": "parallel-apply-v1/lock-released.json",
+      "sha256": "a7ec79a7b55ef2283a50d3cde573d8385f68ba85d814ce7a518f953b8818ca92",
+      "bytes": 97
+    },
+    {
+      "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f06-lora-deployment-plan-v1/parallel-apply-v1/owner-start.json",
+      "record": "parallel-apply-v1/owner-start.json",
+      "sha256": "0d35c45ca0964db26704dcfea497e413beb53b2921ab53d1097dfa688c039b7c",
+      "bytes": 239
+    },
+    {
+      "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f06-lora-deployment-plan-v1/parallel-owner-v1.stdout",
+      "record": "parallel-owner-v1.stdout",
+      "sha256": "4990e811ac2499dc7fb382c178d32e1aadfe1370e8fb6a3bd52e83fba1ed5c58",
+      "bytes": 909
+    },
+    {
+      "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f06-lora-deployment-plan-v1/plan-root-approved-v1.json",
+      "record": "plan-root-approved-v1.json",
+      "sha256": "a1ca6fe0e8756b64e8957e7d14361eef50aef2169f6e0ec2c81600d724fca39f",
+      "bytes": 8793
+    },
+    {
+      "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f06-lora-deployment-plan-v1/plan-unbound.json",
+      "record": "plan-unbound.json",
+      "sha256": "6ab5726feb9424fcd4fc1801a7d13bdb81c335ea000495fb5ba8419470ef6233",
+      "bytes": 3428
+    },
+    {
+      "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f06-lora-deployment-plan-v1/prepare-unbound.py.txt",
+      "record": "prepare-unbound.py.txt",
+      "sha256": "5c82b7929be7ff16dd3d913a736d680d65f87b1614bc4def990c54a4c8ce4016",
+      "bytes": 2963
+    },
+    {
+      "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f06-lora-deployment-plan-v1/preview-receipt.json",
+      "record": "preview-receipt.json",
+      "sha256": "720b09738e3fd4cdcfe33698975f0cfd0659a48359716a614bb46f567d712d74",
+      "bytes": 613
+    },
+    {
+      "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f06-lora-deployment-plan-v1/preview.stderr",
+      "record": "preview.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f06-lora-deployment-plan-v1/preview.stdout",
+      "record": "preview.stdout",
+      "sha256": "32541e1461485812551f418309547e292fc0d014a27780d633e2c97b79a3824e",
+      "bytes": 154
+    },
+    {
+      "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f06-lora-deployment-plan-v1/root-launch-v1.json",
+      "record": "root-launch-v1.json",
+      "sha256": "6ce6e362afe6542261493aaad56381ff5aae12601e0d8161bcf82b35b0eec25a",
+      "bytes": 677
+    },
+    {
+      "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f06-lora-deployment-plan-v1/served-record-update.json",
+      "record": "served-record-update.json",
+      "sha256": "e17bcbfacc268086a793396286fd7adce00cdbdd0fc9ebcccc0bd3e3bafa0265",
+      "bytes": 274
+    }
+  ],
+  "additional_model_requests_for_packaging": 0,
+  "payload_rehash": 0
+}

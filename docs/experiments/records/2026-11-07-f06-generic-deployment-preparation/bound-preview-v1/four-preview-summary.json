@@ -1,0 +1,54 @@
+{
+  "status": "all_four_previews_passed",
+  "seconds": 3.4522910118103027,
+  "plan": {
+    "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f06-lora-deployment-plan-v1/bound-preview-v1/plan-bound-unapproved.json",
+    "sha256": "361d57aef4c6a77495f0dd1220259e1ddfd075c4a890e84423ca137c291a8643"
+  },
+  "freeze": {
+    "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f06-lora-deployment-plan-v1/bound-preview-v1/f06-freeze.json",
+    "sha256": "cee54e1c7f79cf2116ea7b6036c9d2d3c0709f83117cb95c270542b616b84221"
+  },
+  "previews": {
+    "gemma-0": {
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f06-lora-deployment-plan-v1/bound-preview-v1/gemma-0-preview/receipt.json",
+      "sha256": "7c0aca9071f3066961dc5867b133b287cf543a048a3eac126bf424911e484fc7"
+    },
+    "gemma-1": {
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f06-lora-deployment-plan-v1/bound-preview-v1/gemma-1-preview/receipt.json",
+      "sha256": "c90f3e28d1e06e6b4bb2fbd8ab62725b22ad1f61303a0c5bd5a7695892a27142"
+    },
+    "gemma-2": {
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f06-lora-deployment-plan-v1/bound-preview-v1/gemma-2-preview/receipt.json",
+      "sha256": "be3a6ecfb7c83af9586b20010dad8a2f35c277f1bc7c8622b2703bec8a1954db"
+    },
+    "gemma-3": {
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f06-lora-deployment-plan-v1/bound-preview-v1/gemma-3-preview/receipt.json",
+      "sha256": "5351115c88cceb2de38efdcabd8e99b68f6de7b815856be751ebc79d00756e44"
+    }
+  },
+  "target_ids": {
+    "gemma-0": "47207dd45c1819d875951e66728310171dc218dfc55b1221054f704c39eb3009",
+    "gemma-1": "d1a79f265949e31778ead91834e6a509d3c66af708dc3d7247eb716caa28cef3",
+    "gemma-2": "07e1b17e7c84d8d178703417bb341c3313653eca7122aba1ad7b3d6d893d5abb",
+    "gemma-3": "41ae0d0831faf5d79939f16ad401da0da8fee0d2d453af12e4e4efd10480f45c"
+  },
+  "all27_unchanged": true,
+  "protected_count": 23,
+  "all9_stat_continuity": true,
+  "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/checkpoints/fresh-native-relative-f04-faststore-v1/checkpoint",
+  "source_tree": "7b9e9488e3cd4e0b6c5f61ae341e5eeccdf5bd31c46d1c8354950dbc29d0f924",
+  "candidate_tree": "0fc0ef29346c4d8a06bea8570dee96d8e0ba7038fee0d5aded8db57852474ec5",
+  "stat_evidence": {
+    "captured_after_verify": true,
+    "all_file_mtime_ctime_no_newer_than_verify_output": true,
+    "verify_output_mtime_ns": 1794059354483869434,
+    "verification_snapshot_compared_internally_before_and_after": true,
+    "original_internal_snapshot_not_separately_saved": true,
+    "payload_freshhash_for_this_identity": false,
+    "hash_origin": "existing completed create/verify whole-tree streams, including exact block recipe regeneration and nonrecipe byte comparisons"
+  },
+  "model_calls": 0,
+  "service_mutations": 0,
+  "fresh_payload_hashes": 0
+}

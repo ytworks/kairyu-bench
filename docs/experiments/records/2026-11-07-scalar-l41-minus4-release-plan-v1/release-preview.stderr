@@ -1,0 +1,12 @@
+Traceback (most recent call last):
+  File "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/worktrees/kairyu-bench-weight-tools/docs/experiments/scripts/fresh-scalar-l41-minus4-release-20261107.py", line 135, in <module>
+    main()
+  File "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/worktrees/kairyu-bench-weight-tools/docs/experiments/scripts/fresh-scalar-l41-minus4-release-20261107.py", line 131, in main
+    module.main()
+  File "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/worktrees/kairyu-bench-weight-tools/docs/experiments/scripts/fresh-f02-payload-release-20261107.py", line 219, in main
+    base_stat, candidate_stat = checkpoint_guard(archive, [], False)
+                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/worktrees/kairyu-bench-weight-tools/docs/experiments/scripts/fresh-scalar-l41-minus4-release-20261107.py", line 83, in checkpoint_guard
+    assert module.inventory(base) == original
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError

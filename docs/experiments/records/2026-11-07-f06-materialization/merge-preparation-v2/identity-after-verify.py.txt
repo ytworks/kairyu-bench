@@ -1,0 +1,28 @@
+"""Bind completed dense full verify to fresh full POSIX stat; no payload rehash."""
+from pathlib import Path
+import hashlib,json,time
+R=Path("/mnt/nvme/kairyu/wsp/gemma4-coding-20261104")
+N=R/"analysis/fresh-purpose-20261107-f04-mbpp-lora-training-v1"
+O=N/"materialization-f06-v2"
+M=R/"checkpoints/fresh-lora-mbpp-f06-v1/manifest.json"
+def sha(p):return hashlib.sha256(p.read_bytes()).hexdigest()
+m=json.loads(M.read_text());c=json.loads((O/"completion.json").read_text());v=json.loads((O/"verify.stdout").read_text())
+assert c["status"]=="completed" and c["source_unchanged_stat"] and v["verified"] is True
+assert c["manifest_sha256"]==sha(M)=="22b0603cc2dc9a2060c76f8baf99c28eceac08b56116727173bc61a719b5c0d4"
+upper=(O/"verify.stdout").stat().st_mtime_ns
+def inventory(root,files):
+ root=Path(root);out={}
+ for row in files:
+  p=root/row["path"];s=p.stat()
+  assert p.is_file() and not p.is_symlink() and s.st_size==row["size"]
+  assert s.st_mtime_ns<=upper and s.st_ctime_ns<=upper
+  out[row["path"]]={"dev":s.st_dev,"inode":s.st_ino,"size":s.st_size,"mtime_ns":s.st_mtime_ns,"ctime_ns":s.st_ctime_ns,"mode":s.st_mode,"uid":s.st_uid,"gid":s.st_gid,"nlink":s.st_nlink}
+ return out
+src=inventory(m["source"],m["source_files"]);dst=inventory(m["candidate"],m["candidate_files"])
+assert len(src)==len(dst)==9
+assert all(v["nlink"]==1 for v in dst.values())
+obj={"schema_version":1,"kind":"completed_dense_recipe_identity_v1","created_epoch":time.time(),"source":{"path":m["source"],"tree_sha256":m["source_tree_sha256"],"files":m["source_files"],"inventory_stat":src},"candidate":{"path":m["candidate"],"tree_sha256":m["candidate_tree_sha256"],"files":m["candidate_files"],"inventory_stat":dst},"manifest":{"path":str(M),"sha256":sha(M)},"verify":{"path":str(O/"verify.stdout"),"sha256":sha(O/"verify.stdout"),"result":v},"completion":{"path":str(O/"completion.json"),"sha256":sha(O/"completion.json")},"stat_evidence":{"captured_after_verify":True,"all_file_mtime_ctime_no_newer_than_verify_output":True,"verify_output_mtime_ns":upper,"verification_snapshot_compared_internally_before_and_after":True,"original_internal_snapshot_not_separately_saved":True,"payload_freshhash_for_this_identity":False,"hash_origin":"existing completed create/verify whole-tree streams, including exact block recipe regeneration and nonrecipe byte comparisons"},"identity_source_sha256":sha(Path(__file__))}
+p=O/"fullcandidateidentity.json"
+with p.open("x") as f:json.dump(obj,f,indent=2);f.write("\n")
+print(json.dumps({"path":str(p),"sha256":sha(p),"candidate_tree_sha256":m["candidate_tree_sha256"],"files":len(dst),"completion_sha256":sha(O/"completion.json")}))
+

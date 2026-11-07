@@ -1,0 +1,121 @@
+[
+  {
+    "name": "completion.json",
+    "raw_sha256": "cb103108d47e9d5c216d919d38b39354841a879e9f36ec06e28484c70860251d",
+    "stored_sha256": "cb103108d47e9d5c216d919d38b39354841a879e9f36ec06e28484c70860251d",
+    "raw_bytes": 2689,
+    "gzip": false
+  },
+  {
+    "name": "data.stderr",
+    "raw_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stored_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "raw_bytes": 0,
+    "gzip": false
+  },
+  {
+    "name": "data.stdout",
+    "raw_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stored_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "raw_bytes": 0,
+    "gzip": false
+  },
+  {
+    "name": "freeze-inputs.json",
+    "raw_sha256": "a06b902b4757ee66a3bf0469611511a1a8b8fac76bece2e2d88b891f8a762f38",
+    "stored_sha256": "a06b902b4757ee66a3bf0469611511a1a8b8fac76bece2e2d88b891f8a762f38",
+    "raw_bytes": 2468,
+    "gzip": false
+  },
+  {
+    "name": "mypy.stderr",
+    "raw_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stored_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "raw_bytes": 0,
+    "gzip": false
+  },
+  {
+    "name": "mypy.stdout",
+    "raw_sha256": "4ef32b02733c640ba275e5de2c0f630d3ea2a6293bb124ad0dc2173d46e40541",
+    "stored_sha256": "4ef32b02733c640ba275e5de2c0f630d3ea2a6293bb124ad0dc2173d46e40541",
+    "raw_bytes": 44,
+    "gzip": false
+  },
+  {
+    "name": "progress.json",
+    "raw_sha256": "9d87d4e02df2b7443c646ba736fa333bc66f24b312478668fa9de6988076a24b",
+    "stored_sha256": "9d87d4e02df2b7443c646ba736fa333bc66f24b312478668fa9de6988076a24b",
+    "raw_bytes": 1893,
+    "gzip": false
+  },
+  {
+    "name": "repository-shell-check.json",
+    "raw_sha256": "9170825371f9a62d911b1983bb9db21bd016c885bbaf1be9689b0d4859e460c5",
+    "stored_sha256": "9170825371f9a62d911b1983bb9db21bd016c885bbaf1be9689b0d4859e460c5",
+    "raw_bytes": 6720,
+    "gzip": false
+  },
+  {
+    "name": "ruff.stderr",
+    "raw_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stored_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "raw_bytes": 0,
+    "gzip": false
+  },
+  {
+    "name": "ruff.stdout",
+    "raw_sha256": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18",
+    "stored_sha256": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18",
+    "raw_bytes": 19,
+    "gzip": false
+  },
+  {
+    "name": "sources-after.json.gz",
+    "raw_sha256": "e51bbb99e06d3273d09c40b85619aa2c3f44ebb0ba8733193c4546c19582c5d9",
+    "stored_sha256": "3a2c891e4a31b1117b4f204ceb77701d37e1b961a6aea2e8ea8bf59280031fe4",
+    "raw_bytes": 80993,
+    "gzip": true
+  },
+  {
+    "name": "sources-before.json.gz",
+    "raw_sha256": "e51bbb99e06d3273d09c40b85619aa2c3f44ebb0ba8733193c4546c19582c5d9",
+    "stored_sha256": "3a2c891e4a31b1117b4f204ceb77701d37e1b961a6aea2e8ea8bf59280031fe4",
+    "raw_bytes": 80993,
+    "gzip": true
+  },
+  {
+    "name": "summary.json",
+    "raw_sha256": "89007ca5e4b1769b2702790b4e874daf623fd24399889415711e5afc67ada733",
+    "stored_sha256": "89007ca5e4b1769b2702790b4e874daf623fd24399889415711e5afc67ada733",
+    "raw_bytes": 1994,
+    "gzip": false
+  },
+  {
+    "name": "unittest.stderr.gz",
+    "raw_sha256": "59424faa463f8dbd16cc612e0b1869ba7a0a01f723289cf668cba59dc577a523",
+    "stored_sha256": "630de5f28e9ee6db7b15bb6a9b0b69b46c751c5061d14b1270d245b846e1d164",
+    "raw_bytes": 100109,
+    "gzip": true
+  },
+  {
+    "name": "unittest.stdout",
+    "raw_sha256": "f3b824fa92f35f0aacb6278ee84a05fd2fadfba29fcff4a4966819bdd0c9a86a",
+    "stored_sha256": "f3b824fa92f35f0aacb6278ee84a05fd2fadfba29fcff4a4966819bdd0c9a86a",
+    "raw_bytes": 6073,
+    "gzip": false
+  },
+  {
+    "name": "fresh-purpose-20261107-cpu-validation-r13-run.py.txt",
+    "raw_sha256": "0b03dce53851117cac71b8a80b06618d1a04a0c2b4d672609ee03c2437a718cf",
+    "stored_sha256": "0b03dce53851117cac71b8a80b06618d1a04a0c2b4d672609ee03c2437a718cf",
+    "raw_bytes": 5192,
+    "gzip": false
+  },
+  {
+    "name": "fresh-purpose-20261107-cpu-validation-r13-package.py.txt",
+    "raw_sha256": "83983fa4341ee97c3abe3fde027907ae1661e01cf9c6240732fd13eafc31d5d1",
+    "stored_sha256": "83983fa4341ee97c3abe3fde027907ae1661e01cf9c6240732fd13eafc31d5d1",
+    "raw_bytes": 4791,
+    "gzip": false
+  }
+]

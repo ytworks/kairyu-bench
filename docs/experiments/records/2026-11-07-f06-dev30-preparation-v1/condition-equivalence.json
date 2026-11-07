@@ -1,0 +1,47 @@
+{
+  "selection_exact": true,
+  "environment_exact": true,
+  "source_identity_exact": true,
+  "limits_exact": true,
+  "cache_exact": true,
+  "command_only_changes": [
+    "--label candidate tree unbound",
+    "--run-id F06 unique ID",
+    "--observe-config F06 output path"
+  ],
+  "chat_concurrency": 256,
+  "logprob_concurrency": 32,
+  "agent_concurrency": 4,
+  "run_id": "gemma4-fresh-f06-dev30-dp4-20261107-v1",
+  "plan": {
+    "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f06-dev30-dp4-v1/launch-plan-unbound.json",
+    "bytes": 13354,
+    "sha256": "01ab079d90de2b86944eefa88ebd0c13829241d08b2feb5eebc72e2f1c5c46b8"
+  },
+  "preview": {
+    "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f06-dev30-dp4-v1/owner-preview.json",
+    "bytes": 2528,
+    "sha256": "c53aa074c24473d7f3287c6553070254868f662c886a812bb291d533af2af63a"
+  },
+  "pending_fields": [
+    "actual successful F06 checkpoint path, manifest and creation receipts",
+    "full verification receipt and BF16 actual changes",
+    "all checkpoint hash rows and exact current file stat",
+    "F06 spec and final adapter/merge provenance",
+    "actual Opus 5.5 review receipt and root decision",
+    "physical tree and command label",
+    "fresh HTTP trace config and identity check",
+    "four exact healthy ordinary candidate CIDs and per-replica/combined closure",
+    "endpoint chat/logprob identity and normal prior-owner lock release",
+    "root launch authorization"
+  ],
+  "approved_for_execution": false,
+  "checkpoint_bound": false,
+  "F05_gate_inherited": false,
+  "source": {
+    "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f06-dev30-dp4-v1/prepare-unbound-plan.py.txt",
+    "bytes": 8357,
+    "sha256": "7306b9648c3caf54fee560a9ae52c67e18dd45d74708e388a69a781d2a68d30d"
+  },
+  "new_tool_or_product_code_changes": false
+}

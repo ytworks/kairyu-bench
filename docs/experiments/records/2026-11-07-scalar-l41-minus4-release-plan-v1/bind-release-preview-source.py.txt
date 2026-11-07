@@ -1,0 +1,36 @@
+from pathlib import Path
+import ast,hashlib,importlib.util,json,subprocess,time
+R=Path("/mnt/nvme/kairyu/wsp/gemma4-coding-20261104");B=R/"worktrees/kairyu-bench-weight-tools";D=R/"analysis/fresh-purpose-20261107-scalar-l41-minus4-release-plan-v1";A=R/"analysis/fresh-purpose-20261107-scalar-l41-minus4-lossless-v1"
+wrapper=B/"docs/experiments/scripts/fresh-scalar-l41-minus4-release-20261107.py"
+spec=importlib.util.spec_from_file_location("scalar_fixed_preview",wrapper);w=importlib.util.module_from_spec(spec);spec.loader.exec_module(w)
+engine,proof=w.load_engine();a=json.loads((A/"archive.json").read_text());complete=json.loads((D/"archive-completion.json").read_text())
+assert complete["status"]=="completed" and not Path("/proc/1716102").exists()
+engine.CANDIDATE=w.C;engine.BASE=Path(a["mandatory_base_path"]);engine.ARCHIVE=A
+containers=engine.mounts();assert len(containers)==27
+protected={str(p):engine.inventory(p) for p in (R/"checkpoints/code90-current-ad-helper-av-v1",R/"checkpoints/native-faststore-av-v1",R/"checkpoints/fresh-native-relative-f04-faststore-v1/checkpoint")}
+sha=lambda p:hashlib.sha256(Path(p).read_bytes()).hexdigest()
+def save(p,d):
+ assert not p.exists();p.write_text(json.dumps(d,indent=2)+"\n")
+save(D/"release-baseline.json",dict(containers=containers,epoch=time.time(),root_unknown_reference_authorization="root accepted visibility limits for this exact old privately-owned candidate; original/AV/faststore protected"))
+files={r["path"]:r for r in a["files"]}
+plan=dict(status="ready_for_exact_preview",approved_for_execution=False,wrapper_sha256=sha(wrapper),helper_sha256=w.HSHA,
+ mandatory_base=a["mandatory_base_path"],candidate=str(w.C),archive=str(A),engine_ast_transformation=proof,
+ targets=[dict(path=str(w.C/name),current_stat=a["candidate_stats"][name],bytes=a["candidate_stats"][name]["size"],historical_full_sha256=files[name]["candidate_sha256"]) for name in engine.NAMES],
+ archive_checksum_list_sha256=sha(A/"SHA256SUMS"),archive_json_sha256=sha(A/"archive.json"),
+ archive_checksum_entries=len((A/"SHA256SUMS").read_text().splitlines()),read_only_audit=dict(path=str(D/"release-baseline.json"),sha256=sha(D/"release-baseline.json")),
+ protected_checkpoint_inventories=protected,unknown_process_visibility_accepted_by_root=True,
+ legacy_marker_field_note="original_nine_files is the unchanged engine legacy field name; its actual contents are all12 checkpoint files.",
+ fresh_verify= dict(path=str(A/"fresh-verify.json"),sha256=sha(A/"fresh-verify.json")),
+ root_non_destructive_authorization="Archive and preview approved; exact2payload release requires subsequent root approval",
+ reference_visibility_audit=dict(path=str(D/"read-only-audit.json"),sha256=sha(D/"read-only-audit.json")))
+save(D/"release-plan-ready.json",plan)
+before=ast.parse(w.H.read_text());after=ast.parse(w.H.read_text())
+for node in ast.walk(after):
+ if isinstance(node,ast.Constant) and type(node.value)is int and node.value==w.OLD_BYTES:node.value=w.NEW_BYTES
+(D/"engine-original.ast.txt").write_text(ast.dump(before,indent=2))
+(D/"engine-transformed.ast.txt").write_text(ast.dump(after,indent=2))
+save(D/"engine-AST-diff.json",proof)
+cmd=[str(R/"infra/weight-tools-ci/bin/python"),"-B",str(wrapper),"--plan",str(D/"release-plan-ready.json"),"--plan-sha256",sha(D/"release-plan-ready.json"),"--expected-wrapper-sha256",sha(wrapper),"--output",str(D/"release-preview-v1")]
+t=time.time();result=subprocess.run(cmd,capture_output=True,text=True);(D/"release-preview.stdout").write_text(result.stdout);(D/"release-preview.stderr").write_text(result.stderr)
+save(D/"release-preview-command.json",dict(argv=cmd,returncode=result.returncode,seconds=time.time()-t))
+print(json.dumps(dict(returncode=result.returncode,plan_sha256=sha(D/"release-plan-ready.json"),wrapper_sha256=sha(wrapper),archive_sha256=sha(A/"archive.json"),stdout=result.stdout,stderr=result.stderr[-2500:])))

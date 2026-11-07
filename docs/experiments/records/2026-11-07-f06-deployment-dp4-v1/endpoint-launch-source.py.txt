@@ -1,0 +1,28 @@
+from pathlib import Path
+import subprocess,json,hashlib,time
+R=Path("/mnt/nvme/kairyu/wsp/gemma4-coding-20261104");B=R/"worktrees/kairyu-bench-weight-tools"
+old=R/"analysis/fresh-purpose-20261107-f04-relative-v1/deployment-dp4-v1/endpoint-source.py"
+D=R/"analysis/fresh-purpose-20261107-f06-lora-deployment-plan-v1"
+s=old.read_text()
+changes={
+ "fresh-purpose-20261107-f04-relative-v1/deployment-dp4-v1":"fresh-purpose-20261107-f06-lora-deployment-plan-v1",
+ "plan-bound-approved.json":"plan-root-approved-v1.json",
+ "ea8742fea2e187ab29cddc86d1f9dbbec9d0f4003c84c82bcc539d08988b5b60":"a1ca6fe0e8756b64e8957e7d14361eef50aef2169f6e0ec2c81600d724fca39f",
+ "af9ea11e1e748834566fd37473b619c0ef7510c953794a0754d95640f0c820b5":"560d923e6c640eadfe3a118aeb7a629a632bc78af446d34f2b12c1ebb9940ab2",
+ "1257791":"1757019",
+ "02b2e6d12aca5e0bd277fdedb93eaf9cb9386d51250c04a11d80f150154f69c5":"4e4b9a1d6670624cab7e4f53accad87970bf10635599ce2d06a2f6d2b0652552",
+ ".chat-checkpoint-f04.tmp":".chat-checkpoint-f06.tmp",
+ "2026-11-07-f04-deployment-dp4-v1":"2026-11-07-f06-deployment-dp4-v1",
+ "F04":"F06"}
+for before,after in changes.items():
+ assert before in s,before
+ s=s.replace(before,after)
+path=D/"endpoint-source.py";assert not path.exists();path.write_text(s)
+command=[str(R/"infra/weight-tools-ci/bin/python"),"-B",str(path)]
+sha=lambda p:hashlib.sha256(Path(p).read_bytes()).hexdigest()
+(D/"endpoint-command.json").write_text(json.dumps(dict(argv=command,source_sha256=sha(path),reused_source=dict(path=str(old),sha256=sha(old)),fixed_substitutions=changes,authorized_scope="root: existing5smoke and atomic files/path/tree metadata only"),indent=2)+"\n")
+t=time.time()
+with(D/"endpoint.stdout").open("x") as out,(D/"endpoint.stderr").open("x") as err:
+ p=subprocess.run(command,stdout=out,stderr=err,timeout=300)
+(D/"endpoint-execution.json").write_text(json.dumps(dict(returncode=p.returncode,seconds=time.time()-t,source_sha256=sha(path)),indent=2)+"\n")
+print("returncode",p.returncode);print((D/"endpoint.stdout").read_text());print((D/"endpoint.stderr").read_text()[-3000:])

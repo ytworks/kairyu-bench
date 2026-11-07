@@ -710,8 +710,12 @@ def create(base, dest, spec_path, manifest, *, min_free_gib=0.0):
                     ["cp", "--reflink=auto", "--sparse=always", str(p), str(target)],
                     check=True,
                 )
-                if os.path.samefile(p, target):
+                target_stat = target.stat()
+                if os.path.samefile(p, target) or target_stat.st_nlink != 1:
                     raise ValueError("private shard shares source inode")
+                # cp preserves read-only source modes. Only our independent
+                # newly copied shard needs owner-write access for the merge.
+                target.chmod(target_stat.st_mode | 0o200)
                 method = "private-copy-or-reflink"
             else:
                 shutil.copy2(p, target)

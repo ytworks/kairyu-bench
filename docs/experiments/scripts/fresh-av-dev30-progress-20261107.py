@@ -1,7 +1,9 @@
-"""Read-only snapshot for this complete AV dev30 run; never ranks partial scores."""
+"""Append one monitoring snapshot for an explicitly bound complete-manifest dev30 run."""
 from __future__ import annotations
 
+import argparse
 import collections
+import hashlib
 import json
 import os
 import re
@@ -11,8 +13,6 @@ from datetime import datetime
 from pathlib import Path
 
 R = Path("/mnt/nvme/kairyu/wsp/gemma4-coding-20261104")
-N = R / "analysis/fresh-purpose-20261107-av-dev30-dp4-v1"
-RUN = R / "results/gemma4-fresh-av-dev30-dp4-20261107-v1"
 CODE = {"humaneval-plus", "livecodebench", "mbpp-plus", "scicode"}
 
 
@@ -25,7 +25,7 @@ def rows(path: Path) -> tuple[list[dict], int]:
     return [json.loads(x) for x in (lines[:-1] if incomplete else lines)], incomplete
 
 
-def main() -> None:
+def collect(N: Path, RUN: Path) -> None:
     now = time.time()
     responses, response_tail = rows(RUN / "responses.jsonl")
     items, item_tail = rows(RUN / "items.jsonl")
@@ -90,6 +90,59 @@ def main() -> None:
     with (N / "progress.jsonl").open("a") as output:
         output.write(json.dumps(snapshot) + "\n")
     print(json.dumps(snapshot))
+
+
+def validate_roots(analysis_root: Path, run_root: Path) -> None:
+    """Bind the explicit pair to the plan actually started by the existing owner."""
+    owner = json.loads((analysis_root / "owner-start.json").read_text())
+    digest = owner["plan_sha256"]
+    if not re.fullmatch(r"[0-9a-f]{64}", digest):
+        raise ValueError("invalid owner plan identity")
+    plans = [
+        path for path in sorted(analysis_root.glob("*.json"))
+        if hashlib.sha256(path.read_bytes()).hexdigest() == digest
+    ]
+    if not plans:
+        raise ValueError("owner plan SHA has no matching plan in analysis root")
+    plan = json.loads(plans[0].read_text())
+    command = plan["command"]
+
+    def flag(name: str) -> str:
+        if command.count(name) != 1:
+            raise ValueError("missing or repeated plan flag: " + name)
+        return command[command.index(name) + 1]
+
+    config_path = analysis_root / "http-trace/capture.json"
+    run = json.loads((run_root / "run.json").read_text())
+    observation = run.get("observation") or {}
+    if (
+        (Path(plan["cwd"]) / plan["run_id"]).resolve() != run_root
+        or plan["run_id"] != run_root.name
+        or flag("--run-id") != plan["run_id"]
+        or Path(flag("--results-dir")).resolve() != run_root.parent
+        or Path(flag("--observe-config")).resolve() != config_path
+        or Path(plan["http_trace"]["config"]["path"]).resolve() != config_path
+        or hashlib.sha256(config_path.read_bytes()).hexdigest()
+        != plan["http_trace"]["config"]["sha256"]
+        or observation.get("run_id") != plan["run_id"]
+        or Path(observation.get("output_dir", "")).resolve() != config_path.parent
+        or run.get("kind") != "wsp"
+        or str(run.get("tier")) != flag("--tier")
+        or run.get("split") != flag("--split")
+        or run.get("label") != flag("--label")
+    ):
+        raise ValueError("analysis root, run metadata, and owner plan do not match")
+
+
+def main() -> None:
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--analysis-root", type=Path, required=True)
+    parser.add_argument("--run-root", type=Path, required=True)
+    args = parser.parse_args()
+    analysis_root = args.analysis_root.resolve(strict=True)
+    run_root = args.run_root.resolve(strict=True)
+    validate_roots(analysis_root, run_root)
+    collect(analysis_root, run_root)
 
 
 if __name__ == "__main__":

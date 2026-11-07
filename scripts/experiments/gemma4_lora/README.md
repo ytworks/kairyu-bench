@@ -494,3 +494,6 @@ rechecked during create/verify and included in verification stat continuity.
 Legacy public-donor inputs and wrappers retain their previous rules.
 train_lora.py emits this format directly; the arithmetic and BF16 byte
 verification are unchanged.
+
+
+A read-only base shard is supported by the standalone dense creator. A touched shard is first copied into the new candidate, checked for a distinct inode and link count 1, and only that private copy receives owner-write permission. The base mode and shared hardlinks are never changed. The observed failure, regression test, successful F06 retry, and exact full verification are recorded in [F06 materialization](../../../docs/experiments/2026-11-07-f06-materialization.md).

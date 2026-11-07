@@ -1,0 +1,70 @@
+{
+  "checks": [
+    {
+      "name": "help",
+      "args": [
+        "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/infra/weight-tools-ci/bin/python",
+        "docs/experiments/scripts/fresh-av-dev30-progress-20261107.py",
+        "--help"
+      ],
+      "returncode": 0,
+      "seconds": 0.07120224996469915,
+      "stdout_sha256": "546b8a7d4f85c32750814cc99eb29e7a74be897dcb01f7bbee60a88616efa240",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "tests",
+      "args": [
+        "nice",
+        "-n",
+        "15",
+        "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/infra/weight-tools-ci/bin/python",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests",
+        "-p",
+        "test_wsp_progress_cli.py",
+        "-v"
+      ],
+      "returncode": 0,
+      "seconds": 0.12492680293507874,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "625ecd774abc76153f7298c90c676642b470636fa5a41edff68ad0cb7c696e58"
+    },
+    {
+      "name": "ruff",
+      "args": [
+        "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/infra/weight-tools-ci/bin/ruff",
+        "check",
+        "docs/experiments/scripts/fresh-av-dev30-progress-20261107.py",
+        "tests/test_wsp_progress_cli.py"
+      ],
+      "returncode": 0,
+      "seconds": 0.032031441922299564,
+      "stdout_sha256": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "diffcheck",
+      "args": [
+        "git",
+        "diff",
+        "--check",
+        "--",
+        "docs/experiments/scripts/fresh-av-dev30-progress-20261107.py",
+        "tests/test_wsp_progress_cli.py"
+      ],
+      "returncode": 0,
+      "seconds": 0.003212184994481504,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "old_progress_fullbytes_unchanged": true,
+  "old_line_retained": true,
+  "model_calls": 0,
+  "monitor_collection_calls": 0,
+  "source_sha256": "b203aada2141a2e2aa9cfd65434715eb0f8e9923c66864ee0708a34110012913"
+}

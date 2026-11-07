@@ -1,0 +1,84 @@
+{
+  "status": "completed",
+  "runs": [
+    {
+      "phase": "preview",
+      "command": [
+        "nice",
+        "-n",
+        "15",
+        "ionice",
+        "-c",
+        "3",
+        "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/infra/weight-tools-ci/bin/python",
+        "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/worktrees/kairyu-bench-weight-tools/scripts/experiments/gemma4_lora/dense_lora_recipe.py",
+        "create",
+        "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/checkpoints/fresh-native-relative-f04-faststore-v1/checkpoint",
+        "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/checkpoints/fresh-lora-mbpp-f06-v1/checkpoint",
+        "--spec",
+        "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f04-mbpp-lora-training-v1/work/train-lora/final/merge-spec.json",
+        "--manifest",
+        "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/checkpoints/fresh-lora-mbpp-f06-v1/manifest.json",
+        "--min-free-gib",
+        "5"
+      ],
+      "returncode": 0,
+      "seconds": 0.5201668430818245,
+      "stdout_sha256": "3c6a6650d837ea60a73bc6fd8264b53e34b662e5e50831f8d45cb2392ba3baf9",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "phase": "create",
+      "command": [
+        "nice",
+        "-n",
+        "15",
+        "ionice",
+        "-c",
+        "3",
+        "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/infra/weight-tools-ci/bin/python",
+        "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/worktrees/kairyu-bench-weight-tools/scripts/experiments/gemma4_lora/dense_lora_recipe.py",
+        "create",
+        "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/checkpoints/fresh-native-relative-f04-faststore-v1/checkpoint",
+        "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/checkpoints/fresh-lora-mbpp-f06-v1/checkpoint",
+        "--spec",
+        "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f04-mbpp-lora-training-v1/work/train-lora/final/merge-spec.json",
+        "--manifest",
+        "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/checkpoints/fresh-lora-mbpp-f06-v1/manifest.json",
+        "--min-free-gib",
+        "5",
+        "--apply"
+      ],
+      "returncode": 0,
+      "seconds": 444.0018361079274,
+      "stdout_sha256": "bdabed1803e28eee940979509f7ddf02f105cde262c0b022dc5c0a173e34594c",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "phase": "verify",
+      "command": [
+        "nice",
+        "-n",
+        "15",
+        "ionice",
+        "-c",
+        "3",
+        "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/infra/weight-tools-ci/bin/python",
+        "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/worktrees/kairyu-bench-weight-tools/scripts/experiments/gemma4_lora/dense_lora_recipe.py",
+        "verify",
+        "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/checkpoints/fresh-lora-mbpp-f06-v1/manifest.json"
+      ],
+      "returncode": 0,
+      "seconds": 297.80545275006443,
+      "stdout_sha256": "42140a38d3f2412887952c0dfe836433f0fabb6a8aa68196978eb8e5e479788d",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "seconds_including_wait": 742.8811032039812,
+  "source_unchanged_stat": true,
+  "manifest_sha256": "22b0603cc2dc9a2060c76f8baf99c28eceac08b56116727173bc61a719b5c0d4",
+  "free_after_bytes": 68948848640,
+  "global_lock_acquired": false,
+  "GPU_or_service_operations": 0,
+  "verify_stdout_sha256": "42140a38d3f2412887952c0dfe836433f0fabb6a8aa68196978eb8e5e479788d"
+}

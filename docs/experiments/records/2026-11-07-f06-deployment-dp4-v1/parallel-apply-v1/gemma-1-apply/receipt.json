@@ -1,0 +1,295 @@
+{
+  "status": "completed",
+  "apply_requested": true,
+  "ssh_uid": 1003,
+  "service": "gemma-1",
+  "baseline_path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f06-lora-deployment-plan-v1/bound-preview-v1/all-chat-before.json",
+  "baseline_sha256": "8325010ee026212ab39e8b8bbf979466ace1ee8b2613d32ae6a0fd5fbe45a762",
+  "control_sha256": "fc9a78bc232f9cc331926a0737e64f4b4fe14946574f4a02bc1aacb9a800b851",
+  "helper_sha256": "2e9da820fe30ba9b2436fb600cf14a533b1c496b2fed48ac3649fffb9d2bc9ae",
+  "candidate_identity": {
+    "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/checkpoints/fresh-lora-mbpp-f06-v1/checkpoint",
+    "tree_sha256": "0fc0ef29346c4d8a06bea8570dee96d8e0ba7038fee0d5aded8db57852474ec5",
+    "files": [
+      {
+        "path": "chat_template.jinja",
+        "size": 18683,
+        "sha256": "ae53464bf3be25802b3a5b37def7fd89667067d7577049b3b2d74c4d8de4c6d4"
+      },
+      {
+        "path": "config.json",
+        "size": 4621,
+        "sha256": "e967dd38bc5cfd38bd09a995a7bf4a754075df2b46aba68f7fbb5a791e6d8dd1"
+      },
+      {
+        "path": "generation_config.json",
+        "size": 208,
+        "sha256": "d4226bbe3117d2d253ba4609720ba82c6c4ce4627a9a6ae05387c78983ac03de"
+      },
+      {
+        "path": "model.safetensors.index.json",
+        "size": 103577,
+        "sha256": "2eeef6577e663781958c7e17a8809e5f5953ebe1fdb4bf4906cb7f943946bca3"
+      },
+      {
+        "path": "native.safetensors",
+        "size": 2714560,
+        "sha256": "dde45065af919d9b463529f8f12f249266af2c256ffa9a0ef0b1b8a3ee3c572c"
+      },
+      {
+        "path": "processor_config.json",
+        "size": 1689,
+        "sha256": "32bdf45d2ad4cc29a0822ddd157a182de76644f0419a6228d151495256e9813c"
+      },
+      {
+        "path": "shared.safetensors",
+        "size": 62543620336,
+        "sha256": "fb2aac1ce71c98290e61b517db35cf2c828b205b2282e8e2cb46707f76f9dfe1"
+      },
+      {
+        "path": "tokenizer.json",
+        "size": 32169626,
+        "sha256": "cc8d3a0ce36466ccc1278bf987df5f71db1719b9ca6b4118264f45cb627bfe0f"
+      },
+      {
+        "path": "tokenizer_config.json",
+        "size": 3082,
+        "sha256": "9f4fec4b1dc6ecddf8f4a92e9caea5971c0e67d81309f3f9066a2bee8c362633"
+      }
+    ],
+    "stat": {
+      "chat_template.jinja": {
+        "device": 2306,
+        "inode": 182195655,
+        "size": 18683,
+        "mtime_ns": 1794050350349847250,
+        "ctime_ns": 1794058670971191223,
+        "uid": 1003,
+        "gid": 1003,
+        "mode": 33152,
+        "nlink": 1
+      },
+      "config.json": {
+        "device": 2306,
+        "inode": 182195656,
+        "size": 4621,
+        "mtime_ns": 1794050350349847250,
+        "ctime_ns": 1794058670971191223,
+        "uid": 1003,
+        "gid": 1003,
+        "mode": 33152,
+        "nlink": 1
+      },
+      "generation_config.json": {
+        "device": 2306,
+        "inode": 182195657,
+        "size": 208,
+        "mtime_ns": 1794050350350847215,
+        "ctime_ns": 1794058670972191189,
+        "uid": 1003,
+        "gid": 1003,
+        "mode": 33152,
+        "nlink": 1
+      },
+      "model.safetensors.index.json": {
+        "device": 2306,
+        "inode": 182195658,
+        "size": 103577,
+        "mtime_ns": 1794050350350847215,
+        "ctime_ns": 1794058670972191189,
+        "uid": 1003,
+        "gid": 1003,
+        "mode": 33152,
+        "nlink": 1
+      },
+      "native.safetensors": {
+        "device": 2306,
+        "inode": 182195659,
+        "size": 2714560,
+        "mtime_ns": 1794050350572839477,
+        "ctime_ns": 1794058670973191155,
+        "uid": 1003,
+        "gid": 1003,
+        "mode": 33152,
+        "nlink": 1
+      },
+      "processor_config.json": {
+        "device": 2306,
+        "inode": 182195660,
+        "size": 1689,
+        "mtime_ns": 1794050350361846832,
+        "ctime_ns": 1794058670974191121,
+        "uid": 1003,
+        "gid": 1003,
+        "mode": 33152,
+        "nlink": 1
+      },
+      "shared.safetensors": {
+        "device": 2306,
+        "inode": 182195661,
+        "size": 62543620336,
+        "mtime_ns": 1794058934876158971,
+        "ctime_ns": 1794058934876158971,
+        "uid": 1003,
+        "gid": 1003,
+        "mode": 33188,
+        "nlink": 1
+      },
+      "tokenizer.json": {
+        "device": 2306,
+        "inode": 182195829,
+        "size": 32169626,
+        "mtime_ns": 1794050350405845298,
+        "ctime_ns": 1794058724022374961,
+        "uid": 1003,
+        "gid": 1003,
+        "mode": 33152,
+        "nlink": 1
+      },
+      "tokenizer_config.json": {
+        "device": 2306,
+        "inode": 182195830,
+        "size": 3082,
+        "mtime_ns": 1794050350569839582,
+        "ctime_ns": 1794058724022374961,
+        "uid": 1003,
+        "gid": 1003,
+        "mode": 33152,
+        "nlink": 1
+      }
+    },
+    "proof": {
+      "kind": "saved_full_hash_plus_exact_stat_continuity",
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f06-lora-deployment-plan-v1/bound-preview-v1/f06-freeze.json",
+      "sha256": "cee54e1c7f79cf2116ea7b6036c9d2d3c0709f83117cb95c270542b616b84221",
+      "full_payload_rehashed_here": false
+    }
+  },
+  "before": {
+    "id": "d1a79f265949e31778ead91834e6a509d3c66af708dc3d7247eb716caa28cef3",
+    "name": "/gemma-4-31b-8gpu-gemma-1-1",
+    "image_id": "sha256:af9e746b913088cbf6c4464a31d6904a6b7e1d3ba62f0895362ddf13595f7abe",
+    "command_sha256": "f9de227590524bb32445ccde524ca54dc387431068e55b4bd10e2491f17ebc47",
+    "environment_sha256": "e7bc877f2b9eb1b944340aa38c42a093bae14a5512fdb17a8c1c5091ac8bca9b",
+    "user": "",
+    "working_dir": "/vllm-workspace",
+    "healthcheck_sha256": "93daf63c822ca65a2983b12827944e72a088dc50bded4768d4145a97c99b457d",
+    "cpuset": "16-31,80-95",
+    "devices": [
+      {
+        "Driver": "nvidia",
+        "Count": 0,
+        "DeviceIDs": [
+          "2",
+          "3"
+        ],
+        "Capabilities": [
+          [
+            "gpu"
+          ]
+        ],
+        "Options": null
+      }
+    ],
+    "ipc_mode": "host",
+    "mounts": [
+      {
+        "type": "bind",
+        "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/checkpoints/fresh-native-relative-f04-faststore-v1/checkpoint",
+        "target": "/checkpoint",
+        "read_only": true
+      },
+      {
+        "type": "bind",
+        "source": "/mnt/nvme/kairyu/model-volumes/gemma-4-31b-8gpu/models",
+        "target": "/models",
+        "read_only": true
+      },
+      {
+        "type": "bind",
+        "source": "/mnt/nvme/kairyu/model-volumes/gemma-4-31b-8gpu/compile-cache",
+        "target": "/root/.cache",
+        "read_only": false
+      }
+    ],
+    "networks": [
+      "gemma-4-31b-8gpu_default"
+    ],
+    "checkpoint_path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/checkpoints/fresh-native-relative-f04-faststore-v1/checkpoint",
+    "checkpoint_readonly": true,
+    "tree": "7b9e9488e3cd4e0b6c5f61ae341e5eeccdf5bd31c46d1c8354950dbc29d0f924",
+    "running": true,
+    "health": "healthy"
+  },
+  "rendered_service_sha256": "d91ba72a595ce4e4eda394b205e77164416b4d3ad7899b2594ba344d99ea86ef",
+  "daemon_id": "3e518d2b-6972-43f8-b325-f7f33697a2d2",
+  "compose_selection": {
+    "project": "gemma-4-31b-8gpu",
+    "service": "gemma-1",
+    "container_ids": [
+      "d1a79f265949e31778ead91834e6a509d3c66af708dc3d7247eb716caa28cef3"
+    ],
+    "includes_stopped": true
+  },
+  "compose_remove_orphans": false,
+  "scope": "Existing Compose service only; global served-checkpoint record is not updated; never benchmark mixed gateway.",
+  "after": {
+    "id": "ee04769375d9e78370d8d7372ad3c5de8223e50ce3a4a233ae8adabdc1bff897",
+    "name": "/gemma-4-31b-8gpu-gemma-1-1",
+    "image_id": "sha256:af9e746b913088cbf6c4464a31d6904a6b7e1d3ba62f0895362ddf13595f7abe",
+    "command_sha256": "f9de227590524bb32445ccde524ca54dc387431068e55b4bd10e2491f17ebc47",
+    "environment_sha256": "e7bc877f2b9eb1b944340aa38c42a093bae14a5512fdb17a8c1c5091ac8bca9b",
+    "user": "",
+    "working_dir": "/vllm-workspace",
+    "healthcheck_sha256": "93daf63c822ca65a2983b12827944e72a088dc50bded4768d4145a97c99b457d",
+    "cpuset": "16-31,80-95",
+    "devices": [
+      {
+        "Driver": "nvidia",
+        "Count": 0,
+        "DeviceIDs": [
+          "2",
+          "3"
+        ],
+        "Capabilities": [
+          [
+            "gpu"
+          ]
+        ],
+        "Options": null
+      }
+    ],
+    "ipc_mode": "host",
+    "mounts": [
+      {
+        "type": "bind",
+        "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/checkpoints/fresh-lora-mbpp-f06-v1/checkpoint",
+        "target": "/checkpoint",
+        "read_only": true
+      },
+      {
+        "type": "bind",
+        "source": "/mnt/nvme/kairyu/model-volumes/gemma-4-31b-8gpu/models",
+        "target": "/models",
+        "read_only": true
+      },
+      {
+        "type": "bind",
+        "source": "/mnt/nvme/kairyu/model-volumes/gemma-4-31b-8gpu/compile-cache",
+        "target": "/root/.cache",
+        "read_only": false
+      }
+    ],
+    "networks": [
+      "gemma-4-31b-8gpu_default"
+    ],
+    "checkpoint_path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/checkpoints/fresh-lora-mbpp-f06-v1/checkpoint",
+    "checkpoint_readonly": true,
+    "tree": "0fc0ef29346c4d8a06bea8570dee96d8e0ba7038fee0d5aded8db57852474ec5",
+    "running": true,
+    "health": "healthy"
+  },
+  "direct_ips": {
+    "gemma-4-31b-8gpu_default": "172.26.0.6"
+  }
+}

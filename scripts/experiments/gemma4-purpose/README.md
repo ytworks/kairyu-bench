@@ -724,3 +724,7 @@ See the [implementation and CPU validation](../../../docs/experiments/2026-11-07
 The ordinary ON chat format does not prove that direct-code supervision preserves reasoning. A lower answer loss may reflect immediate-code/output-format fitting or suppressed thinking rather than better inference. Compare the candidate’s existing WSP reasoning-token/finish traces with the completed parent traces; no new parent run is required, and no training-loss gain is a capability claim.
 
 The existing fresh-av-native-gpu4 owner has an explicit train-lora single-job mode, a separately bounded training deadline (initial2400s including startup/approval allowances), exact same-CID restoration and a distinct pilot_only result. [Owner preparation](../../../docs/experiments/2026-11-07-f04-mbpp-lora-owner-preparation.md) preserves the original native-mode bounds.
+
+### Completed training-log audit
+
+`training_log_audit.py --study <completed-LoRA-study> --output <new-output>` audits saved logs only. For the fixed64-step/4-accumulation run, it requires all204 training IDs plus52 exact repeated presentations, matches every microbatch with its step, and retains all410 modules including zero gradients. Missing final summary defers work; terminal incomplete training is recorded as partial. CE changes apply only to the repeated training examples; input/output activations at steps1/4/64 have different case sets and are not a capability comparison. Factor payloads are referenced by export SHA/stat without copying to Git or new full hash.

@@ -73,3 +73,23 @@ count once. Unmatched job UUIDs are ignored, so unfinished canonical slots stay
 missing. Per-file stat stability and the SHA256 of only the read prefix are
 recorded; a changed file or path escaping the run is rejected. The source
 trajectory is never modified. Existing output without this flag is unchanged.
+
+
+## Explicit WSP progress snapshot
+
+The historical filename [fresh-av-dev30-progress-20261107.py](fresh-av-dev30-progress-20261107.py)
+now requires both target directories; there is no default AV run. Use it after
+the existing owner's start receipt and run.json exist:
+
+    python docs/experiments/scripts/fresh-av-dev30-progress-20261107.py --help
+    python docs/experiments/scripts/fresh-av-dev30-progress-20261107.py --analysis-root /data/analysis/current-run --run-root /data/results/current-run
+
+The analysis directory must contain a plan matching owner-start.json's exact
+plan SHA. Its run ID, working/result directory, capture config and the run.json
+observation/label/tier/split must match before the monitor reads trajectories,
+queries GET /metrics, or appends one progress.jsonl line to that analysis directory.
+Help and missing required arguments do none of these operations. The monitor
+does not generate model responses, regrade tasks, or rank incomplete runs.
+Unlike the two separate evidence exporters above, this monitor intentionally
+appends its own progress record; it never edits canonical result files.
+See the [incident and regression evidence](../2026-11-07-wsp-progress-cli-fix.md).

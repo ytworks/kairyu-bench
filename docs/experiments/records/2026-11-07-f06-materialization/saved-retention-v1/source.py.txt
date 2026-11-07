@@ -1,0 +1,34 @@
+"""Read manifest + completed step64 only; no checkpoint/factor scan or model."""
+from pathlib import Path
+import hashlib,json,math,re,time
+
+R=Path("/mnt/nvme/kairyu/wsp/gemma4-coding-20261104")
+N=R/"analysis/fresh-purpose-20261107-f04-mbpp-lora-training-v1"
+M=R/"checkpoints/fresh-lora-mbpp-f06-v1/manifest.json"
+O=N/"saved-retention-v1"
+def sha(p):return hashlib.sha256(p.read_bytes()).hexdigest()
+m=json.loads(M.read_text())
+step_path=N/"work/train-lora/steps.jsonl"
+s=json.loads(step_path.read_text().splitlines()[-1])
+assert s["step"]==64 and m["spec_sha256"]=="44e1928332dc347bfe19048b93ddb837e79f79797d2db807e6230bb52ce78d8d"
+assert m["source_tree_sha256"]=="7b9e9488e3cd4e0b6c5f61ae341e5eeccdf5bd31c46d1c8354950dbc29d0f924"
+assert len(m["edits"])==len(s["modules"])==410
+assert {x["tensor"] for x in m["edits"]}==set(s["modules"])
+rows=[]
+for e in m["edits"]:
+ t=e["tensor"];v=s["modules"][t];actual=e["delta_l2"];intended=v["delta_l2_after_projection"];elements=math.prod(e["shape"])
+ assert all(math.isfinite(x) and x>=0 for x in [actual,intended,e["source_l2"]])
+ assert 0<=e["changed_count"]<=elements
+ match=re.fullmatch(r"model.language_model.layers.(\d+).(self_attn|mlp).(\w+).weight",t)
+ assert match
+ rows.append({"tensor":t,"layer":int(match[1]),"family":match[3],"shape":e["shape"],"elements":elements,"changed_elements":e["changed_count"],"changed_byte_elements":e["changed_byte_count"],"saved_delta_l2":actual,"intended_continuous_delta_l2":intended,"saved_to_intended_norm_ratio":actual/intended if intended else None,"same_projection_source_l2":e["source_l2"],"source_l2_training_fp64":v["base_frobenius"],"direction_cosine":None,"cosine_status":"not_recorded_not_reconstructible_from_norms","maximum_absolute_saved_delta":e["maximum_absolute_delta"]})
+def agg(rs):
+ actual=math.sqrt(sum(x["saved_delta_l2"]**2 for x in rs)); intended=math.sqrt(sum(x["intended_continuous_delta_l2"]**2 for x in rs));base=math.sqrt(sum(x["same_projection_source_l2"]**2 for x in rs))
+ count=sum(x["elements"] for x in rs);changed=sum(x["changed_elements"] for x in rs)
+ return {"matrices":len(rs),"elements":count,"changed_elements":changed,"changed_fraction_of_same_projection_elements":changed/count,"saved_delta_l2":actual,"intended_continuous_delta_l2":intended,"saved_to_intended_norm_ratio":actual/intended if intended else None,"same_projection_source_l2":base,"saved_delta_relative_to_same_projection_source_l2":actual/base if base else None,"unchanged_matrices":sum(x["changed_elements"]==0 for x in rs),"direction_cosine":None}
+report={"schema_version":1,"kind":"saved_lora_norm_retention_from_existing_records_v1","epoch":time.time(),"inputs":{"manifest":{"path":str(M),"sha256":sha(M)},"step_log":{"path":str(step_path),"sha256":sha(step_path)},"source":{"path":str(Path(__file__).resolve()),"sha256":sha(Path(__file__))}},"aggregate":agg(rows),"by_family":{k:agg([x for x in rows if x["family"]==k]) for k in sorted({x["family"] for x in rows})},"by_layer":{str(k):agg([x for x in rows if x["layer"]==k]) for k in sorted({x["layer"] for x in rows})},"matrices":rows,"limits":["Full all410 text projection scope; not a full-checkpoint denominator or sample.","Saved actual differences come from create manifest; independent verify is a separate operation.","Intended norm is the completed factor real-product FP64 rank-Gram norm, not an added scan of blockwise FP32 GEMM values.","Norm ratio is not direction retention or a capability score; cosine remains null.","Checkpoint payload bytes additionally read:0; factor payload bytes additionally read:0; model calls:0."]}
+assert abs(report["aggregate"]["saved_delta_l2"]-m["delta_l2"])<1e-9
+O.mkdir(exist_ok=False)
+(O/"report.json").write_text(json.dumps(report,indent=2,allow_nan=False)+"\n")
+print(json.dumps({"path":str(O/"report.json"),"sha256":sha(O/"report.json"),"aggregate":report["aggregate"]}),flush=True)
+

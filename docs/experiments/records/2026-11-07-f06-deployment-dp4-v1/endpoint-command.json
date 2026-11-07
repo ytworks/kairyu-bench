@@ -1,0 +1,24 @@
+{
+  "argv": [
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/infra/weight-tools-ci/bin/python",
+    "-B",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f06-lora-deployment-plan-v1/endpoint-source.py"
+  ],
+  "source_sha256": "c91bbbc6e49daeefac0240543a2b76f0e04e14046f9e0d79bfcc9422ee5acc91",
+  "reused_source": {
+    "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f04-relative-v1/deployment-dp4-v1/endpoint-source.py",
+    "sha256": "0d866a0b277d2054cc7d5513207b812e08edcae037059561e1eb42e70aaa2916"
+  },
+  "fixed_substitutions": {
+    "fresh-purpose-20261107-f04-relative-v1/deployment-dp4-v1": "fresh-purpose-20261107-f06-lora-deployment-plan-v1",
+    "plan-bound-approved.json": "plan-root-approved-v1.json",
+    "ea8742fea2e187ab29cddc86d1f9dbbec9d0f4003c84c82bcc539d08988b5b60": "a1ca6fe0e8756b64e8957e7d14361eef50aef2169f6e0ec2c81600d724fca39f",
+    "af9ea11e1e748834566fd37473b619c0ef7510c953794a0754d95640f0c820b5": "560d923e6c640eadfe3a118aeb7a629a632bc78af446d34f2b12c1ebb9940ab2",
+    "1257791": "1757019",
+    "02b2e6d12aca5e0bd277fdedb93eaf9cb9386d51250c04a11d80f150154f69c5": "4e4b9a1d6670624cab7e4f53accad87970bf10635599ce2d06a2f6d2b0652552",
+    ".chat-checkpoint-f04.tmp": ".chat-checkpoint-f06.tmp",
+    "2026-11-07-f04-deployment-dp4-v1": "2026-11-07-f06-deployment-dp4-v1",
+    "F04": "F06"
+  },
+  "authorized_scope": "root: existing5smoke and atomic files/path/tree metadata only"
+}
