@@ -326,3 +326,38 @@ preview and three intentional rejection checks. The script never changes the
 parent checkpoint or deploys weights. The baseline's full 5.77 MB numeric code
 audit remains on NVMe, with its SHA in the compact PR artifact. No additional
 GPU calculation was used for the RMS table.
+
+## Later Compose collision: retained evidence and limits
+
+A separate F02 deployment operation later failed while Compose processed the
+stopped retired observer together with the ordinary Gemma-0 service. The
+observer owner had followed existing `observe-docker.py restore`: stop the
+observer, rename it `observer-retired-*`, restore the exact original CID, and
+retain the stopped observer as recovery evidence. The observer clone preserves
+original Compose labels, so this left two containers associated with the same
+service. The retired observer was subsequently absent. This observation owner
+did not perform the failed deployment or cleanup and left recovery to its owner.
+
+A read-only [post-incident check](artifacts/av-observer-retired-host-evidence-20261107.json)
+confirmed the capture configuration SHA, both worker-status objects against the
+closed-writer receipt, official run/report SHAs, and private original-backup SHA
+against their preexisting receipts. Host capture streams, site/status/acceptance
+metadata, all results, merged output and audits remain present; no large trace
+payload was rehashed in this check. All original missingness remains explicit.
+
+The original saved inspect contains Compose project/service/container-number/oneoff
+values `gemma-4-31b-8gpu` / `gemma-0` / `1` / `False`. The pre-attach source pin,
+actual runner archive and current observer tool share SHA256
+`c25c4ef70d1825686c0c9d93066432c5ffff15abcb813b86b5aeca6d80b4d97b`.
+That implementation copies original labels, adding only observation labels,
+and restore does not change labels. Together with successful creation/restoration
+receipts this reconstructs the retired observer's Compose identity. A separately
+saved inspect of the observer itself was not found; this distinction is retained.
+
+WSP/merge/init/owner operation logs are on the host. The owner did **not** export
+the observer container's Docker stdout/stderr separately before retirement;
+those logs may therefore be unavailable after deletion. This limitation does not
+remove the captured activation streams, but matters for later runtime diagnosis.
+Any future owned-retired cleanup needs exact-CID ownership, stopped state,
+healthy original restoration and preserved host evidence checks. No cleanup was
+performed as part of this audit.

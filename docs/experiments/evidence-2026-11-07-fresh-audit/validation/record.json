@@ -5,23 +5,23 @@
   "r3": "PATH includes existing CPU venv; TMPDIR is short and within owned NVMe experiment root; full unittest/Ruff/mypy/data/shell completed",
   "outputs": [
     {
-      "file": "r1-unittest.log",
+      "file": "r1-unittest.txt",
       "sha256": "12e52a6721f1956766ffa027826bd9c23ede8c82236e6a02b99f3db68b87bc46"
     },
     {
-      "file": "r3-data-check.log",
+      "file": "r3-data-check.txt",
       "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
     },
     {
-      "file": "r3-unittest.log",
+      "file": "r3-unittest.txt",
       "sha256": "c541c67f77083934cf7871ac03af4ba2c932af16df792d646d7372e0d86a8da5"
     },
     {
-      "file": "r3-ruff.log",
+      "file": "r3-ruff.txt",
       "sha256": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18"
     },
     {
-      "file": "r3-mypy.log",
+      "file": "r3-mypy.txt",
       "sha256": "4ef32b02733c640ba275e5de2c0f630d3ea2a6293bb124ad0dc2173d46e40541"
     },
     {
@@ -29,5 +29,18 @@
       "sha256": "3e5fce725574fcba7f1203927f08f8ecc8a4dbb89dae8cdb80ece830d41648b1"
     }
   ],
-  "scope": "CPU validation, not GPU or final live-serving validation"
+  "scope": "CPU validation, not GPU or final live-serving validation",
+  "r3_counts": {
+    "collected": 521,
+    "passed": 465,
+    "optional_skipped": 56,
+    "errors": 0,
+    "seconds": 43.926
+  },
+  "post_review_wrapper_check": {
+    "tests": 4,
+    "passed": 4,
+    "seconds": 0.362,
+    "change": "Explicit --pull=never prevents image-inspect/run race from pulling; Ruff and sh -n passed."
+  }
 }

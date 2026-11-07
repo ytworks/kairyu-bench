@@ -1,0 +1,2142 @@
+{
+  "status": "complete_read_only_audit",
+  "historical_run_count": 151,
+  "fresh_run_count": 1,
+  "same_checkpoint_completed_dev10_count": 2,
+  "checkpoint_tree": "5d056eb03f954db80313a85167153c875fe5e436e4f97c281a3f55202d9b3eaf",
+  "exact_current_condition_prior_repeats": 0,
+  "exact_current_condition_repeat_statement": "none",
+  "reason": "Older AV uses request tracing only and a different runner image; fresh AV adds actual serving activation capture. The two runs are not an exact-condition repeat pair.",
+  "tied_other_models_are_not_repeats": true,
+  "all_778_selection_and_generation_budgets_equal": true,
+  "runs": [
+    {
+      "run_id": "gemma4-ad-av-av-c32-dev10-full14-20261107-v1",
+      "status": "completed",
+      "items": 778,
+      "scored": 778,
+      "unscored": 0,
+      "started_at": "2026-11-07T01:26:29.260520Z",
+      "finished_at": "2026-11-07T01:52:28.732900Z",
+      "sources": {
+        "humaneval-plus": {
+          "count": 10,
+          "score": 1.0
+        },
+        "mbpp-plus": {
+          "count": 10,
+          "score": 0.8
+        },
+        "livecodebench": {
+          "count": 6,
+          "score": 0.8333333333333334
+        }
+      },
+      "code_source_mean": 0.8777777777777778,
+      "overall": 0.7715494767381015,
+      "timing": {
+        "load_seconds": 107.7,
+        "generation_seconds": 1559.1,
+        "wall_seconds": 1559.1,
+        "source_finished_seconds": {
+          "aime-2026": 667.9,
+          "arc-challenge": 133.0,
+          "bbeh": 1364.3,
+          "bfcl": 1559.1,
+          "gpqa-diamond": 1129.3,
+          "gsm8k-platinum": 1472.7,
+          "hellaswag": 151.0,
+          "hmmt-feb-2026": 901.6,
+          "humaneval-plus": 1397.8,
+          "ifbench": 1477.5,
+          "ifeval": 1506.1,
+          "jamc-qa": 1542.3,
+          "livecodebench": 1083.4,
+          "math-500": 1326.6,
+          "mbpp-plus": 1320.9,
+          "mgsm": 1526.9,
+          "mmlu-pro": 1398.9,
+          "mmlu-prox-ja": 1520.9,
+          "mmmu-pro": 1228.4,
+          "mrcr-v2": 1518.7,
+          "musr": 1189.3,
+          "probe-code": 153.1,
+          "probe-wikipedia-ja": 156.4,
+          "probe-wikitext": 157.5,
+          "ruler": 1495.3,
+          "terminal-bench": 1109.1,
+          "triviaqa": 1497.4,
+          "winogrande": 165.1,
+          "xstest": 1516.7
+        },
+        "target_minutes": 10,
+        "chat_api_calls": 563,
+        "logprob_api_calls": 3062
+      },
+      "manifest_sha256": "a3a0b60e0872a38c6b1abf7e97d7fe729fabf9e25cd3f09a3da9544b9ca39b5b",
+      "capture_id": "6d2858d9cd5a4809b1343e365cf2bb85"
+    },
+    {
+      "run_id": "gemma4-fresh-av-observed-dev10-20261107-v1",
+      "status": "completed",
+      "items": 778,
+      "scored": 778,
+      "unscored": 0,
+      "started_at": "2026-11-07T04:18:20.433906Z",
+      "finished_at": "2026-11-07T04:48:21.492161Z",
+      "sources": {
+        "humaneval-plus": {
+          "count": 10,
+          "score": 1.0
+        },
+        "mbpp-plus": {
+          "count": 10,
+          "score": 0.8
+        },
+        "livecodebench": {
+          "count": 6,
+          "score": 0.8333333333333334
+        }
+      },
+      "code_source_mean": 0.8777777777777778,
+      "overall": 0.772086308565694,
+      "timing": {
+        "load_seconds": 102.8,
+        "generation_seconds": 1800.7,
+        "wall_seconds": 1800.7,
+        "source_finished_seconds": {
+          "aime-2026": 676.5,
+          "arc-challenge": 128.6,
+          "bbeh": 1800.6,
+          "bfcl": 1796.1,
+          "gpqa-diamond": 1189.5,
+          "gsm8k-platinum": 1678.1,
+          "hellaswag": 146.8,
+          "hmmt-feb-2026": 812.1,
+          "humaneval-plus": 1526.7,
+          "ifbench": 1682.6,
+          "ifeval": 1688.2,
+          "jamc-qa": 1783.9,
+          "livecodebench": 1020.5,
+          "math-500": 1517.6,
+          "mbpp-plus": 1505.9,
+          "mgsm": 1774.8,
+          "mmlu-pro": 1595.4,
+          "mmlu-prox-ja": 1746.3,
+          "mmmu-pro": 1395.2,
+          "mrcr-v2": 1507.0,
+          "musr": 1306.4,
+          "probe-code": 148.5,
+          "probe-wikipedia-ja": 151.0,
+          "probe-wikitext": 152.3,
+          "ruler": 1772.4,
+          "terminal-bench": 975.8,
+          "triviaqa": 1800.7,
+          "winogrande": 160.3,
+          "xstest": 1776.0
+        },
+        "target_minutes": 10,
+        "chat_api_calls": 558,
+        "logprob_api_calls": 3062
+      },
+      "manifest_sha256": "a3a0b60e0872a38c6b1abf7e97d7fe729fabf9e25cd3f09a3da9544b9ca39b5b",
+      "capture_id": "f7e79a9fca5f4c09ad3b2944c3b450a9"
+    }
+  ],
+  "all_26_code_items": [
+    {
+      "id": "humaneval-plus:HumanEval/116",
+      "source": "humaneval-plus",
+      "old_score": 1.0,
+      "fresh_score": 1.0,
+      "delta": 0.0,
+      "old_detail": {
+        "samples": [
+          {
+            "base": "pass",
+            "plus": "pass",
+            "passed": true
+          }
+        ]
+      },
+      "fresh_detail": {
+        "samples": [
+          {
+            "base": "pass",
+            "plus": "pass",
+            "passed": true
+          }
+        ]
+      },
+      "old_completion_tokens": 4504,
+      "fresh_completion_tokens": 6498
+    },
+    {
+      "id": "humaneval-plus:HumanEval/144",
+      "source": "humaneval-plus",
+      "old_score": 1.0,
+      "fresh_score": 1.0,
+      "delta": 0.0,
+      "old_detail": {
+        "samples": [
+          {
+            "base": "pass",
+            "plus": "pass",
+            "passed": true
+          }
+        ]
+      },
+      "fresh_detail": {
+        "samples": [
+          {
+            "base": "pass",
+            "plus": "pass",
+            "passed": true
+          }
+        ]
+      },
+      "old_completion_tokens": 1154,
+      "fresh_completion_tokens": 1109
+    },
+    {
+      "id": "humaneval-plus:HumanEval/148",
+      "source": "humaneval-plus",
+      "old_score": 1.0,
+      "fresh_score": 1.0,
+      "delta": 0.0,
+      "old_detail": {
+        "samples": [
+          {
+            "base": "pass",
+            "plus": "pass",
+            "passed": true
+          }
+        ]
+      },
+      "fresh_detail": {
+        "samples": [
+          {
+            "base": "pass",
+            "plus": "pass",
+            "passed": true
+          }
+        ]
+      },
+      "old_completion_tokens": 1264,
+      "fresh_completion_tokens": 1254
+    },
+    {
+      "id": "humaneval-plus:HumanEval/155",
+      "source": "humaneval-plus",
+      "old_score": 1.0,
+      "fresh_score": 1.0,
+      "delta": 0.0,
+      "old_detail": {
+        "samples": [
+          {
+            "base": "pass",
+            "plus": "pass",
+            "passed": true
+          }
+        ]
+      },
+      "fresh_detail": {
+        "samples": [
+          {
+            "base": "pass",
+            "plus": "pass",
+            "passed": true
+          }
+        ]
+      },
+      "old_completion_tokens": 925,
+      "fresh_completion_tokens": 1024
+    },
+    {
+      "id": "humaneval-plus:HumanEval/21",
+      "source": "humaneval-plus",
+      "old_score": 1.0,
+      "fresh_score": 1.0,
+      "delta": 0.0,
+      "old_detail": {
+        "samples": [
+          {
+            "base": "pass",
+            "plus": "pass",
+            "passed": true
+          }
+        ]
+      },
+      "fresh_detail": {
+        "samples": [
+          {
+            "base": "pass",
+            "plus": "pass",
+            "passed": true
+          }
+        ]
+      },
+      "old_completion_tokens": 1258,
+      "fresh_completion_tokens": 1219
+    },
+    {
+      "id": "humaneval-plus:HumanEval/22",
+      "source": "humaneval-plus",
+      "old_score": 1.0,
+      "fresh_score": 1.0,
+      "delta": 0.0,
+      "old_detail": {
+        "samples": [
+          {
+            "base": "pass",
+            "plus": "pass",
+            "passed": true
+          }
+        ]
+      },
+      "fresh_detail": {
+        "samples": [
+          {
+            "base": "pass",
+            "plus": "pass",
+            "passed": true
+          }
+        ]
+      },
+      "old_completion_tokens": 1080,
+      "fresh_completion_tokens": 1923
+    },
+    {
+      "id": "humaneval-plus:HumanEval/30",
+      "source": "humaneval-plus",
+      "old_score": 1.0,
+      "fresh_score": 1.0,
+      "delta": 0.0,
+      "old_detail": {
+        "samples": [
+          {
+            "base": "pass",
+            "plus": "pass",
+            "passed": true
+          }
+        ]
+      },
+      "fresh_detail": {
+        "samples": [
+          {
+            "base": "pass",
+            "plus": "pass",
+            "passed": true
+          }
+        ]
+      },
+      "old_completion_tokens": 736,
+      "fresh_completion_tokens": 482
+    },
+    {
+      "id": "humaneval-plus:HumanEval/49",
+      "source": "humaneval-plus",
+      "old_score": 1.0,
+      "fresh_score": 1.0,
+      "delta": 0.0,
+      "old_detail": {
+        "samples": [
+          {
+            "base": "pass",
+            "plus": "pass",
+            "passed": true
+          }
+        ]
+      },
+      "fresh_detail": {
+        "samples": [
+          {
+            "base": "pass",
+            "plus": "pass",
+            "passed": true
+          }
+        ]
+      },
+      "old_completion_tokens": 747,
+      "fresh_completion_tokens": 805
+    },
+    {
+      "id": "humaneval-plus:HumanEval/57",
+      "source": "humaneval-plus",
+      "old_score": 1.0,
+      "fresh_score": 1.0,
+      "delta": 0.0,
+      "old_detail": {
+        "samples": [
+          {
+            "base": "pass",
+            "plus": "pass",
+            "passed": true
+          }
+        ]
+      },
+      "fresh_detail": {
+        "samples": [
+          {
+            "base": "pass",
+            "plus": "pass",
+            "passed": true
+          }
+        ]
+      },
+      "old_completion_tokens": 1170,
+      "fresh_completion_tokens": 1354
+    },
+    {
+      "id": "humaneval-plus:HumanEval/90",
+      "source": "humaneval-plus",
+      "old_score": 1.0,
+      "fresh_score": 1.0,
+      "delta": 0.0,
+      "old_detail": {
+        "samples": [
+          {
+            "base": "pass",
+            "plus": "pass",
+            "passed": true
+          }
+        ]
+      },
+      "fresh_detail": {
+        "samples": [
+          {
+            "base": "pass",
+            "plus": "pass",
+            "passed": true
+          }
+        ]
+      },
+      "old_completion_tokens": 1118,
+      "fresh_completion_tokens": 1197
+    },
+    {
+      "id": "livecodebench:abc393_d",
+      "source": "livecodebench",
+      "old_score": 1.0,
+      "fresh_score": 1.0,
+      "delta": 0.0,
+      "old_detail": {
+        "samples": [
+          {
+            "passed": true
+          }
+        ]
+      },
+      "fresh_detail": {
+        "samples": [
+          {
+            "passed": true
+          }
+        ]
+      },
+      "old_completion_tokens": 5719,
+      "fresh_completion_tokens": 2139
+    },
+    {
+      "id": "livecodebench:abc394_b",
+      "source": "livecodebench",
+      "old_score": 1.0,
+      "fresh_score": 1.0,
+      "delta": 0.0,
+      "old_detail": {
+        "samples": [
+          {
+            "passed": true
+          }
+        ]
+      },
+      "fresh_detail": {
+        "samples": [
+          {
+            "passed": true
+          }
+        ]
+      },
+      "old_completion_tokens": 595,
+      "fresh_completion_tokens": 919
+    },
+    {
+      "id": "livecodebench:abc395_f",
+      "source": "livecodebench",
+      "old_score": 1.0,
+      "fresh_score": 1.0,
+      "delta": 0.0,
+      "old_detail": {
+        "samples": [
+          {
+            "passed": true
+          }
+        ]
+      },
+      "fresh_detail": {
+        "samples": [
+          {
+            "passed": true
+          }
+        ]
+      },
+      "old_completion_tokens": 10733,
+      "fresh_completion_tokens": 11372
+    },
+    {
+      "id": "livecodebench:abc397_b",
+      "source": "livecodebench",
+      "old_score": 1.0,
+      "fresh_score": 1.0,
+      "delta": 0.0,
+      "old_detail": {
+        "samples": [
+          {
+            "passed": true
+          }
+        ]
+      },
+      "fresh_detail": {
+        "samples": [
+          {
+            "passed": true
+          }
+        ]
+      },
+      "old_completion_tokens": 5542,
+      "fresh_completion_tokens": 4360
+    },
+    {
+      "id": "livecodebench:abc399_c",
+      "source": "livecodebench",
+      "old_score": 1.0,
+      "fresh_score": 1.0,
+      "delta": 0.0,
+      "old_detail": {
+        "samples": [
+          {
+            "passed": true
+          }
+        ]
+      },
+      "fresh_detail": {
+        "samples": [
+          {
+            "passed": true
+          }
+        ]
+      },
+      "old_completion_tokens": 6580,
+      "fresh_completion_tokens": 6207
+    },
+    {
+      "id": "livecodebench:arc191_c",
+      "source": "livecodebench",
+      "old_score": 0.0,
+      "fresh_score": 0.0,
+      "delta": 0.0,
+      "old_detail": {
+        "samples": [
+          {
+            "passed": false
+          }
+        ]
+      },
+      "fresh_detail": {
+        "samples": [
+          {
+            "passed": false
+          }
+        ]
+      },
+      "old_completion_tokens": 7171,
+      "fresh_completion_tokens": 8895
+    },
+    {
+      "id": "mbpp-plus:Mbpp/256",
+      "source": "mbpp-plus",
+      "old_score": 1.0,
+      "fresh_score": 1.0,
+      "delta": 0.0,
+      "old_detail": {
+        "samples": [
+          {
+            "base": "pass",
+            "plus": "pass",
+            "passed": true
+          }
+        ]
+      },
+      "fresh_detail": {
+        "samples": [
+          {
+            "base": "pass",
+            "plus": "pass",
+            "passed": true
+          }
+        ]
+      },
+      "old_completion_tokens": 1583,
+      "fresh_completion_tokens": 1403
+    },
+    {
+      "id": "mbpp-plus:Mbpp/271",
+      "source": "mbpp-plus",
+      "old_score": 1.0,
+      "fresh_score": 1.0,
+      "delta": 0.0,
+      "old_detail": {
+        "samples": [
+          {
+            "base": "pass",
+            "plus": "pass",
+            "passed": true
+          }
+        ]
+      },
+      "fresh_detail": {
+        "samples": [
+          {
+            "base": "pass",
+            "plus": "pass",
+            "passed": true
+          }
+        ]
+      },
+      "old_completion_tokens": 815,
+      "fresh_completion_tokens": 806
+    },
+    {
+      "id": "mbpp-plus:Mbpp/410",
+      "source": "mbpp-plus",
+      "old_score": 0.0,
+      "fresh_score": 0.0,
+      "delta": 0.0,
+      "old_detail": {
+        "samples": [
+          {
+            "base": "pass",
+            "plus": "fail",
+            "passed": false
+          }
+        ]
+      },
+      "fresh_detail": {
+        "samples": [
+          {
+            "base": "pass",
+            "plus": "fail",
+            "passed": false
+          }
+        ]
+      },
+      "old_completion_tokens": 688,
+      "fresh_completion_tokens": 797
+    },
+    {
+      "id": "mbpp-plus:Mbpp/567",
+      "source": "mbpp-plus",
+      "old_score": 1.0,
+      "fresh_score": 1.0,
+      "delta": 0.0,
+      "old_detail": {
+        "samples": [
+          {
+            "base": "pass",
+            "plus": "pass",
+            "passed": true
+          }
+        ]
+      },
+      "fresh_detail": {
+        "samples": [
+          {
+            "base": "pass",
+            "plus": "pass",
+            "passed": true
+          }
+        ]
+      },
+      "old_completion_tokens": 709,
+      "fresh_completion_tokens": 831
+    },
+    {
+      "id": "mbpp-plus:Mbpp/576",
+      "source": "mbpp-plus",
+      "old_score": 0.0,
+      "fresh_score": 0.0,
+      "delta": 0.0,
+      "old_detail": {
+        "samples": [
+          {
+            "base": "pass",
+            "plus": "fail",
+            "passed": false
+          }
+        ]
+      },
+      "fresh_detail": {
+        "samples": [
+          {
+            "base": "pass",
+            "plus": "fail",
+            "passed": false
+          }
+        ]
+      },
+      "old_completion_tokens": 1458,
+      "fresh_completion_tokens": 1392
+    },
+    {
+      "id": "mbpp-plus:Mbpp/612",
+      "source": "mbpp-plus",
+      "old_score": 1.0,
+      "fresh_score": 1.0,
+      "delta": 0.0,
+      "old_detail": {
+        "samples": [
+          {
+            "base": "pass",
+            "plus": "pass",
+            "passed": true
+          }
+        ]
+      },
+      "fresh_detail": {
+        "samples": [
+          {
+            "base": "pass",
+            "plus": "pass",
+            "passed": true
+          }
+        ]
+      },
+      "old_completion_tokens": 1000,
+      "fresh_completion_tokens": 1115
+    },
+    {
+      "id": "mbpp-plus:Mbpp/63",
+      "source": "mbpp-plus",
+      "old_score": 1.0,
+      "fresh_score": 1.0,
+      "delta": 0.0,
+      "old_detail": {
+        "samples": [
+          {
+            "base": "pass",
+            "plus": "pass",
+            "passed": true
+          }
+        ]
+      },
+      "fresh_detail": {
+        "samples": [
+          {
+            "base": "pass",
+            "plus": "pass",
+            "passed": true
+          }
+        ]
+      },
+      "old_completion_tokens": 866,
+      "fresh_completion_tokens": 839
+    },
+    {
+      "id": "mbpp-plus:Mbpp/791",
+      "source": "mbpp-plus",
+      "old_score": 1.0,
+      "fresh_score": 1.0,
+      "delta": 0.0,
+      "old_detail": {
+        "samples": [
+          {
+            "base": "pass",
+            "plus": "pass",
+            "passed": true
+          }
+        ]
+      },
+      "fresh_detail": {
+        "samples": [
+          {
+            "base": "pass",
+            "plus": "pass",
+            "passed": true
+          }
+        ]
+      },
+      "old_completion_tokens": 624,
+      "fresh_completion_tokens": 620
+    },
+    {
+      "id": "mbpp-plus:Mbpp/792",
+      "source": "mbpp-plus",
+      "old_score": 1.0,
+      "fresh_score": 1.0,
+      "delta": 0.0,
+      "old_detail": {
+        "samples": [
+          {
+            "base": "pass",
+            "plus": "pass",
+            "passed": true
+          }
+        ]
+      },
+      "fresh_detail": {
+        "samples": [
+          {
+            "base": "pass",
+            "plus": "pass",
+            "passed": true
+          }
+        ]
+      },
+      "old_completion_tokens": 876,
+      "fresh_completion_tokens": 759
+    },
+    {
+      "id": "mbpp-plus:Mbpp/801",
+      "source": "mbpp-plus",
+      "old_score": 1.0,
+      "fresh_score": 1.0,
+      "delta": 0.0,
+      "old_detail": {
+        "samples": [
+          {
+            "base": "pass",
+            "plus": "pass",
+            "passed": true
+          }
+        ]
+      },
+      "fresh_detail": {
+        "samples": [
+          {
+            "base": "pass",
+            "plus": "pass",
+            "passed": true
+          }
+        ]
+      },
+      "old_completion_tokens": 1245,
+      "fresh_completion_tokens": 1250
+    }
+  ],
+  "code_changed_items": [],
+  "conditions": {
+    "old": {
+      "runner_image": "sha256:e70b1709578f31f27880448bf14a529d39b56ae409255e396383cd0681c0baf1",
+      "source_head": "5e3f2df0c7f455013af3fa2d7abb3719858f808f",
+      "serving_image": "sha256:af9e746b913088cbf6c4464a31d6904a6b7e1d3ba62f0895362ddf13595f7abe",
+      "tp": 2,
+      "replicas": 1,
+      "concurrency": {
+        "chat": 32,
+        "logprob": 8,
+        "agent": 1
+      },
+      "capture_kind": "completed HTTP request traces only, no worker files",
+      "capture_limits": {
+        "storage_bytes": 268435456
+      },
+      "overlap": "Concurrent full AD WSP on GPUs2/3"
+    },
+    "fresh": {
+      "runner_image": "sha256:f91bdcf997af6d7b194bec229812fd018277158f6795de7d91e58448936e7ad8",
+      "serving_image": "sha256:af9e746b913088cbf6c4464a31d6904a6b7e1d3ba62f0895362ddf13595f7abe",
+      "topology": {
+        "tp": 2,
+        "replicas": 1,
+        "mtp_tokens": 4
+      },
+      "concurrency": {
+        "chat": 32,
+        "logprob": 8,
+        "agent": 1
+      },
+      "capture_kind": "live residual/attention/MLP on all 60 layers, TP0/1",
+      "capture_limits": {
+        "gpu_buffer_mib": 256,
+        "storage_bytes": 2147483648,
+        "prefill_positions": 8,
+        "decode_positions": 16
+      },
+      "sampling": {
+        "policy": "first_execution_of_requested_decode_offsets",
+        "prefill_policy": "first_execution_of_first_unique_positions",
+        "decode_policy": "first_execution_of_requested_decode_offsets",
+        "requested_offsets": [
+          0,
+          1,
+          2,
+          4,
+          8,
+          16,
+          32,
+          64,
+          128,
+          256,
+          512,
+          1024,
+          2048,
+          4096,
+          8192,
+          16384
+        ],
+        "offset_origin": "token_position_minus_prompt_length",
+        "missing_policy": "unobserved_requested_offsets_are_missing_not_zero",
+        "semantic_boundary": "thinking_code_boundary_not_measured",
+        "limits": {
+          "prefill": 8,
+          "decode": 16
+        }
+      },
+      "overlap": "F01 finite probe on GPU6 during part of WSP, no overlapping second canonical WSP"
+    },
+    "package_source_changed": {
+      "wsp/weights/editor.py": {
+        "old": "dc5c2ab36f8011330e70879c758fd0c493de337d28445f4748803e9392c18dc7",
+        "new": "0983580f41989c26e84c16c26924f2850dd4e5d3d12917bb9553d7feb92333d2"
+      },
+      "wsp/weights/finite_replay.py": {
+        "old": "e16ef35b2fd1c3d96e8418fa6cb9c15d8a04247add8fd407623f05824e841d92",
+        "new": "71c424bffac775ba112e709632df0a37351a79c3121827be7c9844f321c7c4d3"
+      }
+    },
+    "package_source_added": [
+      "wsp/weights/native_faststore.py"
+    ],
+    "benchmark_selection_client_sources_and_scorers_sha_equal": true
+  },
+  "scanned_historical_runs": [
+    {
+      "run_id": "wsp-calib-dev-chat-20261104",
+      "label": "calib-base-dev",
+      "tier": 60,
+      "split": "dev",
+      "status": "partial",
+      "run_sha256": "abd015e36d67bd9b0044fae8fb67c627244b309eeed8d1fff166ee5b91ab443d"
+    },
+    {
+      "run_id": "wsp-calib-dev-agents-20261104",
+      "label": "calib-base-dev",
+      "tier": 60,
+      "split": "dev",
+      "status": "completed",
+      "run_sha256": "c885ea5e16bbe8633271b5c834f7a5d0bb06e46761f094bab611769478274630"
+    },
+    {
+      "run_id": "wsp-calib-test-agents-20261104",
+      "label": "calib-base-test",
+      "tier": 60,
+      "split": "test",
+      "status": "completed",
+      "run_sha256": "7b4b049ac4ebbf081b509e7e5bc1e6c27e6a657ac385b07253046c3eeb8b495b"
+    },
+    {
+      "run_id": "wsp-calib-test-chat-20261104",
+      "label": "calib-base-test",
+      "tier": 60,
+      "split": "test",
+      "status": "partial",
+      "run_sha256": "300894da3f7d847e3268fd87af9b07092ad5e86c3e3e95d9e0330b94c6d51ee1"
+    },
+    {
+      "run_id": "wsp-calib-dev-swe-20261104",
+      "label": "calib-base-dev",
+      "tier": 60,
+      "split": "dev",
+      "status": "completed",
+      "run_sha256": "8d1cfe240875f505e80c5326369d7cc1c8ea86644c0390549b861fff5d333dca"
+    },
+    {
+      "run_id": "wsp-calib-test-swe-20261104",
+      "label": "calib-base-test",
+      "tier": 60,
+      "split": "test",
+      "status": "completed",
+      "run_sha256": "c0b1fd1d865bf482c1a1c2a97299be2d5e7511ceafe0627b130040b79f7d95b0"
+    },
+    {
+      "run_id": "wsp-calib-dev-agents2-20261104",
+      "label": "calib-base-dev",
+      "tier": 60,
+      "split": "dev",
+      "status": "completed",
+      "run_sha256": "dd9521497547dcabfc758bf6a146b0a71800075e2829c0aa997a53f8606a7c6d"
+    },
+    {
+      "run_id": "wsp-calib-test-agents2-20261104",
+      "label": "calib-base-test",
+      "tier": 60,
+      "split": "test",
+      "status": "partial",
+      "run_sha256": "2157be2502312b2265a7adbd1e9c2dac27706ebb58349ef09833e1e132677b89"
+    },
+    {
+      "run_id": "wsp-base-10-dev-1-20261104",
+      "label": "base-10-dev-1",
+      "tier": 10,
+      "split": "dev",
+      "status": "completed",
+      "run_sha256": "2d33965fd6da69a222bb6f0f6d0b4bd3e1b634c912938a870d262b6d20be5c50"
+    },
+    {
+      "run_id": "wsp-base-10-dev-2-20261104",
+      "label": "base-10-dev-2",
+      "tier": 10,
+      "split": "dev",
+      "status": "running",
+      "run_sha256": "e08c7eb41454eb84498878019d9f6adf65e0ce16c9e0d87daaa732e6f4f10f73"
+    },
+    {
+      "run_id": "wsp-base-10-test-1-20261104",
+      "label": "base-10-test-1",
+      "tier": 10,
+      "split": "test",
+      "status": "completed",
+      "run_sha256": "9e02d061aabbbb75f438602e5ebbe84ef976dfb8160b23a9ca2cdfed15424f65"
+    },
+    {
+      "run_id": "wsp-base-30-dev-1-20261104",
+      "label": "base-30-dev-1",
+      "tier": 30,
+      "split": "dev",
+      "status": "completed",
+      "run_sha256": "75dcf95b9641240c975f51dc14a86adaf5675425231788711de12dbdbecd93da"
+    },
+    {
+      "run_id": "wsp-base-30-test-1-20261104",
+      "label": "base-30-test-1",
+      "tier": 30,
+      "split": "test",
+      "status": "completed",
+      "run_sha256": "a91d1b661d3fceba13cee4d222cca9a8db36b9858c6d3c4140097447943ddbc0"
+    },
+    {
+      "run_id": "wsp-base-60-dev-1-20261104",
+      "label": "base-60-dev-1",
+      "tier": 60,
+      "split": "dev",
+      "status": "completed",
+      "run_sha256": "d7884e8b3e8d44715f41d34557ff8738c8467c8431b1cbe7f840fbc7ef40ea7f"
+    },
+    {
+      "run_id": "wsp-base-60-test-1-20261104",
+      "label": "base-60-test-1",
+      "tier": 60,
+      "split": "test",
+      "status": "completed",
+      "run_sha256": "7b0ab0f4ed6f5f9c1bd4976744f868b6ce92153cb6a92f34b2d47d99733617a2"
+    },
+    {
+      "run_id": "gemma4-base-dev10-screen-20261104",
+      "label": "cab440f871a32b5ea1c12364db7dd35ac8768a83b413ca24bbc18d6478eccbd9",
+      "tier": 10,
+      "split": "dev",
+      "status": "completed",
+      "run_sha256": "7b6f4fe3116d5c031b2185028f4daeaaf8ae9032ddad2a5b107d3b28d2135626"
+    },
+    {
+      "run_id": "gemma4-scalar-l28-minus4-dev10-screen-20261104",
+      "label": "9832d5bdd6af36ec3dca6c0af0957495934376682e489556b894d510790a7c70",
+      "tier": 10,
+      "split": "dev",
+      "status": "completed",
+      "run_sha256": "9df243b3c2364712b54a48736b34588bbe5f1acc84923ec1b87acf8a6b2b732e"
+    },
+    {
+      "run_id": "gemma4-scalar-l28-plus4-dev10-screen-20261104",
+      "label": "cf51e7e0cf5b45f707daa3596f534fc2b04aff26a80576dbb45d13ef5e902e99",
+      "tier": 10,
+      "split": "dev",
+      "status": "completed",
+      "run_sha256": "ccb86c8c3c5254d28bf9b119eeb382b75284b02dd4f3c8627b14d002490295e4"
+    },
+    {
+      "run_id": "gemma4-scalar-l23-minus4-dev10-screen-20261104",
+      "label": "47e907583fbccf65dfce86bcb1d3859c95e5202e9980b54a3e8dd67574deb6d4",
+      "tier": 10,
+      "split": "dev",
+      "status": "completed",
+      "run_sha256": "232f044f4c23ded015ba20d3178a474ff852bd25fbb5ea736975dbc06c6b9456"
+    },
+    {
+      "run_id": "gemma4-scalar-l23-plus4-dev10-screen-20261104",
+      "label": "d16d1c7a5f3381db3eb95d24a0e5e18e3775a52395710b2a40e40135dceaf342",
+      "tier": 10,
+      "split": "dev",
+      "status": "completed",
+      "run_sha256": "1a2169a58a7801d975b99e3e98e77f5d1e26ed44478a5cc8d6577db506fdeb94"
+    },
+    {
+      "run_id": "gemma4-scalar-l41-minus4-dev10-screen-20261104",
+      "label": "8f2a101edd5385785ac7198fdcd59250e67d759959ec84409727e77ad1e237de",
+      "tier": 10,
+      "split": "dev",
+      "status": "completed",
+      "run_sha256": "5e6ae8153f13cb6b2b2f04efefed1ff2e443901db8b170eacf22a91350fc3caf"
+    },
+    {
+      "run_id": "gemma4-scalar-l41-plus4-dev10-screen-20261104",
+      "label": "e1d557d7dd91981a78011988325b72726143fdadabe1701aa44d19d9672510da",
+      "tier": 10,
+      "split": "dev",
+      "status": "completed",
+      "run_sha256": "757f72b8882f6ed00ccef65f736a19e6b2f2c6d352a3fc2970e559cd7dec0c0d"
+    },
+    {
+      "run_id": "gemma4-sparse-code-margin3-dev10-screen-20261105",
+      "label": "011d2df0de9197727da4835b5bfdfe096108a695cbf62a30492d103aceb41a7a",
+      "tier": 10,
+      "split": "dev",
+      "status": "completed",
+      "run_sha256": "a8def4bfda1aadc97370f2ca34c6b259feed88cb04886769adc188a000101806"
+    },
+    {
+      "run_id": "gemma4-sparse-action-margin3-dev10-screen-20261105",
+      "label": "c32c5c24d2dda88b754ead97e0e41cda7d6cd59d958c5faf77a7d2220df97587",
+      "tier": 10,
+      "split": "dev",
+      "status": "completed",
+      "run_sha256": "9c086105da5da651dddde5d57ae6987eafe6aa11389a32fb437c221906b8ea32"
+    },
+    {
+      "run_id": "gemma4-joint-purpose-balanced-small-dev10-screen-20261105",
+      "label": "003dc42c0bc0afe6872c8167e85aac1511ee0c4713543a71f1ec8d1e1b714aca",
+      "tier": 10,
+      "split": "dev",
+      "status": "completed",
+      "run_sha256": "aca353fe39a1e41c4b821325428c32b337e576e7dff31e722c8b08acd8e25d1c"
+    },
+    {
+      "run_id": "gemma4-joint-purpose-balanced-small-dev10-full-20261105",
+      "label": "003dc42c0bc0afe6872c8167e85aac1511ee0c4713543a71f1ec8d1e1b714aca",
+      "tier": 10,
+      "split": "dev",
+      "status": "completed",
+      "run_sha256": "ada03807ff2de69163396857853b4431fc08955e147250f8854ee1fdf8d2af25"
+    },
+    {
+      "run_id": "gemma4-joint-purpose-balanced-small-dev10-screen-20261105-r2",
+      "label": "003dc42c0bc0afe6872c8167e85aac1511ee0c4713543a71f1ec8d1e1b714aca",
+      "tier": 10,
+      "split": "dev",
+      "status": "completed",
+      "run_sha256": "fb73b9d05736b56db0e0d9ed81afd4d5face86591833b234254ebb7c29ca5b9f"
+    },
+    {
+      "run_id": "gemma4-joint-purpose-balanced-small-dev30-hard-code-20261105",
+      "label": "003dc42c0bc0afe6872c8167e85aac1511ee0c4713543a71f1ec8d1e1b714aca",
+      "tier": 30,
+      "split": "dev",
+      "status": "completed",
+      "run_sha256": "730c03a6ce6f4c2fb4a8a2c66b7e25aaede623c864b2ff36204e1847254af894"
+    },
+    {
+      "run_id": "gemma4-joint-purpose-balanced-small-dev10-observed-losses-repeat-20261105",
+      "label": "003dc42c0bc0afe6872c8167e85aac1511ee0c4713543a71f1ec8d1e1b714aca",
+      "tier": 10,
+      "split": "dev",
+      "status": "completed",
+      "run_sha256": "7d210f89670ef407de784a6189519dcf8dd2f8769c2841a30acd7539b7ec2e91"
+    },
+    {
+      "run_id": "gemma4-joint-purpose-programming-set-dev10-screen-20261105",
+      "label": "b01c699175e68a61a02480033fbd87df821f64b0ec4067d23738be9784946c55",
+      "tier": 10,
+      "split": "dev",
+      "status": "completed",
+      "run_sha256": "b0ad7622805307bf23edf600f5a6a6522f7e7bf59c166d193175d067ed56b921"
+    },
+    {
+      "run_id": "gemma4-joint-purpose-programming-set-dev10-full-20261105",
+      "label": "b01c699175e68a61a02480033fbd87df821f64b0ec4067d23738be9784946c55",
+      "tier": 10,
+      "split": "dev",
+      "status": "completed",
+      "run_sha256": "803a38664035f9d74b7c06ce4f2ec3b9326de35ee1ede710c70147166394512a"
+    },
+    {
+      "run_id": "gemma4-joint-purpose-programming-set-dev10-screen-20261105-r2",
+      "label": "b01c699175e68a61a02480033fbd87df821f64b0ec4067d23738be9784946c55",
+      "tier": 10,
+      "split": "dev",
+      "status": "completed",
+      "run_sha256": "7d35f5d7bbdbf0b83be11f7b309a933c8a560650d490ed8d7f71e361e1a752ef"
+    },
+    {
+      "run_id": "gemma4-joint-purpose-programming-set-dev30-hard-code-20261105",
+      "label": "b01c699175e68a61a02480033fbd87df821f64b0ec4067d23738be9784946c55",
+      "tier": 30,
+      "split": "dev",
+      "status": "completed",
+      "run_sha256": "21ddb29ac6544cf7c091c82603dac15685bffaea7fb1370dea9e1719b251bb06"
+    },
+    {
+      "run_id": "gemma4-joint-purpose-algorithm-set-dev10-screen-20261105",
+      "label": "46692e90c87d0eedceee31f1cc7878a085b3d34b58be98d9f1bfa5dbc181ab18",
+      "tier": 10,
+      "split": "dev",
+      "status": "completed",
+      "run_sha256": "6d7769c496ed9b141d073d1bdd848986525853c088c7d0a852dbfb3e543b75b1"
+    },
+    {
+      "run_id": "gemma4-joint-purpose-workflow-language-dev10-screen-20261105",
+      "label": "01f83a9479a4614db2d5e71f96a4b4d4e73466839363e21a86430bd4d202440b",
+      "tier": 10,
+      "split": "dev",
+      "status": "completed",
+      "run_sha256": "95df0af8a76bfa6b5a43441c40f87b821787cb2ee765a0ac776324ea22efb142"
+    },
+    {
+      "run_id": "gemma4-joint-purpose-algorithm-set-dev30-hard-code-20261105",
+      "label": "46692e90c87d0eedceee31f1cc7878a085b3d34b58be98d9f1bfa5dbc181ab18",
+      "tier": 30,
+      "split": "dev",
+      "status": "completed",
+      "run_sha256": "60ded72ff342eeb7228cb858c6b3b3b200be3e1eea2178c969aec69549486e8f"
+    },
+    {
+      "run_id": "gemma4-sparse-code-action6-dev10-screen-20261105",
+      "label": "d56d26a97391743b619be68753fb19aade3aa87674901f29d4f4e736c55b2c88",
+      "tier": 10,
+      "split": "dev",
+      "status": "completed",
+      "run_sha256": "b5bd10e00906bb54b6f9473e60992429b58e7958bf190c04342a3614aa3cddee"
+    },
+    {
+      "run_id": "gemma4-joint-purpose-balanced-medium-dev10-screen-20261105",
+      "label": "23bcae0f0d6763e99a77c1c67d835c3f18a3ad676863c94362bbaf8d509ac9b5",
+      "tier": 10,
+      "split": "dev",
+      "status": "completed",
+      "run_sha256": "14f29c18d3bf716dcb448ee44db5167cd479e38d1f2351de72752a90acf38a8f"
+    },
+    {
+      "run_id": "gemma4-joint-purpose-balanced-medium-dev10-screen-20261105-r2",
+      "label": "23bcae0f0d6763e99a77c1c67d835c3f18a3ad676863c94362bbaf8d509ac9b5",
+      "tier": 10,
+      "split": "dev",
+      "status": "completed",
+      "run_sha256": "a7456b47e95508e17e6f6f3be258ac434eaaaf4e9a8edf5399431794ef845ef4"
+    },
+    {
+      "run_id": "gemma4-joint-purpose-chat-set-dev10-screen-20261105",
+      "label": "14a9fafa06c1e66c355da767fc8a88e260a42cb0a1a1007e17327b68fdc6d3e2",
+      "tier": 10,
+      "split": "dev",
+      "status": "completed",
+      "run_sha256": "63ea2ef75cab1177bbdd6e6370901770a561620be12d32d6d26681b3d95ce960"
+    },
+    {
+      "run_id": "gemma4-joint-purpose-chat-set-dev10-full-20261105",
+      "label": "14a9fafa06c1e66c355da767fc8a88e260a42cb0a1a1007e17327b68fdc6d3e2",
+      "tier": 10,
+      "split": "dev",
+      "status": "completed",
+      "run_sha256": "a44bf32baaebf79f3847edaa9455bbacc3ba58e8d8f9852fe230fddfc49079da"
+    },
+    {
+      "run_id": "gemma4-joint-purpose-chat-set-dev30-hard-code-20261105",
+      "label": "14a9fafa06c1e66c355da767fc8a88e260a42cb0a1a1007e17327b68fdc6d3e2",
+      "tier": 30,
+      "split": "dev",
+      "status": "completed",
+      "run_sha256": "b4594792ee237e03da7bce9d34ad19c7aa3ca9e0711e39f990231cad7809907c"
+    },
+    {
+      "run_id": "gemma4-finalnorm-minus1pct-dev10-screen-20261105",
+      "label": "5b761d754aa65dbc0eb41f124080d953aed9d12d2115a2c3620ab340e0acc252",
+      "tier": 10,
+      "split": "dev",
+      "status": "completed",
+      "run_sha256": "325a7276a0e9b2777886fcbb5cb96a5c449b2b7879af3af0262cda75a5fec48f"
+    },
+    {
+      "run_id": "gemma4-finalnorm-plus1pct-dev10-screen-20261105",
+      "label": "c5be8132c45422536cd62a2bb8904c1c0ad4691a3828da44a1892d936f6d414a",
+      "tier": 10,
+      "split": "dev",
+      "status": "completed",
+      "run_sha256": "7c7e1e9cbe29d96c5ed3605e91e39b6f5efabc983bc300a7c22baa3a4b2ab8cb"
+    },
+    {
+      "run_id": "gemma4-finalnorm-plus1pct-dev10-screen-20261105-r2",
+      "label": "c5be8132c45422536cd62a2bb8904c1c0ad4691a3828da44a1892d936f6d414a",
+      "tier": 10,
+      "split": "dev",
+      "status": "completed",
+      "run_sha256": "707eb7f3241e6ec6170324852bd3c810bccc5a59e0d83826481747ff8bf7457b"
+    },
+    {
+      "run_id": "gemma4-finalnorm-minus1pct-dev10-screen-20261105-r2",
+      "label": "5b761d754aa65dbc0eb41f124080d953aed9d12d2115a2c3620ab340e0acc252",
+      "tier": 10,
+      "split": "dev",
+      "status": "completed",
+      "run_sha256": "7a79e2df3f37678ea9663e88e222e7d3301da41c12256903fce68012ae9a2e3b"
+    },
+    {
+      "run_id": "gemma4-finalnorm-plus1pct-dev10-full-20261105",
+      "label": "c5be8132c45422536cd62a2bb8904c1c0ad4691a3828da44a1892d936f6d414a",
+      "tier": 10,
+      "split": "dev",
+      "status": "completed",
+      "run_sha256": "f90f6d7be67488a7d71d4d283dce29776ccf6f37412db17f54fa546169f16b32"
+    },
+    {
+      "run_id": "gemma4-finalnorm-plus1pct-dev30-hard-code-20261105",
+      "label": "c5be8132c45422536cd62a2bb8904c1c0ad4691a3828da44a1892d936f6d414a",
+      "tier": 30,
+      "split": "dev",
+      "status": "completed",
+      "run_sha256": "a7e5df263cfebc7547df6fc7a85b0287a09bf72faaf9d0af7883e6dc34766538"
+    },
+    {
+      "run_id": "gemma4-donor-text-c1-dev10-screen-20261105",
+      "label": "3353278c3610562f27ee2cbd103fef375968d339a7766cc8abec7fd3d0ce705b",
+      "tier": 10,
+      "split": "dev",
+      "status": "completed",
+      "run_sha256": "e6fe22ca17727236eb18b7705577e1feabc2c82fab5f06126b99564f2a2c8d07"
+    },
+    {
+      "run_id": "gemma4-donor-text-c1-dev30-hard-code-20261105",
+      "label": "3353278c3610562f27ee2cbd103fef375968d339a7766cc8abec7fd3d0ce705b",
+      "tier": 30,
+      "split": "dev",
+      "status": "completed",
+      "run_sha256": "a46c6bad418080141291ebd8af51647b36e6e21a85d7dc6295a5830c5e4e325a"
+    },
+    {
+      "run_id": "gemma4-donor-text-c1-dev10-full-20261105",
+      "label": "3353278c3610562f27ee2cbd103fef375968d339a7766cc8abec7fd3d0ce705b",
+      "tier": 10,
+      "split": "dev",
+      "status": "completed",
+      "run_sha256": "411290d4a7f39c8c5d7db6602db795da12e6dcf1faf14430a5da530e8cc49e88"
+    },
+    {
+      "run_id": "gemma4-joint-programming-finalnorm-plus1pct-dev10-screen-20261105",
+      "label": "b626f11896233d3148bd9b5620736d2372ab4b16bf72d2671454a70ba2bb8ed9",
+      "tier": 10,
+      "split": "dev",
+      "status": "completed",
+      "run_sha256": "c52bab237e61b7b0eac4061074d11df897fc9ad9f9278c9d649060e789a5d1c1"
+    },
+    {
+      "run_id": "gemma4-joint-programming-finalnorm-plus1pct-dev30-hard-code-20261105",
+      "label": "b626f11896233d3148bd9b5620736d2372ab4b16bf72d2671454a70ba2bb8ed9",
+      "tier": 30,
+      "split": "dev",
+      "status": "completed",
+      "run_sha256": "342d86d9083ca6106be0a0e7428e873749f67f357451870f95147ce29a63cb3b"
+    },
+    {
+      "run_id": "gemma4-joint-programming-finalnorm-plus1pct-dev10-full-20261105",
+      "label": "b626f11896233d3148bd9b5620736d2372ab4b16bf72d2671454a70ba2bb8ed9",
+      "tier": 10,
+      "split": "dev",
+      "status": "completed",
+      "run_sha256": "a2fa54e01202f117e66a83768f3a054ce02b0c13d62646153401177fec42cfb1"
+    },
+    {
+      "run_id": "gemma4-finalnorm-plus0p5pct-dev10-screen-20261105",
+      "label": "fb494e89a52e8047d0319ffcf7c11f71dd1c29123ba61dbf2b70cef3ef6423eb",
+      "tier": 10,
+      "split": "dev",
+      "status": "completed",
+      "run_sha256": "faf67516c0e2b6a8589d6ff218e6aaea3e088e32574353e8cecbf2f4349d022d"
+    },
+    {
+      "run_id": "gemma4-finalnorm-plus0p5pct-dev30-hard-code-20261105",
+      "label": "fb494e89a52e8047d0319ffcf7c11f71dd1c29123ba61dbf2b70cef3ef6423eb",
+      "tier": 30,
+      "split": "dev",
+      "status": "completed",
+      "run_sha256": "8d0afb4f5d258c59d46327aebc2c0ce181bb9fda69e47e15ab473bd79edaf72e"
+    },
+    {
+      "run_id": "gemma4-finalnorm-plus0p5pct-dev10-full-20261105",
+      "label": "fb494e89a52e8047d0319ffcf7c11f71dd1c29123ba61dbf2b70cef3ef6423eb",
+      "tier": 10,
+      "split": "dev",
+      "status": "completed",
+      "run_sha256": "f98be3b41cc527397d2107052d5bc2cfb7f0f6c32ede52927e5df8a993ef3627"
+    },
+    {
+      "run_id": "gemma4-donor-text-c0p25-dev10-screen-20261105",
+      "label": "44a68b0f35b8c0866cf4e5d5b3a0e961268b8914e28136e3055483ce206d5a31",
+      "tier": 10,
+      "split": "dev",
+      "status": "completed",
+      "run_sha256": "146a220f7d7d0b77f38f347ae81dd3d207edde70f4a6eaeba215147605a5534d"
+    },
+    {
+      "run_id": "gemma4-donor-text-c0p25-dev30-hard-code-20261105",
+      "label": "44a68b0f35b8c0866cf4e5d5b3a0e961268b8914e28136e3055483ce206d5a31",
+      "tier": 30,
+      "split": "dev",
+      "status": "completed",
+      "run_sha256": "09572ae59628286278eaf59b0e47bbe3abfa312cfe267583e8ab0eb7300348b6"
+    },
+    {
+      "run_id": "gemma4-donor-text-c0p25-dev10-full-20261105",
+      "label": "44a68b0f35b8c0866cf4e5d5b3a0e961268b8914e28136e3055483ce206d5a31",
+      "tier": 10,
+      "split": "dev",
+      "status": "completed",
+      "run_sha256": "12c4a6dad070aa549c6370445b1e78f4bc1b767a142d8d725346937afaee689b"
+    },
+    {
+      "run_id": "gemma4-joint-donor-quarter-finalnorm-plus1pct-dev10-core-long-20261105",
+      "label": "81981febd92b41cc87067f2b9b7a634d2cd288feb3da5c03d56eb85396b117c3",
+      "tier": 10,
+      "split": "dev",
+      "status": "completed",
+      "run_sha256": "7a4ff8878e024ab05531f1823222937175e77f6eafd336b0eb66f51e4a960cb0"
+    },
+    {
+      "run_id": "gemma4-frozen-c5be8132c454-test10-20261105",
+      "label": "c5be8132c45422536cd62a2bb8904c1c0ad4691a3828da44a1892d936f6d414a",
+      "tier": 10,
+      "split": "test",
+      "status": "completed",
+      "run_sha256": "44b4bd438c851d7aa0a10c85313f95f34054532fbd4062fe82381e4cf483bde5"
+    },
+    {
+      "run_id": "gemma4-base-observed-dev10-20261106",
+      "label": "cab440f871a32b5ea1c12364db7dd35ac8768a83b413ca24bbc18d6478eccbd9",
+      "tier": 10,
+      "split": "dev",
+      "status": "completed",
+      "run_sha256": "a65a8fb643205d30813d56c30a134a0da1e54f46b26b223a5954acc322c0527e"
+    },
+    {
+      "run_id": "gemma4-resume-hs0020-dev10-screen-20261106",
+      "label": "6d098298bbf5c1a4a5a5154f0903add7edbd6855428a8c1f7e5585d8a593a66d",
+      "tier": 10,
+      "split": "dev",
+      "status": "completed",
+      "run_sha256": "1b144021bef0a1bfe9a38e1bc7eb4d023a69b7e86dec0bb4aff07eaf510c794b"
+    },
+    {
+      "run_id": "gemma4-resume-h0397-dev10-screen-20261106",
+      "label": "ba5e6ab526c8c08182a030f459f4acb532d5f50ebc1d35e4745b09fe59a8768d",
+      "tier": 10,
+      "split": "dev",
+      "status": "completed",
+      "run_sha256": "05c62d5c93263e03c3c14f326e56f7a1fb00766fc1adc4bac1acb63e0851ad51"
+    },
+    {
+      "run_id": "gemma4-resume-h0397-dev30-hard-code-20261106",
+      "label": "ba5e6ab526c8c08182a030f459f4acb532d5f50ebc1d35e4745b09fe59a8768d",
+      "tier": 30,
+      "split": "dev",
+      "status": "completed",
+      "run_sha256": "0427e32d8312e469290963840a837761076a874b9af95fef0337fae18803c242"
+    },
+    {
+      "run_id": "gemma4-resume-h0397-dev10-full-20261106",
+      "label": "ba5e6ab526c8c08182a030f459f4acb532d5f50ebc1d35e4745b09fe59a8768d",
+      "tier": 10,
+      "split": "dev",
+      "status": "completed",
+      "run_sha256": "bf00b8b4d2a650b3bb350d7f4f78e6f95fffebbe1c56c548c841573a3f339f6e"
+    },
+    {
+      "run_id": "gemma4-resume-h0397-dev30-lcb-repeat-20261106",
+      "label": "ba5e6ab526c8c08182a030f459f4acb532d5f50ebc1d35e4745b09fe59a8768d",
+      "tier": 30,
+      "split": "dev",
+      "status": "completed",
+      "run_sha256": "f485107515facf99bb1cd3f590bed4cef6afc8fa6726d7357ca8927f93a766e9"
+    },
+    {
+      "run_id": "gemma4-resume-base-dev30-lcb-matched-20261106",
+      "label": "cab440f871a32b5ea1c12364db7dd35ac8768a83b413ca24bbc18d6478eccbd9",
+      "tier": 30,
+      "split": "dev",
+      "status": "completed",
+      "run_sha256": "af85522a7b70973e26152e3fca9af343c233e58533d81b4d9d15c8cc15f4a02f"
+    },
+    {
+      "run_id": "gemma4-resume-h0485-dev10-screen-20261106",
+      "label": "b9617ac7de12ca3e9a7ab7cdf70f84f048d5c88d7ff1ae42441e868696b0e62e",
+      "tier": 10,
+      "split": "dev",
+      "status": "completed",
+      "run_sha256": "df5da90fdfea00ebb6d55689f9925dc5e788d54b62c173ff1d1567f7750d4d64"
+    },
+    {
+      "run_id": "gemma4-resume-h0485-dev30-hard-code-20261106",
+      "label": "b9617ac7de12ca3e9a7ab7cdf70f84f048d5c88d7ff1ae42441e868696b0e62e",
+      "tier": 30,
+      "split": "dev",
+      "status": "completed",
+      "run_sha256": "8bef8ec7502f050419a4d5bf4c55631f3dcb1eb025d9d1a182495a9becd8b0b7"
+    },
+    {
+      "run_id": "gemma4-resume-h0485-dev10-full-20261106",
+      "label": "b9617ac7de12ca3e9a7ab7cdf70f84f048d5c88d7ff1ae42441e868696b0e62e",
+      "tier": 10,
+      "split": "dev",
+      "status": "completed",
+      "run_sha256": "e52902c59888124c9c0162d69c4f84646dcc6e0b1b98f2403c21d9d6c4762974"
+    },
+    {
+      "run_id": "gemma4-resume-localgc-dev10-screen-20261106",
+      "label": "cc3bf6d50a1a71648d67367e78e5dc9151f92f76f97a641042d9f80e441e5006",
+      "tier": 10,
+      "split": "dev",
+      "status": "completed",
+      "run_sha256": "a202c6aa57ea159af9620f19aa66dba2fe51068c2f1e556c44a647aba8e541d8"
+    },
+    {
+      "run_id": "gemma4-resume-localgc-dev30-hard-code-20261106",
+      "label": "cc3bf6d50a1a71648d67367e78e5dc9151f92f76f97a641042d9f80e441e5006",
+      "tier": 30,
+      "split": "dev",
+      "status": "completed",
+      "run_sha256": "26f4901fc5d4fb1f070fbafe68cd31471c57d08add2f1ebe7fce37ab856782a4"
+    },
+    {
+      "run_id": "gemma4-resume-composed-dev30-hard-code-20261106",
+      "label": "cc824166b483389d64ee4b7e3f10b14cf07d69d4c9959bed61b18c36dbc04cb9",
+      "tier": 30,
+      "split": "dev",
+      "status": "completed",
+      "run_sha256": "2cfb380f5135a17da20fa6e9efecc645802fc7fa6e185294dd0e94a04530e0d3"
+    },
+    {
+      "run_id": "gemma4-resume-composed-dev10-screen-20261106",
+      "label": "cc824166b483389d64ee4b7e3f10b14cf07d69d4c9959bed61b18c36dbc04cb9",
+      "tier": 10,
+      "split": "dev",
+      "status": "completed",
+      "run_sha256": "7f4149a4bd6d7cbee32473563086db1f6070df111068a0283086fefc2115e83b"
+    },
+    {
+      "run_id": "gemma4-confirmation-base-1491-20261106",
+      "label": "cab440f871a32b5ea1c12364db7dd35ac8768a83b413ca24bbc18d6478eccbd9",
+      "tier": 30,
+      "split": "test",
+      "status": "partial",
+      "run_sha256": "bd43fef4461d22b35e93b83786d2c202d9ea7ce4d8c82d8cd704237eff883169"
+    },
+    {
+      "run_id": "gemma4-confirmation-h0397-1490-20261106",
+      "label": "ba5e6ab526c8c08182a030f459f4acb532d5f50ebc1d35e4745b09fe59a8768d",
+      "tier": 30,
+      "split": "test",
+      "status": "completed",
+      "run_sha256": "252913840440b86ac5cdbeeb386f885139c46176b3063ed01b25ea6f6f2bcbfb"
+    },
+    {
+      "run_id": "gemma4-code90-0397-dev30-code-20261106",
+      "label": "ba5e6ab526c8c08182a030f459f4acb532d5f50ebc1d35e4745b09fe59a8768d",
+      "tier": 30,
+      "split": "dev",
+      "status": "completed",
+      "run_sha256": "424ef3615d4ffc06ac53b65e7024d82a178394dbc693cf005a60337f19e4d6a8"
+    },
+    {
+      "run_id": "gemma4-code90-h0397-control-c32-dev30-code-20261106",
+      "label": "ba5e6ab526c8c08182a030f459f4acb532d5f50ebc1d35e4745b09fe59a8768d",
+      "tier": 30,
+      "split": "dev",
+      "status": "completed",
+      "run_sha256": "654bfe1af790f0ae1c2d70574248b1b1c5522defd22c3f89d1df222fbfe45a41"
+    },
+    {
+      "run_id": "gemma4-code90-native-contracts-c32-dev30-code-20261106",
+      "label": "564ae5fc1efdedd77180a91764308ccea222311e19c5e0a8c7a2262069a8138b",
+      "tier": 30,
+      "split": "dev",
+      "status": "completed",
+      "run_sha256": "b5f2485b7088720a05ac5d80af1646997877fdec06f203daa48a0975eac7e79e"
+    },
+    {
+      "run_id": "gemma4-code90-joint-c32-dev30-code-20261106",
+      "label": "b006bf7e344ac3223305480a912f6fc579e83da83cb43e7ea0aa9b7e50326b7b",
+      "tier": 30,
+      "split": "dev",
+      "status": "completed",
+      "run_sha256": "ea5f5241e7110bfbbc41799638d951aeddd03d5a8bb473f509f2c0ab9f0da944"
+    },
+    {
+      "run_id": "gemma4-code90-matrix-balanced-c32-dev30-code-20261106",
+      "label": "9d2bfb78a08bb58e9c04e37d40dce2eabc92ad11847915785747bd689a454b84",
+      "tier": 30,
+      "split": "dev",
+      "status": "completed",
+      "run_sha256": "f1763b976bed299c4b68421359ec294cefcc9540ae8379751f3298d8e043c40f"
+    },
+    {
+      "run_id": "gemma4-code90-h0397-control-c32-known64-r1-20261106",
+      "label": "ba5e6ab526c8c08182a030f459f4acb532d5f50ebc1d35e4745b09fe59a8768d",
+      "tier": 30,
+      "split": "test",
+      "status": "completed",
+      "run_sha256": "855b9c5d689658a5f615d6b5dcc766b2766b96048676ff959c1e3695170ef98e"
+    },
+    {
+      "run_id": "gemma4-code90-native-contracts-c32-known64-r1-20261106",
+      "label": "564ae5fc1efdedd77180a91764308ccea222311e19c5e0a8c7a2262069a8138b",
+      "tier": 30,
+      "split": "test",
+      "status": "completed",
+      "run_sha256": "d3590449fc23fa0d0759661347d6e7a41f443e9df93891e38cea89ac872c5701"
+    },
+    {
+      "run_id": "gemma4-code90-original-base-c32-dev10-full14-20261106",
+      "label": "cab440f871a32b5ea1c12364db7dd35ac8768a83b413ca24bbc18d6478eccbd9",
+      "tier": 10,
+      "split": "dev",
+      "status": "completed",
+      "run_sha256": "d5ed89a5d8a86f1398389ce758c29e2abc617739c4993de44e5da3adf4cb9f1d"
+    },
+    {
+      "run_id": "gemma4-code90-native-contracts-c32-dev10-full14-20261106",
+      "label": "564ae5fc1efdedd77180a91764308ccea222311e19c5e0a8c7a2262069a8138b",
+      "tier": 10,
+      "split": "dev",
+      "status": "completed",
+      "run_sha256": "ff5a8b2b0b2b74d8d0698fc4ac0904e79c34391f19556f1ca9806f9739a100d6"
+    },
+    {
+      "run_id": "gemma4-code90-original-base-c32-dev30-code-20261106",
+      "label": "cab440f871a32b5ea1c12364db7dd35ac8768a83b413ca24bbc18d6478eccbd9",
+      "tier": 30,
+      "split": "dev",
+      "status": "completed",
+      "run_sha256": "976b916b38f2a813d66a6f55455b7c80aa99d768f05b58f8de8c739d6b1a5d17"
+    },
+    {
+      "run_id": "gemma4-code90-original-base-c32-known64-r1-20261106",
+      "label": "cab440f871a32b5ea1c12364db7dd35ac8768a83b413ca24bbc18d6478eccbd9",
+      "tier": 30,
+      "split": "test",
+      "status": "completed",
+      "run_sha256": "0efb01627fc7ad264f7c8c5b9d612c3aa271f610bdf666c426d527e7b0b35f1b"
+    },
+    {
+      "run_id": "gemma4-code90-public-final-balanced-c32-dev30-code-20261106",
+      "label": "f5137ab7e45d3458057e9163350720613247b6dc5a00a741b9b4b402a12d2e4a",
+      "tier": 30,
+      "split": "dev",
+      "status": "completed",
+      "run_sha256": "c924d8e739744742bd4e15a93f02b1688062ca2402683725d19dd162076f140b"
+    },
+    {
+      "run_id": "gemma4-code90-public-final-joint-c32-dev30-code-20261106",
+      "label": "3d45f526266c2a79f74c4792830c6c06e148143b7394ae2976d77b67b71f08ea",
+      "tier": 30,
+      "split": "dev",
+      "status": "completed",
+      "run_sha256": "1ed7c325f64f596dc1f5586da75611514dfe2340e0b02dc17da3664503ea3d63"
+    },
+    {
+      "run_id": "gemma4-code90-original-base-c32-dev30-code-pairh-20261106",
+      "label": "cab440f871a32b5ea1c12364db7dd35ac8768a83b413ca24bbc18d6478eccbd9",
+      "tier": 30,
+      "split": "dev",
+      "status": "completed",
+      "run_sha256": "97636377628978ccc754fc5cef45032adec42bc0df1451ce9953c5d38da93b55"
+    },
+    {
+      "run_id": "gemma4-code90-coherent-c00625-c32-dev30-code-20261106",
+      "label": "0f9775ba6a2406989407d86d365eed69e1684a4400faddf56bb3822fad6b98d3",
+      "tier": 30,
+      "split": "dev",
+      "status": "completed",
+      "run_sha256": "6688ae421b321eb5416aef9221ff0f2e94e441e127b09d926081b07fc3e24c18"
+    },
+    {
+      "run_id": "gemma4-code90-coherent-c00625-c32-dev10-full14-20261106",
+      "label": "0f9775ba6a2406989407d86d365eed69e1684a4400faddf56bb3822fad6b98d3",
+      "tier": 10,
+      "split": "dev",
+      "status": "completed",
+      "run_sha256": "59678ec34a45ef18ebc398230b3e2d80b22fe58ab157e710b95cf0662027ea37"
+    },
+    {
+      "run_id": "gemma4-code90-original-base-c32-dev10-full14-pairh-20261106",
+      "label": "cab440f871a32b5ea1c12364db7dd35ac8768a83b413ca24bbc18d6478eccbd9",
+      "tier": 10,
+      "split": "dev",
+      "status": "completed",
+      "run_sha256": "19872bafe5d284065268e9e76bc9f67348a401e0d518bf8f10cfca379a540098"
+    },
+    {
+      "run_id": "gemma4-code90-original-base-c32-dev30-code-pairi-20261106",
+      "label": "cab440f871a32b5ea1c12364db7dd35ac8768a83b413ca24bbc18d6478eccbd9",
+      "tier": 30,
+      "split": "dev",
+      "status": "completed",
+      "run_sha256": "3d1b1b12332b0e329a6fda899499fa9136ef413b92ae0682d5c759a7e5515206"
+    },
+    {
+      "run_id": "gemma4-code90-math-grpo-c1-c32-dev30-code-20261106",
+      "label": "9acfbe674fe18fb64eef47d4ece93e72b8f28a5d6ae9ee2bdcf9af54f33ead25",
+      "tier": 30,
+      "split": "dev",
+      "status": "completed",
+      "run_sha256": "a1de0e534402b09622eedf90c5966c10916857108b72d681530fd085ddddbde6"
+    },
+    {
+      "run_id": "gemma4-code90-original-base-c32-dev30-code-pairj-20261106",
+      "label": "cab440f871a32b5ea1c12364db7dd35ac8768a83b413ca24bbc18d6478eccbd9",
+      "tier": 30,
+      "split": "dev",
+      "status": "completed",
+      "run_sha256": "4ccd67db0098d1c2a8e273b59fcb9d77b018ba80bb4e9fb553307758d4659c02"
+    },
+    {
+      "run_id": "gemma4-code90-weighted-reasoning-c1-c32-dev30-code-20261106",
+      "label": "dbf0a54c2788a3d7b529cb925a712b037bf457d392b6346a61c7e32de57c4005",
+      "tier": 30,
+      "split": "dev",
+      "status": "completed",
+      "run_sha256": "eb92ebc3701df4b250c80d898e3062afefc7805447a4617a885742e69cecd745"
+    },
+    {
+      "run_id": "gemma4-code90-native-b-plus-coherent-h-c32-dev30-code-pairk-20261106",
+      "label": "fd8ba3ccb9237a133e9cdead352b5fda71bc7058520e4dfdd0957da3d77cf6ad",
+      "tier": 30,
+      "split": "dev",
+      "status": "completed",
+      "run_sha256": "adcdce5bbae9106a7a20026ad1061c73db2a1abd290b88a118b1cd529cc4f32a"
+    },
+    {
+      "run_id": "gemma4-code90-original-base-c32-dev30-code-pairk-20261106",
+      "label": "cab440f871a32b5ea1c12364db7dd35ac8768a83b413ca24bbc18d6478eccbd9",
+      "tier": 30,
+      "split": "dev",
+      "status": "completed",
+      "run_sha256": "0c808a93c8fe5df62ef21e5bf213e8ad7e361bf197076e29d8d2faeffefbf917"
+    },
+    {
+      "run_id": "gemma4-code90-native-b-c32-dev30-code-pairk-20261106",
+      "label": "564ae5fc1efdedd77180a91764308ccea222311e19c5e0a8c7a2262069a8138b",
+      "tier": 30,
+      "split": "dev",
+      "status": "completed",
+      "run_sha256": "4874a422a964730f9387a5e0abdaa50592e1d3f30af73764a531b148243271af"
+    },
+    {
+      "run_id": "gemma4-code90-coherent-h-c32-dev30-code-pairk-20261106",
+      "label": "0f9775ba6a2406989407d86d365eed69e1684a4400faddf56bb3822fad6b98d3",
+      "tier": 30,
+      "split": "dev",
+      "status": "completed",
+      "run_sha256": "2fd6820bf308f10e1cc8e1566d609610f2ea42d44351fb4d6675cae983479f77"
+    },
+    {
+      "run_id": "gemma4-code90-k1-exported-text-c1-c32-dev30-code-pairl-20261106",
+      "label": "f8f936eee95316d560361b5301a1bde8a892138f0907084eb7569242eefc7f90",
+      "tier": 30,
+      "split": "dev",
+      "status": "completed",
+      "run_sha256": "3787215a01dbc159d4e4181a41db03582c8b1695ea98296d9b3b83a7794b8cc0"
+    },
+    {
+      "run_id": "gemma4-code90-original-base-c32-dev30-code-pairl-20261106",
+      "label": "cab440f871a32b5ea1c12364db7dd35ac8768a83b413ca24bbc18d6478eccbd9",
+      "tier": 30,
+      "split": "dev",
+      "status": "completed",
+      "run_sha256": "80cd15de696cc36d1bd3b8f4f59fe613e46cbd16d65a218d9171d622b2f1426f"
+    },
+    {
+      "run_id": "gemma4-code90-heretic-public-base-c32-dev30-code-pairm-20261106",
+      "label": "3dfb3bd1db0ab2ba4fff843616bb0d3109e0b97a6c9349658620908f2a24bebc",
+      "tier": 30,
+      "split": "dev",
+      "status": "completed",
+      "run_sha256": "0135ae37dcac59dfb8315456fe285afdb9c9a3050d6a07f833c9d36ddabd7047"
+    },
+    {
+      "run_id": "gemma4-code90-heretic-public-base-k1-c1-c32-dev30-code-pairm-20261106",
+      "label": "a09697f0f7cd8f3b569499b8a40a5ca31393007d32fdec3c873b7544c6699361",
+      "tier": 30,
+      "split": "dev",
+      "status": "completed",
+      "run_sha256": "3ffc6c45487ac29130cc5a048a091efac701725b44e203e305af920ee7c38923"
+    },
+    {
+      "run_id": "gemma4-code90-original-base-c32-dev30-code-pairm-20261106",
+      "label": "cab440f871a32b5ea1c12364db7dd35ac8768a83b413ca24bbc18d6478eccbd9",
+      "tier": 30,
+      "split": "dev",
+      "status": "completed",
+      "run_sha256": "862a79ebb4ea18595690e8893e70799a2ab84531e5ab8d687a660f19b2f4202f"
+    },
+    {
+      "run_id": "gemma4-code90-k1-exported-text-c1-c32-dev30-code-pairm-20261106",
+      "label": "f8f936eee95316d560361b5301a1bde8a892138f0907084eb7569242eefc7f90",
+      "tier": 30,
+      "split": "dev",
+      "status": "completed",
+      "run_sha256": "9f12667978007452856a6987737f293a9b000fcf1d07b60a463be678b6584d4e"
+    },
+    {
+      "run_id": "gemma4-code90-incumbent-p-c32-dev10-full14-20261106",
+      "label": "3dfb3bd1db0ab2ba4fff843616bb0d3109e0b97a6c9349658620908f2a24bebc",
+      "tier": 10,
+      "split": "dev",
+      "status": "completed",
+      "run_sha256": "2a6f7b214bf76346d55df358d642ecbec705f3121debe665e268a1a72856c71f"
+    },
+    {
+      "run_id": "gemma4-code90-heretic-public-base-k1-c00625-c32-dev30-code-20261106",
+      "label": "355629b43ad592b0a830208874c04cc0a11e2d51b4b177aeee0e502dc599c5a5",
+      "tier": 30,
+      "split": "dev",
+      "status": "completed",
+      "run_sha256": "ae276489a7b7fa750abbbfbc9efe7e07a8b7afc689885bb7f7e54b855e572549"
+    },
+    {
+      "run_id": "gemma4-code90-heretic-public-base-c32-dev30-code-pairn-20261106",
+      "label": "3dfb3bd1db0ab2ba4fff843616bb0d3109e0b97a6c9349658620908f2a24bebc",
+      "tier": 30,
+      "split": "dev",
+      "status": "completed",
+      "run_sha256": "ff831e6277c3454889172c176584def2f5022cdf48fdbe643719ed373f80668f"
+    },
+    {
+      "run_id": "gemma4-code90-heretic-public-base-math-mlp-c1-c32-dev30-code-20261106",
+      "label": "ea3d27ababa4f189fb5058c5055492ddad42180ec619c80d5a427baccea9cbee",
+      "tier": 30,
+      "split": "dev",
+      "status": "completed",
+      "run_sha256": "b6253eff376a3d91807c9ec908ecb1ea7b5d832c18b1b656c738aa8c2481a03e"
+    },
+    {
+      "run_id": "gemma4-code90-heretic-public-base-c32-dev30-code-pairr-20261106",
+      "label": "3dfb3bd1db0ab2ba4fff843616bb0d3109e0b97a6c9349658620908f2a24bebc",
+      "tier": 30,
+      "split": "dev",
+      "status": "completed",
+      "run_sha256": "989bb5430ba9ab94538cad4932346792e02d5346a7f26bec497648cae3e9f725"
+    },
+    {
+      "run_id": "gemma4-code90-incumbent-r-c32-dev10-full14-20261106",
+      "label": "ea3d27ababa4f189fb5058c5055492ddad42180ec619c80d5a427baccea9cbee",
+      "tier": 10,
+      "split": "dev",
+      "status": "completed",
+      "run_sha256": "ac168280ffef4ea8ba5e628fb634b2d9fc5e08b8bfbce4d4fb29790c7a66e28d"
+    },
+    {
+      "run_id": "gemma4-code90-current-p-native-s-c32-dev30-code-20261106",
+      "label": "60520ea1e63b25a69b10da1f39f63339221b1a0597c358d60a7cc6b0001d3be1",
+      "tier": 30,
+      "split": "dev",
+      "status": "completed",
+      "run_sha256": "e58d57dd3e3c97ba0fe6abf9b82f4831b76d6b48c261e0c630ae454e51011d29"
+    },
+    {
+      "run_id": "gemma4-code90-heretic-public-base-c32-dev30-code-pairs-20261106",
+      "label": "3dfb3bd1db0ab2ba4fff843616bb0d3109e0b97a6c9349658620908f2a24bebc",
+      "tier": 30,
+      "split": "dev",
+      "status": "completed",
+      "run_sha256": "af95dc6a52662f06d84b04c4d674e07a8f6040a99fcb502b6ce154aa15699227"
+    },
+    {
+      "run_id": "gemma4-code90-candidate-s-c32-dev10-full14-20261106",
+      "label": "60520ea1e63b25a69b10da1f39f63339221b1a0597c358d60a7cc6b0001d3be1",
+      "tier": 10,
+      "split": "dev",
+      "status": "completed",
+      "run_sha256": "3465031a4d805327d6af07654e1222176d263a9929b01f09eb6e5443292261c1"
+    },
+    {
+      "run_id": "gemma4-code90-current-s-code-priority-ac-c32-dev30-code-20261107",
+      "label": "d34fcba755eefa6e451521f81a589484bd6eb7368f831e6620a5577d4ff87e85",
+      "tier": 30,
+      "split": "dev",
+      "status": "completed",
+      "run_sha256": "7b2489b8c21755b4d3f4865dac45ccae3af471b1eae6f3b566197ee3404db102"
+    },
+    {
+      "run_id": "gemma4-code90-current-s-c32-dev30-code-pairac-20261107",
+      "label": "60520ea1e63b25a69b10da1f39f63339221b1a0597c358d60a7cc6b0001d3be1",
+      "tier": 30,
+      "split": "dev",
+      "status": "completed",
+      "run_sha256": "75b82f51f682334b0a1f199907f84865ad1512bff95d96bb69c720e0d4f0849b"
+    },
+    {
+      "run_id": "gemma4-code90-candidate-ac-c32-dev10-full14-20261107",
+      "label": "d34fcba755eefa6e451521f81a589484bd6eb7368f831e6620a5577d4ff87e85",
+      "tier": 10,
+      "split": "dev",
+      "status": "completed",
+      "run_sha256": "c24c4883cd61770832e2acc6d9df32355da0f4a2b9e3489f3c685c02851d6d5b"
+    },
+    {
+      "run_id": "gemma4-code90-current-ac-c32-dev30-code-pairadae-20261107",
+      "label": "d34fcba755eefa6e451521f81a589484bd6eb7368f831e6620a5577d4ff87e85",
+      "tier": 30,
+      "split": "dev",
+      "status": "completed",
+      "run_sha256": "ae81008d85ce0f3359a36e5471e800b3bce594070947a4a0fba92266e19124cb"
+    },
+    {
+      "run_id": "gemma4-code90-repair-ae-c32-dev30-code-20261107",
+      "label": "afa211da029e387574069e5bb6f5e6a6beaa88222e7482d5b15e52fbf26296ed",
+      "tier": 30,
+      "split": "dev",
+      "status": "completed",
+      "run_sha256": "cb63fd8bca73b0c23138d18190621663c3a60e7b6e751601d7077216d12614d8"
+    },
+    {
+      "run_id": "gemma4-code90-native-ad-c32-dev30-code-20261107",
+      "label": "27629fd3cd4c7573ca535832ce4e97cb8bc10b28ddd3f6f12ddf1b194633b1e8",
+      "tier": 30,
+      "split": "dev",
+      "status": "completed",
+      "run_sha256": "654387d2d57d2a2dea9f72a006c79c5704d40c9fff03f9878e9e0ef78cb10626"
+    },
+    {
+      "run_id": "gemma4-code90-candidate-ad-c32-dev10-full14-20261107",
+      "label": "27629fd3cd4c7573ca535832ce4e97cb8bc10b28ddd3f6f12ddf1b194633b1e8",
+      "tier": 10,
+      "split": "dev",
+      "status": "completed",
+      "run_sha256": "36631fbb53dc7441872a4d4c502a95f0ac1aa14860c0d8f75d3acc249d460b42"
+    },
+    {
+      "run_id": "gemma4-code90-finalist-af-c32-dev30-code-20261107",
+      "label": "496886f1f822c22d849785cb6d82a18fedd22ff5b43860118b0045e42a00e3df",
+      "tier": 30,
+      "split": "dev",
+      "status": "completed",
+      "run_sha256": "3f06de34f9a340268343834a809da4f4d1e8b2f131113926f883000d56d20775"
+    },
+    {
+      "run_id": "gemma4-code90-current-ad-c32-dev30-code-pairafag-20261107",
+      "label": "27629fd3cd4c7573ca535832ce4e97cb8bc10b28ddd3f6f12ddf1b194633b1e8",
+      "tier": 30,
+      "split": "dev",
+      "status": "completed",
+      "run_sha256": "d45cc36fcdd45a6d9b55bdbe115c28d924cdb7c8956b297a074299c669ae8d30"
+    },
+    {
+      "run_id": "gemma4-code90-finalist-ag-c32-dev30-code-20261107",
+      "label": "b5c80f1e73c4417bd7607510ab79dedd2320c1dfc78ff27e348c37d8379cd67e",
+      "tier": 30,
+      "split": "dev",
+      "status": "completed",
+      "run_sha256": "2e1684503417f59429411d3f3a805a2600790a3413ddcacf4d822101533be491"
+    },
+    {
+      "run_id": "gemma4-code90-library-al-c32-dev30-code-20261107",
+      "label": "e89f4534b6a606c2626bbeb55aabf13a178c66e5ea050c724abfa01c32219968",
+      "tier": 30,
+      "split": "dev",
+      "status": "completed",
+      "run_sha256": "7631b60a2b8169c032402d440c927d9c678725b267c3aabea7e7f0a68866bda8"
+    },
+    {
+      "run_id": "gemma4-code90-current-ad-c32-dev30-code-pairal-20261107",
+      "label": "27629fd3cd4c7573ca535832ce4e97cb8bc10b28ddd3f6f12ddf1b194633b1e8",
+      "tier": 30,
+      "split": "dev",
+      "status": "completed",
+      "run_sha256": "54719898b07e4968d2a7bf7851d6affb05a0e1cc68c74833779f303c201da45f"
+    },
+    {
+      "run_id": "gemma4-code90-ad-functional-overlay-c32-dev30-20261107-r1-an",
+      "label": "24754bba84f8c79fdbd4cb6598506bf3da724b6e66ace4403af844feb949e544",
+      "tier": 30,
+      "split": "dev",
+      "status": "completed",
+      "run_sha256": "b886c6d0607e760fa4cdd1d4c601669295cef353aa56ccbbeeed6e2ae1c4c376"
+    },
+    {
+      "run_id": "gemma4-code90-ad-functional-overlay-c32-dev30-20261107-r1-control",
+      "label": "42db468937d5b759a88a89d4abe8288324a15c63b9ff8f54d6ea223d9f4bc46f",
+      "tier": 30,
+      "split": "dev",
+      "status": "completed",
+      "run_sha256": "dafe8250d49291289cf602d67285266e3740de6f29ed33b8154afca8f3544a56"
+    },
+    {
+      "run_id": "gemma4-code90-ad-functional-overlay-c32-dev30-20261107-r1-ao",
+      "label": "60115082facd5345f1c3055fd9eefa8ebc52089e7b5ece1017d985de86f5dd87",
+      "tier": 30,
+      "split": "dev",
+      "status": "completed",
+      "run_sha256": "6759148a54362270413e927128a5d3f98f823e08eb88dccc621601625cbf7712"
+    },
+    {
+      "run_id": "gemma4-code90-ad-functional-overlay-c32-dev30-20261107-r1-ap",
+      "label": "734747981fc095a445305496d05d3a3d8fc08b9eeaa6bca5c41c12ab39841bb5",
+      "tier": 30,
+      "split": "dev",
+      "status": "completed",
+      "run_sha256": "c7bf0f67b5c5287b09584b67274660f0a2d65af2c3987e81dea21343943b5964"
+    },
+    {
+      "run_id": "gemma4-code90-ad-functional-overlay-c32-dev30-20261107-r2-control",
+      "label": "42db468937d5b759a88a89d4abe8288324a15c63b9ff8f54d6ea223d9f4bc46f",
+      "tier": 30,
+      "split": "dev",
+      "status": "completed",
+      "run_sha256": "a0ac5155140a9b378b1a7c4ccfb473ac4b3d5f042455340757cf528ea130e330"
+    },
+    {
+      "run_id": "gemma4-code90-ad-functional-overlay-c32-dev30-20261107-r2-as",
+      "label": "61833154179615f2b40a65e648e5752d139be37b60ac00f305eadee16e60368f",
+      "tier": 30,
+      "split": "dev",
+      "status": "completed",
+      "run_sha256": "daeb0680f0e5c35258ae749132306b774608dcff152dbcb5efb01ecb8cbcd79a"
+    },
+    {
+      "run_id": "gemma4-code90-ad-functional-overlay-c32-dev30-20261107-r2-aq",
+      "label": "da2708b1b2a9b5ecebbdb1c897f909e93c573483759ff22a71123bbad87f5b8b",
+      "tier": 30,
+      "split": "dev",
+      "status": "completed",
+      "run_sha256": "acc49c3b811dd7519b800a5dac9952b1fcbe5b05648f2b26abb203b22d24963c"
+    },
+    {
+      "run_id": "gemma4-code90-ad-functional-overlay-c32-dev30-20261107-r2-ar",
+      "label": "bca397eacfa68400737a2cbb6113702c532a869f2c277495ae84def541ce6e50",
+      "tier": 30,
+      "split": "dev",
+      "status": "completed",
+      "run_sha256": "344ed555175356b1f2b0578093b6909a56d9a7848b8a20f7d9a452b575f71287"
+    },
+    {
+      "run_id": "code90-current-ad-an-ar-an-20261107-v1",
+      "label": "10a72fc4cb4d6ffcd3efa0d9692625e764598d54fcdfb199f7f842b1724efa2f",
+      "tier": 30,
+      "split": "dev",
+      "status": "completed",
+      "run_sha256": "30e67c191c5450c82c0d58aac37f0dffd26043c235a59d1c4e9501063833f2bd"
+    },
+    {
+      "run_id": "code90-current-ad-an-ar-ar-20261107-v1",
+      "label": "23a4f622315bcfd400c9789f1095ee1f04aadcdd4a2236f040f027943c2e6d35",
+      "tier": 30,
+      "split": "dev",
+      "status": "completed",
+      "run_sha256": "7d6ee457ada66bc513c5e6e70e71c26c257fd43fe5a0e4668aa309befcdc966d"
+    },
+    {
+      "run_id": "code90-current-ad-an-ar-ad-20261107-v1",
+      "label": "27629fd3cd4c7573ca535832ce4e97cb8bc10b28ddd3f6f12ddf1b194633b1e8",
+      "tier": 30,
+      "split": "dev",
+      "status": "completed",
+      "run_sha256": "48c2b872c88860ef29daaee9fb78a3824eccc549b850f54deb4dfe8ede9fd876"
+    },
+    {
+      "run_id": "gemma4-code90-ad-helper-qk-overlay-c32-dev30-20261107-r1-aw",
+      "label": "05a65f83c07e5832d524cd716d1158f8275c81d1e86d995499e57a386338e086",
+      "tier": 30,
+      "split": "dev",
+      "status": "completed",
+      "run_sha256": "d337a5024da499e850a1e5681fd61fae33bfeb8002f8b4e455c7af2ea5cb18f7"
+    },
+    {
+      "run_id": "gemma4-code90-ad-helper-qk-overlay-c32-dev30-20261107-r1-ax",
+      "label": "453a82b66f4ea9d0e5b29af643ec3dd0b984cbd737822f7854e09dae28b140ea",
+      "tier": 30,
+      "split": "dev",
+      "status": "completed",
+      "run_sha256": "253177ac7daa7a6facb8fa602b3d1259ddc26626e5917b8e16bdc311badd1b96"
+    },
+    {
+      "run_id": "gemma4-code90-ad-helper-qk-overlay-c32-dev30-20261107-r1-av",
+      "label": "e73c7262dbf893b8a93a7a2eb6820d5c51afc1edac300072074dc68ff9caf146",
+      "tier": 30,
+      "split": "dev",
+      "status": "completed",
+      "run_sha256": "0b634ad5c51ad121e73f3a33efde100a6252f046b5fd123f0deef069835ff571"
+    },
+    {
+      "run_id": "gemma4-code90-ad-helper-qk-overlay-c32-dev30-20261107-r1-control",
+      "label": "0c6589f6ccccfa7c5389fd7e08a7296e065e43320e1868e756d7a76a8ecc1132",
+      "tier": 30,
+      "split": "dev",
+      "status": "completed",
+      "run_sha256": "8de860bf28c1c3ccaa69ed61b7f616600404027809a3996a84637e0dc081328a"
+    },
+    {
+      "run_id": "gemma4-ad-av-ad-c32-dev10-full14-20261107-v1",
+      "label": "27629fd3cd4c7573ca535832ce4e97cb8bc10b28ddd3f6f12ddf1b194633b1e8",
+      "tier": 10,
+      "split": "dev",
+      "status": "completed",
+      "run_sha256": "e01482a7ca7f1e0c8e1090aa7b0ee7101d3a66103661708b7e5a4aa6c9cd759d"
+    },
+    {
+      "run_id": "gemma4-ad-av-av-c32-dev10-full14-20261107-v1",
+      "label": "5d056eb03f954db80313a85167153c875fe5e436e4f97c281a3f55202d9b3eaf",
+      "tier": 10,
+      "split": "dev",
+      "status": "completed",
+      "run_sha256": "70389d1b4b1fea7e24511d266d3d24698c957f01097df6257e8ca1b87c4ebea7"
+    },
+    {
+      "run_id": "gemma4-code90-av-az-ba-overlay-c32-dev30-20261107-v1-r1-control",
+      "label": "e9de1bc2ba1d8624aeb83a0b06d6c651f69aede8a430ee54ee7388cd6bcc5fc3",
+      "tier": 30,
+      "split": "dev",
+      "status": "completed",
+      "run_sha256": "b8d1776d1360687526ca2de48afb84828c5ee949940c2f6a1ff61777989d715b"
+    },
+    {
+      "run_id": "gemma4-code90-av-az-ba-overlay-c32-dev30-20261107-v1-r1-control-repeat",
+      "label": "e9de1bc2ba1d8624aeb83a0b06d6c651f69aede8a430ee54ee7388cd6bcc5fc3",
+      "tier": 30,
+      "split": "dev",
+      "status": "completed",
+      "run_sha256": "bfa8ec1ee1f33c7587e730927696252cc1a5def002d5eb90c1d2f998d40807ab"
+    },
+    {
+      "run_id": "gemma4-code90-av-az-ba-overlay-c32-dev30-20261107-v1-r1-az",
+      "label": "5676422f433147045eca25ddc53d908bbf9ca8e4c62d4fd647c4ccdf381970d4",
+      "tier": 30,
+      "split": "dev",
+      "status": "completed",
+      "run_sha256": "9ceeaa4881ee90b777db8aa47bc7bf48b3ab33bfc1a7e564905c9721c178738b"
+    },
+    {
+      "run_id": "gemma4-code90-av-az-ba-overlay-c32-dev30-20261107-v1-r1-ba",
+      "label": "937ddbb70102949f8c0c74ae760706fa1849163b6b0d91dcaafe8696e9588602",
+      "tier": 30,
+      "split": "dev",
+      "status": "completed",
+      "run_sha256": "3fc6c30017c291d9c7a3074ed3457de66cebc4e5c26e65035e3809b1d19c5524"
+    }
+  ],
+  "inputs_sha256": {
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/worktrees/kairyu-bench-weight-tools/docs/experiments/evidence-2026-11-07-fresh-audit/runs.json": "9ce61c5ec1ac4360a3b93a0a0ae8802dd01de4fa5c56a230c15cb92bf3ca7add",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/results/gemma4-ad-av-av-c32-dev10-full14-20261107-v1/run.json": "70389d1b4b1fea7e24511d266d3d24698c957f01097df6257e8ca1b87c4ebea7",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/results/gemma4-ad-av-av-c32-dev10-full14-20261107-v1/report.json": "6899184140e03282740e02b7ce4826da258002a13634259d6ad7bb358db3f34c",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/results/gemma4-ad-av-av-c32-dev10-full14-20261107-v1/items.jsonl": "fdcc75ad5dcf940fe140320ce31ddca6a639c2f2982e80b1b6a29779f443b311",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/results/gemma4-fresh-av-observed-dev10-20261107-v1/run.json": "e9d40db9f0324bda06dac8d959f4266ab3ed626d311a36eec2a99504201b200a",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/results/gemma4-fresh-av-observed-dev10-20261107-v1/report.json": "b5f9f174937e1672cfff3bbaa91caadc0212125aac71e9a23a34989b1ef3efa1",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/results/gemma4-fresh-av-observed-dev10-20261107-v1/items.jsonl": "758db2ca303d83234eed4c225ee6559f2c98ee3ddae21a8adae13fb1e7e00804",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/code90-resume-20261106/current-ad-av-retention-full14-v1/full14-pair-launch.json": "c96086e566e6e338df5d56e04ded6ded5ff3ec639580c9819a510d3085755079",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/code90-resume-20261106/current-ad-av-retention-full14-v1/full14-actual-runner-oci.json": "e24fe2646d0037ebb18d634e26a2587fc55cabf392b49f852da57a7460a6a3da",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/code90-resume-20261106/current-ad-av-retention-full14-v1/plan.json": "55d4c010564681a1d32634837ee337bc47578b1279e30de8be60fdadcf658de1",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/code90-resume-20261106/current-ad-av-retention-full14-v1/observers/av/capture.json": "236674f789ebff39f9fcd574bb70bfa968191b36b20cc88d415ec592a99167e5",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-av-live10-v1/plan.json": "aeaef97dc39ea9a380cf6b662f5749c86d1807b600654eb529859ed49f6d2f7b",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-av-live10-v1/capture/capture.json": "163c6da4d9cf63c8ef42181eb1e70936ba05779b8839aa12b8998ba384745f3f",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-av-live10-v1/runner-image-source.json": "e28866ef8a081b578e0be192bdc803ad28cb868797085bbdb5b4b1fa0ab7066d",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-av-live10-v1/wsp-command.json": "54acc2096155e09009a3d0f2c53853bbed6613b8e88089ceb9b1762c9276610e"
+  },
+  "script_sha256": "aae29062f011700bfbb747c737ec4318074c9cdda940afc5d72f02d11af59656",
+  "model_calls": 0,
+  "new_benchmark_runs": 0
+}

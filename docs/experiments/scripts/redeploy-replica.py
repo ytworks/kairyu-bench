@@ -59,6 +59,32 @@ def inspect(name):
     return values[0]
 
 
+def compose_scope(control, service, expected_id=None):
+    """Refuse ambiguous Compose ownership, including stopped/renamed containers.
+
+    Compose selects by project/service labels, not the inspected canonical name.
+    A coordinated external owner must still prevent changes after this check.
+    Rollback may have zero or one remaining member, but never an ambiguous set.
+    """
+    ids = command([
+        "docker", "ps", "--all", "--no-trunc",
+        "--filter", "label=com.docker.compose.project=" + control.PROJECT,
+        "--filter", "label=com.docker.compose.service=" + service,
+        "--format", "{{.ID}}",
+    ]).splitlines()
+    if (any(not re.fullmatch(r"[0-9a-f]{64}", value) for value in ids)
+            or len(ids) != len(set(ids))):
+        raise ValueError("invalid Compose service membership response")
+    ids.sort()
+    if len(ids) > 1 or (expected_id is not None and ids != [expected_id]):
+        raise ValueError(
+            "Compose service selection is not exactly the intended target; "
+            f"matching container IDs: {ids}. Preserve evidence and resolve ownership before retrying."
+        )
+    return {"project": control.PROJECT, "service": service,
+            "container_ids": ids, "includes_stopped": True}
+
+
 def stamp(path):
     s = path.stat()
     return {k: getattr(s, "st_" + key) for k, key in (
@@ -324,9 +350,11 @@ def main():
         old = snapshot(original)
         if old != baseline["replicas"][args.service]:
             raise ValueError("target configuration/state changed since all-replica baseline freeze")
+        selection = compose_scope(control, args.service, old["id"])
         ident = identity(args)
         env = control._compose_env()
-        env.update(CHAT_CHECKPOINT_PATH=str(args.candidate.resolve()), CHAT_CHECKPOINT_TREE=ident["tree_sha256"],
+        env.update(COMPOSE_REMOVE_ORPHANS="0",
+                   CHAT_CHECKPOINT_PATH=str(args.candidate.resolve()), CHAT_CHECKPOINT_TREE=ident["tree_sha256"],
                    VLLM_IMAGE=old["image_id"])
         for s, record in baseline["replicas"].items():
             env[s.replace("-", "_").upper() + "_CPUSET"] = record["cpuset"]
@@ -336,6 +364,7 @@ def main():
                   "service": args.service, "baseline_path": str(args.baseline.resolve()), "baseline_sha256": sha(args.baseline),
                   "control_sha256": control_sha, "helper_sha256": helper_sha, "candidate_identity": ident, "before": old,
                   "rendered_service_sha256": rendered, "daemon_id": daemon,
+                  "compose_selection": selection, "compose_remove_orphans": False,
                   "scope": "Existing Compose service only; global served-checkpoint record is not updated; never benchmark mixed gateway."}
         save(args.output / "receipt.json", report)
         if not args.apply:
@@ -350,6 +379,7 @@ def main():
         idle(inspect(f"{control.PROJECT}-{args.service}-1"))
         if command(["docker", "info", "--format", "{{.ID}}"]).strip() != daemon:
             raise ValueError("Docker daemon changed before apply")
+        compose_scope(control, args.service, old["id"])
         def interrupted(_signum, _frame):
             raise InterruptedError("deployment interrupted")
         signals = (signal.SIGINT, signal.SIGTERM, signal.SIGHUP)
@@ -371,6 +401,7 @@ def main():
             try:
                 if command(["docker", "info", "--format", "{{.ID}}"]).strip() != daemon:
                     raise ValueError("daemon changed; rollback refused")
+                report["rollback_compose_selection"] = compose_scope(control, args.service)
                 rollback = dict(env, CHAT_CHECKPOINT_PATH=old["checkpoint_path"], CHAT_CHECKPOINT_TREE=old["tree"])
                 compose_up(control, rollback, args.service, args.timeout)
                 report["rollback"] = compare_after(old, inspect(f"{control.PROJECT}-{args.service}-1"),

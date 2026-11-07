@@ -154,3 +154,29 @@ actions. Recorded free space afterward was 146,189,119,488 bytes.
 
 Here `R=/mnt/nvme/kairyu/wsp/gemma4-coding-20261104`,
 `A=R/analysis/code90-resume-20261106`, and `CPU_PY=R/infra/weight-tools-ci/bin/python`.
+
+
+### Compose membership before replacement
+
+The single-replica helper inspects **all** containers with the target Compose
+project/service labels, including stopped or renamed containers. Preview and the
+last pre-apply check require exactly the expected original CID. Rollback refuses
+more than one remaining member; zero members permits recreating the original
+service after a failed create. These guards do not replace exclusive ownership
+against an external actor between the check and Compose execution.
+
+This protects a demonstrated failure: an observation restore deliberately kept a
+stopped retired observer under another name, but with the same Compose labels.
+Compose selected that object as well as the canonical service, removed the
+retired object and stopped the original before failing; the old blind rollback
+also failed. The original AV was restored with its exact CID and other production
+services were unchanged. Benchmark/capture host artifacts survived, while the
+retired container's unexported stdout/stderr may be unavailable. Do not treat a
+healthy canonical name as proof that Compose will touch only that container.
+Resolve an extra member's ownership and retain its evidence before any deliberate
+cleanup; this helper never deletes an unexpected member to make its guard pass.
+
+The helper also forces `COMPOSE_REMOVE_ORPHANS=0` for apply and rollback, so an
+inherited shell flag cannot extend deletion to other project services. Rollback
+restores the original weights/configuration and health; Compose recreation does
+not promise restoration of the original container ID.

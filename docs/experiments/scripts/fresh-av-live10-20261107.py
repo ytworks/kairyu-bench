@@ -163,10 +163,13 @@ def main():
     pins = {str(p.relative_to(SOURCE)): sha(p) for p in sorted(SOURCE.rglob('*')) if p.is_file()}
     dependencies = {str(p.relative_to(REPO)): sha(p) for p in [REPO/'pyproject.toml', REPO/'Dockerfile', *sorted((REPO/'scripts/locks').glob('*'))] if p.is_file()}
     save('source-dependencies.json', {'source': pins, 'dependencies': dependencies, 'operation_recipe_sha256': sha(Path(__file__)), 'plan_sha256': sha(N/'plan.json'), 'git_head': subprocess.check_output(['git', 'rev-parse', 'HEAD'], cwd=REPO, text=True).strip()})
-    env = {**os.environ, 'KAIRYU_BENCH_PYTHON': str(PYTHON), 'PYTHONDONTWRITEBYTECODE': '1', 'PYTHONPATH': str(REPO/'src')}
-    run([REPO/'kairyu-bench', 'wsp', 'observe', 'init', PLAN['original_container']['checkpoint'], '--output-dir', CAPTURE, '--model', 'gemma-4-31b', '--tp-size', '2', '--replicas', '1', '--mtp-tokens', '4', '--mode', 'live', '--decode-offsets', ','.join(map(str,PLAN['capture']['decode_offsets']))], 'capture-init.log', env)
+    sys.path.insert(0, str(SOURCE))
+    env = {**os.environ, 'KAIRYU_BENCH_PYTHON': str(PYTHON), 'PYTHONDONTWRITEBYTECODE': '1', 'PYTHONPATH': str(SOURCE)}
+    run([PYTHON, '-m', 'kairyu_bench', 'wsp', 'observe', 'init', PLAN['original_container']['checkpoint'], '--output-dir', CAPTURE, '--model', 'gemma-4-31b', '--tp-size', '2', '--replicas', '1', '--mtp-tokens', '4', '--mode', 'live', '--decode-offsets', ','.join(map(str,PLAN['capture']['decode_offsets']))], 'capture-init.log', env)
     from kairyu_bench.wsp.observe.collector import sampling_metadata, CaptureConfig
     config = json.loads((CAPTURE/'capture.json').read_text())
+    if PLAN.get('expected_checkpoint_sha256'):
+        assert config['checkpoint']['sha256'] == PLAN['expected_checkpoint_sha256'], 'fresh checkpoint hash differs from frozen saved candidate'
     config['limits']['prefill_positions'] = 8
     config['sampling'] = sampling_metadata(8,16,tuple(config['decode_offsets']))
     config['runtime_source_dir'] = str(SOURCE)
@@ -223,7 +226,7 @@ def main():
             assert inspect()['Id']==ORIGINAL_ID and inspect()['State']['Health']['Status']=='healthy'
             save('worker-closed.json',worker_status())
     phase('merging_capture')
-    run([REPO/'kairyu-bench','wsp','observe','merge',CAPTURE,'--results',R/'results'/RUN_ID,'--token-bin-size','64','--output',N/'merged.json'],'merge.log',env)
+    run([PYTHON,'-m','kairyu_bench','wsp','observe','merge',CAPTURE,'--results',R/'results'/RUN_ID,'--token-bin-size','64','--output',N/'merged.json'],'merge.log',env)
     phase('completed',status='completed',finished_epoch=time.time())
 
 

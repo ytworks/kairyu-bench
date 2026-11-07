@@ -1,4 +1,5 @@
 {
+  "av-repeat-audit.json": "04ca90421a9921f666b100981ff90d57a29a15c54d539f601d5447c9540d7103",
   "candidate-spec.json.gz": "b0f8ba697d4c59c36aba772ee6593607d810c58b9009661303910c3124b34fb5",
   "exclusive-lock-cpu-check.json": "be7256aad9a55692c6e5a105769117acfa893473b9399b6fde6d5fad505eb339",
   "finite-v1-cpu-preview.json": "d0d2c6c9fae882256a93dcc33d1dbe80258d36026f755e5ff5d8b3ab388cf8f7",
@@ -25,13 +26,23 @@
   "finite-v2-v1-v2-comparison.json": "a765bfa85702798febfde6ef3f108c9460c6d450edad2a308c579bcc85f094b4",
   "geometry.json": "885779fc51392146ff77834675024d185e498efb867f3292c4304e237964df25",
   "independent-postcheck.json": "f103c8bffd0eef603af517ab06050978ffc885037a8eac739d65e63ac9ea2bbe",
+  "materialization-apply-authorization.json": "71f1cf586d912e9ab0d94bb90248a638d768807d70d52cea7c46da82c52d0729",
+  "materialization-apply-precheck-failure-v1.json": "f07c579a9958d0af80a729a7b62728972185fe2a6ab38ea0bf4e9bd9ae27f03a",
+  "materialization-apply-precheck-v2.json": "71f1cf586d912e9ab0d94bb90248a638d768807d70d52cea7c46da82c52d0729",
+  "materialization-create-receipt.json": "2a48a832d4ae76b8abe407d1653a9d33ba00108206017e5e7a95f588434f5206",
+  "materialization-create.json": "b1cf0a6dea031ab608c11d8347b9fbda91ea5f314fcc8e9824d6141f6961d0e5",
+  "materialization-full-verification-freeze-input.json": "f897d77bf5e4bf219f6c8391cbcb738c780912d1a666ff6ac5cb4ae150fa8715",
   "materialization-plan.json": "d63108fa2969fc62714253e7d34ab1991d34f2c09ed66a6096afd0e4e4755534",
   "materialization-preview-receipt.json": "2bde34f3dc977b129f2c20bbd6ec8d4a8e46a2504e0306eec8c7e54a921470b2",
   "materialization-preview.json": "ef53a7d9d91f1e60c27daa5043942f69c71ae1381179149f6f23b042275fc260",
+  "materialization-verify-receipt.json": "c1445322004e5d3789bbcbc09f650b61a470ccef8805801c7580cffb330b750b",
+  "materialization-verify.json": "3d5b609ef17bc3a1ba1ad064af55e1beac36174e722a3e72339179f7a734a8c5",
   "namespace-prepare.json": "5b5598f928b0d7897705a8ddfe235a958a24096324c61f87813a3ed6b8f93101",
   "namespace-preview.json": "ad9fc5bc183fca4a8a1efb82efcfaf522af74228f7369b9f62c10b6271039ab5",
   "namespace-solve.json": "12e88353200023ab6714736bfc5529afe0ae2f5e1bfc696a62b8a36c7a35d8b1",
+  "opus-review-receipt.json": "6b45d6e20b0750cf299413b59f85ae0796e4a5d00ae0df3752a6ce493edf2692",
   "plan.json": "d118a5373f7da3e3911b48a11ca9c333fccdfd6b57cc091c805d61e5a8d76434",
   "preparation.json": "03b77f1ffcadfc6623481ba5b8e74790e4ea4125cea8576f4f868c41af32beae",
-  "solver-report.json": "2f32887f436b1119559c601c8b3f516ab4cb163637ab5fd5ea7b6dcfa6e4b825"
+  "solver-report.json": "2f32887f436b1119559c601c8b3f516ab4cb163637ab5fd5ea7b6dcfa6e4b825",
+  "transfer-amendment-freeze.json": "344993b8b1b2e3622c581d363d2a4ccdfc28b914e7d22e8c51151f43a8fcdfc3"
 }

@@ -8,6 +8,7 @@ import os
 from pathlib import Path
 from types import SimpleNamespace
 import tempfile
+import sys
 import unittest
 from unittest.mock import patch
 
@@ -64,6 +65,92 @@ class ReplicaRecipeTest(unittest.TestCase):
         changed["volumes"][0]["read_only"] = False
         with self.assertRaises(ValueError):
             invoke(changed)
+
+    def test_cli_refuses_retired_compose_duplicate_before_any_recreation(self):
+        # A renamed, stopped observer still has Compose labels. It must not be
+        # selected or removed by up, including if it appears after the preview.
+        old_id, retired_id = "a" * 64, "b" * 64
+        for apply, memberships, succeeds in (
+            (False, [[old_id, retired_id]], False),
+            (True, [[old_id, retired_id]], False),
+            (True, [[old_id], [old_id, retired_id]], False),
+            (True, [[old_id], [old_id]], True),
+            (True, [[old_id], [old_id], [old_id, retired_id]], "rollback_conflict"),
+            (True, [[old_id], [old_id], []], "rollback_empty"),
+        ):
+            with self.subTest(apply=apply, memberships=memberships), tempfile.TemporaryDirectory() as tmp:
+                root = Path(tmp)
+                candidate = root / "candidate"
+                candidate.mkdir()
+                control = root / "control.py"
+                control.write_text(
+                    "PROJECT = 'example'\nCHAT_SERVICES = ('gemma-0',)\n"
+                    "def _compose_env(): return {'COMPOSE_REMOVE_ORPHANS': '1'}\n"
+                )
+                freeze = root / "freeze.json"
+                freeze.write_text("{}")
+                argv = ["redeploy-replica", "--control", str(control), "--service", "gemma-0",
+                        "--candidate", str(candidate), "--freeze", str(freeze),
+                        "--baseline", str(root / "baseline.json"), "--output", str(root / "out")]
+                if apply:
+                    argv.append("--apply")
+                queries = iter(memberships)
+                commands = []
+
+                def command(args, **kwargs):
+                    commands.append(args)
+                    if args[:2] == ["docker", "info"]:
+                        return "test-daemon\n"
+                    if args[:2] == ["docker", "ps"]:
+                        self.assertIn("--all", args)
+                        self.assertIn("--no-trunc", args)
+                        self.assertIn("label=com.docker.compose.project=example", args)
+                        self.assertIn("label=com.docker.compose.service=gemma-0", args)
+                        ids = next(queries)
+                        return "\n".join(ids) + ("\n" if ids else "")
+                    raise AssertionError(f"unexpected external command: {args}")
+
+                old = {"id": old_id, "image_id": "sha256:fixed", "cpuset": "0-3",
+                       "checkpoint_path": "/old", "tree": "old-tree", "running": True}
+                container = {"NetworkSettings": {"Networks": {"example": {"IPAddress": "127.0.0.1"}}}}
+                identity = {"tree_sha256": "c" * 64, "stat": {}}
+                with (patch.object(sys, "argv", argv), patch.object(tool.os, "getuid", return_value=1003),
+                      patch.object(tool, "command", side_effect=command),
+                      patch.object(tool, "inspect", return_value=container),
+                      patch.object(tool, "snapshot", return_value=old),
+                      patch.object(tool, "identity", return_value=identity),
+                      patch.object(tool, "check_render", return_value="d" * 64),
+                      patch.object(tool, "idle"), patch.object(tool, "compose_up") as mutate,
+                      patch.object(tool, "compare_after", return_value={"id": "e" * 64})):
+                    if succeeds == "rollback_empty":
+                        mutate.side_effect = [RuntimeError("simulated recreation failure"), None]
+                        with self.assertRaisesRegex(RuntimeError, "simulated recreation failure"):
+                            tool.main()
+                        self.assertEqual(mutate.call_count, 2)
+                        rollback_env = mutate.call_args_list[1].args[1]
+                        self.assertEqual(rollback_env["CHAT_CHECKPOINT_PATH"], "/old")
+                        self.assertEqual(rollback_env["CHAT_CHECKPOINT_TREE"], "old-tree")
+                        self.assertEqual(rollback_env["COMPOSE_REMOVE_ORPHANS"], "0")
+                        receipt = json.loads((root / "out/receipt.json").read_text())
+                        self.assertTrue(receipt["rollback_completed"])
+                    elif succeeds == "rollback_conflict":
+                        mutate.side_effect = RuntimeError("simulated recreation failure")
+                        with self.assertRaisesRegex(RuntimeError, "simulated recreation failure"):
+                            tool.main()
+                        self.assertEqual(mutate.call_count, 1)
+                        receipt = json.loads((root / "out/receipt.json").read_text())
+                        self.assertFalse(receipt["rollback_completed"])
+                        self.assertEqual(receipt["rollback_error_type"], "ValueError")
+                    elif succeeds:
+                        tool.main()
+                        self.assertEqual(mutate.call_count, 1)
+                        self.assertEqual(mutate.call_args.args[1]["COMPOSE_REMOVE_ORPHANS"], "0")
+                        self.assertEqual(json.loads((root / "out/receipt.json").read_text())["status"], "completed")
+                    else:
+                        with self.assertRaisesRegex(ValueError, "Compose service selection"):
+                            tool.main()
+                        mutate.assert_not_called()
+                self.assertTrue(commands)
 
     def test_frozen_identity_rejects_changed_frozen_stat_with_same_size(self):
         with tempfile.TemporaryDirectory() as temporary:

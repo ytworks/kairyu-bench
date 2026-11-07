@@ -1,0 +1,314 @@
+{
+  "status": "full_editor_verification_bound_to_postverify_stat",
+  "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/checkpoints/code90-current-ad-helper-av-v1",
+  "candidate": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/checkpoints/fresh-code-joint-f02",
+  "files": [
+    {
+      "path": "chat_template.jinja",
+      "source_sha256": "ae53464bf3be25802b3a5b37def7fd89667067d7577049b3b2d74c4d8de4c6d4",
+      "candidate_sha256": "ae53464bf3be25802b3a5b37def7fd89667067d7577049b3b2d74c4d8de4c6d4",
+      "size": 18683
+    },
+    {
+      "path": "config.json",
+      "source_sha256": "e967dd38bc5cfd38bd09a995a7bf4a754075df2b46aba68f7fbb5a791e6d8dd1",
+      "candidate_sha256": "e967dd38bc5cfd38bd09a995a7bf4a754075df2b46aba68f7fbb5a791e6d8dd1",
+      "size": 4621
+    },
+    {
+      "path": "generation_config.json",
+      "source_sha256": "d4226bbe3117d2d253ba4609720ba82c6c4ce4627a9a6ae05387c78983ac03de",
+      "candidate_sha256": "d4226bbe3117d2d253ba4609720ba82c6c4ce4627a9a6ae05387c78983ac03de",
+      "size": 208
+    },
+    {
+      "path": "model-00001-of-00002.safetensors",
+      "source_sha256": "0589dc8a7a3afba79fe2d8444221dae410db57ce1be33eb72d9be637d70fcf10",
+      "candidate_sha256": "e6144c1c2322cd2a05ced629c754c229ec530747470b3ba423a3c905b8d6e97c",
+      "size": 49923154850
+    },
+    {
+      "path": "model-00002-of-00002.safetensors",
+      "source_sha256": "9be24bc9910dbbe54f3f46154189c729071fd56dc41331f4a97a6ad3e02b3b56",
+      "candidate_sha256": "f472653dfcfe3218f33111b44e936e097a8ba01014b9b5376f33c3196980181b",
+      "size": 12623183414
+    },
+    {
+      "path": "model.safetensors.index.json",
+      "source_sha256": "390b7f9a0a502e4526cf20862d22954c911cc318d8aba2cdb745c6fbd98264f6",
+      "candidate_sha256": "390b7f9a0a502e4526cf20862d22954c911cc318d8aba2cdb745c6fbd98264f6",
+      "size": 120246
+    },
+    {
+      "path": "processor_config.json",
+      "source_sha256": "32bdf45d2ad4cc29a0822ddd157a182de76644f0419a6228d151495256e9813c",
+      "candidate_sha256": "32bdf45d2ad4cc29a0822ddd157a182de76644f0419a6228d151495256e9813c",
+      "size": 1689
+    },
+    {
+      "path": "tokenizer.json",
+      "source_sha256": "cc8d3a0ce36466ccc1278bf987df5f71db1719b9ca6b4118264f45cb627bfe0f",
+      "candidate_sha256": "cc8d3a0ce36466ccc1278bf987df5f71db1719b9ca6b4118264f45cb627bfe0f",
+      "size": 32169626
+    },
+    {
+      "path": "tokenizer_config.json",
+      "source_sha256": "9f4fec4b1dc6ecddf8f4a92e9caea5971c0e67d81309f3f9066a2bee8c362633",
+      "candidate_sha256": "9f4fec4b1dc6ecddf8f4a92e9caea5971c0e67d81309f3f9066a2bee8c362633",
+      "size": 3082
+    }
+  ],
+  "source_tree_sha256": "5d056eb03f954db80313a85167153c875fe5e436e4f97c281a3f55202d9b3eaf",
+  "candidate_tree_sha256": "46680f4066f57c1596a1f4c66b67d23929c96b325943d981c6d74260cdbb3f5c",
+  "source_inventory_stat": {
+    "chat_template.jinja": {
+      "dev": 2306,
+      "inode": 181678464,
+      "size": 18683,
+      "mtime_ns": 1794014158733915132,
+      "ctime_ns": 1794014158733915132,
+      "mode": 33152,
+      "uid": 1003,
+      "gid": 1003,
+      "nlink": 1
+    },
+    "config.json": {
+      "dev": 2306,
+      "inode": 181678465,
+      "size": 4621,
+      "mtime_ns": 1794014158734915095,
+      "ctime_ns": 1794014158734915095,
+      "mode": 33152,
+      "uid": 1003,
+      "gid": 1003,
+      "nlink": 1
+    },
+    "generation_config.json": {
+      "dev": 2306,
+      "inode": 181678466,
+      "size": 208,
+      "mtime_ns": 1794014158734915095,
+      "ctime_ns": 1794014158734915095,
+      "mode": 33152,
+      "uid": 1003,
+      "gid": 1003,
+      "nlink": 1
+    },
+    "model-00001-of-00002.safetensors": {
+      "dev": 2306,
+      "inode": 181678467,
+      "size": 49923154850,
+      "mtime_ns": 1794014260450139654,
+      "ctime_ns": 1794014260450139654,
+      "mode": 33152,
+      "uid": 1003,
+      "gid": 1003,
+      "nlink": 1
+    },
+    "model-00002-of-00002.safetensors": {
+      "dev": 2306,
+      "inode": 181678468,
+      "size": 12623183414,
+      "mtime_ns": 1794014261005119199,
+      "ctime_ns": 1794014261005119199,
+      "mode": 33152,
+      "uid": 1003,
+      "gid": 1003,
+      "nlink": 1
+    },
+    "model.safetensors.index.json": {
+      "dev": 2306,
+      "inode": 181678469,
+      "size": 120246,
+      "mtime_ns": 1794014259954157935,
+      "ctime_ns": 1794014259954157935,
+      "mode": 33152,
+      "uid": 1003,
+      "gid": 1003,
+      "nlink": 1
+    },
+    "processor_config.json": {
+      "dev": 2306,
+      "inode": 181678470,
+      "size": 1689,
+      "mtime_ns": 1794014259954157935,
+      "ctime_ns": 1794014259954157935,
+      "mode": 33152,
+      "uid": 1003,
+      "gid": 1003,
+      "nlink": 1
+    },
+    "tokenizer.json": {
+      "dev": 2306,
+      "inode": 181678471,
+      "size": 32169626,
+      "mtime_ns": 1794014259991156571,
+      "ctime_ns": 1794014259991156571,
+      "mode": 33152,
+      "uid": 1003,
+      "gid": 1003,
+      "nlink": 1
+    },
+    "tokenizer_config.json": {
+      "dev": 2306,
+      "inode": 181678472,
+      "size": 3082,
+      "mtime_ns": 1794014260013155760,
+      "ctime_ns": 1794014260013155760,
+      "mode": 33152,
+      "uid": 1003,
+      "gid": 1003,
+      "nlink": 1
+    }
+  },
+  "candidate_inventory_stat": {
+    "chat_template.jinja": {
+      "dev": 2306,
+      "inode": 182098075,
+      "size": 18683,
+      "mtime_ns": 1794028072644794301,
+      "ctime_ns": 1794028072644794301,
+      "mode": 33204,
+      "uid": 1003,
+      "gid": 1003,
+      "nlink": 1
+    },
+    "config.json": {
+      "dev": 2306,
+      "inode": 182098076,
+      "size": 4621,
+      "mtime_ns": 1794028072645794268,
+      "ctime_ns": 1794028072645794268,
+      "mode": 33204,
+      "uid": 1003,
+      "gid": 1003,
+      "nlink": 1
+    },
+    "generation_config.json": {
+      "dev": 2306,
+      "inode": 182098077,
+      "size": 208,
+      "mtime_ns": 1794028072645794268,
+      "ctime_ns": 1794028072645794268,
+      "mode": 33204,
+      "uid": 1003,
+      "gid": 1003,
+      "nlink": 1
+    },
+    "model-00001-of-00002.safetensors": {
+      "dev": 2306,
+      "inode": 182098078,
+      "size": 49923154850,
+      "mtime_ns": 1794028171554622206,
+      "ctime_ns": 1794028171554622206,
+      "mode": 33204,
+      "uid": 1003,
+      "gid": 1003,
+      "nlink": 1
+    },
+    "model-00002-of-00002.safetensors": {
+      "dev": 2306,
+      "inode": 182098081,
+      "size": 12623183414,
+      "mtime_ns": 1794028170772647248,
+      "ctime_ns": 1794028170772647248,
+      "mode": 33204,
+      "uid": 1003,
+      "gid": 1003,
+      "nlink": 1
+    },
+    "model.safetensors.index.json": {
+      "dev": 2306,
+      "inode": 182098083,
+      "size": 120246,
+      "mtime_ns": 1794028170521655286,
+      "ctime_ns": 1794028170521655286,
+      "mode": 33204,
+      "uid": 1003,
+      "gid": 1003,
+      "nlink": 1
+    },
+    "processor_config.json": {
+      "dev": 2306,
+      "inode": 182098084,
+      "size": 1689,
+      "mtime_ns": 1794028170521655286,
+      "ctime_ns": 1794028170521655286,
+      "mode": 33204,
+      "uid": 1003,
+      "gid": 1003,
+      "nlink": 1
+    },
+    "tokenizer.json": {
+      "dev": 2306,
+      "inode": 182098085,
+      "size": 32169626,
+      "mtime_ns": 1794028170560654037,
+      "ctime_ns": 1794028170560654037,
+      "mode": 33204,
+      "uid": 1003,
+      "gid": 1003,
+      "nlink": 1
+    },
+    "tokenizer_config.json": {
+      "dev": 2306,
+      "inode": 182098086,
+      "size": 3082,
+      "mtime_ns": 1794028170582653333,
+      "ctime_ns": 1794028170582653333,
+      "mode": 33204,
+      "uid": 1003,
+      "gid": 1003,
+      "nlink": 1
+    }
+  },
+  "stat_capture_started_epoch": 1794028505.2521803,
+  "stat_capture_epoch": 1794028505.2524629,
+  "verify_finished_epoch": 1794028459.555246,
+  "verify_finished_epoch_note": "Upper bound from receipt write immediately after verify subprocess returned; not a separately sampled process-exit timestamp.",
+  "verify_completion_window_epoch": [
+    1794028459.531247,
+    1794028459.555246
+  ],
+  "manifest": {
+    "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f02/materialization/edit-manifest.json",
+    "sha256": "1cb562c4d9fbd1fe3bc6a2f2c489b5b482406a5d31ff086ca0f2b48a49d47880"
+  },
+  "verify": {
+    "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f02/materialization/verify.json",
+    "sha256": "3d5b609ef17bc3a1ba1ad064af55e1beac36174e722a3e72339179f7a734a8c5"
+  },
+  "spec": {
+    "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f02/proposal/fresh-code-joint-f02.json",
+    "sha256": "27f000e4933bdb63d29217c6312114d2b912d349a67617fe42d17d263994410b"
+  },
+  "scope": "all regular files except .cache and .kairyu-model-attestation.json",
+  "legacy_full_hashes_missing": false,
+  "changed_elements": 203419,
+  "changed_tensors": 410,
+  "delta_l2": 1.1089462630318312,
+  "code_sha256": {
+    "src/kairyu_bench/wsp/weights/__init__.py": "84407e8a57e31b915d5ba936a309457422b3b6c347fde2056f1dd492ad511cca",
+    "src/kairyu_bench/wsp/weights/checkpoint.py": "898297c05e7179cdc4568d6f290b978073bcebafea804ac043b54030e8205bf9",
+    "src/kairyu_bench/wsp/weights/cli.py": "4193ee3863ac8d96ead9ba167ac572619d280ed9277f5729df970361cb882b26",
+    "src/kairyu_bench/wsp/weights/composition.py": "7ce2bc057ad3974d8c4d8509be0c193dbb7fd6b42cd523e1c9df5619bf7f84b7",
+    "src/kairyu_bench/wsp/weights/editor.py": "0983580f41989c26e84c16c26924f2850dd4e5d3d12917bb9553d7feb92333d2",
+    "src/kairyu_bench/wsp/weights/finite_replay.py": "71c424bffac775ba112e709632df0a37351a79c3121827be7c9844f321c7c4d3",
+    "src/kairyu_bench/wsp/weights/finite_response.py": "2f4b474089290d66a291d61eea176743d2502303943c6fded5b4331ebbff77af",
+    "src/kairyu_bench/wsp/weights/matrix.py": "002761474fd4bba4bce089b23eb6fcf701ab7c40b39b819a272a39dfdbac97e9",
+    "src/kairyu_bench/wsp/weights/native_faststore.py": "445cc73783bd6bd61890b107bb76ddca1e388a9bf84b630125a01486389578cd",
+    "src/kairyu_bench/wsp/weights/receipts.py": "b7299c8c89ad07e2f7df6cacfac39adabb4c98e6407da2585d6649dc26b37f27",
+    "src/kairyu_bench/wsp/weights/shard_pool.py": "f45d073c9950579753c74143dbc9cdc89abfdc6b0d2e4c694c91807d9b4cbc2f",
+    "src/kairyu_bench/wsp/weights/statistics.py": "7c021ac29e0e6bdbcb5a0bc150a598eeef7c9d1a39baf3931525d849ca0370f0"
+  },
+  "git_head_at_preview": "078417a4d5ea5591de6ec10fc9398ec4830b1314",
+  "git_head_at_stat_capture": "0f2298536847f2a4ed4dcf636536558c005ca520",
+  "hash_evidence": "All nine file SHA values come from completed full editor verification; canonical tree reconstructed using Checkpoint.identity ordering/serialization. This evidence builder did not rehash checkpoint payload.",
+  "fresh_payload_rehash_by_evidence_builder": false,
+  "source_stat_unchanged_since_preview": true,
+  "seconds": {
+    "create": 215.17392539593857,
+    "verify": 174.63091336900834
+  },
+  "script_sha256": "cd1a5dccee960839d94fdb01f80ca348135e0fad128ff773d69a1b85dd424eb5"
+}

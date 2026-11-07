@@ -155,3 +155,16 @@ serving provenance still require separate evidence.
 - The fresh F01 CPU/finite recipes accept explicit experiment root and candidate ID while preserving F01 defaults. Fixed F02 additionally selects referent as a target purpose. Finite `--unsaved-spec --exclusive-global` uses the original AV checkpoint plus a CPU-verified edit spec in RAM, with no claim of a saved candidate, and holds both global and GPU6 locks. All input/source hashes and exact target restoration are retained.
 
 - [Fresh AV full-manifest live observation](experiments/2026-11-07-fresh-av-live-observation.md): an explicit remote observer/WSP owner accepts a plan directory and CPU-only preview, verifies the frozen observer source and exact baseline runner, keeps the 778-item / 14-area scope and exact pre-attachment CID restoration. Its paired code-capture audit retains every code question, request/rank/position/acceptance identity, all-item activation coverage and unmatched pre-run records. The completed AV baseline, measured four-request overhead, per-item scores and layer-25 fixed-offset RMS table are retained; unmatched records remain partial, and CPU preview does not deploy candidate weights.
+
+- `docs/experiments/scripts/fresh-av-repeat-audit.py`: independent all-run identity scan, exact same-checkpoint dev10 repeat count, all 26 code outcomes and capture/runner/source condition comparison. Tied different models are never counted as repeats.
+
+- `docs/experiments/scripts/fresh-materialization-evidence.py`: binds completed full editor verification to all nine source/candidate hashes, canonical trees and postverify full stat fields; records timing bounds and exact code hashes without redundant checkpoint payload hashing.
+
+- [30/60 全問監査](experiments/2026-11-07-wsp-large-tier-audit.md): `docs/experiments/scripts/fresh-wsp-large-tier-audit.py` は現 manifest・旧 full dev/test・AV 反復を読み取り照合し、全 source 件数と個別 code 得点、入力 hash、実測と区別した時間概算を保存する。新規 WSP / GPU 実行なし。
+
+
+Single-replica redeployment now checks all Compose project/service members,
+including stopped retired observers, before preview/apply and guarded rollback.
+The [saved-finalist guide](wsp-saved-finalist-confirmation.md#compose-membership-before-replacement)
+records the real duplicate-label failure and exact-AV recovery. The CLI regression
+fixture proves rejection before mutation and refusal of ambiguous rollback.
