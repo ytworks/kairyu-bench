@@ -170,3 +170,13 @@ records the real duplicate-label failure and exact-AV recovery. The CLI regressi
 fixture proves rejection before mutation and refusal of ambiguous rollback.
 
 - [著者120ケースの事後監査](experiments/2026-11-07-authored-case-audit.md): `scripts/experiments/gemma4-purpose/authored_case_audit.py` は固定入力と保存有限値を CPU 再集計し、限定 fixture で契約反例を記録する。新候補・モデル評価・公式 benchmark 採点を行わない。
+
+- [F02全778公式比較](experiments/2026-11-07-f02-official-results.md): `docs/experiments/scripts/fresh-f02-official-comparison.py` は既存 audit_run/strict compare を再利用し、入力・runtime receipts・全問題・source平均・凍結guardrail・usage/agent手数を保存する。capture本体やモデルを実行しない。
+
+- [F02 matched observed diagnostic](experiments/2026-11-07-f02-observed-diagnostic.md): full778 result, incomplete close acknowledgement preserved, one-pass record/trace/rank audit, and a guarded CPU-only owned-retired log export with in-memory credential redaction. No metadata flag patch, retry, deletion or new model execution is introduced by the audit/export.
+
+- [AV/F02 four-task observation display](experiments/2026-11-07-av-f02-four-code-observation.md): recorded one-off bounded extraction and existing offline viewer; all-code/all-item results retained, absent pairing and F02 close acknowledgement explicit. No new model run.
+
+- `docs/experiments/scripts/fresh-wsp-cache-preflight.py`: pinned-runner CPU cache preflight for full canonical selections, package/source identities, H5, source rows and task-image names. Can relocate advisory locks while keeping data read-only. See `docs/experiments/2026-11-07-av-dev30-cache-preflight.md` for limitations and all preparation failures; no generation, scoring, prepare or pull.
+
+- [AV full dev30 ordinary-replica run](experiments/2026-11-07-av-dev30-dp4-run.md): minimal canonical-wrapper/flock owner, client HTTP traces only; no model deployment or activation capture. All 2,338 items and preparation failures retained.

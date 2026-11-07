@@ -35,14 +35,19 @@ with (args.artifacts / "merged.json").open() as stream:
         raise ValueError("merged task array not found")
 merged_run = json.loads("".join(header) + '"tasks": []}]}')["runs"][0]
 acceptance = {}
+acceptance_counts = Counter()
 for path in sorted(capture.glob("workers/*/acceptance.jsonl")):
     for record in json_lines(path):
+        acceptance_counts[path.parent.name] += 1
         key = (str(record["replica"]), record["step"], record["request_id"])
         prior = acceptance.setdefault(key, record)
         assert prior == record
 request_regex = _REQUEST
 counts = Counter()
 observed_item_ids = set()
+worker_activation_counts = Counter()
+trace_ranks = defaultdict(set)
+trace_backend_requests = defaultdict(set)
 unlinked = defaultdict(lambda: {"records": 0, "ranks": set(), "phases": set(), "positions": set()})
 code = {key: {"id": key, "score": items[key]["score"], "calls": {}} for key in sorted(code_ids)}
 for path in sorted(capture.glob("workers/*/observations.jsonl.gz")):
@@ -56,6 +61,7 @@ for path in sorted(capture.glob("workers/*/observations.jsonl.gz")):
         for row_index, row in enumerate(batch["rows"]):
             request, position, phase, spec_index, accepted = row
             counts["records"] += len(batch["site_ids"])
+            worker_activation_counts[path.parent.name] += len(batch["site_ids"])
             match = request_regex.search(request)
             trace = traces.get(match.group(1)) if match else None
             if trace is None:
@@ -70,6 +76,8 @@ for path in sorted(capture.glob("workers/*/observations.jsonl.gz")):
                 counts["excluded_other_run_records"] += len(batch["site_ids"])
                 continue
             counts["official_records"] += len(batch["site_ids"])
+            trace_ranks[trace["trace_id"]].add(rank)
+            trace_backend_requests[trace["trace_id"]].add(request)
             key = trace["item_id"]
             observed_item_ids.add(key)
             if key not in code:
@@ -110,9 +118,22 @@ for entry in unlinked.values():
         entry[key] = sorted(entry[key])
 assert counts["records"] == merged_run["capture"]["counts"]["records"]
 assert counts["unlinked_records"] == merged_run["capture"]["counts"]["unlinked_records"]
+worker_accounting = {}
+for path in sorted(capture.glob("workers/*/status.json")):
+    status = json.loads(path.read_text())
+    name = path.parent.name
+    activation_count = worker_activation_counts[name]
+    acceptance_count = acceptance_counts[name]
+    worker_accounting[name] = {"parsed_activation_records": activation_count, "parsed_acceptance_records": acceptance_count, "writer_records_written": status["records_written"], "counts_equal": activation_count + acceptance_count == status["records_written"], "closed": status["closed"], "status_mtime_epoch": path.stat().st_mtime, "writer_last_completed_epoch": status["writer_queue"]["last_completed_at_unix"]}
+official_traces = {key: value for key, value in traces.items() if value.get("run_id") == run_id}
+missing_trace_ranks = [{"trace_id": key, "item_id": value["item_id"], "request_scope": value.get("request_scope"), "operation": value.get("operation"), "observed_ranks": sorted(trace_ranks[key])} for key, value in official_traces.items() if trace_ranks[key] != {0, 1}]
 result = {
     "schema_version": 1, "run_id": run_id, "capture_id": config["capture_id"],
     "recipe_sha256": hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),
+    "worker_accounting": worker_accounting, "official_client_trace_count": len(official_traces),
+    "official_traces_missing_expected_rank": missing_trace_ranks,
+    "observed_backend_requests_per_trace": {key: len(value) for key, value in trace_backend_requests.items()},
+    "coverage_limit": "Trace-rank coverage does not prove every scheduled activation. Trial-scoped agent traces may contain several backend calls; their expected call count is not inferred.",
     "capture": merged_run["capture"], "counts": dict(counts), "unlinked": dict(unlinked),
     "code_items": list(code.values()), "observed_item_ids": sorted(observed_item_ids),
     "official_items_without_activation": sorted(set(items) - observed_item_ids),

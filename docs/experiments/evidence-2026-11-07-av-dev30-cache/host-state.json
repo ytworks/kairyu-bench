@@ -1,0 +1,92 @@
+{
+  "socket": "unix:///mnt/nvme/kairyu/docker/wsp/run/docker.sock",
+  "runner_image_id": "sha256:f91bdcf997af6d7b194bec229812fd018277158f6795de7d91e58448936e7ad8",
+  "wsp-dind": {
+    "id": "149b564776c7bda50b4039b44b0cf52b1178272a481a4c4dee88de2f283ae334",
+    "state": "running",
+    "mounts": [
+      {
+        "Type": "bind",
+        "Source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/results",
+        "Destination": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/results",
+        "Mode": "rw",
+        "RW": true,
+        "Propagation": "rprivate"
+      },
+      {
+        "Type": "bind",
+        "Source": "/mnt/nvme/kairyu/bench-cache/wsp",
+        "Destination": "/mnt/nvme/kairyu/bench-cache/wsp",
+        "Mode": "",
+        "RW": true,
+        "Propagation": "rprivate"
+      },
+      {
+        "Type": "bind",
+        "Source": "/mnt/nvme/kairyu/docker/wsp/data",
+        "Destination": "/var/lib/docker",
+        "Mode": "",
+        "RW": true,
+        "Propagation": "rprivate"
+      },
+      {
+        "Type": "bind",
+        "Source": "/mnt/nvme/kairyu/docker/wsp/run",
+        "Destination": "/var/run",
+        "Mode": "",
+        "RW": true,
+        "Propagation": "rprivate"
+      },
+      {
+        "Type": "bind",
+        "Source": "/home/y-takagi/kairyu-bench",
+        "Destination": "/home/y-takagi/kairyu-bench",
+        "Mode": "",
+        "RW": true,
+        "Propagation": "rprivate"
+      }
+    ],
+    "ports": {
+      "2375/tcp": null,
+      "2376/tcp": null
+    },
+    "network_names": [
+      "bridge"
+    ]
+  },
+  "gemma-4-31b-8gpu-kairyu-1": {
+    "id": "88943a0985ba97dfb17be6b5fb54040eba2570b70ce05126bd410162d3658ffb",
+    "state": "running",
+    "mounts": [
+      {
+        "Type": "bind",
+        "Source": "/mnt/nvme/kairyu/model-volumes/gemma-4-31b-8gpu/placement-log",
+        "Destination": "/var/lib/kairyu/placement",
+        "Mode": "rw",
+        "RW": true,
+        "Propagation": "rprivate"
+      },
+      {
+        "Type": "bind",
+        "Source": "/home/y-takagi/kairyu/examples/gemma-4-31b-8gpu/kairyu.yaml",
+        "Destination": "/etc/kairyu/kairyu.yaml",
+        "Mode": "ro",
+        "RW": false,
+        "Propagation": "rprivate"
+      }
+    ],
+    "ports": {
+      "8000/tcp": [
+        {
+          "HostIp": "127.0.0.1",
+          "HostPort": "8020"
+        }
+      ]
+    },
+    "network_names": [
+      "gemma-4-31b-8gpu_default"
+    ]
+  },
+  "free_nvme_bytes": 71321071616,
+  "recorded_at_unix": 1794033159.7088578
+}

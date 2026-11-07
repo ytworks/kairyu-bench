@@ -1,0 +1,85 @@
+{
+  "status": "homogeneous_direct_four_and_retained_gateway_metadata_verified",
+  "created_epoch": 1794033665.138552,
+  "gateway": {
+    "cid": "88943a0985ba97dfb17be6b5fb54040eba2570b70ce05126bd410162d3658ffb",
+    "endpoint": "http://172.26.0.9:8000/v1",
+    "model_ids": [
+      "gemma-4-31b",
+      "embeddinggemma-2"
+    ],
+    "image_id": "sha256:8e6c37a16eea6f7855b2142fb75555250b676cfc3a7c5c2d9a748bfd1175001b",
+    "healthy": true,
+    "unchanged_protected_service": true
+  },
+  "replicas": {
+    "gemma-0": {
+      "cid": "baf23e529c4e217801633d0c62b04801e3991b24f6267274104f9d3e355e62c3",
+      "endpoint": "http://172.26.0.4:8000/v1",
+      "models": [
+        "gemma-4-31b"
+      ],
+      "tree": "5d056eb03f954db80313a85167153c875fe5e436e4f97c281a3f55202d9b3eaf",
+      "checkpoint_mount": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/checkpoints/code90-current-ad-helper-av-v1",
+      "checkpoint_readonly": true,
+      "runtime_preserved": true,
+      "mtp_tokens": 4,
+      "tp_size": 2,
+      "native_runtime_flags_preserved": true,
+      "receipt_sha256": "80d6d558668b79025990f5a3d132b694559811ce0a742a423a932f1e33f24dbc",
+      "seconds": 112.11816930770874
+    },
+    "gemma-1": {
+      "cid": "ce1a67f4ec204a90e486092534e3f700f3abf2fbc9f1e68f87668009104ee00d",
+      "endpoint": "http://172.26.0.5:8000/v1",
+      "models": [
+        "gemma-4-31b"
+      ],
+      "tree": "5d056eb03f954db80313a85167153c875fe5e436e4f97c281a3f55202d9b3eaf",
+      "checkpoint_mount": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/checkpoints/code90-current-ad-helper-av-v1",
+      "checkpoint_readonly": true,
+      "runtime_preserved": true,
+      "mtp_tokens": 4,
+      "tp_size": 2,
+      "native_runtime_flags_preserved": true,
+      "receipt_sha256": "be4ac4800d69300bbd3484ca7f2deba54abf8762376fd4707428fc9b13e13471",
+      "seconds": 112.7139720916748
+    },
+    "gemma-2": {
+      "cid": "fd4ec2eb9d7deba2ce3e790add6b50c0ee79a6390495320d8697873b32957bcf",
+      "endpoint": "http://172.26.0.6:8000/v1",
+      "models": [
+        "gemma-4-31b"
+      ],
+      "tree": "5d056eb03f954db80313a85167153c875fe5e436e4f97c281a3f55202d9b3eaf",
+      "checkpoint_mount": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/checkpoints/code90-current-ad-helper-av-v1",
+      "checkpoint_readonly": true,
+      "runtime_preserved": true,
+      "mtp_tokens": 4,
+      "tp_size": 2,
+      "native_runtime_flags_preserved": true,
+      "receipt_sha256": "bbe6837e8f486e6ba5f6ec89b2ee152b6d610c5abbc8f3e440f94e9755c4cd02",
+      "seconds": 117.0195324420929
+    },
+    "gemma-3": {
+      "cid": "e8ec9f3bbfca4baa44b16590ee771a96bba1e1328a60ff0c904995f2675a31b5",
+      "endpoint": "http://172.26.0.8:8000/v1",
+      "models": [
+        "gemma-4-31b"
+      ],
+      "tree": "5d056eb03f954db80313a85167153c875fe5e436e4f97c281a3f55202d9b3eaf",
+      "checkpoint_mount": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/checkpoints/code90-current-ad-helper-av-v1",
+      "checkpoint_readonly": true,
+      "runtime_preserved": true,
+      "mtp_tokens": 4,
+      "tp_size": 2,
+      "native_runtime_flags_preserved": true,
+      "receipt_sha256": "8116199cf8d2be2465bf90e373ec83c43ec03a510cae8a0f6d33ad29e999e4cf",
+      "seconds": 111.98277974128723
+    }
+  },
+  "closure_sha256": "671fc7f0b4f7853631e7dff05e5cb9d76c4d9b95b66927d32fa0393ed2ed82ee",
+  "generation_requests": 0,
+  "check": "Read-only GET /v1/models plus exact CID/runtime/mount/health evidence; not a generation score.",
+  "global_served_record_modified": false
+}

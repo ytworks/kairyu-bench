@@ -1,0 +1,56 @@
+{
+  "status": "all_four_previews_passed_no_service_deployment",
+  "receipts": {
+    "gemma-0": {
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-av-dev30-deployment-plan-v1/gemma-0-preview-v1/receipt.json",
+      "sha256": "2533668e91a232383b8b5eb70d20f3122f8fafadd14c27a35e5c492d87de7d22",
+      "target_id": "e275b7bcc331d6bcdd82a1729c0ec0cc7a80e581a008bd273d0b1aa953e82c02",
+      "rendered_service_sha256": "c634583b551c205bdd6211ba5a91963bb71f4ced6eba4401d0de90f12b2dc544"
+    },
+    "gemma-1": {
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-av-dev30-deployment-plan-v1/gemma-1-preview-v1/receipt.json",
+      "sha256": "97017bf0d1cd3bdb286ccafbc7f97026579b94ce660e6a1d21c246b8015a5266",
+      "target_id": "32517829133b9a4a852eed753ae50b274343733307d65b2c01fa10172d513892",
+      "rendered_service_sha256": "5dcb35cc5c94518b17594a8b51f90da788f49000822b8cb5fd45029bed327e44"
+    },
+    "gemma-2": {
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-av-dev30-deployment-plan-v1/gemma-2-preview-v1/receipt.json",
+      "sha256": "9922ce79d50eafc90b904da832ccf2e301836442d53378767409694fc54d4739",
+      "target_id": "132833f603a6cbd1b6beed302590cbafd6d9e09bad879720f4c35f39cb806210",
+      "rendered_service_sha256": "364622eb5c053e50bd0ba9adb24db9f5da305a52ee61d15ec159f148e9a6e4dc"
+    },
+    "gemma-3": {
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-av-dev30-deployment-plan-v1/gemma-3-preview-v1/receipt.json",
+      "sha256": "f7b17a8b03ad9d32599cd1080599ca4dad044201ef0ff80870a679cd209183fb",
+      "target_id": "64f27c717165a4e4ea37abec691b5871f87fdfc8ddcd8dd2ecddfd832e5df550",
+      "rendered_service_sha256": "7b2f507a68c3c09fe6faed0592fb9b0ae735603d4e6a4f7381530e369922c18c"
+    }
+  },
+  "baseline_path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-av-dev30-deployment-plan-v1/all-chat-before.json",
+  "baseline_sha256": "615955c06b056fa07a6de8fb9f66fada9146be8ce8b2ff3de79fe1313e2c5f54",
+  "freeze_sha256": "0fbf034b37613d20fde3f8a536852246a4207be8c65be0aa46a9f2a1d920f176",
+  "source_pins": {
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/worktrees/kairyu-bench-weight-tools/docs/experiments/scripts/redeploy-replica.py": "2e9da820fe30ba9b2436fb600cf14a533b1c496b2fed48ac3649fffb9d2bc9ae",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/worktrees/kairyu-bench-weight-tools/kairyu-bench": "56b53b7d72d75efcb2bef24643322f73625eba5c08a645c2f847768e558b6176",
+    "/home/y-takagi/kairyu/examples/gemma-4-31b-8gpu/control.py": "fc9a78bc232f9cc331926a0737e64f4b4fe14946574f4a02bc1aacb9a800b851",
+    "/home/y-takagi/kairyu/examples/gemma-4-31b-8gpu/compose.yaml": "fe49b81c153f68335ef46e07dc9f9910ee49ee066902e703d11d152c8809c5cb",
+    "/home/y-takagi/kairyu/examples/gemma-4-31b-8gpu/example.json": "99b1863206205abc92f5bde917c607cced03a220bd77323cf264eb781f4aedb7",
+    "/home/y-takagi/kairyu/examples/gemma-4-31b-8gpu/kairyu.yaml": "a28e232f27b89d1acc35e3f5871ccffafd8145211e4ffcb33cc0c6b514fa640d"
+  },
+  "protected_count": 23,
+  "all_27_containers_unchanged": true,
+  "checkpoint_stats_unchanged": true,
+  "owner": {
+    "owner": {
+      "status": "global_lock_held",
+      "pid": 319432,
+      "uid": 1003,
+      "started_epoch": 1794032371.296285
+    },
+    "lock_identity": "09:02:181180584",
+    "proc_locks_line": "35: FLOCK  ADVISORY  WRITE 319432 09:02:181180584 0 EOF"
+  },
+  "seconds": 2.934392213821411,
+  "source_sha256": "2c3be39f675b3ec3d2cf4c3913ba7a03aeefb5814b7fa0ae3fe9e61fff488947",
+  "apply_authorized": false
+}

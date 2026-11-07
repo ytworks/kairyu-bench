@@ -1,0 +1,85 @@
+{
+  "id": "584418d20c2701e2339a6ce964332e905819c4c9454f0417d489452d9e988ee9",
+  "name": "/gemma-4-31b-8gpu-gemma-0-1-observer-retired-7ab8d99d7d78",
+  "created": "2026-11-07T05:41:30.031529277Z",
+  "image_id": "sha256:af9e746b913088cbf6c4464a31d6904a6b7e1d3ba62f0895362ddf13595f7abe",
+  "command_sha256": "7ccdf178b7695faae7442a076e5a9aab3e8431a94a145d7706eb3bc2515c1661",
+  "environment_sha256": "739374b3f9a39ed1b3eb7cdc85bf5186f13eb387da21596fb5809ce9fd25b84e",
+  "config_sha256": "0bfbdedad012dc83e479da52a0d728584aea7ad080e41b91b9dd708da8ed9541",
+  "hostconfig_sha256": "e8be620d1a1ec12a4e66ce693dd786ccf580b0bfb66ba793ca8fa868971289fb",
+  "state": {
+    "Status": "exited",
+    "Running": false,
+    "Paused": false,
+    "Restarting": false,
+    "Dead": false,
+    "Pid": 0,
+    "ExitCode": 0,
+    "StartedAt": "2026-11-07T05:41:30.05353133Z",
+    "FinishedAt": "2026-11-07T06:08:48.865998065Z"
+  },
+  "health": "unhealthy",
+  "labels": {
+    "com.docker.compose.config-hash": "ce76db1cd5d573b4f478f294936fe5d44fd49cc5600e45c79681dfd903d0c9aa",
+    "com.docker.compose.container-number": "1",
+    "com.docker.compose.depends_on": "",
+    "com.docker.compose.image": "sha256:af9e746b913088cbf6c4464a31d6904a6b7e1d3ba62f0895362ddf13595f7abe",
+    "com.docker.compose.oneoff": "False",
+    "com.docker.compose.project": "gemma-4-31b-8gpu",
+    "com.docker.compose.project.config_files": "/home/y-takagi/kairyu/examples/gemma-4-31b-8gpu/compose.yaml",
+    "com.docker.compose.project.working_dir": "/home/y-takagi/kairyu/examples/gemma-4-31b-8gpu",
+    "com.docker.compose.replace": "gemma-0-1",
+    "com.docker.compose.service": "gemma-0",
+    "com.docker.compose.version": "5.3.1",
+    "kairyu.bench.capture_id": "11228e268bd24e31b8bc3b2b82098c35",
+    "kairyu.bench.observer_operation": "7ab8d99d7d784bcc89b20e820e2a3a15",
+    "kairyu.chat-checkpoint-tree": "46680f4066f57c1596a1f4c66b67d23929c96b325943d981c6d74260cdbb3f5c"
+  },
+  "mounts": [
+    {
+      "type": "bind",
+      "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/checkpoints/fresh-code-joint-f02",
+      "target": "/checkpoint",
+      "read_only": true
+    },
+    {
+      "type": "bind",
+      "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f02-live10-v1/capture",
+      "target": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f02-live10-v1/capture",
+      "read_only": false
+    },
+    {
+      "type": "bind",
+      "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f02-live10-v1/compile-cache/gemma-4-31b-8gpu-gemma-0-1",
+      "target": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f02-live10-v1/compile-cache/gemma-4-31b-8gpu-gemma-0-1",
+      "read_only": false
+    },
+    {
+      "type": "bind",
+      "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/runtime/fresh-purpose-20261107-f02-live10-v1/observer-src",
+      "target": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/runtime/fresh-purpose-20261107-f02-live10-v1/observer-src",
+      "read_only": true
+    },
+    {
+      "type": "bind",
+      "source": "/mnt/nvme/kairyu/model-volumes/gemma-4-31b-8gpu/models",
+      "target": "/models",
+      "read_only": true
+    },
+    {
+      "type": "bind",
+      "source": "/mnt/nvme/kairyu/model-volumes/gemma-4-31b-8gpu/compile-cache",
+      "target": "/root/.cache",
+      "read_only": false
+    }
+  ],
+  "network": {
+    "gemma-4-31b-8gpu_default": {
+      "ip": "",
+      "aliases": [
+        "gemma-4-31b-8gpu-gemma-0-1",
+        "gemma-0"
+      ]
+    }
+  }
+}

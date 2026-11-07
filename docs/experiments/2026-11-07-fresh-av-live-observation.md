@@ -56,7 +56,7 @@ reviewable evidence.
 
 The tier name is a calibration target, not this topology's measured runtime.
 Earlier complete ordinary TP2/DP1 AV and AD runs took 1,559.1 and 1,696.6 seconds
-of generation respectively. A new observed run is not interchangeable with those
+in the loading-inclusive `generation_seconds` field respectively. A new observed run is not interchangeable with those
 ordinary runs for candidate ranking. A candidate comparison must use matched
 source, observation and serving conditions.
 
@@ -166,7 +166,7 @@ All per-item numeric outcomes and all source statistics are retained in
 | vision | 81.2500 |
 | safety | 55.5556 |
 
-Overall is 77.2086/100. Official loading time was 102.8 seconds and generation time 1800.7 seconds (30 minutes 0.7 seconds), with 558 chat and 3,062 logprob API calls. These counts include the official sampling plan and are not per-item step counts. TerminalBench completed both tasks: `install-windows-3.11` reward 0, 12 agent steps / 26 tool calls; `portfolio-optimization` reward 1, 7 agent steps / 13 tool calls. There were no Terminal trial exceptions.
+Overall is 77.2086/100. Official loading time was 102.8 seconds; the `generation_seconds`/report wall field was 1800.7 seconds (30 minutes 0.7 seconds), measured from before loading and therefore including loading, with 558 chat and 3,062 logprob API calls. These counts include the official sampling plan and are not per-item step counts. TerminalBench completed both tasks: `install-windows-3.11` reward 0, 12 agent steps / 26 tool calls; `portfolio-optimization` reward 1, 7 agent steps / 13 tool calls. There were no Terminal trial exceptions.
 
 ## Final restoration and capture audit
 

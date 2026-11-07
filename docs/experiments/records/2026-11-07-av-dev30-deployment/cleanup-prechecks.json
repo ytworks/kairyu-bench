@@ -1,0 +1,38 @@
+{
+  "status": "passed",
+  "command": [
+    "docker",
+    "rm",
+    "584418d20c2701e2339a6ce964332e905819c4c9454f0417d489452d9e988ee9"
+  ],
+  "authorized_exact_cid": "584418d20c2701e2339a6ce964332e905819c4c9454f0417d489452d9e988ee9",
+  "nonforce": true,
+  "remove_volumes": false,
+  "orphan_removal": false,
+  "lock": {
+    "owner": {
+      "status": "global_lock_held",
+      "pid": 319432,
+      "uid": 1003,
+      "started_epoch": 1794032371.296285
+    },
+    "lock_identity": "09:02:181180584",
+    "proc_locks_line": "35: FLOCK  ADVISORY  WRITE 319432 09:02:181180584 0 EOF"
+  },
+  "source_sha256": "99a9cc25006a988d1d7cfe11b8f579ea0bbb857c4de34c39f21bf0769b5a12ce",
+  "retired_metadata_sha256": "05671c1a69257fe2c5c6d685f369e8c1005cbfbbd671c72fcb57a0be3294c6b2",
+  "logs_receipt_sha256": "c24190ff4bfb16bb0c3ef0547c265d28fa4927e09c3a9af775a59a8118453f00",
+  "log_hashes": {
+    "stdout.log": "68cb8b7be02800b9885f7d1f3c51d0a0dd0eeda46e3142a2680cf4a8459f2d7c",
+    "stderr.log": "ecf325945bf606da2c40bc928b2a04bb7f27fa5150eebb78adab66666a38ee20"
+  },
+  "protected_count": 23,
+  "protected_unchanged": true,
+  "other_three_chat_unchanged": true,
+  "ordinary_gemma0_exact_healthy": true,
+  "writer_close_acknowledgements": 0,
+  "writer_count": 2,
+  "capture_limitations_preserved": true,
+  "full_payload_rehashed": false,
+  "started_epoch": 1794032529.4957304
+}

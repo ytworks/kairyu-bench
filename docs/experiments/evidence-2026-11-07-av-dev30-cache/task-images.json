@@ -1,0 +1,102 @@
+[
+  {
+    "task": "swe-bench-pro:instance_ansible__ansible-11c1777d56664b1acb56b387a1ad6aeadef1391d-v0f01c69f1e2528b935359cfe578530722bca2c59",
+    "image": "jefzda/sweap-images:ansible.ansible-ansible__ansible-11c1777d56664b1acb56b387a1ad6aeadef1391d-v0f01c69f1e2528b935359cfe578530722bca2c59",
+    "id": "sha256:857c630e3ff2619c8b8cea014c78161fff780e114877bb45691632a3957eb608",
+    "repo_digests": [
+      "jefzda/sweap-images@sha256:506298a526991c6368b494da8f19277657e356ea3a232ffd7dd42642571050b0"
+    ],
+    "size": 1008255414,
+    "present": true
+  },
+  {
+    "task": "swe-bench-pro:instance_qutebrowser__qutebrowser-ed19d7f58b2664bb310c7cb6b52c5b9a06ea60b2-v059c6fdc75567943479b23ebca7c07b5e9a7f34c",
+    "image": "jefzda/sweap-images:qutebrowser.qutebrowser-qutebrowser__qutebrowser-ed19d7f58b2664bb310c7cb6b52c5b9a06ea60b2-v059c6fdc75567943479b23ebca7c07b5e9a7f",
+    "id": "sha256:eb6c87d3587835bcc1313392cc6d638b26411a3c480534944adda215b84d7a0d",
+    "repo_digests": [
+      "jefzda/sweap-images@sha256:e84c372c7f8b01018b040e08c92b02a4a330dc26063fa6b40b4ddb6c09e606b0"
+    ],
+    "size": 1486151499,
+    "present": true
+  },
+  {
+    "task": "swe-bench-pro:instance_internetarchive__openlibrary-431442c92887a3aece3f8aa771dd029738a80eb1-v76304ecdb3a5954fcf13feb710e8c40fcf24b73c",
+    "image": "jefzda/sweap-images:internetarchive.openlibrary-internetarchive__openlibrary-431442c92887a3aece3f8aa771dd029738a80eb1-v76304ecdb3a5954fcf13feb710e8c",
+    "id": "sha256:af9fc5aab7f02147bd5ada75ae18ebdce5a324d9d464f155d958465534334fa5",
+    "repo_digests": [
+      "jefzda/sweap-images@sha256:ae308cf8f07d0e80a4af1c6661759423d3eb33bb54f1f9fc346d8906ef5f2fc4"
+    ],
+    "size": 2744669951,
+    "present": true
+  },
+  {
+    "task": "swe-bench-pro:instance_NodeBB__NodeBB-da0211b1a001d45d73b4c84c6417a4f1b0312575-vf2cf3cbd463b7ad942381f1c6d077626485a1e9e",
+    "image": "jefzda/sweap-images:nodebb.nodebb-NodeBB__NodeBB-da0211b1a001d45d73b4c84c6417a4f1b0312575-vf2cf3cbd463b7ad942381f1c6d077626485a1e9e",
+    "id": "sha256:4752997a9b70ee41420635ff0aaae9c4c7dcaa6212bdab25c7d7cec4a96fe9e6",
+    "repo_digests": [
+      "jefzda/sweap-images@sha256:b0dd9d971085e2f374d31324ad294eaa71de2ba7daf0bd7b370abf390e20680b"
+    ],
+    "size": 2034235410,
+    "present": true
+  },
+  {
+    "task": "terminal-bench:portfolio-optimization",
+    "image": "alexgshaw/portfolio-optimization:20251031",
+    "id": "sha256:b0ef263fdd85ca609faafead645c86c8a03f534178b3368e3eedc0a273b3fed9",
+    "repo_digests": [
+      "alexgshaw/portfolio-optimization@sha256:93461db3cec697c31585941a3b9387c1398495aa1ff0aee2ac752c7230b50ef8"
+    ],
+    "size": 579678690,
+    "present": true
+  },
+  {
+    "task": "terminal-bench:install-windows-3.11",
+    "image": "alexgshaw/install-windows-3.11:20251031",
+    "id": "sha256:c476efafe0214c2c6263fcbc0b2ed0b67be0b19c053bd7c81865cc4786f79e5f",
+    "repo_digests": [
+      "alexgshaw/install-windows-3.11@sha256:c6695097316ef8810abce0545e347e65354aef9d51d4f7f662c3242e742f6a3e"
+    ],
+    "size": 1546518201,
+    "present": true
+  },
+  {
+    "task": "terminal-bench:bn-fit-modify",
+    "image": "alexgshaw/bn-fit-modify:20251031",
+    "id": "sha256:e22baa862c29eb5076f82ba45527df74ce0b393a03ee6c08697279b852acd354",
+    "repo_digests": [
+      "alexgshaw/bn-fit-modify@sha256:5aeb11ca6e802b83816c9a31f055ac9d028309a853509400c2e3139ac2d8380d"
+    ],
+    "size": 651157517,
+    "present": true
+  },
+  {
+    "task": "terminal-bench:cobol-modernization",
+    "image": "alexgshaw/cobol-modernization:20251031",
+    "id": "sha256:14e6e693be70ee0c7f07105dfc0f3cae71fd495cc0106042dd530fc5fbd8e637",
+    "repo_digests": [
+      "alexgshaw/cobol-modernization@sha256:593ab9df3d83f771e927888b2d9436b380cdf7ec4d0af2a9f0802d541edebba0"
+    ],
+    "size": 424461362,
+    "present": true
+  },
+  {
+    "task": "terminal-bench:reshard-c4-data",
+    "image": "alexgshaw/reshard-c4-data:20251031",
+    "id": "sha256:a1ea118e6dbb44200cb77c4de3dc38023bf80387b0e781512c2d615189ad2562",
+    "repo_digests": [
+      "alexgshaw/reshard-c4-data@sha256:92d209e704785e17ad6b3f740e813dd72bc7ac33982ce435d197ab9d890eac2a"
+    ],
+    "size": 2744627066,
+    "present": true
+  },
+  {
+    "task": "terminal-bench:polyglot-c-py",
+    "image": "alexgshaw/polyglot-c-py:20251031",
+    "id": "sha256:e1956576c394084e01441646e27f54bf0a246d83b764d9d14b04273e00302f07",
+    "repo_digests": [
+      "alexgshaw/polyglot-c-py@sha256:0f1c3b7816d70cf5551573fd6aeef76893f2ae3000be2419997b6871b5d987ed"
+    ],
+    "size": 340877587,
+    "present": true
+  }
+]

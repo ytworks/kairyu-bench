@@ -1,0 +1,232 @@
+{
+  "control_sha256": "fc9a78bc232f9cc331926a0737e64f4b4fe14946574f4a02bc1aacb9a800b851",
+  "daemon_id": "3e518d2b-6972-43f8-b325-f7f33697a2d2",
+  "ssh_uid": 1003,
+  "replicas": {
+    "gemma-0": {
+      "id": "e275b7bcc331d6bcdd82a1729c0ec0cc7a80e581a008bd273d0b1aa953e82c02",
+      "name": "/gemma-4-31b-8gpu-gemma-0-1",
+      "image_id": "sha256:af9e746b913088cbf6c4464a31d6904a6b7e1d3ba62f0895362ddf13595f7abe",
+      "command_sha256": "f9de227590524bb32445ccde524ca54dc387431068e55b4bd10e2491f17ebc47",
+      "environment_sha256": "e7bc877f2b9eb1b944340aa38c42a093bae14a5512fdb17a8c1c5091ac8bca9b",
+      "user": "",
+      "working_dir": "/vllm-workspace",
+      "healthcheck_sha256": "93daf63c822ca65a2983b12827944e72a088dc50bded4768d4145a97c99b457d",
+      "cpuset": "0-15,64-79",
+      "devices": [
+        {
+          "Driver": "nvidia",
+          "Count": 0,
+          "DeviceIDs": [
+            "0",
+            "1"
+          ],
+          "Capabilities": [
+            [
+              "gpu"
+            ]
+          ],
+          "Options": null
+        }
+      ],
+      "ipc_mode": "host",
+      "mounts": [
+        {
+          "type": "bind",
+          "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/checkpoints/fresh-code-joint-f02",
+          "target": "/checkpoint",
+          "read_only": true
+        },
+        {
+          "type": "bind",
+          "source": "/mnt/nvme/kairyu/model-volumes/gemma-4-31b-8gpu/models",
+          "target": "/models",
+          "read_only": true
+        },
+        {
+          "type": "bind",
+          "source": "/mnt/nvme/kairyu/model-volumes/gemma-4-31b-8gpu/compile-cache",
+          "target": "/root/.cache",
+          "read_only": false
+        }
+      ],
+      "networks": [
+        "gemma-4-31b-8gpu_default"
+      ],
+      "checkpoint_path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/checkpoints/fresh-code-joint-f02",
+      "checkpoint_readonly": true,
+      "tree": "46680f4066f57c1596a1f4c66b67d23929c96b325943d981c6d74260cdbb3f5c",
+      "running": true,
+      "health": "healthy"
+    },
+    "gemma-1": {
+      "id": "32517829133b9a4a852eed753ae50b274343733307d65b2c01fa10172d513892",
+      "name": "/gemma-4-31b-8gpu-gemma-1-1",
+      "image_id": "sha256:af9e746b913088cbf6c4464a31d6904a6b7e1d3ba62f0895362ddf13595f7abe",
+      "command_sha256": "f9de227590524bb32445ccde524ca54dc387431068e55b4bd10e2491f17ebc47",
+      "environment_sha256": "e7bc877f2b9eb1b944340aa38c42a093bae14a5512fdb17a8c1c5091ac8bca9b",
+      "user": "",
+      "working_dir": "/vllm-workspace",
+      "healthcheck_sha256": "93daf63c822ca65a2983b12827944e72a088dc50bded4768d4145a97c99b457d",
+      "cpuset": "16-31,80-95",
+      "devices": [
+        {
+          "Driver": "nvidia",
+          "Count": 0,
+          "DeviceIDs": [
+            "2",
+            "3"
+          ],
+          "Capabilities": [
+            [
+              "gpu"
+            ]
+          ],
+          "Options": null
+        }
+      ],
+      "ipc_mode": "host",
+      "mounts": [
+        {
+          "type": "bind",
+          "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/checkpoints/code90-current-ac-native-ad-v1",
+          "target": "/checkpoint",
+          "read_only": true
+        },
+        {
+          "type": "bind",
+          "source": "/mnt/nvme/kairyu/model-volumes/gemma-4-31b-8gpu/models",
+          "target": "/models",
+          "read_only": true
+        },
+        {
+          "type": "bind",
+          "source": "/mnt/nvme/kairyu/model-volumes/gemma-4-31b-8gpu/compile-cache",
+          "target": "/root/.cache",
+          "read_only": false
+        }
+      ],
+      "networks": [
+        "gemma-4-31b-8gpu_default"
+      ],
+      "checkpoint_path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/checkpoints/code90-current-ac-native-ad-v1",
+      "checkpoint_readonly": true,
+      "tree": "27629fd3cd4c7573ca535832ce4e97cb8bc10b28ddd3f6f12ddf1b194633b1e8",
+      "running": true,
+      "health": "healthy"
+    },
+    "gemma-2": {
+      "id": "132833f603a6cbd1b6beed302590cbafd6d9e09bad879720f4c35f39cb806210",
+      "name": "/gemma-4-31b-8gpu-gemma-2-1",
+      "image_id": "sha256:af9e746b913088cbf6c4464a31d6904a6b7e1d3ba62f0895362ddf13595f7abe",
+      "command_sha256": "f9de227590524bb32445ccde524ca54dc387431068e55b4bd10e2491f17ebc47",
+      "environment_sha256": "e7bc877f2b9eb1b944340aa38c42a093bae14a5512fdb17a8c1c5091ac8bca9b",
+      "user": "",
+      "working_dir": "/vllm-workspace",
+      "healthcheck_sha256": "93daf63c822ca65a2983b12827944e72a088dc50bded4768d4145a97c99b457d",
+      "cpuset": "32-47,96-111",
+      "devices": [
+        {
+          "Driver": "nvidia",
+          "Count": 0,
+          "DeviceIDs": [
+            "4",
+            "5"
+          ],
+          "Capabilities": [
+            [
+              "gpu"
+            ]
+          ],
+          "Options": null
+        }
+      ],
+      "ipc_mode": "host",
+      "mounts": [
+        {
+          "type": "bind",
+          "source": "/mnt/nvme/kairyu/model-volumes/gemma-4-31b-8gpu/models/gemma-4-31b-it",
+          "target": "/checkpoint",
+          "read_only": true
+        },
+        {
+          "type": "bind",
+          "source": "/mnt/nvme/kairyu/model-volumes/gemma-4-31b-8gpu/models",
+          "target": "/models",
+          "read_only": true
+        },
+        {
+          "type": "bind",
+          "source": "/mnt/nvme/kairyu/model-volumes/gemma-4-31b-8gpu/compile-cache",
+          "target": "/root/.cache",
+          "read_only": false
+        }
+      ],
+      "networks": [
+        "gemma-4-31b-8gpu_default"
+      ],
+      "checkpoint_path": "/mnt/nvme/kairyu/model-volumes/gemma-4-31b-8gpu/models/gemma-4-31b-it",
+      "checkpoint_readonly": true,
+      "tree": "cab440f871a32b5ea1c12364db7dd35ac8768a83b413ca24bbc18d6478eccbd9",
+      "running": true,
+      "health": "healthy"
+    },
+    "gemma-3": {
+      "id": "64f27c717165a4e4ea37abec691b5871f87fdfc8ddcd8dd2ecddfd832e5df550",
+      "name": "/gemma-4-31b-8gpu-gemma-3-1",
+      "image_id": "sha256:af9e746b913088cbf6c4464a31d6904a6b7e1d3ba62f0895362ddf13595f7abe",
+      "command_sha256": "f9de227590524bb32445ccde524ca54dc387431068e55b4bd10e2491f17ebc47",
+      "environment_sha256": "e7bc877f2b9eb1b944340aa38c42a093bae14a5512fdb17a8c1c5091ac8bca9b",
+      "user": "",
+      "working_dir": "/vllm-workspace",
+      "healthcheck_sha256": "93daf63c822ca65a2983b12827944e72a088dc50bded4768d4145a97c99b457d",
+      "cpuset": "48-63,112-127",
+      "devices": [
+        {
+          "Driver": "nvidia",
+          "Count": 0,
+          "DeviceIDs": [
+            "6",
+            "7"
+          ],
+          "Capabilities": [
+            [
+              "gpu"
+            ]
+          ],
+          "Options": null
+        }
+      ],
+      "ipc_mode": "host",
+      "mounts": [
+        {
+          "type": "bind",
+          "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/checkpoints/code90-current-ad-functional-ar-v1",
+          "target": "/checkpoint",
+          "read_only": true
+        },
+        {
+          "type": "bind",
+          "source": "/mnt/nvme/kairyu/model-volumes/gemma-4-31b-8gpu/models",
+          "target": "/models",
+          "read_only": true
+        },
+        {
+          "type": "bind",
+          "source": "/mnt/nvme/kairyu/model-volumes/gemma-4-31b-8gpu/compile-cache",
+          "target": "/root/.cache",
+          "read_only": false
+        }
+      ],
+      "networks": [
+        "gemma-4-31b-8gpu_default"
+      ],
+      "checkpoint_path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/checkpoints/code90-current-ad-functional-ar-v1",
+      "checkpoint_readonly": true,
+      "tree": "23a4f622315bcfd400c9789f1095ee1f04aadcdd4a2236f040f027943c2e6d35",
+      "running": true,
+      "health": "healthy"
+    }
+  },
+  "created_epoch": 1794032587.885819
+}
