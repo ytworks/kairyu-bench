@@ -1,11 +1,6 @@
 # Planned homogeneous four-replica final DeepSWE run
 
-Status: **read-only inspection and plan only**, 2026-11-07. No service was
-stopped, recreated or reconfigured; no benchmark, review transmission, Git fetch,
-Wiki push or upload was executed for this plan. The observation owner currently
-holds gemma-0, so no deployment may start until that owner has finished, drained
-writers, restored ordinary serving, and released its lock. The final checkpoint
-and run name are deliberately unbound.
+Status: **final DeepSWE plan only**, updated 2026-11-07 after the separate F02 single-replica incident and recovery. No final DeepSWE run, homogeneous four-replica switch, Wiki edit/push or HF access has been executed under this plan. A read-only HTTPS Wiki fetch and ancestry follow-up is recorded below. The current observation owner holds gemma-0; no final deployment may begin before that owner completes, drains writers, restores ordinary serving and releases its lock. The final checkpoint and run name remain unbound. Earlier inspected states and source hashes below are historical snapshots, supplemented by the incident amendment.
 
 The actual chat/gateway Compose labels identify the owner as
 `/home/y-takagi/kairyu/examples/gemma-4-31b-8gpu`. That repository's AGENTS,
@@ -53,7 +48,7 @@ baseline paths, so using a new path does not supersede another owner's lock.
 
 ## Current inspected state and immutable source references
 
-At inspection, the chat replicas are healthy but serve **different** checkpoints:
+At the initial inspection before F02, the chat replicas were healthy but served **different** checkpoints (historical snapshot):
 
 | Replica | GPU pair | CPU set | Current role |
 | --- | --- | --- | --- |
@@ -153,9 +148,10 @@ cache/results same-path mounts and check image digests against the original run.
 Do not prune either the host daemon or another evaluation's images.
 
 Bind `FINAL_RUN_ID`, `FINAL_BENCH_IMAGE` and the attested gateway endpoint before
-running. Use a new image tag: the official wrapper always builds its selected
-runner image from the current checkout before starting it. Record the resulting
-image ID and source hashes; an old tag's name does not pin the built payload.
+running. This command chooses the default new-build path and explicitly unsets
+immutable runner reuse; the alternative opt-in is described in the amendment below.
+Record the resulting image ID and source hashes; an old tag's name does not pin
+the built payload.
 
 ```bash
 set -euo pipefail
@@ -168,6 +164,7 @@ test ! -e "$RESULT_ROOT/$FINAL_RUN_ID"
 test ! -L "$RESULT_ROOT/$FINAL_RUN_ID"
 cd "$RESULT_ROOT"
 unset DOCKER_HOST DOCKER_CONTEXT HF_TOKEN
+unset KAIRYU_BENCH_RUNNER_IMAGE_ID
 unset KAIRYU_BENCH_DEEPSWE_REASONING_EFFORT KAIRYU_BENCH_DEEPSWE_TASKS
 unset KAIRYU_BENCH_DEEPSWE_CONTEXT_WINDOW KAIRYU_BENCH_DEEPSWE_MAX_TOKENS
 export KAIRYU_BENCH_IMAGE="$FINAL_BENCH_IMAGE"
@@ -230,7 +227,7 @@ The existing Wiki checkout has no unstaged changes and HEAD
 reports ahead4. A fresh read-only probe through its SSH origin failed with
 `Permission denied (publickey)`. An HTTPS `ls-remote` succeeded and independently
 returned that same remote master HEAD. No credentials were extracted, and no
-fetch/push was attempted.
+fetch/push was attempted in that initial probe. The later fetch-only follow-up below supersedes the stale tracking comparison.
 
 After the final full result exists, obtain a fresh remote snapshot over the
 working HTTPS transport in a new NVMe checkout, or fetch to a distinct tracking
@@ -248,3 +245,43 @@ normally, then verify remote commit and page hash. Record this receipt in the
 experiment and PR. If Git authentication is unavailable, preserve the complete
 ready-to-publish section and report the specific publication blocker without
 claiming the Wiki was updated.
+
+## F02 incident amendment: enforce unambiguous Compose ownership
+
+This amendment follows the completed single-replica F02 deployment incident and recovery, recorded in [the deployment audit](2026-11-07-f02-serving-preview.md). It is a plan for the later final evaluation, not permission to touch the current observation deployment. The active F02 observer owns the global lock; no current observer/retired cleanup or further model switch is performed here. The finally selected checkpoint remains unbound.
+
+The first helper version inspected the canonical container name but Compose selected by project/service labels. A stopped observer-retired object also retained those labels. The first F02 apply and its rollback failed; the ordinary AV container stopped, the stopped retired Docker object disappeared, and a never-started rollback object remained. Original AV was restored with the exact CID/configuration, the owned new object was attributed and removed after evidence preservation, and all host observation evidence remained. The precise Compose error was suppressed by that helper and is unavailable. A later Docker events query returned zero records and is not evidence of no events. Duplicate label ownership is supported by the preserved original inspect, pinned observer creation/restore source and successful CID receipts; an independent retired-object inspect was not saved.
+
+The repaired existing helper SHA is 2e9da820fe30ba9b2436fb600cf14a533b1c496b2fed48ac3649fffb9d2bc9ae. It enumerates **all** containers, including stopped/renamed objects, by exact Compose project and service labels. Before preview and immediately before apply it requires the sole matching CID to equal the selected canonical target. Rollback allows zero or one remaining member and rejects multiple members. It forces COMPOSE_REMOVE_ORPHANS=0 for apply and rollback. The second F02 preview and application passed with this guard, but that does not pre-clear a future final switch.
+
+Add the following gates before the minimal four-replica switch above:
+
+1. Let the observation owner complete evaluation, drain/close writers, retain its failures and unjoined records, restore ordinary serving and release the real global evaluation flock. Do not clean a container while its current owner is active.
+2. Under exclusive evaluation ownership, enumerate project/service labels for **each of gemma-0 through gemma-3 before changing any one of them**. Each service must have exactly its intended ordinary CID. Canonical names alone are insufficient. Record all selected IDs, states, label sets and all other service snapshots.
+3. If a stopped retained observer or other duplicate is present, stop the deployment plan before any recreation. Do not weaken the guard, hide it with a new baseline path, or use broad Compose down/remove-orphans/prune. Establish which completed owned trial created that exact object, preserve the owner receipts and its safe configuration/mount/label/log evidence, and verify all trace/results bind paths remain. Preserve meaningful container-only artifacts before any disposal. Names or matching checkpoint paths alone do not establish ownership.
+4. A separate explicit cleanup decision may remove only an attributed, unused stopped object from a completed owned trial after evidence preservation. Keep the original ordinary serving CID, other original services, all checkpoints and every trial record. Use an exact CID and non-force operation after rechecking state/ownership; do not generalize a one-object authorization to older or unrelated objects. The F02 recovery only authorized its own never-started rollback object; that is not blanket authorization to clean future retained observers.
+5. After any authorized cleanup, record the exact object loss, before/after snapshots and retained host evidence. Create a **new** protected-container snapshot and all-chat baseline/source plan. Keep old failure receipts and source hashes. Weight hashes with verified stat continuity may remain reusable, while changed deployment source must have a new explicit execution pin.
+6. Re-run the helper preview for all four services with the repaired guard and orphan removal disabled. Recheck global ownership, exact single-CID selection, idle requests and actual source hashes immediately before each sequential apply. Recheck untouched services after each step. If failure occurs, preserve automatic rollback results; if that rollback fails, first recover the specifically affected ordinary service and audit impact before any new attempt.
+
+At the final closure, independently require homogeneous read-only checkpoint mounts, exact canonical tree, serving image/flags and successful direct model/chat/logprob reachability on all four replicas, plus the unchanged intended gateway pool. No benchmark may use the mixed gateway during replacement. The original model comparison must use the same final evaluation conditions; historical parity limitations above still apply. No final DeepSWE or HF access was performed in this amendment.
+
+## Immutable runner update
+
+The old statement that the wrapper always builds described its initial inspected version. It now supports the explicit KAIRYU_BENCH_RUNNER_IMAGE_ID opt-in: a full lowercase sha256 image ID must resolve to exactly that local image, build is skipped, and run uses --pull=never. Mutable tags, short IDs, missing images and mismatches fail before runner startup. Normal invocation still builds from the current checkout. The command above deliberately unsets this opt-in to choose its documented new-build route; alternatively, select and attest one exact measured immutable runner for both final comparison arms. Do not accidentally inherit a prior WSP runner pin.
+
+An immutable image still does not freeze bind-mounted cache environments, official source checkouts, dataset/task images or serving. Record those separately, including the 113-task identity/condition evidence above. Do not call an old tag, package lock alone or a progress/config digest a full binary-equivalence proof.
+
+## Fresh HTTPS Wiki fetch and ancestry evidence
+
+A later read-only follow-up actually fetched Wiki master using HTTPS with the existing gh credential helper configured, without displaying or extracting any credential:
+
+    GIT_TERMINAL_PROMPT=0 git -c credential.helper= \
+      -c 'credential.helper=!gh auth git-credential' fetch --no-tags \
+      https://github.com/ytworks/kairyu-bench.wiki.git \
+      master:refs/remotes/fresh-https-20261107/master
+
+The existing origin URL and working branch were not changed. An independent HTTPS ls-remote matched the fetched ref. Both local and remote HEAD were 9a5335927336e339ebaccc272110e52ca61d1369; both ancestry checks passed and left/right commit counts were 0/0. DeepSWE-Comparison.md had SHA61ab2abc8299c98a03636d79cd78d5451e0e41796089c6ddbf3fe03d7864be11 on both sides with no diff. Working tree, local HEAD and page bytes remained unchanged. The old origin tracking ref still described historical ahead4; it must not supersede this fresh comparison.
+
+Receipt: analysis/fresh-final-wiki-ancestry-20261107-v1/receipt.json. It records the command, transport configuration, remote identities, ancestry/count results, page SHA and no-page-change/no-push status. Fetch/read success does not prove push authorization or privilege. No Wiki page was changed or pushed. After the full final result exists, fetch again into a fresh audit/ref, repeat ancestry and page comparison, append the complete result against the then-current parent, and use the existing HTTPS authentication flow for a normal push only at that result-publication stage.
+
+Actual source recheck for this amendment: repaired helper SHA 2e9da820fe30ba9b2436fb600cf14a533b1c496b2fed48ac3649fffb9d2bc9ae; current official wrapper SHA 56b53b7d72d75efcb2bef24643322f73625eba5c08a645c2f847768e558b6176. Future execution must recheck the selected source/image identities instead of relying on this document date.

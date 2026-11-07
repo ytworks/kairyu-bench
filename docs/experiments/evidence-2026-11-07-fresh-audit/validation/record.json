@@ -27,6 +27,22 @@
     {
       "file": "r3-shell-check.txt",
       "sha256": "3e5fce725574fcba7f1203927f08f8ecc8a4dbb89dae8cdb80ece830d41648b1"
+    },
+    {
+      "file": "r4-mypy.txt",
+      "sha256": "4ef32b02733c640ba275e5de2c0f630d3ea2a6293bb124ad0dc2173d46e40541"
+    },
+    {
+      "file": "r4-data-check.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "file": "r4-ruff.txt",
+      "sha256": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18"
+    },
+    {
+      "file": "r4-unittest.txt",
+      "sha256": "4c3be731c43fabaf1bddb19f6c17e7aedf55895e365139f8caef2d6e59c9c74b"
     }
   ],
   "scope": "CPU validation, not GPU or final live-serving validation",
@@ -42,5 +58,20 @@
     "passed": 4,
     "seconds": 0.362,
     "change": "Explicit --pull=never prevents image-inspect/run race from pulling; Ruff and sh -n passed."
+  },
+  "r4": {
+    "scope": "Post-real-Compose-failure full CPU validation; new duplicate/late-race/normal/rollback regression fixture",
+    "unittest_summary": [
+      "test_zero_sized_tensors_remain_valid_and_zero_denominator_is_unknown (test_wsp_weights.CheckpointObservationTests.test_zero_sized_tensors_remain_valid_and_zero_denominator_is_unknown) ... ok",
+      "",
+      "----------------------------------------------------------------------",
+      "Ran 522 tests in 45.446s",
+      "",
+      "OK (skipped=56)"
+    ],
+    "ruff": "All checks passed!",
+    "mypy": "Success: no issues found in 74 source files",
+    "data_check_exit": 0,
+    "host_wrapper_shell_syntax_exit": 0
   }
 }

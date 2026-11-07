@@ -224,3 +224,25 @@ actual Opus5.5 review, the [frozen post-data amendment](2026-11-07-f02-transfer-
 allows one complete official diagnostic without re-solving or erasing the gate.
 It fixes candidate identity, full evaluation conditions, official tradeoff and
 noise/confirmation rules before materialization or official candidate results.
+
+### Compose deployment failure and repair
+
+F02's first service switch and automatic Compose rollback failed before any
+candidate benchmark. A stopped retired AV observer retained the target's Compose
+labels. The original AV container was recovered healthy with its exact CID; all
+other production containers and both checkpoint inventories match their prior
+states. Only the unstarted rollback object created by this attempt was deliberately
+removed after its evidence was saved. The retired observer Docker object had
+already been removed by Compose; host benchmark/capture evidence survives, while
+its unexported stdout/stderr may be unavailable. See the [full incident and
+recovery record](2026-11-07-f02-serving-preview.md).
+
+The existing single-replica helper now validates all project/service members,
+including stopped or renamed containers, before preview and immediately before
+apply. It refuses ambiguous rollback and forces orphan removal off. The CLI E2E
+covers early duplicates, a late duplicate, a normal replacement, ambiguous
+rollback refusal and zero-member restoration. The [independent review](2026-11-07-compose-scope-review.md)
+was incorporated. A full CPU suite and Ruff/mypy/data checks passed again after
+this real failure; logs are retained under validation/r4*. This fixes deployment
+scope, not the candidate or official scoring. The first failed apply/rollback and
+manual recovery are retained; the official F02 trial count was still zero.

@@ -1,6 +1,6 @@
 # F02 single-replica serving preview — 2026-11-07
 
-Current recorded result: first preview passed, but approved apply and automatic rollback failed. Original AV is now restored with the exact original CID and settings; all surviving original services and AV/F02 weights are unchanged. The stopped observer-retired Docker object was removed by the failed Compose operation, with host evidence retained. F02 WSP has not started. Earlier states below are retained as history.
+Current recorded result: repaired preview-v2 and apply-v2 succeeded. F02 is healthy on gemma-0, direct chat/logprob checks passed, all other 26 containers are unchanged, and no F02 WSP has started in this deployment operation. The first failed apply, exact AV recovery, stopped observer-retired object loss and preserved host evidence remain documented below.
 
 Status at preparation: F02 saved creation has completed; full editor verification is running. No freeze or serving change is justified until that verification succeeds. This is a diagnostic candidate awaiting canonical full WSP evaluation, not an adopted improvement.
 
@@ -473,3 +473,256 @@ The observed topology contained two objects with the same Compose project/servic
 Duplicate Compose identities are therefore an observed unsafe topology consistent with the failed recreate/rollback and temporary-name conflict. The precise suppressed error remains uncertain. The root is adding a guard that refuses extra same-project/same-service CIDs before preview or apply; this audit does not bypass that guard or any source pin. Any retry requires new source-aware preview evidence, because the helper source will change. No second apply was attempted here.
 
 Incident artifacts under deployment-gemma0-v1 include apply-authorization.json, apply-execution.json, apply-v1/receipt.json, protected-containers-after.json, apply-docker-events.json, temporary-created-container.json, temporary-created-container-logs.json, manual-original-restart-start.json, manual-original-restart-completion.json, cleanup-prechecks.json and cleanup-completion.json. The global lock remained held throughout recovery and cleanup.
+
+## Fresh preview-v2 after guard repair
+
+The root reviewed helper SHA 2e9da820fe30ba9b2436fb600cf14a533b1c496b2fed48ac3649fffb9d2bc9ae after focused tests and an independent review. Its new guard includes stopped containers when checking Compose project/service membership, requires the exact target CID before preview and apply, permits at most one member for rollback, and forces COMPOSE_REMOVE_ORPHANS=0. The immutable candidate freeze continues to describe the same verified weight bytes; its old helper pin remains historical provenance. A new explicit source amendment pins the approved helper while retaining and rechecking every other source pin. The old failure and all prior receipts remain.
+
+The following one-off uses a fresh 27-container protected snapshot, a new all-replica baseline and new preview output. It does not apply serving changes.
+
+```python
+"""Fresh F02 preview after the explicitly reviewed duplicate-Compose guard repair."""
+from pathlib import Path
+import importlib.util
+import json
+import os
+import subprocess
+import sys
+import time
+R=Path("/mnt/nvme/kairyu/wsp/gemma4-coding-20261104")
+B=R/"worktrees/kairyu-bench-weight-tools"
+P=R/"analysis/fresh-purpose-20261107-f02/deployment-gemma0-v1"
+H=B/"docs/experiments/scripts/redeploy-replica.py"
+EXPECTED_HELPER="2e9da820fe30ba9b2436fb600cf14a533b1c496b2fed48ac3649fffb9d2bc9ae"
+sys.path.insert(0,str(B/"src"))
+spec=importlib.util.spec_from_file_location("f02_repaired_deploy_guard",H)
+g=importlib.util.module_from_spec(spec);spec.loader.exec_module(g)
+def save(name,value):
+ with(P/name).open("x")as f:json.dump(value,f,indent=2,allow_nan=False);f.write("\n")
+def owner():
+ pid=145741
+ assert(Path("/proc")/str(pid)).stat().st_uid==os.getuid()==1003
+ os.kill(pid,0)
+ st=(R/"candidate-evaluation.lock").stat()
+ key=f"{os.major(st.st_dev):02x}:{os.minor(st.st_dev):02x}:{st.st_ino}"
+ rows=[x.split()for x in Path("/proc/locks").read_text().splitlines()]
+ found=[x for x in rows if len(x)>=6 and x[5]==key]
+ assert any(x[1]=="FLOCK"and x[3]=="WRITE"and x[4]==str(pid)for x in found)
+ return dict(pid=pid,identity=key,rows=found,observed_epoch=time.time())
+def snapshots():
+ ids=g.command(["docker","ps","-aq"]).split()
+ cs=json.loads(g.command(["docker","inspect",*ids]))if ids else[]
+ return {c["Id"]:dict(name=c["Name"],image_id=c["Image"],config_sha256=g.digest(c["Config"]),
+   host_config_sha256=g.digest(c["HostConfig"]),mounts=g.mounts(c),
+   networks=sorted(c["NetworkSettings"]["Networks"]),running=c["State"]["Running"],
+   health=c["State"].get("Health",{}).get("Status"))for c in cs}
+lock=owner()
+assert g.sha(H)==EXPECTED_HELPER
+assert g.sha(P/"freeze.json")=="163202cf38fe36972f90bd22058850eb412372b603c12731e3a9859abe5e4a38"
+freeze=g.read(P/"freeze.json")
+assert g.inventory(Path(freeze["checkpoint_path"]))==freeze["candidate_inventory_stat"]
+assert g.inventory(R/"checkpoints/code90-current-ad-helper-av-v1")==freeze["source_inventory_stat"]
+old_summary=g.read(P/"preview-summary.json")
+pins=dict(old_summary["source_pins"])
+assert pins[str(H)]=="da3dc93dcd1f7c44bbd64c9a0b65403424d436bef984d7964e0f50aee9aecc02"
+pins[str(H)]=EXPECTED_HELPER
+for path,digest in pins.items():assert g.sha(path)==digest
+before=snapshots()
+original=g.read(P/"protected-containers-before.json")
+retired="21aaf4aed1096bd7205fb5369528d6c84d61672b01fc5ef36bfd57bbbbb690cd"
+assert len(before)==27 and set(before)==set(original)-{retired}
+assert all(before[cid]==value for cid,value in original.items()if cid!=retired)
+target=g.inspect("gemma-4-31b-8gpu-gemma-0-1")
+assert target["Id"]=="4e545c35bc0e277344b302058eb9ffa758747f3012bc8e395e417f28d97aa56e"
+g.idle(target)
+amendment=dict(reason="Root-approved duplicate Compose membership guard and COMPOSE_REMOVE_ORPHANS=0 repair",
+ old_helper_sha256=old_summary["source_pins"][str(H)],new_helper_sha256=EXPECTED_HELPER,
+ candidate_weight_freeze_reused_unchanged=True,weight_freeze_sha256=g.sha(P/"freeze.json"),
+ historical_freeze_source_pins_are_provenance_not_current_execution_pins=True,current_source_pins=pins,
+ old_baseline_not_reused=True,new_container_count=27,owner=lock,operation_source_sha256=g.sha(Path(__file__)))
+save("source-amendment-v2.json",amendment)
+save("protected-containers-before-v2.json",before)
+argv=g.read(P/"preview-command.json")["argv"]
+argv[argv.index("--baseline")+1]=str(P/"replica-baseline-v2.json")
+argv[argv.index("--output")+1]=str(P/"preview-v2")
+assert "--apply"not in argv and argv[-2:]==["--timeout","1200"]
+save("preview-command-v2.json",dict(argv=argv,apply=False,source_amendment_sha256=g.sha(P/"source-amendment-v2.json")))
+started=time.time()
+with(P/"preview-v2.stdout").open("x")as stdout,(P/"preview-v2.stderr").open("x")as stderr:
+ result=subprocess.run(argv,cwd=B,env=dict(os.environ,PYTHONPATH=str(B/"src"),PYTHONDONTWRITEBYTECODE="1"),stdout=stdout,stderr=stderr)
+save("preview-execution-v2.json",dict(returncode=result.returncode,seconds=time.time()-started))
+assert result.returncode==0
+report=g.read(P/"preview-v2/receipt.json")
+assert report["status"]=="preview"and report["apply_requested"]is False
+assert report["helper_sha256"]==EXPECTED_HELPER
+assert report["compose_remove_orphans"]is False
+assert report["compose_selection"]["container_ids"]==[target["Id"]]
+assert report["compose_selection"]["includes_stopped"]is True
+assert report["candidate_identity"]["tree_sha256"]==freeze["control_tree_sha256"]
+assert snapshots()==before
+assert g.inventory(Path(freeze["checkpoint_path"]))==freeze["candidate_inventory_stat"]
+assert g.inventory(R/"checkpoints/code90-current-ad-helper-av-v1")==freeze["source_inventory_stat"]
+assert all(g.sha(path)==digest for path,digest in pins.items())
+summary=dict(status="fresh_preview_v2_passed_no_service_change",helper_sha256=EXPECTED_HELPER,
+ tree=freeze["control_tree_sha256"],freeze_sha256=g.sha(P/"freeze.json"),
+ preview_receipt_sha256=g.sha(P/"preview-v2/receipt.json"),
+ baseline_sha256=g.sha(P/"replica-baseline-v2.json"),source_amendment_sha256=g.sha(P/"source-amendment-v2.json"),
+ source_pins=pins,container_count=27,all_containers_unchanged=True,all_checkpoint_stats_unchanged=True,
+ compose_selection=report["compose_selection"],compose_remove_orphans=False,owner=owner(),apply_requested=False)
+save("preview-summary-v2.json",summary)
+print(json.dumps(summary))
+```
+
+## Preview-v2 result and approved apply-v2 source
+
+Fresh preview-v2 passed with helper2e9da820..., exact one-CID Compose selection including stopped objects, orphan removal disabled, all 27 protected snapshots unchanged and AV/F02 stats unchanged. Preview receipt SHA79adf5380f1a03f687988375b9f870a20e27f2a6dc7b1e12d62d6df820d17607, baseline SHAa08dbafefb5a05551b78ab35f3f29708815fa984f056f8e20ff4212a550795a0, source-amendment SHAc1bfb754b6bcaa5aa227df0a31ef4cff5dafb82a3572e48553ef490eb6c1ce10. Weight freeze163202cf... is unchanged. The root explicitly approved the second application against these exact inputs. This new source retains every v1 failure artifact and uses fresh v2 outputs. It rechecks the actual Compose selection and the full approved helper SHA immediately before invoking the existing helper.
+
+```python
+"""Apply the explicitly approved F02 gemma-0 preview, preserving all other services."""
+from pathlib import Path
+import importlib.util
+import json
+import math
+import os
+import subprocess
+import sys
+import time
+import urllib.request
+
+R=Path("/mnt/nvme/kairyu/wsp/gemma4-coding-20261104")
+B=R/"worktrees/kairyu-bench-weight-tools"
+P=R/"analysis/fresh-purpose-20261107-f02/deployment-gemma0-v1"
+sys.path.insert(0,str(B/"src"))
+spec=importlib.util.spec_from_file_location("f02_apply_guard",B/"docs/experiments/scripts/redeploy-replica.py")
+guard=importlib.util.module_from_spec(spec)
+spec.loader.exec_module(guard)
+from kairyu_bench.wsp.client import LogprobClient
+
+def save(name,value):
+    with (P/name).open("x")as f:json.dump(value,f,indent=2,allow_nan=False);f.write("\n")
+
+def lock_proof():
+    pid=145741
+    assert (Path("/proc")/str(pid)).stat().st_uid==os.getuid()==1003
+    os.kill(pid,0)
+    s=(R/"candidate-evaluation.lock").stat()
+    key=f"{os.major(s.st_dev):02x}:{os.minor(s.st_dev):02x}:{s.st_ino}"
+    rows=[x.split()for x in Path("/proc/locks").read_text().splitlines()]
+    matches=[x for x in rows if len(x)>=6 and x[5]==key]
+    assert any(x[1]=="FLOCK"and x[3]=="WRITE"and x[4]==str(pid)for x in matches)
+    return dict(pid=pid,identity=key,rows=matches,epoch=time.time())
+
+def snapshots():
+    ids=guard.command(["docker","ps","-aq"]).split()
+    cs=json.loads(guard.command(["docker","inspect",*ids]))if ids else[]
+    return {c["Id"]:dict(name=c["Name"],image_id=c["Image"],config_sha256=guard.digest(c["Config"]),
+            host_config_sha256=guard.digest(c["HostConfig"]),mounts=guard.mounts(c),
+            networks=sorted(c["NetworkSettings"]["Networks"]),running=c["State"]["Running"],
+            health=c["State"].get("Health",{}).get("Status"))for c in cs}
+
+pins={"freeze.json":"163202cf38fe36972f90bd22058850eb412372b603c12731e3a9859abe5e4a38",
+      "replica-baseline-v2.json":"a08dbafefb5a05551b78ab35f3f29708815fa984f056f8e20ff4212a550795a0",
+      "preview-v2/receipt.json":"79adf5380f1a03f687988375b9f870a20e27f2a6dc7b1e12d62d6df820d17607"}
+pins["source-amendment-v2.json"]="c1bfb754b6bcaa5aa227df0a31ef4cff5dafb82a3572e48553ef490eb6c1ce10"
+for path,digest in pins.items():assert guard.sha(P/path)==digest
+summary=guard.read(P/"preview-summary-v2.json")
+for path,digest in summary["source_pins"].items():assert guard.sha(path)==digest
+freeze=guard.read(P/"freeze.json")
+candidate=Path(freeze["checkpoint_path"])
+base=R/"checkpoints/code90-current-ad-helper-av-v1"
+assert guard.inventory(candidate)==freeze["candidate_inventory_stat"]
+assert guard.inventory(base)==freeze["source_inventory_stat"]
+before=snapshots()
+assert before==guard.read(P/"protected-containers-before-v2.json")
+old=guard.read(P/"preview-v2/receipt.json")["before"]
+assert guard.snapshot(guard.inspect("gemma-4-31b-8gpu-gemma-0-1"))==old
+guard.idle(guard.inspect(old["id"]))
+assert guard.sha(B/"docs/experiments/scripts/redeploy-replica.py")=="2e9da820fe30ba9b2436fb600cf14a533b1c496b2fed48ac3649fffb9d2bc9ae"
+owner=lock_proof()
+argv=guard.read(P/"preview-command-v2.json")["argv"]
+argv[argv.index("--output")+1]=str(P/"apply-v2")
+assert argv[-2:]==["--timeout","1200"]
+argv.append("--apply")
+control_path=Path(argv[argv.index("--control")+1])
+control_spec=importlib.util.spec_from_file_location("f02_v2_actual_control",control_path)
+control=importlib.util.module_from_spec(control_spec);control_spec.loader.exec_module(control)
+selection=guard.compose_scope(control,"gemma-0",old["id"])
+assert selection==guard.read(P/"preview-v2/receipt.json")["compose_selection"]
+assert guard.read(P/"preview-v2/receipt.json")["compose_remove_orphans"]is False
+save("apply-authorization-v2.json",dict(compose_selection=selection,compose_remove_orphans=False,approved_scope="F02 gemma-0 only; root approved exact freeze/baseline/preview hashes",
+     pinned_inputs=pins,owner=owner,argv=argv,operation_source_sha256=guard.sha(Path(__file__)),started_epoch=time.time()))
+started=time.time()
+with (P/"apply-v2.stdout").open("x")as stdout,(P/"apply-v2.stderr").open("x")as stderr:
+    execution=subprocess.run(argv,cwd=B,env=dict(os.environ,PYTHONPATH=str(B/"src"),PYTHONDONTWRITEBYTECODE="1"),stdout=stdout,stderr=stderr)
+save("apply-execution-v2.json",dict(returncode=execution.returncode,seconds=time.time()-started,owner_after=lock_proof()))
+report=guard.read(P/"apply-v2/receipt.json")
+after=snapshots()
+protected={key:value for key,value in before.items()if key!=old["id"]}
+protected_equal=all(after.get(key)==value for key,value in protected.items())
+save("protected-containers-after-v2.json",dict(containers=after,protected_equal=protected_equal))
+assert protected_equal
+assert execution.returncode==0 and report["status"]=="completed"
+current=guard.inspect("gemma-4-31b-8gpu-gemma-0-1")
+verified=guard.compare_after(old,current,candidate,freeze["control_tree_sha256"])
+assert current["Id"]!=old["id"]
+assert set(after)==set(protected)|{current["Id"]}
+assert guard.inventory(candidate)==freeze["candidate_inventory_stat"]
+assert guard.inventory(base)==freeze["source_inventory_stat"]
+ips=[x["IPAddress"]for x in current["NetworkSettings"]["Networks"].values()if x["IPAddress"]]
+assert len(ips)==1
+endpoint="http://"+ips[0]+":8000/v1"
+with urllib.request.urlopen(endpoint+"/models",timeout=30)as response:models=json.load(response)
+assert "gemma-4-31b"in[x["id"]for x in models["data"]]
+payload={"model":"gemma-4-31b","messages":[{"role":"user","content":"Return only the integer result of 17 + 26."}],
+         "temperature":0,"top_p":1,"seed":1700,"max_tokens":8,"chat_template_kwargs":{"enable_thinking":False}}
+request=urllib.request.Request(endpoint+"/chat/completions",data=json.dumps(payload).encode(),headers={"Content-Type":"application/json"})
+with urllib.request.urlopen(request,timeout=180)as response:chat=json.load(response)
+assert chat["choices"] and chat.get("model")=="gemma-4-31b"
+public=chat["choices"][0]["message"].get("content")or""
+assert public.strip()
+client=LogprobClient((endpoint,),model="gemma-4-31b",timeout=180)
+tokens=client.tokenize("The number is 43.",add_special_tokens=True)
+positions=client.prompt_logprobs(tokens,top_k=1)
+assert len(positions)==len(tokens)>1
+assert all(entry is None or all(math.isfinite(value[0])for value in entry.values())for entry in positions)
+guard.idle(current)
+save("direct-endpoint-smoke-v2.json",dict(kind="synthetic_connectivity_not_benchmark",endpoint=endpoint,
+     checkpoint_tree=freeze["control_tree_sha256"],model_ids=[x["id"]for x in models["data"]],
+     chat=dict(public_sha256=guard.digest(public),usage=chat.get("usage"),finish_reason=chat["choices"][0].get("finish_reason")),
+     logprob=dict(token_count=len(tokens),position_count=len(positions),api_calls=client.calls),
+     generation_requests=2,tokenize_requests=1,model_list_requests=1,reasoning_not_read_or_recorded=True))
+assert all(guard.sha(path)==digest for path,digest in summary["source_pins"].items())
+assert guard.inventory(candidate)==freeze["candidate_inventory_stat"]
+assert snapshots()==after
+closure=dict(status="completed_healthy_direct_smoke_passed",new_cid=current["Id"],original_cid=old["id"],
+             checkpoint_path=str(candidate),tree=freeze["control_tree_sha256"],direct_endpoint=endpoint,
+             model="gemma-4-31b",runtime_parity=True,protected_container_count=len(protected),
+             protected_unchanged=True,apply_receipt_sha256=guard.sha(P/"apply-v2/receipt.json"),
+             before_after=verified,owner=lock_proof(),seconds=time.time()-started,
+             global_lock_still_held=True,benchmark_started=False)
+save("apply-closure-v2.json",closure)
+print(json.dumps({key:closure[key]for key in ("status","new_cid","tree","direct_endpoint","protected_container_count","seconds","global_lock_still_held")}))
+```
+
+## Apply-v2 completion
+
+The repaired helper completed and the outer owner passed all final checks. New ordinary F02 CID e275b7bcc331d6bcdd82a1729c0ec0cc7a80e581a008bd273d0b1aa953e82c02 is healthy, with the frozen checkpoint tree 46680f4066f57c1596a1f4c66b67d23929c96b325943d981c6d74260cdbb3f5c. Runtime image, command/environment, CPU/GPU, IPC, healthcheck and mounts match the approved preview except for the intended checkpoint reference. All other 26 containers match the v2 pre-apply snapshot; AV and F02 checkpoint stats remain unchanged. Total apply plus synthetic connectivity checks took 113.98006296157837 seconds.
+
+The direct endpoint is http://172.26.0.4:8000/v1. The Compose network aliases include gemma-0, so the planned direct chat and logprob URL resolves to this replica. A model-list request, one synthetic chat generation, one tokenization request and one synthetic prompt-logprob generation succeeded. These are connectivity checks, not official WSP observations or scores. No reasoning field was read or recorded; only public-output identity and numeric usage were retained. No F02 WSP started in this operation.
+
+| Artifact | SHA256 |
+|---|---|
+| apply-v2/receipt.json | 446f71c7fbbfb9f03f1ba7583ce63d3b084d0ace87df865d98e0f00d19247d56 |
+| apply-closure-v2.json | 8937e7cf83207a67f065af38c80ef4ca0e1ce6cd292d93113e36d37a1cf11a83 |
+| direct-endpoint-smoke-v2.json | 105abf6bbd79831e59567d48f66382611b872481d08cfa9b3c1120e43dad04d4 |
+| apply-authorization-v2.json | 850090dac8b07b37eb0f63d46d29386b370a4d4460c2bc10f0ab1018867ca726 |
+
+apply-v2-final-evidence.json binds these receipts and the network aliases. At closure the global lock is still held by PID145741/session24320; the observer owner was given the healthy CID but instructed to wait for the root handoff and lock-release notification. The first failed apply, automatic rollback failure, restoration and cleanup records remain intact.
+
+## Completed observation handoff
+
+The root authorized the full-778 observation owner. The observer bound plan SHA8ff5619bd55b93b9f967ae06cb8188ab6a015f690f9c1791f557bdea0a84e925 and owner SHAed51d091c05924a09ae3a3fa27c549d50286f0d9ed9fbc3912d1b31c0ac0a3a9, then reported preview success and launch readiness. The deployment owner rechecked that plan/owner/closure identity, exact healthy F02 CID/tree/stat and idle queues. It released its dedicated flock process by sending one line to session24320; the process printed global_lock_released_on_stdin and exited0.
+
+The old PID145741 and old flock disappeared. The new observer PID211879 acquired the same real flock under UID1003. Its launch and execution receipts confirm startup; the handoff evidence observed phase attaching_observer. That phase is preserved as observed, not upgraded to a completed or scored benchmark. No model-service operation was performed by the deployment owner after release. The observer now owns attach, canonical evaluation, writer drain and restoration to the ordinary F02 CID.
+
+Evidence: handoff-ready.json, handoff-release.json and handoff-accepted.json in the deployment artifact directory. The accepted receipt binds launch-receipt SHA 00f218e78274c7fecd006e27d774ef974628c50baca518c5dd1cf2d38e13886e and an execution snapshot SHA 370ce0d84db55b6f5574eb9e53019486bb4a38577a753dd7b330bdc1221720cc. The release time is an observed interval between pre-release and post-release checks, not a fabricated exact timestamp.
