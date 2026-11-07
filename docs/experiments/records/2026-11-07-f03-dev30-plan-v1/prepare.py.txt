@@ -1,0 +1,71 @@
+"""Prepare F03 canonical dev30 from the executed AV plan; no model calls/preview/run."""
+from pathlib import Path
+import copy,datetime,hashlib,json,os,subprocess,time,uuid
+R=Path('/mnt/nvme/kairyu/wsp/gemma4-coding-20261104')
+B=R/'worktrees/kairyu-bench-weight-tools'
+BASE=R/'analysis/fresh-purpose-20261107-av-dev30-dp4-v1'
+N=R/'analysis/fresh-purpose-20261107-f03-dev30-dp4-v1'
+D=B/'docs/experiments/records/2026-11-07-f03-dev30-plan-v1'
+SHA=lambda p:hashlib.sha256(p.read_bytes()).hexdigest()
+save=lambda p,j:p.write_text(json.dumps(j,indent=2,ensure_ascii=False)+chr(10))
+oldpath=BASE/'launch-plan-approved.json'
+assert SHA(oldpath)=='bdd8d4ab62d7a2b31aa697e8cf0554858fb931a216a6612a971f824e1532a5e7'
+old=json.loads(oldpath.read_text());plan=copy.deepcopy(old)
+owner=B/'docs/experiments/scripts/fresh-av-dev30-20261107.py'
+assert SHA(owner)=='956af488fe54578c32c9baa856e9c32170dc49c1bbce2b1ba5db9af9ea1dd524'
+identity_path=R/'analysis/fresh-purpose-20261107-f03-native-v1/materialization/fullcandidateidentity.json'
+assert SHA(identity_path)=='b9e5dbd64520196507d1d53fae64b2609d5ea45559c78aee4a60cf701d6876b5'
+idrecord=json.loads(identity_path.read_text());identity=idrecord['checkpoint']
+tree='504d0914e8f7d2a4e51a0888e5692e2d1a158b82d3a77b600810a14bf7e33b63'
+candidate=R/'checkpoints/fresh-native-contract-f03'
+assert identity['path']==str(candidate) and identity['sha256']==tree and len(identity['files'])==9
+assert identity['hash_files'] is True and identity['identity_level']=='content_sha256'
+assert SHA(Path(idrecord['verify']['path']))==idrecord['verify']['sha256']
+assert {p.name for p in candidate.iterdir()}==set(idrecord['candidate_full_stat'])
+for name,expected in idrecord['candidate_full_stat'].items():
+ s=(candidate/name).lstat()
+ actual=dict(dev=s.st_dev,inode=s.st_ino,size=s.st_size,mtime_ns=s.st_mtime_ns,ctime_ns=s.st_ctime_ns,mode=s.st_mode,uid=s.st_uid,gid=s.st_gid,nlink=s.st_nlink)
+ assert actual==expected,'candidate stat changed'
+assert SHA(Path(old['source_identity']['wrapper']['path']))==old['source_identity']['wrapper']['sha256']
+for pin in old['source_identity']['critical_archived_files']:
+ assert SHA(Path(pin['path']))==pin['sha256']
+runtime=old['environment_allowlist']['KAIRYU_BENCH_RUNNER_IMAGE_ID']
+assert subprocess.check_output(['docker','image','inspect','--format','{{.Id}}',runtime],text=True).strip()==runtime
+N.mkdir(exist_ok=False);(N/'http-trace').mkdir()
+capture_path=Path(old['http_trace']['config']['path'])
+assert SHA(capture_path)==old['http_trace']['config']['sha256']
+capture=json.loads(capture_path.read_text())
+capture.update(checkpoint=identity,output_dir=str(N/'http-trace'),capture_id=uuid.uuid4().hex,created_at=datetime.datetime.now(datetime.timezone.utc).isoformat())
+save(N/'http-trace/capture.json',capture)
+traceproof={'source_capture':{'path':str(capture_path),'sha256':SHA(capture_path)},'candidate_identity':{'path':str(identity_path),'sha256':SHA(identity_path)},'candidate_tree':tree,'full9_verify_plus_current_full_stat':True,'fresh_payload_hash':False,'changed_capture_fields':['checkpoint','output_dir','capture_id','created_at'],'runtime_limits_sampling_equal':all(capture[k]==json.loads(capture_path.read_text())[k] for k in ('runtime','limits','sampling','observation_mode','data_kind','schema_version')),'server_capture_workers':0,'model_calls':0}
+assert traceproof['runtime_limits_sampling_equal']
+save(N/'http-trace-identity-check.json',traceproof)
+run_id='gemma4-fresh-f03-dev30-dp4-20261107-v1'
+assert not (R/'results'/run_id).exists()
+plan.update(status='unapproved_pending_four_F03_closures',approved_for_execution=False,created_epoch=time.time(),run_id=run_id,prior_owner_pid=None,handoff=None,closure_bound_epoch=None)
+for flag,value in [('--label',tree),('--run-id',run_id),('--observe-config',str(N/'http-trace/capture.json'))]:
+ plan['command'][plan['command'].index(flag)+1]=value
+serving=plan['expected_serving']
+serving.update(checkpoint=str(candidate),tree_sha256=tree,service_cids={f'gemma-{i}':None for i in range(4)},closures=[],four_replica_closure=None)
+plan['http_trace'].update(config={'path':str(N/'http-trace/capture.json'),'bytes':(N/'http-trace/capture.json').stat().st_size,'sha256':SHA(N/'http-trace/capture.json')},identity_check={'path':str(N/'http-trace-identity-check.json'),'bytes':(N/'http-trace-identity-check.json').stat().st_size,'sha256':SHA(N/'http-trace-identity-check.json')})
+plan['prelaunch_requirements']=[x.replace('AV mount','F03 mount').replace('fresh full-hash capture identity','saved full-verify-derived capture identity') for x in plan['prelaunch_requirements']]
+plan['comparison']={'baseline_plan':{'path':str(oldpath),'sha256':SHA(oldpath)},'baseline_run_id':old['run_id'],'baseline_reruns':0,'candidate_repetitions':1,'extra_finite_proxy_or_transfer_diagnostics':0,'source_identity_host_git_head_is_historical':True,'current_host_git_head':subprocess.check_output(['git','rev-parse','HEAD'],cwd=B,text=True).strip()}
+plan['pending_deployment_bindings']=['expected_serving.service_cids: gemma-0..3 exact new F03 CIDs','expected_serving.closures: four per-replica closure path+SHA','expected_serving.four_replica_closure: combined path+SHA','handoff: root approval and keeper release, plus F03 endpoint closure path+SHA','approved_for_execution: true only after root approval and binding; CPU preview once after binding']
+assert plan['selection']==old['selection'] and plan['environment_allowlist']==old['environment_allowlist']
+assert plan['selection']['items']==2338 and len(plan['selection']['named_area_counts'])==14 and plan['selection']['probe_count_without_official_area']==96
+different=[i for i,(a,b) in enumerate(zip(old['command'],plan['command'],strict=True)) if a!=b]
+assert different==[old['command'].index(f)+1 for f in ('--label','--run-id','--observe-config')]
+save(N/'launch-plan.json',plan)
+selected=BASE/'selected-items.json'
+with (N/'selected-items.json').open('xb') as f:f.write(selected.read_bytes())
+conditions={'status':'prepared_not_launched','baseline_plan_sha256':SHA(oldpath),'candidate_plan_sha256':SHA(N/'launch-plan.json'),'selection_exact_equal':True,'environment8_exact_equal':True,'runner_image_exact':runtime,'wrapper_sha256':SHA(Path(plan['command'][0])),'owner_sha256':SHA(owner),'command_changed_values':{f:{'baseline':old['command'][old['command'].index(f)+1],'candidate':plan['command'][plan['command'].index(f)+1]} for f in ('--label','--run-id','--observe-config')},'selected_items_sha256':SHA(selected),'owner_source_modified':False,'cpu_preview_executions':0,'generation_runs':0,'service_changes':0,'additional_payload_hash':False}
+save(N/'conditions-diff.json',conditions)
+for name in ('launch-plan.json','conditions-diff.json','http-trace-identity-check.json'):
+ with (D/name).open('xb') as f:f.write((N/name).read_bytes())
+with (D/'capture.json').open('xb') as f:f.write((N/'http-trace/capture.json').read_bytes())
+with (D/'README.md').open('x') as f:
+ f.write('# F03 canonical dev30 plan (pending serving bind)\n\nReuses the unchanged AV N30 owner and exact immutable f91 runner. Full 2,338 items, 14 named areas plus96 diagnostics, all90 code items, source manifest/IDs, eight environment entries and 256/32/4 concurrency remain identical. Only command label, run ID and capture output differ; all four ordinary serving replicas must bind the verified F03 tree. HTTP tracing only, no activation worker or observation claim. Existing AV results are the comparison baseline; no new baseline, finite/proxy or transfer run.\n\nlaunch-plan.json is explicitly unapproved with four null CIDs and no closures. After the deployment owner supplies all four per-replica closures and exact new CIDs, combined closure and endpoint closure, root must create the approved binding and run the unchanged owner CPU preview once before launch. No preview/model call/service action occurred during preparation. Capture identity comes from fresh full9 editor verification plus current full-stat continuity, not another payload hash. Raw selected-items.json remains in the new NVMe study directory byte-identical to AV.\n')
+with (D/'SHA256SUMS').open('x') as f:
+ for p in sorted(D.iterdir()):
+  if p.is_file() and p.name!='SHA256SUMS':f.write(SHA(p)+'  '+p.name+chr(10))
+print(json.dumps({'plan':str(N/'launch-plan.json'),'plan_sha256':SHA(N/'launch-plan.json'),'capture_sha256':SHA(N/'http-trace/capture.json'),'conditions_sha256':SHA(N/'conditions-diff.json'),'owner_source_modified':False,'items':2338,'preview_executions':0}))

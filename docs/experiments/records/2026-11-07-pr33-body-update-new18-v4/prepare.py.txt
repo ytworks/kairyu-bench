@@ -1,0 +1,46 @@
+"""Prepare v4 only; preserve v3 and raw diffs, never PATCH."""
+from pathlib import Path
+import difflib,gzip,hashlib,json,time
+R=Path('/mnt/nvme/kairyu/wsp/gemma4-coding-20261104');B=R/'worktrees/kairyu-bench-weight-tools'
+O=R/'analysis/fresh-purpose-20261107-pr33-body-update-new18-v4'
+D=B/'docs/experiments/records/2026-11-07-pr33-body-update-new18-v4'
+V3=B/'docs/experiments/records/2026-11-07-pr33-body-update-new18-v3/body.md'
+sha=lambda p:hashlib.sha256(p.read_bytes()).hexdigest()
+assert sha(V3)=='0742b416bdbdebfba1f9ec65b7300b009feb2cedc3c7cbb066c9a8d398c32b75'
+assert sha(O/'existing-body.md')=='696f6188ccfe324e6645c521112ea1a0073f616db1c6f82be58ef0a5af1e9d3b'
+base=V3.read_text();body=base
+old='**No F03 finite probe, ordinary-thinking generation, transfer generation or official WSP run has occurred.** AV remains served and remains the parent.'
+assert old in body
+body=body.replace(old,'**No extra F03 finite/proxy or transfer diagnostic was run. F03 is now served on all four ordinary replicas and its full canonical WSP30 run is in progress.** AV remains the editing parent and supplies the existing comparison baseline; F03 has not been adopted.')
+start=body.index('**The next plan was revised by the latest user instruction');end=body.index('\n\n',start)
+link='https://github.com/ytworks/kairyu-bench/blob/codex/weight-observation-tools/docs/experiments/2026-11-07-f03-direct-wsp-amendment.md'
+replacement='**The latest user instruction prioritizes improvement per unit time and cancels the additional finite/proxy step entirely**, including the intermediate candidate-only proposal. The [direct-WSP amendment]('+link+') preserves the unexecuted preparation source, original Opus review and earlier decisions as history. Root launched **one complete F03 dev30 run, all 2,338 items / 14 named areas plus 96 diagnostics**, after all four F03 deployment/endpoint closures and normal global-lock handoff. It uses the same immutable f91 runner, ordinary TP2×4/MTP4 serving, 256/32/4 concurrency, selection and HTTP-only tracing as completed AV N30; **baseline reruns 0**, no transfer diagnostic. Owner PID 1078351 passed launch preflight. F03 final scores are pending and no partial result is ranked. A separate unnecessary unpinned-wrapper help build had ended before its cancellation check; no signal was sent, its exit code was not retained, and the corrected incident preserves the unchanged f91 image and zero model/service calls.'
+body=body[:start]+replacement+body[end:]
+old='CI for the next head is not established in this preparation.'
+assert old in body
+body=body.replace(old,'Head 14407b917108bba2a56d061ad8a542824896a1f2 subsequently passed all four [GitHub checks](https://github.com/ytworks/kairyu-bench/actions/runs/42362630578): test, DeepSWE runtime, Terminal-Bench runtime and Docker. This is a read-only status check, with no CI rerun.')
+body=body.replace('F03 has no measured capability gain, and **90 has not been reached**','F03’s final score is pending, and **90 has not been reached**')
+assert 'candidate-only pass' not in body and 'AV remains served' not in body
+assert not any(line.rstrip(' \t')!=line for line in body.splitlines())
+for name,text in [('body.md',body),('update.json',json.dumps({'body':body},ensure_ascii=False,indent=2)+chr(10))]:
+ with (O/name).open('x') as f:f.write(text)
+assert json.loads((O/'update.json').read_text())['body']==body
+compression=[]
+for name,previous,label in [('diff-from-current-pr.patch',(O/'existing-body.md').read_text(),'current-pr'),('diff-from-v3.patch',base,'superseded-v3')]:
+ raw=''.join(difflib.unified_diff(previous.splitlines(keepends=True),body.splitlines(keepends=True),fromfile=label,tofile='prepared-v4')).encode()
+ with (O/name).open('xb') as f:f.write(raw)
+ packed=gzip.compress(raw,compresslevel=9,mtime=0);assert gzip.decompress(packed)==raw
+ with (D/(name+'.gz')).open('xb') as f:f.write(packed)
+ compression.append({'original_path':str(O/name),'original_sha256':hashlib.sha256(raw).hexdigest(),'stored_name':name+'.gz','stored_sha256':hashlib.sha256(packed).hexdigest(),'roundtrip_exact':True})
+N=R/'analysis/fresh-purpose-20261107-f03-dev30-dp4-v1'
+sources=[B/'docs/experiments/2026-11-07-f03-direct-wsp-amendment.md']+[N/n for n in ('launch-plan-approved.json','owner-preview.json','root-launch.json','owner-start.json','launch-preflight.json')]
+preparation={'status':'prepared_only_no_patch','prepared_epoch':time.time(),'existing_pr':json.loads((O/'existing-pr.json').read_text()),'v3_preserved_sha256':sha(V3),'v3_status':'superseded by user direct-WSP instruction','body_sha256':sha(O/'body.md'),'update_sha256':sha(O/'update.json'),'prior_factual_source_pins_from_v3':json.loads((B/'docs/experiments/records/2026-11-07-pr33-body-update-new18-v3/preparation.json').read_text())['source_pins'],'new_source_pins':{str(p):sha(p) for p in sources},'patch_calls':0,'model_service_gpu_or_test_calls_here':0,'ci_read_only':json.loads((O/'head-ci-readonly.json').read_text()),'prior_dispatch_error':{'type':'JavaScript SyntaxError','cause':'unescaped backtick in first composed code block','reached_ssh':False,'remote_mutations':0},'limitations':['F03 benchmark is running; final scores must come from canonical completed results.','Compare fresh PR body SHA before PATCH; no PATCH here.']}
+for name,j in [('preparation.json',preparation),('compression.json',compression)]:
+ with (O/name).open('x') as f:json.dump(j,f,indent=2);f.write(chr(10))
+for name in ('existing-body.md','existing-pr.json','head-ci-readonly.json','body.md','update.json','preparation.json','compression.json'):
+ with (D/name).open('xb') as f:f.write((O/name).read_bytes())
+with (D/'README.md').open('x') as f:f.write('# PR33 v4: F03 direct WSP30 running\n\nPrepared only, no PATCH/commit/push. Earlier v3 is preserved but superseded: no extra finite or candidate-only proxy run; one full F03 canonical dev30 is running against the existing AV result. All F02/F03 materialization, review, audit and validation facts remain. Fresh public body SHA and head14407b9 four-check success are pinned; re-fetch before PATCH. Raw diffs remain on NVMe and their PR gzip forms round-trip exactly. One failed local dispatch before SSH is retained in preparation.json. No repeated tests/build/model calls.\n')
+with (D/'SHA256SUMS').open('x') as f:
+ for p in sorted(D.iterdir()):
+  if p.is_file() and p.name!='SHA256SUMS':f.write(sha(p)+'  '+p.name+chr(10))
+print(json.dumps({'body_sha256':sha(O/'body.md'),'update_sha256':sha(O/'update.json'),'preparation_sha256':sha(O/'preparation.json'),'records_manifest_sha256':sha(D/'SHA256SUMS'),'bytes':len(body.encode()),'patch_calls':0}))

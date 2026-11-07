@@ -1,0 +1,22 @@
+{
+  "source_capture": {
+    "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-av-dev30-dp4-v1/http-trace/capture.json",
+    "sha256": "8e4b57eacaeca88260281c4d39a0f347b55ed0a7f1cabcac3ff0507d1e6d9e74"
+  },
+  "candidate_identity": {
+    "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f03-native-v1/materialization/fullcandidateidentity.json",
+    "sha256": "b9e5dbd64520196507d1d53fae64b2609d5ea45559c78aee4a60cf701d6876b5"
+  },
+  "candidate_tree": "504d0914e8f7d2a4e51a0888e5692e2d1a158b82d3a77b600810a14bf7e33b63",
+  "full9_verify_plus_current_full_stat": true,
+  "fresh_payload_hash": false,
+  "changed_capture_fields": [
+    "checkpoint",
+    "output_dir",
+    "capture_id",
+    "created_at"
+  ],
+  "runtime_limits_sampling_equal": true,
+  "server_capture_workers": 0,
+  "model_calls": 0
+}

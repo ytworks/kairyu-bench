@@ -1,0 +1,9 @@
+{
+  "reason": "git diff --check found one extra blank line at EOF in the one-off packaging source; exact executed bytes retained as gzip and on NVMe",
+  "original_path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f03-running-records-packaging/package.py.txt",
+  "original_sha256": "a458e555c21a83003d11af03eb058197776ebf3a1424a8356966c219d507d198",
+  "stored_name": "package.py.txt.gz",
+  "stored_sha256": "b4de2bd1dab218e418007f4f271a6bcd4818a946ce84307e2643ff4310ce28a3",
+  "roundtrip_exact": true,
+  "source_executed_again": false
+}

@@ -1,0 +1,260 @@
+{
+  "status": "completed_records_packaging",
+  "started_epoch": 1794047739.3246694,
+  "completed_epoch": 1794047739.3772938,
+  "head_before": "14407b917108bba2a56d061ad8a542824896a1f2",
+  "included_files": 123,
+  "included_bytes": 883357,
+  "completed_deployment_logs": 16,
+  "active_logs_in_package": 0,
+  "excluded_files": [
+    "docs/experiments/2026-11-07-parallel-chat-deployment-readonly.md",
+    "docs/experiments/records/2026-11-07-parallel-chat-deployment-readonly/assessment.json"
+  ],
+  "manifest_checks": [
+    {
+      "manifest": "docs/experiments/records/2026-11-07-f03-dev30-plan-v1/SHA256SUMS",
+      "file": "README.md",
+      "sha256": "1550cd6c9033f1522cb216d3e41693b31009c09006edfea67a6d15b70c4c5c0a"
+    },
+    {
+      "manifest": "docs/experiments/records/2026-11-07-f03-dev30-plan-v1/SHA256SUMS",
+      "file": "capture.json",
+      "sha256": "9697582d3e7cfe729c8f9856314728a34eeb89f83497fbd288efe48359467417"
+    },
+    {
+      "manifest": "docs/experiments/records/2026-11-07-f03-dev30-plan-v1/SHA256SUMS",
+      "file": "conditions-diff.json",
+      "sha256": "3c0ba265ec3325e4547463b34cbcb3fcfce44b44e8c8e598863c0331fe6b42dc"
+    },
+    {
+      "manifest": "docs/experiments/records/2026-11-07-f03-dev30-plan-v1/SHA256SUMS",
+      "file": "http-trace-identity-check.json",
+      "sha256": "2d1236ec3ad37079df3de697a29729ecb723a7de6683cd11bdd755337c910943"
+    },
+    {
+      "manifest": "docs/experiments/records/2026-11-07-f03-dev30-plan-v1/SHA256SUMS",
+      "file": "launch-plan.json",
+      "sha256": "8eb529735a2d2b5e770279a19257d817764af2305af966d94949267b28472dc4"
+    },
+    {
+      "manifest": "docs/experiments/records/2026-11-07-f03-dev30-plan-v1/SHA256SUMS",
+      "file": "prepare.py.txt",
+      "sha256": "843ae5722d4408156d7a51b14ffb3837f586086368c797a9eeb74bc386540164"
+    },
+    {
+      "manifest": "docs/experiments/records/2026-11-07-f03-dev30-plan-v1/approved-binding-v1/SHA256SUMS",
+      "file": "launch-plan-approved.json",
+      "sha256": "5b36b98234658c63b460cbb6cba821812b177b7e49477cc1a2fcabb1cba6095a"
+    },
+    {
+      "manifest": "docs/experiments/records/2026-11-07-f03-dev30-plan-v1/approved-binding-v1/SHA256SUMS",
+      "file": "owner-preview.json",
+      "sha256": "fbd468e7dc4ce63cc4219193c3d83fd1ed7409e7130fdeaa50def8d6cae827e6"
+    },
+    {
+      "manifest": "docs/experiments/records/2026-11-07-f03-direct-wsp-amendment/SHA256SUMS",
+      "file": "amendment.json",
+      "sha256": "c2c1a23c5adcb1cc52f9273fa4a033509ecbcca03671c125a0783fcd6a475807"
+    },
+    {
+      "manifest": "docs/experiments/records/2026-11-07-f03-direct-wsp-amendment/SHA256SUMS",
+      "file": "compare-help-build-incident-correction.json",
+      "sha256": "0b789855a41d36ca7cedd1764310ab7314bee08186f6dd72f47644321e75b724"
+    },
+    {
+      "manifest": "docs/experiments/records/2026-11-07-f03-direct-wsp-amendment/SHA256SUMS",
+      "file": "compare-help-build-incident.json",
+      "sha256": "4d7301ad53c1a1107b171d487c30d4a1b027f2b27dbfce55eb08c046398a41bd"
+    },
+    {
+      "manifest": "docs/experiments/records/2026-11-07-f03-direct-wsp-amendment/SHA256SUMS",
+      "file": "launch-preflight.json",
+      "sha256": "fe7b42826e74afed844e342f79ef2867f50c0ba9edd6425949736c0784eed6bb"
+    },
+    {
+      "manifest": "docs/experiments/records/2026-11-07-f03-direct-wsp-amendment/SHA256SUMS",
+      "file": "owner-start.json",
+      "sha256": "daf0c7d456d23ad6cedab5f08bdf0184ceda724c5688860e37ff4a0a27782be7"
+    },
+    {
+      "manifest": "docs/experiments/records/2026-11-07-f03-direct-wsp-amendment/SHA256SUMS",
+      "file": "root-launch.json",
+      "sha256": "b0ffc1ed3fcdd367c5a177066d405e44cae6091ff9ac603e5abfd6153abe8e7d"
+    },
+    {
+      "manifest": "docs/experiments/records/2026-11-07-f03-direct-wsp-amendment/SHA256SUMS",
+      "file": "withdrawn-fresh-f03-finite-prepare-20261107.py.txt",
+      "sha256": "4bbc3cb9afaee0811890cb566e2e37ef21dc9ef6daca0b9927f0ee93b1ca8c1b"
+    },
+    {
+      "manifest": "docs/experiments/records/2026-11-07-pr33-body-update-new18-v3/SHA256SUMS",
+      "file": "README.md",
+      "sha256": "44831937b17ba2ebb519d0816d74a4846f8e6ba9681b4bd116a403cd69b48cb0"
+    },
+    {
+      "manifest": "docs/experiments/records/2026-11-07-pr33-body-update-new18-v3/SHA256SUMS",
+      "file": "body.md",
+      "sha256": "0742b416bdbdebfba1f9ec65b7300b009feb2cedc3c7cbb066c9a8d398c32b75"
+    },
+    {
+      "manifest": "docs/experiments/records/2026-11-07-pr33-body-update-new18-v3/SHA256SUMS",
+      "file": "compression.json",
+      "sha256": "ae24ad0e2a13bd2863f5db6a8b6b0a57c6b526ff57fa9f24a2b04349c5183de9"
+    },
+    {
+      "manifest": "docs/experiments/records/2026-11-07-pr33-body-update-new18-v3/SHA256SUMS",
+      "file": "diff-from-current-pr.patch.gz",
+      "sha256": "dda58c6dc285878b993ea9da9d3771257fa58a5da79353a375412df554a86fd3"
+    },
+    {
+      "manifest": "docs/experiments/records/2026-11-07-pr33-body-update-new18-v3/SHA256SUMS",
+      "file": "diff-from-v2.patch.gz",
+      "sha256": "7e5b27de351b32e80b2e2fa76b007a9b7bd9b648bef798b171d9427be2b02010"
+    },
+    {
+      "manifest": "docs/experiments/records/2026-11-07-pr33-body-update-new18-v3/SHA256SUMS",
+      "file": "existing-body.md",
+      "sha256": "696f6188ccfe324e6645c521112ea1a0073f616db1c6f82be58ef0a5af1e9d3b"
+    },
+    {
+      "manifest": "docs/experiments/records/2026-11-07-pr33-body-update-new18-v3/SHA256SUMS",
+      "file": "existing-pr.json",
+      "sha256": "6a01a11e2f7ba1cc71d5dcd6f4decc04054779877b983f0afb4c1a64fce585e0"
+    },
+    {
+      "manifest": "docs/experiments/records/2026-11-07-pr33-body-update-new18-v3/SHA256SUMS",
+      "file": "preparation.json",
+      "sha256": "2d672e108f97f8dd9fa289f1f6035c6bd8b04b5a4bc33e6c6b7326e4d161a157"
+    },
+    {
+      "manifest": "docs/experiments/records/2026-11-07-pr33-body-update-new18-v3/SHA256SUMS",
+      "file": "prepare.py.txt",
+      "sha256": "028f519eca2c2d98e2153f7e9e87cc68efe0e98a1d08b54a903057a8c21bd4c2"
+    },
+    {
+      "manifest": "docs/experiments/records/2026-11-07-pr33-body-update-new18-v3/SHA256SUMS",
+      "file": "update.json",
+      "sha256": "f9fa27b3f76fcf00882d135330fa5c590e885db5bab86fd8afbd2d7d5284c5f8"
+    },
+    {
+      "manifest": "docs/experiments/records/2026-11-07-pr33-body-update-new18-v4/SHA256SUMS",
+      "file": "README.md",
+      "sha256": "040c0d7b3d2e6e41057bca64a46f83ea8d3ad3c8a8c7a80d108b2eb3d166d2e3"
+    },
+    {
+      "manifest": "docs/experiments/records/2026-11-07-pr33-body-update-new18-v4/SHA256SUMS",
+      "file": "body.md",
+      "sha256": "b4303dbfbeb3913bf1dfb3ff1dfad51880a7a3e00038e0c8d7ae14ea42d832a6"
+    },
+    {
+      "manifest": "docs/experiments/records/2026-11-07-pr33-body-update-new18-v4/SHA256SUMS",
+      "file": "compression.json",
+      "sha256": "8564287814d4b87a41a5866fbc445ffab1bc4e646499a4a1c0a8c6b2c500aa1c"
+    },
+    {
+      "manifest": "docs/experiments/records/2026-11-07-pr33-body-update-new18-v4/SHA256SUMS",
+      "file": "diff-from-current-pr.patch.gz",
+      "sha256": "8525666d3f212a70bc9c08c84c687bd8fccad539162bb5fa784dcc56804c4ca7"
+    },
+    {
+      "manifest": "docs/experiments/records/2026-11-07-pr33-body-update-new18-v4/SHA256SUMS",
+      "file": "diff-from-v3.patch.gz",
+      "sha256": "1ddda7e4d0c5b80067c89a1d87b04289bab7b7df83927cea13f0f5a042f91c54"
+    },
+    {
+      "manifest": "docs/experiments/records/2026-11-07-pr33-body-update-new18-v4/SHA256SUMS",
+      "file": "existing-body.md",
+      "sha256": "696f6188ccfe324e6645c521112ea1a0073f616db1c6f82be58ef0a5af1e9d3b"
+    },
+    {
+      "manifest": "docs/experiments/records/2026-11-07-pr33-body-update-new18-v4/SHA256SUMS",
+      "file": "existing-pr.json",
+      "sha256": "9e3094f627d26dbf360dae525f16f9800bd73a6c5045e948071d52cb78fc5d85"
+    },
+    {
+      "manifest": "docs/experiments/records/2026-11-07-pr33-body-update-new18-v4/SHA256SUMS",
+      "file": "head-ci-readonly.json",
+      "sha256": "ec55a539ab7db4ea72f33446c5de4dfa72da11b63cd691f824f1922a05dc09da"
+    },
+    {
+      "manifest": "docs/experiments/records/2026-11-07-pr33-body-update-new18-v4/SHA256SUMS",
+      "file": "preparation.json",
+      "sha256": "5f18f8d924e6e60428f2a9dd991e93fc482989b98d8e27dcb83ebb8a5ad24cc5"
+    },
+    {
+      "manifest": "docs/experiments/records/2026-11-07-pr33-body-update-new18-v4/SHA256SUMS",
+      "file": "prepare.py.txt",
+      "sha256": "d45a354e0a1ce690fe3b846ac30e078e6b830295755741ad77f2d6da34dad909"
+    },
+    {
+      "manifest": "docs/experiments/records/2026-11-07-pr33-body-update-new18-v4/SHA256SUMS",
+      "file": "update.json",
+      "sha256": "9027ba2679663e76d96659aa7de878c2960fde5b87a38f9f71ef42bf1ae21efb"
+    }
+  ],
+  "gzip_checks": [
+    {
+      "gzip": "docs/experiments/records/2026-11-07-pr33-body-update-new18-v3/diff-from-current-pr.patch.gz",
+      "raw_path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-pr33-body-update-new18-v3/diff-from-current-pr.patch",
+      "raw_sha256": "b485116ce892804172a05a16799b4f28c8f7efcd20833a9c7c0f10da25cc9349",
+      "roundtrip_exact": true
+    },
+    {
+      "gzip": "docs/experiments/records/2026-11-07-pr33-body-update-new18-v3/diff-from-v2.patch.gz",
+      "raw_path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-pr33-body-update-new18-v3/diff-from-v2.patch",
+      "raw_sha256": "6b09ad6e3c9c1a0b1e9c971e49733dd763e7d8cd8c7073a5230227b5801fe45c",
+      "roundtrip_exact": true
+    },
+    {
+      "gzip": "docs/experiments/records/2026-11-07-pr33-body-update-new18-v4/diff-from-current-pr.patch.gz",
+      "raw_path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-pr33-body-update-new18-v4/diff-from-current-pr.patch",
+      "raw_sha256": "bbe2fed8d0e6816dd393c57727e992fcdb23528da0f4ea06bdfcf66430cefe8e",
+      "roundtrip_exact": true
+    },
+    {
+      "gzip": "docs/experiments/records/2026-11-07-pr33-body-update-new18-v4/diff-from-v3.patch.gz",
+      "raw_path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-pr33-body-update-new18-v4/diff-from-v3.patch",
+      "raw_sha256": "cd31aa80f521915fa91517e579cabbc918ee9eeaea6a5661192dd683d664c607",
+      "roundtrip_exact": true
+    }
+  ],
+  "relative_energy": {
+    "status": "completed",
+    "exit_code": 0,
+    "seconds": 2.8165132999420166,
+    "executions": 1,
+    "loader_calls": 2,
+    "loader_calls_explanation": "one per objective collection; both existing 12-case collections loaded once",
+    "command": [
+      "env",
+      "OPENBLAS_NUM_THREADS=1",
+      "OMP_NUM_THREADS=1",
+      "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/infra/weight-tools-ci/bin/python",
+      "-B",
+      "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-native-relative-energy-v1/analyze.py"
+    ],
+    "source_sha256": "30b0eb8092a672351419f0af512cbafe6e95686ee3f9a1bdaf20309f3356cca4",
+    "report_sha256": "f9f4b5380abcbc0cfcb3f53e6de9e732e364041b1ee2e4348b0feac3e6497ca0",
+    "source_and_input_pins": 44,
+    "model_calls": 0,
+    "gpu_calls": 0,
+    "solver_calls": 0,
+    "tests_added_or_run": 0,
+    "candidate_created": false
+  },
+  "deployment_sources_equal_recorded_copies": true,
+  "inventory_unchanged": true,
+  "credential_pattern_findings": 0,
+  "credential_scan_limit": "Recognizable token/private-key formats only; no secret values printed.",
+  "tests_run": 0,
+  "model_gpu_service_calls": 0,
+  "pr_patch_calls": 0,
+  "prior_attempt": {
+    "status": "stopped_before_writes",
+    "reason": "untracked count 125 instead of 123 after independent parallel-readonly records arrived",
+    "resolution": "explicit fixed input allowlist, new unrelated files excluded"
+  },
+  "benchmark_state": "F03 full WSP30 running; no completed score/adoption claimed.",
+  "source_sha256": "a458e555c21a83003d11af03eb058197776ebf3a1424a8356966c219d507d198"
+}

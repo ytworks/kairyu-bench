@@ -1,0 +1,5 @@
+# F03 canonical dev30 plan (pending serving bind)
+
+Reuses the unchanged AV N30 owner and exact immutable f91 runner. Full 2,338 items, 14 named areas plus96 diagnostics, all90 code items, source manifest/IDs, eight environment entries and 256/32/4 concurrency remain identical. Only command label, run ID and capture output differ; all four ordinary serving replicas must bind the verified F03 tree. HTTP tracing only, no activation worker or observation claim. Existing AV results are the comparison baseline; no new baseline, finite/proxy or transfer run.
+
+launch-plan.json is explicitly unapproved with four null CIDs and no closures. After the deployment owner supplies all four per-replica closures and exact new CIDs, combined closure and endpoint closure, root must create the approved binding and run the unchanged owner CPU preview once before launch. No preview/model call/service action occurred during preparation. Capture identity comes from fresh full9 editor verification plus current full-stat continuity, not another payload hash. Raw selected-items.json remains in the new NVMe study directory byte-identical to AV.

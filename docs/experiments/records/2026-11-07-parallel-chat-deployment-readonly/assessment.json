@@ -1,0 +1,62 @@
+{
+  "status": "read_only_feasibility_checked_not_executed",
+  "compose_version": "5.3.1",
+  "source_sha256": {
+    "/home/y-takagi/kairyu/examples/gemma-4-31b-8gpu/control.py": "fc9a78bc232f9cc331926a0737e64f4b4fe14946574f4a02bc1aacb9a800b851",
+    "/home/y-takagi/kairyu/examples/gemma-4-31b-8gpu/compose.yaml": "fe49b81c153f68335ef46e07dc9f9910ee49ee066902e703d11d152c8809c5cb",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/worktrees/kairyu-bench-weight-tools/docs/experiments/scripts/redeploy-replica.py": "2e9da820fe30ba9b2436fb600cf14a533b1c496b2fed48ac3649fffb9d2bc9ae"
+  },
+  "help_commands": [
+    [
+      "docker",
+      "compose",
+      "up",
+      "--help"
+    ],
+    [
+      "docker",
+      "compose",
+      "--help"
+    ],
+    [
+      "docker",
+      "compose",
+      "version",
+      "--short"
+    ]
+  ],
+  "help_evidence": {
+    "up": "docker compose up [OPTIONS] [SERVICE...]",
+    "no_deps": "Don't start linked services",
+    "parallel": "Control max parallelism, -1 for unlimited (default -1)",
+    "wait": "Wait for services to be running|healthy. Implies detached mode."
+  },
+  "control_entry": "control._compose_command(arguments) at lines 236-245",
+  "prospective_arguments": [
+    "--parallel",
+    "4",
+    "up",
+    "--no-deps",
+    "--force-recreate",
+    "--detach",
+    "--wait",
+    "--wait-timeout",
+    "1200",
+    "gemma-0",
+    "gemma-1",
+    "gemma-2",
+    "gemma-3"
+  ],
+  "required_environment": "Existing control._compose_env() with COMPOSE_REMOVE_ORPHANS=0, content-pinned current VLLM_IMAGE, saved candidate path/tree, all four current CPUsets; all original runtime settings retained",
+  "chat_interdependencies": 0,
+  "global_lock_required": true,
+  "preview_scope": "same four independent exact-target previews before mutation; reject all stopped/running duplicate Compose members",
+  "protected_scope": "same 23 non-chat container identities/configurations; gateway can temporarily be unready while all four chat engines restart",
+  "failure_difference": "Existing redeploy-replica.py rolls back only one target. A multi-service CLI invocation needs explicit all-four inspection and rollback to the pinned homogeneous original checkpoint/runtime; existing one-target helper cannot provide atomic batch rollback. No new rollback implementation was created.",
+  "timing": "Ideal near the maximum individual 112-113 seconds instead of their sum. Concurrent CPU/model-load/cache/NVMe contention unmeasured; two-minute completion not established.",
+  "model_calls": 0,
+  "gpu_calls": 0,
+  "service_mutations": 0,
+  "new_generic_tool": false,
+  "tests_added_or_run": 0
+}
