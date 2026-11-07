@@ -1,7 +1,7 @@
 # Gemma4公式スコア全実行台帳（2026-11-06）
 
-snapshot: 2026-11-07T00:10:44.107685+00:00。WSP **141 runs**（completed136、partial4、running1＝旧保存記録のみ、現在の稼働を意味しない）。
-今回のfresh ordinary AD/AN/AR完了3件を追記した。旧138行の全fieldは完全一致で保持し、過去のlogical-overlay実行も変更していない。保存重みAN/ARはfresh ADに対してcodeが低下し、両方不採用・full14なし。working modelはAD、積み上げP→S→AC→ADを維持する。AD採用時のfresh dev90は+2.416667pp、歴史AC対full14 overallは−1.358562ppであり、全分野改善とは呼ばない。
+snapshot: 2026-11-07T01:16:12.826409+00:00。WSP **145 runs**（completed140、partial4、running1＝旧保存記録のみ、現在の稼働を意味しない）。
+今回のexploratory AD空overlay/AX/AV/AW完了4件を追記。旧141 row objectsの全fieldは完全一致。logical identityを保存checkpoint treeと混同しない。AVのみfresh対照比+0.357143ppで保存/full14確認対象、まだ不採用。working AD7d65と積み上げP→S→AC→ADを維持。ADは全分野改善とは呼ばない。
 新規採点・モデル実行なし。指定したNVMe resultsとlegacy resultsの直下run.json/report.jsonだけを採録した。
 5つのDeepSWE runはWSP台帳から分離し、完了・取消結果を代表表へ併記する。元R1/R2はincompleteで、この台帳から完成した点を捏造しない。
 公式reportから値を転記し、欠測は「—」。表は小数6桁表示、sourceの未丸め値はcatalog JSONに残す。
@@ -5189,3 +5189,27 @@ ANはLCB arc195_bとSciCode58/72の数値3 loss、gain0。公式binary flipは1 
 | export-reproduction.py | 339f49c72218156a30195024c97c9575f62d9710de4d2f74e362ab8e4be97a78 |
 
 最終summary 2f3a50cdf8610c42f2c753d588c190f64ba7dae71d2405f075b90170a1951b86、postchecks f2253c519b7341f66de894cc1fc8d8b6e152b308ed12f00ef4bc3d7b566a8169、working-decision 66aa64e14eaf5c69d114760bdea3e04af145617e172b7a9dc374c44cc6d5bd8d。[機能target実験記録](2026-11-07-ad-functional-targets.md)に対照窓・partial scoreと不採用理由を保持。
+
+## v13追補：Q/Kを含む1ラウンドの探索的公式比較（145 runs）
+
+旧141行完全保持、追加はlogical-overlay4行。全90採点、未知/切詰め/空0。正式HTTP各119、error/retry0、startup各1を分離。保存済み候補checkpointの結果ではない。
+
+| Arm | Code % | Same-window control delta pp | HE /30 | MBPP /30 | LCB /20 | SciCode % |
+|---|---:|---:|---:|---:|---:|---:|
+| CONTROL | 72.575397 | — | 28 | 23 | 16 | 40.301587 |
+| AX | 72.242063 | -0.333333 | 30 | 23 | 14 | 42.301587 |
+| AV | 72.932540 | +0.357143 | 28 | 23 | 16 | 41.730159 |
+| AW | 72.158730 | -0.416667 | 28 | 24 | 15 | 40.301587 |
+
+AVはSciCode80の2/7→3/7が総差を生み、HE/MBPPは各1gain/1lossの入替。pairedCI[−2.976190,+3.690476]pp。AVだけ保存後のADとのfull14確認へ選択、採用は未決定。AX/AWは今回の比較では低下。全4元CIDは正常復帰。
+
+| v13 Artifact | SHA256 |
+|---|---|
+| catalog.json | c694b6a3c10d41e82c78c5fdb78a8affd2a154a1e4f5bd8b35614a3a44ad590c |
+| coverage.json | a72b295ea6372ca1639ca6ab978c203ade0e8672dd78ce6864a5f5c68c70091e |
+| runs.csv | 4ba5024afafa805fd9b4dc1e4a9db779b9ae57306303c444a5f3558f5a939364 |
+| source-scores.csv | a6f37851a87ae035d9f7408f1d6b2b27d22ec161c96bf4c64d6e826902c2ea57 |
+| preservation.json | 3fc3890e93df24d958d3df3ae5d59a2e5ccf81b41f7e1abffae2e15dda1da9c7 |
+| export-reproduction.py | 515142feb24ee4f2e0bdcee0a67d7076ed82ebb58c6ab965d60c9cb93de8f6c3 |
+
+最終numeric summary65860b00…、postchecks65172ef2…、closurebb4bfb69…。[候補の全経過](2026-11-07-helper-capped-functional-targets.md)にsource得失、partial scores、使用token、actual load/restore proofを保存。

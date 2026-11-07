@@ -22,6 +22,7 @@ RUNTIME = (
     "transformers",
     "weight_dtype",
     "attention",
+    "observation_policy",
     "gradients",
     "gradient_accumulation",
     "gradient_checkpointing",
@@ -39,6 +40,7 @@ SETTINGS = (
     "objective_forward_layout",
     "virtual_unit_gains",
     "sampling_mode",
+    "observation_policy",
 )
 
 

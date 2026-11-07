@@ -30,6 +30,93 @@ def _save(path: Path, value: Any) -> None:
     temporary.replace(path)
 
 
+
+def add_observation_arguments(parser: argparse.ArgumentParser) -> None:
+    parser.add_argument("--max-frame-tokens", type=int, choices=(1024, 2048),
+                        help="opt-in complete prefix+answer limit; reject oversize, never truncate")
+    parser.add_argument("--text-attention-backend", choices=("eager", "sdpa"), default="eager")
+    parser.add_argument("--cuda-memory-cap-gib", type=float,
+                        help="optional CUDA caching-allocator limit, not total device memory")
+
+
+def validate_observation_policy(policy: Any) -> dict[str, Any]:
+    keys = {"max_frame_tokens", "attention_dispatch", "cuda_memory_cap_gib",
+            "answer_batching", "max_cases_per_microbatch"}
+    if not isinstance(policy, dict) or set(policy) != keys:
+        raise ValueError("invalid explicit observation policy")
+    limit, cap = policy["max_frame_tokens"], policy["cuda_memory_cap_gib"]
+    dispatch = policy["attention_dispatch"]
+    if (limit is not None and (type(limit) is not int or limit not in (1024, 2048))):
+        raise ValueError("explicit frame limit must be 1024 or 2048")
+    if (not isinstance(dispatch, dict) or set(dispatch) != {"", "text_config", "vision_config", "audio_config"}
+            or dispatch["text_config"] not in ("eager", "sdpa")
+            or any(dispatch[key] != "eager" for key in ("", "vision_config", "audio_config"))):
+        raise ValueError("only explicit text-only eager/SDPA dispatch is supported")
+    if dispatch["text_config"] == "sdpa" and limit is None:
+        raise ValueError("SDPA requires an explicit complete-frame token limit")
+    if (cap is not None and (isinstance(cap, bool) or not isinstance(cap, (int, float))
+                             or not np.isfinite(cap) or cap <= 0)):
+        raise ValueError("CUDA allocator cap must be positive and finite")
+    if policy["answer_batching"] != "serial" or type(policy["max_cases_per_microbatch"]) is not int or policy["max_cases_per_microbatch"] != 1:
+        raise ValueError("explicit observation policy requires one serial case/answer")
+    return policy
+
+
+def observation_policy(args: argparse.Namespace, *, intrinsic_serial: bool = False) -> dict[str, Any] | None:
+    limit = getattr(args, "max_frame_tokens", None)
+    backend = getattr(args, "text_attention_backend", "eager")
+    cap = getattr(args, "cuda_memory_cap_gib", None)
+    if limit is None and backend == "eager" and cap is None:
+        return None  # Preserve historical absent-policy behavior and artifacts.
+    if getattr(args, "mode", "chat-public-answer") != "chat-public-answer":
+        raise ValueError("explicit observation policy requires complete public-answer frames")
+    if cap is not None and args.device != "cuda:0":
+        raise ValueError("CUDA allocator cap requires cuda:0")
+    return validate_observation_policy({
+        "max_frame_tokens": limit,
+        "attention_dispatch": {"": "eager", "text_config": backend,
+                               "vision_config": "eager", "audio_config": "eager"},
+        "cuda_memory_cap_gib": cap,
+        "answer_batching": "serial" if intrinsic_serial else getattr(args, "answer_batching", "paired"),
+        "max_cases_per_microbatch": 1 if intrinsic_serial else getattr(args, "max_cases_per_microbatch", None),
+    })
+
+
+def validate_frame_rows(rows: list[Any], maximum: int | None) -> None:
+    if maximum is not None and any(len(row[1]) + max(len(row[2]), len(row[3])) > maximum for row in rows):
+        raise ValueError(f"complete prefix plus answer exceeds {maximum} tokens; no truncation")
+
+
+def configure_observation_cuda(torch: Any, device: str, policy: dict[str, Any] | None) -> dict[str, Any] | None:
+    if policy is None or policy["cuda_memory_cap_gib"] is None:
+        return None
+    validate_observation_policy(policy)
+    if device != "cuda:0":
+        raise ValueError("CUDA allocator cap requires cuda:0")
+    free, total = torch.cuda.mem_get_info(device)
+    requested = policy["cuda_memory_cap_gib"] * 2**30
+    if requested > free or requested > total:
+        raise ValueError("CUDA allocator cap exceeds available/total device memory")
+    fraction = requested / total
+    torch.cuda.set_per_process_memory_fraction(fraction, device)
+    return {"requested_gib": policy["cuda_memory_cap_gib"], "fraction_of_total": fraction,
+            "free_before_load_bytes": free, "total_device_bytes": total,
+            "scope": "PyTorch caching allocator only; not a cap on all device allocations"}
+
+
+def resolved_observation_execution(model: Any, policy: dict[str, Any], allocator: Any) -> dict[str, Any]:
+    requested = validate_observation_policy(policy)["attention_dispatch"]
+    config = model.config
+    resolved = {key: getattr(config if key == "" else getattr(config, key, None),
+                             "_attn_implementation", None) for key in requested}
+    absent = [key for key in ("vision_config", "audio_config") if getattr(config, key, None) is None]
+    if any(resolved[key] != expected for key, expected in requested.items() if key not in absent):
+        raise ValueError("loaded attention dispatch differs from explicit observation policy")
+    return {"resolved_attention_dispatch": resolved, "absent_subconfigs": absent, "cuda_allocator": allocator,
+            "backend_policy": ("Transformers text SDPA dispatch uses PyTorch automatic kernels, including math; fused/GQA memory savings not asserted"
+                               if requested["text_config"] == "sdpa" else "Transformers eager dispatch for all subconfigs"),
+            "automatic_attention_api_or_length_retry": False}
+
 def batches(rows: list[Any]) -> list[list[Any]]:
     """Preserve the original calibration's deterministic 1600-token packing."""
     ordered = sorted(rows, key=lambda row: max(len(row[1]) + len(row[2]), len(row[1]) + len(row[3])))
@@ -51,6 +138,8 @@ def load_plan(path: Path, checkpoint: Checkpoint) -> tuple[dict[str, Any], list[
     plan = json.loads(path.read_text())
     if plan.get("schema_version") != 1 or plan.get("architecture") not in {"gemma4_native_bf16", "gemma4_sparse_bf16"}:
         raise ValueError("unsupported finite replay plan")
+    if "observation_policy" in plan:
+        validate_observation_policy(plan["observation_policy"])
     entries = plan.get("candidates")
     if not isinstance(entries, list) or not 1 <= len(entries) <= 8:
         raise ValueError("one through eight fixed candidate specs required")
@@ -193,7 +282,7 @@ PUBLIC_ANSWER_FRAME_PROTOCOL = "gemma4-public-answer-v2-forced-empty-thought"
 EMPTY_THOUGHT_BOUNDARY = "<|channel>thought\n<channel|>"
 
 
-def prepare_frames(tokenizer: Any, cases: dict[str, Any]) -> tuple[dict[str, Any], dict[str, Any]]:
+def prepare_frames(tokenizer: Any, cases: dict[str, Any], *, max_frame_tokens: int | None = None) -> tuple[dict[str, Any], dict[str, Any]]:
     """Condition public tokens on an explicitly empty thought under thinking ON.
 
     The ON generation template leaves the model at its assistant start, where
@@ -248,6 +337,7 @@ def prepare_frames(tokenizer: Any, cases: dict[str, Any]) -> tuple[dict[str, Any
                     "prefix_sha256": hashlib.sha256(prefix.encode()).hexdigest(),
                     "prefix_tokens": len(prefixes[0]), "correct_tokens": len(answers[0]),
                     "foil_tokens": len(answers[1])})
+            validate_frame_rows(rows, max_frame_tokens)
             prepared[group].append(rows)
             frames[group].append(frame_rows)
     return prepared, {"schema_version": 2, "frame_protocol": PUBLIC_ANSWER_FRAME_PROTOCOL,
@@ -439,8 +529,13 @@ def run(args: argparse.Namespace) -> dict[str, Any]:
         raise ValueError("exactly one explicitly exposed CUDA GPU required")
     if torch.cuda.mem_get_info()[0] < 70 * 2**30:
         raise ValueError("at least 70 GiB free GPU memory required")
+    policy = observation_policy(args, intrinsic_serial=args.answer_batching == "serial")
     checkpoint = Checkpoint(args.checkpoint)
     plan, specs, hashes = load_plan(args.plan, checkpoint)
+    if "observation_policy" in plan:
+        validate_observation_policy(plan["observation_policy"])
+    if plan.get("observation_policy") != policy:
+        raise ValueError("finite plan and requested observation policy differ")
     output = args.output.resolve()
     inputs = [checkpoint.path.resolve(), *[Path(p).resolve() for p in hashes]]
     if any(output == p or output in p.parents or p in output.parents for p in inputs):
@@ -463,24 +558,32 @@ def run(args: argparse.Namespace) -> dict[str, Any]:
             raise TimeoutError("finite replay time budget; reserve restored-base sweep")
     cases = json.loads(Path(plan["cases"]["path"]).read_text())
     tokenizer = AutoTokenizer.from_pretrained(checkpoint.path, local_files_only=True)
-    prepared, frame = prepare_frames(tokenizer, cases)
+    prepared, frame = prepare_frames(tokenizer, cases, max_frame_tokens=policy["max_frame_tokens"] if policy else None)
     if frame != json.loads(Path(plan["frame_evidence"]["path"]).read_text()):
         raise ValueError("source and replay frame mismatch")
     labels = [f"{group}-{fold}" for group, folds in prepared.items() for fold in range(len(folds))]
-    _save(output / "provenance.json", {
+    provenance = {
         "plan_sha256": hashes[str(args.plan.resolve())], "source_hashes": hashes,
         "runner_sha256": _sha(Path(__file__)), "checkpoint_identity": checkpoint.identity(hash_files=False),
         "expected_base_tree_sha256": plan["base_tree_sha256"], "full_tree_rehashed_here": False,
-        "dtype": "BF16 weights; FP32 softcap/log-softmax", "attention": "eager",
+        "dtype": "BF16 weights; FP32 softcap/log-softmax",
+        "attention": policy["attention_dispatch"]["text_config"] if policy else "eager",
         "answer_batching": args.answer_batching, "threads": args.threads, "seed": args.seed,
         "scope": "Matched teacher-forced public-answer diagnostics only; no free generation or benchmark score.",
-    })
+    }
+    if policy is not None:
+        provenance["observation_policy"] = policy
+    _save(output / "provenance.json", provenance)
     _save(output / "frame-evidence.json", frame)
     note("loading_original_bf16", candidates=len(specs), folds=len(labels))
+    allocator = configure_observation_cuda(torch, args.device, policy)
     model = Gemma4ForConditionalGeneration.from_pretrained(
         checkpoint.path, dtype=torch.bfloat16, local_files_only=True,
-        attn_implementation="eager", device_map={"": args.device}).eval()
+        attn_implementation=policy["attention_dispatch"] if policy else "eager", device_map={"": args.device}).eval()
     model.requires_grad_(False)
+    if policy is not None:
+        provenance["observation_execution"] = resolved_observation_execution(model, policy, allocator)
+        _save(output / "provenance.json", provenance)
     net, head = model.model.language_model, model.get_output_embeddings()
     params = {"model.language_model." + n: p for n, p in net.named_parameters()}
     for i, layer in enumerate(net.layers):
@@ -549,6 +652,8 @@ def run(args: argparse.Namespace) -> dict[str, Any]:
         "limits": ["Synthetic public-answer calibration, not free-generation or WSP performance.",
                    "Per-purpose gains and losses are reported without an all-fold nonregression gate.",
                    "Owner must restore its serving container after this isolated process exits."]}
+    if policy is not None:
+        report.update(observation_policy=policy, observation_execution=provenance["observation_execution"])
     _save(output / "base-restoration.json", restoration)
     _save(output / "summary.json", report)
     note(report["status"], candidates=len(diagnostics), restored=restoration["matched"])
@@ -571,6 +676,7 @@ def main() -> None:
     parser.add_argument("--threads", type=int, default=6)
     parser.add_argument("--seed", type=int, default=20261105)
     parser.add_argument("--gpu-exclusive-approved", action="store_true")
+    add_observation_arguments(parser)
     args = parser.parse_args()
     if not 1 <= args.threads <= 64:
         parser.error("threads must be 1..64")

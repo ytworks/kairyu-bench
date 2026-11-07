@@ -15,6 +15,7 @@ from kairyu_bench.wsp.weights.checkpoint import Checkpoint
 from kairyu_bench.wsp.weights import finite_replay
 from kairyu_bench.wsp.weights.finite_replay import batches as batches
 from kairyu_bench.wsp.weights.finite_replay import prepare_frames
+from kairyu_bench.wsp.weights.finite_replay import validate_observation_policy as validate_observation_policy
 
 
 def sha(path: Path) -> str:
@@ -60,6 +61,7 @@ def parser(description: str, *, chat: bool) -> argparse.ArgumentParser:
     result.add_argument("--reference-tolerance", type=float, default=1e-5)
     result.add_argument("--run", action="store_true", help="otherwise validate inputs and print a preview only")
     result.add_argument("--gpu-exclusive-approved", action="store_true")
+    finite_replay.add_observation_arguments(result)
     if chat:
         result.add_argument("--mode", choices=("raw-next-token", "chat-public-answer"), default="chat-public-answer")
     else:
@@ -154,6 +156,7 @@ def preflight(args: argparse.Namespace, script: Path) -> tuple[Checkpoint, dict,
         raise ValueError("--run requires checkpoint-attestation and its reviewed SHA256")
     if args.device != "cpu" and not args.gpu_exclusive_approved:
         raise ValueError("CUDA requires an explicit exclusive-owner handoff")
+    policy = finite_replay.observation_policy(args, intrinsic_serial=getattr(args, "_intrinsic_serial", False))
     provenance = {"checkpoint": current, "full_tree_rehashed_here": False,
                   "attestation_receipt_sha256": receipt_sha, "input_sha256": hashes, "input_stat": input_states,
                   "calibration_scope": "Explicit caller cases only; no evaluation dataset/result lookup or independent holdout claim",
@@ -163,6 +166,8 @@ def preflight(args: argparse.Namespace, script: Path) -> tuple[Checkpoint, dict,
                   "cases": sum(len(f) for v in cases.values() for f in v),
                   "model_forwards": "not_run" if not args.run else "explicitly_requested",
                   "new_checkpoints": 0, "wsp_calls": 0}
+    if policy is not None:
+        provenance["observation_policy"] = policy
     assert_inputs(checkpoint, provenance)
     return checkpoint, cases, provenance
 
@@ -189,10 +194,11 @@ def transformers_version() -> str:
         return "unknown"
 
 
-def load_model(args: argparse.Namespace):
+def load_model(args: argparse.Namespace, *, cases: dict | None = None, legacy_limit: int | None = None):
     import torch
     from transformers import AutoTokenizer, Gemma4ForConditionalGeneration
 
+    policy = finite_replay.observation_policy(args, intrinsic_serial=getattr(args, "_intrinsic_serial", False))
     torch.set_num_threads(args.threads)
     torch.set_num_interop_threads(1)
     torch.manual_seed(args.seed)
@@ -201,10 +207,15 @@ def load_model(args: argparse.Namespace):
             raise ValueError("exactly one exposed GPU with at least 70 GiB free is required")
         torch.backends.cuda.matmul.allow_tf32 = False
     tokenizer = AutoTokenizer.from_pretrained(args.checkpoint, local_files_only=True)
+    if cases is not None:
+        prepare(tokenizer, cases, args.mode, max_frame_tokens=frame_limit(args, legacy_limit))
+    allocator = finite_replay.configure_observation_cuda(torch, args.device, policy)
     model = Gemma4ForConditionalGeneration.from_pretrained(
         args.checkpoint, dtype=torch.bfloat16, local_files_only=True,
-        attn_implementation="eager", device_map={"": args.device}).eval()
+        attn_implementation=policy["attention_dispatch"] if policy else "eager", device_map={"": args.device}).eval()
     model.requires_grad_(False)
+    if policy is not None:
+        args._observation_execution = finite_replay.resolved_observation_execution(model, policy, allocator)
     return torch, tokenizer, model
 
 
@@ -235,8 +246,24 @@ def raw_frames(tokenizer: Any, cases: dict) -> tuple[dict, dict]:
                       "frames": evidence}
 
 
-def prepare(tokenizer: Any, cases: dict, mode: str) -> tuple[dict, dict]:
-    return prepare_frames(tokenizer, cases) if mode == "chat-public-answer" else raw_frames(tokenizer, cases)
+def frame_limit(args: argparse.Namespace, legacy: int | None = None) -> int | None:
+    explicit = getattr(args, "max_frame_tokens", None)
+    return legacy if explicit is None else explicit
+
+
+def observation_runtime(args: argparse.Namespace, provenance: dict) -> dict:
+    policy = provenance.get("observation_policy")
+    if policy is None:
+        return {"attention": "eager"}
+    validate_observation_policy(policy)
+    return {"attention": policy["attention_dispatch"]["text_config"],
+            "observation_policy": policy,
+            "observation_execution": args._observation_execution}
+
+
+def prepare(tokenizer: Any, cases: dict, mode: str, *, max_frame_tokens: int | None = None) -> tuple[dict, dict]:
+    return (prepare_frames(tokenizer, cases, max_frame_tokens=max_frame_tokens)
+            if mode == "chat-public-answer" else raw_frames(tokenizer, cases))
 
 
 def objective(torch: Any, net: Any, head: Any, tokenizer: Any, batch: list, mode: str, device: str):

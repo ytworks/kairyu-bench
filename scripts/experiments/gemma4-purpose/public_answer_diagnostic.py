@@ -82,14 +82,15 @@ def numeric_comparison(torch, official, native, fp32, targets, channel_token_id=
 def run(args, checkpoint, cases, provenance):
     selected = select_cases(cases, args.case_id)
     start = time.monotonic()
-    torch, tokenizer, model = common.load_model(args)
-    net, head = model.model.language_model, model.get_output_embeddings()
     subset = {"diagnostic": [[row for _, _, row in selected]]}
-    prepared, frame_proof = common.prepare(tokenizer, subset, "chat-public-answer")
+    torch, tokenizer, model = common.load_model(args, cases=subset)
+    net, head = model.model.language_model, model.get_output_embeddings()
+    prepared, frame_proof = common.prepare(tokenizer, subset, "chat-public-answer", max_frame_tokens=common.frame_limit(args))
     new_rows = {row[0]: row for row in prepared["diagnostic"][0]}
     channel = tokenizer.encode("<|channel>", add_special_tokens=False)
     channel_id = channel[0] if len(channel) == 1 else None
     source = __import__("inspect").getsourcefile(type(model))
+    provenance.update(common.observation_runtime(args, provenance))
     provenance["official_modeling_source"] = {
         "path": source, "sha256": common.sha(Path(source)) if source else None}
     provenance["transformers_version"] = common.transformers_version()
@@ -111,8 +112,7 @@ def run(args, checkpoint, cases, provenance):
             for label, prefix in (("legacy_assistant_start", old_prefix),
                                   ("shared_public_final_boundary", new_prefix)):
                 sequence = prefix + old_answer
-                if len(sequence) > 512:
-                    raise ValueError("diagnostic frame exceeds 512 tokens; no truncation")
+                common.finite_replay.validate_frame_rows([(case["id"], prefix, old_answer, old_answer)], common.frame_limit(args, 512))
                 for padding in (0, 8):
                     if time.monotonic() - start > args.max_seconds:
                         raise TimeoutError("diagnostic dispatch budget exceeded")
@@ -153,6 +153,7 @@ def run(args, checkpoint, cases, provenance):
 
 def main(argv=None):
     parser = common.parser(__doc__, chat=True)
+    parser.set_defaults(_intrinsic_serial=True)
     parser.add_argument("--case-id", action="append", required=True)
     parser.add_argument("--max-seconds", type=common.positive_int, default=120)
     args = parser.parse_args(argv)

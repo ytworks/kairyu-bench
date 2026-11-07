@@ -251,6 +251,27 @@ class NativeCoupledTests(unittest.TestCase):
                                   "tree": self.plan["checkpoint"]["tree_sha256"]},
                 "outputs": outputs}))
             return {"path": str(receipt), "sha256": self.sha(receipt)}
+        # Legacy inputs above remain accepted. An opt-in backend/frame policy
+        # must survive composition, and cannot differ within or between segments.
+        observation_policy = {
+            "max_frame_tokens": 1024,
+            "attention_dispatch": {"": "eager", "text_config": "sdpa",
+                                   "vision_config": "eager", "audio_config": "eager"},
+            "cuda_memory_cap_gib": 88.0, "answer_batching": "serial",
+            "max_cases_per_microbatch": 1}
+        def set_observation_policy(directories, policy):
+            for objectives in directories.values():
+                for directory in objectives.values():
+                    folder = Path(directory)
+                    summary = json.loads((folder / "summary.json").read_text())
+                    provenance = json.loads((folder / "provenance.json").read_text())
+                    summary["runtime"]["observation_policy"] = copy.deepcopy(policy)
+                    summary["runtime"]["attention"] = policy["attention_dispatch"]["text_config"]
+                    provenance["observation_policy"] = copy.deepcopy(policy)
+                    (folder / "summary.json").write_text(json.dumps(summary))
+                    (folder / "provenance.json").write_text(json.dumps(provenance))
+        set_observation_policy(self.plan["collections"], observation_policy)
+        set_observation_policy(new_directories, observation_policy)
         compose_plan = {
             "schema_version": 1, "kind": "disjoint_purpose_collections_v1",
             "checkpoint": self.plan["checkpoint"], "baseline_tolerance": 1e-6,
@@ -261,6 +282,25 @@ class NativeCoupledTests(unittest.TestCase):
                 {"cases": {"path": str(new_cases), "sha256": self.sha(new_cases)},
                  "receipt": collection_receipt("new", new_directories)}]}
         compose_path = self.root / "compose-plan.json"
+        compose_path.write_text(json.dumps(compose_plan))
+        different_policy = dict(observation_policy, max_frame_tokens=2048)
+        bad_summary = Path(new_directories["matrix"]["margin"]) / "summary.json"
+        broken = json.loads(bad_summary.read_text())
+        broken["runtime"]["observation_policy"] = different_policy
+        bad_summary.write_text(json.dumps(broken))
+        compose_plan["segments"][1]["receipt"] = collection_receipt("new", new_directories)
+        compose_path.write_text(json.dumps(compose_plan))
+        with self.assertRaisesRegex(ValueError, "observation policy/runtime"):
+            composer.compose(compose_path, self.root / "mismatched-policy", write=True)
+        self.assertFalse((self.root / "mismatched-policy").exists())
+        set_observation_policy(new_directories, different_policy)
+        compose_plan["segments"][1]["receipt"] = collection_receipt("new", new_directories)
+        compose_path.write_text(json.dumps(compose_plan))
+        with self.assertRaisesRegex(ValueError, "collector settings differ"):
+            composer.compose(compose_path, self.root / "mixed-frame-limits", write=True)
+        self.assertFalse((self.root / "mixed-frame-limits").exists())
+        set_observation_policy(new_directories, observation_policy)
+        compose_plan["segments"][1]["receipt"] = collection_receipt("new", new_directories)
         compose_path.write_text(json.dumps(compose_plan))
         composed = self.root / "composed"
         with unittest.mock.patch.object(COUPLED.joint, "quantized_proposal", side_effect=AssertionError("composer invoked solver")):
@@ -277,7 +317,10 @@ class NativeCoupledTests(unittest.TestCase):
                 self.assertEqual((composed / (family + "-" + objective) / ("segment-0-" + filename)).read_bytes(),
                                  (original / filename).read_bytes())
         joined_plan_path = composed / "adapter-input-template.json"
-        _, joined_plan, _, joined_labels, _ = COUPLED.prepare(joined_plan_path)
+        _, joined_plan, joined_collections, joined_labels, _ = COUPLED.prepare(joined_plan_path)
+        self.assertTrue(all(c["summary"]["runtime"]["observation_policy"] == observation_policy
+                            and c["provenance"]["observation_policy"] == observation_policy
+                            for c in joined_collections.values()))
         self.assertEqual(joined_labels, [("science", 0), ("helper", 0)])
         joined_plan["candidates"][0]["constraints"] = [
             {"objective": o, "purpose": p, "fold": f, "minimum_delta": 1 / 128}

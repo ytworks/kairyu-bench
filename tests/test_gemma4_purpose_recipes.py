@@ -171,6 +171,77 @@ assert 'transformers' not in sys.modules
             MATRIX.checked_batches(too_long, "chat-public-answer")
         self.assertEqual(MATRIX.checked_batches(too_long, "raw-next-token"), [too_long])
 
+        # CLI -> complete-token validation -> loader dispatch/resource boundary.
+        # Legacy native remains uncapped, while the matrix default still rejects >512.
+        long_cases = {"science": [[{"id": "complete", "prompt": "p" * 600,
+                                   "correct": "good" * 60, "foil": "bad" * 60}]]}
+        long_prepared, _ = COMMON.prepare(tokenizer, long_cases, "chat-public-answer")
+        long_rows = long_prepared["science"][0]
+        with self.assertRaisesRegex(ValueError, "no truncation"):
+            MATRIX.checked_batches(long_rows, "chat-public-answer")
+        bounded, _ = COMMON.prepare(tokenizer, long_cases, "chat-public-answer", max_frame_tokens=1024)
+        self.assertEqual(bounded, long_prepared)
+        self.assertEqual(MATRIX.checked_batches(long_rows, "chat-public-answer", 1, 1024), [long_rows])
+        oversized = copy.deepcopy(long_cases)
+        oversized["science"][0][0]["foil"] = "x" * 600
+        with self.assertRaisesRegex(ValueError, "no truncation"):
+            COMMON.prepare(tokenizer, oversized, "chat-public-answer", max_frame_tokens=1024)
+        # The foil is also checked even when the downstream objective is correct LL.
+        two_k, _ = COMMON.prepare(tokenizer, oversized, "chat-public-answer", max_frame_tokens=2048)
+        self.assertEqual(two_k["science"][0][0][3], [ord("x")] * 600)
+        args.max_frame_tokens = 1024
+        args.text_attention_backend = "sdpa"
+        args.answer_batching = "serial"
+        args.cuda_memory_cap_gib = 80.
+        args.device = "cuda:0"
+        policy = COMMON.finite_replay.observation_policy(args)
+        events = []
+        cuda = SimpleNamespace(is_available=lambda: True, device_count=lambda: 1,
+                               mem_get_info=lambda *a: (90 * 2**30, 96 * 2**30),
+                               set_per_process_memory_fraction=lambda *a: events.append(("cap", a)))
+        fake_torch = SimpleNamespace(set_num_threads=lambda n: None, set_num_interop_threads=lambda n: None,
+                                     manual_seed=lambda n: None, cuda=cuda, bfloat16="BF16",
+                                     backends=SimpleNamespace(cuda=SimpleNamespace(matmul=SimpleNamespace(allow_tf32=True))))
+        config = SimpleNamespace(_attn_implementation="eager",
+                                 text_config=SimpleNamespace(_attn_implementation="sdpa"),
+                                 vision_config=SimpleNamespace(_attn_implementation="eager"),
+                                 audio_config=None)
+        model = SimpleNamespace(config=config, requires_grad_=lambda flag: None)
+        model.eval = lambda: model
+        def load_model(*positional, **kwargs):
+            events.append(("load", kwargs))
+            self.assertEqual(events[0], ("cap", (80 / 96, "cuda:0")))
+            return model
+        fake_transformers = SimpleNamespace(
+            AutoTokenizer=SimpleNamespace(from_pretrained=lambda *a, **kw: tokenizer),
+            Gemma4ForConditionalGeneration=SimpleNamespace(from_pretrained=load_model))
+        with patch.dict(sys.modules, {"torch": fake_torch, "transformers": fake_transformers}):
+            COMMON.load_model(args, cases=long_cases)
+            self.assertEqual(events[1][1]["attn_implementation"], policy["attention_dispatch"])
+            self.assertEqual(args._observation_execution["resolved_attention_dispatch"],
+                             {**policy["attention_dispatch"], "audio_config": None})
+            self.assertEqual(args._observation_execution["absent_subconfigs"], ["audio_config"])
+            self.assertEqual(COMMON.observation_runtime(args, {"observation_policy": policy})["observation_policy"], policy)
+            events.clear()
+            with self.assertRaisesRegex(ValueError, "no truncation"):
+                COMMON.load_model(args, cases=oversized)
+            self.assertEqual(events, [])  # Reject the complete frame before loading weights.
+            args.cuda_memory_cap_gib = 91
+            with self.assertRaisesRegex(ValueError, "available/total"):
+                COMMON.load_model(args, cases=long_cases)
+            self.assertEqual(events, [])
+            args.cuda_memory_cap_gib = 80.
+            config.text_config._attn_implementation = "eager"
+            with self.assertRaisesRegex(ValueError, "loaded attention dispatch"):
+                COMMON.load_model(args, cases=long_cases)
+        args.answer_batching = "paired"
+        with self.assertRaisesRegex(ValueError, "serial"):
+            COMMON.finite_replay.observation_policy(args)
+        args.answer_batching = "serial"
+        args.max_frame_tokens = None
+        with self.assertRaisesRegex(ValueError, "explicit"):
+            COMMON.finite_replay.observation_policy(args)
+
     def test_matrix_input_bytes_are_pinned_before_parse_and_no_implicit_dataset_read(self):
         model = weights(self.root / "base/model.safetensors", {
             "model.language_model.norm.weight": ("BF16", (2,), bytes.fromhex("803f0040"))})

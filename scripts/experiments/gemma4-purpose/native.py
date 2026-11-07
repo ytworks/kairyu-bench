@@ -31,9 +31,9 @@ def collect(args, checkpoint, cases, provenance):
     if answer_batching not in {"paired", "serial"} or (answer_batching == "serial" and (args.mode != "chat-public-answer" or args.virtual)):
         raise ValueError("serial answer batching requires chat-public-answer native-only collection")
     objective = common.objective if objective_kind == "margin" else variants.correct_logprob_objective
-    torch, tokenizer, model = common.load_model(args)
+    torch, tokenizer, model = common.load_model(args, cases=cases, legacy_limit=None)
     net, head = model.model.language_model, model.get_output_embeddings()
-    prepared, frame = common.prepare(tokenizer, cases, args.mode)
+    prepared, frame = common.prepare(tokenizer, cases, args.mode, max_frame_tokens=common.frame_limit(args, None))
     common.save(args.output / "frame-evidence.json", frame)
     names = {"model.language_model." + name: value for name, value in net.named_parameters()
              if value.ndim <= 1 and value.is_floating_point()}
@@ -143,7 +143,7 @@ def collect(args, checkpoint, cases, provenance):
         summary = {"status": "completed", "mode": args.mode, "objective_kind": objective_kind, "answer_batching": answer_batching, "coverage": coverage,
                    "folds": records, "seconds": time.monotonic() - start,
                    "runtime": {"torch": torch.__version__, "transformers": common.transformers_version(), "device": args.device, "weight_dtype": "BF16",
-                               "attention": "eager", "gradients": "native BF16 autograd, accumulated FP32",
+                               **common.observation_runtime(args, provenance), "gradients": "native BF16 autograd, accumulated FP32",
                                 "max_cases_per_microbatch": args.max_cases_per_microbatch,
                                 "gpu_peak_allocated_GiB": torch.cuda.max_memory_allocated() / 2**30 if args.device != "cpu" else None,
                                 "gpu_peak_reserved_GiB": torch.cuda.max_memory_reserved() / 2**30 if args.device != "cpu" else None},

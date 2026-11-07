@@ -319,7 +319,9 @@ def main():
     plan = read(PLAN)
     require(len(plan["jobs"]) == 1, "one finalist per owner")
     job = plan["jobs"][0]
-    require(job["label"] in {"AN", "AO", "AP", "AQ", "AR", "AS"}, "unknown finalist")
+    require(
+        job["label"] in {"AN", "AO", "AP", "AQ", "AR", "AS", "AV"}, "unknown finalist"
+    )
     guard = load_helper(plan)
     FINITE = Path(plan["finite_owner"]["path"]).parent
     FINITE_OWNER_SHA = plan["finite_owner"]["sha256"]

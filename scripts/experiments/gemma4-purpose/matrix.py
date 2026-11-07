@@ -140,10 +140,10 @@ def factor_derivative(upstream, selected_inputs, rows):
     return products.reshape(-1, len(rows)).sum(0, dtype=torch.float64)
 
 
-def checked_batches(rows, mode, max_cases_per_microbatch=None):
+def checked_batches(rows, mode, max_cases_per_microbatch=None, max_frame_tokens=512):
     """Use the shared packing without silently truncating an oversized chat case."""
-    if mode == "chat-public-answer" and any(len(row[1]) + max(len(row[2]), len(row[3])) > 512 for row in rows):
-        raise ValueError("chat matrix pilot requires prefix plus each answer <=512 tokens; no truncation")
+    if mode == "chat-public-answer":
+        common.finite_replay.validate_frame_rows(rows, max_frame_tokens)
     return common.objective_batches(rows, mode, max_cases_per_microbatch)
 
 
@@ -241,11 +241,11 @@ def collect(args, checkpoint, cases, provenance):
             or args.mode != "chat-public-answer" and (objective_kind != "margin" or answer_batching != "paired")):
         raise ValueError("invalid matrix objective/batching/sampling combination")
     coherent = mlp_triplet_samples(checkpoint.tensors, args.seed) if sampling_mode == "mlp-triplets" else {}
-    torch, tokenizer, model = common.load_model(args)
+    torch, tokenizer, model = common.load_model(args, cases=cases, legacy_limit=512)
     net, head = model.model.language_model, model.get_output_embeddings()
     config = net.config.to_dict()
-    prepared, frame = common.prepare(tokenizer, cases, args.mode)
-    packed_folds = {group: [checked_batches(rows, args.mode, args.max_cases_per_microbatch) for rows in folds]
+    prepared, frame = common.prepare(tokenizer, cases, args.mode, max_frame_tokens=common.frame_limit(args, 512))
+    packed_folds = {group: [checked_batches(rows, args.mode, args.max_cases_per_microbatch, common.frame_limit(args, 512)) for rows in folds]
                     for group, folds in prepared.items()}
     if any(getattr(module, "gradient_checkpointing", False) for module in net.modules()):
         raise ValueError("matrix collector does not support gradient checkpoint recomputation")
@@ -334,7 +334,7 @@ def collect(args, checkpoint, cases, provenance):
                             "mean correct-minus-foil public-answer mean log probability" if args.mode == "chat-public-answer"
                             else "mean first distinguishing next-token softcapped logit margin"),
               "runtime": {"torch": torch.__version__, "transformers": common.transformers_version(), "device": args.device,
-                          "weight_dtype": "BF16", "attention": "eager", "gradient_checkpointing": False,
+                          "weight_dtype": "BF16", **common.observation_runtime(args, provenance), "gradient_checkpointing": False,
                            "max_cases_per_microbatch": args.max_cases_per_microbatch,
                           "gradient_accumulation": "FP32 factors, FP64 sum, each batch divided by original fold example count",
                           "gpu_peak_allocated_GiB": torch.cuda.max_memory_allocated() / 2**30 if args.device != "cpu" else None,

@@ -196,6 +196,14 @@ def prepare(path):
                     or summary.get("answer_batching") != "serial" or provenance.get("answer_batching") != "serial"
                     or provenance.get("max_cases_per_microbatch") != 1):
                 raise ValueError("completed matched serial objective required")
+            runtime = summary["runtime"]
+            if ("observation_policy" in provenance) != ("observation_policy" in runtime):
+                raise ValueError("observation policy presence differs")
+            if "observation_policy" in provenance:
+                policy = joint.common.validate_observation_policy(provenance["observation_policy"])
+                if (runtime["observation_policy"] != policy
+                        or runtime.get("attention") != policy["attention_dispatch"]["text_config"]):
+                    raise ValueError("observation policy/runtime differs")
             if (provenance.get("checkpoint") != current
                     or provenance.get("attestation_receipt_sha256") != ref["sha256"]
                     or provenance["input_sha256"].get(str(cases_path)) != case_ref["sha256"]):
@@ -248,7 +256,7 @@ def prepare(path):
             if left["provenance"][key] != right["provenance"][key]:
                 raise ValueError("objective collector input/runtime differs: " + key)
         for key in ("torch", "transformers", "weight_dtype", "attention", "gradients",
-                    "gradient_accumulation", "gradient_checkpointing", "max_cases_per_microbatch"):
+                    "gradient_accumulation", "gradient_checkpointing", "max_cases_per_microbatch", "observation_policy"):
             if left["summary"]["runtime"].get(key) != right["summary"]["runtime"].get(key):
                 raise ValueError("objective numerical runtime differs: " + key)
     if mixed:
@@ -262,7 +270,7 @@ def prepare(path):
             for key in ("threads", "seed", "max_cases_per_microbatch", "calibration_scope"):
                 if n["provenance"][key] != m["provenance"][key]:
                     raise ValueError("native/matrix input/runtime differs: " + key)
-            for key in ("torch", "transformers", "weight_dtype", "attention", "max_cases_per_microbatch"):
+            for key in ("torch", "transformers", "weight_dtype", "attention", "max_cases_per_microbatch", "observation_policy"):
                 if n["summary"]["runtime"].get(key) != m["summary"]["runtime"].get(key):
                     raise ValueError("native/matrix numerical runtime differs: " + key)
             # Different entry scripts/gradient accumulation are explicit, not falsely equal.

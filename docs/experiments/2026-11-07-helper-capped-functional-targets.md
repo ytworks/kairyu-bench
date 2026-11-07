@@ -63,3 +63,24 @@ The independent prioritization is AX, AV, AW for an ordinary generation comparis
 AT/AU/AY's plain-code margin losses are substantial relative to their LL changes. Targets and losses remain disclosed; not meeting every local bound is not converted into a new universal rejection gate. Helper training chains were already solved, so new-stage proxy gains are retention/dependency evidence rather than demonstrated repair of a training failure. Ordinary native-thinking scores remain necessary to assess transfer; no benchmark accuracy gain is claimed here.
 
 Independent aggregate receipt: `4654c4f6…`; selected-word/tail receipt: `19dabb3a5b87d96e2a74c839f6ce67d6979b17eeb3fd0ad4a90b6d36eaf1c9b7`. Current incumbent remains AD.
+
+## One-round exploratory official Q/K screen
+
+The empty AD overlay and AX/AV/AW completed one simultaneous official dev90 round on the same source5e3 protocol: native thinking on, concurrency32, four source means weighted equally. These are logical overlays on physical AD, not saved candidate checkpoints.
+
+| Arm | Code % | Same-window control delta pp | HE /30 | MBPP /30 | LCB /20 | SciCode % |
+|---|---:|---:|---:|---:|---:|---:|
+| CONTROL | 72.575397 | — | 28 | 23 | 16 | 40.301587 |
+| AX | 72.242063 | -0.333333 | 30 | 23 | 14 | 42.301587 |
+| AV | 72.932540 | +0.357143 | 28 | 23 | 16 | 41.730159 |
+| AW | 72.158730 | -0.416667 | 28 | 24 | 15 | 40.301587 |
+
+AV's +0.357143 pp comes from SciCode80 increasing2/7→3/7. It also gains HumanEval151 and MBPP641 while losing HumanEval95 and MBPP801, so unchanged source totals do not mean unchanged tasks. Its paired95% bootstrap interval is[−2.976190,+3.690476] pp. AX gains two HE items and SciCode58 (.8→1) but loses two LCB items, net−.333333 pp; AW gains one MBPP item while losing one LCB item, with an HE swap, net−.416667 pp. Each candidate has two official binary gains and two losses; partial-score gains are additional numeric changes.
+
+All90 items per arm were scored, with unknown/truncated/empty counts0. Each arm made119 formal calls, zero recorded retries/errors; startup adds one separate length-finished one-token probe (21 input tokens). Output totals are326,065/336,642/336,516/349,604 for control/AX/AV/AW; wall times343.5/383.4/380.2/413.7 seconds. HTTP attempts are not agent steps. Timing includes concurrent services and host work, so no uncontended speed claim is made.
+
+Actual c1b5 overlay loading verified all selected post-TP BF16 words. AV required176,949 parameter destinations for171,925 unique coordinates; AW172,069 for167,095, including both tied K/V destinations. AX118,067 destinations equal its coordinate count. All four runner images,82 installed source/resource hashes, normalized command/environment and writable same-host results mounts matched. At01:10:30UTC, all four original containers were healthy under the same CIDs and final source checks passed.
+
+Root selected AV alone for a saved checkpoint, one create/verify/deploy, then a fresh ordinary AD/AV all14 comparison. The same spec/finite/overlay selected-word identity must connect to saved full-file verification. No extra ordinary dev90 precedes this full14 run; final code confirmation remains later. This is a change in measurement order, not adoption. AD remains accepted until actual purpose tradeoffs are reviewed.
+
+Private evidence: final numeric65860b00b3091dd28f34f7d41c1b6bc24666251b2e304a1adf35eeea2fbde7fc; postchecks65172ef2cb32c08770f3c111ab68ad47dbaabfa5111159f58acaa1bbfa43fddf; owner completionbb4bfb69a9545fe5692bba5c489898af6d407cecb58559ee5e758c29ecb8d07b. All original reports and numeric comparisons are retained, with no raw benchmark-body reading or rescoring.
