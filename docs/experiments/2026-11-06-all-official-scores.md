@@ -1,7 +1,7 @@
 # Gemma4公式スコア全実行台帳（2026-11-06）
 
-snapshot: 2026-11-07T01:58:34.467623+00:00。WSP **147 runs**（completed142、partial4、running1＝旧保存記録のみ、現在の稼働を意味しない）。
-今回のfresh ordinary AD/AV full14完了2件を追記。旧145 row objectsの全fieldは完全一致。778は能力746＋尤度probe32であり、code26はdev90のcode90と別集合。最新の採用判断とは分離して全結果を保存する。
+snapshot: 2026-11-07T03:39:02.022557+00:00。WSP **151 runs**（completed146、partial4、running1＝旧保存記録のみ、現在の稼働を意味しない）。
+今回の1 round AV/AZ/BA/AV-repeat exploratory official90完了4件を追記。旧147 row objectsの全fieldは完全一致。空AV repeatは記述用で、候補の対照は事前固定したprimary AVだけ。最新の採用判断とは分離して全結果を保存する。
 新規採点・モデル実行なし。指定したNVMe resultsとlegacy resultsの直下run.json/report.jsonだけを採録した。
 5つのDeepSWE runはWSP台帳から分離し、完了・取消結果を代表表へ併記する。元R1/R2はincompleteで、この台帳から完成した点を捏造しない。
 公式reportから値を転記し、欠測は「—」。表は小数6桁表示、sourceの未丸め値はcatalog JSONに残す。
@@ -5239,3 +5239,29 @@ At 01:59:49 UTC on 2026-11-07, root adopted saved AV as the working parent, pres
 Decision: current-av-adoption-v1/working-decision.json SHA 4f3af16544d3244ff27470cbe169669873675f5503893dc12e5ebcbe344923c5; current-state SHA f5096f2331243628c49fcfa7a6440b10e7967145a5a9b4942dd96647d4004519. Earlier statements in this record describe the parent at that stage and are retained as history.
 
 The v14 catalog remains the immutable pre-adoption snapshot: all 145 prior row objects are unchanged and exactly two completed ordinary reports are appended (147 total). This postscript records the later decision without rewriting that snapshot.
+
+
+## 2026-11-07: AV / AZ / BA / identical AV repeat
+
+One exploratory load-time-overlay round completed at 03:33:28 UTC. All four original containers returned healthy with the same CIDs; accepted AV remains unchanged. All 90 items per arm are scored, with no unknown, empty or truncated official result. These rows represent logical overlays, not separately saved AZ/BA checkpoints.
+
+| Arm | HE /30 | MBPP /30 | LCB /20 | SciCode mean /10 | Equal-source code % | Delta vs fixed primary pp |
+|---|---:|---:|---:|---:|---:|---:|
+| Primary empty AV | 28 | 22 | 16 | 0.403015873 | 71.742063 | — |
+| AZ | 29 | 21 | 14 | 0.423015873 | 69.742063 | −2.000000 |
+| BA | 29 | 23 | 16 | 0.403015873 | 73.408730 | +1.666667 |
+| Identical empty AV repeat | 29 | 22 | 16 | 0.423015873 | 73.075397 | +1.333333, descriptive only |
+
+BA has three binary gains (HumanEval/152, HumanEval/95, Mbpp/801) and one loss (HumanEval/151). Its code delta CI is [−1.666667, +5.000000] pp; SciCode and LiveCodeBench are unchanged. AZ gains HumanEval/95, loses abc390_g, arc195_b and Mbpp/792, and improves SciCode/58 from 0.8 to 1.0; its CI is [−6.250000, +1.750000] pp. The repeat gains HumanEval/95 and the same SciCode partial credit. The repeat is not substituted for, or averaged with, the declared primary, and one repeat is not an IID variance estimate.
+
+Each arm records 119 formal HTTP attempts, no retries/errors, plus one separate one-token startup call. Total formal input/output tokens are 377,322/1,351,034; the four startup calls add 84/4 tokens. Serving counters include the four startup length finishes, while official scored truncation is zero. Agent steps remain unknown.
+
+Root selected only BA for physical save and fresh ordinary AV/BA full14 tradeoff evaluation; this is not adoption. AZ's negative result remains in the catalog. No capacity-only interpretation is supported because eligibility, step scales and measured Jacobians differ.
+
+Numeric closure: current-av-az-ba-overlay-dev90-v1/numeric-final-summary.json a049be093a44e31a83cda4b280c6df98ef52f1b8218919e6d02175bb56ed10fd. Independent arithmetic review a30900bc26553cb2626c6bcff73bb6bc92f066f7a5963a02c90afdb47565a35d. Completion 937b2d37c8d008c711e01ae86440ecdba20fa57ef6282043050735dfc8e132b9.
+
+Append-only v15: 151 rows, all 147 previous row objects unchanged.
+
+- catalog.json: e45bc9c5d097d04cbdfaca9e0dde3a3ac8a95e3a227fff6839714f2109a4c648
+- preservation.json: cd7ca95e9e322cc303c7a755478afe71f6b631acd5322f65987eff7488df45f0
+- export-reproduction.py: cca97be80de5d5b5be7cae993675573d31086c3cac33a330ac93a5133894129e

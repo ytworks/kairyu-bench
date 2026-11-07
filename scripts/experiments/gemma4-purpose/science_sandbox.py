@@ -168,13 +168,29 @@ def prepare(
 
 
 def compare(result: dict, expected: list) -> dict:
+    def exception_fields(value, phase: str) -> dict:
+        # Worker class names are untrusted. Export only fixed categories, never
+        # custom names, messages, tracebacks, or arbitrary protocol values.
+        allowed = {
+            "NameError", "UnboundLocalError", "TypeError", "ValueError",
+            "IndexError", "KeyError", "AttributeError", "ZeroDivisionError",
+            "FloatingPointError", "OverflowError", "MemoryError", "RecursionError",
+            "ImportError", "ModuleNotFoundError", "SyntaxError", "IndentationError",
+            "LinAlgError", "RuntimeError", "NotImplementedError",
+        }
+        category = value if type(value) is str and value in allowed else "other"
+        return {"phase": phase, "exception_category": category}
+
     if result.get("setup_error"):
         return {
             "status": "evaluated",
             "passed": False,
             "tests_passed": 0,
             "tests_total": len(expected),
-            "failures": [{"kind": "runtime_or_interface"}],
+            "failures": [{
+                "kind": "runtime_or_interface",
+                **exception_fields(result["setup_error"], "setup"),
+            }],
         }
     rows = result.get("trials")
     if not isinstance(rows, list) or len(rows) != len(expected):
@@ -182,11 +198,16 @@ def compare(result: dict, expected: list) -> dict:
     failures = []
     for index, (row, reference) in enumerate(zip(rows, expected)):
         kind = None
+        diagnostic = {}
         if not isinstance(row, dict):
             raise ValueError("invalid sandbox trial")
         if "error" in row:
             known = {"output_type", "output_size", "output_dtype", "nonfinite"}
-            kind = row["error"] if row["error"] in known else "runtime"
+            if type(row["error"]) is str and row["error"] in known:
+                kind = row["error"]
+            else:
+                kind = "runtime"
+                diagnostic = exception_fields(row["error"], "execution")
         else:
             if row.get("dtype") != "float64":
                 kind = "output_dtype"
@@ -206,7 +227,7 @@ def compare(result: dict, expected: list) -> dict:
                 except (KeyError, TypeError, ValueError, OverflowError):
                     raise ValueError("invalid sandbox numeric output") from None
         if kind:
-            failures.append({"trial": index, "kind": kind})
+            failures.append({"trial": index, "kind": kind, **diagnostic})
     return {
         "status": "evaluated",
         "passed": not failures,

@@ -104,6 +104,43 @@ class ScienceSandboxTest(unittest.TestCase):
         with self.assertRaises(ValueError):
             SANDBOX.compare({"trials": []}, expected)
 
+        def execute_trusted(code):
+            # Only this source-owned fixture is executed on the host.
+            fixture = dict(payload, code=code)
+            rc, output = SANDBOX.bounded_command(
+                [sys.executable, "-I", "-c", SANDBOX.WORKER],
+                payload=json.dumps(fixture).encode(),
+                seconds=5,
+            )
+            self.assertEqual(rc, 0)
+            return SANDBOX.compare(json.loads(output), expected)
+
+        setup = execute_trusted("def solve(unexpected):\n    return None\n")
+        self.assertEqual(setup["failures"], [{
+            "kind": "runtime_or_interface", "phase": "setup",
+            "exception_category": "TypeError",
+        }])
+        parameters = ", ".join(payload["parameters"])
+        execution = execute_trusted(
+            f"def solve({parameters}):\n    return missing_fixture_name\n"
+        )
+        self.assertEqual(execution["tests_passed"], 0)
+        self.assertTrue(all(row == {
+            "trial": i, "kind": "runtime", "phase": "execution",
+            "exception_category": "NameError",
+        } for i, row in enumerate(execution["failures"])))
+        custom = execute_trusted(
+            "class PrivateFixtureMarker(Exception):\n    pass\n"
+            f"def solve({parameters}):\n"
+            "    raise PrivateFixtureMarker('private-message-sentinel')\n"
+        )
+        self.assertEqual(custom["tests_passed"], 0)
+        self.assertTrue(all(row["exception_category"] == "other"
+                            and row["phase"] == "execution"
+                            for row in custom["failures"]))
+        self.assertNotIn("PrivateFixtureMarker", json.dumps(custom))
+        self.assertNotIn("private-message-sentinel", json.dumps(custom))
+
     def test_strict_public_answer_extraction_and_reasoning_rejection(self):
         code = "import numpy as np\ndef solve(x):\n    return x\n"
         fence = chr(96) * 3

@@ -268,3 +268,165 @@ The fixed four-arm native-thinking comparison began at 03:20:36 UTC with AV as
 the primary control, AZ, BA and the descriptive AV repeat. Its scores were
 pending when this note was frozen. Conditional equivalent-reference work
 remains unimplemented until actual transfer results inform the next decision.
+## Realized BA unit geometry
+
+A bounded 0.330-second CPU calculation reconstructed BA's exact BF16 deltas
+from its saved spec and same-AV selected source arrays, with no model, solve or
+checkpoint payload scan. Receipt `ba-unit-delta-geometry.json` under
+`current-av-full-unit-d-v1` has SHA
+`dc8250c67f7f8548de3c269459cacd79761299b7565138387627ca26b28631d7`.
+Down columns contain 93.24% of total squared delta norm, versus 3.49% in UP rows
+and 3.26% in gate rows. All 32 selected units changed, but the top eight account
+for 81.76% of MLP squared norm; its participation ratio is 9.45 units. Changed
+fractions are 50.42% of eligible down cells, 19.52% of UP and 19.15% of gate.
+
+The down-column delta's cosine with its own source column ranges from -0.0332
+to +0.0291, with median -0.00065. The realized direction is therefore nearly
+orthogonal to its source columns, rather than a simple column-gain rescaling;
+this is geometric evidence, not functional attribution. The largest floored
+relative change is 294.88 on a source value of magnitude `7.56e-7`, below the
+`1e-6` denominator floor. This concretely illustrates why that ratio does not
+measure a typical relative perturbation.
+
+Within each of the eight layers containing two selected units, the down-delta
+span has numerical rank two; paired cosines range from -0.0798 to +0.4339.
+Different layers were kept in separate coordinate blocks. A direct-sum rank
+of 32 follows from that parameter support and does not establish a common
+feature space, independent causal circuits or additive capability gains.
+Official native-thinking outcomes remain the primary transfer evidence.
+
+### Reproducing the geometry calculation
+
+The calculation used only NumPy and four existing files. Set `A` to the local
+analysis root, then run the recipe below with the saved inputs (no model or
+checkpoint payload load). It prints numeric JSON to stdout; save that output
+to a fresh path if desired. The per-layer Gram matrices deliberately omit
+cross-layer feature comparisons. The direct-sum spectrum is the concatenation
+of their eigenvalues, not a rank estimate for shared representations.
+
+```sh
+SPEC="$A/current-av-full-unit-d-v1/ba-run/BA/candidate/proposals/av-long-full-unit-ba-v1.json"
+COVERAGE="$A/science-gpu-runs/current-av-full-unit-d-v2/matrix-correct-logprob/coverage.json"
+SAMPLE="$A/science-gpu-runs/current-av-full-unit-d-v2/matrix-correct-logprob/sample-plan.npz"
+SUPPORT="$A/current-av-full-unit-d-v1/selected/support.json"
+OPENBLAS_NUM_THREADS=1 python - "$SPEC" "$COVERAGE" "$SAMPLE" "$SUPPORT" <<'PY'
+import hashlib
+import json
+import sys
+from pathlib import Path
+
+import numpy as np
+
+spec_path, coverage_path, sample_path, support_path = map(Path, sys.argv[1:])
+spec = json.loads(spec_path.read_text())
+coverage = json.loads(coverage_path.read_text())
+support = json.loads(support_path.read_text())
+with np.load(sample_path, allow_pickle=False) as z:
+    coordinates = np.asarray(z['coordinates'], dtype=np.int64)
+    source = np.asarray(z['source_values'], dtype=np.float64)
+target = source.copy()
+entries = {e['tensor']: e for e in coverage['entries']}
+for edit in spec['edits']:
+    e = entries[edit['tensor']]
+    start, count, width = e['start'], e['count'], e['shape'][1]
+    c = coordinates[start:start + count]
+    changed = np.asarray(edit['coordinates'], dtype=np.int64)
+    keys = c[:, 0] * width + c[:, 1]
+    wanted = changed[:, 0] * width + changed[:, 1]
+    order = np.argsort(keys)
+    indices = order[np.searchsorted(keys[order], wanted)]
+    assert len(np.unique(wanted)) == len(wanted)
+    assert np.array_equal(keys[indices], wanted)
+    target[start + indices] = np.asarray(edit['set_values'], dtype=np.float64)
+assert np.all((target.astype(np.float32).view(np.uint32) & 65535) == 0)
+delta = target - source
+families, units, down_vectors = {}, [], {}
+for e in coverage['entries']:
+    sl = slice(e['start'], e['start'] + e['count'])
+    d, s = delta[sl], source[sl]
+    f = families.setdefault(e['family'], {'eligible': 0, 'changed': 0, 'squared_l2': 0.})
+    f['eligible'] += len(d)
+    f['changed'] += int(np.count_nonzero(d))
+    f['squared_l2'] += float(d @ d)
+for group in support['units']:
+    layer = group['layer']
+    for unit in group['indices']:
+        row = {'layer': layer, 'unit': unit, 'families': {}}
+        for family in ('gate', 'up', 'down'):
+            e = entries[f'model.language_model.layers.{layer}.mlp.{family}_proj.weight']
+            sl = slice(e['start'], e['start'] + e['count'])
+            c = coordinates[sl]
+            mask = c[:, 1 if family == 'down' else 0] == unit
+            axis = c[mask, 0 if family == 'down' else 1]
+            order = np.argsort(axis)
+            assert np.array_equal(axis[order], np.arange(e['shape'][0 if family == 'down' else 1]))
+            d, s = delta[sl][mask][order], source[sl][mask][order]
+            dn, sn = float(np.linalg.norm(d)), float(np.linalg.norm(s))
+            relative = np.abs(d) / np.maximum(np.abs(s), 1e-6)
+            row['families'][family] = {
+                'eligible': len(d), 'changed': int(np.count_nonzero(d)),
+                'squared_l2': dn * dn, 'raw_l2': dn,
+                'delta_source_cosine': float(d @ s / (dn * sn)) if dn and sn else None,
+                'max_relative_floor_1e6': float(relative.max()),
+                'source_abs_at_max_relative': float(abs(s[int(relative.argmax())])),
+            }
+            if family == 'down':
+                down_vectors[(layer, unit)] = d
+        row['squared_l2'] = sum(v['squared_l2'] for v in row['families'].values())
+        row['changed_fraction'] = sum(v['changed'] for v in row['families'].values()) / sum(v['eligible'] for v in row['families'].values())
+        units.append(row)
+layer_grams = []
+for group in support['units']:
+    x = np.stack([down_vectors[(group['layer'], j)] for j in group['indices']], axis=1)
+    gram = x.T @ x
+    singular = np.sqrt(np.maximum(np.linalg.eigvalsh(gram), 0))[::-1]
+    tolerance = max(x.shape) * np.finfo(np.float64).eps * singular[0]
+    cosine = float(gram[0, 1] / np.sqrt(gram[0, 0] * gram[1, 1])) if x.shape[1] == 2 else None
+    layer_grams.append({'layer': group['layer'], 'units': group['indices'], 'gram': gram.tolist(), 'rank': int(np.count_nonzero(singular > tolerance)), 'rank_tolerance': float(tolerance), 'pair_cosine': cosine})
+squares = np.sort(np.array([u['squared_l2'] for u in units]))[::-1]
+mlp_squared = float(squares.sum())
+total_squared = float(delta @ delta)
+for f in families.values():
+    f['raw_l2'] = float(np.sqrt(f['squared_l2']))
+    f['changed_fraction'] = f['changed'] / f['eligible']
+    f['share_total_squared_l2'] = f['squared_l2'] / total_squared
+print(json.dumps({
+    'input_sha256': {str(p): hashlib.sha256(p.read_bytes()).hexdigest() for p in (spec_path, coverage_path, sample_path, support_path)},
+    'raw_l2': float(np.sqrt(total_squared)), 'changed': int(np.count_nonzero(delta)),
+    'families': families, 'unit_rows': sorted(units, key=lambda u: -u['squared_l2']),
+    'top1_top4_top8_mlp_shares': [float(squares[:n].sum() / mlp_squared) for n in (1, 4, 8)],
+    'unit_participation_ratio': float(mlp_squared ** 2 / (squares @ squares)),
+    'layer_local_down_grams': layer_grams,
+}, indent=2))
+PY
+```
+
+
+## 2026-11-07: AV / AZ / BA / identical AV repeat
+
+One exploratory load-time-overlay round completed at 03:33:28 UTC. All four original containers returned healthy with the same CIDs; accepted AV remains unchanged. All 90 items per arm are scored, with no unknown, empty or truncated official result. These rows represent logical overlays, not separately saved AZ/BA checkpoints.
+
+| Arm | HE /30 | MBPP /30 | LCB /20 | SciCode mean /10 | Equal-source code % | Delta vs fixed primary pp |
+|---|---:|---:|---:|---:|---:|---:|
+| Primary empty AV | 28 | 22 | 16 | 0.403015873 | 71.742063 | — |
+| AZ | 29 | 21 | 14 | 0.423015873 | 69.742063 | −2.000000 |
+| BA | 29 | 23 | 16 | 0.403015873 | 73.408730 | +1.666667 |
+| Identical empty AV repeat | 29 | 22 | 16 | 0.423015873 | 73.075397 | +1.333333, descriptive only |
+
+BA has three binary gains (HumanEval/152, HumanEval/95, Mbpp/801) and one loss (HumanEval/151). Its code delta CI is [−1.666667, +5.000000] pp; SciCode and LiveCodeBench are unchanged. AZ gains HumanEval/95, loses abc390_g, arc195_b and Mbpp/792, and improves SciCode/58 from 0.8 to 1.0; its CI is [−6.250000, +1.750000] pp. The repeat gains HumanEval/95 and the same SciCode partial credit. The repeat is not substituted for, or averaged with, the declared primary, and one repeat is not an IID variance estimate.
+
+Each arm records 119 formal HTTP attempts, no retries/errors, plus one separate one-token startup call. Total formal input/output tokens are 377,322/1,351,034; the four startup calls add 84/4 tokens. Serving counters include the four startup length finishes, while official scored truncation is zero. Agent steps remain unknown.
+
+Root selected only BA for physical save and fresh ordinary AV/BA full14 tradeoff evaluation; this is not adoption. AZ's negative result remains in the catalog. No capacity-only interpretation is supported because eligibility, step scales and measured Jacobians differ.
+
+Numeric closure: current-av-az-ba-overlay-dev90-v1/numeric-final-summary.json a049be093a44e31a83cda4b280c6df98ef52f1b8218919e6d02175bb56ed10fd. Independent arithmetic review a30900bc26553cb2626c6bcff73bb6bc92f066f7a5963a02c90afdb47565a35d. Completion 937b2d37c8d008c711e01ae86440ecdba20fa57ef6282043050735dfc8e132b9.
+
+Append-only v15: 151 rows, all 147 previous row objects unchanged.
+
+- catalog.json: e45bc9c5d097d04cbdfaca9e0dde3a3ac8a95e3a227fff6839714f2109a4c648
+- preservation.json: cd7ca95e9e322cc303c7a755478afe71f6b631acd5322f65987eff7488df45f0
+- export-reproduction.py: cca97be80de5d5b5be7cae993675573d31086c3cac33a330ac93a5133894129e
+
+The prepared [ordinary AV/BA full14 recipe](scripts/launch-av-ba-retention-full14.py) preserves tier10/dev, the fixed 778-item cohort (746 capability items plus 32 likelihood probes), c32/logprob8/agent1, native generation, archived benchmark source and symmetric numeric observers. AV0 is the retained control and saved BA3 is the candidate. Its default unbound preview launches nothing; BA's verified freeze, deployment, fresh endpoint snapshots and a separate root decision must bind before execution.
+
+Future helper diagnostics now retain only an allowlisted exception category and setup/execution phase. Prior runtime-only artifacts cannot recover their class, and no new model diagnostic has run.
