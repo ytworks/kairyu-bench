@@ -1,0 +1,32 @@
+{
+  "command": [
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/infra/weight-tools-ci/bin/python",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/worktrees/kairyu-bench-weight-tools/scripts/claude-method-review.py",
+    "--prompt",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f04-relative-v1/anonymous-opus55-prompt-v1.txt",
+    "--output",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f04-relative-v1/opus55-review-v1",
+    "--model",
+    "claude-opus-5-5",
+    "--labels",
+    "A",
+    "--timeout-seconds",
+    "300",
+    "--max-budget-usd",
+    "2",
+    "--send",
+    "--approved-prompt-sha256",
+    "2e6d476755133c9084cd7a70f92c59725f3640e0adc6549e6e38d204e29a0535"
+  ],
+  "shell": "bash --noprofile --norc -ic; disable xtrace; source existing bashrc with stdout/stderr suppressed; run from NVMe repository",
+  "environment_dumped": false,
+  "raw_stream_saved": false,
+  "thinking_saved": false,
+  "fallback_model": null,
+  "strict_json": true,
+  "outer_shell_warnings": [
+    "no controlling terminal process group",
+    "job control unavailable"
+  ],
+  "review_cli_stderr_bytes": 0
+}

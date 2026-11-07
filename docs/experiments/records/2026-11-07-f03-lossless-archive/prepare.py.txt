@@ -1,0 +1,141 @@
+"""Fixed F03 dependent archive preparation. Never modifies checkpoint payloads."""
+from pathlib import Path
+import gzip,hashlib,importlib.metadata,json,math,os,shutil,stat,sys,time,traceback
+R=Path('/mnt/nvme/kairyu/wsp/gemma4-coding-20261104');B=R/'worktrees/kairyu-bench-weight-tools'
+T=R/'analysis/fresh-purpose-20261107-f03-native-v1';M=T/'materialization'
+O=T/'lossless-archive-preparation-v1';A=T/'lossless-archive-v1'
+BASE=R/'checkpoints/code90-current-ad-helper-av-v1';CAND=R/'checkpoints/fresh-native-contract-f03'
+SOURCE=R/'runtime/fresh-purpose-20261107-av-live10-v1/observer-src'
+EXPECTED={M/'fullcandidateidentity.json':'b9e5dbd64520196507d1d53fae64b2609d5ea45559c78aee4a60cf701d6876b5',M/'verify.json':'616806dc095ebecb04ac10d4514ec6c73f9bbd53d3f572d1ef704452320062c4',T/'proposal/fresh-native-contract-f03.json':'e10018748de2795a8af03b98abb6e18362393a152c74f46b7a7892fe4975e878'}
+def sha(p):
+ h=hashlib.sha256()
+ with p.open('rb') as f:
+  for b in iter(lambda:f.read(1024*1024),b''):h.update(b)
+ return h.hexdigest()
+def stamp(p):
+ s=p.lstat();assert stat.S_ISREG(s.st_mode) and not p.is_symlink()
+ return {'dev':s.st_dev,'inode':s.st_ino,'size':s.st_size,'mtime_ns':s.st_mtime_ns,'ctime_ns':s.st_ctime_ns,'mode':s.st_mode,'uid':s.st_uid,'gid':s.st_gid,'nlink':s.st_nlink}
+def inventory(root):
+ assert root.is_dir() and not root.is_symlink()
+ assert all(p.is_file() and not p.is_symlink() for p in root.iterdir())
+ return {p.name:stamp(p) for p in sorted(root.iterdir())}
+def save(p,x):
+ with p.open('x') as f:json.dump(x,f,indent=2,allow_nan=False);f.write(chr(10))
+def copy(src,dst,expected=None):
+ before=stamp(src);digest=sha(src)
+ if expected is not None:assert digest==expected
+ dst.parent.mkdir(parents=True,exist_ok=True);assert not dst.exists()
+ shutil.copy2(src,dst);assert sha(dst)==digest and stamp(src)==before
+ return {'source':str(src),'archive_path':str(dst.relative_to(A)),'bytes':dst.stat().st_size,'sha256':digest}
+def compress(src,dst):
+ before=stamp(src);digest=sha(src)
+ with src.open('rb') as inp,dst.open('xb') as raw:
+  with gzip.GzipFile(filename='',mode='wb',fileobj=raw,mtime=0,compresslevel=6) as out:shutil.copyfileobj(inp,out,1024*1024)
+ h=hashlib.sha256();n=0
+ with gzip.open(dst,'rb') as inp:
+  for b in iter(lambda:inp.read(1024*1024),b''):h.update(b);n+=len(b)
+ assert h.hexdigest()==digest and n==before['size'] and stamp(src)==before
+ return {'source':str(src),'archive_path':str(dst.relative_to(A)),'original_sha256':digest,'original_bytes':n,'compressed_sha256':sha(dst),'compressed_bytes':dst.stat().st_size,'roundtrip_exact':True}
+start=time.time();stage='precheck'
+try:
+ assert os.getuid()!=0 and not A.exists()
+ assert all(sha(p)==h for p,h in EXPECTED.items())
+ identity=json.loads((M/'fullcandidateidentity.json').read_text())
+ manifest=json.loads((M/'edit-manifest.json').read_text());verify=json.loads((M/'verify.json').read_text())
+ spec=json.loads((T/'proposal/fresh-native-contract-f03.json').read_text())
+ assert identity['manifest']['sha256']==sha(M/'edit-manifest.json')
+ assert manifest['source']==str(BASE) and manifest['candidate']==str(CAND)
+ assert manifest['spec']==spec and manifest['spec_sha256']==EXPECTED[T/'proposal/fresh-native-contract-f03.json']
+ assert verify['verified'] is True and verify['legacy_full_hashes_missing'] is False
+ assert (verify['changed_elements'],verify['changed_tensors'])==(60473,112)
+ assert verify['delta_l2']==0.0043893681725189855
+ basestat,candstat=inventory(BASE),inventory(CAND)
+ assert basestat==identity['source_full_stat'] and candstat==identity['candidate_full_stat']
+ files={x['path']:x for x in manifest['files']};vfiles={x['path']:x for x in verify['files']}
+ assert len(files)==9 and set(files)==set(basestat)==set(candstat)==set(vfiles)
+ for row in identity['checkpoint']['files']:
+  assert row['sha256']==files[row['path']]['candidate_sha256'] and row['size']==files[row['path']]['size']
+ for name,row in files.items():
+  assert row['source_sha256']==vfiles[name]['source_sha256'] and row['candidate_sha256']==vfiles[name]['candidate_sha256']
+  assert row['size']==basestat[name]['size']==candstat[name]['size']
+ free_before=shutil.disk_usage(R).free;A.mkdir();stage='copy'
+ compressed=[compress(T/'proposal/fresh-native-contract-f03.json',A/'spec.json.gz'),compress(M/'edit-manifest.json',A/'edit-manifest.json.gz')]
+ metadata=[copy(CAND/name,A/'metadata'/name,row['candidate_sha256']) for name,row in files.items() if not name.endswith('.safetensors')]
+ assert len(metadata)==7 and all(row['source_sha256']==row['candidate_sha256'] for name,row in files.items() if not name.endswith('.safetensors'))
+ records=[copy(p,A/'records/materialization'/p.relative_to(M)) for p in sorted(M.rglob('*')) if p.is_file() and p.name!='edit-manifest.json']
+ records += [copy(T/name,A/'records'/name) for name in ['proposal/report.json','proposal-plan.json','parent-state.json']]
+ source=[]
+ for p in sorted(SOURCE.rglob('*')):
+  if p.is_file() and '__pycache__' not in p.parts and p.suffix!='.pyc':source.append(copy(p,A/'source'/p.relative_to(SOURCE)))
+ assert len(source)==89
+ pinned=0
+ for name,digest in identity['source_sha256'].items():
+  assert sha(Path(name))==digest
+  if '/source/src/' in name:
+   relative=name.split('/source/src/',1)[1]
+   assert sha(A/'source'/relative)==digest;pinned+=1
+ assert pinned==5
+ copy(Path(__file__),A/'preparation-source.py.txt')
+ stage='existing_editor_selected_replan';t=time.time();sys.path.insert(0,str(A/'source'))
+ from kairyu_bench.wsp.weights.editor import validate_manifest,plan_edits
+ validation=validate_manifest(manifest);patches=plan_edits(BASE,spec)
+ fields=('tensor','shard','offset','size','dtype','shape','before_hex','after_hex','selected_indices','changed_indices','changed_count')
+ assert len(patches)==len(manifest['edits'])
+ assert all(all(a[k]==b[k] for k in fields) for a,b in zip(patches,manifest['edits'],strict=True))
+ assert math.hypot(*(x['delta_l2'] for x in patches))==verify['delta_l2']
+ replan_seconds=time.time()-t
+ assert inventory(BASE)==basestat and inventory(CAND)==candstat
+ archive={'schema_version':1,'status':'dependent_lossless_archive_prepared_payloads_unchanged','created_epoch':time.time(),'mandatory_base_path':str(BASE),'mandatory_base_tree_sha256':identity['source_tree_sha256'],'candidate_path':str(CAND),'candidate_tree_sha256':identity['checkpoint']['sha256'],'files':[{'path':name,'size':r['size'],'source_sha256':r['source_sha256'],'candidate_sha256':r['candidate_sha256']} for name,r in sorted(files.items())],'checkpoint_file_stats':[{'path':name,'size':files[name]['size'],'source_stat_at_archive':basestat[name],'candidate_stat_at_archive':candstat[name]} for name in sorted(files)],'original_spec_sha256':manifest['spec_sha256'],'original_manifest_sha256':sha(M/'edit-manifest.json'),'full_saved_verify_sha256':sha(M/'verify.json'),'fullcandidateidentity_sha256':sha(M/'fullcandidateidentity.json'),'hash_provenance':'Existing fresh editor fullverify source/candidate hashes for all nine files and whole candidate restored-to-source hash proof; exact current eighteen-file full stat continuity. No payload rehash/diff here.','compressed_originals':compressed,'metadata':metadata,'records':records,'source_files_sha256':{x['archive_path'].removeprefix('source/'):x['sha256'] for x in source},'python_version':sys.version,'numpy_version':importlib.metadata.version('numpy'),'operation_source_sha256':sha(Path(__file__)),'physical_reconstruction_performed':False,'checkpoint_payload_fullhash_performed_here':False,'checkpoint_payloads_modified':False,'payload_release_authorized':False,'currently_served_candidate_no_unlink':True,'existing_trials_benchmarks_retained':True,'live_benchmark_outputs_not_copied':True,'candidate_adoption_changed':False,'limitations':['Mandatory immutable AV dependency; archive is not a standalone loadable checkpoint.','Content bytes and relative filenames reconstructable; new filesystem inode/ctime/dev differ.','Future restoration must check archive and base full hashes, use fresh paths, editor verify, and all candidate file hashes.']}
+ save(A/'archive.json',archive)
+ save(A/'archive-validation.json',{'status':'passed','existing_editor_summary':validation,'exact_replanned_spans':len(patches),'exact_replan_fields':fields,'replan_seconds':replan_seconds,'source_files':len(source),'materializer_core_source_pins_matched':pinned,'base_and_candidate_stat_continuity_files':18,'gzip_original_bytes_verified':2,'metadata_hashes_verified':7,'original_saved_fullverify_passed':True,'payload_fullhash_here':False,'full_diff_here':False,'physical_reconstruction_here':False,'payloads_unchanged':True})
+ (A/'BASE-SHA256SUMS').write_text(''.join(r['source_sha256']+'  '+name+chr(10) for name,r in sorted(files.items())))
+ (A/'CANDIDATE-SHA256SUMS').write_text(''.join(r['candidate_sha256']+'  '+name+chr(10) for name,r in sorted(files.items())))
+ (A/'README.md').write_text("""# F03 dependent lossless archive, preparation only
+
+The immutable AV base is mandatory. This archive is not a loadable checkpoint.
+F03 remains complete and currently served; no release or service operation is permitted by this preparation. Existing trial and benchmark results remain elsewhere unchanged; active WSP logs are not copied as final records.
+
+Saved full editor verify proves all edited bytes equal the manifest after_hex and replacing them with before_hex restores complete AV hashes. Existing whole-file hashes plus unchanged current full stats bind the archive to those verified bytes. Selected-coordinate re-planning is not a new payload fullhash/diff or a physical reconstruction.
+
+Content restoration reproduces all nine relative filenames, sizes and full SHA256 values. New inodes, ctime and device values are not promised; original metadata remains provenance.
+
+## Future reconstruction only; not executed here
+
+Reserve sufficient NVMe space. Never overwrite any existing checkpoint or archive.
+
+    R=/mnt/nvme/kairyu/wsp/gemma4-coding-20261104
+    F03_ARCHIVE="$R/analysis/fresh-purpose-20261107-f03-native-v1/lossless-archive-v1"
+    F03_BASE="$R/checkpoints/code90-current-ad-helper-av-v1"
+    F03_RESTORE="$R/checkpoints/fresh-native-contract-f03-reconstructed-v1"
+    F03_WORK="$R/analysis/fresh-purpose-20261107-f03-native-v1/reconstruction-v1"
+    F03_PYTHON="$R/infra/weight-tools-ci/bin/python"
+    test ! -e "$F03_RESTORE"
+    test ! -e "$F03_WORK"
+    (cd "$F03_ARCHIVE" && sha256sum -c SHA256SUMS)
+    (cd "$F03_BASE" && sha256sum -c "$F03_ARCHIVE/BASE-SHA256SUMS")
+    mkdir "$F03_WORK"
+    mkdir "$F03_WORK/tmp"
+    export TMPDIR="$F03_WORK/tmp" PYTHONDONTWRITEBYTECODE=1
+    export OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 MKL_NUM_THREADS=1
+    gzip -dc "$F03_ARCHIVE/spec.json.gz" > "$F03_WORK/spec.json"
+    gzip -dc "$F03_ARCHIVE/edit-manifest.json.gz" > "$F03_WORK/original-edit-manifest.json"
+    # Verify those original-byte hashes against archive.json before create.
+    PYTHONPATH="$F03_ARCHIVE/source" "$F03_PYTHON" -m kairyu_bench.wsp.weights.editor create "$F03_BASE" "$F03_RESTORE" --spec "$F03_WORK/spec.json" --manifest "$F03_WORK/edit-manifest.json" --reserve-bytes 53687091200 > "$F03_WORK/preview.json"
+    PYTHONPATH="$F03_ARCHIVE/source" "$F03_PYTHON" -m kairyu_bench.wsp.weights.editor create "$F03_BASE" "$F03_RESTORE" --spec "$F03_WORK/spec.json" --manifest "$F03_WORK/edit-manifest.json" --reserve-bytes 53687091200 --apply > "$F03_WORK/create.json"
+    PYTHONPATH="$F03_ARCHIVE/source" "$F03_PYTHON" -m kairyu_bench.wsp.weights.editor verify "$F03_WORK/edit-manifest.json" > "$F03_WORK/verify.json"
+    (cd "$F03_RESTORE" && sha256sum -c "$F03_ARCHIVE/CANDIDATE-SHA256SUMS")
+
+Require verify.verified=true and legacy_full_hashes_missing=false. The new manifest contains new paths/timestamps; its JSON SHA need not equal the original. The nine checkpoint content hashes must match exactly. Use archived source and the recorded compatible CPU Python/NumPy environment.
+""")
+ stage='checksum'
+ sums={str(p.relative_to(A)):sha(p) for p in sorted(A.rglob('*')) if p.is_file()}
+ (A/'SHA256SUMS').write_text(''.join(h+'  '+name+chr(10) for name,h in sorted(sums.items())))
+ assert all(sha(A/name)==h for name,h in sums.items())
+ assert set(sums)|{'SHA256SUMS'}=={str(p.relative_to(A)) for p in A.rglob('*') if p.is_file()}
+ assert inventory(BASE)==basestat and inventory(CAND)==candstat
+ assert all(sha(p)==h for p,h in EXPECTED.items())
+ save(O/'receipt.json',{'status':'prepared_and_validated_no_payload_change','elapsed_seconds':time.time()-start,'archive_path':str(A),'archive_json_sha256':sha(A/'archive.json'),'archive_validation_sha256':sha(A/'archive-validation.json'),'archive_sha256sums_sha256':sha(A/'SHA256SUMS'),'archive_files_excluding_checksum':len(sums),'archive_bytes':sum(p.stat().st_size for p in A.rglob('*') if p.is_file()),'exact_replanned_spans':len(patches),'selected_coordinate_replan_seconds':replan_seconds,'free_bytes_before':free_before,'free_bytes_after':shutil.disk_usage(R).free,'all18stats_unchanged':True,'fresh_payload_fullhash_or_diff':False,'physical_reconstruction':False,'payloads_modified':False,'model_gpu_service_lock_operations':0,'payload_release_authorized':False,'operation_source_sha256':sha(Path(__file__))})
+ print((O/'receipt.json').read_text(),flush=True)
+except BaseException as error:
+ save(O/'failure.json',{'status':'failed','stage':stage,'error_type':type(error).__name__,'traceback':traceback.format_exc(),'elapsed_seconds':time.time()-start,'payload_mutation_code_present':False})
+ raise

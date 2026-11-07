@@ -1,0 +1,647 @@
+{
+  "schema_version": 1,
+  "status": "dependent_lossless_archive_prepared_payloads_unchanged",
+  "created_epoch": 1794049120.548259,
+  "mandatory_base_path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/checkpoints/code90-current-ad-helper-av-v1",
+  "mandatory_base_tree_sha256": "5d056eb03f954db80313a85167153c875fe5e436e4f97c281a3f55202d9b3eaf",
+  "candidate_path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/checkpoints/fresh-native-contract-f03",
+  "candidate_tree_sha256": "504d0914e8f7d2a4e51a0888e5692e2d1a158b82d3a77b600810a14bf7e33b63",
+  "files": [
+    {
+      "path": "chat_template.jinja",
+      "size": 18683,
+      "source_sha256": "ae53464bf3be25802b3a5b37def7fd89667067d7577049b3b2d74c4d8de4c6d4",
+      "candidate_sha256": "ae53464bf3be25802b3a5b37def7fd89667067d7577049b3b2d74c4d8de4c6d4"
+    },
+    {
+      "path": "config.json",
+      "size": 4621,
+      "source_sha256": "e967dd38bc5cfd38bd09a995a7bf4a754075df2b46aba68f7fbb5a791e6d8dd1",
+      "candidate_sha256": "e967dd38bc5cfd38bd09a995a7bf4a754075df2b46aba68f7fbb5a791e6d8dd1"
+    },
+    {
+      "path": "generation_config.json",
+      "size": 208,
+      "source_sha256": "d4226bbe3117d2d253ba4609720ba82c6c4ce4627a9a6ae05387c78983ac03de",
+      "candidate_sha256": "d4226bbe3117d2d253ba4609720ba82c6c4ce4627a9a6ae05387c78983ac03de"
+    },
+    {
+      "path": "model-00001-of-00002.safetensors",
+      "size": 49923154850,
+      "source_sha256": "0589dc8a7a3afba79fe2d8444221dae410db57ce1be33eb72d9be637d70fcf10",
+      "candidate_sha256": "48abfc21afab59b95aa9504d8848fd2dd6965ab3a04c9748af4a337bfe70112f"
+    },
+    {
+      "path": "model-00002-of-00002.safetensors",
+      "size": 12623183414,
+      "source_sha256": "9be24bc9910dbbe54f3f46154189c729071fd56dc41331f4a97a6ad3e02b3b56",
+      "candidate_sha256": "8110662f1c1c7386a23478e1e1d33259bc4f99b5d6f115780641dea04eb3a700"
+    },
+    {
+      "path": "model.safetensors.index.json",
+      "size": 120246,
+      "source_sha256": "390b7f9a0a502e4526cf20862d22954c911cc318d8aba2cdb745c6fbd98264f6",
+      "candidate_sha256": "390b7f9a0a502e4526cf20862d22954c911cc318d8aba2cdb745c6fbd98264f6"
+    },
+    {
+      "path": "processor_config.json",
+      "size": 1689,
+      "source_sha256": "32bdf45d2ad4cc29a0822ddd157a182de76644f0419a6228d151495256e9813c",
+      "candidate_sha256": "32bdf45d2ad4cc29a0822ddd157a182de76644f0419a6228d151495256e9813c"
+    },
+    {
+      "path": "tokenizer.json",
+      "size": 32169626,
+      "source_sha256": "cc8d3a0ce36466ccc1278bf987df5f71db1719b9ca6b4118264f45cb627bfe0f",
+      "candidate_sha256": "cc8d3a0ce36466ccc1278bf987df5f71db1719b9ca6b4118264f45cb627bfe0f"
+    },
+    {
+      "path": "tokenizer_config.json",
+      "size": 3082,
+      "source_sha256": "9f4fec4b1dc6ecddf8f4a92e9caea5971c0e67d81309f3f9066a2bee8c362633",
+      "candidate_sha256": "9f4fec4b1dc6ecddf8f4a92e9caea5971c0e67d81309f3f9066a2bee8c362633"
+    }
+  ],
+  "checkpoint_file_stats": [
+    {
+      "path": "chat_template.jinja",
+      "size": 18683,
+      "source_stat_at_archive": {
+        "dev": 2306,
+        "inode": 181678464,
+        "size": 18683,
+        "mtime_ns": 1794014158733915132,
+        "ctime_ns": 1794014158733915132,
+        "mode": 33152,
+        "uid": 1003,
+        "gid": 1003,
+        "nlink": 1
+      },
+      "candidate_stat_at_archive": {
+        "dev": 2306,
+        "inode": 182192243,
+        "size": 18683,
+        "mtime_ns": 1794044237787554020,
+        "ctime_ns": 1794044237787554020,
+        "mode": 33204,
+        "uid": 1003,
+        "gid": 1003,
+        "nlink": 1
+      }
+    },
+    {
+      "path": "config.json",
+      "size": 4621,
+      "source_stat_at_archive": {
+        "dev": 2306,
+        "inode": 181678465,
+        "size": 4621,
+        "mtime_ns": 1794014158734915095,
+        "ctime_ns": 1794014158734915095,
+        "mode": 33152,
+        "uid": 1003,
+        "gid": 1003,
+        "nlink": 1
+      },
+      "candidate_stat_at_archive": {
+        "dev": 2306,
+        "inode": 182192244,
+        "size": 4621,
+        "mtime_ns": 1794044237788553985,
+        "ctime_ns": 1794044237788553985,
+        "mode": 33204,
+        "uid": 1003,
+        "gid": 1003,
+        "nlink": 1
+      }
+    },
+    {
+      "path": "generation_config.json",
+      "size": 208,
+      "source_stat_at_archive": {
+        "dev": 2306,
+        "inode": 181678466,
+        "size": 208,
+        "mtime_ns": 1794014158734915095,
+        "ctime_ns": 1794014158734915095,
+        "mode": 33152,
+        "uid": 1003,
+        "gid": 1003,
+        "nlink": 1
+      },
+      "candidate_stat_at_archive": {
+        "dev": 2306,
+        "inode": 182192245,
+        "size": 208,
+        "mtime_ns": 1794044237788553985,
+        "ctime_ns": 1794044237788553985,
+        "mode": 33204,
+        "uid": 1003,
+        "gid": 1003,
+        "nlink": 1
+      }
+    },
+    {
+      "path": "model-00001-of-00002.safetensors",
+      "size": 49923154850,
+      "source_stat_at_archive": {
+        "dev": 2306,
+        "inode": 181678467,
+        "size": 49923154850,
+        "mtime_ns": 1794014260450139654,
+        "ctime_ns": 1794014260450139654,
+        "mode": 33152,
+        "uid": 1003,
+        "gid": 1003,
+        "nlink": 1
+      },
+      "candidate_stat_at_archive": {
+        "dev": 2306,
+        "inode": 182192246,
+        "size": 49923154850,
+        "mtime_ns": 1794044335354204449,
+        "ctime_ns": 1794044335354204449,
+        "mode": 33204,
+        "uid": 1003,
+        "gid": 1003,
+        "nlink": 1
+      }
+    },
+    {
+      "path": "model-00002-of-00002.safetensors",
+      "size": 12623183414,
+      "source_stat_at_archive": {
+        "dev": 2306,
+        "inode": 181678468,
+        "size": 12623183414,
+        "mtime_ns": 1794014261005119199,
+        "ctime_ns": 1794014261005119199,
+        "mode": 33152,
+        "uid": 1003,
+        "gid": 1003,
+        "nlink": 1
+      },
+      "candidate_stat_at_archive": {
+        "dev": 2306,
+        "inode": 182192247,
+        "size": 12623183414,
+        "mtime_ns": 1794044335356204380,
+        "ctime_ns": 1794044335356204380,
+        "mode": 33204,
+        "uid": 1003,
+        "gid": 1003,
+        "nlink": 1
+      }
+    },
+    {
+      "path": "model.safetensors.index.json",
+      "size": 120246,
+      "source_stat_at_archive": {
+        "dev": 2306,
+        "inode": 181678469,
+        "size": 120246,
+        "mtime_ns": 1794014259954157935,
+        "ctime_ns": 1794014259954157935,
+        "mode": 33152,
+        "uid": 1003,
+        "gid": 1003,
+        "nlink": 1
+      },
+      "candidate_stat_at_archive": {
+        "dev": 2306,
+        "inode": 182192248,
+        "size": 120246,
+        "mtime_ns": 1794044335281206954,
+        "ctime_ns": 1794044335281206954,
+        "mode": 33204,
+        "uid": 1003,
+        "gid": 1003,
+        "nlink": 1
+      }
+    },
+    {
+      "path": "processor_config.json",
+      "size": 1689,
+      "source_stat_at_archive": {
+        "dev": 2306,
+        "inode": 181678470,
+        "size": 1689,
+        "mtime_ns": 1794014259954157935,
+        "ctime_ns": 1794014259954157935,
+        "mode": 33152,
+        "uid": 1003,
+        "gid": 1003,
+        "nlink": 1
+      },
+      "candidate_stat_at_archive": {
+        "dev": 2306,
+        "inode": 182192249,
+        "size": 1689,
+        "mtime_ns": 1794044335282206920,
+        "ctime_ns": 1794044335282206920,
+        "mode": 33204,
+        "uid": 1003,
+        "gid": 1003,
+        "nlink": 1
+      }
+    },
+    {
+      "path": "tokenizer.json",
+      "size": 32169626,
+      "source_stat_at_archive": {
+        "dev": 2306,
+        "inode": 181678471,
+        "size": 32169626,
+        "mtime_ns": 1794014259991156571,
+        "ctime_ns": 1794014259991156571,
+        "mode": 33152,
+        "uid": 1003,
+        "gid": 1003,
+        "nlink": 1
+      },
+      "candidate_stat_at_archive": {
+        "dev": 2306,
+        "inode": 182192250,
+        "size": 32169626,
+        "mtime_ns": 1794044335328205341,
+        "ctime_ns": 1794044335328205341,
+        "mode": 33204,
+        "uid": 1003,
+        "gid": 1003,
+        "nlink": 1
+      }
+    },
+    {
+      "path": "tokenizer_config.json",
+      "size": 3082,
+      "source_stat_at_archive": {
+        "dev": 2306,
+        "inode": 181678472,
+        "size": 3082,
+        "mtime_ns": 1794014260013155760,
+        "ctime_ns": 1794014260013155760,
+        "mode": 33152,
+        "uid": 1003,
+        "gid": 1003,
+        "nlink": 1
+      },
+      "candidate_stat_at_archive": {
+        "dev": 2306,
+        "inode": 182192251,
+        "size": 3082,
+        "mtime_ns": 1794044335350204586,
+        "ctime_ns": 1794044335350204586,
+        "mode": 33204,
+        "uid": 1003,
+        "gid": 1003,
+        "nlink": 1
+      }
+    }
+  ],
+  "original_spec_sha256": "e10018748de2795a8af03b98abb6e18362393a152c74f46b7a7892fe4975e878",
+  "original_manifest_sha256": "44afb922c0b8df5ca20d8c9bf02f4640868177dc322a9b7b3667c160482e92e6",
+  "full_saved_verify_sha256": "616806dc095ebecb04ac10d4514ec6c73f9bbd53d3f572d1ef704452320062c4",
+  "fullcandidateidentity_sha256": "b9e5dbd64520196507d1d53fae64b2609d5ea45559c78aee4a60cf701d6876b5",
+  "hash_provenance": "Existing fresh editor fullverify source/candidate hashes for all nine files and whole candidate restored-to-source hash proof; exact current eighteen-file full stat continuity. No payload rehash/diff here.",
+  "compressed_originals": [
+    {
+      "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f03-native-v1/proposal/fresh-native-contract-f03.json",
+      "archive_path": "spec.json.gz",
+      "original_sha256": "e10018748de2795a8af03b98abb6e18362393a152c74f46b7a7892fe4975e878",
+      "original_bytes": 2583628,
+      "compressed_sha256": "949c7a9cc92988118189e384b0538e00fc92bdd202166c54521a94e7ffe6f569",
+      "compressed_bytes": 307181,
+      "roundtrip_exact": true
+    },
+    {
+      "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f03-native-v1/materialization/edit-manifest.json",
+      "archive_path": "edit-manifest.json.gz",
+      "original_sha256": "44afb922c0b8df5ca20d8c9bf02f4640868177dc322a9b7b3667c160482e92e6",
+      "original_bytes": 11051630,
+      "compressed_sha256": "2f25a6097a9b9f2b1afd6136a5e285218ec4224680c5f2a1a6a8644bd6f00fc1",
+      "compressed_bytes": 1747688,
+      "roundtrip_exact": true
+    }
+  ],
+  "metadata": [
+    {
+      "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/checkpoints/fresh-native-contract-f03/chat_template.jinja",
+      "archive_path": "metadata/chat_template.jinja",
+      "bytes": 18683,
+      "sha256": "ae53464bf3be25802b3a5b37def7fd89667067d7577049b3b2d74c4d8de4c6d4"
+    },
+    {
+      "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/checkpoints/fresh-native-contract-f03/config.json",
+      "archive_path": "metadata/config.json",
+      "bytes": 4621,
+      "sha256": "e967dd38bc5cfd38bd09a995a7bf4a754075df2b46aba68f7fbb5a791e6d8dd1"
+    },
+    {
+      "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/checkpoints/fresh-native-contract-f03/generation_config.json",
+      "archive_path": "metadata/generation_config.json",
+      "bytes": 208,
+      "sha256": "d4226bbe3117d2d253ba4609720ba82c6c4ce4627a9a6ae05387c78983ac03de"
+    },
+    {
+      "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/checkpoints/fresh-native-contract-f03/model.safetensors.index.json",
+      "archive_path": "metadata/model.safetensors.index.json",
+      "bytes": 120246,
+      "sha256": "390b7f9a0a502e4526cf20862d22954c911cc318d8aba2cdb745c6fbd98264f6"
+    },
+    {
+      "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/checkpoints/fresh-native-contract-f03/processor_config.json",
+      "archive_path": "metadata/processor_config.json",
+      "bytes": 1689,
+      "sha256": "32bdf45d2ad4cc29a0822ddd157a182de76644f0419a6228d151495256e9813c"
+    },
+    {
+      "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/checkpoints/fresh-native-contract-f03/tokenizer.json",
+      "archive_path": "metadata/tokenizer.json",
+      "bytes": 32169626,
+      "sha256": "cc8d3a0ce36466ccc1278bf987df5f71db1719b9ca6b4118264f45cb627bfe0f"
+    },
+    {
+      "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/checkpoints/fresh-native-contract-f03/tokenizer_config.json",
+      "archive_path": "metadata/tokenizer_config.json",
+      "bytes": 3082,
+      "sha256": "9f4fec4b1dc6ecddf8f4a92e9caea5971c0e67d81309f3f9066a2bee8c362633"
+    }
+  ],
+  "records": [
+    {
+      "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f03-native-v1/materialization/candidate-after-verify-stat.json",
+      "archive_path": "records/materialization/candidate-after-verify-stat.json",
+      "bytes": 5698,
+      "sha256": "9a2c487abffa6ec2f6a53ea5be9075c732b6c1ffd54335d4b53633879ccbb7b3"
+    },
+    {
+      "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f03-native-v1/materialization/candidate-before-verify-stat.json",
+      "archive_path": "records/materialization/candidate-before-verify-stat.json",
+      "bytes": 5698,
+      "sha256": "b2ebd79b8ef42733c165e6120429ba2125240faafc6413f3da076db27d9b1780"
+    },
+    {
+      "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f03-native-v1/materialization/completion.json",
+      "archive_path": "records/materialization/completion.json",
+      "bytes": 622,
+      "sha256": "eda189e5f82453d354e68d7fb262725003c5538c816abde4882735d5a4523984"
+    },
+    {
+      "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f03-native-v1/materialization/create-receipt.json",
+      "archive_path": "records/materialization/create-receipt.json",
+      "bytes": 2208,
+      "sha256": "533eaac5cee2187c67871c7d7b4475735891d449099c84e7f047946c2fd0947c"
+    },
+    {
+      "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f03-native-v1/materialization/create.json",
+      "archive_path": "records/materialization/create.json",
+      "bytes": 352,
+      "sha256": "ff582fba3e7ebae784d04b2c5057bf363a9dd4b5ebb4432227a9871d80532d4e"
+    },
+    {
+      "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f03-native-v1/materialization/create.stderr",
+      "archive_path": "records/materialization/create.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f03-native-v1/materialization/create.stdout",
+      "archive_path": "records/materialization/create.stdout",
+      "bytes": 334,
+      "sha256": "1fb852156e229cb3c156610deb2f09248dead5e4e451320dda8ea4028c9a9d9d"
+    },
+    {
+      "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f03-native-v1/materialization/fullcandidateidentity.json",
+      "archive_path": "records/materialization/fullcandidateidentity.json",
+      "bytes": 11036,
+      "sha256": "b9e5dbd64520196507d1d53fae64b2609d5ea45559c78aee4a60cf701d6876b5"
+    },
+    {
+      "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f03-native-v1/materialization/lock-acquired.json",
+      "archive_path": "records/materialization/lock-acquired.json",
+      "bytes": 208,
+      "sha256": "cafa5f425c8591a849ea76c42d193722107e8edf2ef8f6879f1bed7db89e7a8b"
+    },
+    {
+      "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f03-native-v1/materialization/lock-released.json",
+      "archive_path": "records/materialization/lock-released.json",
+      "bytes": 94,
+      "sha256": "b5b5c7318084fba3fb2ea97730604796fe39178247a733720fb7aa1bfbcf18a9"
+    },
+    {
+      "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f03-native-v1/materialization/plan.json",
+      "archive_path": "records/materialization/plan.json",
+      "bytes": 8308,
+      "sha256": "b256c8d45daeaa09f6a9b4966d87af2b3e661579cbe177ed4310f5dd782d300c"
+    },
+    {
+      "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f03-native-v1/materialization/preview-receipt.json",
+      "archive_path": "records/materialization/preview-receipt.json",
+      "bytes": 2192,
+      "sha256": "3139126e885afe5f044cbece9a6ded02b9c9526608243e9a9c9c068e0ad618ef"
+    },
+    {
+      "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f03-native-v1/materialization/preview.json",
+      "archive_path": "records/materialization/preview.json",
+      "bytes": 211,
+      "sha256": "1e324f0c25af929c901b42dcd12d22078ec5644272f89f97d84a4190fd89ab0d"
+    },
+    {
+      "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f03-native-v1/materialization/preview.stderr",
+      "archive_path": "records/materialization/preview.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f03-native-v1/materialization/preview.stdout",
+      "archive_path": "records/materialization/preview.stdout",
+      "bytes": 195,
+      "sha256": "67f90b80fe0272080bfac78b713c85fc4adbf1fcfad3ac22713bb0049819c577"
+    },
+    {
+      "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f03-native-v1/materialization/source/fresh-f03-materialize-20261107.py",
+      "archive_path": "records/materialization/source/fresh-f03-materialize-20261107.py",
+      "bytes": 12036,
+      "sha256": "0b5ff541dabfbdc5e7fbd591b0f4389eb923cc33ba22b69fb4a33ec5b27e9f69"
+    },
+    {
+      "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f03-native-v1/materialization/source/src/kairyu_bench/__init__.py",
+      "archive_path": "records/materialization/source/src/kairyu_bench/__init__.py",
+      "bytes": 85,
+      "sha256": "adb3e3c453270cc36bdfe5b78fb4b3543eeb8b1bc8de356847e8580086be0709"
+    },
+    {
+      "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f03-native-v1/materialization/source/src/kairyu_bench/wsp/__init__.py",
+      "archive_path": "records/materialization/source/src/kairyu_bench/wsp/__init__.py",
+      "bytes": 81,
+      "sha256": "066441d666206cec6fe79218c4b94f84b75481769261f88d8092a28bfc2f1927"
+    },
+    {
+      "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f03-native-v1/materialization/source/src/kairyu_bench/wsp/weights/__init__.py",
+      "archive_path": "records/materialization/source/src/kairyu_bench/wsp/weights/__init__.py",
+      "bytes": 73,
+      "sha256": "84407e8a57e31b915d5ba936a309457422b3b6c347fde2056f1dd492ad511cca"
+    },
+    {
+      "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f03-native-v1/materialization/source/src/kairyu_bench/wsp/weights/checkpoint.py",
+      "archive_path": "records/materialization/source/src/kairyu_bench/wsp/weights/checkpoint.py",
+      "bytes": 18153,
+      "sha256": "898297c05e7179cdc4568d6f290b978073bcebafea804ac043b54030e8205bf9"
+    },
+    {
+      "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f03-native-v1/materialization/source/src/kairyu_bench/wsp/weights/editor.py",
+      "archive_path": "records/materialization/source/src/kairyu_bench/wsp/weights/editor.py",
+      "bytes": 40324,
+      "sha256": "0983580f41989c26e84c16c26924f2850dd4e5d3d12917bb9553d7feb92333d2"
+    },
+    {
+      "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f03-native-v1/materialization/verify-receipt.json",
+      "archive_path": "records/materialization/verify-receipt.json",
+      "bytes": 1801,
+      "sha256": "6f60c2ade50032d2eee8e1ff3958862c44b4781e4326d96152dd3bec69e869e7"
+    },
+    {
+      "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f03-native-v1/materialization/verify.json",
+      "archive_path": "records/materialization/verify.json",
+      "bytes": 2387,
+      "sha256": "616806dc095ebecb04ac10d4514ec6c73f9bbd53d3f572d1ef704452320062c4"
+    },
+    {
+      "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f03-native-v1/materialization/verify.stderr",
+      "archive_path": "records/materialization/verify.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f03-native-v1/materialization/verify.stdout",
+      "archive_path": "records/materialization/verify.stdout",
+      "bytes": 2115,
+      "sha256": "b052cd84a74d045b00a2471f6f888208e1e52f168ba7eef2b56cddb412b8b5db"
+    },
+    {
+      "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f03-native-v1/proposal/report.json",
+      "archive_path": "records/proposal/report.json",
+      "bytes": 48042,
+      "sha256": "8375db3bd4cbc870060bea864c38bec01b95b5372f3dddba941eb9233f3d054b"
+    },
+    {
+      "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f03-native-v1/proposal-plan.json",
+      "archive_path": "records/proposal-plan.json",
+      "bytes": 16479,
+      "sha256": "56a4b866a41110ea1397305e9c3aa0b2c03f996f53df8b3953b9a237c387e240"
+    },
+    {
+      "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f03-native-v1/parent-state.json",
+      "archive_path": "records/parent-state.json",
+      "bytes": 1561,
+      "sha256": "59ce4dee21b1d2f3f6e6cbbded3308a3603b779392f982e59be3f55a0a779742"
+    }
+  ],
+  "source_files_sha256": {
+    "kairyu_bench/__init__.py": "adb3e3c453270cc36bdfe5b78fb4b3543eeb8b1bc8de356847e8580086be0709",
+    "kairyu_bench/__main__.py": "53c3bc3ff7afa01b08c74fdf30e51a57f1b6ce7d730bfa2d9af9b108fbd42804",
+    "kairyu_bench/adapter_context.py": "59e89313bb4b45df025a9856c9bc16f2648a84cb879ad85ed98f63433d0ecdbe",
+    "kairyu_bench/artifacts.py": "b30a66967d435dc2e03a4e780e88591e8586c3b95355bbb163cc0b54d457d6ca",
+    "kairyu_bench/benchmarks.py": "fa551e044a9e7f43ca18eec853b99512830606a389feccab4c79d69e9dabfa95",
+    "kairyu_bench/cli.py": "dd679d0f8cb7f6bfdf9e48a25e040bb6d336e6222038ad6de36f381de64cf32a",
+    "kairyu_bench/data/benchmarks.json": "681f9a2b756a08779a699edf621daa277c338163048a63876cce9453d8719cd1",
+    "kairyu_bench/data/deepswe-agent-lock.json": "4cb499a6388e1cc6f1b14eb0124725014ac4b8e0a10db5390accae990a44566e",
+    "kairyu_bench/data/deepswe-deepseek-harness-lock.json": "c9ccf58f98962f9e10998e6d46b0764f9dff858073f1dfc0c501a13a9040400f",
+    "kairyu_bench/data/deepswe-deepseek-harness.patch.json": "073b0e626da5c12cd8a0ead8f8a8ca4961d1b763021108244918563dc1651344",
+    "kairyu_bench/data/public_results.json": "a3249e298f00a10ad4c6ef223c784616b41a94cfb23742392f0878388c37d771",
+    "kairyu_bench/data/terminal-bench-4.json": "963ba8e2cc36954953f23bc286eb3687b5b384f2328bb17382ab8ea520170111",
+    "kairyu_bench/data/wsp/agent-candidates.json": "a5e7e75e6db8f6cb79935f1f91110ab3311613ef1e470400488f12a02fdd0a63",
+    "kairyu_bench/data/wsp/manifest.json": "a3a0b60e0872a38c6b1abf7e97d7fe729fabf9e25cd3f09a3da9544b9ca39b5b",
+    "kairyu_bench/data/wsp/targets.json": "02a44469d4b1e14175648543c76b3c73d3b936b55f9b946cdebcb7ef153b225a",
+    "kairyu_bench/deepswe.py": "8c28ed9b6ceef268cb4863a9f69210d75d8778a3804a586e5c46a3e9c8406406",
+    "kairyu_bench/deepswe_dsh.py": "5b1f4b59c1ec85924508948be0f5e451ebddc5499d4e5d587d9491035c1396be",
+    "kairyu_bench/deepswe_dsh_runner.py": "bbe7073fe525ede0d06618a028d5b7f192e655e6f5c396eaf42a883249334992",
+    "kairyu_bench/deepswe_runtime.py": "a3ebcf772fba4c2aabe365c5346120df3c57367714129dc81f2092c15c868ca3",
+    "kairyu_bench/direct.py": "7105d15cb6d07d3924ca4f05cdf1ce7eff0d1ffe448cbdecb616f3fc35379aa8",
+    "kairyu_bench/harness_config.py": "5416032ec738d8cfd774da7d78e81308727c518d13557673e9ca020aeb11a416",
+    "kairyu_bench/harness_data.py": "dc0546ff96c9355c88c11087aa95c4e497270492ab17fbe94174e60c5fe84d57",
+    "kairyu_bench/inspect_summary.py": "16b21eefdb064e5d1f12b17281084437491aa3c1e029ffc5d901bffa2b9a6a0c",
+    "kairyu_bench/manifest.py": "eaa526757736a83afddd0e1b4298e70f53642129d312d3425acc6c44e97772a4",
+    "kairyu_bench/official.py": "5d7f12e2cf833bd509cf65dbb4619095de2ae936df1a0dfad86b6bdfe6439612",
+    "kairyu_bench/public_results.py": "3771ef066f18dd098ceacf99abfac97bcc6a60c8e600e560e7b657f2c3e8c14d",
+    "kairyu_bench/reporting.py": "213994cc5596affc5a8a93fde75f52d290f8ac49bdc510b29b1ecae0b979c3e6",
+    "kairyu_bench/results.py": "d51922e9ae70f757ee976943cabf72ca280b9e41c41953ad81d63b93ba6f790a",
+    "kairyu_bench/runner.py": "750e95de9865bfb0a29fb75c828ee3281c7fff2f6271544ea6fc45b46f0e57c1",
+    "kairyu_bench/selection.py": "d9d95b6be7b3d6648deaa0b7103d902a6fe717ef6c2b96a520f8b37e587e6f31",
+    "kairyu_bench/swebench_pro.py": "9c5b2615a5c99e699c9cee88c348630a4bef221e43c500be1bad5cad35829df0",
+    "kairyu_bench/target.py": "b44a5d515105b7d1ead8378b3627a12e893106d63533fda8ea517d2b741fca7d",
+    "kairyu_bench/terminal_bench4.py": "93c88cf502a417a9c3fff962ece2256da29b4fb00832c9dadd3d9f7c4aac3b99",
+    "kairyu_bench/terminal_bench4_accounting.py": "fcf4b2b1496253dee73509ed3edfa25d8395805e314ff1c9dccbe98463cc304f",
+    "kairyu_bench/terminal_bench4_cli.py": "37c843e6ce926de92e7de8a9afbd66cc677574d78a61d38e176ddf3437cf7833",
+    "kairyu_bench/terminal_bench4_plugin.py": "c34dcde7247d5903affc643e91a9cb9240540f0a9b31c7430d79d88080a16776",
+    "kairyu_bench/wsp/__init__.py": "066441d666206cec6fe79218c4b94f84b75481769261f88d8092a28bfc2f1927",
+    "kairyu_bench/wsp/catalog.py": "8f250f3180bc0e16876980d681836cd74f4c275b978fa23721e3ee5b0c50a0a7",
+    "kairyu_bench/wsp/cli.py": "406b07cb9bed06bd3b814292329cd67d0acf89fcaf5fddca8858cc865bbed090",
+    "kairyu_bench/wsp/client.py": "3a99ddd6c19697bee533ba3e87d3d13170ba5299571b523b773cd72e60cc7b2c",
+    "kairyu_bench/wsp/manifest.py": "d41c24bec59f7e84bd0065fae400d2c1209bdc7384d277ab82eff3c91debbfe3",
+    "kairyu_bench/wsp/observe/__init__.py": "a42b91d537a800b48f8b4e8b99f74e862ab2f4b8b3a394706ee6b348c1b2b9fe",
+    "kairyu_bench/wsp/observe/budget.py": "edb3bb7554e4b5228c8768a8a8932bbe5237df1b4f7ba4b2bed26d676f468b1a",
+    "kairyu_bench/wsp/observe/cli.py": "3bfbb7e6dd2fe0e89fbd2b2211e1688a9e56daa704bde6575f8e229e51042b9f",
+    "kairyu_bench/wsp/observe/collector.py": "fcb8bbe3f964d47ac2f57e89804c82132b14b9434813fff0a607316bc04fb7d7",
+    "kairyu_bench/wsp/observe/collector_io.py": "85668993159e0788089627b27360918e4761176edea0e35c7b504408be3473f8",
+    "kairyu_bench/wsp/observe/core.py": "363fc7e33bcb22b20d846171892366fa067bdb7f3062cd35e4b8e616dba2849d",
+    "kairyu_bench/wsp/observe/gpu_kernel.py": "622b4ab43a0e83446bbe375a1e604896eb0ed7090c85bdc4c625f6d5a88196fa",
+    "kairyu_bench/wsp/observe/middleware.py": "d5e7e1cf05c5a6081c1cd8185f04a2ecc4a0373f59a9331a0719f588eedf11b6",
+    "kairyu_bench/wsp/observe/report.py": "eb3f44c74034a2087d78a8941823ef5e7f3a82ec1be5d8f566dc01d462258258",
+    "kairyu_bench/wsp/observe/tracing.py": "02b21d991f2d3be7a4f5bd648857e9a887bf1fd7dd7984245b5244ed96ee27b4",
+    "kairyu_bench/wsp/observe/vllm_worker.py": "03c86d216e1177fb879d5314bb43b83cf5a934651be70fa3d6ef8d245cb2fd0d",
+    "kairyu_bench/wsp/report.py": "f708cab18226874ac26d2b9fce642db811fcdbe985f2420eeda40920e2575784",
+    "kairyu_bench/wsp/run.py": "9272730f132a72002cc38f7c3c47690893f8288652364c1b644e0cf27bf04ce2",
+    "kairyu_bench/wsp/scorers/__init__.py": "2145b19f2e3bb058c3261903dad4ca4bb525bfa0ab66e28006c0eee7a8c52616",
+    "kairyu_bench/wsp/scorers/evalplus_score.py": "142c57786f1658d28c3d3927115c1ebb574ac2e5d2f7e54772c704db31b56291",
+    "kairyu_bench/wsp/scorers/livecodebench_score.py": "45ea6a0f27150a148904f1b3a145f51fe2ac9953874e4c7fc7e5e1feda550f60",
+    "kairyu_bench/wsp/scorers/scicode_score.py": "623c459292e33fb406cbeef5aae446657644faef9913af4bb149addbacd0641c",
+    "kairyu_bench/wsp/select.py": "6e3de893d9bd8e0bbb60daa2e75fe3f4e11124dade6daa1e841ab25f1d8f7ed4",
+    "kairyu_bench/wsp/sources/__init__.py": "92a8db31d765d06a8f3c111bf42618fa8f49b8db0b7d2915d0eea0ef6b8ccc4a",
+    "kairyu_bench/wsp/sources/agents.py": "c84d8d2a2ea879ab65d72f535b9108db111909aa1b474c0060275610deb4379d",
+    "kairyu_bench/wsp/sources/choice.py": "bc85beadf73b38368ba43b297ce7a39420d8fdf1621da1c38cca43a4233375b6",
+    "kairyu_bench/wsp/sources/code.py": "523ab727598a80f06f49d7118ad6cfb4206fdae9c1135a63d64b87b3ed5a31c6",
+    "kairyu_bench/wsp/sources/instructions.py": "560366c343de22d23a379dc64ec1101a6d8cbfc4598e8c55dabe41db420b8e25",
+    "kairyu_bench/wsp/sources/logprob.py": "fafc8d0c6b1623621301f2515b1c393948ffbed3fbe5ecfa86571bac1ef6fe89",
+    "kairyu_bench/wsp/sources/long_context.py": "1078a7a05a5d645f1da4c870c0b5c50053fd392826614484552944048963bbb5",
+    "kairyu_bench/wsp/sources/mathematics.py": "8d911891ac7cea5af1b910e03e38866c9c9dfaf471b7c6b7775d4f194a558826",
+    "kairyu_bench/wsp/sources/terminal_bench_observe.py": "79754d3568828424eff5c1adaabf03d7fdd0491ca30e7257322610319c3c46e0",
+    "kairyu_bench/wsp/sources/text.py": "d997d902f42b09abe8252d5b8575fa3e365334f2c21ccdff1f2f80e8da37092d",
+    "kairyu_bench/wsp/sources/tools.py": "79832fe172a2eb10ce11ba759a9ad5127ac759802f0e336afe8c05a0d702ed67",
+    "kairyu_bench/wsp/sources/vision.py": "be03da1f6ea0706e59292f06920272bb73105b54b2404cc5af495d1145b5a58a",
+    "kairyu_bench/wsp/weights/__init__.py": "84407e8a57e31b915d5ba936a309457422b3b6c347fde2056f1dd492ad511cca",
+    "kairyu_bench/wsp/weights/checkpoint.py": "898297c05e7179cdc4568d6f290b978073bcebafea804ac043b54030e8205bf9",
+    "kairyu_bench/wsp/weights/cli.py": "4193ee3863ac8d96ead9ba167ac572619d280ed9277f5729df970361cb882b26",
+    "kairyu_bench/wsp/weights/composition.py": "7ce2bc057ad3974d8c4d8509be0c193dbb7fd6b42cd523e1c9df5619bf7f84b7",
+    "kairyu_bench/wsp/weights/editor.py": "0983580f41989c26e84c16c26924f2850dd4e5d3d12917bb9553d7feb92333d2",
+    "kairyu_bench/wsp/weights/finite_replay.py": "71c424bffac775ba112e709632df0a37351a79c3121827be7c9844f321c7c4d3",
+    "kairyu_bench/wsp/weights/finite_response.py": "2f4b474089290d66a291d61eea176743d2502303943c6fded5b4331ebbff77af",
+    "kairyu_bench/wsp/weights/matrix.py": "002761474fd4bba4bce089b23eb6fcf701ab7c40b39b819a272a39dfdbac97e9",
+    "kairyu_bench/wsp/weights/native_faststore.py": "445cc73783bd6bd61890b107bb76ddca1e388a9bf84b630125a01486389578cd",
+    "kairyu_bench/wsp/weights/receipts.py": "b7299c8c89ad07e2f7df6cacfac39adabb4c98e6407da2585d6649dc26b37f27",
+    "kairyu_bench/wsp/weights/shard_pool.py": "f45d073c9950579753c74143dbc9cdc89abfdc6b0d2e4c694c91807d9b4cbc2f",
+    "kairyu_bench/wsp/weights/statistics.py": "7c021ac29e0e6bdbcb5a0bc150a598eeef7c9d1a39baf3931525d849ca0370f0",
+    "kairyu_bench.egg-info/PKG-INFO": "8904ec6a38718cfd38bb1217c2052bd900632eea0dbac131ca4b8123acc5bb55",
+    "kairyu_bench.egg-info/SOURCES.txt": "7b6268086d178376dff53b1a4fac7c9ac43a05de92ec5f44816174bbf36417d1",
+    "kairyu_bench.egg-info/dependency_links.txt": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+    "kairyu_bench.egg-info/entry_points.txt": "c6e0513e8b281cf97f5f8bd717f0d8eef53dfb69675d3258103433e0d0492039",
+    "kairyu_bench.egg-info/requires.txt": "d2c5effc67ef1b2e051e977b239d9f3cea385540f3226e0c305e0ffe6b084baf",
+    "kairyu_bench.egg-info/top_level.txt": "f69399162838fbddc82250581eca8ee4f5c881e33b10f4b9a131b9801b913279"
+  },
+  "python_version": "3.12.13 (main, Jul 18 2026, 17:02:19) [Clang 22.1.3 ]",
+  "numpy_version": "2.5.4",
+  "operation_source_sha256": "2abde870d9d06075ed836536b449c8c5162cba921a0578d291e92687d38bdc0e",
+  "physical_reconstruction_performed": false,
+  "checkpoint_payload_fullhash_performed_here": false,
+  "checkpoint_payloads_modified": false,
+  "payload_release_authorized": false,
+  "currently_served_candidate_no_unlink": true,
+  "existing_trials_benchmarks_retained": true,
+  "live_benchmark_outputs_not_copied": true,
+  "candidate_adoption_changed": false,
+  "limitations": [
+    "Mandatory immutable AV dependency; archive is not a standalone loadable checkpoint.",
+    "Content bytes and relative filenames reconstructable; new filesystem inode/ctime/dev differ.",
+    "Future restoration must check archive and base full hashes, use fresh paths, editor verify, and all candidate file hashes."
+  ]
+}

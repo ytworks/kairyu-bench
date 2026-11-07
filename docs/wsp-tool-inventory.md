@@ -223,3 +223,5 @@ fixture proves rejection before mutation and refusal of ambiguous rollback.
   50 GiB reserve, immutable CPU source snapshot, all-nine-file verified identity
   bound to identical before/after stats without an extra payload-hash pass.
   [Execution evidence](experiments/2026-11-07-f03-materialization.md).
+
+- `docs/experiments/scripts/fresh-four-parallel-redeploy-20261107.py`: explicit-plan one-off running four existing `redeploy-replica.py` services concurrently under one global lock. All children join before success or all-four rollback; protects 23 other containers and requires homogeneous closure. Default unbound-plan preview performs no Docker call. Four focused CPU tests (including real-loop/fake-child failure→join→rollback), Ruff and inert preview passed; actual parallel service operation remains untested. [Scope, shared-faststore proof and records](experiments/2026-11-07-f04-faststore-and-parallel-plan.md).

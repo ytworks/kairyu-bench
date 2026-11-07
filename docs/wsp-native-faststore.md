@@ -140,3 +140,6 @@ selected sparse matrix edits as well as native values. Matrix changes lie
 outside this store generation's isolated selection; a native-only repack would
 not accelerate that experiment. The prepared generation remains uncreated,
 rather than implying that its full-model equivalence or speedup was measured.
+
+
+The [F04 preparation record](experiments/2026-11-07-f04-faststore-and-parallel-plan.md) binds an existing AV full-nine-file proof and current stats without duplicate payload hashing. Its all421/capacity16/5GiB build preview passed; no real store was built by that preview. The ordinary deployment helper's `--freeze` path accepts the explicit fixed shared-inode/nlink proof; the legacy private-file manifest path does not. A separate four-helper parallel one-off has CPU mock/inert-preview validation only, including all-child join before all-four rollback, and must receive a successful faststore manifest/verify plus four current deployment previews before root-authorized apply. Never remove shared links from failed or retired candidate slots during a generation's lifetime.
