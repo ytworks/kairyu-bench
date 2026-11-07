@@ -1,0 +1,22 @@
+{
+  "argv": [
+    "nice",
+    "-n",
+    "15",
+    "ionice",
+    "-c",
+    "3",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/infra/weight-tools-ci/bin/python",
+    "-B",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f04-native19-dependency-v2/analyze.py"
+  ],
+  "started_epoch": 1794054938.1454852,
+  "seconds": 3.788271427154541,
+  "returncode": 0,
+  "threads": 1,
+  "model_calls": 0,
+  "solver_calls": 0,
+  "source_sha256": "9413e64013252f837576bd02d7ca2f9ab7d6ca5972e51b5cd8ffba3cc8a97465",
+  "prior_attempt": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f04-native19-dependency-v1",
+  "change": "import existing repository joint; collector-only frozen snapshot has no joint.py; prior data reads zero"
+}

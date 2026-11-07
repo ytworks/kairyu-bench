@@ -1,0 +1,88 @@
+{
+  "original_plan": {
+    "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f05-native-contract-v1/proposal-plan.json",
+    "sha256": "f0ca2df4c3a73bd1f032e9602aed42733afc2b9fa919324fc81feef648569ffa",
+    "bytes": 30780
+  },
+  "original_parent_state": {
+    "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f05-native-contract-v1/parent-state.json",
+    "sha256": "75596a03213dcde2eee5856c070b54b110aff2300d09b2c985022c805433acf1",
+    "bytes": 1318
+  },
+  "derived_plan": {
+    "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f05-native-contract-v1/audit-input-v1/proposal-plan.json",
+    "sha256": "0981476fd24eea3c43a3aea87e3550aec8066f934830f4096afd51198405cfd1",
+    "bytes": 30795
+  },
+  "derived_parent_state": {
+    "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f05-native-contract-v1/audit-input-v1/parent-state.json",
+    "sha256": "e1e9cbdf6010d720f3cdd98310b5acaa9e4a4daf5b5b4851d1c68076723f3ce3",
+    "bytes": 2285
+  },
+  "dependency": {
+    "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f05-native-contract-v1/audit-input-v1/dependency.json",
+    "sha256": "fb65f020e9753fea525de3b84474f98412550b83e45879f1df5228bfb3e6bc9a",
+    "bytes": 4847
+  },
+  "all_non_parent_state_fields_exact_equal": true,
+  "candidate_constraints_cost_rounding_scope_unchanged": true,
+  "collections_exact_equal": true,
+  "checkpoint_and_cases_exact_equal": true,
+  "copies": [
+    {
+      "original": {
+        "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f05-native-contract-v1/proposal/report.json",
+        "sha256": "4d2e57e4c92dff749e0da7b052cbadd435bc4486145ebda5d476c12cefdad793",
+        "bytes": 70462
+      },
+      "copy": {
+        "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f05-native-contract-v1/audit-input-v1/proposal/report.json",
+        "sha256": "4d2e57e4c92dff749e0da7b052cbadd435bc4486145ebda5d476c12cefdad793",
+        "bytes": 70462
+      },
+      "exact_bytes_equal": true
+    },
+    {
+      "original": {
+        "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f05-native-contract-v1/proposal/fresh-native-contract-f05.json",
+        "sha256": "48e095d3de304767410ac0956e390ad6db4d211457683dabdc779a4f6bb48df3",
+        "bytes": 904763
+      },
+      "copy": {
+        "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f05-native-contract-v1/audit-input-v1/proposal/fresh-native-contract-f05.json",
+        "sha256": "48e095d3de304767410ac0956e390ad6db4d211457683dabdc779a4f6bb48df3",
+        "bytes": 904763
+      },
+      "exact_bytes_equal": true
+    },
+    {
+      "original": {
+        "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f05-native-contract-v1/solve-execution.json",
+        "sha256": "42782c8742853a72c5708ce1062651b72316aeb8151bdce0d20b0a2f292907c8",
+        "bytes": 761
+      },
+      "copy": {
+        "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f05-native-contract-v1/audit-input-v1/solver-execution.json",
+        "sha256": "42782c8742853a72c5708ce1062651b72316aeb8151bdce0d20b0a2f292907c8",
+        "bytes": 761
+      },
+      "exact_bytes_equal": true
+    }
+  ],
+  "original_report_source_pins_all_match": true,
+  "original_file_sha256": {
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f05-native-contract-v1/proposal-plan.json": "f0ca2df4c3a73bd1f032e9602aed42733afc2b9fa919324fc81feef648569ffa",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f05-native-contract-v1/parent-state.json": "75596a03213dcde2eee5856c070b54b110aff2300d09b2c985022c805433acf1",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f05-native-contract-v1/proposal/report.json": "4d2e57e4c92dff749e0da7b052cbadd435bc4486145ebda5d476c12cefdad793",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f05-native-contract-v1/proposal/fresh-native-contract-f05.json": "48e095d3de304767410ac0956e390ad6db4d211457683dabdc779a4f6bb48df3",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f05-native-contract-v1/solve-execution.json": "42782c8742853a72c5708ce1062651b72316aeb8151bdce0d20b0a2f292907c8"
+  },
+  "preparation_source": {
+    "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f05-native-contract-v1/prepare-static-audit-v1.py.txt",
+    "sha256": "0b0bcde9ac17eb25442031863016dccd38381d3fbc2551f9b3dffa316f45c1fd",
+    "bytes": 5835
+  },
+  "solver_calls": 0,
+  "model_calls": 0,
+  "Docker_calls": 0
+}

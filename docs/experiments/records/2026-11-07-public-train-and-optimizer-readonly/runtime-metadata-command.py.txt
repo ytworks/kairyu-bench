@@ -1,0 +1,7 @@
+from pathlib import Path
+import importlib.metadata as m,importlib.util as u,hashlib,json
+names=["torch","transformers","peft","trl","accelerate","bitsandbytes","deepspeed","safetensors","datasets"]
+r={n:{"version":m.version(n)} if u.find_spec(n) else {"installed":False} for n in names}
+root=Path(m.distribution("torch").locate_file("")); files=["transformers/models/gemma4/modeling_gemma4.py","transformers/modeling_utils.py","transformers/trainer.py","torch/optim/adamw.py","torch/optim/adam.py","torch/distributed/fsdp/__init__.py"]
+r["source"]={n:{"sha256":hashlib.sha256((root/n).read_bytes()).hexdigest(),"exists":(root/n).exists()} for n in files}
+print(json.dumps(r))

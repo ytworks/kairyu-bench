@@ -1,4 +1,4 @@
-"""One fixed train12 native batch; preview only unless its exact plan is approved."""
+"""One pinned native train cohort; preview only unless its exact plan is approved."""
 from __future__ import annotations
 
 import argparse
@@ -28,16 +28,21 @@ def save(path, value):
         handle.write("\n")
 
 
-def validate_train(document):
+def validate_train(document, expected_ids=None):
     groups = document.get("cases", document)
-    if list(groups) != list("ABCDEF") or any(
-        len(folds) != 2 or any(len(fold) != 1 for fold in folds)
-        for folds in groups.values()
-    ):
-        raise ValueError("six purposes, two singleton train folds each required")
+    if expected_ids is None:
+        expected_ids = IDS
+        if list(groups) != list("ABCDEF") or any(len(folds) != 2 for folds in groups.values()):
+            raise ValueError("legacy six purposes and two folds required")
+    if (not isinstance(expected_ids, list) or not 1 <= len(expected_ids) <= 256
+            or len(set(expected_ids)) != len(expected_ids)
+            or any(not isinstance(i, str) or not i for i in expected_ids)
+            or not isinstance(groups, dict) or not groups
+            or any(not folds or any(len(fold) != 1 for fold in folds) for folds in groups.values())):
+        raise ValueError("unique explicit IDs and singleton train folds required")
     rows = [r for folds in groups.values() for fold in folds for r in fold]
-    if [r.get("id") for r in rows] != IDS or any(r.get("split") != "train" for r in rows):
-        raise ValueError("exact ordered train12 IDs and train split required")
+    if [r.get("id") for r in rows] != expected_ids or any(r.get("split") != "train" for r in rows):
+        raise ValueError("exact ordered train IDs and train split required")
     if any(not isinstance(r.get(k), str) or not r[k] for r in rows for k in ("prompt", "correct", "foil")):
         raise ValueError("complete original authored row fields required")
     return rows
@@ -47,7 +52,7 @@ def command(plan, run=False):
     result = [
         plan["python"], plan["generator"], "--cases", plan["cases"], "--split", "train",
         "--endpoint", plan["gateway"]["endpoint"], "--model", "gemma-4-31b",
-        "--checkpoint-sha256", TREE, "--output", plan["generation_output"],
+        "--checkpoint-sha256", plan["serving"]["tree_sha256"], "--output", plan["generation_output"],
         "--concurrency", "16", "--max-tokens", "32768", "--timeout", "1200",
         "--seed", "0", "--thinking-control", "server-default",
     ]
@@ -64,7 +69,7 @@ def check_pins(plan):
         s = (Path(plan["serving"]["checkpoint"]) / old["path"]).stat()
         current = {"device": s.st_dev, "inode": s.st_ino, "mtime_ns": s.st_mtime_ns, "ctime_ns": s.st_ctime_ns}
         if current != old["stat"] or s.st_size != old["size"]:
-            raise ValueError("AV checkpoint stat continuity lost")
+            raise ValueError("parent checkpoint stat continuity lost")
 
 
 def check_plan(plan):
@@ -72,22 +77,24 @@ def check_plan(plan):
     if not required <= {str(Path(p["path"]).resolve()) for p in plan["pins"]}:
         raise ValueError("all executable and input sources must be pinned")
     check_pins(plan)
-    validate_train(json.loads(Path(plan["cases"]).read_text()))
-    if plan["ids"] != IDS or plan["serving"]["tree_sha256"] != TREE:
-        raise ValueError("fixed train12/AV identity required")
+    explicit = plan.get("schema_version", 1) == 2
+    validate_train(json.loads(Path(plan["cases"]).read_text()), plan["ids"] if explicit else None)
+    tree = plan["serving"]["tree_sha256"]
+    if not re.fullmatch(r"[0-9a-f]{64}", tree) or (not explicit and (plan["ids"] != IDS or tree != TREE)):
+        raise ValueError("pinned cohort/checkpoint identity required")
     if list(plan["serving"]["service_cids"]) != [f"gemma-{i}" for i in range(4)]:
-        raise ValueError("all four AV replicas required")
+        raise ValueError("all four pinned replicas required")
     if plan["runtime_image"] != IMAGE or len(plan["protected_containers"]) != 23:
         raise ValueError("fixed image and protected service set required")
     evidence = json.loads(Path(plan["frame_evidence"]).read_text())
     lengths = evidence["lengths"]
-    expected_ids = IDS + [f"behavior-{a}3" for a in "ABCDEF"]
-    if (evidence["expected_count"] != 18 or evidence["over_limit_ids"]
+    expected_ids = plan["ids"] if explicit else IDS + [f"behavior-{a}3" for a in "ABCDEF"]
+    if (evidence["expected_count"] != len(expected_ids) or evidence["over_limit_ids"]
             or [r["id"] for r in lengths] != expected_ids
             or evidence["input_sha256"]["train-cases.json"] != sha(plan["cases"])
             or any(max(r["correct_complete"], r["foil_complete"]) > 1024 for r in lengths)
             or evidence["frame_protocol"] != "gemma4-public-answer-v2-forced-empty-thought"):
-        raise ValueError("all18 complete matching frames must pass 1024 before generation")
+        raise ValueError("complete matching frames must pass 1024 before generation")
     if plan["command"] != command(plan) or plan["thinking_control"] != "server-default":
         raise ValueError("generation settings changed")
     if any(Path(plan[k]).exists() for k in ("generation_output", "owner_output")):
@@ -132,7 +139,7 @@ def preflight(plan):
                 and d["State"]["Running"] and d["State"]["Health"]["Status"] == "healthy"
                 and labels["com.docker.compose.service"] == expected["service"]
                 and mounts == [expected["readonly_model_mount"]] and cmd_sha == expected["cmd_sha256"]):
-            raise ValueError("ordinary homogeneous AV serving identity changed")
+            raise ValueError("ordinary homogeneous parent serving identity changed")
         ip = d["NetworkSettings"]["Networks"][plan["network"]]["IPAddress"]
         with urllib.request.urlopen(f"http://{ip}:8000/metrics", timeout=15) as response:
             metrics = response.read().decode()
@@ -161,9 +168,10 @@ def summary(plan):
     path = Path(plan["generation_output"]) / "train-responses.json"
     rows = json.loads(path.read_text())["responses"] if path.exists() else []
     ids = [r["id"] for r in rows]
-    if len(ids) != len(set(ids)) or not set(ids) <= set(IDS):
+    expected = plan["ids"]
+    if len(ids) != len(set(ids)) or not set(ids) <= set(expected):
         raise ValueError("response IDs duplicate or outside fixed train12")
-    return {"expected": 12, "received": len(rows), "missing_ids": [i for i in IDS if i not in ids],
+    return {"expected": len(expected), "received": len(rows), "missing_ids": [i for i in expected if i not in ids],
             "errors": sum("error_type" in r for r in rows),
             "empty": sum(r.get("public_answer") == "" for r in rows),
             "length_finished": sum(r.get("finish_reason") == "length" for r in rows),
@@ -181,7 +189,7 @@ def main():
     check_plan(plan)
     digest = sha(args.plan)
     if not args.run:
-        print(json.dumps({"status": "preview", "plan_sha256": digest, "cases": 12,
+        print(json.dumps({"status": "preview", "plan_sha256": digest, "cases": len(plan["ids"]),
                           "approved": plan["approved_for_execution"], "model_calls": 0, "network_calls": 0}))
         return
     require_authorization(plan, digest, args.approved_plan_sha256)

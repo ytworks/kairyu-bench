@@ -1,0 +1,39 @@
+import hashlib,importlib.util,json,os,subprocess,time
+from pathlib import Path
+R=Path('/mnt/nvme/kairyu/wsp/gemma4-coding-20261104'); B=R/'worktrees/kairyu-bench-weight-tools'; N=R/'analysis/fresh-purpose-20261107-f04-behavior19-native-v1'
+def sha(p):return hashlib.sha256(Path(p).read_bytes()).hexdigest()
+def save(p,v):
+ with Path(p).open('x') as f:json.dump(v,f,indent=2,allow_nan=False);f.write('\n')
+old=json.loads((R/'analysis/fresh-purpose-20261107-av-behavior12-native-v1/launch-plan.json').read_text())
+n4=json.loads((R/'analysis/fresh-purpose-20261107-f04-dev30-dp4-v1/launch-plan-approved.json').read_text())
+serving=n4['expected_serving'];ck=Path(serving['checkpoint']);mf=Path(n4['candidate_identity']['manifest_path']);m=json.loads(mf.read_text())
+assert sha(mf)==n4['candidate_identity']['manifest_sha256']
+files=[]
+for row in m['all_checkpoint_files']:
+ s=(ck/row['path']).stat();expected=m['candidate_inventory_stat'][row['path']]
+ actual={'device':s.st_dev,'inode':s.st_ino,'size':s.st_size,'mtime_ns':s.st_mtime_ns,'ctime_ns':s.st_ctime_ns,'nlink':s.st_nlink,'uid':s.st_uid,'gid':s.st_gid,'mode':s.st_mode}
+ assert actual==expected,(row['path'],'stat changed')
+ if row['path']!='shared.safetensors':assert sha(ck/row['path'])==row['sha256']
+ files.append({**row,'stat':{k:actual[k] for k in ['device','inode','mtime_ns','ctime_ns']}})
+cases=R/'analysis/fresh-purpose-20261107-behavior19-inputs-v1/train-cases.json'; groups=json.loads(cases.read_text());ids=[row['id'] for folds in groups.values() for fold in folds for row in fold]
+assert len(ids)==19 and len(set(ids))==19
+frame_source=B/'scripts/experiments/gemma4-purpose/behavior_frames.py';frame=N/'frames';frame.mkdir()
+cmd=['docker','run','--rm','--network','none','--cpus','2','--memory','4g','--user',f'{os.getuid()}:{os.getgid()}','--read-only','--tmpfs','/tmp:rw,size=512m','-e','PYTHONPATH=/bench/src','-e','PYTHONDONTWRITEBYTECODE=1','-e','HF_HUB_OFFLINE=1','-v',f'{B}:/bench:ro','-v',f'{ck}:/checkpoint:ro','-v',f'{cases.parent}:/inputs:ro','-v',f'{frame}:/out:rw','--entrypoint','/usr/bin/python3',old['runtime_image'],'/bench/scripts/experiments/gemma4-purpose/behavior_frames.py','--cases','/inputs/train-cases.json','--cases-sha256',sha(cases),'--checkpoint','/checkpoint','--output','/out']
+save(N/'frame-command.json',{'command':cmd,'source_sha256':sha(frame_source),'gpu':False})
+t=time.monotonic()
+with (N/'frame.stdout').open('x') as out,(N/'frame.stderr').open('x') as err:
+ done=subprocess.run(cmd,stdout=out,stderr=err)
+save(N/'frame-execution.json',{'returncode':done.returncode,'elapsed_seconds':time.monotonic()-t,'model_calls':0})
+assert done.returncode==0
+owner=B/'docs/experiments/scripts/fresh-av-behavior12-native-20261107.py';spec=importlib.util.spec_from_file_location('owner',owner);mod=importlib.util.module_from_spec(spec);spec.loader.exec_module(mod)
+p=old.copy();p.update(schema_version=2,status='prepared',approved_for_execution=False,authorization=None,created_epoch=time.time(),owner_sha256=sha(owner),serving=serving,checkpoint_files=files,cases=str(cases),ids=ids,frame_evidence=str(frame/'frame-evidence.json'),owner_output=str(N/'owner'),generation_output=str(N/'generation'),source_git_head=subprocess.check_output(['git','-C',str(B),'rev-parse','HEAD'],text=True).strip(),transfer_policy='old6/new3 untouched; no transfer model generation or gradient',candidate_identity=n4['candidate_identity'])
+p['services']=[]
+for row in old['services']:
+ row=json.loads(json.dumps(row));row['cid']=serving['service_cids'][row['service']];row['readonly_model_mount']['source']=str(ck);p['services'].append(row)
+p['pins']=[]
+for path in [Path(p['python']).resolve(),Path(p['generator']),owner,frame_source,cases,frame/'frame-evidence.json',frame/'train-frame-evidence.json',mf,Path(n4['candidate_identity']['verification_receipt_path']),N/'prepare.py']:
+ p['pins'].append({'path':str(path),'sha256':sha(path),'bytes':path.stat().st_size})
+p['command']=mod.command(p)
+save(N/'launch-plan.json',p);mod.check_plan(p);save(N/'preflight.json',mod.preflight(p))
+save(N/'preview.json',{'plan_sha256':sha(N/'launch-plan.json'),'ids':ids,'cases':19,'model_calls':0,'frame_evidence_sha256':sha(frame/'frame-evidence.json'),'checkpoint_fresh_private_hashes':8,'shared_prior_hash_stat':True})
+print(json.dumps({'plan':str(N/'launch-plan.json'),'sha256':sha(N/'launch-plan.json'),'cohort':19,'model_calls':0,'ready':True}))

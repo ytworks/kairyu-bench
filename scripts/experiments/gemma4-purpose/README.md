@@ -50,6 +50,8 @@ python scripts/experiments/gemma4-purpose/native.py \
 --attestation-sha256 RECEIPT_SHA256 --run
 ~~~
 
+GPU4所有・復帰を伴う実験では、[既存ownerの新親・明示cohort対応](../../../docs/experiments/2026-11-07-f04-native19-gpu4-preparation.md)を参照してください。checkpoint/tree・ordered singleton cohort・全入力SHAを固定し、owner previewはmetadata検証だけです。実計測は別の明示承認planで行い、既定のAV/12と過去finite分岐を混同しません。
+
 native.pyはtext decoderの全scalar / vector parameterとlayer_scalarを対象にします。
 既存実測と同じBF16 autogradの値をFP32で累積し、原本BF16値との一致を確認します。
 --virtualを指定すると、全層のO投影入力headごとのunit gainとMLP-down入力列ごとのunit gainも微分します。
@@ -624,3 +626,24 @@ This is authored validation, not model performance. Full commands, input hashes,
 raw trials and split policy are in
 [the experiment record](../../../docs/experiments/2026-11-07-behavior-followup9.md).
 No transfer model generation or gradients have been used.
+
+The behavior_followup_cases.training_payload()/training_catalog() exports compose unchanged A–F12 and G–I6 train rows plus separate J1 offset contrast. A–I keep two singleton folds; J has one. Original F2 and nine transfer rows remain unchanged. This is18 prompts plus one repeated prompt/new foil. See [input and full F04 CPU score](../../../docs/experiments/2026-11-07-behavior19-inputs-and-f04-score.md).
+
+### Explicit authored training-cohort frame check
+
+`behavior_frames.py` reuses the shared public-answer frame builder for a SHA-pinned
+mapping of singleton training folds. Run it in the existing CPU-only environment
+with local tokenizer files; it refuses exposed GPU devices, transfer rows,
+duplicate IDs and frames over 1024 tokens. It does not load a model or truncate.
+
+```bash
+python behavior_frames.py --cases /inputs/train-cases.json \
+  --cases-sha256 SHA256 --checkpoint /checkpoint --output /fresh-output
+```
+
+It writes complete `frame-evidence.json` and collector-compatible
+`train-frame-evidence.json`. The current-parent generation owner schema2 takes
+these exact IDs and tree rather than the historical fixed AV/train12 cohort;
+its legacy schema1 checks are preserved. Actual F04 train19 evidence and the
+separate execution outcomes are in
+[the run record](../../../docs/experiments/2026-11-07-f04-behavior19-native-generation.md).

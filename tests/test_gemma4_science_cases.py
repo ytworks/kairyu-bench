@@ -92,6 +92,24 @@ class BehaviorCalibrationTest(unittest.TestCase):
             with self.assertRaises(FileExistsError):
                 self.cases.write_bundle(output)
 
+    def test_extended_train19_preserves_rows_and_original_offset_foil(self):
+        followup = module("behavior_followup_cases", "behavior_followup_cases.py")
+        train = followup.training_payload()
+        self.assertEqual({k: train[k] for k in "ABCDEF"}, self.cases.payload("train"))
+        self.assertEqual({k: train[k] for k in "GHI"}, followup.payload("train"))
+        rows = [r for folds in train.values() for fold in folds for r in fold]
+        self.assertEqual(len(rows), 19)
+        self.assertEqual(len({r["id"] for r in rows}), 19)
+        self.assertTrue(all(r["split"] == "train" for r in rows))
+        self.assertEqual(len(followup.training_catalog()), 19)
+        old = next(c for c in self.cases.catalog() if c.name == "F2")
+        new = followup.offset_contrast()
+        self.assertEqual(new.public()["prompt"], old.public()["prompt"])
+        self.assertEqual(new.code(), old.code())
+        self.assertIn("values[0::k]", new.code(True))
+        self.assertIn("values[values!=0][k-1::k]", old.code(True))
+        self.assertEqual(new.public()["id"], "behavior-J1")
+
     def test_named_entrypoints_are_checked_before_alias_and_never_rescued(self):
         for case in self.cases.catalog():
             if case.name[0] != "C":

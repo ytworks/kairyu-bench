@@ -1,0 +1,16 @@
+{
+  "pid": 1474377,
+  "epoch": 1794054218.0759468,
+  "plan_sha256": "0ee593066548761fd5e52544e23a67a6fed67ea97dec738a814470e110bfeac5",
+  "command": [
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/infra/weight-tools-ci/bin/python",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/worktrees/kairyu-bench-weight-tools/docs/experiments/scripts/fresh-av-behavior12-native-20261107.py",
+    "--plan",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f04-behavior19-native-v1/launch-plan-approved.json",
+    "--run",
+    "--approved-plan-sha256",
+    "0ee593066548761fd5e52544e23a67a6fed67ea97dec738a814470e110bfeac5"
+  ],
+  "model_requests_expected": 19,
+  "benchmark_requests": 0
+}

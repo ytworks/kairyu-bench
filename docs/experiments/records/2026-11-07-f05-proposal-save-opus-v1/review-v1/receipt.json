@@ -1,0 +1,28 @@
+{
+  "mode": "send",
+  "prompt_sha256": "57c6e4de0b23e1dc69aa01398a4ab16feed4d13f70acb46ec272059a3d61dcfc",
+  "prompt_bytes": 7236,
+  "requested_model": "claude-opus-5-5",
+  "labels": "A",
+  "fallback_model": null,
+  "allow_text_review": false,
+  "anonymity": "pattern lint only; caller must review every prompt byte for private identifiers and measurements",
+  "schema_version": 1,
+  "started_at": "2026-11-07T12:38:53.532291+00:00",
+  "scope": "User-reviewed anonymous prompt retained with this receipt; the review is not a model capability measurement",
+  "verified_requested_model": false,
+  "controls": {
+    "safe_mode": true,
+    "restricted": true,
+    "tools": [],
+    "mcp_servers": [],
+    "session_persistence": false,
+    "custom_generic_system_prompt": true
+  },
+  "raw_stream_persisted": false,
+  "thinking_blocks_persisted": false,
+  "environment_persisted": false,
+  "error_class": "FileNotFoundError",
+  "finished_at": "2026-11-07T12:38:53.533033+00:00",
+  "duration_seconds": 0.0007640699623152614
+}

@@ -1,0 +1,11 @@
+usage: fresh-av-native-gpu4-20261107.py [-h] --plan PLAN [--run]
+                                        [--approved-plan-sha256 APPROVED_PLAN_SHA256]
+
+Preview metadata, or own native/finite GPU4 diagnostics and restore exact
+gemma-2.
+
+options:
+  -h, --help            show this help message and exit
+  --plan PLAN
+  --run
+  --approved-plan-sha256 APPROVED_PLAN_SHA256

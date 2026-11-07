@@ -1,0 +1,335 @@
+{
+  "epoch": 1794055979.330621,
+  "records": [
+    {
+      "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f05-behavior19-native-v1/gate-driver.py.txt",
+      "stored": "gate-driver.py.txt",
+      "raw_bytes": 4344,
+      "raw_sha256": "b41c080f43947d15d8cd615e48c050f9b7ceeac3d18e57e913e5cac33ec99952",
+      "stored_bytes": 4344,
+      "stored_sha256": "b41c080f43947d15d8cd615e48c050f9b7ceeac3d18e57e913e5cac33ec99952",
+      "lossless_roundtrip": true
+    },
+    {
+      "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f05-behavior19-native-v1/launch-plan-approved.json",
+      "stored": "launch-plan-approved.json",
+      "raw_bytes": 22461,
+      "raw_sha256": "c7e6b59036e625e381409eca075cd32015cb4d0ad4f0a9d1ee8aa7a32c7f2a79",
+      "stored_bytes": 22461,
+      "stored_sha256": "c7e6b59036e625e381409eca075cd32015cb4d0ad4f0a9d1ee8aa7a32c7f2a79",
+      "lossless_roundtrip": true
+    },
+    {
+      "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f05-behavior19-native-v1/package-screen-v1.py.txt",
+      "stored": "package-screen-v1.py.txt",
+      "raw_bytes": 7100,
+      "raw_sha256": "31c39fc2f0da545e3ee4a5b777872e80a5298e40922ec8c9c4cc3ba377b06f5d",
+      "stored_bytes": 7100,
+      "stored_sha256": "31c39fc2f0da545e3ee4a5b777872e80a5298e40922ec8c9c4cc3ba377b06f5d",
+      "lossless_roundtrip": true
+    },
+    {
+      "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f05-behavior19-native-v1/preflight.json",
+      "stored": "preflight.json",
+      "raw_bytes": 1057,
+      "raw_sha256": "51a20c3ab7c3f2b9e2c18584d3a04c69855af00a1af8f9f7e1104a556e675611",
+      "stored_bytes": 1057,
+      "stored_sha256": "51a20c3ab7c3f2b9e2c18584d3a04c69855af00a1af8f9f7e1104a556e675611",
+      "lossless_roundtrip": true
+    },
+    {
+      "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f05-behavior19-native-v1/preparation.stderr",
+      "stored": "preparation.stderr",
+      "raw_bytes": 0,
+      "raw_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stored_bytes": 0,
+      "stored_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "lossless_roundtrip": true
+    },
+    {
+      "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f05-behavior19-native-v1/preparation.stdout",
+      "stored": "preparation.stdout",
+      "raw_bytes": 135,
+      "raw_sha256": "9dc2fa8d6177787ab681ca89a0e07aded25114f517f0114cea4df64dd0695801",
+      "stored_bytes": 135,
+      "stored_sha256": "9dc2fa8d6177787ab681ca89a0e07aded25114f517f0114cea4df64dd0695801",
+      "lossless_roundtrip": true
+    },
+    {
+      "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f05-behavior19-native-v1/prepare-and-launch.py",
+      "stored": "prepare-and-launch.py.txt",
+      "raw_bytes": 4068,
+      "raw_sha256": "e8cc10116356677c7ecf62a9e33b4019729a5261eeda93102adf1aefca386048",
+      "stored_bytes": 4068,
+      "stored_sha256": "e8cc10116356677c7ecf62a9e33b4019729a5261eeda93102adf1aefca386048",
+      "lossless_roundtrip": true
+    },
+    {
+      "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f05-behavior19-native-v1/preview.json",
+      "stored": "preview.json",
+      "raw_bytes": 399,
+      "raw_sha256": "9e976583903b0bc3d354a5661afe32c837668aed47826ef651510a47d26cc067",
+      "stored_bytes": 399,
+      "stored_sha256": "9e976583903b0bc3d354a5661afe32c837668aed47826ef651510a47d26cc067",
+      "lossless_roundtrip": true
+    },
+    {
+      "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f05-behavior19-native-v1/root-launch.json",
+      "stored": "root-launch.json",
+      "raw_bytes": 698,
+      "raw_sha256": "c263be613b933cc26c02396dc999b24a78888d140f4d550b0226d9a91c7291ee",
+      "stored_bytes": 698,
+      "stored_sha256": "c263be613b933cc26c02396dc999b24a78888d140f4d550b0226d9a91c7291ee",
+      "lossless_roundtrip": true
+    },
+    {
+      "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f05-behavior19-native-v1/root-owner.log",
+      "stored": "root-owner.log",
+      "raw_bytes": 0,
+      "raw_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stored_bytes": 0,
+      "stored_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "lossless_roundtrip": true
+    },
+    {
+      "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f05-behavior19-native-v1/score-driver.py.txt",
+      "stored": "score-driver.py.txt",
+      "raw_bytes": 5233,
+      "raw_sha256": "ddc882ae34fe94a6eb47d6ebe33cd23c79e08d2e0226e3f30e0ce029fee18026",
+      "stored_bytes": 5233,
+      "stored_sha256": "ddc882ae34fe94a6eb47d6ebe33cd23c79e08d2e0226e3f30e0ce029fee18026",
+      "lossless_roundtrip": true
+    },
+    {
+      "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f05-behavior19-native-v1/score-execution.json",
+      "stored": "score-execution.json",
+      "raw_bytes": 161,
+      "raw_sha256": "f51e0242c077c5d731dddfce990a75d6bc95c51f7be92442c3e830d0202ac923",
+      "stored_bytes": 161,
+      "stored_sha256": "f51e0242c077c5d731dddfce990a75d6bc95c51f7be92442c3e830d0202ac923",
+      "lossless_roundtrip": true
+    },
+    {
+      "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f05-behavior19-native-v1/score-launch.json",
+      "stored": "score-launch.json",
+      "raw_bytes": 602,
+      "raw_sha256": "ac3fab0b214da487840b83d9f8a13e0662d222441e10f37fba14ae2aa2f9b48a",
+      "stored_bytes": 602,
+      "stored_sha256": "ac3fab0b214da487840b83d9f8a13e0662d222441e10f37fba14ae2aa2f9b48a",
+      "lossless_roundtrip": true
+    },
+    {
+      "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f05-behavior19-native-v1/score-preparation-failure-v1.json",
+      "stored": "score-preparation-failure-v1.json",
+      "raw_bytes": 418,
+      "raw_sha256": "564012a2451ff83440b09403e262169b33f89de2aa5722fbfb4f691dea219e8b",
+      "stored_bytes": 418,
+      "stored_sha256": "564012a2451ff83440b09403e262169b33f89de2aa5722fbfb4f691dea219e8b",
+      "lossless_roundtrip": true
+    },
+    {
+      "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f05-behavior19-native-v1/score.stderr",
+      "stored": "score.stderr",
+      "raw_bytes": 0,
+      "raw_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stored_bytes": 0,
+      "stored_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "lossless_roundtrip": true
+    },
+    {
+      "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f05-behavior19-native-v1/score.stdout",
+      "stored": "score.stdout",
+      "raw_bytes": 5220,
+      "raw_sha256": "74642ed0c11fa2668154e02fd4471de52fa4cb9842bfa96a2df2b4fe9bb6e95c",
+      "stored_bytes": 5220,
+      "stored_sha256": "74642ed0c11fa2668154e02fd4471de52fa4cb9842bfa96a2df2b4fe9bb6e95c",
+      "lossless_roundtrip": true
+    },
+    {
+      "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f05-behavior19-native-v1/generation/receipt.json",
+      "stored": "generation/receipt.json",
+      "raw_bytes": 985,
+      "raw_sha256": "6a84159ea6b1e2367c322693fbea39bd8a3a72562772544449eb405312d07a45",
+      "stored_bytes": 985,
+      "stored_sha256": "6a84159ea6b1e2367c322693fbea39bd8a3a72562772544449eb405312d07a45",
+      "lossless_roundtrip": true
+    },
+    {
+      "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f05-behavior19-native-v1/generation/train-responses.json",
+      "stored": "generation/train-responses.json",
+      "raw_bytes": 13369,
+      "raw_sha256": "17d808d34f7fd7867fadaee6acfae2579d11dc1c5b0d75025d8cadb71a296ad3",
+      "stored_bytes": 13369,
+      "stored_sha256": "17d808d34f7fd7867fadaee6acfae2579d11dc1c5b0d75025d8cadb71a296ad3",
+      "lossless_roundtrip": true
+    },
+    {
+      "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f05-behavior19-native-v1/owner/child.json",
+      "stored": "owner/child.json",
+      "raw_bytes": 926,
+      "raw_sha256": "0a39594bc27bd177e38d5d1c5beec3b52859ce785d405271e29814e30c76ee41",
+      "stored_bytes": 926,
+      "stored_sha256": "0a39594bc27bd177e38d5d1c5beec3b52859ce785d405271e29814e30c76ee41",
+      "lossless_roundtrip": true
+    },
+    {
+      "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f05-behavior19-native-v1/owner/generation-complete.json",
+      "stored": "owner/generation-complete.json",
+      "raw_bytes": 4792,
+      "raw_sha256": "d1d48e048de8f0a2cced8691e915e234a57ab331388cef539dc45bd16c4e8d26",
+      "stored_bytes": 4792,
+      "stored_sha256": "d1d48e048de8f0a2cced8691e915e234a57ab331388cef539dc45bd16c4e8d26",
+      "lossless_roundtrip": true
+    },
+    {
+      "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f05-behavior19-native-v1/owner/generator.log",
+      "stored": "owner/generator.log",
+      "raw_bytes": 66,
+      "raw_sha256": "ea9504953d87fe8267d00cca7151e4ef285f0cba3ff2e7662f9fe0687638a7ac",
+      "stored_bytes": 66,
+      "stored_sha256": "ea9504953d87fe8267d00cca7151e4ef285f0cba3ff2e7662f9fe0687638a7ac",
+      "lossless_roundtrip": true
+    },
+    {
+      "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f05-behavior19-native-v1/owner/normal-lock-release.json",
+      "stored": "owner/normal-lock-release.json",
+      "raw_bytes": 54,
+      "raw_sha256": "56718321fd8f7355d4704ba2c48e8a6ea22f2a618ade0516c2e9c6bda24b85f4",
+      "stored_bytes": 54,
+      "stored_sha256": "56718321fd8f7355d4704ba2c48e8a6ea22f2a618ade0516c2e9c6bda24b85f4",
+      "lossless_roundtrip": true
+    },
+    {
+      "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f05-behavior19-native-v1/owner/observed-responses.json",
+      "stored": "owner/observed-responses.json",
+      "raw_bytes": 4773,
+      "raw_sha256": "325fcebb9b9896a2595c7feaa591daec8b7979e0e0fcfd362c615f3a89cee5f7",
+      "stored_bytes": 4773,
+      "stored_sha256": "325fcebb9b9896a2595c7feaa591daec8b7979e0e0fcfd362c615f3a89cee5f7",
+      "lossless_roundtrip": true
+    },
+    {
+      "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f05-behavior19-native-v1/owner/owner-closure.json",
+      "stored": "owner/owner-closure.json",
+      "raw_bytes": 201,
+      "raw_sha256": "e7f5f3970899074a3584d89252703f0412180beba269af2f13280ce014a8a6ec",
+      "stored_bytes": 201,
+      "stored_sha256": "e7f5f3970899074a3584d89252703f0412180beba269af2f13280ce014a8a6ec",
+      "lossless_roundtrip": true
+    },
+    {
+      "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f05-behavior19-native-v1/owner/preflight.json",
+      "stored": "owner/preflight.json",
+      "raw_bytes": 1057,
+      "raw_sha256": "6833cf9788097e49bfcfffc86d8959468eb1c8eff47f4cec69ffe6bc1fbccbb1",
+      "stored_bytes": 1057,
+      "stored_sha256": "6833cf9788097e49bfcfffc86d8959468eb1c8eff47f4cec69ffe6bc1fbccbb1",
+      "lossless_roundtrip": true
+    },
+    {
+      "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f05-behavior19-native-v1/owner/serving-closure.json",
+      "stored": "owner/serving-closure.json",
+      "raw_bytes": 1057,
+      "raw_sha256": "3d3d7f7a3fb20ac0d7c196843b34cb9d1cfc1f572c63413896f2c6bb83a9622a",
+      "stored_bytes": 1057,
+      "stored_sha256": "3d3d7f7a3fb20ac0d7c196843b34cb9d1cfc1f572c63413896f2c6bb83a9622a",
+      "lossless_roundtrip": true
+    },
+    {
+      "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f05-behavior19-native-v1/owner/start.json",
+      "stored": "owner/start.json",
+      "raw_bytes": 137,
+      "raw_sha256": "f08485c990cb49c41f66e105fdf42f07346f036e2b04d5f7ca373f01a17eca44",
+      "stored_bytes": 137,
+      "stored_sha256": "f08485c990cb49c41f66e105fdf42f07346f036e2b04d5f7ca373f01a17eca44",
+      "lossless_roundtrip": true
+    },
+    {
+      "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f05-behavior19-native-v1/score-v1/gate.json",
+      "stored": "score-v1/gate.json",
+      "raw_bytes": 4462,
+      "raw_sha256": "77548bc4f71fcb74afafc3e964fd8a39293255e649e02373001a5ffdec3c1d2f",
+      "stored_bytes": 4462,
+      "stored_sha256": "77548bc4f71fcb74afafc3e964fd8a39293255e649e02373001a5ffdec3c1d2f",
+      "lossless_roundtrip": true
+    },
+    {
+      "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f05-behavior19-native-v1/score-v1/plan.json",
+      "stored": "score-v1/plan.json",
+      "raw_bytes": 5156,
+      "raw_sha256": "fbba43d6f1e02052b746d0be07b300819284fef93fefb49c881f22c2fa6c4925",
+      "stored_bytes": 5156,
+      "stored_sha256": "fbba43d6f1e02052b746d0be07b300819284fef93fefb49c881f22c2fa6c4925",
+      "lossless_roundtrip": true
+    },
+    {
+      "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f05-behavior19-native-v1/score-v1/report.json",
+      "stored": "score-v1/report.json.gz",
+      "raw_bytes": 155700,
+      "raw_sha256": "e717f268cf3c129d288878097e6e791e7834d1685367323db82be26070619af4",
+      "stored_bytes": 15188,
+      "stored_sha256": "e40ef24c2d44a12ded40b3189d993600db707a66e7fd1bb6b08404ba43ea61b3",
+      "lossless_roundtrip": true
+    },
+    {
+      "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f05-behavior19-native-v1/score-v1/summary.json",
+      "stored": "score-v1/summary.json",
+      "raw_bytes": 4285,
+      "raw_sha256": "4f04b57785a953f97ab4554f04604ea1b4090b9e865d41d7c8ced98b69b83ec6",
+      "stored_bytes": 4285,
+      "stored_sha256": "4f04b57785a953f97ab4554f04604ea1b4090b9e865d41d7c8ced98b69b83ec6",
+      "lossless_roundtrip": true
+    },
+    {
+      "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f05-native-contract-v1/candidate-native-screen-decision.json",
+      "stored": "fixed-policy.json",
+      "raw_bytes": 1880,
+      "raw_sha256": "e2662deb2e3c4414e588d65718fb776f002e72653c7213a6d6a8ba47d7a72378",
+      "stored_bytes": 1880,
+      "stored_sha256": "e2662deb2e3c4414e588d65718fb776f002e72653c7213a6d6a8ba47d7a72378",
+      "lossless_roundtrip": true
+    },
+    {
+      "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f05-behavior19-native-v1/package-screen-v1.py.txt",
+      "stored": "packaging-source.py.txt",
+      "raw_bytes": 7100,
+      "raw_sha256": "31c39fc2f0da545e3ee4a5b777872e80a5298e40922ec8c9c4cc3ba377b06f5d",
+      "stored_bytes": 7100,
+      "stored_sha256": "31c39fc2f0da545e3ee4a5b777872e80a5298e40922ec8c9c4cc3ba377b06f5d",
+      "lossless_roundtrip": true
+    }
+  ],
+  "six_shared_case_scoring_inputs_exactly_equal_F04": [
+    {
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-behavior19-inputs-v1/train-cases.json",
+      "sha256": "74e1cd2000fda0abdc03f4454b18f4231b9891360af266391744e13976f199f1"
+    },
+    {
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/worktrees/kairyu-bench-weight-tools/scripts/experiments/gemma4-purpose/behavior_followup_cases.py",
+      "sha256": "c8c5fc34e6c2103de106599809e97f3b5dcc9810a68fd847595d0b491540f4fe"
+    },
+    {
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/worktrees/kairyu-bench-weight-tools/scripts/experiments/gemma4-purpose/behavior_cases.py",
+      "sha256": "10ba3e480c8685933904060629b351758cf7b61362756179e55779435d01a310"
+    },
+    {
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/worktrees/kairyu-bench-weight-tools/scripts/experiments/gemma4-purpose/behavior_offline.py",
+      "sha256": "30715a30e02c7fab8ec4e1ffad28e57c4925b16fb45048680d6f5735bd3af9e5"
+    },
+    {
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/worktrees/kairyu-bench-weight-tools/scripts/experiments/gemma4-purpose/science_sandbox.py",
+      "sha256": "4a65378e493fb2f109afdaf0d98b5b93dc067d6d3f48d2a4cf17017f1aadcb78"
+    },
+    {
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/worktrees/kairyu-bench-weight-tools/scripts/experiments/gemma4-purpose/science_cases.py",
+      "sha256": "2c4cc6e75c92c41b98e737ca2c0a653e0f7a7675c6150a6ad33e3f954122a26b"
+    }
+  ],
+  "protected_running_exact_count": 13,
+  "all_container_count_after_score": 27,
+  "owned_sandbox_remaining": 0,
+  "model_requests_by_score_and_packaging": 0,
+  "no_reference_revalidation": true,
+  "no_retry": true,
+  "no_shared_source_changes": true
+}

@@ -1,0 +1,193 @@
+{
+  "A": [
+    [
+      {
+        "id": "behavior-A1",
+        "split": "train",
+        "prompt": "Write Python solve(A, b, s). A has shape(B,n,n), each matrix is SPD; b is(B,n), s is(B,). B,n>=1. Solve A[i]x[i]=s[i]*b[i] independently, returning(B,n). Return a float64 ndarray with the specified shape; do not mutate inputs. Include required imports and the complete final function, no prose.",
+        "correct": "import numpy as np\n\ndef solve(A, b, s):\n    A=np.asarray(A,dtype=np.float64)\n    b=np.asarray(b,dtype=np.float64)\n    rhs=np.asarray(s,dtype=np.float64)[:,None]*b\n    return np.linalg.solve(A,rhs[...,None])[...,0]\n",
+        "foil": "import numpy as np\n\ndef solve(A, b, s):\n    A=np.asarray(A,dtype=np.float64)\n    b=np.asarray(b,dtype=np.float64)\n    rhs=np.asarray(s,dtype=np.float64)[:,None]*b\n    return np.linalg.solve(A,rhs)\n"
+      }
+    ],
+    [
+      {
+        "id": "behavior-A2",
+        "split": "train",
+        "prompt": "Write Python solve(A, b, c). A is(B,n,n) SPD, b,c are(B,n), B,n>=1. Solve both RHS with the same A, returning(B,n,2): last-axis0 for b,1 for c. Return a float64 ndarray with the specified shape; do not mutate inputs. Include required imports and the complete final function, no prose.",
+        "correct": "import numpy as np\n\ndef solve(A, b, c):\n    A=np.asarray(A,dtype=np.float64)\n    rhs=np.stack((b,c),axis=-1).astype(np.float64)\n    return np.linalg.solve(A,rhs)\n",
+        "foil": "import numpy as np\n\ndef solve(A, b, c):\n    A=np.asarray(A,dtype=np.float64)\n    rhs=np.stack((b,c),axis=1).astype(np.float64)\n    return np.linalg.solve(A,rhs)\n"
+      }
+    ]
+  ],
+  "B": [
+    [
+      {
+        "id": "behavior-B1",
+        "split": "train",
+        "prompt": "Write Python solve(x, a). x is a 1D real array, possibly empty, and a is real, including0. Differentiate f(t)=a*t**2+t using SymPy then lambdify. Evaluate its derivative at every x, returning x.shape. Return a float64 ndarray with the specified shape; do not mutate inputs. Include required imports and the complete final function, no prose.",
+        "correct": "import numpy as np\nimport sympy as sp\n\ndef solve(x, a):\n    t=sp.symbols('t')\n    f=a*t**2+t\n    g=sp.lambdify(t,sp.diff(f,t),'numpy')(x)\n    return np.broadcast_to(g,x.shape).astype(np.float64,copy=True)\n",
+        "foil": "import numpy as np\nimport sympy as sp\n\ndef solve(x, a):\n    t=sp.symbols('t')\n    f=a*t**2+t\n    g=sp.lambdify(t,sp.diff(f,t),'numpy')(x)\n    return np.asarray(g).astype(np.float64,copy=True)\n"
+      }
+    ],
+    [
+      {
+        "id": "behavior-B2",
+        "split": "train",
+        "prompt": "Write Python solve(x, y, a). x,y are same-length 1D real arrays, possibly empty; a is real including0. Use SymPy differentiation and lambdify for f=a*x*y+y**2. Return rows[df/dx,df/dy], shape(len(x),2). Return a float64 ndarray with the specified shape; do not mutate inputs. Include required imports and the complete final function, no prose.",
+        "correct": "import numpy as np\nimport sympy as sp\n\ndef solve(x, y, a):\n    sx,sy=sp.symbols('x y')\n    f=a*sx*sy+sy**2\n    dx,dy=sp.lambdify((sx,sy),(sp.diff(f,sx),sp.diff(f,sy)),'numpy')(x,y)\n    dx,dy=np.broadcast_arrays(dx,dy)\n    return np.column_stack((dx,dy)).astype(np.float64)\n",
+        "foil": "import numpy as np\nimport sympy as sp\n\ndef solve(x, y, a):\n    sx,sy=sp.symbols('x y')\n    f=a*sx*sy+sy**2\n    dx,dy=sp.lambdify((sx,sy),(sp.diff(f,sx),sp.diff(f,sy)),'numpy')(x,y)\n    pass\n    return np.column_stack((dx,dy)).astype(np.float64)\n"
+      }
+    ]
+  ],
+  "C": [
+    [
+      {
+        "id": "behavior-C1",
+        "split": "train",
+        "prompt": "Write Python positive_mass(xs). xs is a 1D integer array, possibly empty. Return the sum of positive elements as shape(1,); an empty array returns[0]. Return a float64 ndarray with the specified shape; do not mutate inputs. Only imports and one top-level function definition with this exact name are allowed; no other top-level statements or definitions. Include required imports and the complete final function, no prose.",
+        "correct": "import numpy as np\n\ndef positive_mass(xs):\n    return np.array([sum(max(int(v),0) for v in xs)],dtype=np.float64)\n",
+        "foil": "import numpy as np\n\ndef solve(xs):\n    return np.array([sum(max(int(v),0) for v in xs)],dtype=np.float64)\n"
+      }
+    ],
+    [
+      {
+        "id": "behavior-C2",
+        "split": "train",
+        "prompt": "Write Python rotate_left(xs, k). xs is a 1D integer array; k is an integer>=0. Rotate left by k positions. For empty xs return shape(0,); otherwise return shape(len(xs),). Return a float64 ndarray with the specified shape; do not mutate inputs. Only imports and one top-level function definition with this exact name are allowed; no other top-level statements or definitions. Include required imports and the complete final function, no prose.",
+        "correct": "import numpy as np\n\ndef rotate_left(xs, k):\n    if len(xs)==0:\n        return np.empty(0,dtype=np.float64)\n    k=k%len(xs)\n    return np.concatenate((xs[k:],xs[:k])).astype(np.float64)\n",
+        "foil": "import numpy as np\n\ndef rotate_left(xs, k):\n    return np.array([-999.0])\n\ndef rotate_left(xs, k):\n    if len(xs)==0:\n        return np.empty(0,dtype=np.float64)\n    k=k%len(xs)\n    return np.concatenate((xs[k:],xs[:k])).astype(np.float64)\n"
+      }
+    ]
+  ],
+  "D": [
+    [
+      {
+        "id": "behavior-D1",
+        "split": "train",
+        "prompt": "Write Python solve(maps, start). maps is(T,n) of integers in[0,n), n>=1, start in[0,n). At each t update state=maps[t,state]. Return every post-transition state as shape(T,); T=0 is allowed. Return a float64 ndarray with the specified shape; do not mutate inputs. Include required imports and the complete final function, no prose.",
+        "correct": "import numpy as np\n\ndef solve(maps, start):\n    state=int(start)\n    out=[]\n    for row in maps:\n        state=int(row[state])\n        out.append(state)\n    return np.asarray(out,dtype=np.float64)\n",
+        "foil": "import numpy as np\n\ndef solve(maps, start):\n    state=int(start)\n    out=[]\n    for row in maps:\n        state=int(row[start])\n        out.append(state)\n    return np.asarray(out,dtype=np.float64)\n"
+      }
+    ],
+    [
+      {
+        "id": "behavior-D2",
+        "split": "train",
+        "prompt": "Write Python solve(matrices, offsets, x). matrices is(T,d,d), offsets is(T,d), x is(d,), d>=1. Apply x_new=matrices[t]@x+offsets[t] in increasing t order. Return the final(d,) state; T=0 returns a copy of x. Return a float64 ndarray with the specified shape; do not mutate inputs. Include required imports and the complete final function, no prose.",
+        "correct": "import numpy as np\n\ndef solve(matrices, offsets, x):\n    state=np.asarray(x,dtype=np.float64).copy()\n    for t in range(len(matrices)):\n        state=matrices[t]@state+offsets[t]\n    return np.asarray(state,dtype=np.float64)\n",
+        "foil": "import numpy as np\n\ndef solve(matrices, offsets, x):\n    state=np.asarray(x,dtype=np.float64).copy()\n    for t in reversed(range(len(matrices))):\n        state=matrices[t]@state+offsets[t]\n    return np.asarray(state,dtype=np.float64)\n"
+      }
+    ]
+  ],
+  "E": [
+    [
+      {
+        "id": "behavior-E1",
+        "split": "train",
+        "prompt": "Write Python solve(grid, start, moves). grid is a nonempty HxW integer array, start=(row,col) is in bounds, moves is a 1D integer array with0=N,1=E,2=S,3=W. Move on the original toroidal grid and sum the start cell and every visited cell. Return(1,). Return a float64 ndarray with the specified shape; do not mutate inputs. Include required imports and the complete final function, no prose.",
+        "correct": "import numpy as np\n\ndef solve(grid, start, moves):\n    r,c=map(int,start)\n    h,w=grid.shape\n    steps=((-1,0),(0,1),(1,0),(0,-1))\n    total=int(grid[r,c])\n    for move in moves:\n        dr,dc=steps[int(move)]\n        r,c=(r+dr)%h,(c+dc)%w\n        total+=int(grid[r,c])\n    return np.array([total],dtype=np.float64)\n",
+        "foil": "import numpy as np\n\ndef solve(grid, start, moves):\n    r,c=map(int,start)\n    h,w=grid.shape\n    if h<w:\n        grid=grid.T\n        r,c=c,r\n        h,w=grid.shape\n    steps=((-1,0),(0,1),(1,0),(0,-1))\n    total=int(grid[r,c])\n    for move in moves:\n        dr,dc=steps[int(move)]\n        r,c=(r+dr)%h,(c+dc)%w\n        total+=int(grid[r,c])\n    return np.array([total],dtype=np.float64)\n"
+      }
+    ],
+    [
+      {
+        "id": "behavior-E2",
+        "split": "train",
+        "prompt": "Write Python solve(points, height, width). points is(N,2) integer (row,col) coordinates inside an H=height by W=width grid, H,W>=1. Return coordinates after clockwise90-degree rotation, shape(N,2), including N=0. Return a float64 ndarray with the specified shape; do not mutate inputs. Include required imports and the complete final function, no prose.",
+        "correct": "import numpy as np\n\ndef solve(points, height, width):\n    return np.column_stack((points[:,1],height-1-points[:,0])).astype(np.float64)\n",
+        "foil": "import numpy as np\n\ndef solve(points, height, width):\n    return np.column_stack((points[:,1],width-1-points[:,0])).astype(np.float64)\n"
+      }
+    ]
+  ],
+  "F": [
+    [
+      {
+        "id": "behavior-F1",
+        "split": "train",
+        "prompt": "Write Python solve(xs). xs is a 1D integer array. Sum with alternating signs by original index, index0 positive. Zero elements still occupy a position. Return(1,), empty returns[0]. Return a float64 ndarray with the specified shape; do not mutate inputs. Include required imports and the complete final function, no prose.",
+        "correct": "import numpy as np\n\ndef solve(xs):\n    return np.array([sum((-1)**i*int(v) for i,v in enumerate(xs))],dtype=np.float64)\n",
+        "foil": "import numpy as np\n\ndef solve(xs):\n    return np.array([sum((-1)**i*int(v) for i,v in enumerate(xs[xs!=0]))],dtype=np.float64)\n"
+      }
+    ],
+    [
+      {
+        "id": "behavior-F2",
+        "split": "train",
+        "prompt": "Write Python solve(values, k). values is a 1D integer array of event values; k is an integer>=1. Sum every kth event counting the original first event as number1. Zero events still count. Return(1,), empty returns[0]. Return a float64 ndarray with the specified shape; do not mutate inputs. Include required imports and the complete final function, no prose.",
+        "correct": "import numpy as np\n\ndef solve(values, k):\n    return np.array([sum(int(v) for v in values[k-1::k])],dtype=np.float64)\n",
+        "foil": "import numpy as np\n\ndef solve(values, k):\n    return np.array([sum(int(v) for v in values[values!=0][k-1::k])],dtype=np.float64)\n"
+      }
+    ]
+  ],
+  "G": [
+    [
+      {
+        "id": "behavior-G1",
+        "split": "train",
+        "prompt": "Write Python solve(changes, start, lower, upper). changes is a 1D integer array. lower<=upper are integers and start is integer. A balance starts at start and applies changes in order. Return(1,) containing1 iff the initial balance AND every intermediate balance stay in[lower,upper], else0. Return a float64 ndarray with the specified shape; do not mutate inputs. Include required imports and the complete final function, no prose.",
+        "correct": "import numpy as np\n\ndef solve(changes, start, lower, upper):\n    states=np.r_[start,start+np.cumsum(changes)]\n    ok=np.all((states>=lower)&(states<=upper))\n    return np.array([ok],dtype=float)\n",
+        "foil": "import numpy as np\n\ndef solve(changes, start, lower, upper):\n    states=np.r_[start,start+np.cumsum(changes)]\n    ok=(states[-1]>=lower)&(states[-1]<=upper)\n    return np.array([ok],dtype=float)\n"
+      }
+    ],
+    [
+      {
+        "id": "behavior-G2",
+        "split": "train",
+        "prompt": "Write Python solve(bounds, step). bounds is(T,2) integer inclusive intervals [low,high], T>=1, low<=high. step is an integer>=0. Choose one integer at every stage within its interval, with absolute change between consecutive choices<=step. Return(1,) containing1 iff a full valid sequence exists, otherwise0. An impossible prefix cannot be repaired. Return a float64 ndarray with the specified shape; do not mutate inputs. Include required imports and the complete final function, no prose.",
+        "correct": "import numpy as np\n\ndef solve(bounds, step):\n    lo,hi=map(int,bounds[0])\n    for a,b in bounds[1:]:\n        lo=max(int(a),lo-step)\n        hi=min(int(b),hi+step)\n        if lo>hi:\n            return np.array([0.0])\n    return np.array([float(lo<=hi)])\n",
+        "foil": "import numpy as np\n\ndef solve(bounds, step):\n    lo,hi=map(int,bounds[0])\n    for a,b in bounds[1:]:\n        lo=max(int(a),lo-step)\n        hi=min(int(b),hi+step)\n        pass\n    return np.array([float(lo<=hi)])\n"
+      }
+    ]
+  ],
+  "H": [
+    [
+      {
+        "id": "behavior-H1",
+        "split": "train",
+        "prompt": "Write Python solve(times, values). times and values are 1D real arrays of equal length n>=2; times strictly increases. Return(n-1,) where result[i]=(values[i+1]-values[i])/(times[i+1]-times[i]). These are adjacent interval secants, not derivatives at sample points. Return a float64 ndarray with the specified shape; do not mutate inputs. Include required imports and the complete final function, no prose.",
+        "correct": "import numpy as np\n\ndef solve(times, values):\n    return (np.diff(values)/np.diff(times)).astype(float)\n",
+        "foil": "import numpy as np\n\ndef solve(times, values):\n    return (np.gradient(values,times)[:-1]).astype(float)\n"
+      }
+    ],
+    [
+      {
+        "id": "behavior-H2",
+        "split": "train",
+        "prompt": "Write Python solve(values, spacing). values is a 1D real array with n>=3 samples on a uniform grid; spacing is positive. Return(n-2,) containing centered two-neighbor slopes at interior sample points: result[j]=(values[j+2]-values[j])/(2*spacing). Do not use one-sided interval slopes. Return a float64 ndarray with the specified shape; do not mutate inputs. Include required imports and the complete final function, no prose.",
+        "correct": "import numpy as np\n\ndef solve(values, spacing):\n    return ((values[2:]-values[:-2])/(2*spacing)).astype(float)\n",
+        "foil": "import numpy as np\n\ndef solve(values, spacing):\n    return ((values[2:]-values[1:-1])/spacing).astype(float)\n"
+      }
+    ]
+  ],
+  "I": [
+    [
+      {
+        "id": "behavior-I1",
+        "split": "train",
+        "prompt": "Write Python solve(labels). labels is a 1D integer array with values0..9, possibly empty. Return(1,) containing the unique most frequent label. If empty or multiple labels share the highest frequency, return the sentinel -99. Never resolve a frequency tie by numeric order. Return a float64 ndarray with the specified shape; do not mutate inputs. Include required imports and the complete final function, no prose.",
+        "correct": "import numpy as np\n\ndef solve(labels):\n    u,c=np.unique(labels,return_counts=True)\n    if len(u)==0:\n        return np.array([-99.0])\n    w=u[c==c.max()]\n    return np.array([w[0] if len(w)==1 else -99],dtype=float)\n",
+        "foil": "import numpy as np\n\ndef solve(labels):\n    u,c=np.unique(labels,return_counts=True)\n    if len(u)==0:\n        return np.array([-99.0])\n    w=u[c==c.max()]\n    return np.array([w[0]],dtype=float)\n"
+      }
+    ],
+    [
+      {
+        "id": "behavior-I2",
+        "split": "train",
+        "prompt": "Write Python solve(labels). labels is a 1D integer array with values0..9, possibly empty. Rank DISTINCT frequency values from largest to smallest. Return(1,) containing the unique label with the SECOND largest distinct frequency. Return -88 if fewer than two distinct frequencies exist or multiple labels have that second frequency. Return a float64 ndarray with the specified shape; do not mutate inputs. Include required imports and the complete final function, no prose.",
+        "correct": "import numpy as np\n\ndef solve(labels):\n    u,c=np.unique(labels,return_counts=True)\n    f=np.unique(c)\n    if len(f)<2:\n        return np.array([-88.0])\n    w=u[c==f[-2]]\n    return np.array([w[0] if len(w)==1 else -88],dtype=float)\n",
+        "foil": "import numpy as np\n\ndef solve(labels):\n    u,c=np.unique(labels,return_counts=True)\n    f=np.unique(c)\n    if len(f)<2:\n        return np.array([-88.0])\n    w=u[c==f[-2]]\n    return np.array([w[0]],dtype=float)\n"
+      }
+    ]
+  ],
+  "J": [
+    [
+      {
+        "id": "behavior-J1",
+        "split": "train",
+        "prompt": "Write Python solve(values, k). values is a 1D integer array of event values; k is an integer>=1. Sum every kth event counting the original first event as number1. Zero events still count. Return(1,), empty returns[0]. Return a float64 ndarray with the specified shape; do not mutate inputs. Include required imports and the complete final function, no prose.",
+        "correct": "import numpy as np\n\ndef solve(values, k):\n    return np.array([sum(int(v) for v in values[k-1::k])],dtype=np.float64)\n",
+        "foil": "import numpy as np\n\ndef solve(values, k):\n    return np.array([sum(int(v) for v in values[0::k])],dtype=np.float64)\n"
+      }
+    ]
+  ]
+}

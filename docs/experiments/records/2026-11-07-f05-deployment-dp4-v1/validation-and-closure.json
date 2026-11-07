@@ -1,0 +1,25 @@
+{
+  "recorded_epoch": 1794055087.4327934,
+  "source_sha256": "3a898414020dc83a8602255cd2c8573299aa4d5524aa144ddf6477e1da0a6416",
+  "syntax_compile_exit_code": 0,
+  "ruff_exit_code": 0,
+  "ruff_stdout": "All checks passed!\n",
+  "initial_ruff_failure_preserved": "E731, source-before-ruff.py.txt/source-preparation.json",
+  "transport_prelaunch_syntax_failure": {
+    "remote_executed": false,
+    "reason": "JavaScript wrapper literal backtick in planned Markdown string; corrected before any remote operation"
+  },
+  "runtime": {
+    "invocations": 1,
+    "helper_previews": 4,
+    "passed": 4,
+    "elapsed_seconds": 3.935685396194458,
+    "approved_for_apply": false,
+    "model_calls": 0,
+    "service_mutations": 0,
+    "payload_rehashed": false
+  },
+  "launch_logs_note": "Recipe finally copied launch stdout/stderr before its final print; final-launch.* retain closed wrapper outputs. Early snapshots are preserved.",
+  "plan_sha256": "92fa379989319ea903fa5128fbe49910128d9989a49a9a74215aeb3546fecf7e",
+  "normal_lock_release_sha256": "92f2703989972d0ac6ca210808b1901a4162aaab5385dac6d4c290ded7ad2845"
+}

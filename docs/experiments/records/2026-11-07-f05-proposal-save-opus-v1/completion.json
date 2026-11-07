@@ -1,0 +1,66 @@
+{
+  "status": "completed",
+  "elapsed_seconds_including_wait": 206.66438221931458,
+  "runs": [
+    {
+      "phase": "preview",
+      "command": [
+        "nice",
+        "-n",
+        "15",
+        "ionice",
+        "-c",
+        "3",
+        "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/infra/weight-tools-ci/bin/python",
+        "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/worktrees/kairyu-bench-weight-tools/scripts/experiments/gemma4-purpose/propose_native_objectives.py",
+        "--plan",
+        "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f05-native-contract-v1/proposal-plan.json",
+        "--output",
+        "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f05-native-contract-v1/proposal",
+        "--maximum-seconds",
+        "120"
+      ],
+      "returncode": 0,
+      "elapsed_seconds": 0.29754288599360734,
+      "model_calls": 0
+    },
+    {
+      "phase": "solve",
+      "command": [
+        "nice",
+        "-n",
+        "15",
+        "ionice",
+        "-c",
+        "3",
+        "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/infra/weight-tools-ci/bin/python",
+        "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/worktrees/kairyu-bench-weight-tools/scripts/experiments/gemma4-purpose/propose_native_objectives.py",
+        "--plan",
+        "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f05-native-contract-v1/proposal-plan.json",
+        "--output",
+        "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f05-native-contract-v1/proposal",
+        "--maximum-seconds",
+        "120",
+        "--run",
+        "--write-spec"
+      ],
+      "returncode": 0,
+      "elapsed_seconds": 26.341674857074395,
+      "model_calls": 0
+    }
+  ],
+  "plan": {
+    "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f05-native-contract-v1/proposal-plan.json",
+    "sha256": "f0ca2df4c3a73bd1f032e9602aed42733afc2b9fa919324fc81feef648569ffa"
+  },
+  "report": {
+    "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f05-native-contract-v1/proposal/report.json",
+    "sha256": "4d2e57e4c92dff749e0da7b052cbadd435bc4486145ebda5d476c12cefdad793"
+  },
+  "spec": {
+    "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f05-native-contract-v1/proposal/fresh-native-contract-f05.json",
+    "sha256": "48e095d3de304767410ac0956e390ad6db4d211457683dabdc779a4f6bb48df3"
+  },
+  "model_calls": 0,
+  "checkpoint_created": false
+}

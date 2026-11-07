@@ -1,0 +1,128 @@
+[
+  {
+    "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-mbpp-train-preparation-v1/dataset-download-receipt.json",
+    "source_sha256": "6f4ee75fff4bafbc28ef94f60a98af5406f7e908d1c8f1abd8f27e1a37b79a15",
+    "source_bytes": 914,
+    "record": "dataset-download-receipt.json",
+    "record_sha256": "6f4ee75fff4bafbc28ef94f60a98af5406f7e908d1c8f1abd8f27e1a37b79a15"
+  },
+  {
+    "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-mbpp-train-preparation-v1/filter-policy.json",
+    "source_sha256": "f332c7277a561ff47d9fb57683737b2865a7014f4e00501b3992c265bdb73e65",
+    "source_bytes": 2312,
+    "record": "filter-policy.json",
+    "record_sha256": "f332c7277a561ff47d9fb57683737b2865a7014f4e00501b3992c265bdb73e65"
+  },
+  {
+    "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-mbpp-train-preparation-v1/filter-v1/all374-ledger.json",
+    "source_sha256": "231ad3d4d18a464e6977df7c8c30346b64d18a985ad3eb12d5dee45cad7cd981",
+    "source_bytes": 98377,
+    "record": "filter-v1/all374-ledger.json.gz",
+    "record_sha256": "8b0bc2d03ce328d575ec4c6bfbf46f18f41d3811a9efa69e8d0faa5762cfd935"
+  },
+  {
+    "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-mbpp-train-preparation-v1/filter-v1/holdout.jsonl",
+    "source_sha256": "2397ed986d06fa36f5a0dbfb80d4f08c8ba771eda0153288f0110bd20c26db2c",
+    "source_bytes": 28035,
+    "record": "filter-v1/holdout.jsonl",
+    "record_sha256": "2397ed986d06fa36f5a0dbfb80d4f08c8ba771eda0153288f0110bd20c26db2c"
+  },
+  {
+    "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-mbpp-train-preparation-v1/filter-v1/summary.json",
+    "source_sha256": "e3022119b905b00bd7f9f8f3574f6d83fcd84e9df6fb5c3afb8e1da01cd2dc11",
+    "source_bytes": 7492,
+    "record": "filter-v1/summary.json",
+    "record_sha256": "e3022119b905b00bd7f9f8f3574f6d83fcd84e9df6fb5c3afb8e1da01cd2dc11"
+  },
+  {
+    "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-mbpp-train-preparation-v1/filter-v1/train.jsonl",
+    "source_sha256": "d501b58dd3860a5c1b666a9318f3f8f70c405d2369afce3aea13bd0f379223f6",
+    "source_bytes": 120270,
+    "record": "filter-v1/train.jsonl.gz",
+    "record_sha256": "e473721a9b5d3f4d74c29b305edd304625610920d2ce5632ff11d8ca9cc8392d"
+  },
+  {
+    "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-mbpp-train-preparation-v1/filter-v1-execution.json",
+    "source_sha256": "cc98ca804a4650f9bbda919728c28cdf54fc806e01385173fb789cb55b826ef5",
+    "source_bytes": 1027,
+    "record": "filter-v1-execution.json",
+    "record_sha256": "cc98ca804a4650f9bbda919728c28cdf54fc806e01385173fb789cb55b826ef5"
+  },
+  {
+    "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-mbpp-train-preparation-v1/filter-v1.stderr",
+    "source_sha256": "e98dfd33055f3d2c786005763ad3efb5773fd7382f6025bd924a7e1260e0b6ff",
+    "source_bytes": 1826,
+    "record": "filter-v1.stderr",
+    "record_sha256": "e98dfd33055f3d2c786005763ad3efb5773fd7382f6025bd924a7e1260e0b6ff"
+  },
+  {
+    "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-mbpp-train-preparation-v1/filter-v1.stdout",
+    "source_sha256": "1bcb8d603bb174b4cfd9b0cda3ef31ab37aa45975ea5297057af7faf2414a2bb",
+    "source_bytes": 857,
+    "record": "filter-v1.stdout",
+    "record_sha256": "1bcb8d603bb174b4cfd9b0cda3ef31ab37aa45975ea5297057af7faf2414a2bb"
+  },
+  {
+    "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-mbpp-train-preparation-v1/license-check.json",
+    "source_sha256": "a0207a451c4766a2b57af36b781de9983b4a4a7187cff9042e7d392a22129150",
+    "source_bytes": 888,
+    "record": "license-check.json",
+    "record_sha256": "a0207a451c4766a2b57af36b781de9983b4a4a7187cff9042e7d392a22129150"
+  },
+  {
+    "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-mbpp-train-preparation-v1/metadata-download-receipt.json",
+    "source_sha256": "7a7f89c6ee138bd1001037109f7838e27592a5e9a68eaab41932dc86d0311717",
+    "source_bytes": 2064,
+    "record": "metadata-download-receipt.json",
+    "record_sha256": "7a7f89c6ee138bd1001037109f7838e27592a5e9a68eaab41932dc86d0311717"
+  },
+  {
+    "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-mbpp-train-preparation-v1/ruff.stderr",
+    "source_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "source_bytes": 0,
+    "record": "ruff.stderr",
+    "record_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-mbpp-train-preparation-v1/ruff.stdout",
+    "source_sha256": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18",
+    "source_bytes": 19,
+    "record": "ruff.stdout",
+    "record_sha256": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18"
+  },
+  {
+    "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-mbpp-train-preparation-v1/upstream-README.md",
+    "source_sha256": "02d63a4ffdad806c3c87b5ea2aa91e946f6eec0c2869643b09831650883f41be",
+    "source_bytes": 1422,
+    "record": "upstream-README.md",
+    "record_sha256": "02d63a4ffdad806c3c87b5ea2aa91e946f6eec0c2869643b09831650883f41be"
+  },
+  {
+    "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-mbpp-train-preparation-v1/upstream-commit.json",
+    "source_sha256": "591445a700712f1cbd4681819d415aa7582c729b19c63a8ebba325918badeeb7",
+    "source_bytes": 334277,
+    "record": "upstream-commit.json.gz",
+    "record_sha256": "ad73f00121ca419ad19c95cc2cac392ebb2cba30b063f84c0ccbb27ab73fb0f7"
+  },
+  {
+    "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-mbpp-train-preparation-v1/upstream-mbpp-listing.json",
+    "source_sha256": "a46ee27a86a9c092c7bed9656be22dbce1fab5e5a14a26541992c333bb535f6f",
+    "source_bytes": 3193,
+    "record": "upstream-mbpp-listing.json",
+    "record_sha256": "a46ee27a86a9c092c7bed9656be22dbce1fab5e5a14a26541992c333bb535f6f"
+  },
+  {
+    "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-mbpp-train-preparation-v1/upstream-mbpp.jsonl",
+    "source_sha256": "ccf64ceae9c5403bf50a044cb6d505bfd2a2963ee58338ba268fd65beab92a9f",
+    "source_bytes": 563743,
+    "record": "upstream-mbpp.jsonl.gz",
+    "record_sha256": "5da714a90c1b388857026ac955de6a98b42b311e570cee3d27683f98e1699923"
+  },
+  {
+    "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-mbpp-train-preparation-v1/upstream-root-LICENSE",
+    "source_sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
+    "source_bytes": 11358,
+    "record": "upstream-root-LICENSE",
+    "record_sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30"
+  }
+]

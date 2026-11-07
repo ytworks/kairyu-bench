@@ -1,0 +1,55 @@
+"""Derived audit-only envelope; original F05 numeric plan/spec/report stay unchanged."""
+import copy,hashlib,json,pathlib,subprocess,time
+R=pathlib.Path('/mnt/nvme/kairyu/wsp/gemma4-coding-20261104');B=R/'worktrees/kairyu-bench-weight-tools';P=R/'analysis/fresh-purpose-20261107-f05-native-contract-v1';A=P/'audit-input-v1';O=P/'static-native-audit-v1'
+def sha(p):return hashlib.sha256(p.read_bytes()).hexdigest()
+def pin(p):return {'path':str(p),'sha256':sha(p),'bytes':p.stat().st_size}
+def save(p,x):
+ with p.open('x') as f:json.dump(x,f,indent=2,allow_nan=False);f.write(chr(10))
+orig=P/'proposal-plan.json';plan=json.loads(orig.read_text());statepath=pathlib.Path(plan['parent_state']['path']);state=json.loads(statepath.read_text())
+assert sha(statepath)==plan['parent_state']['sha256']
+assert plan['checkpoint']['tree_sha256']=='7b9e9488e3cd4e0b6c5f61ae341e5eeccdf5bd31c46d1c8354950dbc29d0f924'
+assert plan['collections']=={o:str(R/'analysis/fresh-purpose-20261107-f04-native19-gpu4-v1/work'/o) for o in ['correct-logprob','margin']}
+casespath=pathlib.Path(plan['cases']['path']);assert sha(casespath)==plan['cases']['sha256']
+cases=json.loads(casespath.read_text());ordered=[(g,i,row['id']) for g,fs in cases.items() for i,fold in enumerate(fs) for row in fold];assert len(ordered)==19
+assert all(len(fold)==1 for fs in cases.values() for fold in fs)
+reportpath=P/'proposal/report.json';report=json.loads(reportpath.read_text());assert len(report['methods'])==1
+specpath=P/'proposal'/(plan['candidates'][0]['id']+'.json')
+executionpath=P/'solve-execution.json';execution=json.loads(executionpath.read_text())
+originalpins={str(p):sha(p) for p in [orig,statepath,reportpath,specpath,executionpath]}
+for path,h in report['source_sha256'].items():assert sha(pathlib.Path(path))==h,(path,h)
+source_summary_pins={};values={}
+for objective in ['correct-logprob','margin']:
+ sp=pathlib.Path(plan['collections'][objective])/'summary.json';summary=json.loads(sp.read_text());source_summary_pins[objective]=pin(sp)
+ assert summary['status']=='completed' and summary['source_values_unchanged'] is True and summary['objective_kind']==objective
+ field,key=('correct_logprobs','correct_logprob') if objective=='correct-logprob' else ('margins','margin')
+ assert [(f['purpose'],f['fold'],f[field][0]['id']) for f in summary['folds']]==ordered
+ assert all(f['examples']==1 and len(f[field])==1 for f in summary['folds'])
+ values[key]={f[field][0]['id']:f[field][0][key] for f in summary['folds']}
+A.mkdir();(A/'proposal').mkdir()
+dep={'checkpoint_tree_sha256':plan['checkpoint']['tree_sha256'],'case_rows':[{'id':cid,'correct_logprob':values['correct_logprob'][cid],'margin':values['margin'][cid]} for _,_,cid in ordered],'source_summaries':source_summary_pins,'ordered_cohort':[{'purpose':g,'fold':f,'id':cid} for g,f,cid in ordered],'origin':'F04 native19 measured summaries only; no AV values, no model request or recomputation','case_input':plan['cases']}
+save(A/'dependency.json',dep)
+derivedstate=copy.deepcopy(state);assert 'dependency' not in state
+derivedstate['dependency']=pin(A/'dependency.json')
+derivedstate['audit_derivation']={'original_parent_state':pin(statepath),'original_plan':pin(orig),'scope':'Only opaque parent-state reference augmented for existing static audit. All solver numeric fields unchanged.'}
+save(A/'parent-state.json',derivedstate)
+derived=copy.deepcopy(plan);derived['parent_state']=pin(A/'parent-state.json')
+# Preserve the original plan reference schema (path/sha256 only).
+derived['parent_state'].pop('bytes')
+assert {k:v for k,v in derived.items() if k!='parent_state'}=={k:v for k,v in plan.items() if k!='parent_state'}
+save(A/'proposal-plan.json',derived)
+copies=[]
+for src,dst in [(reportpath,A/'proposal/report.json'),(specpath,A/'proposal'/specpath.name),(executionpath,A/'solver-execution.json')]:
+ with dst.open('xb') as f:f.write(src.read_bytes())
+ assert sha(src)==sha(dst);copies.append({'original':pin(src),'copy':pin(dst),'exact_bytes_equal':True})
+proof={'original_plan':pin(orig),'original_parent_state':pin(statepath),'derived_plan':pin(A/'proposal-plan.json'),'derived_parent_state':pin(A/'parent-state.json'),'dependency':pin(A/'dependency.json'),'all_non_parent_state_fields_exact_equal':True,'candidate_constraints_cost_rounding_scope_unchanged':True,'collections_exact_equal':derived['collections']==plan['collections'],'checkpoint_and_cases_exact_equal':derived['checkpoint']==plan['checkpoint'] and derived['cases']==plan['cases'],'copies':copies,'original_report_source_pins_all_match':True,'original_file_sha256':originalpins,'preparation_source':pin(pathlib.Path(__file__)),'solver_calls':0,'model_calls':0,'Docker_calls':0}
+save(A/'derivation-proof.json',proof)
+cmd=['nice','-n','15',str(R/'infra/weight-tools-ci/bin/python'),str(B/'scripts/experiments/gemma4-purpose/native_spec_audit.py'),'--root',str(A),'--plan-sha256',sha(A/'proposal-plan.json'),'--output',str(O)]
+started=time.time()
+with (A/'audit.stdout').open('x') as out,(A/'audit.stderr').open('x') as err:r=subprocess.run(cmd,cwd=B,stdout=out,stderr=err)
+unchanged=all(sha(pathlib.Path(p))==h for p,h in originalpins.items())
+save(A/'audit-execution.json',{'command':cmd,'returncode':r.returncode,'elapsed_seconds':time.time()-started,'original_files_unchanged':unchanged,'stdout_sha256':sha(A/'audit.stdout'),'stderr_sha256':sha(A/'audit.stderr'),'audit_source':pin(B/'scripts/experiments/gemma4-purpose/native_spec_audit.py')})
+print(json.dumps({'returncode':r.returncode,'elapsed_seconds':time.time()-started,'original_files_unchanged':unchanged,'derived_plan_sha256':sha(A/'proposal-plan.json'),'proof_sha256':sha(A/'derivation-proof.json')}),flush=True)
+if r.returncode:print((A/'audit.stderr').read_text()[-4000:])
+else:print((A/'audit.stdout').read_text())
+assert unchanged
+raise SystemExit(r.returncode)

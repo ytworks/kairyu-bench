@@ -26,6 +26,15 @@ class FixedBehaviorOwnerTests(unittest.TestCase):
             return {a: [[{"id": f"behavior-{a}{i}", "split": "train",
                          "prompt": "p", "correct": "c", "foil": "f"}] for i in (1, 2)] for a in "ABCDEF"}
         self.assertEqual(len(owner.validate_train(data())), 12)
+        expanded = data()
+        expanded["J"] = [[{"id": "behavior-J1", "split": "train", "prompt": "new", "correct": "c", "foil": "f"}]]
+        explicit_ids = owner.IDS + ["behavior-J1"]
+        self.assertEqual(len(owner.validate_train(expanded, explicit_ids)), 13)
+        with self.assertRaises(ValueError):
+            owner.validate_train(expanded, explicit_ids[:-1])
+        expanded["J"][0][0]["split"] = "transfer"
+        with self.assertRaises(ValueError):
+            owner.validate_train(expanded, explicit_ids)
         value = data()
         value["F"][1][0]["id"] = "behavior-F3"
         value["F"][1][0]["split"] = "transfer"

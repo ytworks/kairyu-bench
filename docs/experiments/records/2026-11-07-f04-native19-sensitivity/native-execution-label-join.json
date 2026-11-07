@@ -1,0 +1,149 @@
+{
+  "status": "matched",
+  "analysis_report": {
+    "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f04-native19-dependency-v2/report.json",
+    "sha256": "d1126f39833bc48709e9e5afee76262614335fe12de78210fec6007ee29ac6ea"
+  },
+  "execution_report": {
+    "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f04-behavior19-native-v1/score-v1/report.json",
+    "sha256": "1599a3c564aa9fe019087618f9373a4d65d268ab2c11d7fb56859dab70cd9c82"
+  },
+  "rows": [
+    {
+      "id": "behavior-A1",
+      "passed": false,
+      "tests_passed": 0,
+      "tests_total": 16,
+      "status": "evaluated"
+    },
+    {
+      "id": "behavior-A2",
+      "passed": true,
+      "tests_passed": 16,
+      "tests_total": 16,
+      "status": "evaluated"
+    },
+    {
+      "id": "behavior-B1",
+      "passed": true,
+      "tests_passed": 16,
+      "tests_total": 16,
+      "status": "evaluated"
+    },
+    {
+      "id": "behavior-B2",
+      "passed": true,
+      "tests_passed": 16,
+      "tests_total": 16,
+      "status": "evaluated"
+    },
+    {
+      "id": "behavior-C1",
+      "passed": true,
+      "tests_passed": 16,
+      "tests_total": 16,
+      "status": "evaluated"
+    },
+    {
+      "id": "behavior-C2",
+      "passed": true,
+      "tests_passed": 16,
+      "tests_total": 16,
+      "status": "evaluated"
+    },
+    {
+      "id": "behavior-D1",
+      "passed": true,
+      "tests_passed": 16,
+      "tests_total": 16,
+      "status": "evaluated"
+    },
+    {
+      "id": "behavior-D2",
+      "passed": true,
+      "tests_passed": 16,
+      "tests_total": 16,
+      "status": "evaluated"
+    },
+    {
+      "id": "behavior-E1",
+      "passed": true,
+      "tests_passed": 16,
+      "tests_total": 16,
+      "status": "evaluated"
+    },
+    {
+      "id": "behavior-E2",
+      "passed": true,
+      "tests_passed": 16,
+      "tests_total": 16,
+      "status": "evaluated"
+    },
+    {
+      "id": "behavior-F1",
+      "passed": true,
+      "tests_passed": 16,
+      "tests_total": 16,
+      "status": "evaluated"
+    },
+    {
+      "id": "behavior-F2",
+      "passed": false,
+      "tests_passed": 4,
+      "tests_total": 16,
+      "status": "evaluated"
+    },
+    {
+      "id": "behavior-G1",
+      "passed": true,
+      "tests_passed": 16,
+      "tests_total": 16,
+      "status": "evaluated"
+    },
+    {
+      "id": "behavior-G2",
+      "passed": true,
+      "tests_passed": 16,
+      "tests_total": 16,
+      "status": "evaluated"
+    },
+    {
+      "id": "behavior-H1",
+      "passed": true,
+      "tests_passed": 16,
+      "tests_total": 16,
+      "status": "evaluated"
+    },
+    {
+      "id": "behavior-H2",
+      "passed": true,
+      "tests_passed": 16,
+      "tests_total": 16,
+      "status": "evaluated"
+    },
+    {
+      "id": "behavior-I1",
+      "passed": true,
+      "tests_passed": 16,
+      "tests_total": 16,
+      "status": "evaluated"
+    },
+    {
+      "id": "behavior-I2",
+      "passed": true,
+      "tests_passed": 16,
+      "tests_total": 16,
+      "status": "evaluated"
+    },
+    {
+      "id": "behavior-J1",
+      "passed": false,
+      "tests_passed": 4,
+      "tests_total": 16,
+      "status": "evaluated"
+    }
+  ],
+  "matches": 19,
+  "unknown": 0,
+  "model_calls": 0
+}

@@ -1,0 +1,12 @@
+{
+  "epoch": 1794054394.5006688,
+  "all_cpu_finished": true,
+  "sandbox_label": "kairyu.science-sandbox",
+  "labeled_container_ids": [],
+  "docker_calls": 19,
+  "model_calls": 0,
+  "report_sha256": "1599a3c564aa9fe019087618f9373a4d65d268ab2c11d7fb56859dab70cd9c82",
+  "summary_sha256": "2907a3768ecb3c4370a11ae43bc475309e251122afaa15929490a8f5acec8408",
+  "container_count": 27,
+  "first_metadata_check_failure": "system python lacked numpy; zero Docker commands; retried metadata-only with existing scientific Python"
+}

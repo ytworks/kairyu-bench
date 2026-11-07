@@ -1,0 +1,549 @@
+{
+  "created_epoch": 1794055659.087959,
+  "scope": "read-only metadata/source/header; no model imports, downloads, container create, training, optimizer step, or GPU work",
+  "cache_search_roots": [
+    "/mnt/nvme/kairyu/bench-cache/wsp",
+    "/mnt/nvme/kairyu/dev-logs/wsp",
+    "/mnt/nvme/kairyu/bench-1017/kairyu-bench/.cache",
+    "/mnt/nvme/kairyu/bench-pr31/kairyu-bench/.cache",
+    "/mnt/nvme/kairyu/bench-full/repo/.cache",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis"
+  ],
+  "search_limits": [
+    "bounded directory walk to depth6 for other NVMe areas",
+    "three old bench-full source/venv directories denied permission; no sudo attempted",
+    "absence applies to inspected caches, not entire host"
+  ],
+  "train_found": false,
+  "dataset_metadata": {
+    "/mnt/nvme/kairyu/bench-cache/wsp/hf/wsp/datasets/evalplus___mbppplus/default/0.0.0/b2d74c91837c3f2a20c1299ae98133cbe7cfa077/dataset_info.json": {
+      "builder_name": "parquet",
+      "dataset_name": "mbppplus",
+      "config_name": "default",
+      "splits": {
+        "test": {
+          "name": "test",
+          "num_bytes": 4841314,
+          "num_examples": 378,
+          "dataset_name": "mbppplus"
+        }
+      },
+      "features": {
+        "task_id": {
+          "dtype": "int64",
+          "_type": "Value"
+        },
+        "code": {
+          "dtype": "string",
+          "_type": "Value"
+        },
+        "prompt": {
+          "dtype": "string",
+          "_type": "Value"
+        },
+        "source_file": {
+          "dtype": "string",
+          "_type": "Value"
+        },
+        "test_imports": {
+          "feature": {
+            "dtype": "string",
+            "_type": "Value"
+          },
+          "_type": "List"
+        },
+        "test_list": {
+          "feature": {
+            "dtype": "string",
+            "_type": "Value"
+          },
+          "_type": "List"
+        },
+        "test": {
+          "dtype": "string",
+          "_type": "Value"
+        }
+      },
+      "license": ""
+    },
+    "/mnt/nvme/kairyu/bench-cache/wsp/hf/wsp/datasets/SciCode1___sci_code/default/0.0.0/4510f6a6aa27c43fad7b43da2c59602a86e88480/dataset_info.json": {
+      "builder_name": "json",
+      "dataset_name": "sci_code",
+      "config_name": "default",
+      "splits": {
+        "validation": {
+          "name": "validation",
+          "num_bytes": 263209,
+          "num_examples": 15,
+          "dataset_name": "sci_code"
+        },
+        "test": {
+          "name": "test",
+          "num_bytes": 870415,
+          "num_examples": 65,
+          "dataset_name": "sci_code"
+        }
+      },
+      "features": {
+        "problem_name": {
+          "dtype": "string",
+          "_type": "Value"
+        },
+        "problem_id": {
+          "dtype": "string",
+          "_type": "Value"
+        },
+        "problem_description_main": {
+          "dtype": "string",
+          "_type": "Value"
+        },
+        "problem_background_main": {
+          "dtype": "string",
+          "_type": "Value"
+        },
+        "problem_io": {
+          "dtype": "string",
+          "_type": "Value"
+        },
+        "required_dependencies": {
+          "dtype": "string",
+          "_type": "Value"
+        },
+        "sub_steps": {
+          "feature": {
+            "step_number": {
+              "dtype": "string",
+              "_type": "Value"
+            },
+            "step_description_prompt": {
+              "dtype": "string",
+              "_type": "Value"
+            },
+            "step_background": {
+              "dtype": "string",
+              "_type": "Value"
+            },
+            "ground_truth_code": {
+              "dtype": "string",
+              "_type": "Value"
+            },
+            "function_header": {
+              "dtype": "string",
+              "_type": "Value"
+            },
+            "test_cases": {
+              "feature": {
+                "dtype": "string",
+                "_type": "Value"
+              },
+              "_type": "List"
+            },
+            "return_line": {
+              "dtype": "string",
+              "_type": "Value"
+            }
+          },
+          "_type": "List"
+        },
+        "general_solution": {
+          "dtype": "string",
+          "_type": "Value"
+        },
+        "general_tests": {
+          "feature": {
+            "dtype": "string",
+            "_type": "Value"
+          },
+          "_type": "List"
+        }
+      },
+      "license": ""
+    },
+    "/mnt/nvme/kairyu/bench-cache/wsp/hf/wsp/datasets/json/default-2f463d1ca8a3a8fa/0.0.0/2752a09ea3d59feeb3ad5ea2af11086f41ecd725fd528c98a89d75f546aba397/dataset_info.json": {
+      "builder_name": "json",
+      "dataset_name": "json",
+      "config_name": "default",
+      "splits": {
+        "train": {
+          "name": "train",
+          "num_bytes": 691895352,
+          "num_examples": 342,
+          "shard_lengths": [
+            105,
+            237
+          ],
+          "dataset_name": "json"
+        }
+      },
+      "features": {
+        "question_title": {
+          "dtype": "string",
+          "_type": "Value"
+        },
+        "question_content": {
+          "dtype": "string",
+          "_type": "Value"
+        },
+        "platform": {
+          "dtype": "string",
+          "_type": "Value"
+        },
+        "question_id": {
+          "dtype": "string",
+          "_type": "Value"
+        },
+        "contest_id": {
+          "dtype": "string",
+          "_type": "Value"
+        },
+        "contest_date": {
+          "dtype": "timestamp[s]",
+          "_type": "Value"
+        },
+        "starter_code": {
+          "dtype": "string",
+          "_type": "Value"
+        },
+        "difficulty": {
+          "dtype": "string",
+          "_type": "Value"
+        },
+        "public_test_cases": {
+          "dtype": "string",
+          "_type": "Value"
+        },
+        "private_test_cases": {
+          "dtype": "string",
+          "_type": "Value"
+        },
+        "metadata": {
+          "dtype": "string",
+          "_type": "Value"
+        }
+      },
+      "license": ""
+    }
+  },
+  "cached_cards": [
+    {
+      "path": "/mnt/nvme/kairyu/bench-cache/wsp/hf/wsp/hub/datasets--evalplus--mbppplus/snapshots/b2d74c91837c3f2a20c1299ae98133cbe7cfa077/README.md",
+      "sha256": "179a650b19c82b439f8d63d17443cddd076f315477489140013053eaa8e3eb85",
+      "license_line": "license: apache-2.0"
+    },
+    {
+      "path": "/mnt/nvme/kairyu/dev-logs/wsp/hf/hub/datasets--SciCode1--SciCode/snapshots/4510f6a6aa27c43fad7b43da2c59602a86e88480/README.md",
+      "sha256": "f9349885a434d018008ddc95d079e00782c70fa7823d80214cb3ee3bd3e7827b",
+      "license_line": "license: apache-2.0"
+    }
+  ],
+  "excluded_mbpp_ids": [
+    2,
+    3,
+    4,
+    6,
+    8,
+    9,
+    11,
+    14,
+    18,
+    19,
+    20,
+    56,
+    57,
+    63,
+    64,
+    67,
+    68,
+    69,
+    70,
+    75,
+    77,
+    79,
+    82,
+    84,
+    88,
+    89,
+    90,
+    91,
+    92,
+    93,
+    95,
+    96,
+    97,
+    98,
+    99,
+    100,
+    102,
+    103,
+    104,
+    106,
+    109,
+    111,
+    124,
+    125,
+    126,
+    128,
+    129,
+    130,
+    131,
+    132,
+    133,
+    135,
+    139,
+    140,
+    141,
+    145,
+    160,
+    161,
+    165,
+    166,
+    168,
+    171,
+    172,
+    223,
+    224,
+    226,
+    232,
+    234,
+    235,
+    238,
+    240,
+    245,
+    247,
+    250,
+    256,
+    260,
+    262,
+    264,
+    267,
+    270,
+    271,
+    272,
+    273,
+    276,
+    277,
+    279,
+    280,
+    281,
+    283,
+    284,
+    286,
+    287,
+    297,
+    299,
+    306,
+    308,
+    309,
+    310,
+    388,
+    389,
+    391,
+    392,
+    395,
+    398,
+    406,
+    410,
+    412,
+    413,
+    415,
+    418,
+    420,
+    421,
+    426,
+    427,
+    428,
+    429,
+    432,
+    445,
+    446,
+    447,
+    450,
+    454,
+    455,
+    458,
+    459,
+    460,
+    471,
+    472,
+    475,
+    478,
+    479,
+    559,
+    562,
+    563,
+    564,
+    565,
+    567,
+    568,
+    573,
+    576,
+    577,
+    578,
+    579,
+    580,
+    581,
+    583,
+    585,
+    586,
+    589,
+    590,
+    594,
+    597,
+    598,
+    599,
+    600,
+    603,
+    604,
+    605,
+    606,
+    607,
+    610,
+    611,
+    612,
+    614,
+    615,
+    616,
+    618,
+    622,
+    623,
+    624,
+    626,
+    628,
+    629,
+    633,
+    635,
+    637,
+    638,
+    639,
+    641,
+    720,
+    721,
+    722,
+    725,
+    726,
+    733,
+    736,
+    737,
+    739,
+    740,
+    741,
+    743,
+    745,
+    748,
+    749,
+    753,
+    757,
+    758,
+    759,
+    760,
+    762,
+    763,
+    766,
+    767,
+    769,
+    771,
+    775,
+    778,
+    780,
+    781,
+    782,
+    784,
+    785,
+    786,
+    787,
+    788,
+    790,
+    791,
+    792,
+    793,
+    796,
+    799,
+    800,
+    801,
+    804,
+    805,
+    807,
+    808,
+    809
+  ],
+  "mbpp_eval_ids_count": 120,
+  "probe_ids_count": 160,
+  "intersection_count": 52,
+  "union_count": 228,
+  "union_ids_ge601": 73,
+  "whole_mbppplus_test_rows": 378,
+  "whole_mbppplus_ids_ge601": 108,
+  "nonoverlap_status": "ID exclusion possible; no train input assembled and no normalized-text/AST or cross-source duplicate check executed",
+  "checkpoint_header_only": [
+    {
+      "file": "native.safetensors",
+      "header_bytes": 51528,
+      "header_sha256": "ced86816e4640b280085ee9c859ea6efa7434ddfa50a90012b2b09d65b3370b6"
+    },
+    {
+      "file": "shared.safetensors",
+      "header_bytes": 105616,
+      "header_sha256": "f889e7e22d0ca5ef522d0d99b034f45eb9a3b6ae9f85d8b0c7aa1aeac513a2b7"
+    }
+  ],
+  "projection_count": 410,
+  "rank8_lora_parameters": 61214720,
+  "rank8_BF16_adapter_bytes": 122429440,
+  "rank8_FP32_two_moment_bytes": 489717760,
+  "full_checkpoint_BF16_bytes": 62546177752,
+  "native361_parameters": 1331456,
+  "native361_two_FP32_moments_bytes": 10651648,
+  "runtime": {
+    "evidence": "Successful read-only docker exec metadata/source reads before F05 rollout, preserved in conversation tool outputs; later packaging repeat failed and was not retried",
+    "image": "sha256:af9e746b913088cbf6c4464a31d6904a6b7e1d3ba62f0895362ddf13595f7abe",
+    "container_at_successful_reads": "fc3e14a0b216e622004db9b0cf754c7d33e4410d2ab63a28b762ef32607327ca",
+    "installed": {
+      "torch": "2.14.0+cu130",
+      "transformers": "5.20.2",
+      "accelerate": "1.15.0",
+      "safetensors": "0.8.0"
+    },
+    "not_installed": [
+      "peft",
+      "trl",
+      "bitsandbytes",
+      "deepspeed",
+      "datasets"
+    ],
+    "source_sha256": {
+      "transformers/models/gemma4/modeling_gemma4.py": "d42819dd9a2e5627da35a056e44b3c4c7b778e11c2067dcdd8312ee17ddc52f3",
+      "transformers/modeling_utils.py": "553412f58334f65abba617f3b344828698dbf63615e109159fd03dafd3422d38",
+      "transformers/trainer.py": "33ef308cf53cd54511823f05d8888eb25d6bd567c4ef0c777b51abd65306bbef",
+      "torch/optim/adamw.py": "39c5eaa04f83632285b114fd093eeb0006866e4adf59ad50cc28de12e63a8459",
+      "torch/optim/adam.py": "6f4a96e7bccd5e233a66f846c39f7a9da0157cf657c2275d2a269a78a6b90921",
+      "torch/distributed/fsdp/__init__.py": "3bf55cf91e5c858dc81f97fdf93100e89b067aa428bc2261148c2ff9a6ed8643"
+    },
+    "gemma4_gradient_checkpointing_source_line": 1451,
+    "supports_gradient_checkpointing": true,
+    "model_imports": 0
+  },
+  "source_sha256": {
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/worktrees/kairyu-bench-weight-tools/src/kairyu_bench/data/wsp/manifest.json": "a3a0b60e0872a38c6b1abf7e97d7fe729fabf9e25cd3f09a3da9544b9ca39b5b",
+    "/mnt/nvme/kairyu/bench-cache/wsp/hf/wsp/datasets/evalplus___mbppplus/default/0.0.0/b2d74c91837c3f2a20c1299ae98133cbe7cfa077/dataset_info.json": "6ef9fd6cfb3ce76dc00110691c10f84033945e02b771a3f3ba072dc9b2571fab",
+    "/mnt/nvme/kairyu/bench-cache/wsp/hf/wsp/datasets/SciCode1___sci_code/default/0.0.0/4510f6a6aa27c43fad7b43da2c59602a86e88480/dataset_info.json": "885ab3b1c5418892f67d35ae6ccb30f05fdeee3bc8b993d4d496da20b9007c9f",
+    "/mnt/nvme/kairyu/bench-cache/wsp/hf/wsp/datasets/json/default-2f463d1ca8a3a8fa/0.0.0/2752a09ea3d59feeb3ad5ea2af11086f41ecd725fd528c98a89d75f546aba397/dataset_info.json": "c88b89aca3e2ea830895129c2da04db8aedf09a873aa5795c5ad65204366ed30",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/worktrees/kairyu-bench-weight-tools/src/kairyu_bench/wsp/catalog.py": "8f250f3180bc0e16876980d681836cd74f4c275b978fa23721e3ee5b0c50a0a7",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/worktrees/kairyu-bench-weight-tools/src/kairyu_bench/wsp/sources/code.py": "523ab727598a80f06f49d7118ad6cfb4206fdae9c1135a63d64b87b3ed5a31c6",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/worktrees/kairyu-bench-weight-tools/src/kairyu_bench/wsp/sources/logprob.py": "fafc8d0c6b1623621301f2515b1c393948ffbed3fbe5ecfa86571bac1ef6fe89",
+    "/mnt/nvme/kairyu/dev-logs/wsp/research-c/src/evalplus/evalplus/data/mbpp.py": "186e09b7b14dcf12ed259dfca1d6644a1c266c1bbac41c917fd3c0449a734b24",
+    "/mnt/nvme/kairyu/dev-logs/wsp/research-c/src/evalplus/LICENSE": "fcc1f77fe5443b21bfc4dfcc3d66f7654f599b91582df771850e5e876986a103",
+    "/mnt/nvme/kairyu/bench-cache/wsp/hf/wsp/hub/datasets--evalplus--mbppplus/snapshots/b2d74c91837c3f2a20c1299ae98133cbe7cfa077/README.md": "179a650b19c82b439f8d63d17443cddd076f315477489140013053eaa8e3eb85",
+    "/mnt/nvme/kairyu/dev-logs/wsp/hf/hub/datasets--SciCode1--SciCode/snapshots/4510f6a6aa27c43fad7b43da2c59602a86e88480/README.md": "f9349885a434d018008ddc95d079e00782c70fa7823d80214cb3ee3bd3e7827b",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/checkpoints/fresh-native-relative-f04-faststore-v1/checkpoint/model.safetensors.index.json": "2eeef6577e663781958c7e17a8809e5f5953ebe1fdb4bf4906cb7f943946bca3"
+  },
+  "new_model_calls": 0,
+  "new_GPU_calculations": 0,
+  "new_container_creations": 0,
+  "downloads": 0,
+  "new_tools_implemented": 0,
+  "errors_retained": [
+    "initial rg used absent data/wsp and sources/probes.py paths; corrected to src/kairyu_bench/data/wsp and sources/logprob.py",
+    "bounded old-cache rg reported three Permission denied directories",
+    "final packaging repeat of read-only docker exec on old gemma2 returned 1 during ongoing deployment; no retry, original successful metadata/source observations used"
+  ]
+}

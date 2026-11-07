@@ -1,0 +1,21 @@
+{
+  "command": [
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/infra/weight-tools-ci/bin/python",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/worktrees/kairyu-bench-weight-tools/docs/experiments/scripts/fresh-n30-complete-audit.py",
+    "--project",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104",
+    "--repository",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/worktrees/kairyu-bench-weight-tools",
+    "--study",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f04-dev30-dp4-v1",
+    "--run",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/results/gemma4-fresh-f04-dev30-dp4-20261107-v1",
+    "--output",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f04-dev30-dp4-v1/official-comparison-v1/candidate-audit",
+    "--expected-tree",
+    "7b9e9488e3cd4e0b6c5f61ae341e5eeccdf5bd31c46d1c8354950dbc29d0f924"
+  ],
+  "start_epoch": 1794053640.8135567,
+  "elapsed_seconds": 3.8233795166015625,
+  "returncode": 0
+}

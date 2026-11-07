@@ -1,0 +1,29 @@
+{
+  "created_epoch": 1794055467.0020738,
+  "candidate_tree_sha256": "fcc4681343c1a0c338157bee767df2024f37290469e55dbc417723717f4ac176",
+  "candidate_forward_count_before_policy": 0,
+  "review_receipt_sha256": "c19a3f3ae455c537c0764ce9348615ae918671e98a5c8bf1e0287f647076b19e",
+  "decision": "Use one candidate-only native execution screen before the full canonical dev30; no new parent measurement or replay.",
+  "gate": {
+    "cohort": 19,
+    "parent_report_sha256": "1599a3c564aa9fe019087618f9373a4d65d268ab2c11d7fb56859dab70cd9c82",
+    "target_ids": [
+      "behavior-A1",
+      "behavior-F2",
+      "behavior-J1"
+    ],
+    "target_condition": "at least one of these generated answers passes all16 fixtures",
+    "guard_condition": "at most one of the16 previously passing cases may cease to pass; permit a modest loss only with target gain",
+    "total_condition": "at least264/304 fixtures and at least16/19 fully passing cases",
+    "infrastructure": "all19 responses/executions; zero unknown/APIerror/truncation",
+    "sampling": "same parent19 native generation/fixtures, sameimage/TP/DP/MTP/seed/server defaults, one pass, no retries"
+  },
+  "if_pass": "run existing unchanged full2338 canonical dev30 vs completedF04",
+  "if_fail": "retain rejected/unscored candidate and all results, do not assign official score or rank it, redesign fromF04",
+  "rationale": "Opus identified persistent prior proxy-to-native failure. Candidate-only ~1minute can avoid an unsupported32minute trial; do not re-solve to erase tiny missed bounds.",
+  "limitations": [
+    "Known authored calibration screen, not WSP or independent transfer",
+    "F2/J1 share one prompt; one passing sample is weak evidence and no general capability claim",
+    "Strictzero16regression advice relaxed to allow one loss only with observed aggregate gain, consistent with user tradeoff instruction"
+  ]
+}

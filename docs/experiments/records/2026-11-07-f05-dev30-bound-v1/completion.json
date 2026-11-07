@@ -1,0 +1,39 @@
+{
+  "epoch": 1794055746.743887,
+  "status": "endpoint_complete_wsp_bound_screen_pending",
+  "parallel_apply_by": "root",
+  "parallel_seconds": 124.16857719421387,
+  "endpoint_source_sha256": "8ee58d4a172504835a94af394ac598d735bf8aef8200a67c64532940ee324f7d",
+  "endpoint_exit": {
+    "returncode": 0,
+    "elapsed_seconds": 5.122043132781982
+  },
+  "endpoint_closure_sha256": "418e3fcb1d1bc1314a3a4160a61f95eb0d65e943c61771472754b706b4886f4e",
+  "served_record_update": {
+    "before_sha256": "4e4b9a1d6670624cab7e4f53accad87970bf10635599ce2d06a2f6d2b0652552",
+    "after_sha256": "53985c2d592b92391afbe15adf8ddfb3a101a3b38c9ea50af2cd609e89759e8c",
+    "changed_fields": [
+      "files",
+      "path",
+      "tree_sha256"
+    ],
+    "schema_preserved": true
+  },
+  "endpoint_requests": 5,
+  "official_requests": 0,
+  "protected_count": 23,
+  "protected_unchanged": true,
+  "replica_cids": {
+    "gemma-0": "19a1344a05b79dbc5ac3f5f1c2540126847586226a002e042714158fe408b7aa",
+    "gemma-1": "c49e6eb95a1609b547e74fa32706ea36068f60bb95b5e23136b66a1e73bf6490",
+    "gemma-2": "abb3b4d5103df28984f34e784c757fd26b093b48a426824d817b271c8cdbc1d0",
+    "gemma-3": "9ef25f4abd6e5bf027a50f3f147636f5e15def3d4bc4666006396c3671e0030e"
+  },
+  "bind_source_sha256": "9832682bc2f61ad8b024b31161e7d0733d72658204f4233e78e3feba398ec5ab",
+  "bound_plan_sha256": "a9a862d5dfc33444f93a8d320faa552c60ee086bd9f828ab627ce1758cda8533",
+  "owner_preview_returncode": 0,
+  "owner_preview_sha256": "b0d80450ef868e1a4cb23936fa45936b09fb06addd3e0bfe6955def5aa85688e",
+  "candidate_screen_pending": true,
+  "wsp_run_started_by_this_agent": false,
+  "baseline_reruns": 0
+}

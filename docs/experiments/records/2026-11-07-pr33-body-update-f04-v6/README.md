@@ -1,0 +1,5 @@
+# PR33 body update after F04 completion
+
+Actual existing body SHA82988eab429a83622e21bf41a1d920c061f07a78266c8a26b4682968790bb0e9 matched the root-provided v5 record. The prior body and structured GET response were saved before drafting. One gh REST PATCH with a structured JSON body succeeded; returned body exactly matches SHA985f5a875101ede053280e5a1b0610c123e34885214a15db2e2e655c60155793. The pre-PATCH body was checked again to reject concurrent editing.
+
+Current F04 completion, exact coding tie, overall tie-break parent selection, full tradeoffs/time, existing F03 partial outcome and remaining90/DeepSWE/wiki/HF requirements are retained. Next19 contracts are described as preparation with no model measurements claimed. Prior experimental facts and CPU validation limits remain. No git commit/push, model request, test rerun or credential output occurred. Exact preparation/apply scripts, input/returned bodies and receipt are preserved here; scripts are one-off provenance, not new reusable tools.

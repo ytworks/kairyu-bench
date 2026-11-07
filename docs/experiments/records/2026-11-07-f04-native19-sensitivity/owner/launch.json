@@ -1,0 +1,36 @@
+{
+  "pid": 1499183,
+  "started_epoch": 1794054588.2950206,
+  "jobs": [],
+  "restored": false,
+  "protected_exact": false,
+  "lock_proof": {
+    "pid": 1499183,
+    "uid": 1003,
+    "lock_identity": "09:02:181180584",
+    "lock_rows": [
+      [
+        "31:",
+        "FLOCK",
+        "ADVISORY",
+        "WRITE",
+        "1499183",
+        "09:02:181180584",
+        "0",
+        "EOF"
+      ]
+    ],
+    "observed_epoch": 1794054588.3077075
+  },
+  "before_queues": {
+    "metrics_sha256": "16cfca7c3d2e8ef3e199f4334a344fcb366b631bcef936571ae755f636cea455",
+    "queues": {
+      "vllm:num_requests_running": [
+        0.0
+      ],
+      "vllm:num_requests_waiting": [
+        0.0
+      ]
+    }
+  }
+}

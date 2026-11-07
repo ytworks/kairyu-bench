@@ -1,0 +1,23 @@
+{
+  "epoch": 1794056163.249231,
+  "operation": "deployment-only restore rejected F05 to highest complete F04",
+  "preview_source_sha256": "08df35cf0cef597b46eced3515604196a936034709e89a683fd0c4b61a60d2fe",
+  "source_reused_from_sha256": "3a898414020dc83a8602255cd2c8573299aa4d5524aa144ddf6477e1da0a6416",
+  "syntax_compile_passed": true,
+  "ruff_passed": true,
+  "previews": 4,
+  "all_passed": true,
+  "seconds": 3.6357805728912354,
+  "plan_sha256": "f85b72399141c30f239c5a80d75fd1eceb6cff148a0c7e8e7d46d396e6fa8f14",
+  "restore_tree": "7b9e9488e3cd4e0b6c5f61ae341e5eeccdf5bd31c46d1c8354950dbc29d0f924",
+  "model_calls": 0,
+  "serving_mutations": 0,
+  "weight_edits": 0,
+  "all27_unchanged": true,
+  "protected_count": 23,
+  "F04_and_F05_fullstats_unchanged": true,
+  "shared_nlink": 17,
+  "approved_for_apply": false,
+  "normal_lock_release_sha256": "622e05b22873d3b7c4347b2a75645ab37b234810ed2e830c55440ac86b7574b1",
+  "launch_logs_note": "Final closed wrapper logs are final-launch.*, early recipe copies retained."
+}

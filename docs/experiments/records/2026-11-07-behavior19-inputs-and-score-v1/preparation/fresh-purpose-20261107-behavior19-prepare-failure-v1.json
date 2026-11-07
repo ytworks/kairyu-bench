@@ -1,0 +1,8 @@
+{
+  "status": "failed_before_output_or_Docker",
+  "error": "ModuleNotFoundError: kairyu_bench",
+  "reason": "scientific venv requires explicit repository src import path",
+  "model_calls": 0,
+  "docker_calls": 0,
+  "input_files_written": 0
+}

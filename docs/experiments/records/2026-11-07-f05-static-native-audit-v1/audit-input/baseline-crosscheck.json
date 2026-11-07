@@ -1,0 +1,10 @@
+{
+  "external_report": {
+    "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f04-native19-dependency-v2/report.json",
+    "sha256": "d1126f39833bc48709e9e5afee76262614335fe12de78210fec6007ee29ac6ea"
+  },
+  "all19_exact_baseline_equal": true,
+  "field_mapping": "all19_cases.correct-logprob -> case_rows.correct_logprob; margin unchanged",
+  "original_optional_probe_failure": "KeyError case_rows: external report uses all19_cases. No input/source mutation and no audit rerun.",
+  "AV_values_used": false
+}

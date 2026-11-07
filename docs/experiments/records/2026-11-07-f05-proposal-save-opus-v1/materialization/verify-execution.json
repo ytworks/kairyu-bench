@@ -1,0 +1,14 @@
+{
+  "phase": "verify",
+  "command": [
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/infra/weight-tools-ci/bin/python",
+    "-m",
+    "kairyu_bench.wsp.weights.native_faststore",
+    "verify",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/checkpoints/fresh-native-contract-f05-faststore-v1/manifest.json",
+    "--manifest-sha256",
+    "09ea569a08f138efd438055d7149f0697dc1d6edd08332f2b6c7c09b1da7c24c"
+  ],
+  "returncode": 0,
+  "elapsed_seconds": 4.326436006929725
+}

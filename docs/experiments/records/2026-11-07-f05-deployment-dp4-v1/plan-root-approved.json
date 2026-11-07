@@ -1,0 +1,113 @@
+{
+  "status": "root_authorized_for_F05_candidate_only_screen_then_conditional_full_WSP",
+  "approved_for_apply": true,
+  "service_order": [
+    "gemma-0",
+    "gemma-1",
+    "gemma-2",
+    "gemma-3"
+  ],
+  "python": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/infra/weight-tools-ci/bin/python",
+  "control": "/home/y-takagi/kairyu/examples/gemma-4-31b-8gpu/control.py",
+  "helper_sha256": "2e9da820fe30ba9b2436fb600cf14a533b1c496b2fed48ac3649fffb9d2bc9ae",
+  "owner_sha256": "19ae025add4f2f08705f33f0146f48cc9fa8e92bdb14a8383f46fb7d531e53bc",
+  "source_pins": {
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/worktrees/kairyu-bench-weight-tools/docs/experiments/scripts/redeploy-replica.py": "2e9da820fe30ba9b2436fb600cf14a533b1c496b2fed48ac3649fffb9d2bc9ae",
+    "/home/y-takagi/kairyu/examples/gemma-4-31b-8gpu/control.py": "fc9a78bc232f9cc331926a0737e64f4b4fe14946574f4a02bc1aacb9a800b851",
+    "/home/y-takagi/kairyu/examples/gemma-4-31b-8gpu/compose.yaml": "fe49b81c153f68335ef46e07dc9f9910ee49ee066902e703d11d152c8809c5cb",
+    "/home/y-takagi/kairyu/examples/gemma-4-31b-8gpu/example.json": "99b1863206205abc92f5bde917c607cced03a220bd77323cf264eb781f4aedb7",
+    "/home/y-takagi/kairyu/examples/gemma-4-31b-8gpu/kairyu.yaml": "a28e232f27b89d1acc35e3f5871ccffafd8145211e4ffcb33cc0c6b514fa640d"
+  },
+  "candidate": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/checkpoints/fresh-native-contract-f05-faststore-v1/checkpoint",
+  "freeze": {
+    "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/checkpoints/fresh-native-contract-f05-faststore-v1/manifest.json",
+    "sha256": "09ea569a08f138efd438055d7149f0697dc1d6edd08332f2b6c7c09b1da7c24c"
+  },
+  "verification": {
+    "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f05-native-contract-v1/materialization-v1/verify.stdout",
+    "sha256": "1e9150f21a53af2e96d82c65297a9ce0dffb71d21ea59ea03d3d02a45ca4c427"
+  },
+  "baseline": {
+    "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f05-native-contract-v1/deployment-dp4-v1/all-chat-before.json",
+    "sha256": "7388092f579cc49b1f028d1efc860bb090575365e3dc7ddd8289f0c453feb6aa"
+  },
+  "protected_before": {
+    "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f05-native-contract-v1/deployment-dp4-v1/protected-before.json",
+    "sha256": "f8d8df987b3f2574fc380ab48d20e2f4a905d69fa8c370cc513f00f55e2cf427"
+  },
+  "target_ids": {
+    "gemma-0": "dc117b29cb6f7ef23c8bab4ecb5d734114ebb828c3b569b2e2ba0843b7f962dd",
+    "gemma-1": "08037f93d105bc27be35b05b93fed55b463fc4776e446c1152fa5c6cb4563052",
+    "gemma-2": "fc3e14a0b216e622004db9b0cf754c7d33e4410d2ab63a28b762ef32607327ca",
+    "gemma-3": "d8ad71d8d13f18fa5311b89b08860ac0c8fefcbae03b9d631816d74c68a929a0"
+  },
+  "protected_ids": [
+    "005b20d4f0adacdc438e2e90f44c9d21579f3d089b366bcfe8af8f0785bde8c3",
+    "0a32557db9cd0bd49fffefea34276c8515021858e3d0115e560ef835f616609a",
+    "149b564776c7bda50b4039b44b0cf52b1178272a481a4c4dee88de2f283ae334",
+    "3257ee5ee6d0fa212bacd64de8b86152ab0be509e0a7d329838193559039dbda",
+    "374e969acaf78f336c638b5bff9ffdde04fd44f9075e45d2cfd54881b556b2c1",
+    "37b84155d0d47c339a8a3f989cf69be74a80a9f7369829db41612a5a77fe481a",
+    "3d62fd16cb139033941f36930a226b197b4512f4d319bc0920ecc3ef0b62a87f",
+    "4ef033809802f99ae4859327cf7350e2dc4c7d657b226a7229914432e0dd0718",
+    "5885c75f79f5396867db6b3518637ca5bcde342dd1fd20f88c89bf69ff42cdff",
+    "61a829c3aaf5c9af66499357d1f55b8f58ad19ef40cb887bbe63a0c4729c10f9",
+    "88943a0985ba97dfb17be6b5fb54040eba2570b70ce05126bd410162d3658ffb",
+    "897103115f63e39d3261f39bf449bfa9258121d270ae700f65c0321837eeec08",
+    "8c1e4b184886cd32d110fab4c4fda7369c445ae910f1e68b8ba4834811921d8d",
+    "b0d4c3e871a7d2a44249318079920bd01f56cb7978b58a19f4245245f140afd6",
+    "b4302da3c2814fa2458ae7e4652b0041af34bd45d6872b86ecd40cfa06bf9985",
+    "bcf8a575872a9ff05a85bfd8b46dbeec3cb9d8bef6a94aded4cb5a12c61bc976",
+    "c672bb052ad042282e2e2ec2e8b65edde8b6c50262bd6dab00da57314e4f8b1b",
+    "c81e36297abd0b0e23fd11ada341ac6845e4446fe34a5f9432de70cbdfa752cc",
+    "ca0ce07ae660af1bb129a129aa538d23206e1d10c4db982ae692618dd852678d",
+    "dbabe7158257d30d26b6f96d51eb17e4a0b6385fcf5d9d90c2182b22aed3d20b",
+    "dfbaee8005646b8369493c56f5daa89251880694970e135209b3416255e57d57",
+    "ed9842852109333c564c5962ada840ea2794720ad613ebc0c8ef96591c816a33",
+    "fbb725752d9e8990506968903bfcb5a406eb56f0bc6c839eb08199c0d05f54f3"
+  ],
+  "previews": {
+    "gemma-0": {
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f05-native-contract-v1/deployment-dp4-v1/gemma-0-preview/receipt.json",
+      "sha256": "d2d413e5dd7e6449e7663ac326367ce4439031003100110534a570fa4d004d3f"
+    },
+    "gemma-1": {
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f05-native-contract-v1/deployment-dp4-v1/gemma-1-preview/receipt.json",
+      "sha256": "b704e6e8cbe8c73d392365a8439209faf12d840370ac3ac51ac838fce1a983bd"
+    },
+    "gemma-2": {
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f05-native-contract-v1/deployment-dp4-v1/gemma-2-preview/receipt.json",
+      "sha256": "8265e3069ce0e26c87dec8266935c80e6e078cc2d9b5a9b09faa9022dfebab8b"
+    },
+    "gemma-3": {
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f05-native-contract-v1/deployment-dp4-v1/gemma-3-preview/receipt.json",
+      "sha256": "40ccc096428750aa3f035c430ac3c6298d24a2e68240ee1e8255e80d3d014c45"
+    }
+  },
+  "output": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f05-native-contract-v1/deployment-dp4-v1/parallel-apply-v1",
+  "parent_gate": "F04 is the selected complete parent; root approval of this exact bound F05 plan is required for apply.",
+  "endpoint_checks_and_served_record": "After successful closure only, parent performs minimum endpoint checks and atomic served-record update before WSP handoff.",
+  "materialization": {
+    "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f05-native-contract-v1/materialization-v1/verify.stdout",
+    "sha256": "1e9150f21a53af2e96d82c65297a9ce0dffb71d21ea59ea03d3d02a45ca4c427"
+  },
+  "parent_decision": {
+    "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/worktrees/kairyu-bench-weight-tools/docs/experiments/records/2026-11-07-f04-official-comparison/parent-selection.json",
+    "sha256": "50a48edce45c69e7f06e35566dcdbbaa93ed18d2c27368d2f14c3c52d759157b"
+  },
+  "spec": {
+    "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f05-native-contract-v1/proposal/fresh-native-contract-f05.json",
+    "sha256": "48e095d3de304767410ac0956e390ad6db4d211457683dabdc779a4f6bb48df3"
+  },
+  "preparation_source": {
+    "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f05-native-contract-v1/deployment-dp4-v1/prepare-source.py",
+    "sha256": "3a898414020dc83a8602255cd2c8573299aa4d5524aa144ddf6477e1da0a6416"
+  },
+  "parent_manifest": {
+    "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/checkpoints/fresh-native-relative-f04-faststore-v1/manifest.json",
+    "sha256": "fd189cf276a1219ad627186d2dfb4a895c79768821f247a0b33d9abd8953d8c1"
+  },
+  "authorization": "User-authorized cumulative coding improvement; exactfour F04 inference replicas toF05, protectother23; actualOpus55reviewchecked; rootfixedscreenbeforecandidateforward",
+  "review_receipt_sha256": "c19a3f3ae455c537c0764ce9348615ae918671e98a5c8bf1e0287f647076b19e",
+  "screen_policy_sha256": "e2662deb2e3c4414e588d65718fb776f002e72653c7213a6d6a8ba47d7a72378"
+}

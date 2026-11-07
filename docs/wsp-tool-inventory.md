@@ -193,6 +193,7 @@ fixture proves rejection before mutation and refusal of ambiguous rollback.
 - [Behavior18 fixed train/transfer calibration](experiments/2026-11-07-behavior18-implementation.md): new case recipe and thin offline adapter reuse the existing Docker worker; 18 correct programs passed288 numeric fixtures, all18 foils rejected by fixed witnesses or explicit entrypoint contracts. Train12 first; transfer6 only after candidate freeze. All revisions, raw final worker output and the common empty-array JSON boundary fix are retained; method requirements are separately unverified.
 
 - [AV train12 native GPU4測定owner](experiments/2026-11-07-native-gpu4-measurement-plan.md): plan/SHAに束縛したscalar/vector全量2目的収集。既定preview、GPU4専有とgemma-2 exact CID復帰、全失敗保存。GPU実測は別承認で全12×2目的完了、[実測結果](experiments/2026-11-07-av-behavior12-native-sensitivity-results.md)に復帰と資源証拠を保存。
+- [新親・明示cohort対応の同GPU4 owner](experiments/2026-11-07-f04-native19-gpu4-preparation.md): native分岐だけcheckpoint/treeとordered singleton cohortをplanで指定。F04/train19のCPU preview、23 focused tests、exact新CID復帰guardを確認。collect/mathは不変、既存finite分岐は旧scopeのまま。 その後、F04全19×2の実計測・sameCID復帰が完了し、[資源・全19値・全38依存表](experiments/2026-11-07-f04-native19-sensitivity-results.md)を保存。
 
 - [Behavior18 tokenizer and fixed train12 owner](experiments/2026-11-07-behavior18-frame-and-train12-readiness.md): local CPU-only complete-frame audit (18/18, maximum290), explicit exact-plan approval, all4 AV serving identity, and global-lock retention through issued requests/idle closure; three focused CPU guards passed. No new model generation is implied.
 
@@ -235,3 +236,9 @@ fixture proves rejection before mutation and refusal of ambiguous rollback.
 ### Completed F03 dependent payload release and F04 dev30 bind
 
 The fixed [F03 release wrapper](experiments/scripts/fresh-f03-payload-release-20261107.py) delegates to the unchanged F02 durable release engine. It requires the verified AV-dependent archive, exact private two-file scope, F04 four-replica closure and global lock; known inaccessible OS-process references remain explicit unknowns. The one approved operation has completed and must not be repeated. See [failure, revision and completion](experiments/2026-11-07-f03-payload-release-completed.md). The existing canonical dev30 owner was reused without changes; [F04 binding and launch](experiments/2026-11-07-f04-dev30-launch.md) records the one-off source, full 2,338-item plan and mixed fresh/private plus prior/shared hash contract.
+
+- [Current-parent authored generation](experiments/2026-11-07-f04-behavior19-native-generation.md): existing owner schema2 accepts a SHA-bound train cohort and checkpoint; the small `behavior_frames.py` recipe reuses prepare_frames for complete tokenizer-only validation. Original fixed12 plans retain their checks. Actual F04 generation19 completed; this is not a WSP score.
+
+The experiment-owned behavior follow-up module exports training_payload()/training_catalog() for fixed19 calibration entries; existing fixtures and worker are reused, transfers excluded. [Input, lineage and F04 CPU score](experiments/2026-11-07-behavior19-inputs-and-f04-score.md).
+
+- [公式MBPP original TRAIN準備](experiments/2026-11-07-mbpp-train-preparation.md): 公式commit/license/元splitを固定し、全WSP/probe＋MBPP+pool/exact/near重複を除外。全374理由台帳・train204/holdout51、CPU syntaxのみで実行品質未検証。専用recipeと全downloadをPRに保存、training/model0。

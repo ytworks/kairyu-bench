@@ -1,0 +1,22 @@
+"""Read only the six selected saved public code answers in each arm."""
+import hashlib,json
+from pathlib import Path
+R=Path("/mnt/nvme/kairyu/wsp/gemma4-coding-20261104")
+B=R/"worktrees/kairyu-bench-weight-tools"
+D=B/"docs/experiments/records/2026-11-07-f04-official-comparison"
+P=R/"analysis/fresh-purpose-20261107-f04-dev30-dp4-v1/official-comparison-v1/code-90-paired-items.json"
+pairs=json.loads(P.read_text())
+ids={r["id"] for r in pairs if r["delta"]!=0}
+assert len(ids)==6
+facts={"method":"Saved public content and official diagnostics only; no reasoning, benchmark reference answer, model call or generated-code execution.","score_pairs":{"path":str(P),"sha256":hashlib.sha256(P.read_bytes()).hexdigest()},"responses":{}}
+for label,run in [("AV","gemma4-fresh-av-dev30-dp4-20261107-v1"),("F04","gemma4-fresh-f04-dev30-dp4-20261107-v1")]:
+    p=R/"results"/run/"responses.jsonl"; rows=[]
+    with p.open("rb") as f:
+        for line_number,raw in enumerate(f,1):
+            r=json.loads(raw)
+            if r["id"] in ids:
+                content=r["outcome"]["samples"][0]["content"]
+                rows.append({"id":r["id"],"line_number":line_number,"raw_line_sha256_including_newline":hashlib.sha256(raw).hexdigest(),"public_content_pointer":"outcome.samples[0].content","public_content_sha256":hashlib.sha256(content.encode()).hexdigest(),"public_content_bytes":len(content.encode())})
+    assert {r["id"] for r in rows}==ids
+    facts["responses"][label]={"path":str(p),"rows":rows}
+with (D/"code-public-evidence.json").open("x") as f:f.write(json.dumps(facts,indent=2)+"\n")

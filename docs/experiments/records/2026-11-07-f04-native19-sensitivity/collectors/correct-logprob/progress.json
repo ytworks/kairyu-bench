@@ -1,0 +1,23 @@
+{
+  "completed_folds": 19,
+  "last": {
+    "purpose": "F",
+    "fold": 0,
+    "examples": 1,
+    "correct_logprobs": [
+      {
+        "id": "behavior-F1",
+        "correct_logprob": -2.045177698135376
+      }
+    ],
+    "mean_correct_logprob": -2.045177698135376,
+    "microbatches": 1,
+    "answer_batching": "serial",
+    "model_forward_count": 1,
+    "unused_tensors": [],
+    "file": "gradient-F-0.npz",
+    "reference_cases": 0,
+    "max_reference_error": null,
+    "reference_objective": "correct-logprob"
+  }
+}

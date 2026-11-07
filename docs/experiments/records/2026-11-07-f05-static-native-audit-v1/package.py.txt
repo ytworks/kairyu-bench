@@ -1,0 +1,55 @@
+import gzip,hashlib,json,math,pathlib,time
+R=pathlib.Path('/mnt/nvme/kairyu/wsp/gemma4-coding-20261104');B=R/'worktrees/kairyu-bench-weight-tools';P=R/'analysis/fresh-purpose-20261107-f05-native-contract-v1';A=P/'audit-input-v1';E=B/'docs/experiments';O=E/'records/2026-11-07-f05-static-native-audit-v1';O.mkdir()
+def sha(p):return hashlib.sha256(p.read_bytes()).hexdigest()
+dep=R/'analysis/fresh-purpose-20261107-f04-native19-dependency-v2/report.json';d=json.loads(dep.read_text());ours=json.loads((A/'dependency.json').read_text())
+assert sha(dep)=='d1126f39833bc48709e9e5afee76262614335fe12de78210fec6007ee29ac6ea'
+a={x['id']:(x['correct_logprob'],x['margin']) for x in ours['case_rows']}
+b={x['id']:(x['correct-logprob'],x['margin']) for x in d['all19_cases']}
+assert a==b and len(a)==19
+cross={'external_report':{'path':str(dep),'sha256':sha(dep)},'all19_exact_baseline_equal':True,'field_mapping':'all19_cases.correct-logprob -> case_rows.correct_logprob; margin unchanged','original_optional_probe_failure':'KeyError case_rows: external report uses all19_cases. No input/source mutation and no audit rerun.','AV_values_used':False}
+(A/'baseline-crosscheck.json').write_text(json.dumps(cross,indent=2)+chr(10))
+rows=[]
+def cp(p,rel):
+ raw=p.read_bytes();dest=O/rel
+ if len(raw)>65536:dest=dest.with_name(dest.name+'.gz');data=gzip.compress(raw,mtime=0);assert gzip.decompress(data)==raw
+ else:data=raw
+ dest.parent.mkdir(parents=True,exist_ok=True)
+ with dest.open('xb') as f:f.write(data)
+ rows.append({'source':str(p),'path':str(dest.relative_to(O)),'raw_bytes':len(raw),'raw_sha256':hashlib.sha256(raw).hexdigest(),'stored_sha256':hashlib.sha256(data).hexdigest()})
+for p in sorted(A.rglob('*')):
+ if p.is_file():cp(p,pathlib.Path('audit-input')/p.relative_to(A))
+cp(P/'static-native-audit-v1/report.json','report.json')
+for name in ['proposal-plan.json','parent-state.json']:cp(P/name,pathlib.Path('original')/name)
+cp(P/'prepare-static-audit-v1.py.txt','prepare-static-audit-v1.py.txt')
+cp(B/'scripts/experiments/gemma4-purpose/native_spec_audit.py','native_spec_audit.py.txt')
+cp(P/'materialization-v1/verify.stdout','separate-saved-checkpoint-verify.json')
+cp(pathlib.Path(__file__),'package.py.txt')
+r=json.loads((P/'static-native-audit-v1/report.json').read_text());m=json.loads((P/'proposal/report.json').read_text())['methods'][0]
+summary={'audit_report_sha256':sha(P/'static-native-audit-v1/report.json'),'derived_plan_sha256':sha(A/'proposal-plan.json'),'derivation_proof_sha256':sha(A/'derivation-proof.json'),'static_audit_calls':1,'original_numeric_plan_exact_equal':True,'original_report_source_pins_all_checked':True,'all19_baseline_crosscheck':cross,'eligible_scope':r['eligible_scope'],'whole_native_source_l2':math.sqrt(sum(v['source_l2']**2 for v in r['families'].values())),'weighted_delta_l2_from_original_solver':m['weighted_delta_l2'],'all38_prediction_max_error':r['prediction_max_abs_disagreement'],'met':r['met_constraints'],'unmet':[x for x in r['rows'] if not x['met']],'model_solver_Docker_operations':0,'artifacts':rows}
+(O/'summary.json').write_text(json.dumps(summary,indent=2)+chr(10))
+files=sorted(p for p in O.rglob('*') if p.is_file());(O/'SHA256SUMS').write_text(''.join(sha(p)+'  '+str(p.relative_to(O))+chr(10) for p in files))
+table='\n'.join('| '+name+' | '+str(v['changed'])+' | '+f"{v['actual_delta_l2']:.9g}"+' | '+str(v['exceeds_declared_continuous_box'])+' |' for name,v in r['families'].items())
+doc=f"""# F05 static native-spec audit
+
+One existing native_spec_audit invocation independently reconstructed F05's exact BF16 spec against F04 in{r['audit_seconds']:.6f}s (wall3.759590s). It read all421 native tensors/1,331,516 source words and checked them against the saved measurement source. Matrices were not read or edited. This audit made no solver/model/Docker call, checkpoint write or service change.
+
+Eligible scope is361 vectors/1,331,456 coordinates;60 scalars stay unchanged. **26,417 coordinates in361 tensors change**, with delta L2 **52.2944053830**. Relative L2 **0.0007456253031** uses source L2 **70,134.9661329 over all eligible coordinates**, not only changed coordinates and not the full model. Whole native source L2 including60 unchanged scalars is70,134.9664104. The solver's declared relative-metric weighted norm is0.936642257920, a distinct metric.
+
+After BF16 rounding, **653 coordinates exceed the declared continuous box** (relative1%, absolute floor1e-6). Maximum excess1.56, actual/radius ratio1.333333, maximum per-coordinate relative change1.333333%, maximum absolute delta8. No sign flips. These are preserved facts; no clamp, rescale, plan rewrite or rerun was performed.
+
+| Native family | Changed coordinates | Delta L2 | Box exceedances |
+|---|---:|---:|---:|
+{table}
+
+All38 ordered predictions independently match the original solver exactly (max discrepancy0);36 meet their frozen constraints. Margin A1 predicts0.0998884202013 against0.1 (shortfall0.000111579798704); J1 predicts0.0999481658819 against0.1 (shortfall0.0000518341181305). Chosen round15 of16. Reported rounding relative L2 error is0.820878101690 and cosine to the continuous direction0.615749115111. Neither linear predictions nor static norms establish capability improvement.
+
+The original parent-state lacked the audit tool's dependency field. The new audit-input-v1 derives only an opaque parent-state reference: all original plan numeric fields, constraints, costs, rounding, eligibility, collection paths, checkpoint and cases are exactly unchanged. Original report/spec and solve-execution bytes are copied unchanged under the tool's expected names. The new dependency joins all19 F04 measured correct-logprob/margin rows; no AV values are used. A later cross-check matches all19 values exactly to dependency report d1126f39…6ea. The first optional cross-check used the wrong external key; its KeyError is recorded, and the actual audit was not rerun.
+
+Report SHA256:4fe03834011c41512674fc5febd9238a65349f57bbd1d8d2b9dd5d9495afe468. Derived plan:0981476fd24eea3c43a3aea87e3550aec8066f934830f4096afd51198405cfd1. Equality proof:f3cd6bb60780953aa515a5c20894b756495192ee3d6db46e232a954a985d79c2. Original files and every source pin named by the solver report remained unchanged.
+
+Root separately saved and verified F05; the preserved faststore verification reports the same26,417/361 and L2, with tree fcc4681343c1a0c338157bee767df2024f37290469e55dbc417723717f4ac176. This static audit itself reconstructed the spec and is not a fresh hash/read of the saved candidate. No finite/model response was measured.
+
+[Every38 row,421 tensor, family/layer metric, original/derived inputs and execution source](records/2026-11-07-f05-static-native-audit-v1/) is retained, using lossless gzip where needed. The unchanged tool contains a historical text saying24-row histories; actual cohort/row counts are38 and complete. Per-round per-constraint vectors were never stored and remain unknown. Shared source was not modified.
+"""
+(E/'2026-11-07-f05-static-native-audit.md').write_text(doc)
+print(json.dumps({'document_sha256':sha(E/'2026-11-07-f05-static-native-audit.md'),'manifest_sha256':sha(O/'SHA256SUMS'),'records':len(files),'all19_baseline_equal':True}))

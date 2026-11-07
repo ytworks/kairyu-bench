@@ -1,0 +1,31 @@
+{
+  "recorded_at_utc": "2026-11-07T12:20:46.035126+00:00",
+  "decision_authority": "Explicit root instruction after all2338 F04 scores and strict comparison were available",
+  "selected_next_parent": "F04",
+  "selected_run": "gemma4-fresh-f04-dev30-dp4-20261107-v1",
+  "selected_tree_sha256": "7b9e9488e3cd4e0b6c5f61ae341e5eeccdf5bd31c46d1c8354950dbc29d0f924",
+  "previous_parent": "AV",
+  "primary_code_points": {
+    "AV": 72.93650793650794,
+    "F04": 72.93650793650794,
+    "delta": 0.0
+  },
+  "overall_points": {
+    "AV": 76.72005929150431,
+    "F04": 76.9910864327912,
+    "delta": 0.27102714128688365
+  },
+  "basis": "Primary official code source mean exactly ties the highest complete comparable AV; root selects F04 using the higher overall mean as tie-breaker. This is not called a coding gain.",
+  "tradeoffs_visible": {
+    "reasoning_delta_points": -6.014492753623191,
+    "vision_delta_points": -2.083333333333326,
+    "long_context_delta_points": 5.768387753654591,
+    "expert_delta_points": 4.166666666666663
+  },
+  "full_items": 2338,
+  "code_items": 90,
+  "unscored": 0,
+  "baseline_remeasurements": 0,
+  "new_model_calls_by_comparison": 0,
+  "comparison_summary_sha256": "350e8b1b7993d270b805f51a3fdac4b2b5bef2825a5e916723a8c55bddd2c158"
+}

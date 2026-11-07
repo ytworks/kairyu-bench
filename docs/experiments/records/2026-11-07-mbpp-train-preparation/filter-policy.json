@@ -1,0 +1,49 @@
+{
+  "schema_version": 1,
+  "created_epoch": 1794056116.9165328,
+  "frozen_before_original_jsonl_download": true,
+  "source_commit": "0eebfd403ba438bfd14cb70b9b24a7745c997083",
+  "original_train_task_ids_inclusive": [
+    601,
+    974
+  ],
+  "exclude_ids": "Union of every WSP manifest mbpp-plus/probe-code ID plus complete MBPP+378 pool; preserve both reasons",
+  "reference_pools": [
+    "all original MBPP IDs outside TRAIN (1..600)",
+    "complete MBPP+378 prompt/canonical solution pool",
+    "complete HumanEval+164 prompt/canonical solution pool",
+    "all cached SciCode test65 and validation15 main/step descriptions and references",
+    "all cached LCB342 question text only, never public/private test payloads"
+  ],
+  "prompt_normalization": "Unicode NFKC casefold; regex \\w+ tokens joined by space",
+  "exact_code": "AST dump without attributes, after removing module/function/class docstrings; identifiers and literals preserved",
+  "near_prompt": {
+    "shingle_tokens": 3,
+    "minimum_shorter_tokens": 12,
+    "jaccard_gte": 0.8,
+    "containment_of_shorter_gte": 0.95
+  },
+  "near_code": {
+    "shingle_tokens": 5,
+    "minimum_shorter_tokens": 20,
+    "jaccard_gte": 0.9,
+    "containment_of_shorter_gte": 0.98,
+    "tokens": "tokenize of ast.unparse after docstring removal; names/literals retained; comments/formatting omitted"
+  },
+  "syntax_quality_gate": [
+    "nonempty text/code/test_list; exactly three nonempty tests",
+    "code AST parses; setup and each test AST parse",
+    "no execution or pass claim; unsafe/import/environment semantics still require a later sandbox quality gate"
+  ],
+  "within_train_duplicate_policy": "Same exact/near rules against earlier retained candidates, ascending original task_id; exclude later candidate and keep both IDs/reasons",
+  "holdout": {
+    "seed": "mbpp-original-train-dedup-20261107-v1",
+    "ordering": "SHA256(seed + : + original_task_id), ascending",
+    "count": "min(64, ceil(retained_unique_count * 0.20))",
+    "independent_from_training": true
+  },
+  "allow_benchmark_reduction": false,
+  "model_calls": 0,
+  "training_steps": 0,
+  "near_duplicate_limitations": "Heuristic lexical/structural exclusion is conservative, not proof of semantic nonoverlap. All matches and scores are retained; no score-dependent threshold changes."
+}

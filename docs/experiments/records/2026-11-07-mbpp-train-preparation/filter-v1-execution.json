@@ -1,0 +1,28 @@
+{
+  "argv": [
+    "nice",
+    "-n",
+    "15",
+    "ionice",
+    "-c",
+    "3",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/infra/weight-tools-ci/bin/python",
+    "-B",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/worktrees/kairyu-bench-weight-tools/docs/experiments/scripts/fresh-mbpp-train-prepare-20261107.py",
+    "--input-root",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-mbpp-train-preparation-v1",
+    "--output",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-mbpp-train-preparation-v1/filter-v1",
+    "--manifest",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/worktrees/kairyu-bench-weight-tools/src/kairyu_bench/data/wsp/manifest.json",
+    "--cache",
+    "/mnt/nvme/kairyu/bench-cache/wsp"
+  ],
+  "source_sha256": "66c81a33c69d80a928f2642fa38f143eff22a4f0ca6d2d77836397730f46ae48",
+  "started_epoch": 1794056289.8606844,
+  "seconds": 5.893849611282349,
+  "returncode": 0,
+  "threads": 1,
+  "training_steps": 0,
+  "model_calls": 0
+}

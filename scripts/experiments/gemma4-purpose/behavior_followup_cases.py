@@ -2,8 +2,11 @@
 from __future__ import annotations
 
 from collections import Counter
+from dataclasses import replace
 
 import numpy as np
+
+import behavior_cases as original_cases
 
 from behavior_cases import (
     Case,
@@ -90,6 +93,8 @@ def catalog():
 
 
 def sample(name, rng, trial):
+    if name == "J1" or name[0] in "ABCDEF":
+        return original_cases.sample("F2" if name == "J1" else name, rng, trial)
     if not 0 <= trial < TRIALS:
         raise ValueError("eight fixed plus eight seeded trials required")
     fixed = trial < 8
@@ -191,3 +196,27 @@ def payload(split):
         raise ValueError("train/transfer required")
     return {family: [[c.public()] for c in selected if c.name[0] == family]
             for family in ("G", "H", "I")}
+
+
+def offset_contrast():
+    """A separate ID contrasts the observed offset error; original F2 is intact."""
+    case = next(c for c in original_cases.catalog() if c.name == "F2")
+    return replace(case, name="J1", new="values[0::k]")
+
+
+def training_catalog():
+    """All old12 and follow-up6 train cases, plus the separate J1 contrast."""
+    return (
+        [c for c in original_cases.catalog() if c.split == "train"]
+        + [c for c in catalog() if c.split == "train"]
+        + [offset_contrast()]
+    )
+
+
+def training_payload():
+    """Preserve existing purpose/fold rows; add J as one singleton fold."""
+    return {
+        **original_cases.payload("train"),
+        **payload("train"),
+        "J": [[offset_contrast().public()]],
+    }

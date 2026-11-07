@@ -1,0 +1,28 @@
+{
+  "created_epoch": 1794055287.5968971,
+  "scope": "Source/template preparation only; scripts not invoked; endpoint generation, record updates, model requests, owner preview all 0",
+  "endpoint_source_parent": {
+    "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/worktrees/kairyu-bench-weight-tools/docs/experiments/scripts/fresh-f04-endpoint-closure-20261107.py",
+    "sha256": "0b383ee6fb26c5cf5fa33c633f85638266a023db39eb0abaaf9422813af6fa8e"
+  },
+  "endpoint_source": {
+    "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/worktrees/kairyu-bench-weight-tools/docs/experiments/scripts/fresh-f05-endpoint-closure-20261107.py",
+    "sha256": "cb0434d633e77bd191c8405054de5ded583c34af91c8f0d3f55e1abe004a9803"
+  },
+  "bind_source_parent": {
+    "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/worktrees/kairyu-bench-weight-tools/docs/experiments/records/2026-11-07-f04-dev30-bound-v1/bind-and-preview.py.txt",
+    "sha256": "77c5b2439a6730698d27ea31706b0b0ffdc2ce87610da1a0acfccdcb47d432b9"
+  },
+  "bind_source": {
+    "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f05-dev30-dp4-v1/bind-and-preview.py",
+    "sha256": "04a6d755beb1dd8fffa75ffa616b6c32f72efade265e779fc91748b62d31c18a"
+  },
+  "unbound_plan": {
+    "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f05-dev30-dp4-v1/launch-plan-unbound.json",
+    "sha256": "d3f73a6b15c4d21f5a59fbf573af2f319194decc34aa4555e0673d6234a7085a"
+  },
+  "same_selection": true,
+  "same_environment_allowlist": true,
+  "baseline_run_id": "gemma4-fresh-f04-dev30-dp4-20261107-v1",
+  "baseline_reruns": 0
+}

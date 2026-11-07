@@ -1,0 +1,124 @@
+{
+  "status": "repository_source_checks_passed_with_recorded_runtime_cache_traversal_error",
+  "unittest": {
+    "count": 573,
+    "passed": 516,
+    "skipped": 57,
+    "reported_seconds": 46.111,
+    "wall_seconds": 46.54324460029602
+  },
+  "ruff_mypy_data_passed": true,
+  "mypy_files": 74,
+  "repository_shell_files": 31,
+  "source_count": 311,
+  "sources_unchanged": true,
+  "original_find_returncode": 1,
+  "original_find_failure": "Permission denied entering unrelated runtime cache; no shell syntax error",
+  "source_permission_changes": 0,
+  "full_suite_runs": 1,
+  "model_GPU_service_operations": 0,
+  "artifacts": [
+    {
+      "file": "completion.json",
+      "raw_sha256": "584c9b8193e0a3d420ef7129cba386515a03acb61a69581045152f707845bd1c",
+      "stored_sha256": "584c9b8193e0a3d420ef7129cba386515a03acb61a69581045152f707845bd1c",
+      "raw_bytes": 3153
+    },
+    {
+      "file": "data.stderr",
+      "raw_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stored_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "raw_bytes": 0
+    },
+    {
+      "file": "data.stdout",
+      "raw_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stored_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "raw_bytes": 0
+    },
+    {
+      "file": "mypy.stderr",
+      "raw_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stored_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "raw_bytes": 0
+    },
+    {
+      "file": "mypy.stdout",
+      "raw_sha256": "4ef32b02733c640ba275e5de2c0f630d3ea2a6293bb124ad0dc2173d46e40541",
+      "stored_sha256": "4ef32b02733c640ba275e5de2c0f630d3ea2a6293bb124ad0dc2173d46e40541",
+      "raw_bytes": 44
+    },
+    {
+      "file": "progress.json",
+      "raw_sha256": "6fdb3dd0f061bd26af0830fedcdb155d848839811a5d471ef401086fe0e887a0",
+      "stored_sha256": "6fdb3dd0f061bd26af0830fedcdb155d848839811a5d471ef401086fe0e887a0",
+      "raw_bytes": 2415
+    },
+    {
+      "file": "repository-shell-check.json",
+      "raw_sha256": "72994746705adf9071d54fec247d425dcd99c08b6bb212a6b58ea650ed18bcd5",
+      "stored_sha256": "72994746705adf9071d54fec247d425dcd99c08b6bb212a6b58ea650ed18bcd5",
+      "raw_bytes": 6947
+    },
+    {
+      "file": "ruff.stderr",
+      "raw_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stored_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "raw_bytes": 0
+    },
+    {
+      "file": "ruff.stdout",
+      "raw_sha256": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18",
+      "stored_sha256": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18",
+      "raw_bytes": 19
+    },
+    {
+      "file": "shell.stderr",
+      "raw_sha256": "4a834789aa32a1ce432fdfda2b504701ba371c6187fe37b9749fc56a18a34889",
+      "stored_sha256": "4a834789aa32a1ce432fdfda2b504701ba371c6187fe37b9749fc56a18a34889",
+      "raw_bytes": 1110
+    },
+    {
+      "file": "shell.stdout",
+      "raw_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stored_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "raw_bytes": 0
+    },
+    {
+      "file": "sources-after.json",
+      "raw_sha256": "7caa2bcac901a588408943256929f41a57dbafc2ebd3551e18d099fdaf6bf7c3",
+      "stored_sha256": "7caa2bcac901a588408943256929f41a57dbafc2ebd3551e18d099fdaf6bf7c3",
+      "raw_bytes": 36028
+    },
+    {
+      "file": "sources-before.json",
+      "raw_sha256": "7caa2bcac901a588408943256929f41a57dbafc2ebd3551e18d099fdaf6bf7c3",
+      "stored_sha256": "7caa2bcac901a588408943256929f41a57dbafc2ebd3551e18d099fdaf6bf7c3",
+      "raw_bytes": 36028
+    },
+    {
+      "file": "unittest.stderr.gz",
+      "raw_sha256": "a82cdb2abfba207ac9e59d68121e179342fc8f8504addb5250b38671d3531bf6",
+      "stored_sha256": "5506fb17d1e122cafad3b8d213e37072f68d05fdbedc7bb5c7efdbd6cbbebd78",
+      "raw_bytes": 97761
+    },
+    {
+      "file": "unittest.stdout",
+      "raw_sha256": "1053b5df22a25fd9303c4f15a92eef6d3cbaa4faa78cf3c1bbba3745cf48a708",
+      "stored_sha256": "1053b5df22a25fd9303c4f15a92eef6d3cbaa4faa78cf3c1bbba3745cf48a708",
+      "raw_bytes": 6073
+    },
+    {
+      "file": "fresh-purpose-20261107-cpu-validation-r10-run.py.txt",
+      "raw_sha256": "35432b86e0867b0acec6088398e575c60a2a541a05e16d022cb09d37e62a54d5",
+      "stored_sha256": "35432b86e0867b0acec6088398e575c60a2a541a05e16d022cb09d37e62a54d5",
+      "raw_bytes": 2832
+    },
+    {
+      "file": "fresh-purpose-20261107-cpu-validation-r10-package.py.txt",
+      "raw_sha256": "8a25c43c1b9fed7698892bfc13c41f5c0830bc4ab98cc582f1ce80c72c13eb78",
+      "stored_sha256": "8a25c43c1b9fed7698892bfc13c41f5c0830bc4ab98cc582f1ce80c72c13eb78",
+      "raw_bytes": 3915
+    }
+  ]
+}
