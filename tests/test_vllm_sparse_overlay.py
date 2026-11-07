@@ -43,15 +43,19 @@ class SparseOverlayTests(unittest.TestCase):
         names = {key: prefix + value + ".weight" for key, value in {
             "gate": "mlp.gate_proj", "up": "mlp.up_proj", "down": "mlp.down_proj",
             "o": "self_attn.o_proj", "q": "self_attn.q_proj",
+            "k": "self_attn.k_proj", "v": "self_attn.v_proj",
             "native": "post_attention_layernorm",
         }.items()}
+        names["full_q"] = "model.language_model.layers.1.self_attn.q_proj.weight"
+        names["full_k"] = "model.language_model.layers.1.self_attn.k_proj.weight"
         with tempfile.TemporaryDirectory() as tmp:
             root = Path(tmp).resolve()
             base, draft = root / "base", root / "draft"
             base.mkdir()
             draft.mkdir()
             values = {names[key]: (torch.arange(16).reshape(4, 4) / 4).to(torch.bfloat16)
-                      for key in ("gate", "up", "down", "o", "q")}
+                      for key in ("gate", "up", "down", "o", "q", "k", "v", "full_q")}
+            values[names["full_k"]] = (torch.arange(8).reshape(2, 4) / 4).to(torch.bfloat16)
             values[names["native"]] = torch.tensor([-0.0, 1.0], dtype=torch.bfloat16)
             values[names["q"]].view(torch.int16)[0, 0] = -32768
             save_file(values, str(base / "model.safetensors"))
@@ -74,12 +78,19 @@ class SparseOverlayTests(unittest.TestCase):
                 return {"path": str(path), "tree_sha256": identity["sha256"],
                         "proof": save_json(root / (path.name + "-proof.json"), proof)}
 
+            save_json(base / "config.json", {"architectures": ["Gemma4ForConditionalGeneration"],
+                "text_config": {"hidden_size": 4, "num_hidden_layers": 2,
+                    "layer_types": ["sliding_attention", "full_attention"],
+                    "num_attention_heads": 4, "num_key_value_heads": 4,
+                    "num_global_key_value_heads": 2, "head_dim": 1,
+                    "global_head_dim": 1, "attention_k_eq_v": True,
+                    "num_kv_shared_layers": 0}})
             target, bypass = source(base), source(draft)
             original = (base / "model.safetensors").read_bytes()
             source_stamp = (base / "model.safetensors").stat()
             spec = {"source_checkpoint": str(base), "base_tree_sha256": target["tree_sha256"],
-                    "edits": [{"tensor": names[key], "coordinates": [[0, 0], [3, 3]],
-                               "set_values": [-0.5, 4.0]} for key in ("gate", "up", "down", "o")]}
+                    "edits": [{"tensor": names[key], "coordinates": [[0, 0], [values[names[key]].shape[0] - 1, 3]],
+                               "set_values": [-0.5, 4.0]} for key in ("gate", "up", "down", "o", "q", "k", "full_q", "full_k")]}
             spec_ref = save_json(root / "spec.json", spec)
             receipts = root / "receipts"
             receipts.mkdir()
@@ -102,10 +113,10 @@ class SparseOverlayTests(unittest.TestCase):
 
             loader = new_loader(plan, "plan.json")
             loaded = dict(loader.get_all_weights(SimpleNamespace(model=str(base), revision=None), torch.nn.Module()))
-            for key in ("gate", "up", "down", "o"):
+            for key in ("gate", "up", "down", "o", "q", "k", "full_q", "full_k"):
                 self.assertEqual(float(loaded[names[key]][0, 0]), -0.5)
-                self.assertEqual(float(loaded[names[key]][3, 3]), 4.0)
-            for key in ("q", "native"):
+                self.assertEqual(float(loaded[names[key]][-1, 3]), 4.0)
+            for key in ("v", "native"):
                 self.assertTrue(torch.equal(loaded[names[key]].view(torch.int16), values[names[key]].view(torch.int16)))
             models = []
             for rank in range(2):
@@ -115,6 +126,10 @@ class SparseOverlayTests(unittest.TestCase):
                         [loaded[names[key]].chunk(2, dim=0)[rank] for key in ("gate", "up")], dim=0),
                     names["down"]: loaded[names["down"]].chunk(2, dim=1)[rank].contiguous(),
                     names["o"]: loaded[names["o"]].chunk(2, dim=1)[rank].contiguous(),
+                    prefix + "self_attn.qkv_proj.weight": torch.cat(
+                        [loaded[names[key]].chunk(2, dim=0)[rank] for key in ("q", "k", "v")], dim=0),
+                    "model.language_model.layers.1.self_attn.qkv_proj.weight": torch.cat(
+                        [loaded[names[key]].chunk(2, dim=0)[rank] for key in ("full_q", "full_k", "full_k")], dim=0),
                 }
                 for raw, value in weights.items():
                     path = raw.replace("model.language_model.", "language_model.model.").split(".")
@@ -127,12 +142,27 @@ class SparseOverlayTests(unittest.TestCase):
                 models.append(model)
             proofs = [loader.overlay.rank_proof(model, rank) for rank, model in enumerate(models)]
             combined = loader.overlay.aggregate(proofs)
-            self.assertEqual(combined["selected_coordinates"], 8)
+            self.assertEqual(combined["selected_coordinates"], 16)
+            self.assertEqual(combined["required_parameter_copies"], 18)
             self.assertTrue(combined["storage_bytes_exact"])
             self.assertFalse(combined["physical_checkpoint_is_overlay_candidate"])
             self.assertNotEqual(combined["logical_overlay_sha256"], target["tree_sha256"])
             with self.assertRaises(ValueError):
                 loader.overlay.aggregate([proofs[0], proofs[0]])
+            # Full-attention K is copied to both fused K and V slots. A missing
+            # second destination or a corrupt V-slot word must fail complete proof.
+            incomplete = copy.deepcopy(proofs)
+            record = next(row for row in incomplete[1]["records"] if row["tensor"] == names["full_k"])
+            record["indices"].pop()
+            record["placement_copies"].pop()
+            record["actual_words_hex"] = record["actual_words_hex"][:-4]
+            with self.assertRaisesRegex(ValueError, "incomplete"):
+                loader.overlay.aggregate(incomplete)
+            tied = dict(models[1].named_parameters())["language_model.model.layers.1.self_attn.qkv_proj.weight"]
+            tied.view(torch.int16)[3, 3] += 1
+            with self.assertRaisesRegex(ValueError, "word mismatch"):
+                loader.overlay.aggregate([proofs[0], loader.overlay.rank_proof(models[1], 1)])
+            tied.view(torch.int16)[3, 3] -= 1
             parameter = dict(models[1].named_parameters())["language_model.model.layers.0.mlp.gate_up_proj.weight"]
             parameter.view(torch.int16)[1, 3] += 1
             damaged = loader.overlay.rank_proof(models[1], 1)

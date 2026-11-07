@@ -107,11 +107,59 @@ restoration remain unchanged. This small parameterization passed syntax,
 Ruff check/format, inert preview and an independent limited-diff review; it does
 not change the finite numerical core or imply another executed batch.
 
-The prepared AT–AY reuse observes all 160 authored rows / 23 purposes / 46 folds,
+The completed AT–AY reuse observed all 160 authored rows / 23 purposes / 46 folds,
 while its fitting subset is separately recorded as 112 rows / 17 purposes /
 34 folds. The 48 omitted fitting rows remain diagnostics. Its explicit matrix
-scope can include Q/K/O and coherent MLP, with native parameters and V frozen;
-there is no inherited all-QKV-zero claim. Rejected AN in slot0 is the planned
-scratch service, and AD1/O2/AR3 plus embeddings remain protected. Candidate
-eligibility, source proofs and actual container snapshots are bound at dispatch.
+scope can include Q/K/O and coherent MLP, without native or V tensor writes.
+In Gemma4 full-attention layers with K_eq_V, K-source edits can change both key
+and value functions; the value function is not claimed frozen. There is no
+inherited all-QKV-zero claim. Rejected AN in slot0 was the
+scratch service, and AD1/O2/AR3 plus embeddings remained protected. Candidate
+eligibility, source proofs and actual container snapshots were bound at dispatch.
 The unbound template is A/current-ad-helper-six-finite-v1/owner-plan-template.json.
+
+
+## Actual AT–AY result
+
+The parameterized recipe SHA256
+`ed12a9df2f3ef442060cb39224f3bfee6bb111c1ee5e6b54eb6d5876b3aa3f95`
+was executed once at **2026-11-07 00:43:26.185758 UTC**. Finite measurement
+took **201.3247 seconds**; the same AN0 container was healthy again at
+**00:48:55.003408 UTC**, with total owner time **328.6602 seconds**.
+All eight phases matched **360 tensors / 179,842 union coordinates** against
+the independently derived BF16 expectations. Baseline fold correct-LL difference
+was zero, maximum case-margin difference was `9.5367431640625e-7`, and final
+A/A margin, NLL, KL and selected-word restoration differences were zero.
+Source pins, current AD state, all nine checkpoint file stats and protected
+serving identities remained unchanged.
+
+The primary code group for this batch is implementation, algorithm and workflow
+(core3); plain code is separately retained. Science6 excludes the two newly
+authored helper/composition purposes. Each reported group equally weights its
+purposes and folds. The 68 fitting conditions cover the selected 17 purposes;
+the six omitted purposes remain separately reported diagnostics.
+
+| Candidate | Core3 correct-LL Δ | Plain code Δ | Science6 Δ | Helper Δ | Composition Δ | Actual unmet fit bounds / 68 |
+|---|---:|---:|---:|---:|---:|---:|
+| AT | +0.046729 | −0.173047 | +0.044504 | +0.097285 | +0.072177 | 29 |
+| AU | +0.050484 | −0.052019 | +0.046859 | +0.093518 | +0.071005 | 26 |
+| AV | +0.040201 | +0.118661 | +0.046601 | +0.093360 | +0.071512 | 36 |
+| AW | +0.049410 | +0.129617 | +0.012132 | +0.060786 | +0.060627 | 13 |
+| AX | +0.042476 | +0.131789 | +0.045506 | +0.094267 | +0.077114 | 31 |
+| AY | +0.036213 | +0.029985 | +0.042132 | +0.075003 | +0.074617 | 36 |
+
+AX, AV and AW were selected for a subsequent ordinary-generation comparison.
+These finite diagnostics establish neither ordinary benchmark improvement nor
+adoption. The accepted physical parent remains AD.
+
+Evidence under `A/current-ad-helper-six-finite-v1`:
+
+| Artifact | SHA256 |
+|---|---|
+| `owner-plan.json` | `127294963b3274678db7cece686f604455807a47a6cdfb3013144d3d9f17c2a9` |
+| `completion.json` | `a289535209686206cc2024337960eca568fadfff76ec54b24fdbc310fe69f3dc` |
+| `postchecks.json` | `4ce0c08cb7034269299df6809e0381be101ffb7469995555c79c640b67b6f191` |
+| `numeric-final-summary.json` | `a96e9850c2d1ba6d0d668420805162fb751af2c8d4bd331f48fa54bec83e665e` |
+| `selected-byte-expectations.json` | `9ff04076149370194f435fe915215b63866521ff433555702105c7575a39333b` |
+| `replay/selected-byte-proofs.json` | `808af06c7b20517f7f51bf2bcc332d10d75db66ee6bff177c33b4406e6f329a4` |
+| `independent-proof-tail-review.json` | `19dabb3a5b87d96e2a74c839f6ce67d6979b17eeb3fd0ad4a90b6d36eaf1c9b7` |

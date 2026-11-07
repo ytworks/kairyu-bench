@@ -123,8 +123,8 @@ class DerivedMatrixRadiusTests(unittest.TestCase):
             renamed = scoped.root / ("native-" + objective)
             Path(directory).rename(renamed)
             scoped.plan["collections"]["native"][objective] = str(renamed)
-        onames = sorted(e["tensor"] for e in scoped_entries if e["family"] == "o")
-        selected, excluded = onames
+        selected = next(e["tensor"] for e in scoped_entries if e["family"] == "q")
+        excluded = next(e["tensor"] for e in scoped_entries if e["family"] == "o")
         tensor = scoped.checkpoint.tensors[selected]
         tensors = {name: (item.dtype, item.shape, scoped.checkpoint.read_raw(name))
                    for name, item in scoped.checkpoint.tensors.items()}
@@ -139,7 +139,7 @@ class DerivedMatrixRadiusTests(unittest.TestCase):
                                attestation={"path": str(attestation), "sha256": scoped.sha(attestation)})
         p["eligible_blocks"] = ["matrix"]
         p["matrix_tensors"] = [selected]
-        p["matrix_families"] = ["o", "gate", "up", "down"]
+        p["matrix_families"] = ["q", "k", "o", "gate", "up", "down"]
         p["candidates"][0]["id"] = "euclidean-selected"
         p["candidates"][0]["cost_metric"] = {
             "type": "euclidean", "block_scales": {"native": 1., "matrix": 1.}}
@@ -159,7 +159,7 @@ class DerivedMatrixRadiusTests(unittest.TestCase):
                     if entry["tensor"] == selected:
                         source[entry["start"]:entry["start"] + entry["count"]] = 2.
                         gradient[entry["start"]] = 1.
-                    elif entry["tensor"] == excluded or entry["family"] == "q":
+                    elif entry["tensor"] == excluded or entry["family"] == "v":
                         gradient[entry["start"]] = 1e6
                 np.savez(folder / "sample-plan.npz", coordinates=coordinates, source_values=source)
                 np.save(folder / "gradient.npy", gradient)
@@ -196,6 +196,7 @@ class DerivedMatrixRadiusTests(unittest.TestCase):
         analytic = json.loads((out / "report.json").read_text())
         self.assertEqual(analytic["eligible_matrix_tensors"], [selected])
         self.assertEqual(analytic["matrix_columns"], 1)
+        self.assertEqual(analytic["qkv_edit_columns"], 1)
         self.assertAlmostEqual(analytic["continuous_delta_l2"], 1 / 128)
         self.assertAlmostEqual(analytic["continuous_weighted_delta_l2"], 1 / 128)
         self.assertAlmostEqual(analytic["derived_relative_radius"], 3 / 256)

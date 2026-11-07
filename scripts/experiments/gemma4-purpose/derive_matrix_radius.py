@@ -60,8 +60,8 @@ def check_plan(path, expected):
     if not np.array_equal(active, reference_active):
         raise ValueError("reference matrix mask differs")
     if any(adapter.matrix_recipe.PATTERN.fullmatch(row["tensor"])[3]
-           not in {"o", "gate", "up", "down"} for row in selected):
-        raise ValueError("analytic scope permits only O/MLP matrices")
+           not in {"q", "k", "o", "gate", "up", "down"} for row in selected):
+        raise ValueError("analytic scope permits only Q/K/O/MLP matrices")
     for filename, old in plan["completed_collection_stat"].items():
         if adapter.stamp(Path(filename)) != tuple(old[k] for k in ("device", "inode", "size", "mtime_ns", "ctime_ns")):
             raise ValueError("completed observation stat changed")
@@ -102,7 +102,7 @@ def matrix_arrays(checkpoint, plan, collections, labels, pins):
         raise ValueError("matrix objective coordinates/source bytes differ")
     active = left[4]
     if not len(active):
-        raise ValueError("nonempty sampled O/MLP scope required")
+        raise ValueError("nonempty sampled Q/K/O/MLP scope required")
     return left[0][active], np.vstack([row[1][:, active] for row in loaded]), left[5]
 
 def calibration(checkpoint, plan, collections, labels, pins, destination):
@@ -160,7 +160,10 @@ def calibration(checkpoint, plan, collections, labels, pins, destination):
               "rounded_box_necessary_conditions_all_met": bool(np.all(upper >= lower - 1e-10)),
               "rounded_box_maximum_necessary_shortfall": float(np.maximum(lower-upper, 0).max()),
               "row_bounds_are_necessary_not_joint_sufficient": True,
-              "native_edit_columns": 0, "qkv_edit_columns": 0, "matrix_columns": len(base),
+              "native_edit_columns": 0,
+              "qkv_edit_columns": sum(entry["count"] for entry in layout
+                                      if entry["family"] in {"q", "k", "v"}),
+              "matrix_columns": len(base),
               "observed_matrix_columns": sum(entry["count"] for entry in
                   collections["matrix:correct-logprob"]["coverage"]["entries"]),
               "cost_metric": method["cost_metric"],
@@ -257,7 +260,7 @@ def main(argv=None):
                 spec = json.loads((proposal_dir / (measured["id"] + ".json")).read_bytes())
                 for edit in spec["edits"]:
                     match = adapter.matrix_recipe.PATTERN.fullmatch(edit["tensor"])
-                    if ("indices" in edit or not match or match[3] not in {"o", "gate", "up", "down"}
+                    if ("indices" in edit or not match or match[3] not in {"q", "k", "o", "gate", "up", "down"}
                             or edit["tensor"] not in selected_names):
                         raise ValueError("candidate edit outside analytic matrix mask")
                     for rc, value in zip(edit["coordinates"], edit["set_values"], strict=True):

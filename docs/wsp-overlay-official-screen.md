@@ -108,3 +108,5 @@ directory. Actual OCI capture also requires a writable bind that covers the
 requested result path and maps it to that same host path. Equal mounts across
 arms alone are insufficient. The source change is for future execution; it
 is not represented as the bytes used by the active batch.
+
+The Q/K-capable revision accepts explicit Q/K/O/MLP specs only with the separately reviewed loader mapping and all selected post-TP destination proofs. Full-attention tied K/V loading proves both copies; no direct V or native edits are added. The former AN–AS runtime and its output evidence remain frozen. A new plugin requires a new pinned image and fresh overlay plans.

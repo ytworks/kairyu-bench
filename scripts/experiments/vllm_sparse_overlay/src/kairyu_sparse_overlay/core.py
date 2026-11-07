@@ -13,7 +13,7 @@ from kairyu_bench.wsp.weights import editor
 
 FORMAT = "kairyu_sparse_bf16_v1"
 PATTERN = re.compile(
-    r"model\.language_model\.layers\.(\d+)\.(self_attn\.o_proj|mlp\.(?:gate|up|down)_proj)\.weight"
+    r"model\.language_model\.layers\.(\d+)\.(self_attn\.(?:q|k|o)_proj|mlp\.(?:gate|up|down)_proj)\.weight"
 )
 # This mapping is reviewed against these installed source files, not version text alone.
 VLLM_FILES = (
@@ -157,7 +157,7 @@ class Overlay:
         for edit in edits:
             if (not PATTERN.fullmatch(edit["tensor"])
                     or set(edit) != {"tensor", "coordinates", "set_values"}):
-                raise ValueError("only explicit O/MLP matrix set_values are supported")
+                raise ValueError("only explicit Q/K/O/MLP matrix set_values are supported")
         patches = editor.plan_edits(self.target.path, self.spec) if edits else []
         self.words: dict[str, dict[int, tuple[int, int]]] = {}
         for patch in patches:
@@ -171,6 +171,45 @@ class Overlay:
         self.tp_size = p["tensor_parallel_size"]
         if type(self.tp_size) is not int or self.tp_size not in (1, 2):
             raise ValueError("only reviewed TP1/TP2 are supported")
+        self.qk_shapes: dict[str, tuple[int, int, int, bool]] = {}
+        qk_names = [name for name in self.words
+                    if ".q_proj." in name or ".k_proj." in name]
+        if qk_names:
+            config_row = next((row for row in self.target.files if row["path"] == "config.json"), None)
+            if config_row is None:
+                raise ValueError("Q/K mapping requires pinned Gemma4 config")
+            document = self.inputs.read({"path": str(self.target.path / "config.json"),
+                                         "sha256": config_row["sha256"]})
+            config = document.get("text_config", document)
+            layers = config["layer_types"]
+            if (config.get("num_kv_shared_layers", 0) != 0
+                    or type(config["num_hidden_layers"]) is not int
+                    or len(layers) != config["num_hidden_layers"]
+                    or type(config.get("attention_k_eq_v", False)) is not bool):
+                raise ValueError("shared-KV or ambiguous Gemma4 Q/K config unsupported")
+            for name in qk_names:
+                match = PATTERN.fullmatch(name)
+                assert match is not None
+                layer = int(match[1])
+                if not 0 <= layer < len(layers) or layers[layer] not in ("sliding_attention", "full_attention"):
+                    raise ValueError("unknown Q/K layer type")
+                full = layers[layer] == "full_attention"
+                heads = config["num_attention_heads"]
+                kv_heads = config["num_global_key_value_heads"] if full else config["num_key_value_heads"]
+                head_dim = config["global_head_dim"] if full else config["head_dim"]
+                hidden = config["hidden_size"]
+                if (any(type(v) is not int or v <= 0 for v in (heads, kv_heads, head_dim, hidden))
+                        or heads % self.tp_size or kv_heads < self.tp_size or kv_heads % self.tp_size):
+                    raise ValueError("replicated-KV or nondivisible Q/K TP mapping unsupported")
+                q_rows, k_rows = heads * head_dim, kv_heads * head_dim
+                stem = name.rsplit(".", 2)[0]
+                q_info = self.target.checkpoint.tensors.get(stem + ".q_proj.weight")
+                k_info = self.target.checkpoint.tensors.get(stem + ".k_proj.weight")
+                if (q_info is None or k_info is None
+                        or q_info.shape != (q_rows, hidden) or k_info.shape != (k_rows, hidden)):
+                    raise ValueError("source Q/K shapes differ from reviewed config mapping")
+                self.qk_shapes[name] = (q_rows, k_rows, hidden,
+                                        full and config.get("attention_k_eq_v", False))
         self.receipt_dir = exact_path(p["receipt_directory"])
         if any(self.receipt_dir.is_relative_to(s.path) for s in (self.target, self.draft)):
             raise ValueError("receipts cannot modify a source checkpoint")
@@ -232,12 +271,22 @@ class Overlay:
             self.finished = True
         self.check()
 
-    def placement(self, name: str, index: int) -> tuple[int, str, tuple[int, int], tuple[int, int]]:
-        """Reviewed Gemma4 MM dense loader mapping; owner rank, parameter, index, shape."""
+    def placements(self, name: str, index: int) -> list[tuple[int, str, tuple[int, int], tuple[int, int]]]:
+        """All required loaded copies: rank, parameter, local index, local shape."""
         info = self.target.checkpoint.tensors[name]
         rows, cols = info.shape
         row, col = divmod(index, cols)
         mapped = name.replace("model.language_model.", "language_model.model.", 1)
+        if name in self.qk_shapes:
+            q_rows, k_rows, hidden, tied_kv = self.qk_shapes[name]
+            q_width, k_width = q_rows // self.tp_size, k_rows // self.tp_size
+            mapped = mapped.replace(".q_proj.", ".qkv_proj.").replace(".k_proj.", ".qkv_proj.")
+            shape = (q_width + 2 * k_width, hidden)
+            if ".q_proj." in name:
+                return [(row // q_width, mapped, (row % q_width, col), shape)]
+            rank, local_row = row // k_width, row % k_width
+            offsets = (q_width, q_width + k_width) if tied_kv else (q_width,)
+            return [(rank, mapped, (offset + local_row, col), shape) for offset in offsets]
         if ".gate_proj." in name or ".up_proj." in name:
             if rows % self.tp_size:
                 raise ValueError("nondivisible merged-column TP shape")
@@ -245,11 +294,11 @@ class Overlay:
             rank = row // width
             local_row = row % width + (width if ".up_proj." in name else 0)
             mapped = mapped.replace(".gate_proj.", ".gate_up_proj.").replace(".up_proj.", ".gate_up_proj.")
-            return rank, mapped, (local_row, col), (2 * width, cols)
+            return [(rank, mapped, (local_row, col), (2 * width, cols))]
         if cols % self.tp_size:
             raise ValueError("nondivisible row-parallel TP shape")
         width = cols // self.tp_size
-        return col // width, mapped, (row, col % width), (rows, width)
+        return [(col // width, mapped, (row, col % width), (rows, width))]
 
     def rank_proof(self, model: Any, rank: int) -> dict[str, Any]:
         import torch
@@ -258,20 +307,21 @@ class Overlay:
         params = dict(model.named_parameters())
         records = []
         for name, words in sorted(self.words.items()):
-            selected = [(index, self.placement(name, index)) for index in sorted(words)]
-            selected = [(index, place) for index, place in selected if place[0] == rank]
+            selected = [(index, copy_id, place) for index in sorted(words)
+                        for copy_id, place in enumerate(self.placements(name, index)) if place[0] == rank]
             if not selected:
                 continue
-            parameter, shape = selected[0][1][1], selected[0][1][3]
+            parameter, shape = selected[0][2][1], selected[0][2][3]
             tensor = params.get(parameter)
             if tensor is None or tensor.dtype != torch.bfloat16 or tuple(tensor.shape) != shape:
                 raise ValueError("loaded parameter missing or incompatible with TP mapping")
             # One selected-word transfer per tensor, not one GPU synchronization per word.
-            rows = torch.tensor([place[2][0] for _, place in selected], device=tensor.device)
-            cols = torch.tensor([place[2][1] for _, place in selected], device=tensor.device)
+            rows = torch.tensor([place[2][0] for _, _, place in selected], device=tensor.device)
+            cols = torch.tensor([place[2][1] for _, _, place in selected], device=tensor.device)
             values = tensor.detach().view(torch.int16)[rows, cols].cpu().tolist()
             raw = struct.pack("<" + "H" * len(values), *(value & 65535 for value in values))
-            records.append({"tensor": name, "indices": [index for index, _ in selected],
+            records.append({"tensor": name, "indices": [index for index, _, _ in selected],
+                            "placement_copies": [copy_id for _, copy_id, _ in selected],
                             "actual_words_hex": raw.hex()})
         self.check()
         return {"rank": rank, "tensor_parallel_size": self.tp_size,
@@ -280,10 +330,10 @@ class Overlay:
                 "method": "post_load_post_tp_selected_bf16_readback", "records": records}
 
     def aggregate(self, proofs: list[dict[str, Any]]) -> dict[str, Any]:
-        """All ranks must agree; each selected global coordinate has exactly one owner."""
+        """Prove every selected destination, including both tied K/V parameter slots."""
         if len(proofs) != self.tp_size or {p.get("rank") for p in proofs} != set(range(self.tp_size)):
             raise ValueError("missing or duplicate TP rank proof")
-        covered: set[tuple[str, int]] = set()
+        covered: set[tuple[str, int, int]] = set()
         for proof in proofs:
             if (proof.get("error") or proof.get("logical_overlay_sha256") != self.logical_id
                     or proof.get("physical_tree_sha256") != self.target.tree
@@ -294,17 +344,21 @@ class Overlay:
             for record in proof["records"]:
                 name = record["tensor"]
                 indices = record["indices"]
+                copies = record["placement_copies"]
                 raw = bytes.fromhex(record["actual_words_hex"])
-                if len(raw) != 2 * len(indices):
+                if len(raw) != 2 * len(indices) or len(copies) != len(indices):
                     raise ValueError("rank proof word length mismatch")
-                for index, (actual,) in zip(indices, struct.iter_unpack("<H", raw), strict=True):
-                    key = name, index
+                for index, copy_id, (actual,) in zip(indices, copies, struct.iter_unpack("<H", raw), strict=True):
+                    key = name, index, copy_id
                     if (name not in self.words or index not in self.words[name] or key in covered
-                            or self.placement(name, index)[0] != proof["rank"]
+                            or type(copy_id) is not int
+                            or not 0 <= copy_id < len(self.placements(name, index))
+                            or self.placements(name, index)[copy_id][0] != proof["rank"]
                             or self.words[name][index][1] != actual):
                         raise ValueError("post-TP selected word mismatch/ownership error")
                     covered.add(key)
-        expected = {(name, index) for name, words in self.words.items() for index in words}
+        expected = {(name, index, copy_id) for name, words in self.words.items() for index in words
+                    for copy_id in range(len(self.placements(name, index)))}
         if covered != expected:
             raise ValueError("incomplete all-rank selected-word coverage")
         self.check()
@@ -314,7 +368,8 @@ class Overlay:
                 "physical_checkpoint_is_overlay_candidate": False,
                 "source_proof": "prior_full_file_sha256_plus_exact_current_stat",
                 "fresh_full_checkpoint_hash": False, "empty_overlay": not self.words,
-                "selected_coordinates": len(expected), "selected_tensors": len(self.words),
+                "selected_coordinates": sum(len(words) for words in self.words.values()),
+                "required_parameter_copies": len(expected), "selected_tensors": len(self.words),
                 "storage_bytes_exact": True, "scope": "selected coordinates only",
                 "rank_proofs": sorted(proofs, key=lambda p: p["rank"]),
                 "plan": self.plan_record, "draft_tree_sha256": self.draft.tree,

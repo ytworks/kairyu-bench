@@ -6,7 +6,7 @@ The implementation uses vLLM's formal vllm.general_plugins entrypoint and regist
 
 ## Supported boundary
 
-The initial target is dense BF16 Gemma4ForConditionalGeneration, TP1 or TP2, PP1/DP1, without runtime LoRA, quantization, expert parallelism, or secondary checkpoint sources. Only model.language_model.layers.N.self_attn.o_proj.weight and the three MLP gate/up/down matrices can be edited. Existing editor validation enforces exact BF16 values, coordinates, non-noop edits, and coordinate budgets (512 per tensor; the explicit sampled-matrix batch contract for larger totals). Native vectors, Q/K/V, embeddings, vision tensors, and all other tensors pass through unchanged.
+The initial target is dense BF16 Gemma4ForConditionalGeneration, TP1 or TP2, PP1/DP1, without runtime LoRA, quantization, expert parallelism, or secondary checkpoint sources. Explicit model.language_model.layers.N.self_attn.q_proj.weight, k_proj.weight, o_proj.weight and the three MLP gate/up/down matrices can be edited. Existing editor validation enforces exact BF16 values, coordinates, non-noop edits, and coordinate budgets (512 per tensor; the explicit sampled-matrix batch contract for larger totals). Native vectors, V source tensors, embeddings, vision tensors, and all other tensors pass through unchanged. Q/K support is bound to the pinned Gemma4 config and source tensor shapes, with no KV-shared layers and no replicated KV heads; unsupported layouts reject. On full-attention layers with attention_k_eq_v, the K source is intentionally loaded into both K and V parameter slots, so no V tensor write does not mean an unchanged value function.
 
 The spec must declare the exact saved logical parent path and full-file tree. This version does not accept an unmaterialized overlay as its next parent. A future promotion would first materialize and verify the accepted candidate using the existing editor.
 
@@ -40,9 +40,10 @@ Raw iterator hashes alone are insufficient. After the normal loader and weight p
 
 - Gate/up source rows map to the rank's packed gate_up_proj rows, including the distinct gate/up offsets.
 - Down/o source columns map to the corresponding row-parallel rank's local columns.
-- Exact local parameter names, shapes, BF16 dtype, and divisibility are checked.
+- Q source rows map to the fused qkv parameter's Q partition; K rows map to its K partition. Full-attention K-equals-V layers require the same selected K word in both fused K and V partitions.
+- Exact local parameter names, shapes, BF16 dtype, and divisibility are checked against the pinned source config and headers.
 
-The readback transfers selected words once per tensor. All ranks exchange their proof records through the existing TP CPU process group. Every rank checks the same complete rank set, plan/logical identity, unique coordinate ownership, coverage, and exact expected uint16 values before returning the model. A local readback error is carried into that collective so other ranks reject it too.
+The readback transfers selected words once per tensor. All ranks exchange their proof records through the existing TP CPU process group. Every rank checks the same complete rank set, plan/logical identity, unique destination ownership, coverage of every required parameter copy, and exact expected uint16 values before returning the model. A local readback error is carried into that collective so other ranks reject it too.
 
 Fresh target-rank-N.json files contain the all-rank proof and draft_bypass-rank-N.json files record the explicit bypass. Existing files are never overwritten. The owner must require every expected target and draft receipt, matching the command/image/plan and successful engine readiness. A source/iteration failure before the collective remains an ordinary worker startup failure; the owner must terminate the failed launch, not retry within the same receipt directory.
 
@@ -50,7 +51,7 @@ The proof covers selected coordinates, not an independent complete-model GPU has
 
 ## CPU validation and future rollout
 
-One E2E fixture writes tiny real BF16 safetensors, uses the installed DefaultModelLoader iterator through the custom subclass, simulates the reviewed TP2 gate/up packing and down/o partition boundary with Torch tensors, and validates all-rank readback. It checks source bytes/stat preservation, signed-zero preservation in untouched native/Q tensors, exact private target words, corrupted post-TP word rejection, missing/duplicate coverage rejection, pinned draft bypass, empty-overlay object identity, and wrong logical parent rejection. This is not a full vLLM engine or GPU test.
+One E2E fixture writes tiny real BF16 safetensors, uses the installed DefaultModelLoader iterator through the custom subclass, simulates the reviewed TP2 gate/up, down/o and Q/K packed-parameter boundary with Torch tensors, and validates all-rank readback. It checks source bytes/stat preservation, signed-zero preservation in untouched native tensors, exact private target words, corrupted post-TP word rejection (including the tied K-to-V destination), missing/duplicate destination coverage rejection, pinned draft bypass, empty-overlay object identity, and wrong logical parent rejection. This is not a full vLLM engine or GPU test.
 
 The test requires the existing audited vLLM/Torch CPU environment; it skips in the lightweight repository environment. Run it without GPU devices or network:
 
@@ -179,3 +180,11 @@ output_tokens, tests_passed and tests_total report fields. No generated
 answer or reasoning body was inspected for these summaries. Future trials
 still require their own exact source/overlay identity and owner binding;
 the physical saved-checkpoint path remains available.
+
+## Q/K scope extension
+
+The pinned vLLM0.33 Gemma4 mapper packs Q/K/V into qkv_proj and copies full-attention K into both K and V slots. The accepted AD config has32 query heads,16 sliding KV heads and4 full-attention KV heads, with no shared-KV layers; all divide across TP2. The plugin checks these config/header relationships and rejects shared or replicated KV layouts rather than assuming unique ownership. Direct V edits remain excluded.
+
+The existing single E2E was extended to verify sliding Q/K and full-attention tied-K/V destinations, source/draft preservation and failure on a missing or corrupted second K copy. It passed in the pinned af9 CPU runtime without GPU or network (10.138 seconds); focused Ruff/mypy also passed. Evidence A/vllm-sparse-overlay-qk-v1/focused.json. This proves the CPU loading/readback contract, not a model score or engine rollout; fresh image and actual selected-word startup evidence are separate.
+
+The fresh Q/K image was then built with the existing COPY-only offline workflow: sha256:c1b5c0a94b7e77e0672346d7c191fb143c3dbf88e6b28c673f4d2b754d288ba8. The installed-only existing E2E passed9.340 seconds without a repository fallback, network, GPU or model construction. Base layers, entrypoint and all nine pinned vLLM source files remained unchanged. Image proof SHA256 bd3aaf2908eeba7e0ec6db064c932cf93ebc0e096144b37f9b20dd1cadde6ad6. An initial metadata recorder assumed optional Image.Config.Cmd existed; the built image was preserved, absent values compared as None, and the one pending installed test then ran. No rebuild occurred. No real-model Q/K startup or accuracy claim is made here.

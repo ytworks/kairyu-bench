@@ -150,14 +150,14 @@ def overlay_metadata(arm):
         "spec not current-parent increment",
     )
     pattern = re.compile(
-        r"model\.language_model\.layers\.\d+\.(?:self_attn\.o_proj|mlp\.(?:gate|up|down)_proj)\.weight"
+        r"model\.language_model\.layers\.\d+\.(?:self_attn\.(?:q|k|o)_proj|mlp\.(?:gate|up|down)_proj)\.weight"
     )
     total = 0
     for edit in spec["edits"]:
         need(
             set(edit) == {"tensor", "coordinates", "set_values"}
             and pattern.fullmatch(edit["tensor"]),
-            "only O/MLP matrix edits supported",
+            "only Q/K/O/MLP matrix edits supported",
         )
         need(
             len(edit["coordinates"]) == len(edit["set_values"]),
@@ -210,7 +210,7 @@ def validate(serving):
     )
     need(
         plan["image_id"]
-        == "sha256:33025e08d05ed9f79ba0f4fa34a62bb005e6404c3aa70af20ade5e73c1e88602",
+        == "sha256:c1b5c0a94b7e77e0672346d7c191fb143c3dbf88e6b28c673f4d2b754d288ba8",
         "validated overlay image required",
     )
     need(
@@ -1274,6 +1274,7 @@ if not args.apply:
                 "candidate_capacity": 6,
                 "planned_candidates": len(plan.get("candidates", [])),
                 "maximum_rounds": 2,
+                "planned_rounds": (len(plan.get("candidates", [])) + 2) // 3,
                 "runtime_sha256": sha(__file__),
                 "service_changes": 0,
                 "model_calls": 0,

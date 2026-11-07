@@ -6,9 +6,11 @@ reuses the [coupled adapter](wsp-native-coupled-objectives.md), existing
 minimum-step solver and BF16 realization. It never loads a model or modifies a
 checkpoint.
 
-The explicit matrix-only hypothesis freezes accepted native parameters and
-diagnostic Q/K/V columns. It permits sampled attention output coordinates and
-complete sampled MLP gate/up/down sets. The optional exact matrix_tensors mask
+The matrix-only hypothesis freezes accepted native parameters and explicit V
+tensor columns. The default mask remains sampled attention output coordinates
+and complete sampled MLP gate/up/down sets; explicit matrix_families may also
+admit Q/K columns. In tied K/V blocks, editing K changes both functional paths,
+so unchanged V tensors do not imply an unchanged value function. The optional exact matrix_tensors mask
 is applied through the same adapter.matrix_column_indices selector used by the
 BF16 proposal; an excluded matrix cannot influence the continuous step or box. This structural scope does not
 guarantee that every permitted matrix receives a nonzero realized change.
@@ -88,7 +90,7 @@ contract and finite-value checks must pass. A failed solver contract is not
 reported as mathematical infeasibility.
 
 The report retains the declared cost, exact eligible tensor names, observed and
-active column counts, continuous norms, all predictions, the derived box, and
+active column counts (including eligible Q/K columns in the legacy qkv_edit_columns field), continuous norms, all predictions, the derived box, and
 per-row necessary upper bounds from the two realized BF16 endpoints. These row
 bounds are not jointly sufficient. The candidate uses at most 16 existing
 internal BF16 corrections, with every realization anchored to the incumbent.
@@ -129,6 +131,8 @@ The same end-to-end fixture additionally exercises an exact one-matrix mask
 with a much stronger excluded matrix gradient, Euclidean cost at source value
 2, the derived plan through BF16 proposal and actual saved-byte verification,
 and the functional raw-cap postchecker. It rejects a mismatched reference mask
-and preserves every excluded/native/QKV byte. This extends the existing test;
+and preserves every excluded/native/V byte. The exact-mask subcase now selects Q and checks its reported eligible-column count, covering the demonstrated Q/K preflight refusal and inherited zero-count reporting bug. This extends the existing test;
 no static registry tests or real candidate/model calculations are added. Large
 derived radii remain visible without an arbitrary box cap.
+
+The AT/AU/AX historical runtime paths remained unchanged while AV/AW/AY used a versioned compatibility copy. Their original analytic reports, failures, and exact specs were preserved; a sidecar corrects the old qkv_edit_columns literal. The public source now derives that count from the selected layout. These are eligible sampled columns, not the number of BF16 coordinates actually changed. See the [experiment record](experiments/2026-11-07-helper-capped-functional-targets.md) and its exact historical patch.
