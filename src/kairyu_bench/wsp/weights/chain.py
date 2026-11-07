@@ -57,7 +57,7 @@ def verify_chain(original: Path, candidate: Path, manifests: Sequence[Path], *,
     stamps = [_stamp(path) for path in paths]
     records = [read_json(path) for path in paths]
     manifest_hashes = [hashlib.sha256(path.read_bytes()).hexdigest() for path in paths]
-    inventories = []
+    inventories: list[dict[str, dict[str, Any]]] = []
     stages: list[dict[str, list[tuple[int, bytes, bytes]]]] = []
     expected_parent = original
     for record in records:
