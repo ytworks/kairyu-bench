@@ -1,0 +1,13 @@
+Traceback (most recent call last):
+  File "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/worktrees/kairyu-bench-weight-tools/docs/experiments/scripts/fresh-f03-payload-release-20261107.py", line 166, in <module>
+    main()
+  File "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/worktrees/kairyu-bench-weight-tools/docs/experiments/scripts/fresh-f03-payload-release-20261107.py", line 162, in main
+    module.main()
+  File "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/worktrees/kairyu-bench-weight-tools/docs/experiments/scripts/fresh-f02-payload-release-20261107.py", line 227, in main
+    refs = references({name: candidate_stat[name] for name in NAMES})
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/worktrees/kairyu-bench-weight-tools/docs/experiments/scripts/fresh-f03-payload-release-20261107.py", line 138, in guarded_references
+    require(not any(Path(f"/proc/{pid}").exists() for pid in result["inaccessible_or_disappeared"]),
+  File "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/worktrees/kairyu-bench-weight-tools/docs/experiments/scripts/fresh-f03-payload-release-20261107.py", line 26, in require
+    raise ValueError(message)
+ValueError: live same-UID process references inaccessible

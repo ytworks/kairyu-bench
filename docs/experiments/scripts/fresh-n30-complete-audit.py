@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Audit completed canonical AV dev30; CPU reads only, never calls a model."""
+"""Audit completed canonical dev30; CPU reads only, never calls a model."""
 from __future__ import annotations
 
 import argparse
@@ -111,12 +111,16 @@ def main():
     parser.add_argument("--study", type=Path, required=True)
     parser.add_argument("--run", type=Path, required=True)
     parser.add_argument("--output", type=Path, required=True)
+    parser.add_argument("--expected-tree", default="5d056eb03f954db80313a85167153c875fe5e436e4f97c281a3f55202d9b3eaf",
+                        help="Expected checkpoint content tree; defaults to the established AV baseline.")
+    parser.add_argument("--allow-partial", action="store_true",
+                        help="Preserve an explicitly partial run; never permits full-score ranking.")
     args = parser.parse_args()
     assert not args.output.exists(), "Fresh output required."
     # Refuse to create a scored audit from a partial run.
     meta = read(args.run / "run.json")
-    if meta["status"] != "completed":
-        raise RuntimeError("Run is not completed; no partial-score audit performed.")
+    if meta["status"] != "completed" and not (args.allow_partial and meta["status"] == "partial"):
+        raise RuntimeError("Run is not completed; explicit --allow-partial is required for a partial record.")
     args.output.mkdir(parents=True)
     started = time.monotonic()
     module = importlib.util.spec_from_file_location(
@@ -171,7 +175,7 @@ def main():
         assert actual["command"] == command[1:]
         image = "sha256:f91bdcf997af6d7b194bec229812fd018277158f6795de7d91e58448936e7ad8"
         assert actual["image_id"] == plan["source_identity"]["actual_runner_image_id"] == image
-        tree = "5d056eb03f954db80313a85167153c875fe5e436e4f97c281a3f55202d9b3eaf"
+        tree = args.expected_tree
         serving = plan["expected_serving"]
         assert serving["tree_sha256"] == meta["label"] == report["run"]["label"] == tree
         assert (serving["replicas"], serving["tp_size"], serving["mtp_tokens"]) == (4, 2, 4)
@@ -288,7 +292,7 @@ def main():
             "runtime": {"image": image, "checkpoint_tree": tree, "topology": {"tp": 2, "replicas": 4, "mtp_tokens": 4},
                         "concurrency": {"chat": 256, "logprob": 32, "agent": 4},
                         "actual_runner_cid": actual["cid"], "http_client_trace_only": True,
-                        "comparison_limit": "New dev30 baseline; no same-condition candidate pair; tier10 and historical original results are different conditions."},
+                        "comparison_limit": "Single completed dev30 run audit; paired comparison and matching conditions are checked separately."},
             "timing_note": "wall_seconds and generation_seconds both start before dataset loading; do not call either pure generation time.",
             "source_sha256": source_checks, "analysis_seconds": time.monotonic() - started,
         }

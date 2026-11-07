@@ -1,0 +1,17 @@
+{
+  "epoch": 1794050001.6329656,
+  "command": [
+    "docker",
+    "exec",
+    "b947da714bf08c131db8971e36e16f5155a5de5303161ad8898bd48cff4eaa01",
+    "/bin/kill",
+    "-TERM",
+    "602"
+  ],
+  "returncode": 0,
+  "stdout": "",
+  "stderr": "",
+  "sigterm_commands": 1,
+  "repeat_signal_authorized": false,
+  "sigkill_used": false
+}

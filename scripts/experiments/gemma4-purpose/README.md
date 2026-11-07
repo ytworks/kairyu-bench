@@ -611,3 +611,16 @@ reconstructs a fixed schema-1 spec, checks all native parent words and target ha
 and reports all tensor/family/layer differences and signed predictions. It does not
 optimize, materialize or call a model. Actual BF16 box excess and missing per-round
 vectors stay explicit. See [F03's audit](../../../docs/experiments/2026-11-07-f03-native-spec-audit.md).
+
+### Additional behavior contracts after F03
+
+`behavior_followup_cases.py` adds nine independently authored contracts (train6,
+held-out transfer3) for every-stage constraints, explicit numerical stencils and
+frequency sentinels. It reuses `behavior_cases.Case` and the existing
+`behavior_offline.score` / `science_sandbox.Docker.run`; common harness source is
+unchanged. All9 correct/foil programs were checked once with16 fixtures each:
+correct144/144, every foil rejected by a fixed counterexample, no unknown.
+This is authored validation, not model performance. Full commands, input hashes,
+raw trials and split policy are in
+[the experiment record](../../../docs/experiments/2026-11-07-behavior-followup9.md).
+No transfer model generation or gradients have been used.

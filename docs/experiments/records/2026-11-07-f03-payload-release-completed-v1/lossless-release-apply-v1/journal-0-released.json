@@ -1,0 +1,21 @@
+{
+  "free_bytes": 57186471936,
+  "released": [
+    {
+      "bytes": 49923154850,
+      "current_stat": {
+        "ctime_ns": 1794044335354204449,
+        "device": 2306,
+        "gid": 1003,
+        "inode": 182192246,
+        "mode": 33204,
+        "mtime_ns": 1794044335354204449,
+        "nlink": 1,
+        "size": 49923154850,
+        "uid": 1003
+      },
+      "historical_full_sha256": "48abfc21afab59b95aa9504d8848fd2dd6965ab3a04c9748af4a337bfe70112f",
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/checkpoints/fresh-native-contract-f03/model-00001-of-00002.safetensors"
+    }
+  ]
+}

@@ -1,0 +1,46 @@
+import difflib,gzip,hashlib,json,pathlib,re,subprocess,time
+R=pathlib.Path('/mnt/nvme/kairyu/wsp/gemma4-coding-20261104');B=R/'worktrees/kairyu-bench-weight-tools';D=R/'analysis/fresh-purpose-20261107-cpu-validation-r9';E=B/'docs/experiments';O=E/'records/2026-11-07-cpu-validation-r9';O.mkdir()
+def sha(data):return hashlib.sha256(data).hexdigest()
+rows=[]
+def store(src,rel):
+ data=src.read_bytes();dst=O/rel
+ if dst.suffix=='.py':dst=dst.with_suffix('.py.txt')
+ if len(data)>65536:dst=dst.with_name(dst.name+'.gz');stored=gzip.compress(data,mtime=0);assert gzip.decompress(stored)==data
+ else:stored=data
+ dst.parent.mkdir(parents=True,exist_ok=True)
+ with dst.open('xb') as f:f.write(stored)
+ rows.append(dict(source=str(src),artifact=str(dst.relative_to(O)),raw_bytes=len(data),raw_sha256=sha(data),stored_bytes=len(stored),stored_sha256=sha(stored)))
+for root,rel in [(D,pathlib.Path('attempt-v1')),(D/'attempt-v2',pathlib.Path('attempt-v2'))]:
+ for p in sorted(root.iterdir()):
+  if p.is_file():store(p,rel/p.name)
+for p in sorted((D/'before').rglob('*')):
+ if p.is_file():store(p,pathlib.Path('before')/p.relative_to(D/'before'))
+changes=['pyproject.toml','docs/experiments/scripts/fresh-f03-deploy-preview-20261107.py','docs/experiments/scripts/fresh-f03-deploy-apply-20261107.py','tests/test_dependency_set_plans.py']
+patch=''.join(''.join(difflib.unified_diff((D/'before'/n).read_text().splitlines(True),(B/n).read_text().splitlines(True),fromfile='before/'+n,tofile='after/'+n)) for n in changes)
+raw=patch.encode();(O/'changes.diff.gz').write_bytes(gzip.compress(raw,mtime=0))
+end=json.loads((D/'attempt-v2/completion.json').read_text());assert end['success'] and end['sources_unchanged']
+log=(D/'attempt-v2/unittest.stderr').read_text();match=re.search(r'Ran (\d+) tests in ([0-9.]+)s',log);assert match
+skip=re.search(r'OK \(skipped=(\d+)\)',log);assert skip
+count=int(match[1]);skipped=int(skip[1]);assert count==571 and skipped==57
+immutable=json.loads((D/'immutable-sources-before.json').read_text());assert all(sha((B/n).read_bytes())==h for n,h in immutable.items())
+receipt={'completed_epoch':time.time(),'unittest':{'run':count,'passed':count-skipped,'skipped':skipped,'errors':0,'failures':0,'reported_seconds':float(match[2]),'wall_seconds':end['results'][-1]['elapsed_seconds']},'checks':end['results'],'sources_unchanged':end['sources_unchanged'],'live_source_count':end['source_count_after'],'original_immutable_sources_unchanged':len(immutable),'active_owner_sha256':sha((B/'docs/experiments/scripts/fresh-av-dev30-20261107.py').read_bytes()),'raw_records_preserved':True,'initial_root_ruff_errors':290,'initial_root_unittest_mypy':'not_started','first_repair_suite':{'run':571,'error_records':20,'skipped':57,'passed_count':'not inferred from subtest error entries'},'first_suite_environment_failures':'long AF_UNIX paths and missing venv PATH prefix','fixture_repair':'summary-declared gradient filename replaces stale hardcoded filename in one test','records':rows,'patch':{'raw_sha256':sha(raw),'stored_sha256':sha((O/'changes.diff.gz').read_bytes())},'GPU_model_service_operations':0}
+(O/'summary.json').write_text(json.dumps(receipt,indent=2)+chr(10))
+fs=sorted(p for p in O.rglob('*') if p.is_file())
+(O/'SHA256SUMS').write_text(''.join(sha(p.read_bytes())+'  '+str(p.relative_to(O))+chr(10) for p in fs))
+text=f"""# CPU CI repair and validation r9
+
+The final repaired tree passes full Ruff, mypy and the complete unittest suite: **{count-skipped} passed, {skipped} skipped, {count} total**, no failures or errors. Unittest reported {match[2]} s ({end['results'][-1]['elapsed_seconds']:.6f} s wall); all three checks took {end['elapsed_seconds']:.6f} s. The 278 live source files matched before/after, as did 141 protected source/snapshot files. Active F04 WSP owner SHA remains 956af488fe54578c32c9baa856e9c32170dc49c1bbce2b1ba5db9af9ea1dd524. No model, GPU or service operation occurred.
+
+Root's first Ruff attempt stopped at **290 errors**; unittest and mypy had not started. The saved JSON reproduction locates 231 errors in eight byte-preserved experiment snapshots, and 59 in two public historical F03 deployment scripts. Snapshot content is immutable evidence. The narrow pyproject setting excludes only docs/experiments/records/** from Ruff; default rules and maintained src/tests/scripts scope remain unchanged. Archived scripts are not a route for adding unlinted live tools. Promote reusable code into the normal source or scripts tree before use.
+
+The two public deployment scripts retain their original bytes and hashes in this record and their historical execution snapshots. Changes split imports, format statements, and explicitly bind the same function objects loaded by their SHA-pinned exec. A read-only AST comparison normalizes only split import nodes and those exact redundant globals()[same_name] aliases; every other AST node matches. The pinned source defines each loaded function exactly once. [Independent review](records/2026-11-07-cpu-validation-r9-independent-review/review.json) recomputed the same comparison. Existing frozen deployment plans remain tied to their historical source hashes; this formatting does not authorize rerunning them.
+
+The first repaired-tree full suite retained 20 error records: long temporary paths exceeded AF_UNIX limits, shell fixtures lacked the existing virtualenv Python on PATH, and one test referenced a nonexistent gradient.npz. The test now reads the existing fixture summary's declared filenames both when renaming native tensor keys and writing its deliberate gradient values; production code and the shared fixture are unchanged. That focused test passed in 0.473 s. A proposed shorter parent directory was not writable and failed before any test; the final NVMe TMPDIR uses the existing owned infra/tmp/r9 directory. All failures remain recorded.
+
+The final suite ran once after these repairs with nice 15, one-thread numerical libraries, the existing virtualenv bin prefix and short NVMe TMPDIR. Full Ruff passed in {end['results'][0]['elapsed_seconds']:.6f} s, mypy reported no issues in 74 source files in {end['results'][1]['elapsed_seconds']:.6f} s, and all 571 tests completed. This is CPU verification only. No benchmark condition, score, active owner, weight/proposal or shared model library changed.
+
+[Complete logs, source snapshots, normalized AST audit, driver and hashes](records/2026-11-07-cpu-validation-r9/) preserve both suite attempts and the original Ruff failure. Large records and the source patch are lossless gzip with raw/stored SHA256; original bytes remain on NVMe. A missing optional filename during read-only diagnosis made no changes.
+"""
+(E/'2026-11-07-cpu-validation-r9.md').write_text(text)
+r=subprocess.run(['git','diff','--check','--',*changes],cwd=B,text=True,capture_output=True);assert r.returncode==0,r.stdout+r.stderr
+print(json.dumps({'summary':receipt['unittest'],'document_sha256':sha((E/'2026-11-07-cpu-validation-r9.md').read_bytes()),'manifest_sha256':sha((O/'SHA256SUMS').read_bytes()),'artifact_files':len(fs),'source_changes':changes,'git_diff_check':0}))

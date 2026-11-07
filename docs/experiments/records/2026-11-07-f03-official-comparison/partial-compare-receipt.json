@@ -1,0 +1,16 @@
+{
+  "command": [
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/infra/weight-tools-ci/bin/python",
+    "-m",
+    "kairyu_bench.wsp.cli",
+    "compare",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/results/gemma4-fresh-av-dev30-dp4-20261107-v1",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/results/gemma4-fresh-f03-dev30-dp4-20261107-v1",
+    "--partial",
+    "--output",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f03-dev30-dp4-v1/official-partial-comparison-v1/comparison.json"
+  ],
+  "start_epoch": 1794050165.1372292,
+  "elapsed_seconds": 3.6474225521087646,
+  "returncode": 0
+}

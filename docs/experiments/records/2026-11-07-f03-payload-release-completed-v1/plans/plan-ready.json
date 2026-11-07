@@ -1,0 +1,147 @@
+{
+  "status": "ready_for_exact_preview",
+  "created_epoch": 1794050457.8416095,
+  "mandatory_base": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/checkpoints/code90-current-ad-helper-av-v1",
+  "candidate": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/checkpoints/fresh-native-contract-f03",
+  "archive": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f03-native-v1/lossless-archive-v1",
+  "archive_checksum_list_sha256": "374f40c074c4ea8c893d802217d31d1ef99987cb6d146016972790128aa3b520",
+  "archive_json_sha256": "00ef50f95b783c25da078e4274e142471d9bfceefb34d78042fba5d83eb9a4e0",
+  "archive_checksum_entries": 132,
+  "targets": [
+    {
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/checkpoints/fresh-native-contract-f03/model-00001-of-00002.safetensors",
+      "bytes": 49923154850,
+      "historical_full_sha256": "48abfc21afab59b95aa9504d8848fd2dd6965ab3a04c9748af4a337bfe70112f",
+      "current_stat": {
+        "inode": 182192246,
+        "size": 49923154850,
+        "mtime_ns": 1794044335354204449,
+        "ctime_ns": 1794044335354204449,
+        "mode": 33204,
+        "uid": 1003,
+        "gid": 1003,
+        "nlink": 1,
+        "device": 2306
+      }
+    },
+    {
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/checkpoints/fresh-native-contract-f03/model-00002-of-00002.safetensors",
+      "bytes": 12623183414,
+      "historical_full_sha256": "8110662f1c1c7386a23478e1e1d33259bc4f99b5d6f115780641dea04eb3a700",
+      "current_stat": {
+        "inode": 182192247,
+        "size": 12623183414,
+        "mtime_ns": 1794044335356204380,
+        "ctime_ns": 1794044335356204380,
+        "mode": 33204,
+        "uid": 1003,
+        "gid": 1003,
+        "nlink": 1,
+        "device": 2306
+      }
+    }
+  ],
+  "total_logical_bytes": 62546338264,
+  "wrapper_sha256": "72e5bdb4566652d5baeae5fb4d9ef71a02f3b5920951891a3f5167f63a39881c",
+  "helper_sha256": "435e01109887123db12519c100e304fa7bd4f5a71b772e6c96eedce1b130f894",
+  "read_only_audit": {
+    "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f03-native-v1/lossless-release-plan-v1/read-only-audit.json",
+    "sha256": "f2130113bc65a94bee3c0910fd682cc6475934e591d0b0be3fb844191f6e7309"
+  },
+  "f04_serving": {
+    "checkpoint": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/checkpoints/fresh-native-relative-f04-faststore-v1/checkpoint",
+    "tree_sha256": "7b9e9488e3cd4e0b6c5f61ae341e5eeccdf5bd31c46d1c8354950dbc29d0f924",
+    "service_cids": {
+      "gemma-0": "dc117b29cb6f7ef23c8bab4ecb5d734114ebb828c3b569b2e2ba0843b7f962dd",
+      "gemma-1": "08037f93d105bc27be35b05b93fed55b463fc4776e446c1152fa5c6cb4563052",
+      "gemma-2": "fc3e14a0b216e622004db9b0cf754c7d33e4410d2ab63a28b762ef32607327ca",
+      "gemma-3": "d8ad71d8d13f18fa5311b89b08860ac0c8fefcbae03b9d631816d74c68a929a0"
+    },
+    "closures": [
+      {
+        "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f04-relative-v1/deployment-dp4-v1/gemma-0-closure-v1.json",
+        "sha256": "9c8cb98b6ed22c6cafb80bffa792ce0d28230e1bda013b70f385416cf6f7f126"
+      },
+      {
+        "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f04-relative-v1/deployment-dp4-v1/gemma-1-closure-v1.json",
+        "sha256": "5db50b29c8b3036bac1b437d170f33492b95a33e8e129d514e4b811778722e1c"
+      },
+      {
+        "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f04-relative-v1/deployment-dp4-v1/gemma-2-closure-v1.json",
+        "sha256": "3c602f0541f14cdf63799577e0d1d2e13f5c7ff674b36c3834aa5a0df48304f4"
+      },
+      {
+        "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f04-relative-v1/deployment-dp4-v1/gemma-3-closure-v1.json",
+        "sha256": "ae1630ca31c3691ef50d6ae459eec0cbf202c2721f67429917b6ea4d42e6e1d2"
+      }
+    ],
+    "four_replica_closure": {
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f04-relative-v1/deployment-dp4-v1/four-apply-closure.json",
+      "sha256": "91d0d6cfbcbf093c56b575633493e5a21ab15e89b986e8c7aeb579940e3c26bf"
+    },
+    "endpoint_closure": {
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f04-relative-v1/deployment-dp4-v1/endpoint-closure.json",
+      "sha256": "44c5fd4e3a725353eca32fb56278000886cc9ca92bd03013f64fea0c6dc36727"
+    },
+    "normal_global_release": {
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f04-relative-v1/deployment-dp4-v1/global-lock-released.json",
+      "sha256": "ed8a921b735573190cafd162c38f524f0c6c9afe6f0fa58219e66bd4842886c9"
+    },
+    "candidate_manifest": {
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/checkpoints/fresh-native-relative-f04-faststore-v1/manifest.json",
+      "sha256": "fd189cf276a1219ad627186d2dfb4a895c79768821f247a0b33d9abd8953d8c1"
+    },
+    "candidate_verify": {
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f04-relative-v1/faststore-plan-v1/materialization-v1/verify.stdout",
+      "sha256": "a7237a2b82d68e64467c791c3781a86b8b216f584272ef5db77c956383c4b0cd"
+    },
+    "protected_cids": [
+      "005b20d4f0adacdc438e2e90f44c9d21579f3d089b366bcfe8af8f0785bde8c3",
+      "0a32557db9cd0bd49fffefea34276c8515021858e3d0115e560ef835f616609a",
+      "149b564776c7bda50b4039b44b0cf52b1178272a481a4c4dee88de2f283ae334",
+      "3257ee5ee6d0fa212bacd64de8b86152ab0be509e0a7d329838193559039dbda",
+      "374e969acaf78f336c638b5bff9ffdde04fd44f9075e45d2cfd54881b556b2c1",
+      "37b84155d0d47c339a8a3f989cf69be74a80a9f7369829db41612a5a77fe481a",
+      "3d62fd16cb139033941f36930a226b197b4512f4d319bc0920ecc3ef0b62a87f",
+      "4ef033809802f99ae4859327cf7350e2dc4c7d657b226a7229914432e0dd0718",
+      "5885c75f79f5396867db6b3518637ca5bcde342dd1fd20f88c89bf69ff42cdff",
+      "61a829c3aaf5c9af66499357d1f55b8f58ad19ef40cb887bbe63a0c4729c10f9",
+      "88943a0985ba97dfb17be6b5fb54040eba2570b70ce05126bd410162d3658ffb",
+      "897103115f63e39d3261f39bf449bfa9258121d270ae700f65c0321837eeec08",
+      "8c1e4b184886cd32d110fab4c4fda7369c445ae910f1e68b8ba4834811921d8d",
+      "b0d4c3e871a7d2a44249318079920bd01f56cb7978b58a19f4245245f140afd6",
+      "b4302da3c2814fa2458ae7e4652b0041af34bd45d6872b86ecd40cfa06bf9985",
+      "bcf8a575872a9ff05a85bfd8b46dbeec3cb9d8bef6a94aded4cb5a12c61bc976",
+      "c672bb052ad042282e2e2ec2e8b65edde8b6c50262bd6dab00da57314e4f8b1b",
+      "c81e36297abd0b0e23fd11ada341ac6845e4446fe34a5f9432de70cbdfa752cc",
+      "ca0ce07ae660af1bb129a129aa538d23206e1d10c4db982ae692618dd852678d",
+      "dbabe7158257d30d26b6f96d51eb17e4a0b6385fcf5d9d90c2182b22aed3d20b",
+      "dfbaee8005646b8369493c56f5daa89251880694970e135209b3416255e57d57",
+      "ed9842852109333c564c5962ada840ea2794720ad613ebc0c8ef96591c816a33",
+      "fbb725752d9e8990506968903bfcb5a406eb56f0bc6c839eb08199c0d05f54f3"
+    ]
+  },
+  "parent_outcome_context": {
+    "source": "root instruction, full official result remains separately retained",
+    "F03_trial_status": "partial;2338 records/2337 scored/polyglot1 unknown",
+    "F03_code_all90": 72.65873,
+    "AV_code_same_cohort": 72.93651,
+    "F03_adopted": false,
+    "release_does_not_remove_trial_records": true
+  },
+  "authorization": "Root authorized final binding and preview only. Apply still requires explicit final plan/helper/wrapper approval.",
+  "future_apply_gates": [
+    "Root explicitly authorizes finalized plan/helper/wrapper SHA",
+    "F04 all4 exact CID healthy and idle, exact candidate stats and closure pins",
+    "All27 exact containers, 23 unrelated protected, no F03 ancestor/direct/descendant mounts",
+    "No visible same-UID F03 payload FD or mapped inode; inaccessible live same-UID process aborts",
+    "Global evaluation lock acquired nonblocking; no conflicting WSP run",
+    "132 archive hashes and inventory; original all9 fullverify/restoration proof;18stats",
+    "Exact owned nlink1 nofollow2targets; fsync marker and per-file intent before unlink; postclosure and no auto retry"
+  ],
+  "free_bytes_observed": 7265431552,
+  "free_after_logical_release_projection": "observed free + 62,546,338,264 bytes, not an actual release or allocation guarantee",
+  "fresh_payload_hash_or_diff": false,
+  "physical_reconstruction": false,
+  "bound_epoch": 1794050881.6754541
+}

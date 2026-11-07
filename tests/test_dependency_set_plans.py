@@ -31,7 +31,9 @@ class DependencyPlanTests(unittest.TestCase):
             for tensor in coverage["tensors"]:
                 tensor["name"] = names[tensor["name"]]
             (path / "coverage.json").write_text(json.dumps(coverage))
-            for filename in ("source-native-values.npz", "gradient.npz"):
+            summary = json.loads((path / "summary.json").read_text())
+            gradient_files = sorted({fold["file"] for fold in summary["folds"]})
+            for filename in ["source-native-values.npz", *gradient_files]:
                 with np.load(path / filename, allow_pickle=False) as values:
                     renamed = {names[key]: values[key].copy() for key in values.files}
                 np.savez(path / filename, **renamed)
@@ -113,7 +115,7 @@ class DependencyPlanTests(unittest.TestCase):
                 (path / "frame-evidence.json").write_text(json.dumps(frame))
                 if family == "native" and objective == "correct-logprob":
                     np.savez(
-                        path / "gradient.npz",
+                        path / template["file"],
                         **{f.norm: np.array([2.0, 0.0]), f.scalar: np.array(0.0)},
                     )
                 if family == "matrix" and objective == "margin":

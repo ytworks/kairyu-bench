@@ -1,0 +1,26 @@
+{
+  "cases": 9,
+  "train": 6,
+  "transfer": 3,
+  "initial_generation_split": "train",
+  "model_calls": 0,
+  "transfer_generation_or_gradient_used": false,
+  "token_count_measured": false,
+  "max_tokens_target": 1024,
+  "fixtures_per_code": 16,
+  "fixed_boundary": 8,
+  "seeded": 8,
+  "train_seed": 202611071,
+  "transfer_seed": 202611072,
+  "status": "preview_only_waiting_for_F04_launch",
+  "prior_failure": {
+    "stage": "ruff",
+    "issue": "two constants imported for public reuse were flagged unused",
+    "resolution": "explicit re-export aliases; Ruff PASS; no fixture changes, no execution attempt"
+  },
+  "identities": {
+    "train-cases.json": "adc645385045ea8a0dc8da7ba70fe62743f426424e6e1021060aaab36a932ac4",
+    "transfer-cases.json": "d237511d22b8c88685f3062fc2cacf2ddccadbd8df40bcefeedeee83fe881ce5",
+    "preview.json": "954f68114ceabaf293ac191ad2dbfb3497457a25154994fc067f1c69aa00bf06"
+  }
+}

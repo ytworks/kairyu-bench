@@ -1,0 +1,71 @@
+{
+  "epoch": 1794050241.570479,
+  "run_status": "partial",
+  "pids_absent": {
+    "1083709": true,
+    "1083647": true,
+    "1078731": true,
+    "1078351": true
+  },
+  "five_named_services_same_cid_running": [
+    {
+      "id": "0169d434fd1fa863ec39661a3e4c6b947ac2bef977e6f596ede771c6921bd32b",
+      "name": "gemma-4-31b-8gpu-gemma-0-1",
+      "image": "sha256:af9e746b913088cbf6c4464a31d6904a6b7e1d3ba62f0895362ddf13595f7abe",
+      "state": "running"
+    },
+    {
+      "id": "d782bf8b23562bd19835279b1f8804910df882065d222e8e674cecafbb9b7d5e",
+      "name": "gemma-4-31b-8gpu-gemma-1-1",
+      "image": "sha256:af9e746b913088cbf6c4464a31d6904a6b7e1d3ba62f0895362ddf13595f7abe",
+      "state": "running"
+    },
+    {
+      "id": "3acc0a02d713ae298e7979547db8fac1a14374826cd52fa7eb4453289ffe4072",
+      "name": "gemma-4-31b-8gpu-gemma-2-1",
+      "image": "sha256:af9e746b913088cbf6c4464a31d6904a6b7e1d3ba62f0895362ddf13595f7abe",
+      "state": "running"
+    },
+    {
+      "id": "a7a781b8fa49e81f0a1cd638dbcc70f2d9c8310857e3b8c1ef53250eeafa4a02",
+      "name": "gemma-4-31b-8gpu-gemma-3-1",
+      "image": "sha256:af9e746b913088cbf6c4464a31d6904a6b7e1d3ba62f0895362ddf13595f7abe",
+      "state": "running"
+    },
+    {
+      "id": "88943a0985ba97dfb17be6b5fb54040eba2570b70ce05126bd410162d3658ffb",
+      "name": "gemma-4-31b-8gpu-kairyu-1",
+      "image": "local/kairyu:gemma-4-31b-8gpu-example",
+      "state": "running"
+    }
+  ],
+  "pre_running_still_running": [
+    "a7a781b8fa49e81f0a1cd638dbcc70f2d9c8310857e3b8c1ef53250eeafa4a02",
+    "3acc0a02d713ae298e7979547db8fac1a14374826cd52fa7eb4453289ffe4072",
+    "d782bf8b23562bd19835279b1f8804910df882065d222e8e674cecafbb9b7d5e",
+    "0169d434fd1fa863ec39661a3e4c6b947ac2bef977e6f596ede771c6921bd32b",
+    "88943a0985ba97dfb17be6b5fb54040eba2570b70ce05126bd410162d3658ffb",
+    "3257ee5ee6d0fa212bacd64de8b86152ab0be509e0a7d329838193559039dbda",
+    "dfbaee8005646b8369493c56f5daa89251880694970e135209b3416255e57d57",
+    "149b564776c7bda50b4039b44b0cf52b1178272a481a4c4dee88de2f283ae334",
+    "005b20d4f0adacdc438e2e90f44c9d21579f3d089b366bcfe8af8f0785bde8c3",
+    "b4302da3c2814fa2458ae7e4652b0041af34bd45d6872b86ecd40cfa06bf9985",
+    "897103115f63e39d3261f39bf449bfa9258121d270ae700f65c0321837eeec08",
+    "bcf8a575872a9ff05a85bfd8b46dbeec3cb9d8bef6a94aded4cb5a12c61bc976",
+    "b0d4c3e871a7d2a44249318079920bd01f56cb7978b58a19f4245245f140afd6"
+  ],
+  "pre_running_no_longer_running": [
+    {
+      "id": "b947da714bf08c131db8971e36e16f5155a5de5303161ad8898bd48cff4eaa01",
+      "state": "removed"
+    }
+  ],
+  "owner_complete": {
+    "epoch": 1794050017.7876601,
+    "elapsed_seconds": 2981.63409948349,
+    "returncode": 1,
+    "services_changed_by_owner": false
+  },
+  "signal_receipt": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f03-dev30-dp4-v1/terminal-graceful-stop-signal.json",
+  "global_lock_probe": "Not reacquired: root has started the separately authorized F04 CPU materialization."
+}

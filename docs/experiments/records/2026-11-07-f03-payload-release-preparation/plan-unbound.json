@@ -1,0 +1,87 @@
+{
+  "status": "unbound_not_executable",
+  "created_epoch": 1794050457.8416095,
+  "mandatory_base": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/checkpoints/code90-current-ad-helper-av-v1",
+  "candidate": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/checkpoints/fresh-native-contract-f03",
+  "archive": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f03-native-v1/lossless-archive-v1",
+  "archive_checksum_list_sha256": "374f40c074c4ea8c893d802217d31d1ef99987cb6d146016972790128aa3b520",
+  "archive_json_sha256": "00ef50f95b783c25da078e4274e142471d9bfceefb34d78042fba5d83eb9a4e0",
+  "archive_checksum_entries": 132,
+  "targets": [
+    {
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/checkpoints/fresh-native-contract-f03/model-00001-of-00002.safetensors",
+      "bytes": 49923154850,
+      "historical_full_sha256": "48abfc21afab59b95aa9504d8848fd2dd6965ab3a04c9748af4a337bfe70112f",
+      "current_stat": {
+        "inode": 182192246,
+        "size": 49923154850,
+        "mtime_ns": 1794044335354204449,
+        "ctime_ns": 1794044335354204449,
+        "mode": 33204,
+        "uid": 1003,
+        "gid": 1003,
+        "nlink": 1,
+        "device": 2306
+      }
+    },
+    {
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/checkpoints/fresh-native-contract-f03/model-00002-of-00002.safetensors",
+      "bytes": 12623183414,
+      "historical_full_sha256": "8110662f1c1c7386a23478e1e1d33259bc4f99b5d6f115780641dea04eb3a700",
+      "current_stat": {
+        "inode": 182192247,
+        "size": 12623183414,
+        "mtime_ns": 1794044335356204380,
+        "ctime_ns": 1794044335356204380,
+        "mode": 33204,
+        "uid": 1003,
+        "gid": 1003,
+        "nlink": 1,
+        "device": 2306
+      }
+    }
+  ],
+  "total_logical_bytes": 62546338264,
+  "wrapper_sha256": "72e5bdb4566652d5baeae5fb4d9ef71a02f3b5920951891a3f5167f63a39881c",
+  "helper_sha256": "435e01109887123db12519c100e304fa7bd4f5a71b772e6c96eedce1b130f894",
+  "read_only_audit": null,
+  "f04_serving": {
+    "checkpoint": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/checkpoints/fresh-native-relative-f04-faststore-v1/checkpoint",
+    "tree_sha256": null,
+    "service_cids": {
+      "gemma-0": null,
+      "gemma-1": null,
+      "gemma-2": null,
+      "gemma-3": null
+    },
+    "closures": [],
+    "four_replica_closure": null,
+    "endpoint_closure": null,
+    "normal_global_release": null,
+    "candidate_manifest": null,
+    "candidate_verify": null,
+    "protected_cids": []
+  },
+  "parent_outcome_context": {
+    "source": "root instruction, full official result remains separately retained",
+    "F03_trial_status": "partial;2338 records/2337 scored/polyglot1 unknown",
+    "F03_code_all90": 72.65873,
+    "AV_code_same_cohort": 72.93651,
+    "F03_adopted": false,
+    "release_does_not_remove_trial_records": true
+  },
+  "authorization": "preparation only; no payload release, model or service operation approved",
+  "future_apply_gates": [
+    "Root explicitly authorizes finalized plan/helper/wrapper SHA",
+    "F04 all4 exact CID healthy and idle, exact candidate stats and closure pins",
+    "All27 exact containers, 23 unrelated protected, no F03 ancestor/direct/descendant mounts",
+    "No visible same-UID F03 payload FD or mapped inode; inaccessible live same-UID process aborts",
+    "Global evaluation lock acquired nonblocking; no conflicting WSP run",
+    "132 archive hashes and inventory; original all9 fullverify/restoration proof;18stats",
+    "Exact owned nlink1 nofollow2targets; fsync marker and per-file intent before unlink; postclosure and no auto retry"
+  ],
+  "free_bytes_observed": 7265431552,
+  "free_after_logical_release_projection": "observed free + 62,546,338,264 bytes, not an actual release or allocation guarantee",
+  "fresh_payload_hash_or_diff": false,
+  "physical_reconstruction": false
+}

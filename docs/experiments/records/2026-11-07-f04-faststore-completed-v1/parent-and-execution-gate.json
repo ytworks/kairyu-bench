@@ -1,0 +1,12 @@
+{
+  "approved_for_apply": false,
+  "required_after_F03_complete": "Root compares complete same-cohort score; if F03 becomes highest, do not build from AV and mark F04 unscored_reason=parent_changed.",
+  "actual_scope": "Build metadata preview only; no store receipt exists and create/verify cannot run yet.",
+  "future_global_lock_required": true,
+  "future_pipeline": "If authorized: build --apply once; bind real receipt SHA; create preview, create --apply once; bind manifest SHA; native_faststore verify once; ordinary four-chat parallel deployment with exact guards.",
+  "source_sha256": {
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/worktrees/kairyu-bench-weight-tools/src/kairyu_bench/wsp/weights/native_faststore.py": "445cc73783bd6bd61890b107bb76ddca1e388a9bf84b630125a01486389578cd",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f04-relative-v1/faststore-plan-v1/prepare-preview.py": "6385016c7869ac795c41cb786b9b39976468225cf29165a73b749ac99732398c"
+  },
+  "free_before": 69807472640
+}

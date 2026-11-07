@@ -1,0 +1,23 @@
+{
+  "command": [
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/infra/weight-tools-ci/bin/ruff",
+    "check",
+    "docs/experiments/scripts/fresh-f03-payload-release-20261107.py",
+    "tests/test_f02_payload_release_recipe.py"
+  ],
+  "returncode": 0,
+  "stdout": "All checks passed!\n",
+  "stderr": "",
+  "elapsed_seconds": 0.03579068183898926,
+  "focused_tests_receipt": "lossless-release-plan-v1/focused-tests-v2.log",
+  "focused_tests": 4,
+  "focused_test_seconds": 0.038,
+  "repeated_full_suite": false,
+  "model_calls": 0,
+  "service_changes": 0,
+  "records_checksum_counts": [
+    24,
+    9
+  ],
+  "git_diff_check": 0
+}

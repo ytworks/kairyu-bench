@@ -53,7 +53,7 @@ class NativeCoupledTests(unittest.TestCase):
             values = np.array([1, 2], dtype=np.float32)
             np.savez(path / "source-native-values.npz", **{self.norm: values, self.scalar: np.array(-0., dtype=np.float32)})
             gradients = [1., 0.] if objective == "correct-logprob" else [-1., 1.]
-            np.savez(path / "gradient.npz", **{self.norm: np.array(gradients), self.scalar: np.array(0.)})
+            np.savez(path / "gradient-science-0.npz", **{self.norm: np.array(gradients), self.scalar: np.array(0.)})
             field, value = ("correct_logprobs", "correct_logprob") if objective == "correct-logprob" else ("margins", "margin")
             summary = {"status": "completed", "candidate_selection": False, "source_values_unchanged": True,
                        "mode": "chat-public-answer", "objective_kind": objective, "answer_batching": "serial",
@@ -61,7 +61,7 @@ class NativeCoupledTests(unittest.TestCase):
                                    "attention": "eager", "gradients": "FP32 accumulation",
                                    "max_cases_per_microbatch": 1,
                                    "gpu_peak_allocated_GiB": 1 if objective == "margin" else 2},
-                       "folds": [{"purpose": "science", "fold": 0, "examples": 1, "file": "gradient.npz",
+                       "folds": [{"purpose": "science", "fold": 0, "examples": 1, "file": "gradient-science-0.npz",
                                   field: [{"id": "authored", value: -1. if objective == "correct-logprob" else 0.}]}]}
             provenance = {"mode": "chat-public-answer", "objective_kind": objective, "answer_batching": "serial",
                           "virtual_unit_gains": False, "max_cases_per_microbatch": 1, "threads": 4, "seed": 0,
@@ -130,7 +130,7 @@ class NativeCoupledTests(unittest.TestCase):
             provenance.update(checkpoint=self.checkpoint.identity(False), attestation_receipt_sha256=self.sha(attestation))
             (path / "provenance.json").write_text(json.dumps(provenance))
             if objective == "correct-logprob":
-                np.savez(path / "gradient.npz", **{self.norm: np.zeros(2), self.scalar: np.array(0.)})
+                np.savez(path / "gradient-science-0.npz", **{self.norm: np.zeros(2), self.scalar: np.array(0.)})
             target = self.root / ("matrix-" + objective)
             target.mkdir()
             self.plan["collections"]["matrix"][objective] = str(target)
@@ -177,6 +177,28 @@ class NativeCoupledTests(unittest.TestCase):
         self.assertEqual(actual["prediction"], [1 / 128, 1 / 128])
         self.assertEqual({p: self.sha(p) for p in self.checkpoint.files}, before)
         self.assertEqual(self.checkpoint.read_raw(self.scalar), bytes.fromhex("0080"))
+        # The report must reach completion with the final norm's global
+        # scope, rather than crashing after all reconstruction.
+        audit_plan = copy.deepcopy(self.plan)
+        audit_plan["native_tensors"] = [self.norm]
+        audit_root = self.root / "global-audit"
+        audit_root.mkdir()
+        dependency = self.root / "audit-dependency.json"
+        dependency.write_text(json.dumps({"case_rows": [
+            {"id": "authored", "correct_logprob": -1., "margin": 0.}]}))
+        parent = self.root / "audit-parent.json"
+        parent.write_text(json.dumps({"dependency": {
+            "path": str(dependency), "sha256": self.sha(dependency)}}))
+        audit_plan["parent_state"] = {"path": str(parent), "sha256": self.sha(parent)}
+        audit_path = audit_root / "proposal-plan.json"
+        audit_path.write_text(json.dumps(audit_plan))
+        COUPLED.solve(audit_path, audit_root / "proposal", write_spec=True)
+        (audit_root / "solver-execution.json").write_text(json.dumps({"status": "CPU fixture"}))
+        audit = load("native_spec_audit").audit(audit_root, self.sha(audit_path))
+        self.assertEqual(audit["status"], "existing_native_spec_independently_reconstructed")
+        self.assertEqual(audit["eligible_layers"], ["global"])
+        self.assertEqual(audit["eligible_scope"]["changed"], actual["changed_elements"])
+        self.assertEqual(audit["met_constraints"], 2)
         with self.assertRaisesRegex(ValueError, "fresh output"):
             COUPLED.solve(self.plan_path, output, write_spec=True)
         entries = self.mixed_fixture()

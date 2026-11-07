@@ -1,0 +1,27 @@
+{
+  "argv": [
+    "nice",
+    "-n",
+    "15",
+    "ionice",
+    "-c",
+    "3",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/infra/weight-tools-ci/bin/python",
+    "-B",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/worktrees/kairyu-bench-weight-tools/scripts/experiments/gemma4-purpose/native_spec_audit.py",
+    "--root",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f04-relative-v1",
+    "--plan-sha256",
+    "8e06264ec98ac6adf4a847603886e4377d61f0c4f1a7c96831fc5ceecd0dfacb",
+    "--output",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f04-relative-v1/static-native-audit-v1/audit"
+  ],
+  "environment_overrides": {
+    "PYTHONPATH": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/worktrees/kairyu-bench-weight-tools/src",
+    "TMPDIR": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f04-relative-v1/static-native-audit-v1/tmp",
+    "OMP_NUM_THREADS": "1",
+    "OPENBLAS_NUM_THREADS": "1",
+    "MKL_NUM_THREADS": "1"
+  },
+  "purpose": "One static reconstruction of existing F04; official WSP is running; no GPU/model/API"
+}

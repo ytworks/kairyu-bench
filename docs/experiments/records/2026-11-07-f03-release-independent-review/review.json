@@ -1,0 +1,23 @@
+{
+  "status": "read_only_review_completed_no_new_blocker",
+  "wrapper_sha256": "72e5bdb4566652d5baeae5fb4d9ef71a02f3b5920951891a3f5167f63a39881c",
+  "delegate_sha256": "435e01109887123db12519c100e304fa7bd4f5a71b772e6c96eedce1b130f894",
+  "epoch": 1794050831.260205,
+  "reviewed": [
+    "fixed F03 path and two private nlink1 payloads",
+    "132 archive hashes, complete nine-file saved verification and exact reconstruction spans",
+    "AV/F03 stat continuity and F04 shared-stat continuity",
+    "all27 containers,23 protected,4 F04 healthy/idle, all mount overlap refusal",
+    "global flock and nofollow inode identity",
+    "durable archive marker and intent before unlink, fsync and release journal afterward",
+    "partial failure preserved, no automatic retry"
+  ],
+  "limitations": [
+    "Other-UID host process references remain unobserved as in delegated engine.",
+    "Saved whole-file hashes are used with stat continuity; this is not a new payload hash.",
+    "No application or CPU fixture executed by this independent reviewer."
+  ],
+  "model_calls": 0,
+  "service_operations": 0,
+  "unlink_operations": 0
+}

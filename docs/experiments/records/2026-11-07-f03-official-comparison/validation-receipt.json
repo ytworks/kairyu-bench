@@ -1,0 +1,17 @@
+{
+  "test_command": "PYTHONPATH=src weight-tools-ci/bin/python -m unittest discover -s tests -p test_n30_audit_evidence.py -v",
+  "tests": 3,
+  "failures": 0,
+  "errors": 0,
+  "seconds": 0.069,
+  "compile": "PASS",
+  "help": "PASS for expected-tree extension; allow-partial parser compiled",
+  "ruff_command": "ruff check docs/experiments/scripts/fresh-n30-complete-audit.py",
+  "ruff": "PASS",
+  "git_diff_check": "PASS",
+  "full_suite_rerun": false,
+  "audit_source_sha256": "51898bdb849a632a1837b6c4b6166ff8456854c11fdce6077c15d6106ffe73b5",
+  "record_hashes_checked_before_this_receipt": 36,
+  "gzip_crc_and_json_checked": 4,
+  "secret_pattern_hits": 0
+}

@@ -1,0 +1,13 @@
+{
+  "argv": [
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/infra/weight-tools-ci/bin/python",
+    "-B",
+    "-m",
+    "kairyu_bench.wsp.weights.native_faststore",
+    "verify",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/checkpoints/fresh-native-relative-f04-faststore-v1/manifest.json",
+    "--manifest-sha256",
+    "fd189cf276a1219ad627186d2dfb4a895c79768821f247a0b33d9abd8953d8c1"
+  ],
+  "epoch": 1794050350.866143
+}

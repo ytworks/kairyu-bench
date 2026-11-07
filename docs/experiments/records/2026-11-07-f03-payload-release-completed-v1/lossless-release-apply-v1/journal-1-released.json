@@ -1,0 +1,37 @@
+{
+  "free_bytes": 69809664000,
+  "released": [
+    {
+      "bytes": 49923154850,
+      "current_stat": {
+        "ctime_ns": 1794044335354204449,
+        "device": 2306,
+        "gid": 1003,
+        "inode": 182192246,
+        "mode": 33204,
+        "mtime_ns": 1794044335354204449,
+        "nlink": 1,
+        "size": 49923154850,
+        "uid": 1003
+      },
+      "historical_full_sha256": "48abfc21afab59b95aa9504d8848fd2dd6965ab3a04c9748af4a337bfe70112f",
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/checkpoints/fresh-native-contract-f03/model-00001-of-00002.safetensors"
+    },
+    {
+      "bytes": 12623183414,
+      "current_stat": {
+        "ctime_ns": 1794044335356204380,
+        "device": 2306,
+        "gid": 1003,
+        "inode": 182192247,
+        "mode": 33204,
+        "mtime_ns": 1794044335356204380,
+        "nlink": 1,
+        "size": 12623183414,
+        "uid": 1003
+      },
+      "historical_full_sha256": "8110662f1c1c7386a23478e1e1d33259bc4f99b5d6f115780641dea04eb3a700",
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/checkpoints/fresh-native-contract-f03/model-00002-of-00002.safetensors"
+    }
+  ]
+}

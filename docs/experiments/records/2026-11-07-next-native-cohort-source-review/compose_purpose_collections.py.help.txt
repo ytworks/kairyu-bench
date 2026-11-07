@@ -1,0 +1,11 @@
+usage: compose_purpose_collections.py [-h] --plan PLAN --output OUTPUT
+                                      --plan-sha256 PLAN_SHA256 [--write]
+
+Compose completed disjoint-purpose observations without a model or solver.
+
+options:
+  -h, --help            show this help message and exit
+  --plan PLAN
+  --output OUTPUT
+  --plan-sha256 PLAN_SHA256
+  --write

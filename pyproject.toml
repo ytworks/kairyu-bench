@@ -21,3 +21,7 @@ where = ["src"]
 
 [tool.setuptools.package-data]
 kairyu_bench = ["data/*.json", "data/wsp/*.json"]
+
+[tool.ruff]
+# Immutable experiment evidence is preserved byte-for-byte, not maintained code.
+extend-exclude = ["docs/experiments/records/**"]

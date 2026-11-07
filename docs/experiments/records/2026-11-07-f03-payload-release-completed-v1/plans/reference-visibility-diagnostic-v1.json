@@ -1,0 +1,126 @@
+{
+  "reference_audit": {
+    "processes_checked": 18,
+    "matches": [],
+    "inaccessible_or_disappeared": [
+      1283123,
+      2707330,
+      2707331,
+      2707447,
+      3336969
+    ],
+    "other_uid_processes_not_inspected": true
+  },
+  "inaccessible_details": [
+    {
+      "pid": 1283123,
+      "exists": true,
+      "comm": "sshd",
+      "status": {
+        "State": "S (sleeping)",
+        "PPid": "1283058",
+        "TracerPid": "0",
+        "Uid": "1003\t1003\t1003\t1003",
+        "Gid": "1003\t1003\t1003\t1003"
+      },
+      "fd": {
+        "readable": false,
+        "error_type": "PermissionError",
+        "errno": 13
+      },
+      "maps": {
+        "readable": false,
+        "error_type": "PermissionError",
+        "errno": 13
+      }
+    },
+    {
+      "pid": 2707330,
+      "exists": true,
+      "comm": "systemd",
+      "status": {
+        "State": "S (sleeping)",
+        "PPid": "1",
+        "TracerPid": "0",
+        "Uid": "1003\t1003\t1003\t1003",
+        "Gid": "1003\t1003\t1003\t1003"
+      },
+      "fd": {
+        "readable": true,
+        "count": 35
+      },
+      "maps": {
+        "readable": false,
+        "error_type": "PermissionError",
+        "errno": 13
+      }
+    },
+    {
+      "pid": 2707331,
+      "exists": true,
+      "comm": "(sd-pam)",
+      "status": {
+        "State": "S (sleeping)",
+        "PPid": "2707330",
+        "TracerPid": "0",
+        "Uid": "1003\t1003\t1003\t1003",
+        "Gid": "1003\t1003\t1003\t1003"
+      },
+      "fd": {
+        "readable": false,
+        "error_type": "PermissionError",
+        "errno": 13
+      },
+      "maps": {
+        "readable": false,
+        "error_type": "PermissionError",
+        "errno": 13
+      }
+    },
+    {
+      "pid": 2707447,
+      "exists": true,
+      "comm": "ssh-agent",
+      "status": {
+        "State": "S (sleeping)",
+        "PPid": "1",
+        "TracerPid": "0",
+        "Uid": "1003\t1003\t1003\t1003",
+        "Gid": "1003\t1003\t103\t1003"
+      },
+      "fd": {
+        "readable": false,
+        "error_type": "PermissionError",
+        "errno": 13
+      },
+      "maps": {
+        "readable": false,
+        "error_type": "PermissionError",
+        "errno": 13
+      }
+    },
+    {
+      "pid": 3336969,
+      "exists": true,
+      "comm": "sshd",
+      "status": {
+        "State": "S (sleeping)",
+        "PPid": "3336821",
+        "TracerPid": "0",
+        "Uid": "1003\t1003\t1003\t1003",
+        "Gid": "1003\t1003\t1003\t1003"
+      },
+      "fd": {
+        "readable": false,
+        "error_type": "PermissionError",
+        "errno": 13
+      },
+      "maps": {
+        "readable": false,
+        "error_type": "PermissionError",
+        "errno": 13
+      }
+    }
+  ],
+  "model_service_mutations": 0
+}

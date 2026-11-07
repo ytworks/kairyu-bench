@@ -182,7 +182,7 @@ fixture proves rejection before mutation and refusal of ambiguous rollback.
 
 - [AV full dev30 ordinary-replica run](experiments/2026-11-07-av-dev30-dp4-run.md): `docs/experiments/scripts/fresh-av-dev30-20261107.py` is the preview-first canonical-wrapper/flock owner, with pinned runner, input/closure identity and exact healthy idle replicas. `fresh-av-dev30-progress-20261107.py` reads response, verifier, trajectory, HTTP and capacity evidence, separating completed responses from scores. The actual full run completed all 2,338 scored items with zero unscored/errors; owner closure and exact healthy AV identities passed. Client HTTP traces only, no model deployment or activation capture.
 
-- `docs/experiments/scripts/fresh-n30-complete-audit.py`: CPU audit for completed canonical AV dev30, using existing `audit_run` and exact `build_report` reconstruction; checks all 2,338 IDs/budgets, 90 code items, 14 areas/32 sources, immutable runner/serving receipts, HTTP request counts and ten agent trajectories. Refuses partial runs; writes fresh numeric evidence only, with no model/API/GPU calls. The actual complete-run audit and exact report reconstruction passed; missing/error/duplicate/nonfinite evidence remains explicit on anomalous inputs. Three boundary tests and the full 525-test CPU suite passed with 56 optional-dependency skips.
+- `docs/experiments/scripts/fresh-n30-complete-audit.py`: CPU audit for canonical dev30 using existing audit_run and exact build_report reconstruction; retains all 2,338 IDs/budgets, 90 code items, 14 areas/32 sources, immutable runtime receipts, HTTP counts and ten agent trajectories. --expected-tree defaults to AV; partial runs are refused unless --allow-partial is explicitly supplied, which preserves unknown/error rows and never permits full-run ranking. No model/API/GPU calls. Historical complete AV validation passed the 525-test suite (56 optional-dependency skips); the F03 argument/partial-record extension passed compile/help, three existing boundary tests and focused Ruff, without rerunning the full suite. See [F03 partial result](experiments/2026-11-07-f03-partial-official-result.md).
 
 - [Authored 120-case native generation owner](experiments/2026-11-07-av-authored120-native-generation.md): preview-first, fixed four input batches through the existing public-answer generator; pinned AV/4-CID identity and shared evaluation lock; no scoring or service changes.
 
@@ -225,3 +225,13 @@ fixture proves rejection before mutation and refusal of ambiguous rollback.
   [Execution evidence](experiments/2026-11-07-f03-materialization.md).
 
 - `docs/experiments/scripts/fresh-four-parallel-redeploy-20261107.py`: explicit-plan one-off running four existing `redeploy-replica.py` services concurrently under one global lock. All children join before success or all-four rollback; protects 23 other containers and requires homogeneous closure. Default unbound-plan preview performs no Docker call. Four focused CPU tests (including real-loop/fake-child failure→join→rollback), Ruff and inert preview passed; actual parallel service operation remains untested. [Scope, shared-faststore proof and records](experiments/2026-11-07-f04-faststore-and-parallel-plan.md).
+
+- `scripts/experiments/gemma4-purpose/behavior_followup_cases.py`:
+  nine additional authored contracts after F03 (train6 / transfer3), reusing the
+  existing Case/CPU Docker fixture harness. Correct144/144 and all9 foils rejected
+  by fixed witnesses in one18-call CPU validation; model/GPU validation absent.
+  [Inputs, full trials and exact one-off invocation](experiments/2026-11-07-behavior-followup9.md).
+
+### Completed F03 dependent payload release and F04 dev30 bind
+
+The fixed [F03 release wrapper](experiments/scripts/fresh-f03-payload-release-20261107.py) delegates to the unchanged F02 durable release engine. It requires the verified AV-dependent archive, exact private two-file scope, F04 four-replica closure and global lock; known inaccessible OS-process references remain explicit unknowns. The one approved operation has completed and must not be repeated. See [failure, revision and completion](experiments/2026-11-07-f03-payload-release-completed.md). The existing canonical dev30 owner was reused without changes; [F04 binding and launch](experiments/2026-11-07-f04-dev30-launch.md) records the one-off source, full 2,338-item plan and mixed fresh/private plus prior/shared hash contract.

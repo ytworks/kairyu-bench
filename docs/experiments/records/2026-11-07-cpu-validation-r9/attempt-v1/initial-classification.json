@@ -1,0 +1,76 @@
+{
+  "root_initial_attempt": {
+    "ruff_errors": 290,
+    "unittest": "not_started",
+    "mypy": "not_started"
+  },
+  "recorded_attempt": {
+    "returncode": 1,
+    "elapsed_seconds": 0.06602025032043457,
+    "errors": 290
+  },
+  "by_file": {
+    "docs/experiments/records/2026-11-07-f03-deployment-dp4-v1/apply-source.py": {
+      "E401": 1,
+      "E702": 29,
+      "F821": 11,
+      "E701": 3
+    },
+    "docs/experiments/records/2026-11-07-f03-deployment-dp4-v1/prepare-source.py": {
+      "E401": 1,
+      "E702": 12,
+      "F821": 2
+    },
+    "docs/experiments/records/2026-11-07-f04-deployment-dp4-v1/endpoint-source.py": {
+      "E401": 1,
+      "F401": 1,
+      "E702": 25,
+      "F821": 3,
+      "E701": 2
+    },
+    "docs/experiments/records/2026-11-07-f04-deployment-dp4-v1/preview-source.py": {
+      "E401": 1,
+      "F401": 1,
+      "E702": 26,
+      "F821": 2,
+      "E701": 1
+    },
+    "docs/experiments/records/2026-11-07-f04-faststore-preview-v1/prepare-preview.py": {
+      "E401": 1,
+      "E702": 14,
+      "E402": 2,
+      "E731": 1,
+      "E701": 1
+    },
+    "docs/experiments/records/2026-11-07-f04-parallel-deploy-plan-v1/owner-source.py": {
+      "E401": 1,
+      "E702": 35,
+      "E701": 8,
+      "F821": 3
+    },
+    "docs/experiments/records/2026-11-07-f04-relative-v1/prepare-and-solve.py": {
+      "E401": 1,
+      "E702": 13,
+      "E731": 1,
+      "E701": 1
+    },
+    "docs/experiments/records/2026-11-07-native-relative-energy-v1/analyze.py": {
+      "E401": 1,
+      "E702": 20,
+      "E402": 1,
+      "E701": 3,
+      "F821": 2
+    },
+    "docs/experiments/scripts/fresh-f03-deploy-apply-20261107.py": {
+      "E401": 1,
+      "E702": 29,
+      "F821": 11,
+      "E701": 3
+    },
+    "docs/experiments/scripts/fresh-f03-deploy-preview-20261107.py": {
+      "E401": 1,
+      "E702": 12,
+      "F821": 2
+    }
+  }
+}

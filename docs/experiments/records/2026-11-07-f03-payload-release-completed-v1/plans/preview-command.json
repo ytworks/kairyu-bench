@@ -1,0 +1,12 @@
+[
+  "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/infra/weight-tools-ci/bin/python",
+  "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/worktrees/kairyu-bench-weight-tools/docs/experiments/scripts/fresh-f03-payload-release-20261107.py",
+  "--plan",
+  "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f03-native-v1/lossless-release-plan-v1/plan-ready.json",
+  "--plan-sha256",
+  "82c8cbddd59f8d7aecf599b53aa781a8c69475c2c9344190ce845ff426dbd9fa",
+  "--expected-wrapper-sha256",
+  "72e5bdb4566652d5baeae5fb4d9ef71a02f3b5920951891a3f5167f63a39881c",
+  "--output",
+  "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f03-native-v1/lossless-release-preview-v1"
+]

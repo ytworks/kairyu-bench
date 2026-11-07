@@ -1,0 +1,69 @@
+{
+  "epoch": 1794050068.0773633,
+  "parent": "AV",
+  "approved_for_materialization": true,
+  "f03_status": "partial",
+  "reason": "interrupted_after_1200_second_disconnect_not_ranked",
+  "f03_report_sha256": "cc76ce3de5ce7202ca994d087fdaa3f856abb71c87061d4b5a368691edbcf9bc",
+  "f03_run_sha256": "836300a72567fa0c85a02bd433fae5e68923f79d910d530a4d1355b057779f1e",
+  "f03_owner_complete_sha256": "4d52b85c13e9db7c27431a680763fc38f4138392d7324ea603b558fd8f5b407b",
+  "f03_code_score_all90": 0.7265873015873016,
+  "av_code_score_all90": 0.7293650793650793,
+  "whole_run_ranked": false,
+  "f03_unscored": [
+    "terminal-bench:polyglot-c-py"
+  ],
+  "services": [
+    {
+      "service": "gemma-0",
+      "cid": "0169d434fd1fa863ec39661a3e4c6b947ac2bef977e6f596ede771c6921bd32b",
+      "healthy": true,
+      "idle_counts": [
+        0.0,
+        0.0
+      ],
+      "models": [
+        "gemma-4-31b"
+      ]
+    },
+    {
+      "service": "gemma-1",
+      "cid": "d782bf8b23562bd19835279b1f8804910df882065d222e8e674cecafbb9b7d5e",
+      "healthy": true,
+      "idle_counts": [
+        0.0,
+        0.0
+      ],
+      "models": [
+        "gemma-4-31b"
+      ]
+    },
+    {
+      "service": "gemma-2",
+      "cid": "3acc0a02d713ae298e7979547db8fac1a14374826cd52fa7eb4453289ffe4072",
+      "healthy": true,
+      "idle_counts": [
+        0.0,
+        0.0
+      ],
+      "models": [
+        "gemma-4-31b"
+      ]
+    },
+    {
+      "service": "gemma-3",
+      "cid": "a7a781b8fa49e81f0a1cd638dbcc70f2d9c8310857e3b8c1ef53250eeafa4a02",
+      "healthy": true,
+      "idle_counts": [
+        0.0,
+        0.0
+      ],
+      "models": [
+        "gemma-4-31b"
+      ]
+    }
+  ],
+  "free_bytes": 69889232896,
+  "model_generation_calls": 0,
+  "next": "One existing faststore build then F04 create/verify; no baseline generation"
+}

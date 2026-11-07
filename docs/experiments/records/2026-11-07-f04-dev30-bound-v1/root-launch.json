@@ -1,0 +1,17 @@
+{
+  "pid": 1311358,
+  "epoch": 1794051666.5631177,
+  "plan_sha256": "26c44c8b15af2c5c0fefeebb1d0aaa94203c381ada65c69eab16ea127b44ef07",
+  "owner_sha256": "956af488fe54578c32c9baa856e9c32170dc49c1bbce2b1ba5db9af9ea1dd524",
+  "argv_without_credentials": [
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/infra/weight-tools-ci/bin/python",
+    "-B",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/worktrees/kairyu-bench-weight-tools/docs/experiments/scripts/fresh-av-dev30-20261107.py",
+    "--plan",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f04-dev30-dp4-v1/launch-plan-approved.json",
+    "--run"
+  ],
+  "auth": "existing bashrc sourced silently; no credential values recorded",
+  "selected_items": 2338,
+  "baseline_runs_added": 0
+}

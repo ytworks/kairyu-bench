@@ -1,0 +1,48 @@
+{
+  "service": "gemma-1",
+  "cid": "d782bf8b23562bd19835279b1f8804910df882065d222e8e674cecafbb9b7d5e",
+  "samples": [
+    {
+      "epoch": 1794049282.4104397,
+      "values": {
+        "generation_tokens_total": [
+          1135962.0
+        ],
+        "prompt_tokens_total": [
+          1865895.0
+        ],
+        "num_requests_running": [
+          1.0
+        ],
+        "num_requests_waiting": [
+          0.0
+        ],
+        "time_per_output_token_seconds_count": [],
+        "time_per_output_token_seconds_sum": []
+      }
+    },
+    {
+      "epoch": 1794049292.4304407,
+      "values": {
+        "generation_tokens_total": [
+          1137267.0
+        ],
+        "prompt_tokens_total": [
+          1865895.0
+        ],
+        "num_requests_running": [
+          1.0
+        ],
+        "num_requests_waiting": [
+          0.0
+        ],
+        "time_per_output_token_seconds_count": [],
+        "time_per_output_token_seconds_sum": []
+      }
+    }
+  ],
+  "inference_requests_added": 0,
+  "stops": 0,
+  "interval_seconds": 10.02000093460083,
+  "generation_tokens_delta": 1305.0
+}

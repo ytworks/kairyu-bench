@@ -1,0 +1,33 @@
+import json,re,time,urllib.request
+from pathlib import Path
+R=Path("/mnt/nvme/kairyu/wsp/gemma4-coding-20261104")
+N=R/"analysis/fresh-purpose-20261107-f03-dev30-dp4-v1"
+RUN=R/"results/gemma4-fresh-f03-dev30-dp4-20261107-v1"
+service=next(x for x in json.loads((N/"launch-preflight.json").read_text())["services"] if x["service"]=="gemma-1")
+names=["generation_tokens_total","prompt_tokens_total","num_requests_running","num_requests_waiting","time_per_output_token_seconds_count","time_per_output_token_seconds_sum"]
+out={"service":service["service"],"cid":service["cid"],"samples":[],"inference_requests_added":0,"stops":0}
+for i in range(2):
+ epoch=time.time()
+ with urllib.request.urlopen("http://"+service["ip"]+":8000/metrics",timeout=10) as response:text=response.read().decode()
+ values={name:[float(x) for x in re.findall(r"^vllm:"+name+r"(?:\{[^}]*\})?\s+([0-9.eE+-]+)",text,re.M)] for name in names}
+ out["samples"].append({"epoch":epoch,"values":values})
+ if i==0:time.sleep(10)
+out["interval_seconds"]=out["samples"][1]["epoch"]-out["samples"][0]["epoch"]
+out["generation_tokens_delta"]=sum(out["samples"][1]["values"]["generation_tokens_total"])-sum(out["samples"][0]["values"]["generation_tokens_total"])
+with (N/"engine-progress-probe.json").open("x") as f:f.write(json.dumps(out,indent=2)+"\n")
+print(json.dumps(out))
+base=RUN/"agents/terminal-bench/raw/terminal-bench/jobs"
+for trial in base.glob("*/polyglot*"):
+ print("trial",trial)
+ for p in [trial/"config.json",trial.parent/"config.json",trial/"result.json"]:
+  if not p.exists():continue
+  d=json.loads(p.read_text())
+  def selected(v,prefix=""):
+   if isinstance(v,dict):
+    for k,x in v.items():
+     if any(w in k.lower() for w in ["timeout","started","finished","duration","task_path"]):print(str(p),prefix+k,json.dumps(x))
+     elif isinstance(x,(dict,list)):selected(x,prefix+k+".")
+   elif isinstance(v,list):
+    for i,x in enumerate(v):selected(x,prefix+str(i)+".")
+  selected(d)
+ print("file_names",[str(x.relative_to(trial)) for x in trial.rglob("*") if x.is_file() and x.suffix in [".toml",".json"]][:25])

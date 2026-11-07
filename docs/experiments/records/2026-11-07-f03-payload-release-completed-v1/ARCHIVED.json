@@ -1,0 +1,103 @@
+{
+  "archive": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f03-native-v1/lossless-archive-v1",
+  "archive_checksum_list_sha256": "374f40c074c4ea8c893d802217d31d1ef99987cb6d146016972790128aa3b520",
+  "kind": "lossless_dependent_archive",
+  "mandatory_base": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/checkpoints/code90-current-ad-helper-av-v1",
+  "not_a_saved_model": true,
+  "operation_sha256": "435e01109887123db12519c100e304fa7bd4f5a71b772e6c96eedce1b130f894",
+  "original_nine_files": [
+    {
+      "candidate_sha256": "ae53464bf3be25802b3a5b37def7fd89667067d7577049b3b2d74c4d8de4c6d4",
+      "path": "chat_template.jinja",
+      "size": 18683,
+      "source_sha256": "ae53464bf3be25802b3a5b37def7fd89667067d7577049b3b2d74c4d8de4c6d4"
+    },
+    {
+      "candidate_sha256": "e967dd38bc5cfd38bd09a995a7bf4a754075df2b46aba68f7fbb5a791e6d8dd1",
+      "path": "config.json",
+      "size": 4621,
+      "source_sha256": "e967dd38bc5cfd38bd09a995a7bf4a754075df2b46aba68f7fbb5a791e6d8dd1"
+    },
+    {
+      "candidate_sha256": "d4226bbe3117d2d253ba4609720ba82c6c4ce4627a9a6ae05387c78983ac03de",
+      "path": "generation_config.json",
+      "size": 208,
+      "source_sha256": "d4226bbe3117d2d253ba4609720ba82c6c4ce4627a9a6ae05387c78983ac03de"
+    },
+    {
+      "candidate_sha256": "48abfc21afab59b95aa9504d8848fd2dd6965ab3a04c9748af4a337bfe70112f",
+      "path": "model-00001-of-00002.safetensors",
+      "size": 49923154850,
+      "source_sha256": "0589dc8a7a3afba79fe2d8444221dae410db57ce1be33eb72d9be637d70fcf10"
+    },
+    {
+      "candidate_sha256": "8110662f1c1c7386a23478e1e1d33259bc4f99b5d6f115780641dea04eb3a700",
+      "path": "model-00002-of-00002.safetensors",
+      "size": 12623183414,
+      "source_sha256": "9be24bc9910dbbe54f3f46154189c729071fd56dc41331f4a97a6ad3e02b3b56"
+    },
+    {
+      "candidate_sha256": "390b7f9a0a502e4526cf20862d22954c911cc318d8aba2cdb745c6fbd98264f6",
+      "path": "model.safetensors.index.json",
+      "size": 120246,
+      "source_sha256": "390b7f9a0a502e4526cf20862d22954c911cc318d8aba2cdb745c6fbd98264f6"
+    },
+    {
+      "candidate_sha256": "32bdf45d2ad4cc29a0822ddd157a182de76644f0419a6228d151495256e9813c",
+      "path": "processor_config.json",
+      "size": 1689,
+      "source_sha256": "32bdf45d2ad4cc29a0822ddd157a182de76644f0419a6228d151495256e9813c"
+    },
+    {
+      "candidate_sha256": "cc8d3a0ce36466ccc1278bf987df5f71db1719b9ca6b4118264f45cb627bfe0f",
+      "path": "tokenizer.json",
+      "size": 32169626,
+      "source_sha256": "cc8d3a0ce36466ccc1278bf987df5f71db1719b9ca6b4118264f45cb627bfe0f"
+    },
+    {
+      "candidate_sha256": "9f4fec4b1dc6ecddf8f4a92e9caea5971c0e67d81309f3f9066a2bee8c362633",
+      "path": "tokenizer_config.json",
+      "size": 3082,
+      "source_sha256": "9f4fec4b1dc6ecddf8f4a92e9caea5971c0e67d81309f3f9066a2bee8c362633"
+    }
+  ],
+  "plan_sha256": "7473e36c8948981fbb020c4cbf3917f7b98f4474b9d4fca25a6cea4f04fba964",
+  "receipts": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f03-native-v1/lossless-release-apply-v1",
+  "reconstruction_instructions": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f03-native-v1/lossless-archive-v1/README.md",
+  "released": [
+    {
+      "bytes": 49923154850,
+      "current_stat": {
+        "ctime_ns": 1794044335354204449,
+        "device": 2306,
+        "gid": 1003,
+        "inode": 182192246,
+        "mode": 33204,
+        "mtime_ns": 1794044335354204449,
+        "nlink": 1,
+        "size": 49923154850,
+        "uid": 1003
+      },
+      "historical_full_sha256": "48abfc21afab59b95aa9504d8848fd2dd6965ab3a04c9748af4a337bfe70112f",
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/checkpoints/fresh-native-contract-f03/model-00001-of-00002.safetensors"
+    },
+    {
+      "bytes": 12623183414,
+      "current_stat": {
+        "ctime_ns": 1794044335356204380,
+        "device": 2306,
+        "gid": 1003,
+        "inode": 182192247,
+        "mode": 33204,
+        "mtime_ns": 1794044335356204380,
+        "nlink": 1,
+        "size": 12623183414,
+        "uid": 1003
+      },
+      "historical_full_sha256": "8110662f1c1c7386a23478e1e1d33259bc4f99b5d6f115780641dea04eb3a700",
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/checkpoints/fresh-native-contract-f03/model-00002-of-00002.safetensors"
+    }
+  ],
+  "schema_version": 1,
+  "state": "archived_losslessly"
+}

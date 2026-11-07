@@ -1,0 +1,77 @@
+import copy,datetime,hashlib,json,pathlib,subprocess,sys,time,uuid
+R=pathlib.Path('/mnt/nvme/kairyu/wsp/gemma4-coding-20261104')
+B=R/'worktrees/kairyu-bench-weight-tools'
+N=R/'analysis/fresh-purpose-20261107-f04-dev30-dp4-v1'
+P4=R/'analysis/fresh-purpose-20261107-f04-relative-v1'
+D=P4/'deployment-dp4-v1'
+sys.path.insert(0,str(B/'src'))
+from kairyu_bench.wsp.weights.checkpoint import Checkpoint
+from kairyu_bench.wsp.weights.native_faststore import digest
+def sha(p):return hashlib.sha256(p.read_bytes()).hexdigest()
+def pin(p,expected=None):
+ h=sha(p)
+ if expected is not None:assert h==expected,(str(p),h)
+ return {'path':str(p),'bytes':p.stat().st_size,'sha256':h}
+def save(p,d):
+ with p.open('x') as f:json.dump(d,f,indent=2);f.write(chr(10))
+def st(p):
+ s=p.stat()
+ return dict(device=s.st_dev,inode=s.st_ino,size=s.st_size,mtime_ns=s.st_mtime_ns,ctime_ns=s.st_ctime_ns,nlink=s.st_nlink,uid=s.st_uid,gid=s.st_gid,mode=s.st_mode)
+mp=R/'checkpoints/fresh-native-relative-f04-faststore-v1/manifest.json'
+mpin=pin(mp,'fd189cf276a1219ad627186d2dfb4a895c79768821f247a0b33d9abd8953d8c1')
+m=json.loads(mp.read_text());cp=pathlib.Path(m['checkpoint_path'])
+vp=P4/'faststore-plan-v1/materialization-v1/verify.stdout'
+vpin=pin(vp,'a7237a2b82d68e64467c791c3781a86b8b216f584272ef5db77c956383c4b0cd')
+v=json.loads(vp.read_text());assert v['verified'] and m['verification']['verified']
+now={x['path']:st(cp/x['path']) for x in m['all_checkpoint_files']}
+assert len(now)==9 and now==m['candidate_inventory_stat']
+rows=sorted(m['all_checkpoint_files'],key=lambda x:x['path'])
+tree=digest(rows);assert tree==m['control_tree_sha256']=='7b9e9488e3cd4e0b6c5f61ae341e5eeccdf5bd31c46d1c8354950dbc29d0f924'
+identity=Checkpoint(cp).identity(hash_files=False)
+rowmap={x['path']:x for x in rows}
+assert set(rowmap)=={x['path'] for x in identity['files']}
+for item in identity['files']:
+ assert item['size']==rowmap[item['path']]['size']
+ item['sha256']=rowmap[item['path']]['sha256']
+identity.update(sha256=tree,hash_files=True,identity_level='content_sha256',source_stable=True)
+assert now=={x:st(cp/x) for x in now}
+closurepin=pin(D/'four-apply-closure.json','91d0d6cfbcbf093c56b575633493e5a21ab15e89b986e8c7aeb579940e3c26bf')
+closure=json.loads((D/'four-apply-closure.json').read_text())
+epin=pin(D/'endpoint-closure.json','44c5fd4e3a725353eca32fb56278000886cc9ca92bd03013f64fea0c6dc36727')
+relpin=pin(D/'global-lock-released.json','ed8a921b735573190cafd162c38f524f0c6c9afe6f0fa58219e66bd4842886c9')
+rel=json.loads((D/'global-lock-released.json').read_text());assert rel['status']=='normal_release'
+individualshas=['9c8cb98b6ed22c6cafb80bffa792ce0d28230e1bda013b70f385416cf6f7f126','5db50b29c8b3036bac1b437d170f33492b95a33e8e129d514e4b811778722e1c','3c602f0541f14cdf63799577e0d1d2e13f5c7ff674b36c3834aa5a0df48304f4','ae1630ca31c3691ef50d6ae459eec0cbf202c2721f67429917b6ea4d42e6e1d2']
+individuals=[pin(D/f'gemma-{i}-closure-v1.json',h) for i,h in enumerate(individualshas)]
+for service,c in closure['replicas'].items():
+ assert c['tree']==tree and c['checkpoint_mount']==str(cp) and c['checkpoint_readonly'] and c['runtime_preserved'] and c['tp_size']==2 and c['mtp_tokens']==4
+ assert json.loads((D/f'{service}-closure-v1.json').read_text())==c
+assert len(closure['replicas'])==4 and closure['protected_unchanged'] and closure['protected_count']==23 and closure['container_count']==27
+releasepath=R/'analysis/fresh-purpose-20261107-f03-native-v1/lossless-release-apply-v1/receipt.json'
+release=json.loads(releasepath.read_text())
+assert release['status']=='completed_two_private_payloads_represented_by_archive'
+cfg=json.loads((N/'http-trace-template.json').read_text())
+cfg.update(capture_id=uuid.uuid4().hex,created_at=datetime.datetime.now(datetime.timezone.utc).isoformat(),checkpoint=identity)
+(N/'http-trace').mkdir()
+save(N/'http-trace/capture.json',cfg)
+evidence={'created_epoch':time.time(),'manifest':mpin,'verify':vpin,'checkpoint':str(cp),'tree_sha256':tree,'current_full_stat':now,'all_checkpoint_files':rows,'hash_provenance':m['verification'],'payload_hash_passes_in_this_binding':0,'headers_and_metadata_only_read':True,'same_stat_before_after':True,'source':pin(pathlib.Path(__file__)),'scope':'Fresh-private and prior-full-shared hashes attested by faststore verification; current full inode/stat continuity, no new full payload hash.'}
+save(N/'http-trace-identity-check.json',evidence)
+p=json.loads((N/'launch-plan-unbound.json').read_text())
+p.update(status='approved_for_execution',approved_for_execution=True,closure_bound_epoch=time.time())
+p['command'][p['command'].index('--label')+1]=tree
+p['expected_serving'].update(tree_sha256=tree,service_cids={k:x['cid'] for k,x in closure['replicas'].items()},closures=individuals,four_replica_closure=closurepin)
+p['http_trace']['config']=pin(N/'http-trace/capture.json')
+p['http_trace']['identity_check']=pin(N/'http-trace-identity-check.json')
+p['handoff'].update(root_authorized=True,prior_owner_pid=rel['pid'],normal_global_release=relpin,endpoint_closure=epin,lossless_release_receipt=pin(releasepath),authorization='Root explicitly authorized fully bound existing-owner preview and immediate root launch after F03 lossless release. No base rerun or additional finite/proxy evaluation.')
+p['prior_owner_pid']=rel['pid']
+p['pending_deployment_bindings']=[]
+p['candidate_identity']=p.pop('candidate_identity_pending')
+p['candidate_identity'].update(manifest_sha256=mpin['sha256'],verification_receipt_path=str(vp),verification_receipt_sha256=vpin['sha256'])
+p['prelaunch_requirements'][0]='AV remains best complete same-cohort parent; F03 partial trial preserved and all90 code lower than AV, no adoption.'
+owner=pathlib.Path(p['owner_source']['path']);pin(owner,p['owner_source']['sha256'])
+save(N/'launch-plan-approved.json',p)
+previewcmd=[sys.executable,str(owner),'--plan',str(N/'launch-plan-approved.json')]
+t=time.time()
+result=subprocess.run(previewcmd,text=True,capture_output=True)
+save(N/'owner-preview.json',{'command':previewcmd,'returncode':result.returncode,'stdout':result.stdout,'stderr':result.stderr,'elapsed_seconds':time.time()-t,'plan':pin(N/'launch-plan-approved.json'),'owner':pin(owner),'model_calls':0})
+print(json.dumps({'plan':pin(N/'launch-plan-approved.json'),'preview':pin(N/'owner-preview.json'),'preview_returncode':result.returncode,'preview_stdout':result.stdout,'source':pin(pathlib.Path(__file__))}))
+assert result.returncode==0
