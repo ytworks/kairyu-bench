@@ -181,3 +181,48 @@ application; AZ and BA are alternatives, not cumulative edits. This owner-only
 change passed Ruff, syntax, metadata lifecycle rejection checks and an inert CLI
 preview in `A/current-av-az-ba-finite-v1/owner-focused.json`. It does not claim
 an executed finite batch or a new model result.
+
+
+## Actual AV parent AZ/BA replay
+
+The declared O2/GPU4 path ran once on **2026-11-07 03:13:06 UTC**, using
+recipe `d1f965914df677c710cd23ab0dd8e40b132a5d3cf6c13128a8eef2ce0037dbcc`.
+Accepted AV remained the source for both alternatives. The fixed 120 cases /
+19 purposes / 38 folds used SDPA, complete 2048-token frame limit, serial answers
+and longest-frame-first execution. Actual complete frames reached 1,268 tokens.
+
+Finite measurement completed in **97.7645 seconds**. All four phases matched
+**360 tensors / 325,313 selected coordinates** against the source-sample-derived
+BF16 expectations. The restored AV margin, correct-NLL and KL differences were
+exactly zero. Against the completed AV derivative collection, baseline fold
+correct-LL difference was zero and maximum case-margin difference was
+`2.384185791015625e-7`. Peak GPU allocation/reservation was **59.46 / 61.32 GiB**.
+The exact O2 container was healthy again at **03:16:50.478472 UTC**, with total
+owner time **223.7186 seconds**; AV0, AD1, AR3, embeddings and source pins stayed
+unchanged. No model retry or checkpoint copy occurred.
+
+Both candidates increased mean correct-LL for every authored purpose. This is
+a purpose-average observation, not satisfaction of every fold target. Science10
+includes the original six science purposes and four helper/composition purposes;
+core3 is implementation, algorithm and workflow. Tools3 is tool-call, no-call
+and arguments. Values below are equally weighted purpose/fold means.
+
+| Alternative | Science10 correct-LL Δ | Core3 correct-LL Δ | Plain code Δ | Tools3 Δ | Referent Δ | Fact retention Δ |
+|---|---:|---:|---:|---:|---:|---:|
+| AZ sampled coordinates | +0.052869 | +0.059006 | +0.197734 | +0.080441 | +0.044755 | +0.035120 |
+| BA full MLP units | +0.049529 | +0.043147 | +0.120601 | +0.084982 | +0.041643 | +0.015846 |
+
+These are teacher-forced public-answer diagnostics. They establish neither
+ordinary-generation improvement nor adoption; each candidate was restored from
+AV before its own application. The A/D attention-gradient arrays were not
+claimed identical, and the separate review records that limitation.
+
+Evidence under `A/current-av-az-ba-finite-v1`:
+
+| Artifact | SHA256 |
+|---|---|
+| `owner-plan.json` | `81fdb17f21ea58991779c05616b73e5c28a18c2ff5aa62e85921fb158a51b91d` |
+| `completion.json` | `ef935844f0b5fc0169090ecdd856e2d5d03ef6bde911f4b9a8c0ca1b760a1104` |
+| `postchecks.json` | `d2f2be34345b1ad497d27fa7f205a68b27de4600fd9b4dc1e1c0c1c9b7c8f25b` |
+| `numeric-final-summary.json` | `e72f2d1b9e6699565e51cd73df10c7982003436e751611521d14ecced21f9910` |
+| `selected-byte-expectations.json` | `cc145aa8651f64bf09f9a5feb7215c0b43a2fdb0d2b6441d438489ba3f694131` |
