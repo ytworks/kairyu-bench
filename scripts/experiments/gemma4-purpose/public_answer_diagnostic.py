@@ -101,8 +101,12 @@ def run(args, checkpoint, cases, provenance):
         "legacy_custom": "head output upcast FP32 -> divide -> tanh -> multiply -> logsoftmax",
         "exact_bit_parity_required_between_dtypes": False}
     rows = []
+    execution_selected = selected
+    if common.execution_order(args) == "longest_frame_first":
+        execution_selected = sorted(selected, key=lambda item: len(new_rows[item[2]["id"]][1]) + max(
+            len(new_rows[item[2]["id"]][2]), len(new_rows[item[2]["id"]][3])), reverse=True)
     with torch.inference_mode():
-        for purpose, fold, case in selected:
+        for purpose, fold, case in execution_selected:
             old_prefix, old_answer = legacy_frame(tokenizer, case)
             _, new_prefix, new_answer, _ = new_rows[case["id"]]
             if old_prefix == new_prefix:
@@ -136,6 +140,8 @@ def run(args, checkpoint, cases, provenance):
                     rows.append(result)
                     del ids, mask, official, hidden, raw, native, fp32, target
                     common.save(args.output / "partial.json", {"status": "running", "rows": rows})
+    canonical = {case["id"]: index for index, (_, _, case) in enumerate(selected)}
+    rows.sort(key=lambda row: canonical[row["id"]])
     common.assert_inputs(checkpoint, provenance)
     result = {"schema_version": 1, "status": "completed", "rows": rows,
               "seconds_including_model_load": time.monotonic() - start,

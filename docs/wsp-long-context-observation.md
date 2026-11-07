@@ -84,3 +84,14 @@ resource owner and measured peaks. Old eager gradients cannot be relabeled as
 new SDPA observations.
 
 The complete CPU suite finished with **520 collected: 464 passed and 56 optional skips**, whole-tree Ruff, mypy74, data and shell checks passing, and no source changes during checks. Evidence: `A/cpu-integration-long-context-v1/ci-results.json` SHA256 `a23ac1ac9c4605214f66c4c14f6fe7baa5054944e93ad27be69aa32650d24a6d`. The existing test count is unchanged. This excludes the subsequent materializer label-only AV authorization change, which received its own inert preview and Ruff checks.
+
+The optional `--execution-order longest_frame_first` orders folds by their largest
+complete prefix plus correct/foil answer, then cases within each fold by that
+length. Serial collectors therefore process the largest actual frame first,
+without a separate model probe. Saved purpose, fold, and case order stays
+canonical. The explicit policy records this choice; adapters and composition
+require an exact match. Omission retains the original execution order.
+The observation owner can bind an explicit free-memory budget separately from
+the Torch allocator cap. The prospective AV run uses 88 GiB for the allocator
+plus 2 GiB outside it, requiring at least 90 GiB free after releasing O2.
+This is a resource limit, not evidence of fused SDPA or reduced memory use.

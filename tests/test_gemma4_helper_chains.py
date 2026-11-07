@@ -13,6 +13,7 @@ DIRECTORY = Path(__file__).resolve().parents[1] / "scripts/experiments/gemma4-pu
 sys.path.insert(0, str(DIRECTORY))
 import helper_chain_cases as CHAINS  # noqa: E402
 import recipe_common as COMMON  # noqa: E402
+import long_helper_chain_cases as LONG  # noqa: E402
 
 
 class HelperChainsTest(unittest.TestCase):
@@ -104,6 +105,48 @@ class HelperChainsTest(unittest.TestCase):
             )
             with self.assertRaises(ValueError):
                 CHAINS.trusted_run({"code": "raise RuntimeError('arbitrary')"})
+
+            # The longer catalog reuses the three-call evaluator with its own
+            # semantic sample oracle; the prior case objects are preserved.
+            long_output = root / "long-bundle"
+            long_report = LONG.write_bundle(
+                long_output,
+                base=base,
+                base_sha256=hashlib.sha256(before).hexdigest(),
+                trials=4,
+            )
+            long_cases = json.loads((long_output / "train-cases.json").read_text())
+            self.assertEqual(long_cases["code"], old["code"])
+            self.assertEqual(base.read_bytes(), before)
+            self.assertTrue(long_report["old_objects_preserved"])
+            self.assertTrue(
+                all(
+                    f["kind"] == "numeric"
+                    for c in long_report["validation"]["chains"]
+                    for foil in c["foils"]
+                    for f in foil["outcome"]["failures"]
+                )
+            )
+            long_chain = LONG.catalog()[0]
+
+            def long_request(row):
+                code = (
+                    long_chain.helper.code(1)
+                    if row["id"].endswith("helper")
+                    else long_chain.downstream.code()
+                )
+                return {"public_answer": code, "finish_reason": "stop", "usage": {}}
+
+            result = LONG.evaluate_requests(
+                long_chain, long_request, LONG.trusted_run, trials=4
+            )
+            self.assertEqual(result["call_count"], 3)
+            self.assertFalse(result["helper_stage"]["passed"])
+            self.assertTrue(result["oracle_helper_downstream"]["passed"])
+            self.assertFalse(result["generated_helper_downstream"]["passed"])
+            with self.assertRaises(FileExistsError):
+                LONG.write_bundle(long_output)
+            self.assertEqual(base.read_bytes(), before)
 
 
 if __name__ == "__main__":

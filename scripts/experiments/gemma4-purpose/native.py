@@ -86,56 +86,57 @@ def collect(args, checkpoint, cases, provenance):
         if costs:
             np.savez_compressed(args.output / "virtual-unit-gain-l2-costs.npz", **costs)
         records = []
-        for group, folds in prepared.items():
-            for fold, rows in enumerate(folds):
-                accum = {key: torch.zeros_like(names[key], dtype=torch.float32) for key in ordered}
-                measured, unused = {}, set()
-                packed = common.objective_batches(rows, args.mode, args.max_cases_per_microbatch)
-                forward_count = 0
-                def accumulate(values, sign=1.):
-                    gradients = torch.autograd.grad(values.sum() * sign / len(rows),
-                                                    [names[k] for k in ordered], allow_unused=True)
-                    for key, gradient in zip(ordered, gradients, strict=True):
-                        if gradient is None:
-                            unused.add(key)
-                        else:
-                            # Every answer VJP is converted before accumulation;
-                            # no BF16 .grad buffer accumulates across answers.
-                            accum[key] += gradient.detach().float()
-                    return values.detach().cpu().tolist()
-                for batch in packed:
-                    if answer_batching == "paired":
-                        margins = objective(torch, net, head, tokenizer, batch, args.mode, args.device)
-                        observed = accumulate(margins)
-                        measured.update({row[0]: float(value) for row, value in zip(batch, observed, strict=True)})
-                        forward_count += 1
-                        del margins
+        for group, fold, rows in common.finite_replay.ordered_folds(prepared, common.execution_order(args)):
+            accum = {key: torch.zeros_like(names[key], dtype=torch.float32) for key in ordered}
+            measured, unused = {}, set()
+            packed = common.objective_batches(rows, args.mode, args.max_cases_per_microbatch, common.execution_order(args))
+            forward_count = 0
+            def accumulate(values, sign=1.):
+                gradients = torch.autograd.grad(values.sum() * sign / len(rows),
+                                                [names[k] for k in ordered], allow_unused=True)
+                for key, gradient in zip(ordered, gradients, strict=True):
+                    if gradient is None:
+                        unused.add(key)
                     else:
-                        width = max(len(row[1]) + max(len(row[2]), len(row[3])) for row in batch)
-                        selections = (("correct", 1.), ("foil", -1.)) if objective_kind == "margin" else (("correct", 1.),)
-                        for row in batch:
-                            measured[row[0]] = 0.
-                            for answer_kind, sign in selections:
-                                values = variants.single_answer_logprob_objective(
-                                    torch, net, head, tokenizer, row, answer_kind, args.mode, args.device, width)
-                                measured[row[0]] += sign * float(accumulate(values, sign)[0])
-                                forward_count += 1
-                                del values  # Graph is freed before the next answer forward.
-                arrays = {key: value.detach().cpu().numpy() for key, value in accum.items()}
-                if not all(np.isfinite(value).all() for value in arrays.values()):
-                    raise ValueError("nonfinite native derivative")
-                reference = variants.objective_references(cases[group][fold], measured, args.reference_tolerance, objective_kind)
-                path = args.output / f"gradient-{group}-{fold}.npz"
-                np.savez_compressed(path, **arrays)
-                value_key = "margin" if objective_kind == "margin" else "correct_logprob"
-                record = {"purpose": group, "fold": fold, "examples": len(rows),
-                          ("margins" if objective_kind == "margin" else "correct_logprobs"):
-                              [{"id": row[0], value_key: measured[row[0]]} for row in rows],
-                          "mean_" + value_key: float(np.mean(list(measured.values()))), "microbatches": len(packed),
-                          "answer_batching": answer_batching, "model_forward_count": forward_count,
-                          "unused_tensors": sorted(unused), "file": path.name, **reference}
-                records.append(record)
-                common.save(args.output / "progress.json", {"completed_folds": len(records), "last": record})
+                        # Every answer VJP is converted before accumulation;
+                        # no BF16 .grad buffer accumulates across answers.
+                        accum[key] += gradient.detach().float()
+                return values.detach().cpu().tolist()
+            for batch in packed:
+                if answer_batching == "paired":
+                    margins = objective(torch, net, head, tokenizer, batch, args.mode, args.device)
+                    observed = accumulate(margins)
+                    measured.update({row[0]: float(value) for row, value in zip(batch, observed, strict=True)})
+                    forward_count += 1
+                    del margins
+                else:
+                    width = max(len(row[1]) + max(len(row[2]), len(row[3])) for row in batch)
+                    selections = (("correct", 1.), ("foil", -1.)) if objective_kind == "margin" else (("correct", 1.),)
+                    for row in batch:
+                        measured[row[0]] = 0.
+                        for answer_kind, sign in selections:
+                            values = variants.single_answer_logprob_objective(
+                                torch, net, head, tokenizer, row, answer_kind, args.mode, args.device, width)
+                            measured[row[0]] += sign * float(accumulate(values, sign)[0])
+                            forward_count += 1
+                            del values  # Graph is freed before the next answer forward.
+            arrays = {key: value.detach().cpu().numpy() for key, value in accum.items()}
+            if not all(np.isfinite(value).all() for value in arrays.values()):
+                raise ValueError("nonfinite native derivative")
+            reference = variants.objective_references(cases[group][fold], measured, args.reference_tolerance, objective_kind)
+            path = args.output / f"gradient-{group}-{fold}.npz"
+            np.savez_compressed(path, **arrays)
+            value_key = "margin" if objective_kind == "margin" else "correct_logprob"
+            record = {"purpose": group, "fold": fold, "examples": len(rows),
+                      ("margins" if objective_kind == "margin" else "correct_logprobs"):
+                          [{"id": row[0], value_key: measured[row[0]]} for row in prepared[group][fold]],
+                      "mean_" + value_key: float(np.mean(list(measured.values()))), "microbatches": len(packed),
+                      "answer_batching": answer_batching, "model_forward_count": forward_count,
+                      "unused_tensors": sorted(unused), "file": path.name, **reference}
+            records.append(record)
+            common.save(args.output / "progress.json", {"completed_folds": len(records), "last": record})
+        canonical_order = {(group, fold): i for i, (group, fold, _) in enumerate(common.finite_replay.ordered_folds(prepared))}
+        records.sort(key=lambda row: canonical_order[(row["purpose"], row["fold"])])
         common.assert_inputs(checkpoint, provenance)
         for name, original in originals.items():
             if not np.array_equal(names[name].detach().flatten().float().cpu().numpy(), original):

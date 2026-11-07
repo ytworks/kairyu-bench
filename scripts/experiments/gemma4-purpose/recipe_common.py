@@ -35,10 +35,16 @@ def positive_int(value: str) -> int:
     return number
 
 
-def objective_batches(rows: list, mode: str, max_cases_per_microbatch: int | None = None) -> list[list]:
+def objective_batches(rows: list, mode: str, max_cases_per_microbatch: int | None = None, execution_order: str = "original") -> list[list]:
     """Retain existing packing/order, optionally split each pack into bounded case groups."""
     if max_cases_per_microbatch is not None and (type(max_cases_per_microbatch) is not int or max_cases_per_microbatch < 1):
         raise ValueError("max cases per microbatch must be a positive integer")
+    if execution_order == "longest_frame_first":
+        if mode != "chat-public-answer" or max_cases_per_microbatch != 1:
+            raise ValueError("longest-first requires one complete public-answer case")
+        return [[row] for row in sorted(rows, key=lambda r: len(r[1]) + max(len(r[2]), len(r[3])), reverse=True)]
+    if execution_order != "original":
+        raise ValueError("invalid observation execution order")
     packed = batches(rows) if mode == "chat-public-answer" else [rows]
     if max_cases_per_microbatch is None:
         return packed
@@ -244,6 +250,10 @@ def raw_frames(tokenizer: Any, cases: dict) -> tuple[dict, dict]:
             evidence[group].append(proof)
     return prepared, {"scope": "raw prompt, first continuation token only; no chat/thinking frame",
                       "frames": evidence}
+
+
+def execution_order(args: argparse.Namespace) -> str:
+    return getattr(args, "execution_order", "original")
 
 
 def frame_limit(args: argparse.Namespace, legacy: int | None = None) -> int | None:

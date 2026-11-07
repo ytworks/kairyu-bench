@@ -129,3 +129,5 @@ The [helper-capped functional batch](experiments/2026-11-07-helper-capped-functi
 [Opt-in long-context authored observations](wsp-long-context-observation.md) retain legacy frame/backend defaults while adding complete 1024/2048-token validation, text-only SDPA dispatch and an optional CUDA allocator cap. Shared policy identity rejects incompatible collector/composer mixtures. CPU contracts are validated; real 31B long-context capacity and fused-kernel savings remain untested.
 
 - [Saved AV ordinary all14 confirmation](wsp-av-full14-confirmation.md): fixed778 AD/AV TP2 comparison after explicit exploratory selection and saved-word/full-file verification; no intervening dev90 claim or automatic adoption.
+
+[Dependency-rich longer helper chains](wsp-long-helper-chains.md) add four authored training families (eight stages) and two disjoint transfer chains using the existing public-code evaluator and isolated executor. Complete interfaces and semantic foils are CPU-verified; the selected112 case objects remain unchanged in the120-row bundle. Longer input frames are not evidence of greater model capability.

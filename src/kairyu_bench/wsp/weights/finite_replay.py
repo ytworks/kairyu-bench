@@ -35,15 +35,18 @@ def add_observation_arguments(parser: argparse.ArgumentParser) -> None:
     parser.add_argument("--max-frame-tokens", type=int, choices=(1024, 2048),
                         help="opt-in complete prefix+answer limit; reject oversize, never truncate")
     parser.add_argument("--text-attention-backend", choices=("eager", "sdpa"), default="eager")
+    parser.add_argument("--execution-order", choices=("original", "longest_frame_first"), default="original")
     parser.add_argument("--cuda-memory-cap-gib", type=float,
                         help="optional CUDA caching-allocator limit, not total device memory")
 
 
 def validate_observation_policy(policy: Any) -> dict[str, Any]:
     keys = {"max_frame_tokens", "attention_dispatch", "cuda_memory_cap_gib",
-            "answer_batching", "max_cases_per_microbatch"}
+            "answer_batching", "max_cases_per_microbatch", "execution_order"}
     if not isinstance(policy, dict) or set(policy) != keys:
         raise ValueError("invalid explicit observation policy")
+    if policy["execution_order"] not in ("original", "longest_frame_first"):
+        raise ValueError("invalid observation execution order")
     limit, cap = policy["max_frame_tokens"], policy["cuda_memory_cap_gib"]
     dispatch = policy["attention_dispatch"]
     if (limit is not None and (type(limit) is not int or limit not in (1024, 2048))):
@@ -66,14 +69,15 @@ def observation_policy(args: argparse.Namespace, *, intrinsic_serial: bool = Fal
     limit = getattr(args, "max_frame_tokens", None)
     backend = getattr(args, "text_attention_backend", "eager")
     cap = getattr(args, "cuda_memory_cap_gib", None)
-    if limit is None and backend == "eager" and cap is None:
+    order = getattr(args, "execution_order", "original")
+    if limit is None and backend == "eager" and cap is None and order == "original":
         return None  # Preserve historical absent-policy behavior and artifacts.
     if getattr(args, "mode", "chat-public-answer") != "chat-public-answer":
         raise ValueError("explicit observation policy requires complete public-answer frames")
     if cap is not None and args.device != "cuda:0":
         raise ValueError("CUDA allocator cap requires cuda:0")
     return validate_observation_policy({
-        "max_frame_tokens": limit,
+        "max_frame_tokens": limit, "execution_order": order,
         "attention_dispatch": {"": "eager", "text_config": backend,
                                "vision_config": "eager", "audio_config": "eager"},
         "cuda_memory_cap_gib": cap,
@@ -85,6 +89,20 @@ def observation_policy(args: argparse.Namespace, *, intrinsic_serial: bool = Fal
 def validate_frame_rows(rows: list[Any], maximum: int | None) -> None:
     if maximum is not None and any(len(row[1]) + max(len(row[2]), len(row[3])) > maximum for row in rows):
         raise ValueError(f"complete prefix plus answer exceeds {maximum} tokens; no truncation")
+
+
+
+def ordered_folds(prepared: dict[str, Any], execution_order: str = "original") -> list[tuple[str, int, list[Any]]]:
+    """Order execution only; callers retain original fold/case labels in artifacts."""
+    result = [(group, fold, rows) for group, folds in prepared.items() for fold, rows in enumerate(folds)]
+    if execution_order == "original":
+        return result
+    if execution_order != "longest_frame_first":
+        raise ValueError("invalid observation execution order")
+    def width(row: Any) -> int:
+        return len(row[1]) + max(len(row[2]), len(row[3]))
+    result.sort(key=lambda item: max(map(width, item[2])), reverse=True)
+    return [(group, fold, sorted(rows, key=width, reverse=True)) for group, fold, rows in result]
 
 
 def configure_observation_cuda(torch: Any, device: str, policy: dict[str, Any] | None) -> dict[str, Any] | None:
@@ -357,10 +375,13 @@ class PublicAnswerEvaluator:
     """
     def __init__(self, net: Any, head: Any, tokenizer: Any, prepared: dict[str, Any],
                  device: str, deadline: Callable[[], None] = lambda: None,
-                 answer_batching: str = "paired") -> None:
+                 answer_batching: str = "paired", execution_order: str = "original") -> None:
         if answer_batching not in {"paired", "serial"}:
             raise ValueError("answer batching must be paired or serial")
         self.answer_batching = answer_batching
+        if execution_order != "original" and answer_batching != "serial":
+            raise ValueError("longest-first requires serial case/answers")
+        self.execution_order = execution_order
         import torch
         self.torch, self.net, self.head = torch, net, head
         self.tokenizer, self.prepared, self.device = tokenizer, prepared, device
@@ -376,78 +397,78 @@ class PublicAnswerEvaluator:
         auxiliary: dict[str, Any] = {}
         sweep_started = time.monotonic()
         with torch.inference_mode():
-            for group, folds in prepared.items():
-                values[group], auxiliary[group] = [], []
-                for fold_index, rows in enumerate(folds):
-                    fold_values, fold_aux = {}, {}
-                    packed = batches(rows)
+            values = {group: [None] * len(folds) for group, folds in prepared.items()}
+            auxiliary = {group: [None] * len(folds) for group, folds in prepared.items()}
+            for group, fold_index, rows in ordered_folds(prepared, self.execution_order):
+                fold_values, fold_aux = {}, {}
+                packed = batches(rows) if self.execution_order == "original" else [[row] for row in rows]
+                if self.answer_batching == "serial":
+                    packed = [[row] for batch in packed for row in batch]
+                for batch_index, batch in enumerate(packed):
+                    if not recovery:
+                        deadline()
+                    seq, targets, lengths = [], [], []
+                    for _, prefix, good, bad in batch:
+                        for reply in (good, bad):
+                            seq.append(prefix + reply)
+                            targets.append(reply)
+                            lengths.append(len(prefix))
+                    width = max(map(len, seq))
+                    ids = torch.tensor([s + [tokenizer.pad_token_id] * (width - len(s)) for s in seq], device=device)
+                    mask = torch.tensor([[1] * len(s) + [0] * (width - len(s)) for s in seq], device=device)
                     if self.answer_batching == "serial":
-                        packed = [[row] for batch in packed for row in batch]
-                    for batch_index, batch in enumerate(packed):
-                        if not recovery:
-                            deadline()
-                        seq, targets, lengths = [], [], []
-                        for _, prefix, good, bad in batch:
-                            for reply in (good, bad):
-                                seq.append(prefix + reply)
-                                targets.append(reply)
-                                lengths.append(len(prefix))
-                        width = max(map(len, seq))
-                        ids = torch.tensor([s + [tokenizer.pad_token_id] * (width - len(s)) for s in seq], device=device)
-                        mask = torch.tensor([[1] * len(s) + [0] * (width - len(s)) for s in seq], device=device)
-                        if self.answer_batching == "serial":
-                            answer_logp = []
-                            for i, prefix_length in enumerate(lengths):
-                                hidden = net(input_ids=ids[i:i + 1], attention_mask=mask[i:i + 1],
-                                             use_cache=False, return_dict=True).last_hidden_state
-                                selected = hidden[0, prefix_length - 1:len(seq[i]) - 1]
-                                logits = head(selected).float()
-                                if cap:
-                                    logits = cap * torch.tanh(logits / cap)
-                                answer_logp.append(torch.log_softmax(logits, -1))
-                            full_logp = torch.cat(answer_logp)
-                            del answer_logp
-                        else:
-                            hidden = net(input_ids=ids, attention_mask=mask, use_cache=False, return_dict=True).last_hidden_state
-                            selected = torch.cat([hidden[i, p - 1:len(seq[i]) - 1] for i, p in enumerate(lengths)])
+                        answer_logp = []
+                        for i, prefix_length in enumerate(lengths):
+                            hidden = net(input_ids=ids[i:i + 1], attention_mask=mask[i:i + 1],
+                                         use_cache=False, return_dict=True).last_hidden_state
+                            selected = hidden[0, prefix_length - 1:len(seq[i]) - 1]
                             logits = head(selected).float()
                             if cap:
                                 logits = cap * torch.tanh(logits / cap)
-                            full_logp = torch.log_softmax(logits, -1)
-                        answer = torch.tensor([t for reply in targets for t in reply], device=device)
-                        logp = full_logp.gather(1, answer[:, None]).flatten()
-                        means, positions, position_cases, at = [], [], [], 0
-                        for reply_index, reply in enumerate(targets):
-                            means.append(logp[at:at + len(reply)].mean())
-                            if reply_index % 2 == 0:
-                                for position in sorted({at, at + len(reply) - 1}):
-                                    positions.append(position)
-                                    position_cases.append(reply_index // 2)
-                            at += len(reply)
-                        means = torch.stack(means)
-                        margin = (means[::2] - means[1::2]).tolist()
-                        selected_logp = full_logp[positions]
-                        key = (group, fold_index, batch_index)
-                        if store_base:
-                            base_aux[key] = selected_logp.detach().cpu().clone()
-                            kl = torch.zeros(len(positions), device=device)
-                        else:
-                            reference = base_aux[key].to(device)
-                            kl = (reference.exp() * (reference - selected_logp)).sum(-1)
-                            if float(kl.min()) < -1e-4:
-                                raise ValueError("KL numerical consistency failed")
-                            kl = kl.clamp_min(0)
-                        kl_values, nll = kl.tolist(), (-means[::2]).tolist()
-                        for i, row in enumerate(batch):
-                            positions_kl = [v for j, v in enumerate(kl_values) if position_cases[j] == i]
-                            fold_aux[row[0]] = {"kl": sum(positions_kl) / len(positions_kl), "correct_nll": nll[i]}
-                        fold_values.update({row[0]: v for row, v in zip(batch, margin)})
-                        del hidden, selected, logits, full_logp, selected_logp, logp, means, kl
-                        if not store_base:
-                            del reference
-                    values[group].append([fold_values[row[0]] for row in rows])
-                    auxiliary[group].append({key: float(np.mean([fold_aux[row[0]][key] for row in rows]))
-                                             for key in ("kl", "correct_nll")})
+                            answer_logp.append(torch.log_softmax(logits, -1))
+                        full_logp = torch.cat(answer_logp)
+                        del answer_logp
+                    else:
+                        hidden = net(input_ids=ids, attention_mask=mask, use_cache=False, return_dict=True).last_hidden_state
+                        selected = torch.cat([hidden[i, p - 1:len(seq[i]) - 1] for i, p in enumerate(lengths)])
+                        logits = head(selected).float()
+                        if cap:
+                            logits = cap * torch.tanh(logits / cap)
+                        full_logp = torch.log_softmax(logits, -1)
+                    answer = torch.tensor([t for reply in targets for t in reply], device=device)
+                    logp = full_logp.gather(1, answer[:, None]).flatten()
+                    means, positions, position_cases, at = [], [], [], 0
+                    for reply_index, reply in enumerate(targets):
+                        means.append(logp[at:at + len(reply)].mean())
+                        if reply_index % 2 == 0:
+                            for position in sorted({at, at + len(reply) - 1}):
+                                positions.append(position)
+                                position_cases.append(reply_index // 2)
+                        at += len(reply)
+                    means = torch.stack(means)
+                    margin = (means[::2] - means[1::2]).tolist()
+                    selected_logp = full_logp[positions]
+                    key = (group, fold_index, batch_index)
+                    if store_base:
+                        base_aux[key] = selected_logp.detach().cpu().clone()
+                        kl = torch.zeros(len(positions), device=device)
+                    else:
+                        reference = base_aux[key].to(device)
+                        kl = (reference.exp() * (reference - selected_logp)).sum(-1)
+                        if float(kl.min()) < -1e-4:
+                            raise ValueError("KL numerical consistency failed")
+                        kl = kl.clamp_min(0)
+                    kl_values, nll = kl.tolist(), (-means[::2]).tolist()
+                    for i, row in enumerate(batch):
+                        positions_kl = [v for j, v in enumerate(kl_values) if position_cases[j] == i]
+                        fold_aux[row[0]] = {"kl": sum(positions_kl) / len(positions_kl), "correct_nll": nll[i]}
+                    fold_values.update({row[0]: v for row, v in zip(batch, margin)})
+                    del hidden, selected, logits, full_logp, selected_logp, logp, means, kl
+                    if not store_base:
+                        del reference
+                values[group][fold_index] = [fold_values[row[0]] for row in prepared[group][fold_index]]
+                auxiliary[group][fold_index] = {key: float(np.mean([fold_aux[row[0]][key] for row in prepared[group][fold_index]]))
+                                              for key in ("kl", "correct_nll")}
         flat = [float(np.mean(v)) for folds in values.values() for v in folds]
         aux = {key: [row[key] for folds in auxiliary.values() for row in folds]
                for key in ("kl", "correct_nll")}
@@ -605,7 +626,8 @@ def run(args: argparse.Namespace) -> dict[str, Any]:
         byte_proofs[name] = proof
         _save(output / "selected-byte-proofs.json", byte_proofs)
     evaluate = PublicAnswerEvaluator(net, head, tokenizer, prepared, args.device, deadline,
-                                    answer_batching=args.answer_batching)
+                                    answer_batching=args.answer_batching,
+                                    execution_order=policy["execution_order"] if policy else "original")
     records: dict[str, Any] = {}
     def on_result(identifier: str, result: Any) -> None:
         records[identifier] = result

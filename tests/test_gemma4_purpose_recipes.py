@@ -533,6 +533,52 @@ class PurposeTorchFixtures(unittest.TestCase):
                     self.assertFalse(net.norm.weight.requires_grad)
                     self.assertIsNone(net.norm.weight.grad)
 
+        # Exercise the execution policy through collection and finite replay:
+        # longest global fold/case first, canonical saved rows and same gradients.
+        long_rows = [rows[0], ("b", [1] * 5 + rows[1][1], rows[1][2], rows[1][3])]
+        longest = ("c", [1] * 9 + rows[0][1], rows[0][2], rows[0][3])
+        prepared = {"science": [long_rows], "later": [[longest]]}
+        cases = {group: [[{"id": row[0]} for row in fold] for fold in folds]
+                 for group, folds in prepared.items()}
+        saved_gradients = {}
+        for order in ("original", "longest_frame_first"):
+            with tempfile.TemporaryDirectory() as temporary:
+                args = SimpleNamespace(output=Path(temporary), mode="chat-public-answer", device="cpu",
+                                       virtual=False, max_cases_per_microbatch=1, objective="margin",
+                                       answer_batching="serial", reference_tolerance=0., execution_order=order)
+                net.events.clear()
+                with patch.object(COMMON, "load_model", return_value=(torch, tokenizer, model)), \
+                     patch.object(COMMON, "prepare", return_value=(prepared, {})), \
+                     patch.object(COMMON, "assert_inputs"), \
+                     patch.object(COMMON, "transformers_version", return_value="fixture"):
+                    report = NATIVE.collect(args, checkpoint, cases, {})
+                self.assertEqual([(r["purpose"], r["fold"]) for r in report["folds"]],
+                                 [("science", 0), ("later", 0)])
+                self.assertEqual([r["id"] for r in report["folds"][0]["margins"]], ["a", "b"])
+                if order == "longest_frame_first":
+                    self.assertEqual([shape[1] for event, shape in net.events if event == "forward"],
+                                     [14, 14, 10, 10, 5, 5])
+                for group in prepared:
+                    with np.load(Path(temporary) / f"gradient-{group}-0.npz") as saved:
+                        value = saved[name].copy()
+                    if order == "original":
+                        saved_gradients[group] = value
+                    else:
+                        np.testing.assert_array_equal(value, saved_gradients[group])
+            net.events.clear()
+            evaluator = COMMON.finite_replay.PublicAnswerEvaluator(
+                net, head, tokenizer, prepared, "cpu", answer_batching="serial", execution_order=order)
+            result = evaluator(store_base=True)
+            restored = evaluator(recovery=True)
+            result.pop("seconds")
+            restored.pop("seconds")
+            self.assertEqual(restored, result)
+            if order == "original":
+                original_result = result
+            else:
+                self.assertEqual(result, original_result)
+                self.assertEqual(net.events[0], ("forward", (1, 14)))
+
     def test_virtual_group_gain_derivative_and_norm_cost(self):
         inputs = torch.tensor([[1., 2., 3., 4.]])
         weight = torch.tensor([[1., 2., 3., 4.], [-1., 0., 2., 3.]], requires_grad=True)

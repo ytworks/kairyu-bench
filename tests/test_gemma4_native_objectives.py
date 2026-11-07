@@ -258,7 +258,7 @@ class NativeCoupledTests(unittest.TestCase):
             "attention_dispatch": {"": "eager", "text_config": "sdpa",
                                    "vision_config": "eager", "audio_config": "eager"},
             "cuda_memory_cap_gib": 88.0, "answer_batching": "serial",
-            "max_cases_per_microbatch": 1}
+            "max_cases_per_microbatch": 1, "execution_order": "original"}
         def set_observation_policy(directories, policy):
             for objectives in directories.values():
                 for directory in objectives.values():

@@ -140,11 +140,11 @@ def factor_derivative(upstream, selected_inputs, rows):
     return products.reshape(-1, len(rows)).sum(0, dtype=torch.float64)
 
 
-def checked_batches(rows, mode, max_cases_per_microbatch=None, max_frame_tokens=512):
+def checked_batches(rows, mode, max_cases_per_microbatch=None, max_frame_tokens=512, execution_order="original"):
     """Use the shared packing without silently truncating an oversized chat case."""
     if mode == "chat-public-answer":
         common.finite_replay.validate_frame_rows(rows, max_frame_tokens)
-    return common.objective_batches(rows, mode, max_cases_per_microbatch)
+    return common.objective_batches(rows, mode, max_cases_per_microbatch, execution_order)
 
 
 def batch_derivatives(torch, net, head, tokenizer, rows, mode, device, plans, modules, fold_examples, verify_names,
@@ -245,7 +245,7 @@ def collect(args, checkpoint, cases, provenance):
     net, head = model.model.language_model, model.get_output_embeddings()
     config = net.config.to_dict()
     prepared, frame = common.prepare(tokenizer, cases, args.mode, max_frame_tokens=common.frame_limit(args, 512))
-    packed_folds = {group: [checked_batches(rows, args.mode, args.max_cases_per_microbatch, common.frame_limit(args, 512)) for rows in folds]
+    packed_folds = {group: [checked_batches(rows, args.mode, args.max_cases_per_microbatch, common.frame_limit(args, 512), common.execution_order(args)) for rows in folds]
                     for group, folds in prepared.items()}
     if any(getattr(module, "gradient_checkpointing", False) for module in net.modules()):
         raise ValueError("matrix collector does not support gradient checkpoint recomputation")
@@ -289,39 +289,40 @@ def collect(args, checkpoint, cases, provenance):
     common.save(args.output / "coverage.json", coverage)
     checks, records = {}, []
     start = time.monotonic()
-    for group, folds in prepared.items():
-        for fold, rows in enumerate(folds):
-            accumulated = {name: torch.zeros(512, dtype=torch.float64, device=args.device) for name in names}
-            measured, forward_count = {}, 0
-            packed = packed_folds[group][fold]
-            for batch_index, batch in enumerate(packed):
-                verify_names = {names[0], names[-1]} if not records and batch_index == 0 else set()
-                margins, captured, verified, forwards = objective_derivatives(
-                    torch, net, head, tokenizer, batch, args.mode, args.device,
-                    plans, modules, len(rows), verify_names,
-                    objective_kind=objective_kind, answer_batching=answer_batching)
-                forward_count += forwards
-                checks.update(verified)
-                for name in names:
-                    accumulated[name] += captured[name]
-                measured.update({row[0]: float(value) for row, value in zip(batch, margins.cpu(), strict=True)})
-                del margins, captured
-            values = torch.cat([accumulated[name] for name in names]).float().cpu().numpy()
-            if not np.isfinite(values).all() or any(p.grad is not None for p in net.parameters()):
-                raise ValueError("nonfinite derivatives or unexpected full parameter gradients")
-            reference = variants.objective_references(cases[group][fold], measured, args.reference_tolerance, objective_kind)
-            file = args.output / f"gradient-{group}-{fold}.npy"
-            np.save(file, values, allow_pickle=False)
-            value_key = "margin" if objective_kind == "margin" else "correct_logprob"
-            record = {"purpose": group, "fold": fold, "examples": len(rows),
-                      "microbatches": len(packed), "mean_" + value_key: float(np.mean(list(measured.values()))),
-                      ("margins" if objective_kind == "margin" else "correct_logprobs"):
-                          [{"id": row[0], value_key: measured[row[0]]} for row in rows], "file": file.name,
-                      "answer_batching": answer_batching, "model_forward_count": forward_count,
-                      "sample_gradient_l2": float(np.linalg.norm(values.astype(np.float64))), **reference}
-            records.append(record)
-            common.save(args.output / "progress.json", {"completed_folds": len(records), "last": record})
+    for group, fold, rows in common.finite_replay.ordered_folds(prepared, common.execution_order(args)):
+        accumulated = {name: torch.zeros(512, dtype=torch.float64, device=args.device) for name in names}
+        measured, forward_count = {}, 0
+        packed = packed_folds[group][fold]
+        for batch_index, batch in enumerate(packed):
+            verify_names = {names[0], names[-1]} if not records and batch_index == 0 else set()
+            margins, captured, verified, forwards = objective_derivatives(
+                torch, net, head, tokenizer, batch, args.mode, args.device,
+                plans, modules, len(rows), verify_names,
+                objective_kind=objective_kind, answer_batching=answer_batching)
+            forward_count += forwards
+            checks.update(verified)
+            for name in names:
+                accumulated[name] += captured[name]
+            measured.update({row[0]: float(value) for row, value in zip(batch, margins.cpu(), strict=True)})
+            del margins, captured
+        values = torch.cat([accumulated[name] for name in names]).float().cpu().numpy()
+        if not np.isfinite(values).all() or any(p.grad is not None for p in net.parameters()):
+            raise ValueError("nonfinite derivatives or unexpected full parameter gradients")
+        reference = variants.objective_references(cases[group][fold], measured, args.reference_tolerance, objective_kind)
+        file = args.output / f"gradient-{group}-{fold}.npy"
+        np.save(file, values, allow_pickle=False)
+        value_key = "margin" if objective_kind == "margin" else "correct_logprob"
+        record = {"purpose": group, "fold": fold, "examples": len(rows),
+                  "microbatches": len(packed), "mean_" + value_key: float(np.mean(list(measured.values()))),
+                  ("margins" if objective_kind == "margin" else "correct_logprobs"):
+                      [{"id": row[0], value_key: measured[row[0]]} for row in prepared[group][fold]], "file": file.name,
+                  "answer_batching": answer_batching, "model_forward_count": forward_count,
+                  "sample_gradient_l2": float(np.linalg.norm(values.astype(np.float64))), **reference}
+        records.append(record)
+        common.save(args.output / "progress.json", {"completed_folds": len(records), "last": record})
         del accumulated, values
+    canonical_order = {(group, fold): i for i, (group, fold, _) in enumerate(common.finite_replay.ordered_folds(prepared))}
+    records.sort(key=lambda row: canonical_order[(row["purpose"], row["fold"])])
     common.assert_inputs(checkpoint, provenance)
     for index, name in enumerate(names):
         sampled_rows, columns = plans[name]

@@ -9,6 +9,7 @@ import importlib.util
 import json
 import os
 import signal
+import sys
 import subprocess
 import time
 from pathlib import Path
@@ -194,6 +195,28 @@ def validate(serving=True):
         and len(plan["embedding_baseline"]) == 2,
         "complete serving/embedding binding required",
     )
+    policy_flags = {}
+    if "observation_policy" in plan:
+        sys.path.insert(0, str(R / "worktrees/kairyu-bench-weight-tools/src"))
+        from kairyu_bench.wsp.weights.finite_replay import validate_observation_policy
+
+        policy = validate_observation_policy(plan["observation_policy"])
+        resource = plan["resource_budget"]
+        require(
+            policy["cuda_memory_cap_gib"] == resource["allocator_cap_gib"]
+            and resource["nonallocator_reserve_gib"] > 0
+            and resource["minimum_free_gib"]
+            == resource["allocator_cap_gib"] + resource["nonallocator_reserve_gib"],
+            "explicit allocator plus nonallocator reserve differs",
+        )
+        policy_flags = {
+            "--max-frame-tokens": str(policy["max_frame_tokens"]),
+            "--text-attention-backend": policy["attention_dispatch"]["text_config"],
+            "--cuda-memory-cap-gib": str(policy["cuda_memory_cap_gib"]),
+            "--execution-order": policy["execution_order"],
+            "--answer-batching": policy["answer_batching"],
+            "--max-cases-per-microbatch": str(policy["max_cases_per_microbatch"]),
+        }
     for job in plan["jobs"]:
         for argv in [job["preview_argv"], job["run_argv"]]:
             for flag, value in {
@@ -202,6 +225,7 @@ def validate(serving=True):
                 "--checkpoint-attestation": att["path"],
                 "--attestation-sha256": att["sha256"],
                 "--output": job["output"],
+                **policy_flags,
             }.items():
                 require(
                     argv.count(flag) == 1 and argv[argv.index(flag) + 1] == value,
@@ -259,6 +283,9 @@ def run():
     validate()
     state["observed_parent"] = plan["observed_parent"]
     state["incumbent"] = plan["parent"]
+    if "observation_policy" in plan:
+        state["observation_policy"] = plan["observation_policy"]
+        state["resource_budget"] = plan["resource_budget"]
     state["observation_is_adoption"] = False
     state["new_edit_eligibility"] = (
         "Use only if this exact observed path/tree is the accepted parent when creating a future edit; rebind current incumbent then."
@@ -381,7 +408,11 @@ def run():
                 "free_MiB": int(row[3]),
             }
         )
-        require(int(row[3]) >= 70 * 1024, "collector existing70GiB free requirement")
+        minimum_free = plan.get("resource_budget", {}).get("minimum_free_gib", 70)
+        require(
+            int(row[3]) >= minimum_free * 1024,
+            "collector declared free-memory requirement",
+        )
     state["status"] = "collecting_parallel_families"
     publish()
     collection_deadline = time.monotonic() + 1800
@@ -466,6 +497,14 @@ def run():
             require(rc == 0, "collector nonzero exit " + job["label"])
             out = Path(job["output"])
             summary = read(out / "summary.json")
+            if "observation_policy" in plan:
+                require(
+                    summary["runtime"]["observation_policy"]
+                    == plan["observation_policy"]
+                    and read(out / "provenance.json")["observation_policy"]
+                    == plan["observation_policy"],
+                    "collector execution policy differs",
+                )
             frame = read(out / "frame-evidence.json")
             require(
                 summary["status"] == "completed"

@@ -494,6 +494,7 @@ def evaluate(
     *,
     seed: int = 64123,
     trials: int = 8,
+    score_fn: Callable = score,
 ) -> dict[str, Any]:
     """Caller supplies the existing isolated Docker.run, not host exec."""
     helper_code = sandbox.extract(helper_public)
@@ -503,11 +504,11 @@ def evaluate(
     return {
         "family": chain.family,
         "gradient_allowed": chain.split == "train",
-        "helper": score(chain, 0, helper_code, run, seed, trials),
-        "downstream_given_oracle": score(
+        "helper": score_fn(chain, 0, helper_code, run, seed, trials),
+        "downstream_given_oracle": score_fn(
             chain, 1, oracle_helper + downstream_code, run, seed, trials
         ),
-        "whole_chain_generated_helper": score(
+        "whole_chain_generated_helper": score_fn(
             chain, 1, generated_helper + downstream_code, run, seed, trials
         ),
         "public_code_sha256": {
@@ -554,6 +555,7 @@ def evaluate_requests(
     *,
     seed: int = 64123,
     trials: int = 8,
+    score_fn: Callable = score,
 ) -> dict:
     """At most three existing-client calls; only extracted public code enters Docker.
 
@@ -586,7 +588,7 @@ def evaluate_requests(
                 "error_type": "missing_public_code",
             }
         try:
-            return score(chain, stage, code, run, seed, trials)
+            return score_fn(chain, stage, code, run, seed, trials)
         except sandbox.SafetyError:
             raise
         except Exception as error:
@@ -797,7 +799,13 @@ def stage_cases(split: str, helpers: dict[str, str] | None = None) -> dict:
     }
 
 
-def main() -> None:
+def main(
+    *,
+    catalog_fn: Callable = catalog,
+    bundle_fn: Callable = write_bundle,
+    evaluator: Callable = evaluate_requests,
+    extra_sources: tuple[Path, ...] = (),
+) -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--action", choices=("bundle", "evaluate"), default="bundle")
     parser.add_argument("--output", type=Path, required=True)
@@ -822,7 +830,7 @@ def main() -> None:
 
         if not 4 <= args.trials <= 100 or args.trials % 2:
             raise ValueError("an even 4..100 trials required")
-        chains = [chain for chain in catalog() if chain.split == args.split]
+        chains = [chain for chain in catalog_fn() if chain.split == args.split]
         preview = {
             "status": "preview",
             "chains": len(chains),
@@ -864,6 +872,7 @@ def main() -> None:
             Path(__file__).resolve(),
             Path(sandbox.__file__).resolve(),
             Path(generator.__file__).resolve(),
+            *(p.resolve() for p in extra_sources),
         ]
         if any(
             path.is_relative_to(output) or output.is_relative_to(path)
@@ -897,7 +906,7 @@ def main() -> None:
         try:
             for chain in chains:
                 report["chains"].append(
-                    evaluate_requests(
+                    evaluator(
                         chain,
                         lambda row: generator.generate(row, args, urlopen),
                         runner.run,
@@ -920,7 +929,7 @@ def main() -> None:
             )
         print(json.dumps({"status": report["status"], "chains": len(report["chains"])}))
         return
-    report = write_bundle(
+    report = bundle_fn(
         args.output,
         base=args.base,
         base_sha256=args.base_sha256,
