@@ -245,5 +245,211 @@ class NativeOwnerGuards(unittest.TestCase):
         self.assertFalse(calls)
 
 
+class FiniteOwnerGuards(unittest.TestCase):
+    pin = NativeOwnerGuards.pin
+    fake_guard = NativeOwnerGuards.fake_guard
+
+    def setUp(self):
+        from kairyu_bench.wsp.weights import checkpoint, editor, finite_replay
+        from test_wsp_weights import weights
+        NativeOwnerGuards.setUp(self)
+        cp = Path(self.plan["checkpoint"])
+        for path in cp.iterdir():
+            path.unlink()
+        self.tensor = "model.language_model.norm.weight"
+        weights(cp / "model.safetensors", {self.tensor: ("BF16", (2,), bytes.fromhex("803f0040"))})
+        (cp / "model.safetensors.index.json").write_text(json.dumps({"weight_map": {self.tensor: "model.safetensors"}}))
+        for name in checkpoint.CONFIG_FILES[:7]:
+            (cp / name).write_text("{}")
+        identity = checkpoint.Checkpoint(cp).identity()
+        tree_patch = patch.object(OWNER, "TREE", identity["sha256"])
+        tree_patch.start()
+        self.addCleanup(tree_patch.stop)
+        out = Path(self.plan["output_root"])
+        self.plan["attestation"] = self.pin(out / "attestation.json", dict(checkpoint=identity))
+        self.plan["mode"] = "finite"
+        self.plan.pop("cpu_previews")
+        spec = self.pin(out / "spec.json", dict(id="fixture", edits=[dict(tensor=self.tensor, indices=[0], set_values=[1.0078125])]))
+        self.candidate = self.root / "checkpoints/candidate"
+        manifest = out / "manifest.json"
+        editor.create(cp, self.candidate, Path(spec["path"]), manifest, apply=True)
+        verification = editor.verify(manifest)
+        finite = dict(spec=spec, manifest=dict(path=str(manifest), sha256=OWNER.sha(manifest)),
+                      verify=self.pin(out / "verify.json", verification),
+                      candidate_identity=self.pin(out / "candidate-identity.json", checkpoint.Checkpoint(self.candidate).identity()))
+        finite["plan"] = self.pin(out / "finite-plan.json", dict(schema_version=1, architecture="gemma4_native_bf16",
+            base_tree_sha256=OWNER.TREE, checkpoint_index_sha256=OWNER.sha(cp / "model.safetensors.index.json"),
+            checkpoint_attestation=self.plan["attestation"], cases=self.plan["cases"], frame_evidence=self.plan["frame"],
+            candidates=[dict(id="fixture", spec=spec["path"], sha256=spec["sha256"])], observation_policy=OWNER.finite_policy()))
+        self.plan["finite"] = finite
+        modules = patch.object(OWNER, "finite_modules", return_value=(checkpoint, editor, finite_replay))
+        modules.start()
+        self.addCleanup(modules.stop)
+        self.replay = finite_replay
+        runtime = Path(self.plan["source_root"]) / "src/kairyu_bench/wsp/weights/finite_replay.py"
+        runtime.parent.mkdir(parents=True)
+        runtime.write_bytes(Path(finite_replay.__file__).read_bytes())
+        self.plan["source_pins"][str(runtime)] = OWNER.sha(runtime)
+
+    def replace_pin(self, key, update):
+        pin = self.plan["finite"][key]
+        data = OWNER.read(pin["path"])
+        update(data)
+        self.plan["finite"][key] = self.pin(Path(pin["path"]), data)
+
+    def test_metadata_preview_reads_real_bf16_without_model_or_subprocess(self):
+        with patch.object(self.replay, "run", side_effect=AssertionError("not a preview")), patch.object(
+                OWNER.subprocess, "Popen", side_effect=AssertionError("no process")):
+            self.assertEqual(len(OWNER.validate(self.plan)), 12)
+            metadata = OWNER.finite_metadata(self.plan)
+        self.assertEqual(metadata["metrics"], dict(changed_elements=1, changed_tensors=1, delta_l2=1/128))
+        self.assertNotEqual(metadata["proofs"]["base"], metadata["proofs"]["fixture"])
+        self.assertEqual(metadata["proofs"]["base"], metadata["proofs"]["restored_base"])
+        self.assertEqual(OWNER.stages(self.plan), ("finite",))
+        cmd = OWNER.command(self.plan, "finite", "a" * 64)
+        self.assertIn("kairyu_bench.wsp.weights.finite_replay", cmd)
+        self.assertNotIn("--run", cmd)  # CLI has no preview gate; owner does.
+        with self.assertRaisesRegex(ValueError, "job differs"):
+            OWNER.command(self.plan, "margin", "a" * 64)
+
+    def test_multiple_candidates_and_changed_policy_rejected(self):
+        original = OWNER.read(self.plan["finite"]["plan"]["path"])
+        for update in (lambda d: d["candidates"].append(dict(d["candidates"][0])),
+                       lambda d: d["observation_policy"].update(answer_batching="paired")):
+            self.replace_pin("plan", update)
+            with self.assertRaises(ValueError):
+                OWNER.validate(self.plan)
+            self.plan["finite"]["plan"] = self.pin(Path(self.plan["finite"]["plan"]["path"]), original)
+
+    def test_verified_boolean_cannot_hide_file_hash_or_spec_mismatch(self):
+        self.replace_pin("verify", lambda d: d["files"][0].update(candidate_sha256="0" * 64))
+        with self.assertRaisesRegex(ValueError, "file hashes differ"):
+            OWNER.validate(self.plan)
+        self.replace_pin("manifest", lambda d: d.update(spec_sha256="0" * 64))
+        with self.assertRaisesRegex(ValueError, "manifest/spec"):
+            OWNER.validate(self.plan)
+
+    def test_saved_candidate_change_rejected_even_with_old_verified_receipt(self):
+        (self.candidate / "config.json").write_text('{"changed":true}')
+        with self.assertRaisesRegex(ValueError, "stat changed"):
+            OWNER.validate(self.plan)
+
+    def test_actual_saved_bf16_differs_from_replay_spec(self):
+        from kairyu_bench.wsp.weights.checkpoint import Checkpoint
+        # A coherent new full-hash/stat receipt alone cannot replace the fixed exact spec.
+        file = self.candidate / "model.safetensors"
+        data = bytearray(file.read_bytes())
+        data[-4:] = bytes.fromhex("823f0040")
+        file.write_bytes(data)
+        identity = Checkpoint(self.candidate).identity()
+        self.plan["finite"]["candidate_identity"] = self.pin(Path(self.plan["finite"]["candidate_identity"]["path"]), identity)
+        digest = {r["path"]: r["sha256"] for r in identity["files"]}
+        for key in ("manifest", "verify"):
+            self.replace_pin(key, lambda d: [r.update(candidate_sha256=digest[r["path"]]) for r in d["files"]])
+        with self.assertRaisesRegex(ValueError, "saved candidate BF16 values"):
+            OWNER.validate(self.plan)
+
+    def result_fixture(self):
+        result = Path(self.plan["output_root"]) / "result-fixture"
+        result.mkdir()
+        metadata = OWNER.finite_metadata(self.plan)
+        for label in ("base", "fixture", "restored_base"):
+            value = .5 if label == "fixture" else 0.
+            OWNER.save(result / (label + ".json"), dict(values={g: [[value], [value]] for g in "ABCDEF"},
+                means=[value] * 12, correct_nll=[1. - value] * 12, kl=[value] * 12, seconds=1.))
+        restore = dict(attempted=True, forward_completed=True, matched=True, storage_bytes_exact=True)
+        proofs = {label: dict(method="selected_bf16_cpu_readback", storage_bytes_exact=True, tensors=rows)
+                  for label, rows in metadata["proofs"].items()}
+        execution = dict(resolved_attention_dispatch={"text_config": "sdpa"}, cuda_allocator=dict(requested_gib=88),
+                         automatic_attention_api_or_length_retry=False)
+        summary = dict(status="completed", source_stable=True, error_type=None, observation_execution=execution,
+            labels=[g + "-" + str(i) for g in "ABCDEF" for i in range(2)], answer_batching="serial",
+            observation_policy=OWNER.finite_policy(), new_gradients=0, generated_tokens=0,
+            candidates=[dict(id="fixture", **metadata["metrics"], margin_delta=[.5] * 12,
+                             correct_nll_delta=[-.5] * 12, kl_base_to_candidate=[.5] * 12)],
+            base_restoration=restore, selected_byte_proofs=proofs)
+        for name, value in {"summary": summary, "base-restoration": restore, "selected-byte-proofs": proofs,
+                            "frame-evidence": OWNER.pinned(self.plan["frame"]), "provenance": dict(
+                                plan_sha256=self.plan["finite"]["plan"]["sha256"], expected_base_tree_sha256=OWNER.TREE,
+                                source_hashes=metadata["source_hashes"], runner_sha256=OWNER.sha(Path(self.replay.__file__)),
+                                observation_execution=execution)}.items():
+            OWNER.save(result / (name + ".json"), value)
+        return result
+
+    def test_completed_summary_cannot_hide_partial_sweep_or_wrong_byte_application(self):
+        result = self.result_fixture()
+        OWNER.finite_complete(self.plan, result)
+        path = result / "fixture.json"
+        sweep = OWNER.read(path)
+        original = copy.deepcopy(sweep)
+        sweep["values"]["F"].pop()
+        path.write_text(json.dumps(sweep))
+        with self.assertRaisesRegex(ValueError, "partial finite sweep"):
+            OWNER.finite_complete(self.plan, result)
+        path.write_text(json.dumps(original))
+        for name in ("summary", "selected-byte-proofs"):
+            path = result / (name + ".json")
+            data = OWNER.read(path)
+            proofs = data["selected_byte_proofs"] if name == "summary" else data
+            proofs["fixture"]["tensors"][0]["actual_bf16_sha256"] = "0" * 64
+            path.write_text(json.dumps(data))
+        with self.assertRaisesRegex(ValueError, "selected BF16 proof differs"):
+            OWNER.finite_complete(self.plan, result)
+
+    def test_claimed_restoration_cannot_hide_numerical_failure(self):
+        result = self.result_fixture()
+        path = result / "restored_base.json"
+        data = OWNER.read(path)
+        data["kl"][0] = .1
+        path.write_text(json.dumps(data))
+        with self.assertRaisesRegex(ValueError, "restored finite numerical"):
+            OWNER.finite_complete(self.plan, result)
+
+    def test_actual_attention_or_source_differs_from_pinned_result(self):
+        result = self.result_fixture()
+        path = result / "provenance.json"
+        original = OWNER.read(path)
+        for update in (lambda d: d.update(runner_sha256="0" * 64), lambda d:
+                       d["observation_execution"]["resolved_attention_dispatch"].update(text_config="eager")):
+            changed = copy.deepcopy(original)
+            update(changed)
+            path.write_text(json.dumps(changed))
+            with self.assertRaises(ValueError):
+                OWNER.finite_complete(self.plan, result)
+
+    def test_finite_late_create_reuses_owned_cleanup(self):
+        guard, calls = self.fake_guard()
+        owned = dict(Id="finite-own", Image=OWNER.IMAGE, Name="/" + self.plan["container_prefix"] + "-finite",
+            State=dict(Running=True), Config=dict(Labels={"kairyu.native.owner-plan-sha256": "a" * 64,
+                                                        "kairyu.native.owner-root": self.plan["output_root"]}))
+        state = dict(done=False)
+        work = Path(self.plan["output_root"]) / "work"
+        work.mkdir()
+        original_inspect, original_docker = guard.inspect, guard.docker
+        def inspect(name):
+            return owned if state["done"] and name in (owned["Id"], owned["Name"].lstrip("/")) else original_inspect(name)
+        def docker(*args):
+            if args[0] == "kill":
+                calls.append(args)
+                owned["State"]["Running"] = False
+                return ""
+            if args[0] == "start":
+                self.assertFalse(owned["State"]["Running"])
+            return original_docker(*args)
+        class Client:
+            def poll(self):
+                return 0 if state["done"] else None
+            def wait(self, timeout):
+                state["done"] = True
+                (work / "finite.cid").write_text(owned["Id"])
+        guard.inspect, guard.docker = inspect, docker
+        status = dict(restored=False, protected_exact=False)
+        OWNER.finish(self.plan, guard, Client(), True, status, "a" * 64)
+        self.assertTrue(status["restored"])
+        self.assertEqual(len(status["collector_cleanup"]), 2)
+        self.assertEqual([a for a in calls if a[0] != "ps"], [
+            ("stop", "--time", "30", "finite-own"), ("kill", "finite-own"), ("start", OWNER.CID)])
+
+
 if __name__ == "__main__":
     unittest.main()

@@ -1,0 +1,255 @@
+{
+  "status": "completed",
+  "records_checksum_entries": 58,
+  "all_records_checksums_match": true,
+  "checked_files": 111,
+  "valid_json_files": 53,
+  "gzip_roundtrips_read": 5,
+  "secret_signature_matches": [],
+  "trailing_whitespace": [],
+  "git_diff_check_returncode": 0,
+  "untouched_original_files": 99,
+  "finished_file_list": "commit-candidate-files.txt",
+  "checks": [
+    {
+      "file": "docs/experiments/records/2026-11-07-f02-payload-release-plan/audit-v1.py.txt",
+      "matched": true
+    },
+    {
+      "file": "docs/experiments/records/2026-11-07-f02-payload-release-plan/audit.py.txt",
+      "matched": true
+    },
+    {
+      "file": "docs/experiments/records/2026-11-07-f02-payload-release-plan/v1/audit.json",
+      "matched": true
+    },
+    {
+      "file": "docs/experiments/records/2026-11-07-f02-payload-release-plan/v1/mount-order-diagnostic.json",
+      "matched": true
+    },
+    {
+      "file": "docs/experiments/records/2026-11-07-f02-payload-release-plan/v1/post-failure-container-check.json",
+      "matched": true
+    },
+    {
+      "file": "docs/experiments/records/2026-11-07-f02-payload-release-plan/v2/audit.json",
+      "matched": true
+    },
+    {
+      "file": "docs/experiments/records/2026-11-07-f02-payload-release-plan/v2/plan.json",
+      "matched": true
+    },
+    {
+      "file": "docs/experiments/records/2026-11-07-native-dependency-independent-review/check.py.txt",
+      "matched": true
+    },
+    {
+      "file": "docs/experiments/records/2026-11-07-native-dependency-independent-review/finite-owner-review.json",
+      "matched": true
+    },
+    {
+      "file": "docs/experiments/records/2026-11-07-native-dependency-independent-review/receipt.json",
+      "matched": true
+    },
+    {
+      "file": "docs/experiments/records/2026-11-07-native-dependency-v2/analysis-command.sh.txt",
+      "matched": true
+    },
+    {
+      "file": "docs/experiments/records/2026-11-07-native-dependency-v2/analysis.txt",
+      "matched": true
+    },
+    {
+      "file": "docs/experiments/records/2026-11-07-native-dependency-v2/diffcheck-final.txt",
+      "matched": true
+    },
+    {
+      "file": "docs/experiments/records/2026-11-07-native-dependency-v2/final-source-receipt.json",
+      "matched": true
+    },
+    {
+      "file": "docs/experiments/records/2026-11-07-native-dependency-v2/native_dependency.py.txt",
+      "matched": true
+    },
+    {
+      "file": "docs/experiments/records/2026-11-07-native-dependency-v2/receipt.json",
+      "matched": true
+    },
+    {
+      "file": "docs/experiments/records/2026-11-07-native-dependency-v2/render-report.py.txt",
+      "matched": true
+    },
+    {
+      "file": "docs/experiments/records/2026-11-07-native-dependency-v2/report.json.gz",
+      "matched": true
+    },
+    {
+      "file": "docs/experiments/records/2026-11-07-native-dependency-v2/ruff-final.txt",
+      "matched": true
+    },
+    {
+      "file": "docs/experiments/records/2026-11-07-native-dependency-v2/ruff.txt",
+      "matched": true
+    },
+    {
+      "file": "docs/experiments/records/2026-11-07-native-dependency-v2/summarize.py.txt",
+      "matched": true
+    },
+    {
+      "file": "docs/experiments/records/2026-11-07-native-dependency-v2/summary.json",
+      "matched": true
+    },
+    {
+      "file": "docs/experiments/records/2026-11-07-native-dependency-v2/test_gemma4_native_objectives-final.py.txt",
+      "matched": true
+    },
+    {
+      "file": "docs/experiments/records/2026-11-07-native-dependency-v2/test_gemma4_native_objectives.py.txt",
+      "matched": true
+    },
+    {
+      "file": "docs/experiments/records/2026-11-07-native-dependency-v2/tests-final-entrypoint.txt",
+      "matched": true
+    },
+    {
+      "file": "docs/experiments/records/2026-11-07-native-dependency-v2/tests.txt",
+      "matched": true
+    },
+    {
+      "file": "docs/experiments/records/2026-11-07-native-dependency/analysis-command.sh.txt",
+      "matched": true
+    },
+    {
+      "file": "docs/experiments/records/2026-11-07-native-dependency/analysis.txt",
+      "matched": true
+    },
+    {
+      "file": "docs/experiments/records/2026-11-07-native-dependency/native_dependency.py.txt",
+      "matched": true
+    },
+    {
+      "file": "docs/experiments/records/2026-11-07-native-dependency/receipt.json",
+      "matched": true
+    },
+    {
+      "file": "docs/experiments/records/2026-11-07-native-dependency/report.json.gz",
+      "matched": true
+    },
+    {
+      "file": "docs/experiments/records/2026-11-07-native-dependency/ruff.txt",
+      "matched": true
+    },
+    {
+      "file": "docs/experiments/records/2026-11-07-native-dependency/summarize.py.txt",
+      "matched": true
+    },
+    {
+      "file": "docs/experiments/records/2026-11-07-native-dependency/summary.json",
+      "matched": true
+    },
+    {
+      "file": "docs/experiments/records/2026-11-07-native-dependency/test_gemma4_native_objectives.py.txt",
+      "matched": true
+    },
+    {
+      "file": "docs/experiments/records/2026-11-07-native-dependency/tests.txt",
+      "matched": true
+    },
+    {
+      "file": "docs/experiments/records/2026-11-07-pr33-body-update-new18-v2/SHA256SUMS.before-packaging",
+      "matched": true
+    },
+    {
+      "file": "docs/experiments/records/2026-11-07-pr33-body-update-new18-v2/body.md",
+      "matched": true
+    },
+    {
+      "file": "docs/experiments/records/2026-11-07-pr33-body-update-new18-v2/diff-from-current-pr.patch.gz",
+      "matched": true
+    },
+    {
+      "file": "docs/experiments/records/2026-11-07-pr33-body-update-new18-v2/diff-from-v1.patch.gz",
+      "matched": true
+    },
+    {
+      "file": "docs/experiments/records/2026-11-07-pr33-body-update-new18-v2/existing-body.md",
+      "matched": true
+    },
+    {
+      "file": "docs/experiments/records/2026-11-07-pr33-body-update-new18-v2/existing-pr.json",
+      "matched": true
+    },
+    {
+      "file": "docs/experiments/records/2026-11-07-pr33-body-update-new18-v2/packaging-note.json",
+      "matched": true
+    },
+    {
+      "file": "docs/experiments/records/2026-11-07-pr33-body-update-new18-v2/preparation.json",
+      "matched": true
+    },
+    {
+      "file": "docs/experiments/records/2026-11-07-pr33-body-update-new18-v2/update.json",
+      "matched": true
+    },
+    {
+      "file": "docs/experiments/records/2026-11-07-pr33-body-update-new18/SHA256SUMS.before-packaging",
+      "matched": true
+    },
+    {
+      "file": "docs/experiments/records/2026-11-07-pr33-body-update-new18/body.md",
+      "matched": true
+    },
+    {
+      "file": "docs/experiments/records/2026-11-07-pr33-body-update-new18/draft-before-wording-body.md",
+      "matched": true
+    },
+    {
+      "file": "docs/experiments/records/2026-11-07-pr33-body-update-new18/draft-before-wording-preparation.json",
+      "matched": true
+    },
+    {
+      "file": "docs/experiments/records/2026-11-07-pr33-body-update-new18/draft-before-wording-update.json",
+      "matched": true
+    },
+    {
+      "file": "docs/experiments/records/2026-11-07-pr33-body-update-new18/existing-body.md",
+      "matched": true
+    },
+    {
+      "file": "docs/experiments/records/2026-11-07-pr33-body-update-new18/existing-pr.json",
+      "matched": true
+    },
+    {
+      "file": "docs/experiments/records/2026-11-07-pr33-body-update-new18/head-ci-jobs-readonly.json",
+      "matched": true
+    },
+    {
+      "file": "docs/experiments/records/2026-11-07-pr33-body-update-new18/head-ci-readonly.json",
+      "matched": true
+    },
+    {
+      "file": "docs/experiments/records/2026-11-07-pr33-body-update-new18/packaging-note.json",
+      "matched": true
+    },
+    {
+      "file": "docs/experiments/records/2026-11-07-pr33-body-update-new18/preparation.json",
+      "matched": true
+    },
+    {
+      "file": "docs/experiments/records/2026-11-07-pr33-body-update-new18/proposed.diff.gz",
+      "matched": true
+    },
+    {
+      "file": "docs/experiments/records/2026-11-07-pr33-body-update-new18/update.json",
+      "matched": true
+    }
+  ],
+  "risks": [
+    "Signature scan does not prove absence of arbitrary encoded secrets",
+    "Finite owner/dependency code has focused CPU evidence; r7 predates these changes",
+    "No actual finite candidate/GPU execution claim",
+    "PR existing-body SHA is historical; re-fetch before PATCH",
+    "F02 payload release remains unperformed",
+    "F03 excluded; concurrent work must be committed separately"
+  ]
+}

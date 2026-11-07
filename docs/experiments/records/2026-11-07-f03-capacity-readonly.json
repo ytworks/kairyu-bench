@@ -1,0 +1,34 @@
+{
+  "scope": "Read-only inspection before F03 save; no candidate, copy, deletion, model, GPU, or service mutation",
+  "source_sha256": {
+    "src/kairyu_bench/wsp/weights/editor.py": "0983580f41989c26e84c16c26924f2850dd4e5d3d12917bb9553d7feb92333d2",
+    "src/kairyu_bench/wsp/weights/shard_pool.py": "f45d073c9950579753c74143dbc9cdc89abfdc6b0d2e4c694c91807d9b4cbc2f",
+    "src/kairyu_bench/wsp/weights/composition.py": "7ce2bc057ad3974d8c4d8509be0c193dbb7fd6b42cd523e1c9df5619bf7f84b7",
+    "docs/wsp-weight-editing.md": "b9eec63bbfda6dca9fd9773ecd1046af2e9a89aadec59b2c3fc3dbe0b6577cd7",
+    "docs/wsp-vllm-sparse-overlay.md": "af98fbb0bafad180ab16fa28b7c85bf99e9098889aeca1bfde46f2298b4d78af"
+  },
+  "editor_help": {
+    "exit_code": 0,
+    "options": [
+      "--spec",
+      "--manifest",
+      "--apply",
+      "--reserve-bytes",
+      "--shard-pool"
+    ],
+    "clone_or_reflink_option": false
+  },
+  "payload_bytes": [
+    49923154850,
+    12623183414
+  ],
+  "total_payload_bytes": 62546338264,
+  "observed_free_bytes": 71030145024,
+  "filesystem": "ext4 rw,noatime,stripe=32",
+  "finding": "Both touched shards remain private copies; existing shard_pool links only untouched shards; composition has no file I/O; load-time plugin excludes native vectors and is not a standard physical checkpoint.",
+  "capacity_decision": "No existing-tool reduction for this two-touched-shard native candidate; use ordinary editor create/full verify after separately authorized archival release. No archive operation performed here.",
+  "implementation": {
+    "copy": "exclusive target xb then source stream and patch",
+    "edited_shard_requires_nlink_1": true
+  }
+}

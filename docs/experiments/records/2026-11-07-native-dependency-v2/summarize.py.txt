@@ -1,0 +1,98 @@
+import gzip
+import hashlib
+import json
+from pathlib import Path
+import shutil
+
+R = Path("/mnt/nvme/kairyu/wsp/gemma4-coding-20261104")
+B = R / "worktrees/kairyu-bench-weight-tools"
+P = R / "analysis/fresh-purpose-20261107-native-dependency-v2"
+V = R / "analysis/fresh-purpose-20261107-native-dependency-validation-v2"
+D = B / "docs/experiments/records/2026-11-07-native-dependency-v2"
+r = json.loads((P / "report.json").read_text())
+sha = lambda p: hashlib.sha256(p.read_bytes()).hexdigest()
+def write(path, value):
+    path.write_text(json.dumps(value, ensure_ascii=False, indent=2, allow_nan=False) + "\n")
+fullraw = (P / "report.json").read_bytes()
+compressed = gzip.compress(fullraw, mtime=0)
+assert gzip.decompress(compressed) == fullraw
+(D / "report.json.gz").write_bytes(compressed)
+for name in ["analysis-command.sh.txt", "analysis.txt", "tests.txt", "ruff.txt"]:
+    shutil.copyfile(V / name, D / name)
+shutil.copyfile(B / "scripts/experiments/gemma4-purpose/native_dependency.py", D / "native_dependency.py.txt")
+shutil.copyfile(B / "tests/test_gemma4_native_objectives.py", D / "test_gemma4_native_objectives.py.txt")
+s = {
+    "status": "completed", "report": {"path": str(P / "report.json"), "sha256": sha(P / "report.json"),
+        "bytes": len(fullraw), "lossless_gzip_sha256": sha(D / "report.json.gz"), "gzip_bytes": len(compressed)},
+    "analysis_seconds": r["analysis_seconds"], "input_pin_count": len(r["input_sha256"]),
+    "native_tensors": r["native_tensors"], "native_coordinates": r["native_coordinates"],
+    "source": r["source"], "case_rows": [], "pair_rows": [], "families": {}, "layers": {},
+    "unused_tensors_by_row": r["unused_tensors_by_row"],
+    "gradient_zero_coordinates": r["global"]["gradient_zero_coordinates"],
+    "all_same_objective_pairs": {}, "frame_protocol": r["frame_evidence"]["frame_protocol"],
+    "all_native_source_words_checked": True, "payload_rehashed_here": False,
+    "source_scope": r["source_scope"], "limits": r["limits"], "candidate_or_solver_calls": 0,
+    "analysis_source_sha256": sha(B / "scripts/experiments/gemma4-purpose/native_dependency.py"),
+    "focused_tests": {"ran": 2, "passed": 2, "seconds": .031, "ruff": "passed"},
+}
+for i, c in enumerate(r["case_rows"]):
+    s["case_rows"].append({**c, "correct_gradient_l2": r["global"]["gradient_l2"][i],
+        "margin_gradient_l2": r["global"]["gradient_l2"][i + 12],
+        "correct_margin_cosine": r["global"]["cosine"][i][i + 12],
+        "correct_gradient_zero_coordinates": r["global"]["gradient_zero_coordinates"][i],
+        "margin_gradient_zero_coordinates": r["global"]["gradient_zero_coordinates"][i+12]})
+pairs = [("LL:A1/F2", 0, 11), ("LL:A1/A2", 0, 1), ("LL:F2/F1", 11, 10),
+         ("margin:A1/F2", 12, 23), ("margin:A1/A2", 12, 13), ("margin:F2/F1", 23, 22),
+         ("A1:LL/margin", 0, 12), ("F2:LL/margin", 11, 23)]
+for label, i, j in pairs:
+    layer_contributions = {k: v["contribution_to_global_cosine"][i][j] for k, v in r["layers"].items()}
+    s["pair_rows"].append({"pair": label, "rows": [i, j], "cosine": r["global"]["cosine"][i][j],
+        "family_cosines": {k: v["cosine"][i][j] for k, v in r["families"].items()},
+        "family_contributions": {k: v["contribution_to_global_cosine"][i][j] for k, v in r["families"].items()},
+        "layer_contributions": layer_contributions,
+        "positive_layer_contribution_sum": sum(v for v in layer_contributions.values() if v > 0),
+        "negative_layer_contribution_sum": sum(v for v in layer_contributions.values() if v < 0),
+        "positive_layer_count": sum(v > 0 for v in layer_contributions.values()),
+        "negative_layer_count": sum(v < 0 for v in layer_contributions.values())})
+for objective, start in [("correct-logprob", 0), ("margin", 12)]:
+    vals = [r["global"]["cosine"][i][j] for i in range(start, start + 12) for j in range(i + 1, start + 12)]
+    s["all_same_objective_pairs"][objective] = {"pairs": len(vals), "positive": sum(v > 0 for v in vals),
+        "negative": sum(v < 0 for v in vals), "min": min(vals), "max": max(vals)}
+for k, v in r["families"].items():
+    s["families"][k] = {"source": v["source"],
+        "source_energy_fraction": v["source"]["l2"] ** 2 / r["source"]["l2"] ** 2,
+        "gradient_energy_fraction": v["gradient_energy_fraction"],
+        "gradient_zero_coordinates": v["gradient_zero_coordinates"]}
+for k, v in r["layers"].items():
+    s["layers"][k] = {"source": v["source"], "gradient_l2": v["gradient_l2"],
+                     "gradient_energy_fraction": v["gradient_energy_fraction"],
+        "gradient_zero_coordinates": v["gradient_zero_coordinates"]}
+s["failed_case_to_all_case_cosines"] = {
+    label: {r["row_labels"][j]["id"]: r["global"]["cosine"][i][j + start] for j in range(12)}
+    for label, i, start in [("A1_LL_to_LL", 0, 0), ("F2_LL_to_LL", 11, 0),
+                             ("A1_margin_to_margin", 12, 12), ("F2_margin_to_margin", 23, 12),
+                             ("F2_margin_to_LL", 23, 0)]}
+old = json.loads((R / "analysis/fresh-purpose-20261107-native-dependency-v1/report.json").read_text())
+assert old["case_rows"] == r["case_rows"]
+assert old["global"] == {k:v for k,v in r["global"].items() if k != "gradient_zero_coordinates"}
+s["v1_numerics_unchanged"] = True
+s["v1_retained_reason"] = "v2 adds explicit unused vs zero-gradient counts after parent review; no objective/input change"
+write(P / "summary.json", s)
+shutil.copyfile(P / "summary.json", D / "summary.json")
+write(D / "receipt.json", {
+    "report_sha256": sha(P / "report.json"), "summary_sha256": sha(P / "summary.json"),
+    "all_input_sha256": r["input_sha256"], "full_raw_gradient_arrays_copied_to_git": False,
+    "raw_gradients_preserved_on_nvme_with_all_sha": True,
+    "source_native_word_comparison_complete": True, "all_family_layer_gram_sum_verified": True,
+    "original_owner_elapsed_seconds": r["owner_seconds"], "analysis_seconds": r["analysis_seconds"],
+    "commands": (D / "analysis-command.sh.txt").read_text(),
+    "validation_commands": [
+        "PYTHONPATH=$PWD/src:$PWD/tests PYTHONDONTWRITEBYTECODE=1 <CI_PYTHON> -m unittest test_gemma4_native_objectives.NativeDependencyGeometryTests -v",
+        "<CI_BIN>/ruff check scripts/experiments/gemma4-purpose/native_dependency.py tests/test_gemma4_native_objectives.py"],
+})
+(D / "SHA256SUMS").write_text("".join(sha(p) + "  " + p.name + "\n" for p in sorted(D.iterdir())
+                                    if p.is_file() and p.name != "SHA256SUMS"))
+print(json.dumps({k:s[k] for k in ["report","analysis_source_sha256","all_same_objective_pairs"]}, indent=2))
+print("layer_pair_sums", [(p["pair"],p["positive_layer_count"],p["negative_layer_count"],
+                          p["positive_layer_contribution_sum"],p["negative_layer_contribution_sum"]) for p in s["pair_rows"]])
+print("source_family_energy", {k:v["source_energy_fraction"] for k,v in s["families"].items()})

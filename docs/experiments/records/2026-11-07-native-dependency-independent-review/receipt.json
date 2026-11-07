@@ -1,0 +1,29 @@
+{
+  "review": "read_only_existing_report_and_source",
+  "source_sha256": "8aefc1862e964ea9d2f821a1bcb413ad8f421cecc3e56b140583ed56da37a7a9",
+  "report_path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-native-dependency-v2/report.json",
+  "report_sha256": "271ee1afef4afd855c3aa6d589891bef6ad2b144b9499df9646039894835fad7",
+  "native_tensors": 421,
+  "coordinates": 1331516,
+  "coordinate_sum": 1331516,
+  "gradient_rows": 24,
+  "source_scope": "All 421 language-model native scalar/vector tensors; not all 31B matrix weights",
+  "reported_source_l2": 70134.9646234848,
+  "recombined_source_l2": 70134.96462348501,
+  "symmetric_finite_gram": true,
+  "all_unused_empty": true,
+  "zero_count_additivity": true,
+  "model_calls": 0,
+  "service_mutations": 0,
+  "analysis_reruns": 0,
+  "test_reruns": 0,
+  "families": {
+    "count": 8,
+    "cosine_sum_max_error": 2.9976021664879227e-15
+  },
+  "layers": {
+    "count": 61,
+    "cosine_sum_max_error": 2.7755575615628914e-15
+  },
+  "seconds": 0.08810396399348974
+}

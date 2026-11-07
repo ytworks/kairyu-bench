@@ -57,3 +57,12 @@ collectorのfilterはtext language modelのfloating parameter ndim<=1とlayer_sc
 新出力rootは `analysis/fresh-purpose-20261107-av-behavior12-native-gpu4-v2`。[plan v2](records/2026-11-07-native-gpu4-owner/plan-v2/plan.json) SHA `8edba22f5aa38ec5eebf443a3b4b2eab2794b23c9968fcd0c09d13d003f20316`、`approved_for_execution=false`。新source snapshot/79pins/2つのnative metadata previewに更新し、[owner full CPU preview](records/2026-11-07-native-gpu4-owner/plan-v2/owner-full-preview.json)も成功した（SHA `d6f2d62c6f10527c387ac47ae3464290f200c83a2b8636f382e96a673a4cec27`）。27containerはv1 snapshotと一致、gemma-2 queue0。GPU計算・配信stop/start・global lock取得は0で、rootの目的/計画承認を待つ。
 
 [再現用のCPU-only preparation操作](records/2026-11-07-native-gpu4-owner/prepare-v2.py)と[実行receipt](records/2026-11-07-native-gpu4-owner/prepare-v2-operation-receipt.json)を保存した。元f47plan/v1 source、途中の検証記録、失敗と未実行状態は上書きしていない。
+
+
+## 承認後の実測完了
+
+root承認plan5783f8bc…で全12×2目的を各1回完了し、237.897175秒でsameCID healthy/queue0へ復帰した。他26不変、failure/retry0、owner終了/global lock解放済み。[全case・時間・peak・CPU退避量と限界](2026-11-07-av-behavior12-native-sensitivity-results.md)を別記録へ保存した。上の未承認v1/v2は準備時点の履歴として保持する。
+
+## 後続の明示finite mode
+
+実測済み9a8原文を保存した後、同lifecycleへ[保存native候補1件のfinite分岐](2026-11-07-behavior12-finite-owner.md)を追加した。既定native二目的は維持。CPU22tests/Ruff成功、実candidate/plan未bind、finite GPU未検証。この追加は実行許可ではない。

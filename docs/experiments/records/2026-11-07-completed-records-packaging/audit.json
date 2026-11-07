@@ -1,0 +1,639 @@
+{
+  "scope": "Packaging completed records only; no F03/model/serving/GPU/benchmark/commit/push/PR PATCH operation",
+  "initial_changed_files": [
+    "docs/experiments/2026-11-07-av-behavior12-native-sensitivity-results.md",
+    "docs/experiments/2026-11-07-behavior12-finite-owner.md",
+    "docs/experiments/2026-11-07-behavior12-finite-replay-reuse.md",
+    "docs/experiments/2026-11-07-f02-payload-release-plan.md",
+    "docs/experiments/2026-11-07-native-dependency-analysis.md",
+    "docs/experiments/2026-11-07-native-dependency-independent-review.md",
+    "docs/experiments/2026-11-07-native-gpu4-measurement-plan.md",
+    "docs/experiments/records/2026-11-07-completed-records-packaging/operation.py.txt",
+    "docs/experiments/records/2026-11-07-cpu-validation-r8/run.py.txt",
+    "docs/experiments/records/2026-11-07-f02-payload-release-plan/SHA256SUMS",
+    "docs/experiments/records/2026-11-07-f02-payload-release-plan/audit-v1.py.txt",
+    "docs/experiments/records/2026-11-07-f02-payload-release-plan/audit.py.txt",
+    "docs/experiments/records/2026-11-07-f02-payload-release-plan/v1/audit.json",
+    "docs/experiments/records/2026-11-07-f02-payload-release-plan/v1/mount-order-diagnostic.json",
+    "docs/experiments/records/2026-11-07-f02-payload-release-plan/v1/post-failure-container-check.json",
+    "docs/experiments/records/2026-11-07-f02-payload-release-plan/v2/audit.json",
+    "docs/experiments/records/2026-11-07-f02-payload-release-plan/v2/plan.json",
+    "docs/experiments/records/2026-11-07-native-dependency-independent-review/SHA256SUMS",
+    "docs/experiments/records/2026-11-07-native-dependency-independent-review/check.py.txt",
+    "docs/experiments/records/2026-11-07-native-dependency-independent-review/finite-owner-review.json",
+    "docs/experiments/records/2026-11-07-native-dependency-independent-review/receipt.json",
+    "docs/experiments/records/2026-11-07-native-dependency-v2/SHA256SUMS",
+    "docs/experiments/records/2026-11-07-native-dependency-v2/analysis-command.sh.txt",
+    "docs/experiments/records/2026-11-07-native-dependency-v2/analysis.txt",
+    "docs/experiments/records/2026-11-07-native-dependency-v2/diffcheck-final.txt",
+    "docs/experiments/records/2026-11-07-native-dependency-v2/final-source-receipt.json",
+    "docs/experiments/records/2026-11-07-native-dependency-v2/native_dependency.py.txt",
+    "docs/experiments/records/2026-11-07-native-dependency-v2/receipt.json",
+    "docs/experiments/records/2026-11-07-native-dependency-v2/render-report.py.txt",
+    "docs/experiments/records/2026-11-07-native-dependency-v2/report.json.gz",
+    "docs/experiments/records/2026-11-07-native-dependency-v2/ruff-final.txt",
+    "docs/experiments/records/2026-11-07-native-dependency-v2/ruff.txt",
+    "docs/experiments/records/2026-11-07-native-dependency-v2/summarize.py.txt",
+    "docs/experiments/records/2026-11-07-native-dependency-v2/summary.json",
+    "docs/experiments/records/2026-11-07-native-dependency-v2/test_gemma4_native_objectives-final.py.txt",
+    "docs/experiments/records/2026-11-07-native-dependency-v2/test_gemma4_native_objectives.py.txt",
+    "docs/experiments/records/2026-11-07-native-dependency-v2/tests-final-entrypoint.txt",
+    "docs/experiments/records/2026-11-07-native-dependency-v2/tests.txt",
+    "docs/experiments/records/2026-11-07-native-dependency/SHA256SUMS",
+    "docs/experiments/records/2026-11-07-native-dependency/analysis-command.sh.txt",
+    "docs/experiments/records/2026-11-07-native-dependency/analysis.txt",
+    "docs/experiments/records/2026-11-07-native-dependency/native_dependency.py.txt",
+    "docs/experiments/records/2026-11-07-native-dependency/receipt.json",
+    "docs/experiments/records/2026-11-07-native-dependency/report.json.gz",
+    "docs/experiments/records/2026-11-07-native-dependency/ruff.txt",
+    "docs/experiments/records/2026-11-07-native-dependency/summarize.py.txt",
+    "docs/experiments/records/2026-11-07-native-dependency/summary.json",
+    "docs/experiments/records/2026-11-07-native-dependency/test_gemma4_native_objectives.py.txt",
+    "docs/experiments/records/2026-11-07-native-dependency/tests.txt",
+    "docs/experiments/records/2026-11-07-native-gpu4-owner/close-measurement-v2-lint.json",
+    "docs/experiments/records/2026-11-07-native-gpu4-owner/close-measurement-v2-operation-receipt.json",
+    "docs/experiments/records/2026-11-07-native-gpu4-owner/close-measurement-v2.py",
+    "docs/experiments/records/2026-11-07-native-gpu4-owner/cpu-validation-finite-v1.json",
+    "docs/experiments/records/2026-11-07-native-gpu4-owner/executed-owner-preservation.json",
+    "docs/experiments/records/2026-11-07-native-gpu4-owner/finite-reuse-readonly-source.json",
+    "docs/experiments/records/2026-11-07-native-gpu4-owner/measurement-v2/completion.json",
+    "docs/experiments/records/2026-11-07-native-gpu4-owner/measurement-v2/correct-logprob-complete.json",
+    "docs/experiments/records/2026-11-07-native-gpu4-owner/measurement-v2/correct-logprob-start.json",
+    "docs/experiments/records/2026-11-07-native-gpu4-owner/measurement-v2/correct-logprob/coverage.json",
+    "docs/experiments/records/2026-11-07-native-gpu4-owner/measurement-v2/correct-logprob/frame-evidence.json",
+    "docs/experiments/records/2026-11-07-native-gpu4-owner/measurement-v2/correct-logprob/progress.json",
+    "docs/experiments/records/2026-11-07-native-gpu4-owner/measurement-v2/correct-logprob/provenance.json",
+    "docs/experiments/records/2026-11-07-native-gpu4-owner/measurement-v2/correct-logprob/saved-activation-storage.json",
+    "docs/experiments/records/2026-11-07-native-gpu4-owner/measurement-v2/correct-logprob/summary.json",
+    "docs/experiments/records/2026-11-07-native-gpu4-owner/measurement-v2/launch.json",
+    "docs/experiments/records/2026-11-07-native-gpu4-owner/measurement-v2/margin-complete.json",
+    "docs/experiments/records/2026-11-07-native-gpu4-owner/measurement-v2/margin-start.json",
+    "docs/experiments/records/2026-11-07-native-gpu4-owner/measurement-v2/margin/coverage.json",
+    "docs/experiments/records/2026-11-07-native-gpu4-owner/measurement-v2/margin/frame-evidence.json",
+    "docs/experiments/records/2026-11-07-native-gpu4-owner/measurement-v2/margin/progress.json",
+    "docs/experiments/records/2026-11-07-native-gpu4-owner/measurement-v2/margin/provenance.json",
+    "docs/experiments/records/2026-11-07-native-gpu4-owner/measurement-v2/margin/saved-activation-storage.json",
+    "docs/experiments/records/2026-11-07-native-gpu4-owner/measurement-v2/margin/summary.json",
+    "docs/experiments/records/2026-11-07-native-gpu4-owner/measurement-v2/measurement-closure.json",
+    "docs/experiments/records/2026-11-07-native-gpu4-owner/measurement-v2/owner-executed-9a8d9255.py.txt",
+    "docs/experiments/records/2026-11-07-native-gpu4-owner/measurement-v2/read-only-monitor.jsonl",
+    "docs/experiments/records/2026-11-07-native-gpu4-owner/measurement-v2/root-approved-plan.json",
+    "docs/experiments/records/2026-11-07-native-gpu4-owner/measurement-v2/root-launch.json",
+    "docs/experiments/records/2026-11-07-pr33-body-update-new18-v2/SHA256SUMS",
+    "docs/experiments/records/2026-11-07-pr33-body-update-new18-v2/body.md",
+    "docs/experiments/records/2026-11-07-pr33-body-update-new18-v2/diff-from-current-pr.patch",
+    "docs/experiments/records/2026-11-07-pr33-body-update-new18-v2/diff-from-v1.patch",
+    "docs/experiments/records/2026-11-07-pr33-body-update-new18-v2/existing-body.md",
+    "docs/experiments/records/2026-11-07-pr33-body-update-new18-v2/existing-pr.json",
+    "docs/experiments/records/2026-11-07-pr33-body-update-new18-v2/preparation.json",
+    "docs/experiments/records/2026-11-07-pr33-body-update-new18-v2/update.json",
+    "docs/experiments/records/2026-11-07-pr33-body-update-new18/SHA256SUMS",
+    "docs/experiments/records/2026-11-07-pr33-body-update-new18/body.md",
+    "docs/experiments/records/2026-11-07-pr33-body-update-new18/draft-before-wording-body.md",
+    "docs/experiments/records/2026-11-07-pr33-body-update-new18/draft-before-wording-preparation.json",
+    "docs/experiments/records/2026-11-07-pr33-body-update-new18/draft-before-wording-update.json",
+    "docs/experiments/records/2026-11-07-pr33-body-update-new18/existing-body.md",
+    "docs/experiments/records/2026-11-07-pr33-body-update-new18/existing-pr.json",
+    "docs/experiments/records/2026-11-07-pr33-body-update-new18/head-ci-jobs-readonly.json",
+    "docs/experiments/records/2026-11-07-pr33-body-update-new18/head-ci-readonly.json",
+    "docs/experiments/records/2026-11-07-pr33-body-update-new18/preparation.json",
+    "docs/experiments/records/2026-11-07-pr33-body-update-new18/proposed.diff",
+    "docs/experiments/records/2026-11-07-pr33-body-update-new18/update.json",
+    "docs/experiments/scripts/fresh-av-native-gpu4-20261107.py",
+    "docs/wsp-tool-inventory.md",
+    "scripts/experiments/gemma4-purpose/README.md",
+    "scripts/experiments/gemma4-purpose/native_dependency.py",
+    "tests/test_gemma4_native_objectives.py",
+    "tests/test_gemma4_native_owner.py"
+  ],
+  "excluded_f03_files": [
+    "docs/experiments/scripts/fresh-f03-prepare-20261107.py"
+  ],
+  "initial_checksum_entries": [
+    {
+      "manifest": "docs/experiments/records/2026-11-07-f02-payload-release-plan/SHA256SUMS",
+      "file": "docs/experiments/records/2026-11-07-f02-payload-release-plan/audit-v1.py.txt",
+      "sha256": "0c3b7211f70bc5bcbcc961623ed67c7752fcd69eb97eed9a04a34f5c96719e46",
+      "matched": true
+    },
+    {
+      "manifest": "docs/experiments/records/2026-11-07-f02-payload-release-plan/SHA256SUMS",
+      "file": "docs/experiments/records/2026-11-07-f02-payload-release-plan/audit.py.txt",
+      "sha256": "3822766900f4ab5dcba3bdc2bd731276f12ec4b9c5946788d03719030e8b320c",
+      "matched": true
+    },
+    {
+      "manifest": "docs/experiments/records/2026-11-07-f02-payload-release-plan/SHA256SUMS",
+      "file": "docs/experiments/records/2026-11-07-f02-payload-release-plan/v1/audit.json",
+      "sha256": "85a51e8d2a6ebb7209e2ebcb7553475297fa1175ce986d95b07125ab540d2e12",
+      "matched": true
+    },
+    {
+      "manifest": "docs/experiments/records/2026-11-07-f02-payload-release-plan/SHA256SUMS",
+      "file": "docs/experiments/records/2026-11-07-f02-payload-release-plan/v1/mount-order-diagnostic.json",
+      "sha256": "c12623b95b4378652ed229a202608cb7d23ee5477cd66103f77612743f7b3568",
+      "matched": true
+    },
+    {
+      "manifest": "docs/experiments/records/2026-11-07-f02-payload-release-plan/SHA256SUMS",
+      "file": "docs/experiments/records/2026-11-07-f02-payload-release-plan/v1/post-failure-container-check.json",
+      "sha256": "7f3dd6c2657093bc73d5f05515f97130ccda04228df81a7ec0a3a0fc4a65fbbf",
+      "matched": true
+    },
+    {
+      "manifest": "docs/experiments/records/2026-11-07-f02-payload-release-plan/SHA256SUMS",
+      "file": "docs/experiments/records/2026-11-07-f02-payload-release-plan/v2/audit.json",
+      "sha256": "8c655deb16614701126cec894f22e564c8f10fd6e9e5adf268b9fe1cb1fb3aac",
+      "matched": true
+    },
+    {
+      "manifest": "docs/experiments/records/2026-11-07-f02-payload-release-plan/SHA256SUMS",
+      "file": "docs/experiments/records/2026-11-07-f02-payload-release-plan/v2/plan.json",
+      "sha256": "9f758511d865d9444858bcf645746efced8f567246dcd3a4472b6c9b055f6a3a",
+      "matched": true
+    },
+    {
+      "manifest": "docs/experiments/records/2026-11-07-native-dependency-independent-review/SHA256SUMS",
+      "file": "docs/experiments/records/2026-11-07-native-dependency-independent-review/check.py.txt",
+      "sha256": "79c1f8a46605618c8ccd634fe57a40968a131c9a1cb998868a4c4c04402607a2",
+      "matched": true
+    },
+    {
+      "manifest": "docs/experiments/records/2026-11-07-native-dependency-independent-review/SHA256SUMS",
+      "file": "docs/experiments/records/2026-11-07-native-dependency-independent-review/finite-owner-review.json",
+      "sha256": "251473a5a503410db6415f70f720a3ab104672189f4f25de6beca9b21ca8f9a6",
+      "matched": true
+    },
+    {
+      "manifest": "docs/experiments/records/2026-11-07-native-dependency-independent-review/SHA256SUMS",
+      "file": "docs/experiments/records/2026-11-07-native-dependency-independent-review/receipt.json",
+      "sha256": "0b2f5f071b69f43e565d58ff2dba0191c903795e6a27212436ff765592915901",
+      "matched": true
+    },
+    {
+      "manifest": "docs/experiments/records/2026-11-07-native-dependency-v2/SHA256SUMS",
+      "file": "docs/experiments/records/2026-11-07-native-dependency-v2/analysis-command.sh.txt",
+      "sha256": "b290cd44ef9918853375e8887eb4c76dc670597f70ec113d1d7436e9b4c10604",
+      "matched": true
+    },
+    {
+      "manifest": "docs/experiments/records/2026-11-07-native-dependency-v2/SHA256SUMS",
+      "file": "docs/experiments/records/2026-11-07-native-dependency-v2/analysis.txt",
+      "sha256": "32bbb6b846538287fd7932195e23b1ddafa5a038edaf66417c2abd1950bb26be",
+      "matched": true
+    },
+    {
+      "manifest": "docs/experiments/records/2026-11-07-native-dependency-v2/SHA256SUMS",
+      "file": "docs/experiments/records/2026-11-07-native-dependency-v2/diffcheck-final.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "matched": true
+    },
+    {
+      "manifest": "docs/experiments/records/2026-11-07-native-dependency-v2/SHA256SUMS",
+      "file": "docs/experiments/records/2026-11-07-native-dependency-v2/final-source-receipt.json",
+      "sha256": "79cecff7fb44165f63fb2ca21d3d84174ed9f8de449b2ca93aea06cdc842e46a",
+      "matched": true
+    },
+    {
+      "manifest": "docs/experiments/records/2026-11-07-native-dependency-v2/SHA256SUMS",
+      "file": "docs/experiments/records/2026-11-07-native-dependency-v2/native_dependency.py.txt",
+      "sha256": "8aefc1862e964ea9d2f821a1bcb413ad8f421cecc3e56b140583ed56da37a7a9",
+      "matched": true
+    },
+    {
+      "manifest": "docs/experiments/records/2026-11-07-native-dependency-v2/SHA256SUMS",
+      "file": "docs/experiments/records/2026-11-07-native-dependency-v2/receipt.json",
+      "sha256": "eb2c46130033c8c430f780b23aae53ce069f15974f2eb923c4041a9fb8904463",
+      "matched": true
+    },
+    {
+      "manifest": "docs/experiments/records/2026-11-07-native-dependency-v2/SHA256SUMS",
+      "file": "docs/experiments/records/2026-11-07-native-dependency-v2/render-report.py.txt",
+      "sha256": "6dce242c0476f463c3aa88afa722e686bbe3ed93a18889f77c48ddc092129e78",
+      "matched": true
+    },
+    {
+      "manifest": "docs/experiments/records/2026-11-07-native-dependency-v2/SHA256SUMS",
+      "file": "docs/experiments/records/2026-11-07-native-dependency-v2/report.json.gz",
+      "sha256": "a349810704cf303b03ec6f3d874d8ef8b8500bb849388f58d32f5412b2f57105",
+      "matched": true
+    },
+    {
+      "manifest": "docs/experiments/records/2026-11-07-native-dependency-v2/SHA256SUMS",
+      "file": "docs/experiments/records/2026-11-07-native-dependency-v2/ruff-final.txt",
+      "sha256": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18",
+      "matched": true
+    },
+    {
+      "manifest": "docs/experiments/records/2026-11-07-native-dependency-v2/SHA256SUMS",
+      "file": "docs/experiments/records/2026-11-07-native-dependency-v2/ruff.txt",
+      "sha256": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18",
+      "matched": true
+    },
+    {
+      "manifest": "docs/experiments/records/2026-11-07-native-dependency-v2/SHA256SUMS",
+      "file": "docs/experiments/records/2026-11-07-native-dependency-v2/summarize.py.txt",
+      "sha256": "471a42cfb1449ed591b7c82870e1e7e0b0f5283cfaaba21088a1d3d383887340",
+      "matched": true
+    },
+    {
+      "manifest": "docs/experiments/records/2026-11-07-native-dependency-v2/SHA256SUMS",
+      "file": "docs/experiments/records/2026-11-07-native-dependency-v2/summary.json",
+      "sha256": "a3a7120a661e9375a9ae362aec35bec08e726df95a1812558e9f4b0c2895fb07",
+      "matched": true
+    },
+    {
+      "manifest": "docs/experiments/records/2026-11-07-native-dependency-v2/SHA256SUMS",
+      "file": "docs/experiments/records/2026-11-07-native-dependency-v2/test_gemma4_native_objectives-final.py.txt",
+      "sha256": "18a324044edf3ac5c886920294366ee37fe480e02186e535069fd8660c6aabbc",
+      "matched": true
+    },
+    {
+      "manifest": "docs/experiments/records/2026-11-07-native-dependency-v2/SHA256SUMS",
+      "file": "docs/experiments/records/2026-11-07-native-dependency-v2/test_gemma4_native_objectives.py.txt",
+      "sha256": "40945f98b02f72999d34d903ae6ea1e61a972d454e63384ddea35031427ca831",
+      "matched": true
+    },
+    {
+      "manifest": "docs/experiments/records/2026-11-07-native-dependency-v2/SHA256SUMS",
+      "file": "docs/experiments/records/2026-11-07-native-dependency-v2/tests-final-entrypoint.txt",
+      "sha256": "673edab4e0cb2972862ee061dbc6363f67f903e2b76fddd9068d1a348d10dba3",
+      "matched": true
+    },
+    {
+      "manifest": "docs/experiments/records/2026-11-07-native-dependency-v2/SHA256SUMS",
+      "file": "docs/experiments/records/2026-11-07-native-dependency-v2/tests.txt",
+      "sha256": "b335d9a946ba4c3dc2ffc445cdd058d8ddb140f63b20d4d1618e9880fc8f24e9",
+      "matched": true
+    },
+    {
+      "manifest": "docs/experiments/records/2026-11-07-native-dependency/SHA256SUMS",
+      "file": "docs/experiments/records/2026-11-07-native-dependency/analysis-command.sh.txt",
+      "sha256": "d1f94603fc3196b74b890a9dd3cf6217044957c1a6dab85c5c0c0de09214b481",
+      "matched": true
+    },
+    {
+      "manifest": "docs/experiments/records/2026-11-07-native-dependency/SHA256SUMS",
+      "file": "docs/experiments/records/2026-11-07-native-dependency/analysis.txt",
+      "sha256": "94f7cb82880897e121f3daac3e11d7fb33a556decaa8bae0a1ce624839145786",
+      "matched": true
+    },
+    {
+      "manifest": "docs/experiments/records/2026-11-07-native-dependency/SHA256SUMS",
+      "file": "docs/experiments/records/2026-11-07-native-dependency/native_dependency.py.txt",
+      "sha256": "86453fb08db588d69024364da4e157590c1b079ae414daef8c3b0683cff1ef7b",
+      "matched": true
+    },
+    {
+      "manifest": "docs/experiments/records/2026-11-07-native-dependency/SHA256SUMS",
+      "file": "docs/experiments/records/2026-11-07-native-dependency/receipt.json",
+      "sha256": "373a2fe2d00935a0d632fff2dd31d53389814eb8b90d899d523bee1fb6d135ac",
+      "matched": true
+    },
+    {
+      "manifest": "docs/experiments/records/2026-11-07-native-dependency/SHA256SUMS",
+      "file": "docs/experiments/records/2026-11-07-native-dependency/report.json.gz",
+      "sha256": "31569faf766e47ab23175c9318807931c3abaf59dee16f2d3bfc7c9e8c41d5c0",
+      "matched": true
+    },
+    {
+      "manifest": "docs/experiments/records/2026-11-07-native-dependency/SHA256SUMS",
+      "file": "docs/experiments/records/2026-11-07-native-dependency/ruff.txt",
+      "sha256": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18",
+      "matched": true
+    },
+    {
+      "manifest": "docs/experiments/records/2026-11-07-native-dependency/SHA256SUMS",
+      "file": "docs/experiments/records/2026-11-07-native-dependency/summarize.py.txt",
+      "sha256": "409578820de5e12d5a46d2a2b82667fadad08e98cd5834e5655cf8a38b7c3719",
+      "matched": true
+    },
+    {
+      "manifest": "docs/experiments/records/2026-11-07-native-dependency/SHA256SUMS",
+      "file": "docs/experiments/records/2026-11-07-native-dependency/summary.json",
+      "sha256": "eeb64afcc38484ce872cedc59f09ad92af6db5dc06051b117d2433e5c7af87b7",
+      "matched": true
+    },
+    {
+      "manifest": "docs/experiments/records/2026-11-07-native-dependency/SHA256SUMS",
+      "file": "docs/experiments/records/2026-11-07-native-dependency/test_gemma4_native_objectives.py.txt",
+      "sha256": "40945f98b02f72999d34d903ae6ea1e61a972d454e63384ddea35031427ca831",
+      "matched": true
+    },
+    {
+      "manifest": "docs/experiments/records/2026-11-07-native-dependency/SHA256SUMS",
+      "file": "docs/experiments/records/2026-11-07-native-dependency/tests.txt",
+      "sha256": "b335d9a946ba4c3dc2ffc445cdd058d8ddb140f63b20d4d1618e9880fc8f24e9",
+      "matched": true
+    },
+    {
+      "manifest": "docs/experiments/records/2026-11-07-pr33-body-update-new18-v2/SHA256SUMS",
+      "file": "docs/experiments/records/2026-11-07-pr33-body-update-new18-v2/body.md",
+      "sha256": "acfea78fba5ba2795c146def16a996a2eefdca04b0a2546b5f1b2421b44882ad",
+      "matched": true
+    },
+    {
+      "manifest": "docs/experiments/records/2026-11-07-pr33-body-update-new18-v2/SHA256SUMS",
+      "file": "docs/experiments/records/2026-11-07-pr33-body-update-new18-v2/diff-from-current-pr.patch",
+      "sha256": "7aa9cd01f43e5fe2fcbf18e7797cd76f89064ee89ef97e09c542b0a8907caa54",
+      "matched": true
+    },
+    {
+      "manifest": "docs/experiments/records/2026-11-07-pr33-body-update-new18-v2/SHA256SUMS",
+      "file": "docs/experiments/records/2026-11-07-pr33-body-update-new18-v2/diff-from-v1.patch",
+      "sha256": "ef69c49f3669b0d4c6f9bd8b43576389a5c319071c901f8ac37c71c8bb21f3f3",
+      "matched": true
+    },
+    {
+      "manifest": "docs/experiments/records/2026-11-07-pr33-body-update-new18-v2/SHA256SUMS",
+      "file": "docs/experiments/records/2026-11-07-pr33-body-update-new18-v2/existing-body.md",
+      "sha256": "696f6188ccfe324e6645c521112ea1a0073f616db1c6f82be58ef0a5af1e9d3b",
+      "matched": true
+    },
+    {
+      "manifest": "docs/experiments/records/2026-11-07-pr33-body-update-new18-v2/SHA256SUMS",
+      "file": "docs/experiments/records/2026-11-07-pr33-body-update-new18-v2/existing-pr.json",
+      "sha256": "1dffba3aec125626173e2775a2ba927320f2681c3bc8882c4fffb4cc53b988a5",
+      "matched": true
+    },
+    {
+      "manifest": "docs/experiments/records/2026-11-07-pr33-body-update-new18-v2/SHA256SUMS",
+      "file": "docs/experiments/records/2026-11-07-pr33-body-update-new18-v2/preparation.json",
+      "sha256": "cabedb416baad90196a7839c320588c2acc995f77f17eaeafd0443f2bc2ae772",
+      "matched": true
+    },
+    {
+      "manifest": "docs/experiments/records/2026-11-07-pr33-body-update-new18-v2/SHA256SUMS",
+      "file": "docs/experiments/records/2026-11-07-pr33-body-update-new18-v2/update.json",
+      "sha256": "f60a4923453cab90f5ba5362bf0216d940907d58ac9004842458f1f36c0a0fe6",
+      "matched": true
+    },
+    {
+      "manifest": "docs/experiments/records/2026-11-07-pr33-body-update-new18/SHA256SUMS",
+      "file": "docs/experiments/records/2026-11-07-pr33-body-update-new18/body.md",
+      "sha256": "cf31b946926986b4065751275f010677627e8c725799d0d494f704c6bba94a5a",
+      "matched": true
+    },
+    {
+      "manifest": "docs/experiments/records/2026-11-07-pr33-body-update-new18/SHA256SUMS",
+      "file": "docs/experiments/records/2026-11-07-pr33-body-update-new18/draft-before-wording-body.md",
+      "sha256": "402de7791290a1d58eff07850423850e8e82e9fe3cbc728180e36e3792013db8",
+      "matched": true
+    },
+    {
+      "manifest": "docs/experiments/records/2026-11-07-pr33-body-update-new18/SHA256SUMS",
+      "file": "docs/experiments/records/2026-11-07-pr33-body-update-new18/draft-before-wording-preparation.json",
+      "sha256": "7056390682e116f5b83b73c39e2f52e6ca3148d4ebe776c0d4b7435b8bc0be06",
+      "matched": true
+    },
+    {
+      "manifest": "docs/experiments/records/2026-11-07-pr33-body-update-new18/SHA256SUMS",
+      "file": "docs/experiments/records/2026-11-07-pr33-body-update-new18/draft-before-wording-update.json",
+      "sha256": "9b9dab4c31df739d84194a4af11b1107e387644de93b0c4205535e21e89c265d",
+      "matched": true
+    },
+    {
+      "manifest": "docs/experiments/records/2026-11-07-pr33-body-update-new18/SHA256SUMS",
+      "file": "docs/experiments/records/2026-11-07-pr33-body-update-new18/existing-body.md",
+      "sha256": "696f6188ccfe324e6645c521112ea1a0073f616db1c6f82be58ef0a5af1e9d3b",
+      "matched": true
+    },
+    {
+      "manifest": "docs/experiments/records/2026-11-07-pr33-body-update-new18/SHA256SUMS",
+      "file": "docs/experiments/records/2026-11-07-pr33-body-update-new18/existing-pr.json",
+      "sha256": "ff3a4150984273d575228c64de24a4b64e207480e53586fa48eda875866ea9c1",
+      "matched": true
+    },
+    {
+      "manifest": "docs/experiments/records/2026-11-07-pr33-body-update-new18/SHA256SUMS",
+      "file": "docs/experiments/records/2026-11-07-pr33-body-update-new18/head-ci-jobs-readonly.json",
+      "sha256": "ba6a46ba99900cc5a7a7c310cc9f958c2af8fca2f62350b66e57043d05951d19",
+      "matched": true
+    },
+    {
+      "manifest": "docs/experiments/records/2026-11-07-pr33-body-update-new18/SHA256SUMS",
+      "file": "docs/experiments/records/2026-11-07-pr33-body-update-new18/head-ci-readonly.json",
+      "sha256": "71304c31fa7348982ee4db743551b495c4e30e6c1ed0c010b5070cf32454178c",
+      "matched": true
+    },
+    {
+      "manifest": "docs/experiments/records/2026-11-07-pr33-body-update-new18/SHA256SUMS",
+      "file": "docs/experiments/records/2026-11-07-pr33-body-update-new18/preparation.json",
+      "sha256": "df05c2aba67d512eb98bc4de1d60c7b3017dd745f3622b9a796f39f45419080e",
+      "matched": true
+    },
+    {
+      "manifest": "docs/experiments/records/2026-11-07-pr33-body-update-new18/SHA256SUMS",
+      "file": "docs/experiments/records/2026-11-07-pr33-body-update-new18/proposed.diff",
+      "sha256": "0c7f87be8bb5822cd9152f98416fd41d66b9e861a227e1d4c74fa836153150b1",
+      "matched": true
+    },
+    {
+      "manifest": "docs/experiments/records/2026-11-07-pr33-body-update-new18/SHA256SUMS",
+      "file": "docs/experiments/records/2026-11-07-pr33-body-update-new18/update.json",
+      "sha256": "1a7ef9536ef8cdd0843f4143de286526f5ef508b6740501f6330f2284d27641e",
+      "matched": true
+    }
+  ],
+  "secret_scan": {
+    "patterns": [
+      "private_key",
+      "github_pat",
+      "hf_token",
+      "anthropic_token",
+      "openai_token",
+      "aws_access",
+      "credential_url"
+    ],
+    "signature_matches": [],
+    "limits": "High-confidence signature scan plus review; not a proof against every possible secret encoding; no values or credential stores read"
+  },
+  "initial_trailing_whitespace": [
+    {
+      "path": "docs/experiments/records/2026-11-07-pr33-body-update-new18-v2/diff-from-current-pr.patch",
+      "lines": [
+        4,
+        6
+      ]
+    },
+    {
+      "path": "docs/experiments/records/2026-11-07-pr33-body-update-new18-v2/diff-from-v1.patch",
+      "lines": [
+        4,
+        6,
+        9
+      ]
+    },
+    {
+      "path": "docs/experiments/records/2026-11-07-pr33-body-update-new18/proposed.diff",
+      "lines": [
+        4,
+        6
+      ]
+    }
+  ],
+  "packaged_files": [
+    {
+      "record_directory": "2026-11-07-pr33-body-update-new18",
+      "original_name": "proposed.diff",
+      "original_sha256": "0c7f87be8bb5822cd9152f98416fd41d66b9e861a227e1d4c74fa836153150b1",
+      "original_bytes": 5548,
+      "earlier_original_retained": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-pr33-body-update-new18-v1/proposed.diff",
+      "additional_raw_retained": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-pr33-completed-records-packaging-v1/2026-11-07-pr33-body-update-new18/proposed.diff",
+      "stored_name": "proposed.diff.gz",
+      "stored_sha256": "7ce14388c0ca1c64872b0d27e3f1ee97dfe644a254071f8b8c20ef443eb47322",
+      "stored_bytes": 2232,
+      "roundtrip_exact": true
+    },
+    {
+      "record_directory": "2026-11-07-pr33-body-update-new18-v2",
+      "original_name": "diff-from-current-pr.patch",
+      "original_sha256": "7aa9cd01f43e5fe2fcbf18e7797cd76f89064ee89ef97e09c542b0a8907caa54",
+      "original_bytes": 6078,
+      "earlier_original_retained": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-pr33-body-update-new18-v2/diff-from-current-pr.patch",
+      "additional_raw_retained": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-pr33-completed-records-packaging-v1/2026-11-07-pr33-body-update-new18-v2/diff-from-current-pr.patch",
+      "stored_name": "diff-from-current-pr.patch.gz",
+      "stored_sha256": "d8928f32ddf14c9f89b2cdc950e750cdf3c04163b67ee2b1c88af28cff9cb6c4",
+      "stored_bytes": 2441,
+      "roundtrip_exact": true
+    },
+    {
+      "record_directory": "2026-11-07-pr33-body-update-new18-v2",
+      "original_name": "diff-from-v1.patch",
+      "original_sha256": "ef69c49f3669b0d4c6f9bd8b43576389a5c319071c901f8ac37c71c8bb21f3f3",
+      "original_bytes": 2595,
+      "earlier_original_retained": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-pr33-body-update-new18-v2/diff-from-v1.patch",
+      "additional_raw_retained": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-pr33-completed-records-packaging-v1/2026-11-07-pr33-body-update-new18-v2/diff-from-v1.patch",
+      "stored_name": "diff-from-v1.patch.gz",
+      "stored_sha256": "7f0ef0d738584c5fcc44311dbccfaa139acfc599ec0036502d6a49055ae834a3",
+      "stored_bytes": 1251,
+      "roundtrip_exact": true
+    }
+  ],
+  "prior_manifests_preserved": true,
+  "all_other_initial_bytes_unchanged": true,
+  "body_checks": [
+    {
+      "directory": "2026-11-07-pr33-body-update-new18",
+      "body_sha256": "cf31b946926986b4065751275f010677627e8c725799d0d494f704c6bba94a5a",
+      "update_sha256": "1a7ef9536ef8cdd0843f4143de286526f5ef508b6740501f6330f2284d27641e",
+      "body_matches_update": true
+    },
+    {
+      "directory": "2026-11-07-pr33-body-update-new18-v2",
+      "body_sha256": "acfea78fba5ba2795c146def16a996a2eefdca04b0a2546b5f1b2421b44882ad",
+      "update_sha256": "f60a4923453cab90f5ba5362bf0216d940907d58ac9004842458f1f36c0a0fe6",
+      "body_matches_update": true
+    }
+  ],
+  "initial_hashes": {
+    "docs/experiments/2026-11-07-av-behavior12-native-sensitivity-results.md": "f4a0ec2d9f2538dab179d7459c009c3c243ee9489fa164a48ef389be440e6761",
+    "docs/experiments/2026-11-07-behavior12-finite-owner.md": "919a83d2788d5ca809e7a556e2e9d73f5cad4001cc72666e830cd015cabd9762",
+    "docs/experiments/2026-11-07-behavior12-finite-replay-reuse.md": "a7ecdaaf7d111df25e71a3f3a9424ed8db56aebece8326fa3a35fbd0eadc1f8f",
+    "docs/experiments/2026-11-07-f02-payload-release-plan.md": "8bb6afc491aad337ee4707e12ed9327540b93d2f4fd0a61779f1a660ad5b7f38",
+    "docs/experiments/2026-11-07-native-dependency-analysis.md": "e2e673fe295fac89ee26285b697ca640af477eb6e2f5ff876eabacc473711e57",
+    "docs/experiments/2026-11-07-native-dependency-independent-review.md": "329c3635ee5ac0d6c405eca87feba8a6ac904fffe3cab1b14ade78083b816512",
+    "docs/experiments/2026-11-07-native-gpu4-measurement-plan.md": "d3858d5d3cccde6bb862cdd58579928513f5101821b74e33bd71929e6173c34c",
+    "docs/experiments/records/2026-11-07-completed-records-packaging/operation.py.txt": "37a8618b64ff6ef6f56573a87d4119d924da3ba693bdeb0e14a3367a483427a4",
+    "docs/experiments/records/2026-11-07-cpu-validation-r8/run.py.txt": "863f29a6ef3f17aca391e4c14202f0f2ad7c1b44a6faa5b94c8bdd18dbddf915",
+    "docs/experiments/records/2026-11-07-f02-payload-release-plan/SHA256SUMS": "b0ed66db40e44f079c42ed230ff5a978fb01b7913281d5a8a2fb9466241698d5",
+    "docs/experiments/records/2026-11-07-f02-payload-release-plan/audit-v1.py.txt": "0c3b7211f70bc5bcbcc961623ed67c7752fcd69eb97eed9a04a34f5c96719e46",
+    "docs/experiments/records/2026-11-07-f02-payload-release-plan/audit.py.txt": "3822766900f4ab5dcba3bdc2bd731276f12ec4b9c5946788d03719030e8b320c",
+    "docs/experiments/records/2026-11-07-f02-payload-release-plan/v1/audit.json": "85a51e8d2a6ebb7209e2ebcb7553475297fa1175ce986d95b07125ab540d2e12",
+    "docs/experiments/records/2026-11-07-f02-payload-release-plan/v1/mount-order-diagnostic.json": "c12623b95b4378652ed229a202608cb7d23ee5477cd66103f77612743f7b3568",
+    "docs/experiments/records/2026-11-07-f02-payload-release-plan/v1/post-failure-container-check.json": "7f3dd6c2657093bc73d5f05515f97130ccda04228df81a7ec0a3a0fc4a65fbbf",
+    "docs/experiments/records/2026-11-07-f02-payload-release-plan/v2/audit.json": "8c655deb16614701126cec894f22e564c8f10fd6e9e5adf268b9fe1cb1fb3aac",
+    "docs/experiments/records/2026-11-07-f02-payload-release-plan/v2/plan.json": "9f758511d865d9444858bcf645746efced8f567246dcd3a4472b6c9b055f6a3a",
+    "docs/experiments/records/2026-11-07-native-dependency-independent-review/SHA256SUMS": "b74ad6611d73558e3b1f4a449ff4fc82b1b5a7e21ccbcca8fc41af5f95d7a248",
+    "docs/experiments/records/2026-11-07-native-dependency-independent-review/check.py.txt": "79c1f8a46605618c8ccd634fe57a40968a131c9a1cb998868a4c4c04402607a2",
+    "docs/experiments/records/2026-11-07-native-dependency-independent-review/finite-owner-review.json": "251473a5a503410db6415f70f720a3ab104672189f4f25de6beca9b21ca8f9a6",
+    "docs/experiments/records/2026-11-07-native-dependency-independent-review/receipt.json": "0b2f5f071b69f43e565d58ff2dba0191c903795e6a27212436ff765592915901",
+    "docs/experiments/records/2026-11-07-native-dependency-v2/SHA256SUMS": "36caeae59813c309a5182985c02f708b9375ba31204f662890109e8494ead208",
+    "docs/experiments/records/2026-11-07-native-dependency-v2/analysis-command.sh.txt": "b290cd44ef9918853375e8887eb4c76dc670597f70ec113d1d7436e9b4c10604",
+    "docs/experiments/records/2026-11-07-native-dependency-v2/analysis.txt": "32bbb6b846538287fd7932195e23b1ddafa5a038edaf66417c2abd1950bb26be",
+    "docs/experiments/records/2026-11-07-native-dependency-v2/diffcheck-final.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "docs/experiments/records/2026-11-07-native-dependency-v2/final-source-receipt.json": "79cecff7fb44165f63fb2ca21d3d84174ed9f8de449b2ca93aea06cdc842e46a",
+    "docs/experiments/records/2026-11-07-native-dependency-v2/native_dependency.py.txt": "8aefc1862e964ea9d2f821a1bcb413ad8f421cecc3e56b140583ed56da37a7a9",
+    "docs/experiments/records/2026-11-07-native-dependency-v2/receipt.json": "eb2c46130033c8c430f780b23aae53ce069f15974f2eb923c4041a9fb8904463",
+    "docs/experiments/records/2026-11-07-native-dependency-v2/render-report.py.txt": "6dce242c0476f463c3aa88afa722e686bbe3ed93a18889f77c48ddc092129e78",
+    "docs/experiments/records/2026-11-07-native-dependency-v2/report.json.gz": "a349810704cf303b03ec6f3d874d8ef8b8500bb849388f58d32f5412b2f57105",
+    "docs/experiments/records/2026-11-07-native-dependency-v2/ruff-final.txt": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18",
+    "docs/experiments/records/2026-11-07-native-dependency-v2/ruff.txt": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18",
+    "docs/experiments/records/2026-11-07-native-dependency-v2/summarize.py.txt": "471a42cfb1449ed591b7c82870e1e7e0b0f5283cfaaba21088a1d3d383887340",
+    "docs/experiments/records/2026-11-07-native-dependency-v2/summary.json": "a3a7120a661e9375a9ae362aec35bec08e726df95a1812558e9f4b0c2895fb07",
+    "docs/experiments/records/2026-11-07-native-dependency-v2/test_gemma4_native_objectives-final.py.txt": "18a324044edf3ac5c886920294366ee37fe480e02186e535069fd8660c6aabbc",
+    "docs/experiments/records/2026-11-07-native-dependency-v2/test_gemma4_native_objectives.py.txt": "40945f98b02f72999d34d903ae6ea1e61a972d454e63384ddea35031427ca831",
+    "docs/experiments/records/2026-11-07-native-dependency-v2/tests-final-entrypoint.txt": "673edab4e0cb2972862ee061dbc6363f67f903e2b76fddd9068d1a348d10dba3",
+    "docs/experiments/records/2026-11-07-native-dependency-v2/tests.txt": "b335d9a946ba4c3dc2ffc445cdd058d8ddb140f63b20d4d1618e9880fc8f24e9",
+    "docs/experiments/records/2026-11-07-native-dependency/SHA256SUMS": "cc6074ce6efc97fff1ebf635372b4fe49886700f78c31ced91c1e2fd626da69e",
+    "docs/experiments/records/2026-11-07-native-dependency/analysis-command.sh.txt": "d1f94603fc3196b74b890a9dd3cf6217044957c1a6dab85c5c0c0de09214b481",
+    "docs/experiments/records/2026-11-07-native-dependency/analysis.txt": "94f7cb82880897e121f3daac3e11d7fb33a556decaa8bae0a1ce624839145786",
+    "docs/experiments/records/2026-11-07-native-dependency/native_dependency.py.txt": "86453fb08db588d69024364da4e157590c1b079ae414daef8c3b0683cff1ef7b",
+    "docs/experiments/records/2026-11-07-native-dependency/receipt.json": "373a2fe2d00935a0d632fff2dd31d53389814eb8b90d899d523bee1fb6d135ac",
+    "docs/experiments/records/2026-11-07-native-dependency/report.json.gz": "31569faf766e47ab23175c9318807931c3abaf59dee16f2d3bfc7c9e8c41d5c0",
+    "docs/experiments/records/2026-11-07-native-dependency/ruff.txt": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18",
+    "docs/experiments/records/2026-11-07-native-dependency/summarize.py.txt": "409578820de5e12d5a46d2a2b82667fadad08e98cd5834e5655cf8a38b7c3719",
+    "docs/experiments/records/2026-11-07-native-dependency/summary.json": "eeb64afcc38484ce872cedc59f09ad92af6db5dc06051b117d2433e5c7af87b7",
+    "docs/experiments/records/2026-11-07-native-dependency/test_gemma4_native_objectives.py.txt": "40945f98b02f72999d34d903ae6ea1e61a972d454e63384ddea35031427ca831",
+    "docs/experiments/records/2026-11-07-native-dependency/tests.txt": "b335d9a946ba4c3dc2ffc445cdd058d8ddb140f63b20d4d1618e9880fc8f24e9",
+    "docs/experiments/records/2026-11-07-native-gpu4-owner/close-measurement-v2-lint.json": "8fd02f108dca81dae9133ea439af799fe656ba421394accadbfd5dd4122712f2",
+    "docs/experiments/records/2026-11-07-native-gpu4-owner/close-measurement-v2-operation-receipt.json": "1fec49cd37b7b8e9d81d148a2905586d759d0b4b7f7d411caad0a66fdb86bf33",
+    "docs/experiments/records/2026-11-07-native-gpu4-owner/close-measurement-v2.py": "26565da9ef67dbd3ce625374dab07ccb6b346c5348215f0acd3e66dca642247c",
+    "docs/experiments/records/2026-11-07-native-gpu4-owner/cpu-validation-finite-v1.json": "6269332743a44efe6b7e022206f56094eb6cc031723d1c81eba0751f0b1c5d3f",
+    "docs/experiments/records/2026-11-07-native-gpu4-owner/executed-owner-preservation.json": "39f54c7f72671b3dd1f8437d271b9388bb9592d17a400a49c3baafbb40c0329a",
+    "docs/experiments/records/2026-11-07-native-gpu4-owner/finite-reuse-readonly-source.json": "5056fb48fb698dd8b06d6439354aea5084a29bd64d754cd024be96dc97693ffc",
+    "docs/experiments/records/2026-11-07-native-gpu4-owner/measurement-v2/completion.json": "f5c5fd8a3ca9dbb4ab767887028e60ba005210db83cfbf7ff8772ce08da93202",
+    "docs/experiments/records/2026-11-07-native-gpu4-owner/measurement-v2/correct-logprob-complete.json": "27a2b5b90f8486846f0a248f62f87bce1f146e21ec9ecd1baf9cbd5caddb267d",
+    "docs/experiments/records/2026-11-07-native-gpu4-owner/measurement-v2/correct-logprob-start.json": "b553c56f79843ecab69930ac9c2e2542398fe37fb712c31d8725cadba2ee1777",
+    "docs/experiments/records/2026-11-07-native-gpu4-owner/measurement-v2/correct-logprob/coverage.json": "88be0e2cd3cbef6fcf85a7dfd5fee307f30db071ed5cb4561320e412738ef4e7",
+    "docs/experiments/records/2026-11-07-native-gpu4-owner/measurement-v2/correct-logprob/frame-evidence.json": "21ae203f395c51f7d973436b42cfeab19f9d72b1c2db18e8c0faa4613fa26f2d",
+    "docs/experiments/records/2026-11-07-native-gpu4-owner/measurement-v2/correct-logprob/progress.json": "a33f47abd121bb7796bf5aa5845c0f995a9bacd2d946345875800aa117e4a4ea",
+    "docs/experiments/records/2026-11-07-native-gpu4-owner/measurement-v2/correct-logprob/provenance.json": "25754ae2274d420471f322dd25774e6c94d3b226251a4a469002e236683abeb7",
+    "docs/experiments/records/2026-11-07-native-gpu4-owner/measurement-v2/correct-logprob/saved-activation-storage.json": "6b01a614b9c11f19c8f0b598efb6a6d042e17666b897ad3dd0b9f80db32dc7b9",
+    "docs/experiments/records/2026-11-07-native-gpu4-owner/measurement-v2/correct-logprob/summary.json": "eabb73cd9d978130dae53f6ac151dd9660fcb0862876f3063e8d6d91b167fccd",
+    "docs/experiments/records/2026-11-07-native-gpu4-owner/measurement-v2/launch.json": "1e1e4deb962ce83342db04d19562ec63ba9f1820efdb33747dd9eb14f0e15912",
+    "docs/experiments/records/2026-11-07-native-gpu4-owner/measurement-v2/margin-complete.json": "97c806c6417bce67fc16017c0dee4665d20b18366c16f10b6d5beada7694a5d4",
+    "docs/experiments/records/2026-11-07-native-gpu4-owner/measurement-v2/margin-start.json": "8e5f6d40be8f72dc031da88f28bbe796809c9fcdca4e51b666c041cd7969f872",
+    "docs/experiments/records/2026-11-07-native-gpu4-owner/measurement-v2/margin/coverage.json": "88be0e2cd3cbef6fcf85a7dfd5fee307f30db071ed5cb4561320e412738ef4e7",
+    "docs/experiments/records/2026-11-07-native-gpu4-owner/measurement-v2/margin/frame-evidence.json": "21ae203f395c51f7d973436b42cfeab19f9d72b1c2db18e8c0faa4613fa26f2d",
+    "docs/experiments/records/2026-11-07-native-gpu4-owner/measurement-v2/margin/progress.json": "f80afc7ac237b91804f5edf6926383ac05d78cae1290646990825952bf7e24d8",
+    "docs/experiments/records/2026-11-07-native-gpu4-owner/measurement-v2/margin/provenance.json": "f35cf7b1849eba5e63f79cb8b9ab2fcd4f04573eceda3e832500a29f3fa59c47",
+    "docs/experiments/records/2026-11-07-native-gpu4-owner/measurement-v2/margin/saved-activation-storage.json": "1708dda64abbb5b26847b3698a50f761fb98d59b1947f827ed9abdd957444ee3",
+    "docs/experiments/records/2026-11-07-native-gpu4-owner/measurement-v2/margin/summary.json": "e9ca36ef7c67a17c25ac849e67a4a3ee027eeba49c1422b602c04d501ec0bc25",
+    "docs/experiments/records/2026-11-07-native-gpu4-owner/measurement-v2/measurement-closure.json": "e889b331d80e724c4313cda5f9cec672d3f1752364e268e4c9b415d12eb897c3",
+    "docs/experiments/records/2026-11-07-native-gpu4-owner/measurement-v2/owner-executed-9a8d9255.py.txt": "9a8d9255312a97ae2762ec97c34c9701ac5d64dcb0dc273e01f8d7f6700b7183",
+    "docs/experiments/records/2026-11-07-native-gpu4-owner/measurement-v2/read-only-monitor.jsonl": "3b80bea2f3565699358290128c78384a6017bde126781e6769c69108f9c3dafb",
+    "docs/experiments/records/2026-11-07-native-gpu4-owner/measurement-v2/root-approved-plan.json": "5783f8bce04355bcc57d8c2648659e92c9c107c71de9d01c20b0e39dde6fa732",
+    "docs/experiments/records/2026-11-07-native-gpu4-owner/measurement-v2/root-launch.json": "c61a8aedc9066cf721dc684551528b5562141fb4ed426920c032f3065e6fe60f",
+    "docs/experiments/records/2026-11-07-pr33-body-update-new18-v2/SHA256SUMS": "368154b8be1393f04ac544213b21d4b465f2c0691bc9291f1a36399e8d8c014c",
+    "docs/experiments/records/2026-11-07-pr33-body-update-new18-v2/body.md": "acfea78fba5ba2795c146def16a996a2eefdca04b0a2546b5f1b2421b44882ad",
+    "docs/experiments/records/2026-11-07-pr33-body-update-new18-v2/diff-from-current-pr.patch": "7aa9cd01f43e5fe2fcbf18e7797cd76f89064ee89ef97e09c542b0a8907caa54",
+    "docs/experiments/records/2026-11-07-pr33-body-update-new18-v2/diff-from-v1.patch": "ef69c49f3669b0d4c6f9bd8b43576389a5c319071c901f8ac37c71c8bb21f3f3",
+    "docs/experiments/records/2026-11-07-pr33-body-update-new18-v2/existing-body.md": "696f6188ccfe324e6645c521112ea1a0073f616db1c6f82be58ef0a5af1e9d3b",
+    "docs/experiments/records/2026-11-07-pr33-body-update-new18-v2/existing-pr.json": "1dffba3aec125626173e2775a2ba927320f2681c3bc8882c4fffb4cc53b988a5",
+    "docs/experiments/records/2026-11-07-pr33-body-update-new18-v2/preparation.json": "cabedb416baad90196a7839c320588c2acc995f77f17eaeafd0443f2bc2ae772",
+    "docs/experiments/records/2026-11-07-pr33-body-update-new18-v2/update.json": "f60a4923453cab90f5ba5362bf0216d940907d58ac9004842458f1f36c0a0fe6",
+    "docs/experiments/records/2026-11-07-pr33-body-update-new18/SHA256SUMS": "e763fbf4e37ca35829ae20f4cc2f7f5d801b5b66130183e130a04d568ce84b99",
+    "docs/experiments/records/2026-11-07-pr33-body-update-new18/body.md": "cf31b946926986b4065751275f010677627e8c725799d0d494f704c6bba94a5a",
+    "docs/experiments/records/2026-11-07-pr33-body-update-new18/draft-before-wording-body.md": "402de7791290a1d58eff07850423850e8e82e9fe3cbc728180e36e3792013db8",
+    "docs/experiments/records/2026-11-07-pr33-body-update-new18/draft-before-wording-preparation.json": "7056390682e116f5b83b73c39e2f52e6ca3148d4ebe776c0d4b7435b8bc0be06",
+    "docs/experiments/records/2026-11-07-pr33-body-update-new18/draft-before-wording-update.json": "9b9dab4c31df739d84194a4af11b1107e387644de93b0c4205535e21e89c265d",
+    "docs/experiments/records/2026-11-07-pr33-body-update-new18/existing-body.md": "696f6188ccfe324e6645c521112ea1a0073f616db1c6f82be58ef0a5af1e9d3b",
+    "docs/experiments/records/2026-11-07-pr33-body-update-new18/existing-pr.json": "ff3a4150984273d575228c64de24a4b64e207480e53586fa48eda875866ea9c1",
+    "docs/experiments/records/2026-11-07-pr33-body-update-new18/head-ci-jobs-readonly.json": "ba6a46ba99900cc5a7a7c310cc9f958c2af8fca2f62350b66e57043d05951d19",
+    "docs/experiments/records/2026-11-07-pr33-body-update-new18/head-ci-readonly.json": "71304c31fa7348982ee4db743551b495c4e30e6c1ed0c010b5070cf32454178c",
+    "docs/experiments/records/2026-11-07-pr33-body-update-new18/preparation.json": "df05c2aba67d512eb98bc4de1d60c7b3017dd745f3622b9a796f39f45419080e",
+    "docs/experiments/records/2026-11-07-pr33-body-update-new18/proposed.diff": "0c7f87be8bb5822cd9152f98416fd41d66b9e861a227e1d4c74fa836153150b1",
+    "docs/experiments/records/2026-11-07-pr33-body-update-new18/update.json": "1a7ef9536ef8cdd0843f4143de286526f5ef508b6740501f6330f2284d27641e",
+    "docs/experiments/scripts/fresh-av-native-gpu4-20261107.py": "39707865f4cc4851290d218d0f4cb6a3fa8768a940a124a9f0ea953ee0d2c5d7",
+    "docs/wsp-tool-inventory.md": "d57c954b215a4d4dd78e7a01a2c50702ea7df9e4c7d558833c5b094f04389f5d",
+    "scripts/experiments/gemma4-purpose/README.md": "01bb1892b97239866c7fe07a0ae300408f4916b8f388768688a0ad2648e55a35",
+    "scripts/experiments/gemma4-purpose/native_dependency.py": "8aefc1862e964ea9d2f821a1bcb413ad8f421cecc3e56b140583ed56da37a7a9",
+    "tests/test_gemma4_native_objectives.py": "18a324044edf3ac5c886920294366ee37fe480e02186e535069fd8660c6aabbc",
+    "tests/test_gemma4_native_owner.py": "d76064bc0ddebe6dc10cce0f8d26fa2b4562e8fb8aaa5bf73e427ec0102187ff"
+  },
+  "seconds": 0.8795254670549184,
+  "preparation_read_errors": [
+    "Two guessed prior packaging record filenames did not exist; actual packaging-note.json was discovered and read; no mutations in those attempts"
+  ]
+}

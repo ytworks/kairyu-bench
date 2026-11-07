@@ -1,0 +1,23 @@
+import hashlib,json,time
+from pathlib import Path
+import numpy as np
+R=Path('/mnt/nvme/kairyu/wsp/gemma4-coding-20261104')
+B=R/'worktrees/kairyu-bench-weight-tools'
+D=B/'docs/experiments/records/2026-11-07-native-dependency-independent-review'
+D.mkdir(parents=True,exist_ok=False)
+p=R/'analysis/fresh-purpose-20261107-native-dependency-v2/report.json'
+started=time.monotonic(); j=json.loads(p.read_text())
+g=np.array(j['global']['gram']); c=np.array(j['global']['cosine'])
+sha=lambda x:hashlib.sha256(Path(x).read_bytes()).hexdigest()
+source=B/'scripts/experiments/gemma4-purpose/native_dependency.py'
+assert sha(source)=='8aefc1862e964ea9d2f821a1bcb413ad8f421cecc3e56b140583ed56da37a7a9'
+assert sha(p)=='271ee1afef4afd855c3aa6d589891bef6ad2b144b9499df9646039894835fad7'
+o={'review':'read_only_existing_report_and_source','source_sha256':sha(source),'report_path':str(p),'report_sha256':sha(p),'native_tensors':len(j['tensors']),'coordinates':j['native_coordinates'],'coordinate_sum':sum(t['source']['coordinates'] for t in j['tensors']),'gradient_rows':j['gradient_rows'],'source_scope':j['source_scope'],'reported_source_l2':j['source']['l2'],'recombined_source_l2':float(np.sqrt(sum(t['source']['l2']**2 for t in j['tensors']))),'symmetric_finite_gram':bool(np.array_equal(g,g.T) and np.isfinite(g).all()),'all_unused_empty':all(not x for x in j['unused_tensors_by_row']),'zero_count_additivity':all(sum(t['gradient_zero_coordinates'][i] for t in j['tensors'])==j['global']['gradient_zero_coordinates'][i] for i in range(24)),'model_calls':0,'service_mutations':0,'analysis_reruns':0,'test_reruns':0}
+for k in ('families','layers'):
+    o[k]={'count':len(j[k]),'cosine_sum_max_error':float(np.max(np.abs(sum(np.array(v['contribution_to_global_cosine']) for v in j[k].values())-c)))}
+assert o['native_tensors']==421 and o['coordinate_sum']==o['coordinates']==1331516 and o['gradient_rows']==24
+assert o['symmetric_finite_gram'] and o['all_unused_empty'] and o['zero_count_additivity']
+assert max(o[k]['cosine_sum_max_error'] for k in ('families','layers'))<1e-12
+o['seconds']=time.monotonic()-started
+(D/'receipt.json').write_text(json.dumps(o,indent=2,allow_nan=False)+'\n')
+print(json.dumps({'record':str(D),'sha256':sha(D/'receipt.json'),'seconds':o['seconds']}))

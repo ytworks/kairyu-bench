@@ -192,6 +192,16 @@ fixture proves rejection before mutation and refusal of ambiguous rollback.
 
 - [Behavior18 fixed train/transfer calibration](experiments/2026-11-07-behavior18-implementation.md): new case recipe and thin offline adapter reuse the existing Docker worker; 18 correct programs passed288 numeric fixtures, all18 foils rejected by fixed witnesses or explicit entrypoint contracts. Train12 first; transfer6 only after candidate freeze. All revisions, raw final worker output and the common empty-array JSON boundary fix are retained; method requirements are separately unverified.
 
-- [AV train12 native GPU4測定owner](experiments/2026-11-07-native-gpu4-measurement-plan.md): plan/SHAに束縛したscalar/vector全量2目的収集。既定preview、GPU4専有とgemma-2 exact CID復帰、全失敗保存。GPU実測は別承認・未実行。
+- [AV train12 native GPU4測定owner](experiments/2026-11-07-native-gpu4-measurement-plan.md): plan/SHAに束縛したscalar/vector全量2目的収集。既定preview、GPU4専有とgemma-2 exact CID復帰、全失敗保存。GPU実測は別承認で全12×2目的完了、[実測結果](experiments/2026-11-07-av-behavior12-native-sensitivity-results.md)に復帰と資源証拠を保存。
 
 - [Behavior18 tokenizer and fixed train12 owner](experiments/2026-11-07-behavior18-frame-and-train12-readiness.md): local CPU-only complete-frame audit (18/18, maximum290), explicit exact-plan approval, all4 AV serving identity, and global-lock retention through issued requests/idle closure; three focused CPU guards passed. No new model generation is implied.
+
+
+### Behavior12 native dependency analysis (2026-11-07)
+
+- `scripts/experiments/gemma4-purpose/native_dependency.py`: CPU-only complete
+  native LL/margin geometry after confirmed owner restoration; all 12 cases,
+  421 tensors and 1,331,516 coordinates retained, no solver or edit.
+  [Measured report and validation](experiments/2026-11-07-native-dependency-analysis.md).
+
+- [全train12・保存native候補1件のfinite owner](experiments/2026-11-07-behavior12-finite-owner.md): 既存GPU4 ownerの明示mode分岐。全9file editor/full-hash/statとRAM選択BF16を結び、AV→candidate→AV全12・同CID復帰を検証する。22 focused CPU tests/Ruff成功、実candidate未bind・finite GPU未実行。

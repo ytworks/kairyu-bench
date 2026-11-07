@@ -1,0 +1,33 @@
+{
+  "reason": "Unified diff context-only blank lines have literal trailing spaces; preserve bytes through gzip instead of modifying raw patch text",
+  "files": [
+    {
+      "record_directory": "2026-11-07-pr33-body-update-new18-v2",
+      "original_name": "diff-from-current-pr.patch",
+      "original_sha256": "7aa9cd01f43e5fe2fcbf18e7797cd76f89064ee89ef97e09c542b0a8907caa54",
+      "original_bytes": 6078,
+      "earlier_original_retained": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-pr33-body-update-new18-v2/diff-from-current-pr.patch",
+      "additional_raw_retained": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-pr33-completed-records-packaging-v1/2026-11-07-pr33-body-update-new18-v2/diff-from-current-pr.patch",
+      "stored_name": "diff-from-current-pr.patch.gz",
+      "stored_sha256": "d8928f32ddf14c9f89b2cdc950e750cdf3c04163b67ee2b1c88af28cff9cb6c4",
+      "stored_bytes": 2441,
+      "roundtrip_exact": true
+    },
+    {
+      "record_directory": "2026-11-07-pr33-body-update-new18-v2",
+      "original_name": "diff-from-v1.patch",
+      "original_sha256": "ef69c49f3669b0d4c6f9bd8b43576389a5c319071c901f8ac37c71c8bb21f3f3",
+      "original_bytes": 2595,
+      "earlier_original_retained": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-pr33-body-update-new18-v2/diff-from-v1.patch",
+      "additional_raw_retained": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-pr33-completed-records-packaging-v1/2026-11-07-pr33-body-update-new18-v2/diff-from-v1.patch",
+      "stored_name": "diff-from-v1.patch.gz",
+      "stored_sha256": "7f0ef0d738584c5fcc44311dbccfaa139acfc599ec0036502d6a49055ae834a3",
+      "stored_bytes": 1251,
+      "roundtrip_exact": true
+    }
+  ],
+  "previous_manifest_retained": "SHA256SUMS.before-packaging",
+  "previous_manifest_sha256": "368154b8be1393f04ac544213b21d4b465f2c0691bc9291f1a36399e8d8c014c",
+  "scientific_results_or_code_changed": false,
+  "body_and_update_bytes_unchanged": true
+}

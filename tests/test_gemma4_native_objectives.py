@@ -528,5 +528,34 @@ class NativeCoupledTests(unittest.TestCase):
         self.assertFalse((self.root / "bad-mixed").exists())
 
 
+class NativeDependencyGeometryTests(unittest.TestCase):
+    """Protect zero-gradient unknowns and BF16 exponent-boundary asymmetry."""
+
+    def test_group_contribution_preserves_opposition_and_zero_is_unknown(self):
+        dependency = load("native_dependency")
+        gradient = np.array([[1., 2.], [-1., 2.], [0., 0.]])
+        whole = gradient @ gradient.T
+        left = gradient[:, :1] @ gradient[:, :1].T
+        right = gradient[:, 1:] @ gradient[:, 1:].T
+        a = dependency.geometry(left, whole)
+        b = dependency.geometry(right, whole)
+        total = dependency.geometry(whole, whole)
+        self.assertAlmostEqual(a["cosine"][0][1], -1.)
+        self.assertAlmostEqual(b["cosine"][0][1], 1.)
+        self.assertAlmostEqual(total["cosine"][0][1], .6)
+        self.assertAlmostEqual(a["contribution_to_global_cosine"][0][1]
+                               + b["contribution_to_global_cosine"][0][1], .6)
+        self.assertIsNone(total["cosine"][0][2])
+        self.assertIsNone(a["gradient_energy_fraction"][2])
+
+    def test_bf16_spacing_handles_signed_zero_and_asymmetric_powers(self):
+        dependency = load("native_dependency")
+        up, down = dependency.bf16_gaps(np.array([1., -1., 0., -0.], dtype=np.float32))
+        np.testing.assert_array_equal(up, [2**-7, 2**-8, 2**-133, 2**-133])
+        np.testing.assert_array_equal(down, [2**-8, 2**-7, 2**-133, 2**-133])
+        with self.assertRaisesRegex(ValueError, "exact BF16"):
+            dependency.bf16_gaps(np.array([1.001], dtype=np.float32))
+
+
 if __name__ == "__main__":
     unittest.main()

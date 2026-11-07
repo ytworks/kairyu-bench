@@ -590,3 +590,15 @@ transferは候補spec/幅凍結後にAV/候補で各1回だけ測り、gradient�
 既存Docker.run/WORKERを使用し、Cの要求関数名はAST適合後だけsolveへaliasします。
 BのSymPy実使用などの方法要件は数値合格から推定しません。
 [操作・全検証・既知の限界](../../../docs/experiments/2026-11-07-behavior18-implementation.md)を参照。
+
+
+### Full-native dependency report after owner closure
+
+`native_dependency.py --collector-root <completed-owner-root> --closure-sha256 <SHA> --output <new-dir>`
+is a read-only CPU report for fixed behavior12 training. It requires both objectives,
+exact 12 singleton folds, all 421 native tensors, matching frames, completed owner
+restoration and pinned inputs/source. It reuses `joint.read_collection` without an
+optimizer. Output contains all 24-row geometry, family/layer/tensor denominators,
+exact-zero counts distinct from unused tensors and adjacent BF16 spacing. It neither
+creates a candidate nor selects support. See [the measured report](../../../docs/experiments/2026-11-07-native-dependency-analysis.md)
+for scope, units and forced-empty-thought limitations.

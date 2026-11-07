@@ -1,0 +1,21 @@
+{
+  "reason": "Unified diff context-only blank lines have literal trailing spaces; preserve bytes through gzip instead of modifying raw patch text",
+  "files": [
+    {
+      "record_directory": "2026-11-07-pr33-body-update-new18",
+      "original_name": "proposed.diff",
+      "original_sha256": "0c7f87be8bb5822cd9152f98416fd41d66b9e861a227e1d4c74fa836153150b1",
+      "original_bytes": 5548,
+      "earlier_original_retained": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-pr33-body-update-new18-v1/proposed.diff",
+      "additional_raw_retained": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-pr33-completed-records-packaging-v1/2026-11-07-pr33-body-update-new18/proposed.diff",
+      "stored_name": "proposed.diff.gz",
+      "stored_sha256": "7ce14388c0ca1c64872b0d27e3f1ee97dfe644a254071f8b8c20ef443eb47322",
+      "stored_bytes": 2232,
+      "roundtrip_exact": true
+    }
+  ],
+  "previous_manifest_retained": "SHA256SUMS.before-packaging",
+  "previous_manifest_sha256": "e763fbf4e37ca35829ae20f4cc2f7f5d801b5b66130183e130a04d568ce84b99",
+  "scientific_results_or_code_changed": false,
+  "body_and_update_bytes_unchanged": true
+}

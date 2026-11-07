@@ -1,0 +1,8 @@
+{
+  "analysis_source_sha256": "8aefc1862e964ea9d2f821a1bcb413ad8f421cecc3e56b140583ed56da37a7a9",
+  "test_source_sha256": "18a324044edf3ac5c886920294366ee37fe480e02186e535069fd8660c6aabbc",
+  "test_entrypoint_placement_fix": "Move existing unittest.main after new tests so direct invocation also discovers them; no analysis source/data change",
+  "tests_final": "test_bf16_spacing_handles_signed_zero_and_asymmetric_powers (test_gemma4_native_objectives.NativeDependencyGeometryTests.test_bf16_spacing_handles_signed_zero_and_asymmetric_powers) ... ok\ntest_group_contribution_preserves_opposition_and_zero_is_unknown (test_gemma4_native_objectives.NativeDependencyGeometryTests.test_group_contribution_preserves_opposition_and_zero_is_unknown) ... ok\n\n----------------------------------------------------------------------\nRan 2 tests in 0.030s\n\nOK\n",
+  "ruff_final": "All checks passed!\n",
+  "diffcheck_final": ""
+}

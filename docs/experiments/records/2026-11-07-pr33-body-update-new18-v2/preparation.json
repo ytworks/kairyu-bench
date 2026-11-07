@@ -1,0 +1,26 @@
+{
+  "prepared_epoch": 1794041712.0027184,
+  "patch_sent": false,
+  "commit_or_push": false,
+  "v1_preserved": {
+    "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-pr33-body-update-new18-v1/body.md",
+    "sha256": "cf31b946926986b4065751275f010677627e8c725799d0d494f704c6bba94a5a"
+  },
+  "current_pr_body_sha256": "696f6188ccfe324e6645c521112ea1a0073f616db1c6f82be58ef0a5af1e9d3b",
+  "current_pr_updated_at": "2026-11-07T08:46:57Z",
+  "head_at_read": "b928ace83402873b8c3bf823c9753a29d07b4ee8",
+  "proposed_body_sha256": "acfea78fba5ba2795c146def16a996a2eefdca04b0a2546b5f1b2421b44882ad",
+  "update_json_sha256": "f60a4923453cab90f5ba5362bf0216d940907d58ac9004842458f1f36c0a0fe6",
+  "only_change_from_v1": "Replace GPU-running paragraph with verified completion and no-new-edit/no-official-gain scope",
+  "source_sha256": {
+    "docs/experiments/2026-11-07-av-behavior12-native-sensitivity-results.md": "f4a0ec2d9f2538dab179d7459c009c3c243ee9489fa164a48ef389be440e6761",
+    "docs/experiments/records/2026-11-07-native-gpu4-owner/measurement-v2/measurement-closure.json": "e889b331d80e724c4313cda5f9cec672d3f1752364e268e4c9b415d12eb897c3",
+    "docs/experiments/records/2026-11-07-native-gpu4-owner/measurement-v2/completion.json": "f5c5fd8a3ca9dbb4ab767887028e60ba005210db83cfbf7ff8772ce08da93202",
+    "docs/experiments/records/2026-11-07-native-gpu4-owner/measurement-v2/correct-logprob/summary.json": "eabb73cd9d978130dae53f6ac151dd9660fcb0862876f3063e8d6d91b167fccd",
+    "docs/experiments/records/2026-11-07-native-gpu4-owner/measurement-v2/margin/summary.json": "e9ca36ef7c67a17c25ac849e67a4a3ee027eeba49c1422b602c04d501ec0bc25"
+  },
+  "gpu_status": "completed",
+  "elapsed_owner_seconds": 237.89717507362366,
+  "model_requests_sent_by_this_update": 0,
+  "service_operations": 0
+}
