@@ -1,0 +1,513 @@
+{
+  "schema_version": 2,
+  "kind": "native_matrix_coupled_objectives_v2",
+  "observed_blocks": [
+    "matrix"
+  ],
+  "eligible_blocks": [
+    "matrix"
+  ],
+  "matrix_families": [
+    "q",
+    "k",
+    "v",
+    "o",
+    "gate",
+    "up",
+    "down"
+  ],
+  "baseline_tolerance": 1e-06,
+  "checkpoint": {
+    "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/checkpoints/code90-current-ad-helper-av-v1",
+    "tree_sha256": "5d056eb03f954db80313a85167153c875fe5e436e4f97c281a3f55202d9b3eaf",
+    "attestation": {
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/code90-resume-20261106/provisional-av-long-purpose-observation-v1/checkpoint-attestation.json",
+      "sha256": "12ba81915ae02dfc9d898bc5639d4deb689821071b3a36fceb3befa4e0f01755"
+    }
+  },
+  "cases": {
+    "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/code90-resume-20261106/long-helper-chain-curriculum-v1/train-cases.json",
+    "sha256": "bd6fcba70e93b1870ee882f6e92893b93490ad4099af7a9a290ba3d324d68951"
+  },
+  "collections": {
+    "matrix": {
+      "correct-logprob": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/code90-resume-20261106/science-gpu-runs/provisional-av-long-purpose-v3/matrix-correct-logprob",
+      "margin": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/code90-resume-20261106/science-gpu-runs/provisional-av-long-purpose-v3/matrix-margin"
+    }
+  },
+  "candidates": [
+    {
+      "id": "fresh-code-joint-f01",
+      "constraints": [
+        {
+          "objective": "correct-logprob",
+          "purpose": "code",
+          "fold": 0,
+          "minimum_delta": 0.01
+        },
+        {
+          "objective": "correct-logprob",
+          "purpose": "code",
+          "fold": 1,
+          "minimum_delta": 0.01
+        },
+        {
+          "objective": "correct-logprob",
+          "purpose": "implementation",
+          "fold": 0,
+          "minimum_delta": 0.03
+        },
+        {
+          "objective": "correct-logprob",
+          "purpose": "implementation",
+          "fold": 1,
+          "minimum_delta": 0.03
+        },
+        {
+          "objective": "correct-logprob",
+          "purpose": "workflow",
+          "fold": 0,
+          "minimum_delta": -0.03
+        },
+        {
+          "objective": "correct-logprob",
+          "purpose": "workflow",
+          "fold": 1,
+          "minimum_delta": -0.03
+        },
+        {
+          "objective": "correct-logprob",
+          "purpose": "tool_call",
+          "fold": 0,
+          "minimum_delta": -0.03
+        },
+        {
+          "objective": "correct-logprob",
+          "purpose": "tool_call",
+          "fold": 1,
+          "minimum_delta": -0.03
+        },
+        {
+          "objective": "correct-logprob",
+          "purpose": "tool_no_call",
+          "fold": 0,
+          "minimum_delta": -0.03
+        },
+        {
+          "objective": "correct-logprob",
+          "purpose": "tool_no_call",
+          "fold": 1,
+          "minimum_delta": -0.03
+        },
+        {
+          "objective": "correct-logprob",
+          "purpose": "tool_arguments",
+          "fold": 0,
+          "minimum_delta": -0.03
+        },
+        {
+          "objective": "correct-logprob",
+          "purpose": "tool_arguments",
+          "fold": 1,
+          "minimum_delta": -0.03
+        },
+        {
+          "objective": "correct-logprob",
+          "purpose": "algorithm",
+          "fold": 0,
+          "minimum_delta": 0.03
+        },
+        {
+          "objective": "correct-logprob",
+          "purpose": "algorithm",
+          "fold": 1,
+          "minimum_delta": 0.03
+        },
+        {
+          "objective": "correct-logprob",
+          "purpose": "referent",
+          "fold": 0,
+          "minimum_delta": -0.03
+        },
+        {
+          "objective": "correct-logprob",
+          "purpose": "referent",
+          "fold": 1,
+          "minimum_delta": -0.03
+        },
+        {
+          "objective": "correct-logprob",
+          "purpose": "fact_retention",
+          "fold": 0,
+          "minimum_delta": -0.03
+        },
+        {
+          "objective": "correct-logprob",
+          "purpose": "fact_retention",
+          "fold": 1,
+          "minimum_delta": -0.03
+        },
+        {
+          "objective": "correct-logprob",
+          "purpose": "science_numerics",
+          "fold": 0,
+          "minimum_delta": -0.03
+        },
+        {
+          "objective": "correct-logprob",
+          "purpose": "science_numerics",
+          "fold": 1,
+          "minimum_delta": -0.03
+        },
+        {
+          "objective": "correct-logprob",
+          "purpose": "science_contracts",
+          "fold": 0,
+          "minimum_delta": -0.03
+        },
+        {
+          "objective": "correct-logprob",
+          "purpose": "science_contracts",
+          "fold": 1,
+          "minimum_delta": -0.03
+        },
+        {
+          "objective": "correct-logprob",
+          "purpose": "science_advanced_state",
+          "fold": 0,
+          "minimum_delta": -0.03
+        },
+        {
+          "objective": "correct-logprob",
+          "purpose": "science_advanced_state",
+          "fold": 1,
+          "minimum_delta": -0.03
+        },
+        {
+          "objective": "correct-logprob",
+          "purpose": "science_advanced_counting",
+          "fold": 0,
+          "minimum_delta": -0.03
+        },
+        {
+          "objective": "correct-logprob",
+          "purpose": "science_advanced_counting",
+          "fold": 1,
+          "minimum_delta": -0.03
+        },
+        {
+          "objective": "correct-logprob",
+          "purpose": "science_advanced_simulation",
+          "fold": 0,
+          "minimum_delta": -0.03
+        },
+        {
+          "objective": "correct-logprob",
+          "purpose": "science_advanced_simulation",
+          "fold": 1,
+          "minimum_delta": -0.03
+        },
+        {
+          "objective": "correct-logprob",
+          "purpose": "science_advanced_probability",
+          "fold": 0,
+          "minimum_delta": -0.03
+        },
+        {
+          "objective": "correct-logprob",
+          "purpose": "science_advanced_probability",
+          "fold": 1,
+          "minimum_delta": -0.03
+        },
+        {
+          "objective": "correct-logprob",
+          "purpose": "science_helper_stage",
+          "fold": 0,
+          "minimum_delta": -0.03
+        },
+        {
+          "objective": "correct-logprob",
+          "purpose": "science_helper_stage",
+          "fold": 1,
+          "minimum_delta": -0.03
+        },
+        {
+          "objective": "correct-logprob",
+          "purpose": "science_composition_stage",
+          "fold": 0,
+          "minimum_delta": -0.03
+        },
+        {
+          "objective": "correct-logprob",
+          "purpose": "science_composition_stage",
+          "fold": 1,
+          "minimum_delta": -0.03
+        },
+        {
+          "objective": "correct-logprob",
+          "purpose": "science_long_helper",
+          "fold": 0,
+          "minimum_delta": -0.03
+        },
+        {
+          "objective": "correct-logprob",
+          "purpose": "science_long_helper",
+          "fold": 1,
+          "minimum_delta": -0.03
+        },
+        {
+          "objective": "correct-logprob",
+          "purpose": "science_long_composition",
+          "fold": 0,
+          "minimum_delta": -0.03
+        },
+        {
+          "objective": "correct-logprob",
+          "purpose": "science_long_composition",
+          "fold": 1,
+          "minimum_delta": -0.03
+        },
+        {
+          "objective": "margin",
+          "purpose": "code",
+          "fold": 0,
+          "minimum_delta": 0.0
+        },
+        {
+          "objective": "margin",
+          "purpose": "code",
+          "fold": 1,
+          "minimum_delta": 0.0
+        },
+        {
+          "objective": "margin",
+          "purpose": "implementation",
+          "fold": 0,
+          "minimum_delta": 0.03
+        },
+        {
+          "objective": "margin",
+          "purpose": "implementation",
+          "fold": 1,
+          "minimum_delta": 0.03
+        },
+        {
+          "objective": "margin",
+          "purpose": "workflow",
+          "fold": 0,
+          "minimum_delta": -0.03
+        },
+        {
+          "objective": "margin",
+          "purpose": "workflow",
+          "fold": 1,
+          "minimum_delta": -0.03
+        },
+        {
+          "objective": "margin",
+          "purpose": "tool_call",
+          "fold": 0,
+          "minimum_delta": -0.03
+        },
+        {
+          "objective": "margin",
+          "purpose": "tool_call",
+          "fold": 1,
+          "minimum_delta": -0.03
+        },
+        {
+          "objective": "margin",
+          "purpose": "tool_no_call",
+          "fold": 0,
+          "minimum_delta": -0.03
+        },
+        {
+          "objective": "margin",
+          "purpose": "tool_no_call",
+          "fold": 1,
+          "minimum_delta": -0.03
+        },
+        {
+          "objective": "margin",
+          "purpose": "tool_arguments",
+          "fold": 0,
+          "minimum_delta": -0.03
+        },
+        {
+          "objective": "margin",
+          "purpose": "tool_arguments",
+          "fold": 1,
+          "minimum_delta": -0.03
+        },
+        {
+          "objective": "margin",
+          "purpose": "algorithm",
+          "fold": 0,
+          "minimum_delta": 0.03
+        },
+        {
+          "objective": "margin",
+          "purpose": "algorithm",
+          "fold": 1,
+          "minimum_delta": 0.03
+        },
+        {
+          "objective": "margin",
+          "purpose": "referent",
+          "fold": 0,
+          "minimum_delta": -0.03
+        },
+        {
+          "objective": "margin",
+          "purpose": "referent",
+          "fold": 1,
+          "minimum_delta": -0.03
+        },
+        {
+          "objective": "margin",
+          "purpose": "fact_retention",
+          "fold": 0,
+          "minimum_delta": -0.03
+        },
+        {
+          "objective": "margin",
+          "purpose": "fact_retention",
+          "fold": 1,
+          "minimum_delta": -0.03
+        },
+        {
+          "objective": "margin",
+          "purpose": "science_numerics",
+          "fold": 0,
+          "minimum_delta": -0.03
+        },
+        {
+          "objective": "margin",
+          "purpose": "science_numerics",
+          "fold": 1,
+          "minimum_delta": -0.03
+        },
+        {
+          "objective": "margin",
+          "purpose": "science_contracts",
+          "fold": 0,
+          "minimum_delta": -0.03
+        },
+        {
+          "objective": "margin",
+          "purpose": "science_contracts",
+          "fold": 1,
+          "minimum_delta": -0.03
+        },
+        {
+          "objective": "margin",
+          "purpose": "science_advanced_state",
+          "fold": 0,
+          "minimum_delta": -0.03
+        },
+        {
+          "objective": "margin",
+          "purpose": "science_advanced_state",
+          "fold": 1,
+          "minimum_delta": -0.03
+        },
+        {
+          "objective": "margin",
+          "purpose": "science_advanced_counting",
+          "fold": 0,
+          "minimum_delta": -0.03
+        },
+        {
+          "objective": "margin",
+          "purpose": "science_advanced_counting",
+          "fold": 1,
+          "minimum_delta": -0.03
+        },
+        {
+          "objective": "margin",
+          "purpose": "science_advanced_simulation",
+          "fold": 0,
+          "minimum_delta": -0.03
+        },
+        {
+          "objective": "margin",
+          "purpose": "science_advanced_simulation",
+          "fold": 1,
+          "minimum_delta": -0.03
+        },
+        {
+          "objective": "margin",
+          "purpose": "science_advanced_probability",
+          "fold": 0,
+          "minimum_delta": -0.03
+        },
+        {
+          "objective": "margin",
+          "purpose": "science_advanced_probability",
+          "fold": 1,
+          "minimum_delta": -0.03
+        },
+        {
+          "objective": "margin",
+          "purpose": "science_helper_stage",
+          "fold": 0,
+          "minimum_delta": -0.03
+        },
+        {
+          "objective": "margin",
+          "purpose": "science_helper_stage",
+          "fold": 1,
+          "minimum_delta": -0.03
+        },
+        {
+          "objective": "margin",
+          "purpose": "science_composition_stage",
+          "fold": 0,
+          "minimum_delta": -0.03
+        },
+        {
+          "objective": "margin",
+          "purpose": "science_composition_stage",
+          "fold": 1,
+          "minimum_delta": -0.03
+        },
+        {
+          "objective": "margin",
+          "purpose": "science_long_helper",
+          "fold": 0,
+          "minimum_delta": -0.03
+        },
+        {
+          "objective": "margin",
+          "purpose": "science_long_helper",
+          "fold": 1,
+          "minimum_delta": -0.03
+        },
+        {
+          "objective": "margin",
+          "purpose": "science_long_composition",
+          "fold": 0,
+          "minimum_delta": -0.03
+        },
+        {
+          "objective": "margin",
+          "purpose": "science_long_composition",
+          "fold": 1,
+          "minimum_delta": -0.03
+        }
+      ],
+      "cost_metric": {
+        "type": "euclidean",
+        "block_scales": {
+          "native": 1,
+          "matrix": 1
+        }
+      },
+      "rounding": {
+        "relative_radius": 0.25,
+        "absolute_radius": 0.0001,
+        "rounds": 16
+      }
+    }
+  ]
+}

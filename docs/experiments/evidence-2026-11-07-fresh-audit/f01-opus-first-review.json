@@ -1,0 +1,155 @@
+{
+  "mode": "send",
+  "prompt_sha256": "1413fc6adab7344d505359fd0ee70e43593863d2db0b9c54cfd51da7437c8d8b",
+  "prompt_bytes": 12649,
+  "requested_model": "claude-opus-5-5",
+  "labels": "A",
+  "fallback_model": null,
+  "allow_text_review": false,
+  "anonymity": "pattern lint only; caller must review every prompt byte for private identifiers and measurements",
+  "schema_version": 1,
+  "started_at": "2026-11-07T04:21:34.467261+00:00",
+  "scope": "User-reviewed anonymous prompt retained with this receipt; the review is not a model capability measurement",
+  "verified_requested_model": true,
+  "controls": {
+    "safe_mode": true,
+    "restricted": true,
+    "tools": [],
+    "mcp_servers": [],
+    "session_persistence": false,
+    "custom_generic_system_prompt": true
+  },
+  "raw_stream_persisted": false,
+  "thinking_blocks_persisted": false,
+  "environment_persisted": false,
+  "returncode": 0,
+  "stderr_bytes": 0,
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "assistant_models": [
+    "claude-opus-5-5"
+  ],
+  "model_usage": {
+    "claude-opus-5-5": {
+      "inputTokens": 4,
+      "outputTokens": 8278,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 10029,
+      "webSearchRequests": 0,
+      "costUSD": 0.24580800000000003,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 128000,
+      "canonicalModel": "claude-opus-5-5"
+    }
+  },
+  "is_error": false,
+  "labels_match": true,
+  "tool_uses": 0,
+  "event_types": {
+    "system": 33,
+    "assistant": 3,
+    "rate_limit_event": 1,
+    "user": 1,
+    "result": 1
+  },
+  "review_format": "json_reviews",
+  "review_usable": true,
+  "review_context_label": null,
+  "public_final_text": null,
+  "response": {
+    "reviews": [
+      {
+        "label": "A",
+        "assessment": "Candidate A is a fixed BF16 edit specification. It has not been evaluated as a model. Measured facts: 201426 of 209920 sampled cells change across 410 matrices; native scalar/vector values are unchanged; the edit has a realized L2 of 0.9915 and a maximum absolute coordinate delta of 0.0566; 29079 cells exceed the continuous box by at most 0.00048828125; and source bytes and recomputed linear predictions were independently verified. The candidate also fails its own planned linearized constraints: 9 of 76 are unmet. The unmet set covers all four algorithm targets, all four implementation targets, and code LL on the second fold (+0.00696 against +0.01). The maximum shortfall is 0.0153 nats per token. Because even the linear prediction falls short, A does not meet its pre-stated design criteria. It should be treated as a diagnostic probe of linear-to-finite transfer, not as an adoption candidate. The following have NOT been run: saved-checkpoint creation and verification, finite response, generation, candidate activation capture, canonical dev scores, test confirmation, and DeepSWE. No capability gain, finite feasibility, official-score change, or tradeoff acceptability is established.",
+        "transfer_risks": [
+          "Established: the surrogate is teacher-forced public-answer log-likelihood and correct-minus-foil margin. It is measured with a forced-empty-thought prefix under serial SDPA. The official path is free-running generation under the normal thinking configuration and serving topology. Transfer between these paths is untested.",
+          "Plausible mechanism: an edit that raises conditional LL of a completed answer can change the reasoning trace that precedes it under normal generation. The thinking-on path never sees the forced-empty prefix, so the edit's effect there is unconstrained.",
+          "Plausible mechanism: per-token mean LL gains of about 0.01–0.03 nats may change no argmax or sampled token on hidden tests. Pass/fail on expanded tests depends on rare decisive tokens, edge-case handling and formatting, which an average does not weight.",
+          "Plausible mechanism: numerics differ between serial SDPA and batched or TP-sharded serving kernels. BF16 deltas near rounding boundaries could therefore act differently under different accumulation orders.",
+          "Plausible mechanism: foil choice defines the margin. A larger margin against authored foils does not imply a larger margin against the model's own likely errors.",
+          "Established limitation: the calibration set is 120 authored cases. Some science calibration was influenced by concepts from earlier dev failures, so the set is neither independent nor representative of the official code sources.",
+          "Established heterogeneity: predicted code LL is +0.1665 on one fold and +0.0070 on the other. The aggregate may be driven by a few cases. Per-case distributions are needed before reading the fold means as broad shifts.",
+          "Not established: the 4-request thinking-OFF control shows identical hashes and +7.85% time. It establishes nothing about WSP output stability, overhead, or thinking-on behavior."
+        ],
+        "selection_bias": [
+          "The incumbent's 87.7778 is the maximum, and a tie, over previously tested weights on reused dev data. A fresh audit corrects bookkeeping errors but not winner's-curse inflation. The incumbent's true expected score is likely at or below 87.7778.",
+          "Calibration concepts were partly shaped by observed dev failures. Dev results for A are therefore not fresh evidence even though no reference answers were copied.",
+          "Each further candidate, round-selection rule, threshold change, or amplitude change evaluated on dev adds selection. The fixed round-8 shortfall/norm rule mitigates this only if it was pre-specified, which should be documented.",
+          "A tie at the top creates a choice between incumbents. The tie-breaking rule and both tied runs must be reported.",
+          "Final test confirmation supports a claim only if the test split is used once, for a pre-registered model and pre-registered tiers, with no reselection afterward. Even then it is a single noisy estimate. A margin near 90 needs the item count and a paired or binomial uncertainty statement, not just a point value.",
+          "All trials must be counted in the search history reported with any claim, including failed setups, regressions, unscored results and remeasurements."
+        ],
+        "weight_combination_and_rounding": [
+          "Structural relatedness of Q/K/V/O and gate/up/down matrices justifies solving the groups jointly for linear consistency. It is not evidence that the sampled coordinates encode coding skill or that their joint change is functionally small.",
+          "The gradient geometry includes 1315 negative cosines out of 2850 row pairs, with a minimum of -0.7073. Objectives conflict, so a minimum-norm solution must trade them off. This is consistent with linear infeasibility at the chosen round and implies that gains on target folds come with predicted costs elsewhere.",
+          "BF16 rounding left 8494 sampled cells unchanged and pushed 29079 cells outside the box. The realized direction therefore differs from the FP64 proposal. The cosine between realized and intended deltas, and per-constraint prediction changes due to rounding, should be reported. The 5.55e-17 agreement verifies the arithmetic of the linear predictions on the realized delta, not their accuracy.",
+          "The 0.134 ratio is relative to the sampled cells only. It is not a whole-model or per-matrix relative perturbation, and it says nothing about activation-level change.",
+          "Missing evidence that would change the update or its interpretation: (a) finite versus linear agreement per constraint, which reveals curvature; (b) per-layer and per-family finite ablations, applying only attention or only MLP deltas, to test whether the joint combination is needed; (c) candidate activation captures under matched provenance, to see where the realized change propagates; (d) sensitivity to the box scale and to the round chosen. If finite effects are dominated by a few layers or by rounding residuals, the bounds and the joint-solve premise should be revisited.",
+          "Activation magnitude or weight correlation from incumbent captures cannot assign causal roles. Only interventional finite measurements can."
+        ],
+        "acceptable_loss_evidence": [
+          "The -0.03 allowance is in surrogate units: nats per token or margin, averaged per case. It has no established mapping to official points in any area. By itself it cannot show that a loss is moderate.",
+          "Acceptable tradeoff must be judged in official units. The required evidence is completed canonical scores for all 14 areas, per tier (778, 2338 and 4841), for A and for a matched incumbent run under identical serving and evaluation conditions.",
+          "Report paired item-level differences per area and source, with uncertainty, plus unscored counts, latency, token or step usage and retries.",
+          "Pre-register the acceptable-loss rule in official points per area and in aggregate before viewing A's results.",
+          "Optionally, a finite surrogate-to-official calibration across past candidates could relate the units. It would be descriptive and would inherit selection bias."
+        ],
+        "minimum_finite_probe": [
+          "Create the saved A checkpoint and run full verification: hashes of all 410 edited matrices against the specification, bit-identical native and unedited tensors, and correct load.",
+          "Run the AV -> A -> AV replay of all 120 authored cases under the exact surrogate conditions (serial SDPA, forced-empty-thought). Record finite LL and margin for all 76 constraints next to the linear predictions. Confirm that the restored AV run reproduces the incumbent bit-identically, so drift is excluded.",
+          "Report the finite-minus-linear gap per constraint, per-case distributions, and sign agreement. Do not reduce this to an aggregate pass count.",
+          "Run a small free-running generation check on the authored cases under the normal benchmark generation path and serving topology, with matched incumbent outputs. It should show whether answer correctness or format changes. It is a transfer check, not a score.",
+          "Keep tooling limited to what these measurements require. Do not add new optimizers or amplitude search within this probe."
+        ],
+        "canonical_evaluation_requirements": [
+          "Run the full dev manifests for all three tiers with all 14 areas, all sources and all selected problems. Drop nothing, keep tier scores separate, and do not rank partial runs.",
+          "Use a matched incumbent baseline under identical serving topology, configuration and endpoint identity for chat and log-probability endpoints. The incumbent dev run currently in progress with activation capture must either be shown equivalent to an uncaptured run or be repeated without the observer for comparison.",
+          "Report per-area and per-source scores, the code-area equal-weight mean, unscored and failed counts, and paired item deltas.",
+          "If A advances on pre-registered dev criteria, run test confirmation once on all three tiers' test manifests.",
+          "Run a final DeepSWE comparison: all 113 tasks, 32 workers, one attempt each, original versus edited under identical serving and evaluation conditions. Obtain a new original baseline if the topology differs. Report outcomes, unscored counts, steps, time and retries. Publish only if this comparison shows improvement.",
+          "Preserve the official zeros for the three described failures. Any independent validity check is reported separately as supplemental."
+        ],
+        "reject_or_stop_conditions": [
+          "A already fails its own planned constraints at the linear level (9 of 76 unmet, all algorithm and implementation targets). Under the stated design it is not eligible for adoption without a pre-registered change to the criteria, and any such change would add a selection step.",
+          "Stop this direction if finite replay shows target-fold gains materially below the already-short linear predictions, sign reversals on target folds, or other-fold losses beyond -0.03. Do not respond with amplitude or round search on the same direction, which would compound dev selection.",
+          "Stop if free-running generation shows no correctness change or shows new format or termination regressions relative to the incumbent.",
+          "Reject at canonical dev if the code-area mean does not exceed the matched incumbent beyond pre-registered noise in each claimed tier, or if any area loss exceeds the pre-registered official-point limit.",
+          "Reject for publication if the complete DeepSWE comparison does not show improvement, or shows more unscored tasks or regressions.",
+          "Set a pre-declared cap on further candidates for this direction to bound development search."
+        ],
+        "claim_limits": [
+          "Exceeding 90 may be claimed only when: a completed, unpartial official run on the named tier's test manifest, with all areas, sources and problems retained and the official scorer pinned, yields a code-area equal-weight mean strictly above 90; the model was selected before the test was seen, and the test was not reused; and the claim states the tier, item counts, unscored counts, uncertainty and full search history. Dev results alone do not support the claim, and each tier must be reported separately.",
+          "The three described failures keep their official zeros. The valid alternative construction stays a fail, and the two spec-ambiguity tasks stay fails. Any gain toward 90 must come from other problems, and no edit should target reproducing reference constructions or interpretations.",
+          "Even if the threshold is crossed, these remain unsupported: claims of general coding-ability improvement, robustness beyond the benchmark, causal skill localization in the edited coordinates, DeepSWE or agentic improvement without the complete matched comparison, and acceptable other-area tradeoff without official per-area results.",
+          "Surrogate gains, linear feasibility and incumbent activation captures cannot be reported as model improvement."
+        ]
+      }
+    ],
+    "sequence": [
+      "1. Document that A is linearly infeasible under its own constraints, and record whether the round-selection rule was pre-registered.",
+      "2. Create and fully verify the saved A checkpoint.",
+      "3. Run the AV -> A -> AV finite replay of all 120 cases under surrogate conditions, comparing finite and linear results per constraint and checking that the incumbent is restored bit-identically.",
+      "4. Run a short matched free-running generation check under the normal benchmark path and topology.",
+      "5. Apply pre-registered stop rules. If transfer fails, stop the direction without amplitude search.",
+      "6. Otherwise, complete matched canonical dev runs for incumbent and A on all three tiers and all 14 areas, with an uncaptured or equivalence-checked incumbent baseline.",
+      "7. Apply pre-registered official-point acceptance and loss rules.",
+      "8. If A advances, run single-use test confirmation on all tiers.",
+      "9. Run the full matched original-versus-edited DeepSWE comparison and publish only if it shows improvement.",
+      "10. Report all trials, failures, unscored results and remeasurements."
+    ],
+    "evidence_limits": [
+      "All quantitative evidence for A consists of linear predictions or static weight statistics. No finite, generative or official outcome exists.",
+      "The calibration set is small, authored, and partly influenced by dev failures, and surrogate units do not map to official points.",
+      "Incumbent activation capture is incomplete, candidate capture has not been run, and correlational captures cannot establish causal roles.",
+      "The incumbent score of 87.7778 is a selected maximum on reused dev data and is likely optimistic.",
+      "The scorer wrapper drops first-failure diagnostics and exact failing inputs, which limits failure attribution.",
+      "The 4-request overhead and stability check is not representative of WSP conditions."
+    ],
+    "fresh_reserve": [
+      "The test split for all three tiers stays unused until a single pre-registered confirmation.",
+      "Author a new set of calibration or validation code cases blind to dev failures. Seal it before any further edit analysis, and use it only to check surrogate-to-finite transfer, never for optimization.",
+      "Keep a fresh, matched DeepSWE baseline for the final serving topology, used only for the final comparison."
+    ]
+  },
+  "finished_at": "2026-11-07T04:23:04.706742+00:00",
+  "duration_seconds": 90.23950393800624
+}

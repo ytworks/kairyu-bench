@@ -1,0 +1,33 @@
+{
+  "status": "completed_cpu_checks",
+  "r1": "521 tests; 19 errors from AF_UNIX path length and missing python command in PATH; 56 optional skips; all failures retained",
+  "r2": "No tests run: attempt to create short temp directory outside owned experiment root failed with Permission denied. No privilege escalation or outside change.",
+  "r3": "PATH includes existing CPU venv; TMPDIR is short and within owned NVMe experiment root; full unittest/Ruff/mypy/data/shell completed",
+  "outputs": [
+    {
+      "file": "r1-unittest.log",
+      "sha256": "12e52a6721f1956766ffa027826bd9c23ede8c82236e6a02b99f3db68b87bc46"
+    },
+    {
+      "file": "r3-data-check.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "file": "r3-unittest.log",
+      "sha256": "c541c67f77083934cf7871ac03af4ba2c932af16df792d646d7372e0d86a8da5"
+    },
+    {
+      "file": "r3-ruff.log",
+      "sha256": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18"
+    },
+    {
+      "file": "r3-mypy.log",
+      "sha256": "4ef32b02733c640ba275e5de2c0f630d3ea2a6293bb124ad0dc2173d46e40541"
+    },
+    {
+      "file": "r3-shell-check.txt",
+      "sha256": "3e5fce725574fcba7f1203927f08f8ecc8a4dbb89dae8cdb80ece830d41648b1"
+    }
+  ],
+  "scope": "CPU validation, not GPU or final live-serving validation"
+}

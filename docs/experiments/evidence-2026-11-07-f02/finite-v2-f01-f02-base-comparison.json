@@ -1,0 +1,10 @@
+{
+  "input_sha256": {
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f01/finite-gpu6-v4/work/replay/base.json": "71fffcb1229065ee34403e22b442cceb7bd541ebc665a5c36b67ee83ac05e8ca",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f02/finite-gpu6-v2/work/replay/base.json": "b5a1bee3b4ff11fddd275a7d736bc0d2bdb66869b5120db2b0b9084b161e8383"
+  },
+  "all_120_case_margins_exact": true,
+  "all_38_fold_ll_exact": true,
+  "all_38_fold_margin_means_exact": true,
+  "scope": "Independent F01/F02 AV baseline numerical equality, same public-answer policy; times not compared for speed claims."
+}

@@ -135,3 +135,23 @@ The [helper-capped functional batch](experiments/2026-11-07-helper-capped-functi
 The [matrix-only observation contract](wsp-matrix-only-observation.md) supports explicitly frozen, unobserved native parameters with complete matrix LL/margin provenance; it does not fabricate missing native gradients.
 
 [UP-output unit sensitivities](wsp-up-unit-gains.md) select bounded coherent support through the [full-MLP-unit method](wsp-coherent-full-mlp-units.md). The [explicit full-unit editor mode](wsp-full-unit-edits.md) permits selected gate/up rows and down columns with an unchanged one-million-coordinate ceiling, preserves native/V and unselected bytes, and retains legacy sampled-coordinate bounds. Unit salience is a support choice, not circuit attribution or a measured candidate improvement.
+
+The [fresh F01 CPU record](experiments/2026-11-07-fresh-f01-cpu-proposal.md) adds a fixed-purpose all-fold geometry/plan recipe, a nonroot network-isolated exact historical-input namespace owner, and an independent sampled-source/BF16-spec postcheck. All 76 rows and 410 matrices remain; unmet bounds and setup failures are preserved. These tools perform no model call or adoption.
+
+The same F01 record includes a preview-first GPU6 finite replay owner with a pinned sublease, exact serving-CID restoration, protected-service checks and full 120-case frame verification. Its real CPU-container preview and one full 120-case AV/F01/AV GPU6 run passed, with exact selected-byte restoration, zero A/A error, healthy same-CID service recovery and unchanged protected snapshots. The F01 finite result exposed two referent retention violations, retained without a retry.
+
+- `scripts/experiments/gemma4-purpose/fresh_joint_f01_summary.py`: fixed F01 finite-response audit; retains all 76 objective/fold comparisons and all 120 case margins, verifies zero-error base restoration and fold means, and records input/source hashes. Authored proxy values are not WSP scores.
+
+- `scripts/experiments/gemma4-purpose/fresh_joint_referent_analysis.py`: read-only all-fold referent/code derivative cosines, full family/layer F01 dot-product contributions, and all 76 finite prediction errors; checks original gradient SHA and exact BF16 target bytes.
+
+
+The [official host wrapper](../kairyu-bench) now supports explicit immutable
+`KAIRYU_BENCH_RUNNER_IMAGE_ID` reuse, documented in [WSP](wsp.md#measured-runner-image-reuse).
+It checks a complete local Docker image ID and preserves the normal launch path;
+default commands still build the current checkout. This prevents experiment-only
+source changes from silently changing a paired measurement's runner. Cache and
+serving provenance still require separate evidence.
+
+- The fresh F01 CPU/finite recipes accept explicit experiment root and candidate ID while preserving F01 defaults. Fixed F02 additionally selects referent as a target purpose. Finite `--unsaved-spec --exclusive-global` uses the original AV checkpoint plus a CPU-verified edit spec in RAM, with no claim of a saved candidate, and holds both global and GPU6 locks. All input/source hashes and exact target restoration are retained.
+
+- [Fresh AV full-manifest live observation](experiments/2026-11-07-fresh-av-live-observation.md): an explicit remote observer/WSP owner accepts a plan directory and CPU-only preview, verifies the frozen observer source and exact baseline runner, keeps the 778-item / 14-area scope and exact pre-attachment CID restoration. Its paired code-capture audit retains every code question, request/rank/position/acceptance identity, all-item activation coverage and unmatched pre-run records. The completed AV baseline, measured four-request overhead, per-item scores and layer-25 fixed-offset RMS table are retained; unmatched records remain partial, and CPU preview does not deploy candidate weights.

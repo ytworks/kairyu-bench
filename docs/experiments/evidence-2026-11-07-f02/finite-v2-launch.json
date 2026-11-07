@@ -1,0 +1,37 @@
+{
+  "status": "starting",
+  "pid": 97910,
+  "plan_sha256": "f820d34c3f2fc2b20481044e5b983ab09ffe54ed19ad5e82e5c3c82a53004bc1",
+  "started_epoch": 1794027365.9659476,
+  "before": {
+    "metrics_sha256": "5b7467f2ede4970434ade8b7d0978e703fc557b48f36e20b29ec8c473cfbb22b",
+    "queues": {
+      "vllm:num_requests_running": [
+        0.0
+      ],
+      "vllm:num_requests_waiting": [
+        0.0
+      ]
+    }
+  },
+  "primary_owner_before_run": {
+    "pid": 97910,
+    "uid": 1003,
+    "lock_identity": "09:02:181180584",
+    "lock_rows": [
+      [
+        "12:",
+        "FLOCK",
+        "ADVISORY",
+        "WRITE",
+        "97910",
+        "09:02:181180584",
+        "0",
+        "EOF"
+      ]
+    ],
+    "observed_epoch": 1794027365.910695
+  },
+  "stopped": false,
+  "restored": false
+}

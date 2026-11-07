@@ -1,0 +1,122 @@
+Review fixed candidate B as an independent methodological reviewer. Use only this anonymous text, no tools or external resources. Return JSON as specified below. The proposed next experiment is explicitly a post-data protocol amendment; do not relabel a failed gate as passed.
+
+PURPOSE
+Improve a dense instruction-tuned language model's coding through saved-weight edits, accumulating from the highest completed same-condition model, to exceed 90 official code-source-mean points. Moderate losses in other capabilities are acceptable if the measured overall tradeoff serves that coding purpose. All 14 domains, all official sources/questions/conditions and every failed/partial/repeated trial must remain. Surrogates are never official points. A fresh audit used existing raw records but inherited no previous agent's hypothesis, candidate rank or adoption judgment. Historical selection and repeated dev use still create bias.
+
+INCUMBENT AND OFFICIAL MEASUREMENT
+The incumbent A is the cumulative edited parent, not the original model. A fresh canonical dev tier10 run has completed all 778 questions, all 14 domains, zero unscored and zero API errors. Official coding source mean is 87.777778: HumanEval+10/10, LiveCodeBench5/6, MBPP+8/10. Overall14-area mean77.208631. Terminal2 tasks have one pass/one fail, 19 agent steps/39 tool calls total. Generation1800.7 seconds plus data load102.8 seconds. Native thinking, BF16, TP2/one replica, MTP4, chat32/logprob8/agent1. Chat and logprob reach the same attested weights. Runner actual image, code, official sources and mounted runtime packages are recorded. The next official run would keep these conditions and the same immutable runner.
+
+The three code failures remain official failures. The LiveCodeBench construction task accepts arbitrary mathematically valid constructions in its prompt but its pinned scorer compares against one exact output; the incumbent's public-case construction is valid but differs from that output. This is not proof its entire algorithm is valid. The two MBPP tasks pass base tests and fail expanded tests: integer-only versus int-and-float interpretation of heterogeneous-list minimum, and noncontiguous subsequence versus contiguous sublist. Do not recommend copying benchmark reference answers into calibration, changing scorers, excluding tasks or relaxing the official standard.
+
+WEIGHT AND SURROGATE DESIGN
+A fixed sample covers209920 coordinates from410 actual q/k/v/o/gate/up/down matrices across all60 layers. Native scalar/vector weights are frozen. Raw checkpoint-identified gradients use120 authored cases,19 purposes,2 folds each, both correct-answer LL and correct-minus-foil mean-LL margins: all76 constraints. Each answer LL averages public answer tokens; folds average cases equally. Serial SDPA with a forced-empty-thought prefix differs from ordinary free generation. Some inherited authored science concepts were informed by earlier dev failures; these cases are not independent holdout. No evaluation reference answers were copied into calibration. Sample correlations/activation magnitude do not prove causal skill localization.
+
+The solver minimizes Euclidean displacement across all matrix families jointly, with a continuous box max(.25*abs(parent value),.0001), then BF16 rounding from A and up to16 correction rounds using a fixed shortfall/norm selection rule. No amplitude grid was run. Rounded values can exceed the continuous box slightly. This is not a whole-model relative bound or a guarantee of small functional change.
+
+PREVIOUS FIXED CANDIDATE AND WHY B EXISTS
+Earlier candidate F01 targeted algorithm/implementation each fold LL/margin+.03, code LL+.01/margin>=0, other folds>=-.03. It was saved and fully verified, then measured A->F01->A on all120 cases. Code and algorithm/implementation fold directions were positive, but referent fold1 LL-.03751715/margin-.03225573 violated the -.03 allowance. The prespecified gate stopped F01 before official WSP; no official F01 score exists. Its whole trial and exact lossless weight representation are retained. Actual Opus5.5 had recommended treating it as diagnostic and checking finite transfer, not claiming improvement from predictions.
+
+Reference tracking plausibly supports variable/helper relationships. Local referent/implementation LL directions share some positive cosine, while referent/code and cross-objective directions conflict. These are associations, not demonstrated causal dependencies. Candidate B is one new solve from A (NOT from F01), adding referent LL/margin+.03 for EACH fold to the same algorithm/implementation targets, retaining code+.01/0 and every other-.03 condition. All410 matrices and76 separate rows remain. No families or unfavorable folds were removed.
+
+B SPECIFICATION AND FINITE RESULTS
+B changes 203419 exact BF16 stored cells in 410 matrices, delta L2 1.10894626303, source norm 7.38878114249, ratio 0.150085141466 with the denominator ONLY the209920 sampled coordinates. Native changes0. All sampled source words match A; every target is exact BF16; independent predictions agree within 8.33e-17. Saved checkpoint has NOT been materialized yet.
+A->B->restored A measured all120 cases each in20.913/20.354/20.331 seconds; total finite78.654 seconds. Selected BF16 bytes were exact; restored A max LL/margin/KL error0. The independent A sweeps in the F01 and B experiments also match all recorded scalar/case values exactly. 71 case margins improved and49 worsened; no cases removed. These are teacher-forced measurements, not executable coding successes.
+
+The PREDECLARED gate required positive target fold directions, non-target loss no worse than-.03, and exact restoration. B FAILED: referent fold1 LL-.005767981 and margin-.029900710 are negative, and workflow fold1 margin-.035185695 crosses retention. All code/algorithm/implementation folds have positive LL and margin, but several gains are very small. 64/76 numerical design constraints pass;12 fail. The largest code-fold margin gain is dominated by one case (+6.02874), with three other cases in that fold negative; the favorable mean is not universal improvement. Do not erase these failures or infer official gains.
+
+ALL76 ROWS: objective,purpose,fold,requested minimum,linear prediction,measured finite delta
+correct-logprob,code,0,0.010000000,0.179235421,0.234654201
+correct-logprob,code,1,0.010000000,0.005836489,0.062548074
+correct-logprob,implementation,0,0.030000000,0.023505212,0.034243867
+correct-logprob,implementation,1,0.030000000,0.023279048,0.025859550
+correct-logprob,workflow,0,-0.030000000,0.017636253,0.005424142
+correct-logprob,workflow,1,-0.030000000,0.012436145,-0.027737657
+correct-logprob,tool_call,0,-0.030000000,-0.007041433,0.022122502
+correct-logprob,tool_call,1,-0.030000000,0.004840736,0.022632480
+correct-logprob,tool_no_call,0,-0.030000000,0.008531557,-0.004728913
+correct-logprob,tool_no_call,1,-0.030000000,0.010033518,0.021963477
+correct-logprob,tool_arguments,0,-0.030000000,0.000439688,0.026305676
+correct-logprob,tool_arguments,1,-0.030000000,0.000644748,0.029793620
+correct-logprob,algorithm,0,0.030000000,0.019484819,0.017244697
+correct-logprob,algorithm,1,0.030000000,0.015772340,0.001078054
+correct-logprob,referent,0,0.030000000,0.033317904,0.029855251
+correct-logprob,referent,1,0.030000000,0.026875603,-0.005767981
+correct-logprob,fact_retention,0,-0.030000000,0.017127244,0.019618034
+correct-logprob,fact_retention,1,-0.030000000,0.014566572,0.039668957
+correct-logprob,science_numerics,0,-0.030000000,0.005554692,0.001924887
+correct-logprob,science_numerics,1,-0.030000000,0.004099274,0.006808509
+correct-logprob,science_contracts,0,-0.030000000,0.004390504,0.003512512
+correct-logprob,science_contracts,1,-0.030000000,0.004655185,0.005462627
+correct-logprob,science_advanced_state,0,-0.030000000,0.004821160,0.005570173
+correct-logprob,science_advanced_state,1,-0.030000000,0.002179331,-0.010700509
+correct-logprob,science_advanced_counting,0,-0.030000000,0.002702276,0.000770718
+correct-logprob,science_advanced_counting,1,-0.030000000,0.000399392,-0.002819240
+correct-logprob,science_advanced_simulation,0,-0.030000000,0.004508097,-0.000802398
+correct-logprob,science_advanced_simulation,1,-0.030000000,0.008604092,0.010842383
+correct-logprob,science_advanced_probability,0,-0.030000000,0.003731626,0.010796189
+correct-logprob,science_advanced_probability,1,-0.030000000,0.002579555,0.006240726
+correct-logprob,science_helper_stage,0,-0.030000000,0.023514382,0.018163800
+correct-logprob,science_helper_stage,1,-0.030000000,0.007259776,0.006814897
+correct-logprob,science_composition_stage,0,-0.030000000,0.005081784,0.014240921
+correct-logprob,science_composition_stage,1,-0.030000000,-0.004460441,-0.020079613
+correct-logprob,science_long_helper,0,-0.030000000,-0.002254034,-0.005586684
+correct-logprob,science_long_helper,1,-0.030000000,-0.004677267,-0.028968990
+correct-logprob,science_long_composition,0,-0.030000000,0.004303056,0.008956075
+correct-logprob,science_long_composition,1,-0.030000000,0.005439392,-0.004366159
+margin,code,0,0.000000000,0.139990921,1.017807007
+margin,code,1,0.000000000,0.008464478,0.080272198
+margin,implementation,0,0.030000000,0.015976638,0.007310912
+margin,implementation,1,0.030000000,0.019351522,0.017910302
+margin,workflow,0,-0.030000000,0.007109762,-0.000528812
+margin,workflow,1,-0.030000000,-0.001867232,-0.035185695
+margin,tool_call,0,-0.030000000,0.002447726,0.020089030
+margin,tool_call,1,-0.030000000,-0.007005890,0.005437732
+margin,tool_no_call,0,-0.030000000,0.007124667,0.013912797
+margin,tool_no_call,1,-0.030000000,0.010851659,0.004713655
+margin,tool_arguments,0,-0.030000000,0.002215730,0.031726956
+margin,tool_arguments,1,-0.030000000,0.001730281,0.041612625
+margin,algorithm,0,0.030000000,0.019939131,0.021333694
+margin,algorithm,1,0.030000000,0.015518037,0.002125666
+margin,referent,0,0.030000000,0.023569042,0.029189428
+margin,referent,1,0.030000000,0.014295184,-0.029900710
+margin,fact_retention,0,-0.030000000,0.000814271,0.003790935
+margin,fact_retention,1,-0.030000000,-0.000035345,0.002560774
+margin,science_numerics,0,-0.030000000,0.000827406,0.003962805
+margin,science_numerics,1,-0.030000000,-0.000827702,0.008470217
+margin,science_contracts,0,-0.030000000,0.001019686,0.002016276
+margin,science_contracts,1,-0.030000000,-0.002245288,0.006073038
+margin,science_advanced_state,0,-0.030000000,-0.001457318,0.000020653
+margin,science_advanced_state,1,-0.030000000,0.000900798,-0.001337841
+margin,science_advanced_counting,0,-0.030000000,0.001311908,0.008027583
+margin,science_advanced_counting,1,-0.030000000,0.000640475,0.002579093
+margin,science_advanced_simulation,0,-0.030000000,0.000410072,-0.005210559
+margin,science_advanced_simulation,1,-0.030000000,-0.000248293,0.013043582
+margin,science_advanced_probability,0,-0.030000000,-0.006654947,0.009783943
+margin,science_advanced_probability,1,-0.030000000,-0.003425460,0.010815620
+margin,science_helper_stage,0,-0.030000000,0.004012200,-0.005628586
+margin,science_helper_stage,1,-0.030000000,0.003198734,0.012319505
+margin,science_composition_stage,0,-0.030000000,-0.001200332,-0.006199896
+margin,science_composition_stage,1,-0.030000000,0.004765972,-0.008943200
+margin,science_long_helper,0,-0.030000000,0.044977989,0.002799630
+margin,science_long_helper,1,-0.030000000,-0.003779273,-0.009459972
+margin,science_long_composition,0,-0.030000000,0.000181653,0.008712053
+margin,science_long_composition,1,-0.030000000,0.002861532,-0.001619220
+
+OBSERVATION LIMITS
+A's live activation run sampled60 layers and attention/MLP/residual sites, with explicit prefill positions and decode offsets, both TP ranks. Writers are closed with zero dropped/error/quota-loss records. Merge found5760 unjoined records among about7million activation records; unrelated synthetic probes are excluded, and the unmatched cause/scope is under audit. Capture is therefore not called complete. The complete official scoring is separate. No unmatched activation becomes zero, and distinct questions/calls/ranks/token positions are not silently mixed. Four short deterministic thinking-OFF before/after-observer requests matched public output4/4; +7.85% total latency is only that small diagnostic, not a WSP overhead guarantee.
+
+PROPOSED POST-DATA AMENDMENT, BEFORE ANY OFFICIAL B SCORE
+Stop further surrogate optimization now. Preserve B's FAILED gate and all evidence. The -.03 proxy threshold has no calibrated mapping to official capability loss, whereas the user explicitly allows some actual other-domain loss for coding benefit. Consider saving and verifying exactly B (no additional tuning), then one FULL778 canonical dev WSP under A's identical conditions, including all domains and activations. This would measure whether these proxy gains/losses transfer and establish actual tradeoffs, not retrospectively satisfy the old gate. The amendment is knowingly after proxy data and must be disclosed, including selection of B rather than a complete official measurement of F01. B is the latest fixed dependency experiment, not selected by an official score. Do not claim preregistered confirmation.
+
+Before official B results, retain: no code improvement means no advancement; >1 point overall-mean loss or >5 in any area requires explicit measured tradeoff analysis and cannot be silently accepted. Exact paired item/source outcomes, unscored, agent steps, tokens and time are reported. The highest completed comparable official model remains parent for any later edit; no proxy winner is adopted. Any advance would be under the disclosed amended official-evidence rule, not the failed original proxy gate. If an integrity/runtime failure leaves a partial official run, retain it and do not rank it as complete.
+
+The30/60tiers use2338/4841 canonical questions and different source mixes, so scores stay separate. Broader code claims require those complete evaluations. Test is final confirmation but historically used already, not virgin. Final edited DeepSWE uses all113 tasks once,32 concurrent, matched original conditions; only actual improvement authorizes weight publication. Neither final evaluation nor upload has occurred.
+
+REVIEW QUESTIONS
+1. Is this single full official diagnostic a defensible way to learn transfer, given the failed proxy gate and the user's actual objective? Identify a reason to stop if you disagree, distinguishing gate discipline from evidence that official performance regresses.
+2. What disclosure and BEFORE-official-result criteria are needed for this amendment to avoid hiding failure, post-hoc confirmation or further surrogate-only search? Do not require new benchmark exclusions.
+3. Does the evidence support the proposed weight combination mechanistically, and what narrow claims are justified? Treat small positive margins, case concentration, raw correlation and forced-thought mismatch carefully.
+4. What must be complete before a reported >90 result, advancement, final confirmation or DeepSWE publication? Keep a diagnostic run distinct from adoption and broad ability claims.
+
+Return only valid JSON with this structure:
+{"reviews":[{"label":"B","assessment":"...","diagnostic_recommendation":"...","failed_gate_disposition":"...","amendment_requirements":[],"measurement_requirements":[],"reject_or_stop_conditions":[],"claim_limits":[]}],"sequence":[],"evidence_limits":[]}

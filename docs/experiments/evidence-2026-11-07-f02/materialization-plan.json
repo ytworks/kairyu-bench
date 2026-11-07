@@ -1,0 +1,177 @@
+{
+  "kind": "cpu_preview_only",
+  "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/checkpoints/code90-current-ad-helper-av-v1",
+  "candidate": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/checkpoints/fresh-code-joint-f02",
+  "spec": {
+    "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f02/proposal/fresh-code-joint-f02.json",
+    "sha256": "27f000e4933bdb63d29217c6312114d2b912d349a67617fe42d17d263994410b"
+  },
+  "manifest": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f02/materialization/edit-manifest.json",
+  "source_checkpoint_attestation": {
+    "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/code90-resume-20261106/provisional-av-long-purpose-observation-v1/checkpoint-attestation.json",
+    "sha256": "12ba81915ae02dfc9d898bc5639d4deb689821071b3a36fceb3befa4e0f01755",
+    "tree_sha256": "5d056eb03f954db80313a85167153c875fe5e436e4f97c281a3f55202d9b3eaf",
+    "current_inventory_stat_exact": true,
+    "fresh_payload_hash": false
+  },
+  "source_checkpoint_current_stat": {
+    "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/checkpoints/code90-current-ad-helper-av-v1",
+    "files": [
+      {
+        "path": "chat_template.jinja",
+        "size": 18683,
+        "sha256": null,
+        "stat": {
+          "device": 2306,
+          "inode": 181678464,
+          "mtime_ns": 1794014158733915132,
+          "ctime_ns": 1794014158733915132
+        }
+      },
+      {
+        "path": "config.json",
+        "size": 4621,
+        "sha256": null,
+        "stat": {
+          "device": 2306,
+          "inode": 181678465,
+          "mtime_ns": 1794014158734915095,
+          "ctime_ns": 1794014158734915095
+        }
+      },
+      {
+        "path": "generation_config.json",
+        "size": 208,
+        "sha256": null,
+        "stat": {
+          "device": 2306,
+          "inode": 181678466,
+          "mtime_ns": 1794014158734915095,
+          "ctime_ns": 1794014158734915095
+        }
+      },
+      {
+        "path": "model-00001-of-00002.safetensors",
+        "size": 49923154850,
+        "sha256": null,
+        "stat": {
+          "device": 2306,
+          "inode": 181678467,
+          "mtime_ns": 1794014260450139654,
+          "ctime_ns": 1794014260450139654
+        }
+      },
+      {
+        "path": "model-00002-of-00002.safetensors",
+        "size": 12623183414,
+        "sha256": null,
+        "stat": {
+          "device": 2306,
+          "inode": 181678468,
+          "mtime_ns": 1794014261005119199,
+          "ctime_ns": 1794014261005119199
+        }
+      },
+      {
+        "path": "model.safetensors.index.json",
+        "size": 120246,
+        "sha256": null,
+        "stat": {
+          "device": 2306,
+          "inode": 181678469,
+          "mtime_ns": 1794014259954157935,
+          "ctime_ns": 1794014259954157935
+        }
+      },
+      {
+        "path": "processor_config.json",
+        "size": 1689,
+        "sha256": null,
+        "stat": {
+          "device": 2306,
+          "inode": 181678470,
+          "mtime_ns": 1794014259954157935,
+          "ctime_ns": 1794014259954157935
+        }
+      },
+      {
+        "path": "tokenizer.json",
+        "size": 32169626,
+        "sha256": null,
+        "stat": {
+          "device": 2306,
+          "inode": 181678471,
+          "mtime_ns": 1794014259991156571,
+          "ctime_ns": 1794014259991156571
+        }
+      },
+      {
+        "path": "tokenizer_config.json",
+        "size": 3082,
+        "sha256": null,
+        "stat": {
+          "device": 2306,
+          "inode": 181678472,
+          "mtime_ns": 1794014260013155760,
+          "ctime_ns": 1794014260013155760
+        }
+      }
+    ],
+    "sha256": null,
+    "hash_files": false,
+    "identity_level": "stat_only",
+    "input_scope": "indexed_checkpoint",
+    "complete_model_claimed": false,
+    "configuration_names_considered": [
+      "config.json",
+      "generation_config.json",
+      "tokenizer_config.json",
+      "tokenizer.json",
+      "special_tokens_map.json",
+      "chat_template.jinja",
+      "processor_config.json",
+      "preprocessor_config.json",
+      "tokenizer.model",
+      "spiece.model",
+      "vocab.json",
+      "merges.txt",
+      "added_tokens.json"
+    ],
+    "scope": "all referenced shards, index, and recognized configuration/tokenizer files",
+    "source_stable": true
+  },
+  "code": {
+    "git_head": "078417a4d5ea5591de6ec10fc9398ec4830b1314",
+    "source_sha256": {
+      "src/kairyu_bench/wsp/weights/__init__.py": "84407e8a57e31b915d5ba936a309457422b3b6c347fde2056f1dd492ad511cca",
+      "src/kairyu_bench/wsp/weights/checkpoint.py": "898297c05e7179cdc4568d6f290b978073bcebafea804ac043b54030e8205bf9",
+      "src/kairyu_bench/wsp/weights/cli.py": "4193ee3863ac8d96ead9ba167ac572619d280ed9277f5729df970361cb882b26",
+      "src/kairyu_bench/wsp/weights/composition.py": "7ce2bc057ad3974d8c4d8509be0c193dbb7fd6b42cd523e1c9df5619bf7f84b7",
+      "src/kairyu_bench/wsp/weights/editor.py": "0983580f41989c26e84c16c26924f2850dd4e5d3d12917bb9553d7feb92333d2",
+      "src/kairyu_bench/wsp/weights/finite_replay.py": "71c424bffac775ba112e709632df0a37351a79c3121827be7c9844f321c7c4d3",
+      "src/kairyu_bench/wsp/weights/finite_response.py": "2f4b474089290d66a291d61eea176743d2502303943c6fded5b4331ebbff77af",
+      "src/kairyu_bench/wsp/weights/matrix.py": "002761474fd4bba4bce089b23eb6fcf701ab7c40b39b819a272a39dfdbac97e9",
+      "src/kairyu_bench/wsp/weights/native_faststore.py": "445cc73783bd6bd61890b107bb76ddca1e388a9bf84b630125a01486389578cd",
+      "src/kairyu_bench/wsp/weights/receipts.py": "b7299c8c89ad07e2f7df6cacfac39adabb4c98e6407da2585d6649dc26b37f27",
+      "src/kairyu_bench/wsp/weights/shard_pool.py": "f45d073c9950579753c74143dbc9cdc89abfdc6b0d2e4c694c91807d9b4cbc2f",
+      "src/kairyu_bench/wsp/weights/statistics.py": "7c021ac29e0e6bdbcb5a0bc150a598eeef7c9d1a39baf3931525d849ca0370f0"
+    }
+  },
+  "preview_command": [
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/infra/weight-tools-ci/bin/python",
+    "-m",
+    "kairyu_bench.wsp.weights.editor",
+    "create",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/checkpoints/code90-current-ad-helper-av-v1",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/checkpoints/fresh-code-joint-f02",
+    "--spec",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f02/proposal/fresh-code-joint-f02.json",
+    "--manifest",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f02/materialization/edit-manifest.json",
+    "--reserve-bytes",
+    "53687091200"
+  ],
+  "apply_is_not_authorized": true,
+  "reserve_bytes": 53687091200,
+  "free_bytes_before": 137547411456
+}
