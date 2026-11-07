@@ -2,6 +2,7 @@
 """Collect Gemma 4 native gain and optional virtual-block purpose derivatives."""
 from __future__ import annotations
 
+from contextlib import nullcontext
 from pathlib import Path
 import time
 
@@ -9,6 +10,68 @@ import numpy as np
 
 import recipe_common as common
 import objective_variants as variants
+
+
+def saved_activation_policy(args):
+    mode = getattr(args, "saved_activation_storage", "device")
+    if mode == "device":
+        return None
+    if mode != "cpu-fp32":
+        raise ValueError("unsupported native saved-activation storage")
+    if (args.mode != "chat-public-answer" or args.virtual
+            or getattr(args, "answer_batching", "paired") != "serial"):
+        raise ValueError("CPU saved activations require serial public-answer native-only collection")
+    return {"mode": "cpu-fp32", "source_device": "cuda", "dtype": "torch.float32",
+            "minimum_ndim": 2, "nonleaf_only": True, "copy": "blocking_preserve_dtype",
+            "scope": "one answer forward and immediate VJP", "automatic_fallback": False}
+
+
+class _SavedActivationStorage:
+    """Storage-only hooks; no GPU tensor is retained in an offloaded packet."""
+
+    def __init__(self, torch, enabled: bool, *, source_device_type: str = "cuda"):
+        self.torch, self.enabled = torch, enabled
+        # The alternate device is private CPU-fixture injection, not a CLI option.
+        self.source_device_type = source_device_type
+        self.saved = self.packed = self.pack_bytes = self.unpacked = self.unpack_bytes = 0
+        self.histogram: dict[str, dict] = {}
+
+    def pack(self, tensor):
+        self.saved += 1
+        if (tensor.device.type != self.source_device_type or tensor.dtype != self.torch.float32
+                or tensor.ndim < 2 or tensor.is_leaf):
+            return tensor.detach()
+        cpu = tensor.detach().to(device="cpu", copy=True)
+        size = tensor.numel() * tensor.element_size()
+        self.packed += 1
+        self.pack_bytes += size
+        key = str(tensor.dtype) + ":" + ",".join(map(str, tensor.shape))
+        row = self.histogram.setdefault(key, {"dtype": str(tensor.dtype),
+                                             "shape": list(tensor.shape), "save_count": 0,
+                                             "copied_bytes": 0})
+        row["save_count"] += 1
+        row["copied_bytes"] += size
+        return tensor.device, cpu
+
+    def unpack(self, packet):
+        if isinstance(packet, tuple):
+            device, cpu = packet
+            self.unpacked += 1
+            self.unpack_bytes += cpu.numel() * cpu.element_size()
+            return cpu.to(device=device)
+        return packet
+
+    def context(self):
+        if not self.enabled:
+            return nullcontext()
+        return self.torch.autograd.graph.saved_tensors_hooks(self.pack, self.unpack)
+
+    def report(self):
+        return {"saved_tensor_events": self.saved, "offloaded_save_events": self.packed,
+                "copied_to_cpu_bytes": self.pack_bytes, "offloaded_unpack_events": self.unpacked,
+                "restored_payload_bytes": self.unpack_bytes,
+                "offloaded_shapes": [self.histogram[key].copy() for key in sorted(self.histogram)],
+                "byte_interpretation": "Summed copy events, including duplicate saves/unpacks; not unique storage or GPU memory reclaimed."}
 
 
 def column_group_norms(weight, groups: int, torch):
@@ -24,6 +87,7 @@ def column_group_norms(weight, groups: int, torch):
 
 
 def collect(args, checkpoint, cases, provenance):
+    storage_policy = saved_activation_policy(args)
     objective_kind = getattr(args, "objective", "margin")
     if objective_kind not in {"margin", "correct-logprob"} or (objective_kind == "correct-logprob" and args.mode != "chat-public-answer"):
         raise ValueError("unsupported objective/frame combination")
@@ -32,6 +96,8 @@ def collect(args, checkpoint, cases, provenance):
         raise ValueError("serial answer batching requires chat-public-answer native-only collection")
     objective = common.objective if objective_kind == "margin" else variants.correct_logprob_objective
     torch, tokenizer, model = common.load_model(args, cases=cases, legacy_limit=None)
+    storage = _SavedActivationStorage(torch, storage_policy is not None)
+    completed = False
     net, head = model.model.language_model, model.get_output_embeddings()
     prepared, frame = common.prepare(tokenizer, cases, args.mode, max_frame_tokens=common.frame_limit(args, None))
     common.save(args.output / "frame-evidence.json", frame)
@@ -115,9 +181,10 @@ def collect(args, checkpoint, cases, provenance):
                     for row in batch:
                         measured[row[0]] = 0.
                         for answer_kind, sign in selections:
-                            values = variants.single_answer_logprob_objective(
-                                torch, net, head, tokenizer, row, answer_kind, args.mode, args.device, width)
-                            measured[row[0]] += sign * float(accumulate(values, sign)[0])
+                            with storage.context():
+                                values = variants.single_answer_logprob_objective(
+                                    torch, net, head, tokenizer, row, answer_kind, args.mode, args.device, width)
+                                measured[row[0]] += sign * float(accumulate(values, sign)[0])
                             forward_count += 1
                             del values  # Graph is freed before the next answer forward.
             arrays = {key: value.detach().cpu().numpy() for key, value in accum.items()}
@@ -157,7 +224,11 @@ def collect(args, checkpoint, cases, provenance):
                               "Correct-logprob arrays are not margin derivatives; downstream solver must explicitly match objective_kind.",
                               "Serial answers preserve the mathematical loss and token widths; BF16 batching/gradient reduction need not be bit identical to paired collection.",
                               "No checkpoint edits, solver, finite candidate test, or WSP acceptance decision."]}
+        if storage_policy is not None:
+            summary["runtime"]["native_saved_activation_storage"] = storage_policy
+            summary["runtime"]["saved_activation_metrics"] = storage.report()
         common.save(args.output / "summary.json", summary)
+        completed = True
         return summary
     finally:
         for hook in hooks:
@@ -165,6 +236,10 @@ def collect(args, checkpoint, cases, provenance):
         for value in names.values():
             value.requires_grad_(False)
             value.grad = None
+        if storage_policy is not None:
+            common.save(args.output / "saved-activation-storage.json",
+                        {"status": "completed" if completed else "incomplete",
+                         "policy": storage_policy, **storage.report()})
 
 
 def main(argv=None):
@@ -174,6 +249,8 @@ def main(argv=None):
     parser.add_argument("--answer-batching", choices=("paired", "serial"), default="paired",
                         help="serial uses one answer graph at a time; chat native-only, unchanged full tokens and pack padding")
     parser.add_argument("--virtual", action="store_true", help="also differentiate explicit O-head and MLP-down-column unit gains")
+    parser.add_argument("--saved-activation-storage", choices=("device", "cpu-fp32"), default="device",
+                        help="opt-in blocking CPU storage of nonleaf CUDA FP32 saved activations; serial native-only")
     args = parser.parse_args(argv)
     if args.answer_batching == "serial" and (args.mode != "chat-public-answer" or args.virtual):
         parser.error("serial answer batching requires chat-public-answer native-only collection")
@@ -184,6 +261,9 @@ def main(argv=None):
     provenance["answer_batching"] = args.answer_batching
     if args.answer_batching == "serial":
         provenance["objective_forward_layout"] = "one case/answer per forward and immediate VJP; original paired-pack token padding width; good-minus-foil or good-only; FP32 answer-gradient accumulation"
+    storage_policy = saved_activation_policy(args)
+    if storage_policy is not None:
+        provenance["native_saved_activation_storage"] = storage_policy
     if not args.run:
         import json
         print(json.dumps(provenance, indent=2))

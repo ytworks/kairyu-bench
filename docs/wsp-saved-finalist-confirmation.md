@@ -2,7 +2,7 @@
 
 These two host-bound recipes reuse the successful AL saved-checkpoint path:
 
-- [Materialize one selected AD increment](experiments/scripts/materialize-ad-finalist.py):
+- [Materialize one selected saved-parent increment](experiments/scripts/materialize-ad-finalist.py):
   derived from executed `materialize-and-deploy-current-ad-library-al-v1.py`,
   SHA `a20fc5efb905c2ea1a4c8d0ee0ac44c5378f9ace6bfc0933f98cb6a90ed2fe87`.
 - [Launch fresh AD plus one or two saved finalists](experiments/scripts/launch-ad-finalists-dev90.py):
@@ -12,14 +12,16 @@ These two host-bound recipes reuse the successful AL saved-checkpoint path:
 The AN and AR materialization bindings have now executed once each. Both saved
 checkpoints passed independent full-file verification and the measured BF16
 selected-word comparison, then deployed healthy to slots0 and3. The fresh
-ordinary AD/AN/AR dev90 started on 2026-11-07 at 00:00:50 UTC; its scores and
-adoption decision remain pending at this update.
+ordinary AD/AN/AR dev90 started on 2026-11-07 at 00:00:50 UTC; both finalists
+were rejected after scoring, as recorded below.
 The unchanged absolute workspace and existing operational helpers are part of
 this machine-specific recipe; this is not a general service orchestration SDK.
 
-The only behavioral changes are selecting an AN–AS label, choosing target slot0
-or slot3 through the materialization plan, and supplying the official plan via
-`--plan`. A single official comparison can contain one or two distinct selected
+The recipe accepts the recorded AN–AS, AV and BA labels, chooses target slot0
+or slot3 through the materialization plan, and accepts the official plan via
+`--plan`. The materializer checks the incumbent name and checkpoint against
+`plan.parent` and the retained control against `plan.parent_service`; the
+default control remains `gemma-1` for the historical AD bindings. A single official comparison can contain one or two distinct selected
 slots plus fresh AD1. Source correspondence, syntax and Ruff are recorded in
 `A/current-ad-functional-finalists-preparation-v1/source-validation.json`.
 No model or full CI rerun is required to prepare these bindings.
@@ -35,13 +37,13 @@ It must also bind the completed overlay owner, all four original services
 restored, and fresh serving snapshots. Do not reuse the stopped-service
 snapshots captured before the overlay screen.
 
-Every candidate applies its exact BF16 spec to the same accepted AD saved
+Every candidate applies its exact BF16 spec to its plan-bound accepted saved
 checkpoint. It never uses original weights or another finalist as its base.
 One existing editor create is followed by one independent editor verify.
 The existing full-file hash evidence, private-inode checks and measured selected
 BF16 parity produce the freeze without a third payload hash pass.
-Deployment replaces only the selected slot with rollback available; AD1, O2,
-the other slot and embeddings are protected by fresh checks.
+Deployment replaces only the selected slot with rollback available; the retained
+parent control, other chat services and embeddings are protected by fresh checks.
 
 The materialization recipe supports `--save-only`, and otherwise includes the
 existing deployment helper. No automatic cleanup or retry is introduced.
@@ -68,10 +70,13 @@ An exploratory overlay score does not replace a fresh saved-weight score.
 
 ## Storage budget
 
-The explicit per-create reserve is **80 GiB**. A private candidate requires
+The historical AN/AR per-create reserve was **80 GiB**. A private candidate requires
 62,578,656,419 bytes plus the existing 67,108,864-byte editor headroom:
 **148,545,111,203 free bytes** before each create. Two copies are sequential;
-there is no implicit relaxation of the reserve or automatic deletion.
+there is no implicit relaxation of the reserve or automatic deletion. The later
+AV and prepared BA bindings explicitly declare **75 GiB**; the unchanged editor
+also requires 64 MiB of headroom, for **143,176,402,083 bytes** total before
+creating a checkpoint with the same nine-file layout.
 
 A read-only metadata survey found the completed previous authored screen's
 private cache used 1,649,119,232 allocated file bytes (7,910 files, UID1003,
@@ -117,6 +122,35 @@ against fresh AD and were rejected, with no full14 run. All 90 items per arm
 were scored with zero unknown/truncated/empty outcomes. See the
 [experiment result](experiments/2026-11-07-ad-functional-targets.md#ordinary-saved-weight-confirmation-an-and-ar-rejected)
 for source tradeoffs, usage and closure hashes.
+
+
+## Prepared BA binding: held before execution
+
+The BA materializer binding applies the complete-unit spec
+`ecc1d988…` to saved AV tree `5d056eb0…`, preserving AV0 as control and
+targeting rejected AR3. Its 154,318 edited BF16 coordinates in 242 matrices
+are bound to the fresh D-v2 sampled source words, the completed finite union,
+and the independently verified actual post-TP overlay words (154,451 physical
+destinations including tied K/V copies). This establishes selected-word
+application evidence, not functional equivalence between overlay and saved runs.
+
+Preparation is recorded under `A/current-av-full-unit-ba-materialization-v1`:
+plan `58d77285002b7a8940adbdf3ad5807a657097fea22520702d2a24eb99fec1cc9`,
+selected expectations `5ab1e796…`, and readiness `469c9077…`.
+Ruff check/format and the inert metadata preview passed. Formatting preserved
+the normalized AST of the reviewed owner. **No BA create, verify or deployment
+has run**; execution was held while the working-parent choice was reconsidered.
+A later execution still requires the exact authorization and unchanged
+incumbent, source, closure and serving bindings.
+
+The separately authorized obsolete closed QK overlay cache was removed after
+fresh all-three-daemon running/stopped mount checks and an exact full inventory
+match: 4,520 files and 988 directories, 933,350,947 logical bytes and
+943,149,056 allocated file bytes. Receipt
+`A/obsolete-qk-overlay-cache-audit-v1/cleanup.json` has SHA
+`6f39b9fc231dbcd3ed85627f85f464ee1609afcaafce378f996473573789b7ce`.
+No model, result, proof or current-run cache was removed; there were no service
+actions. Recorded free space afterward was 146,189,119,488 bytes.
 
 Here `R=/mnt/nvme/kairyu/wsp/gemma4-coding-20261104`,
 `A=R/analysis/code90-resume-20261106`, and `CPU_PY=R/infra/weight-tools-ci/bin/python`.

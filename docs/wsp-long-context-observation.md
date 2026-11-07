@@ -41,7 +41,8 @@ New provenance and summaries carry the same `observation_policy` object:
   },
   "cuda_memory_cap_gib": 88.0,
   "answer_batching": "serial",
-  "max_cases_per_microbatch": 1
+  "max_cases_per_microbatch": 1,
+  "execution_order": "original"
 }
 ```
 
@@ -143,3 +144,47 @@ postchecks `76477b618dfdd49b67cb41ec68eba75ff96c7cac88b97768517b6b7dc5bcdcfa`
 and the 88-file output inventory `dadcaa5e0cb51b482bd0193b00eb02c63dbae0616cfbbae39407732b38621729`
 cover both complete matrix collections. This observation makes no candidate
 edit, capability, adoption, eager-parity, or native-gradient claim.
+
+## Native saved-activation CPU storage
+
+The native collector alone accepts the optional
+`--saved-activation-storage cpu-fp32`. It requires public-answer mode, serial
+answers and no virtual gains. Omission (or `device`) keeps the old execution
+and artifact fields. This option neither changes attention, objectives,
+complete frames, weights, nor the declared allocator cap.
+
+During each answer's forward and immediate VJP, PyTorch saved-tensor hooks copy
+nonleaf CUDA FP32 tensors with at least two dimensions to CPU without changing
+dtype. Backward restores each saved value to its original device on demand.
+Other saved tensors remain on their device. Copies are blocking; no compression,
+recomputation, automatic fallback or activation checkpointing is introduced.
+The hooks are scoped to that answer and are removed even if forward or backward
+fails. Native trainability and gradients retain the existing final cleanup.
+
+Requested storage is recorded separately as
+`native_saved_activation_storage` in provenance and summary runtime.
+`saved-activation-storage.json` records completion or interruption, the same
+policy, saved/offloaded/unpacked event counts, and copied byte totals grouped
+by dtype and shape. Completed summaries also carry these metrics. Counts and
+bytes include duplicate saves or unpacks: they are not unique allocations,
+peak CPU usage, or measured GPU memory reclaimed.
+
+Installed RMSNorm source computes FP32 normalization followed by a trainable
+scale. The scale derivative needs the normalized activation; at the observed
+1,268-token frame, four residual norms across 60 layers have about 6.09 GiB of
+such logical FP32 payload. Including Q/K and final norms gives about 9.89 GiB
+by shape arithmetic, not a measured unique saved-storage inventory or a proven
+cause of the previous OOMs. Some constant normalized inputs are leaves and are
+not offloaded; BF16 layer-scalar inputs are also outside this filter. Duplicate
+copies, host memory use, transfer latency and backward restore peaks can remain
+substantial. No claim that the 31B native workload now fits under 88 GiB is made.
+
+The existing native norm/serial fixture was extended, with no new test method.
+In the installed Torch CPU image it checks exact LL and saved native gradients,
+success and reference-failure cleanup, and an exception inside the save-hook
+context. The private fixture exercises CPU-to-CPU copies through the same hook
+code; it does not measure CUDA transfers or memory reduction. The focused test
+passed in 0.099 seconds, and focused Ruff/mypy checks passed. No GPU trial or
+production model collection has run for this option. Any later observation
+must use fresh provenance for the actually selected current parent; historical
+AV arrays must not be relabeled after a parent change.

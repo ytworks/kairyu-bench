@@ -430,3 +430,12 @@ Append-only v15: 151 rows, all 147 previous row objects unchanged.
 The prepared [ordinary AV/BA full14 recipe](scripts/launch-av-ba-retention-full14.py) preserves tier10/dev, the fixed 778-item cohort (746 capability items plus 32 likelihood probes), c32/logprob8/agent1, native generation, archived benchmark source and symmetric numeric observers. AV0 is the retained control and saved BA3 is the candidate. Its default unbound preview launches nothing; BA's verified freeze, deployment, fresh endpoint snapshots and a separate root decision must bind before execution.
 
 Future helper diagnostics now retain only an allowlisted exception category and setup/execution phase. Prior runtime-only artifacts cannot recover their class, and no new model diagnostic has run.
+
+
+## Current parent: highest recorded code90 score
+
+The user's explicit policy now selects the highest measured score on the fixed four-source official code90 cohort, superseding the earlier local-pair gain rule. The151-run ledger contains59 code90 runs. Saved AD's74.742063% is the highest ordinary code90 score; the AR logical overlay ties that value, while separately saved AR scores73.075397%. Different cohorts (screen95, hard30, known64, full14 code26) are not ranked together.
+
+The working-parent metadata was restored to saved AD, tree27629fd3, with no weight or service change. AV's prior accepted state and all AV-anchored AZ/BA measurements remain historical evidence. BA materialization and the prepared AV/BA full14 comparison are HELD: no copy, deployment, or full14 launch occurred. The old AV-pinned templates remain unchanged and cannot validate against the new parent state.
+
+Current AD state: b70fe5e9d519c7b4459af26f505471649c3313483058558e0796be3dad64440f. Policy: working-incumbent-policy-highest-code-v2.json eaf2112552ba45b26c913756ee128111848b64b7184afd74da3ae425886e85de. Decision: current-ad-highest-code-policy-v1/working-decision.json a9eaa1fd499b7363a2f44f375fbcf7bd3d2732ca28c8b79129f26ee228e5bc7b. This selects the observed record; it does not prove a stable expected-score ordering or code>90.

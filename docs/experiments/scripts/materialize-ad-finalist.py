@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Selected sparse finalist from saved AD: one create, one verify, optional one-service deploy."""
+"""Selected sparse finalist from a pinned saved parent: one create, one verify, optional one-service deploy."""
 
 import argparse
 import datetime
@@ -90,22 +90,23 @@ def parent_check(plan, job, guard):
     parent = plan["parent"]
     require(
         sha(parent["state"]["path"]) == parent["state"]["sha256"],
-        "AD incumbent state changed",
+        "incumbent state changed",
     )
     current = read(parent["state"]["path"])
     require(
-        current["short_name"] == "AD"
+        current["short_name"] == parent["short_name"]
         and current["checkpoint_path"] == parent["checkpoint_path"]
         and current["control_tree_sha256"] == parent["tree_sha256"],
-        "AD parent mismatch",
+        "declared parent mismatch",
     )
     require(
-        sha(parent["freeze"]["path"]) == parent["freeze"]["sha256"], "AD freeze changed"
+        sha(parent["freeze"]["path"]) == parent["freeze"]["sha256"],
+        "parent freeze changed",
     )
     require(
         guard.inventory(Path(parent["checkpoint_path"]))
         == parent["source_inventory_stat"],
-        "AD9 inventory changed",
+        "parent inventory changed",
     )
     require(sha(job["spec"]["path"]) == job["spec"]["sha256"], "finalist spec changed")
     spec = read(job["spec"]["path"])
@@ -320,7 +321,8 @@ def main():
     require(len(plan["jobs"]) == 1, "one finalist per owner")
     job = plan["jobs"][0]
     require(
-        job["label"] in {"AN", "AO", "AP", "AQ", "AR", "AS", "AV"}, "unknown finalist"
+        job["label"] in {"AN", "AO", "AP", "AQ", "AR", "AS", "AV", "BA"},
+        "unknown finalist",
     )
     guard = load_helper(plan)
     FINITE = Path(plan["finite_owner"]["path"]).parent
@@ -398,9 +400,11 @@ def main():
         "finalist target previous checkpoint changed",
     )
     require(
-        before["replicas"]["gemma-1"]["tree"] == plan["parent"]["tree_sha256"]
-        and before["replicas"]["gemma-1"]["health"] == "healthy",
-        "AD1 not healthy parent",
+        before["replicas"][plan.get("parent_service", "gemma-1")]["tree"]
+        == plan["parent"]["tree_sha256"]
+        and before["replicas"][plan.get("parent_service", "gemma-1")]["health"]
+        == "healthy",
+        "declared parent service not healthy",
     )
     # Reservation happens once after all authorization/closure checks. No resume or retry path.
     out.mkdir()

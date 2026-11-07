@@ -637,6 +637,11 @@ class PurposeTorchFixtures(unittest.TestCase):
             def forward(self, input_ids, **kwargs):
                 self.events.append(("forward", tuple(input_ids.shape)))
                 hidden = self.embedding(input_ids) * self.norm.weight
+                # FP32 normalization followed by a trainable scale, with a
+                # nonleaf input produced by the first scale operation.
+                normalized = hidden.float()
+                normalized = normalized * (normalized.square().mean(-1, keepdim=True) + 1e-6).pow(-.5)
+                hidden = (normalized * self.norm.weight.float()).to(torch.bfloat16)
                 if hidden.requires_grad:
                     hidden.register_hook(lambda unused: self.events.append(("backward", None)))
                 return SimpleNamespace(last_hidden_state=hidden)
@@ -676,10 +681,19 @@ class PurposeTorchFixtures(unittest.TestCase):
             if kind == "correct-logprob":
                 for row in cases["science"][0]:
                     row["expected_margin"] = 999.  # Must not interpret this as the selected objective.
-            for fail in (False, True):
-                with self.subTest(objective=kind, layout=layout, failure=fail), tempfile.TemporaryDirectory() as temporary:
+            modes = ("device", "cpu-fp32") if layout == "serial" else ("device",)
+            for fail, storage_mode in [(f, m) for f in (False, True) for m in modes]:
+                with self.subTest(objective=kind, layout=layout, failure=fail, storage=storage_mode), tempfile.TemporaryDirectory() as temporary:
                     args = SimpleNamespace(output=Path(temporary), mode="chat-public-answer", device="cpu",
-                                           virtual=False, max_cases_per_microbatch=1, objective=kind, answer_batching=layout, reference_tolerance=0.)
+                                           virtual=False, max_cases_per_microbatch=1, objective=kind, answer_batching=layout, reference_tolerance=0.,
+                                           saved_activation_storage=storage_mode)
+                    storage_instances = []
+                    storage_class = NATIVE._SavedActivationStorage
+                    def cpu_storage(torch_module, enabled):
+                        # Same copy/unpack path on CPU; not a CUDA memory test.
+                        value = storage_class(torch_module, enabled, source_device_type="cpu")
+                        storage_instances.append(value)
+                        return value
                     supplied = copy.deepcopy(cases)
                     if fail:
                         supplied["science"][0][0][reference_key] += 1.
@@ -687,7 +701,8 @@ class PurposeTorchFixtures(unittest.TestCase):
                     with patch.object(COMMON, "load_model", return_value=(torch, tokenizer, model)), \
                          patch.object(COMMON, "prepare", return_value=({"science": [rows]}, {})), \
                          patch.object(COMMON, "assert_inputs"), \
-                         patch.object(COMMON, "transformers_version", return_value="fixture"):
+                         patch.object(COMMON, "transformers_version", return_value="fixture"), \
+                         patch.object(NATIVE, "_SavedActivationStorage", side_effect=cpu_storage):
                         if fail:
                             with self.assertRaisesRegex(ValueError, "reference"):
                                 NATIVE.collect(args, checkpoint, supplied, {})
@@ -709,6 +724,52 @@ class PurposeTorchFixtures(unittest.TestCase):
                     np.testing.assert_array_equal(net.norm.weight.detach().float().numpy(), original)
                     self.assertFalse(net.norm.weight.requires_grad)
                     self.assertIsNone(net.norm.weight.grad)
+                    metrics_path = Path(temporary) / "saved-activation-storage.json"
+                    if storage_mode == "cpu-fp32":
+                        metrics = json.loads(metrics_path.read_text())
+                        self.assertEqual(metrics["status"], "incomplete" if fail else "completed")
+                        self.assertGreater(metrics["offloaded_save_events"], 0)
+                        self.assertGreater(metrics["offloaded_unpack_events"], 0)
+                        self.assertEqual(metrics["copied_to_cpu_bytes"],
+                                         sum(row["copied_bytes"] for row in metrics["offloaded_shapes"]))
+                        self.assertTrue(any(row["shape"] == [1, 5, 3]
+                                            for row in metrics["offloaded_shapes"]))
+                        before = storage_instances[0].report()
+                        leaf = torch.ones(2, requires_grad=True)
+                        leaf.square().sum().backward()
+                        self.assertEqual(storage_instances[0].report(), before)
+                    else:
+                        self.assertFalse(metrics_path.exists())
+                        if not fail:
+                            self.assertNotIn("native_saved_activation_storage", report["runtime"])
+
+        # An exception inside the active save-hook context must also pop hooks
+        # and restore trainability, rather than only handling reference failure.
+        with tempfile.TemporaryDirectory() as temporary:
+            args = SimpleNamespace(output=Path(temporary), mode="chat-public-answer", device="cpu",
+                                   virtual=False, max_cases_per_microbatch=1, objective="correct-logprob",
+                                   answer_batching="serial", reference_tolerance=0., saved_activation_storage="cpu-fp32")
+            storage_instances.clear()
+            original_objective = OBJECTIVES.single_answer_logprob_objective
+            def fail_after_forward(*args, **kwargs):
+                original_objective(*args, **kwargs)
+                raise ValueError("fixture after forward")
+            with patch.object(COMMON, "load_model", return_value=(torch, tokenizer, model)), \
+                 patch.object(COMMON, "prepare", return_value=({"science": [rows]}, {})), \
+                 patch.object(NATIVE, "_SavedActivationStorage", side_effect=cpu_storage), \
+                 patch.object(NATIVE.variants, "single_answer_logprob_objective", side_effect=fail_after_forward):
+                with self.assertRaisesRegex(ValueError, "fixture after forward"):
+                    NATIVE.collect(args, checkpoint, cases, {})
+            metrics = json.loads((Path(temporary) / "saved-activation-storage.json").read_text())
+            self.assertEqual(metrics["status"], "incomplete")
+            self.assertGreater(metrics["offloaded_save_events"], 0)
+            self.assertEqual(metrics["offloaded_unpack_events"], 0)
+            self.assertFalse(net.norm.weight.requires_grad)
+            self.assertIsNone(net.norm.weight.grad)
+            before = storage_instances[0].report()
+            leaf = torch.ones(2, requires_grad=True)
+            leaf.square().sum().backward()
+            self.assertEqual(storage_instances[0].report(), before)
 
         # Exercise the execution policy through collection and finite replay:
         # longest global fold/case first, canonical saved rows and same gradients.
