@@ -1,0 +1,26 @@
+{
+  "socket": "/var/run/docker.sock",
+  "socket_stat": {
+    "dev": 26,
+    "ino": 3105,
+    "size": 0,
+    "mtime_ns": 1793351541989999672,
+    "ctime_ns": 1793351542003999671
+  },
+  "daemon_id": "3e518d2b-6972-43f8-b325-f7f33697a2d2",
+  "docker_root_dir": "/mnt/nvme/docker",
+  "driver": "overlayfs",
+  "default_runtime": "runc",
+  "server_version": "29.6.1",
+  "image_id": "sha256:c4ab50223f03fca17bf871e4d05f77001e76525a1c574b6c6ee7024db06cfdc2",
+  "image_size_bytes": 9777059118,
+  "image_user": "1003:1003",
+  "image_entrypoint": [
+    "vllm",
+    "serve"
+  ],
+  "effective_entrypoint": "python3",
+  "image_architecture": "amd64",
+  "image_os": "linux",
+  "container_created": false
+}

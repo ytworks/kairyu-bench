@@ -1,0 +1,201 @@
+Review candidate A as an independent methodological reviewer. A fixed BF16 candidate specification exists. Its actual numeric proposal evidence
+and unmeasured finite/official outcomes are explicitly separated below.
+Use only this anonymous text. Do not access external resources or tools. Return
+only the JSON structure requested at the end. Distinguish measured facts,
+proposed objectives, predictions, and unmeasured claims.
+
+PURPOSE AND ACCEPTANCE RULES
+The aim is to improve an instruction-tuned dense language model's coding ability
+through saved-weight edits and exceed 90 points on the official code-area score,
+computed as an equal-weight mean over its official sources. A surrogate objective
+or one favorable problem does not count as that score. The next edit must begin
+from the highest-scoring model under the same evaluation conditions. Improvements
+are accumulated; repeatedly restarting edits from the original model is excluded.
+Moderate losses elsewhere may be acceptable when the overall tradeoff advances
+the coding objective, but all gains and losses must be reported.
+
+A fresh audit reconstructs comparison eligibility and scores from recorded
+measurements. It does not inherit earlier agents' hypotheses, candidate order,
+proposed experiments, or adoption decisions. The retained incumbent is tied for
+the highest measured comparable official code score, 87.7778. Selection among
+previously tested weights and repeated use of development data remain sources of
+selection bias even though the audit is fresh. Resetting the analyst does not
+reset that history or make development problems fresh.
+
+CANDIDATE A: PROPOSED CUMULATIVE EDIT
+The base is that measured incumbent. The proposed update jointly changes sampled
+coordinates from 410 matrices, totaling 209,920 sampled coordinates, across
+attention query, key, value and output projections and MLP gate, up and down
+projections. Native scalar/vector parameters remain fixed at the incumbent's
+stored values. The matrix groups are solved together, not one weight at a time.
+Calling these groups related is a structural statement about the computation;
+it is not yet evidence that these particular coordinates causally own a skill.
+
+The calibration material consists of 120 authored cases rather than copied evaluation problems or reference
+answers. Some inherited science calibration was influenced by concepts seen in
+earlier development failures; this is not independent held-out material. Public correct-answer
+log-likelihood and answer margins are measured at the incumbent with serial SDPA
+execution and a forced-empty-thought answer prefix. This conditional-answer
+measurement differs from the model's normal benchmark generation path. Its
+transfer to free-running generation must be tested, not assumed.
+
+The proposed solver uses a Euclidean minimum-norm objective, a continuous coordinate
+box max(0.25*abs(current stored value), 0.0001), BF16 storage rounding from the
+current parent plus the cumulative FP64 proposal, and up to 16 correction rounds.
+The BF16-realized displacement can exceed the continuous box by rounding; these numerical limits alone do not
+establish a small functional change. Storage rounding can alter the active set,
+constraint satisfaction and the realized direction. Planned constraints are:
+
+- For each algorithm and implementation fold, public-answer log-likelihood and
+  margin targets of at least +0.03.
+- For each code fold, log-likelihood target of at least +0.01 and margin target
+  of at least 0.
+- For each other fold, permit at most -0.03 in the constrained surrogate values.
+
+These thresholds are surrogate units, not WSP points or percentage-point gains.
+Each of 19 authored purposes has two explicitly recorded folds; all 38 folds
+are retained for both objectives (76 constraints). Within a case, LL averages all
+public answer tokens; margin is correct mean LL minus foil mean LL. Fold values
+are the equal-case mean, independent of answer length. All 120 case IDs are
+recorded; no public test/reference answer is used to calculate the update. Linearized feasibility must
+not be reported as finite-edit feasibility or measured model improvement.
+
+EVIDENCE POLICY
+Inspect both saved weights and execution activations. Existing collector raw data
+may be reused only after matching checkpoint identity, configuration and request
+provenance. Prior interpretations of those captures are not inherited. Missing
+capture, dropped records, unmatched requests or unfinished writers stay missing;
+none becomes zero, and distinct questions, calls or tensor-parallel ranks must
+not be silently pooled. Activation magnitude or weight correlation alone does
+not prove a causal capability assignment.
+
+The official evaluation manifests retain all 14 areas and all selected problems:
+778 for the 10-minute tier, 2,338 for the 30-minute tier and 4,841 for the 60-minute
+tier. No area, source, question or condition is removed. The tiers differ in
+composition and their scores must remain separate. Development splits support
+iteration; the test split is for final confirmation. Every trial, including
+failure, regression, unscored result and remeasurement, is retained. Partial runs
+are not ranked as completed runs. Identity and conditions must match for chat and
+log-probability endpoints.
+
+The final edited checkpoint will also receive a full DeepSWE pass with 32 problem
+workers, all 113 tasks and one attempt each. Compare it with the original under
+the same serving and evaluation conditions, not merely the same model identifier.
+If serving topology differs from an old baseline, obtain a matching baseline.
+Report official task outcomes, unscored counts, steps, elapsed time, retries and
+other-area effects. Publication of edited weights is conditional on improvement
+in this complete original-versus-edited DeepSWE comparison. No such improvement
+has been established for candidate A.
+
+KNOWN LIMITS OF THREE INCUMBENT CODE FAILURES
+One official coding problem permits any valid mathematical construction. Its
+pinned official scorer instead compares output lines for exact textual or exact
+numeric equality against one reference construction. For the public case with
+required minimum positive exponent equal to one, the incumbent emits a pair with
+modulus one that is mathematically valid but differs from the reference pair.
+That valid alternative is rejected by the pinned scorer. This does not prove the
+entire generated algorithm correct or efficient on large cases. The wrapper
+retains only a pass/fail result and not the first failure's diagnostic metadata.
+The official zero is preserved; any independent validity check is supplemental.
+Do not recommend tuning the model to reproduce the reference construction.
+
+Two other tasks pass the base tests and fail the expanded tests. One public
+prompt asks for the minimum of a heterogeneous list without specifying which
+numeric types qualify: the reference admits integers only, while the incumbent
+admits integers and floating-point values. Another prompt asks about a sublist:
+the reference checks an order-preserving, possibly noncontiguous subsequence,
+while the incumbent checks contiguous slices. These are interpretation/contract
+mismatches; the public examples do not resolve the distinctions. Both final
+functions are complete and do not depend on missing helpers. Exact first failing
+inputs are not retained in the WSP verdict. Official scores remain unchanged.
+These three recorded failures should not all be classified as demonstrated
+underlying coding incapacity, and their reference answers must not be transferred
+into calibration examples.
+
+ACTUAL-CANDIDATE MEASUREMENTS AT FIRST REVIEW
+One fixed candidate specification has been produced, with no amplitude search.
+The existing solver ran for 4.920433 seconds. It examined 16 BF16 correction
+rounds and selected round 8 internally by its fixed shortfall/norm rule.
+All failed setup attempts were retained: the first host preview rejected an old
+collector-source hash, and the first isolated rerun lacked a device mount. Exact
+historical source bytes were then restored read-only in a separate network-isolated
+namespace while the current solver ran from a different pinned snapshot. Neither
+historical gradients/provenance nor working-tree source was rewritten.
+
+- BF16 specification changes 201426 stored coordinates in
+  410 matrices; native scalar/vector changes: zero.
+- Realized delta L2: 0.991527104249; represented source L2:
+  7.388781142491. Their ratio is
+  0.134193595009, and its denominator is ONLY
+  the 209920 sampled matrix cells. This is not a whole-model relative norm.
+- Independent reconstruction verified all 209920 source BF16 words against the
+  current checkpoint, every proposed target is exact BF16, and all native values
+  remain untouched. Recomputed predictions agree within 5.55e-17. Maximum
+  absolute coordinate delta is 0.056640625. The continuous box is exceeded after
+  BF16 rounding at 29079 cells, by at most 0.00048828125; no post-round clamp
+  or target relaxation was applied.
+- All 76 linearized constraints satisfied: False; 9 are unmet. Every non-target
+  allowance of -0.03 is retained in the linear prediction.
+  The maximum shortfall is 0.0152623 natural-log units per answer token.
+  Algorithm LL predictions by fold: +0.01916763, +0.01549597 (targets +0.03).
+  Algorithm margins: +0.01950170, +0.01473770 (targets +0.03).
+  Implementation LL: +0.02354915, +0.02373325 (targets +0.03).
+  Implementation margins: +0.01491047, +0.01877198 (targets +0.03).
+  Code LL: +0.16649965, +0.00695747 (targets +0.01).
+  Code margins: +0.15223791, +0.01886311 (targets >=0).
+- Full 76-row sampled-gradient geometry retained. Across 2850 distinct row
+  pairs, 1535 cosines are positive and 1315 negative, spanning -0.7073 to
+  +0.9491. Layer/family data are retained, not just selected top correlations.
+  These numbers describe derivatives of authored objectives, not skills.
+- Saved checkpoint create/full verification: NOT YET RUN.
+- Finite model response and generation: NOT YET RUN. An AV -> fixed A -> AV
+  restored replay of all 120 authored cases is available without new optimization.
+- Live incumbent activation capture started on a dedicated TP2 replica; full
+  canonical 778-item dev evaluation is running and incomplete. Candidate capture
+  has not run. Four short deterministic thinking-OFF control/observer requests
+  gave 4/4 identical public-answer hashes and total time 0.3242 versus 0.3496
+  seconds (+7.85%). This does not establish overhead/output stability under WSP.
+- Full official scores, test confirmation, and final DeepSWE for A: NOT YET RUN.
+- No candidate capability claim or adoption has been made.
+
+REVIEW QUESTIONS
+1. Which assumptions most threaten transfer from the forced-empty-thought,
+   serial-SDPA correct-answer surrogate to coding generation? Separate plausible
+   mechanisms from evidence actually established here.
+2. What selection bias remains after independently re-auditing historical results,
+   and what can final confirmation support after repeated development search?
+3. Is the proposed allowance for other-fold losses meaningful for the stated
+   purpose? Explain what finite and official measurements are needed to assess
+   acceptable tradeoffs; do not equate surrogate units with capability points.
+4. Is the simultaneous attention/MLP coordinate combination supported by the
+   available dependency evidence? What missing evidence would materially change
+   the proposed update, its bounds, or its interpretation after BF16 rounding?
+5. Specify the minimum useful finite-response check and the canonical evaluations
+   needed to accept or reject A, without dropping any manifest content or
+   expanding tool development into the objective itself. Identify a clear stop
+   or rejection condition for a direction that fails to transfer.
+6. Under what exact completed-evaluation evidence could one truthfully claim
+   exceeding 90 official code points, and what broader coding-improvement claim
+   would still be unsupported? Preserve official scores for the three ambiguous
+   failure mechanisms described above.
+
+REQUIRED JSON OUTPUT
+{
+  "reviews": [
+    {
+      "label": "A",
+      "assessment": "A concise independent assessment that states the unmeasured status",
+      "transfer_risks": [],
+      "selection_bias": [],
+      "weight_combination_and_rounding": [],
+      "acceptable_loss_evidence": [],
+      "minimum_finite_probe": [],
+      "canonical_evaluation_requirements": [],
+      "reject_or_stop_conditions": [],
+      "claim_limits": []
+    }
+  ],
+  "sequence": [],
+  "evidence_limits": [],
+  "fresh_reserve": []
+}

@@ -1,0 +1,38 @@
+{
+  "validation": [
+    {
+      "case": "matched_planned_preview",
+      "exit": 0,
+      "result": {
+        "mode": "preview",
+        "status": "planned_candidate_not_saved_not_deployed",
+        "run_id": "gemma4-fresh-f02-observed-dev10-20261107-v1-planned",
+        "checkpoint_planned": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/checkpoints/fresh-purpose-f02-planned",
+        "runner_image_id": "sha256:f91bdcf997af6d7b194bec229812fd018277158f6795de7d91e58448936e7ad8",
+        "observer_files_verified": 89,
+        "checkpoint_payload_hashed": false,
+        "serving_mutated": false,
+        "benchmark_started": false
+      }
+    },
+    {
+      "case": "wrong_runner",
+      "exit": 1,
+      "diagnostic": "{\"preview_error_type\": \"AssertionError\"}",
+      "serving_mutated": false
+    },
+    {
+      "case": "subset",
+      "exit": 1,
+      "diagnostic": "{\"preview_error_type\": \"AssertionError\"}",
+      "serving_mutated": false
+    },
+    {
+      "case": "wrong_topology",
+      "exit": 1,
+      "diagnostic": "{\"preview_error_type\": \"AssertionError\"}",
+      "serving_mutated": false
+    }
+  ],
+  "scope": "CPU-only planned owner validation; no candidate payload hashing or service changes"
+}

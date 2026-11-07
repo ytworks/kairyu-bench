@@ -126,6 +126,8 @@ class Context:
     logprob: LogprobClient | None
     loader: Loader = field(default_factory=Loader)
     run_dir: Path | None = None
+    observe_config: Path | None = None
+    run_id: str | None = None
 
 
 @dataclass(frozen=True)
@@ -252,6 +254,7 @@ def run_chat(
     sent at once (the client bounds the requests in flight)."""
 
     from concurrent.futures import ThreadPoolExecutor
+    from contextvars import copy_context
 
     chat = context.chat
     if chat is None:
@@ -263,7 +266,8 @@ def run_chat(
     if item.samples == 1:
         return {"samples": [one(0)]}
     with ThreadPoolExecutor(item.samples, thread_name_prefix="wsp-sample") as pool:
-        return {"samples": list(pool.map(one, range(item.samples)))}
+        futures = [pool.submit(copy_context().run, one, sample) for sample in range(item.samples)]
+        return {"samples": [future.result() for future in futures]}
 
 
 def score_each(

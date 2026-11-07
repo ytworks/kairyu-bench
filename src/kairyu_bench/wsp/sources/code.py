@@ -303,7 +303,7 @@ def _score_scicode(entries: list[tuple[Item, Row, Outcome]], loader: Loader) -> 
                         "tests": list(step["test_cases"]),
                     }
                 )
-    verdicts = (
+    execution = (
         run_scorer(
             loader.python("wsp"),
             "kairyu_bench.wsp.scorers.scicode_score",
@@ -311,8 +311,9 @@ def _score_scicode(entries: list[tuple[Item, Row, Outcome]], loader: Loader) -> 
             pythonpath=(loader.source("scicode") / "src",),
         )
         if jobs
-        else {}
+        else {"schema_version": 1, "verdicts": {}, "diagnostics": {}}
     )
+    verdicts, diagnostics = execution["verdicts"], execution["diagnostics"]
     results: list[Scored] = []
     for position, (_, row, outcome) in enumerate(entries):
         values: list[float] = []
@@ -325,7 +326,13 @@ def _score_scicode(entries: list[tuple[Item, Row, Outcome]], loader: Loader) -> 
             keys = [key for key in verdicts if key.startswith(f"{position}:{index}:")]
             passed = sum(bool(verdicts[key]) for key in keys)
             values.append(passed / len(keys) if keys else 0.0)
-            details.append({"steps_passed": passed, "steps_tested": len(keys), "problem_solved": passed == len(keys)})
+            details.append({
+                "steps_passed": passed, "steps_tested": len(keys), "problem_solved": passed == len(keys),
+                "step_diagnostics": [
+                    {"step": key.rsplit(":", 1)[1], "passed": bool(verdicts[key]), **diagnostics[key]}
+                    for key in keys
+                ],
+            })
         results.append(Scored(sum(values) / len(values), tuple(values), {"samples": details}))
     return results
 

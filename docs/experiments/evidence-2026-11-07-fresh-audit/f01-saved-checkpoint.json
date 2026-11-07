@@ -1,0 +1,86 @@
+{
+  "create.json": {
+    "sha256": "b0abf41b9ea9f4703d2a90e36759ad7fd8f5e46e278d8f754e9904305843c40c",
+    "birth_epoch_seconds": 1794025428,
+    "modified_epoch_seconds": 1794025648,
+    "elapsed_seconds_from_output_file_timestamps": 220,
+    "timing_precision": "integer seconds, output file opened immediately before CLI and written at completion; includes shell scheduling, not monotonic timer",
+    "result": {
+      "changed_elements": 201426,
+      "changed_tensors": 410,
+      "delta_l2": 0.9915271042485978,
+      "copy_bytes_upper_bound": 62578656419,
+      "hardlink_bytes": 0,
+      "reserve_bytes": 53687091200,
+      "applied": true,
+      "manifest": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f01/materialization/edit-manifest.json"
+    }
+  },
+  "verify.json": {
+    "sha256": "80f4bedc3f32a37eb00138bf294a75563b60f05fe628889acda8a9c6df8a1990",
+    "birth_epoch_seconds": 1794025648,
+    "modified_epoch_seconds": 1794025821,
+    "elapsed_seconds_from_output_file_timestamps": 173,
+    "timing_precision": "integer seconds, output file opened immediately before CLI and written at completion; includes shell scheduling, not monotonic timer",
+    "result": {
+      "changed_elements": 201426,
+      "changed_tensors": 410,
+      "delta_l2": 0.9915271042485978,
+      "verified": true,
+      "scope": "all regular files except .cache and .kairyu-model-attestation.json",
+      "legacy_full_hashes_missing": false,
+      "files": [
+        {
+          "path": "chat_template.jinja",
+          "source_sha256": "ae53464bf3be25802b3a5b37def7fd89667067d7577049b3b2d74c4d8de4c6d4",
+          "candidate_sha256": "ae53464bf3be25802b3a5b37def7fd89667067d7577049b3b2d74c4d8de4c6d4"
+        },
+        {
+          "path": "config.json",
+          "source_sha256": "e967dd38bc5cfd38bd09a995a7bf4a754075df2b46aba68f7fbb5a791e6d8dd1",
+          "candidate_sha256": "e967dd38bc5cfd38bd09a995a7bf4a754075df2b46aba68f7fbb5a791e6d8dd1"
+        },
+        {
+          "path": "generation_config.json",
+          "source_sha256": "d4226bbe3117d2d253ba4609720ba82c6c4ce4627a9a6ae05387c78983ac03de",
+          "candidate_sha256": "d4226bbe3117d2d253ba4609720ba82c6c4ce4627a9a6ae05387c78983ac03de"
+        },
+        {
+          "path": "model-00001-of-00002.safetensors",
+          "source_sha256": "0589dc8a7a3afba79fe2d8444221dae410db57ce1be33eb72d9be637d70fcf10",
+          "candidate_sha256": "747de4b2b690649c9ad08b20e63a2c5e9cce97fe4d9ba9e1f903e821a313d085"
+        },
+        {
+          "path": "model-00002-of-00002.safetensors",
+          "source_sha256": "9be24bc9910dbbe54f3f46154189c729071fd56dc41331f4a97a6ad3e02b3b56",
+          "candidate_sha256": "5278835d2db3fae2819bbd67bf4af4640cf9be60c0a4b7247759fb5190853d5e"
+        },
+        {
+          "path": "model.safetensors.index.json",
+          "source_sha256": "390b7f9a0a502e4526cf20862d22954c911cc318d8aba2cdb745c6fbd98264f6",
+          "candidate_sha256": "390b7f9a0a502e4526cf20862d22954c911cc318d8aba2cdb745c6fbd98264f6"
+        },
+        {
+          "path": "processor_config.json",
+          "source_sha256": "32bdf45d2ad4cc29a0822ddd157a182de76644f0419a6228d151495256e9813c",
+          "candidate_sha256": "32bdf45d2ad4cc29a0822ddd157a182de76644f0419a6228d151495256e9813c"
+        },
+        {
+          "path": "tokenizer.json",
+          "source_sha256": "cc8d3a0ce36466ccc1278bf987df5f71db1719b9ca6b4118264f45cb627bfe0f",
+          "candidate_sha256": "cc8d3a0ce36466ccc1278bf987df5f71db1719b9ca6b4118264f45cb627bfe0f"
+        },
+        {
+          "path": "tokenizer_config.json",
+          "source_sha256": "9f4fec4b1dc6ecddf8f4a92e9caea5971c0e67d81309f3f9066a2bee8c362633",
+          "candidate_sha256": "9f4fec4b1dc6ecddf8f4a92e9caea5971c0e67d81309f3f9066a2bee8c362633"
+        }
+      ]
+    }
+  },
+  "manifest": {
+    "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f01/materialization/edit-manifest.json",
+    "sha256": "d84737dacb9fc79000b074ba8a33be0c877c007c06b5a7f8da305928e91c4701",
+    "bytes": 213705616
+  }
+}

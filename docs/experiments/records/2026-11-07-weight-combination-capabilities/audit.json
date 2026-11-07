@@ -1,0 +1,122 @@
+{
+  "schema_version": 1,
+  "created_utc": "2026-11-07T07:19:18.176341+00:00",
+  "scope": "read-only current-source and help audit; no model calls, GPU probes, solver, candidate, service or lock changes",
+  "source_sha256": {
+    "scripts/experiments/gemma4-purpose/native.py": "c9b294242d6e1c8c2786b1f4264dfcaf6d1c8927d576e815c53c96fca51ec108",
+    "scripts/experiments/gemma4-purpose/matrix.py": "bcda8de026bb70ca93d821afb2a4987f4bc11b33672d861635459610540e5a22",
+    "scripts/experiments/gemma4-purpose/matrix_full_units.py": "c25805880b862cf814b2294fdb396850650a34288934aab4c949facf67ef8b24",
+    "scripts/experiments/gemma4-purpose/recipe_common.py": "fddbca286f3423e5e4a0bb046663600967f2060d0e055558d1c8659fcd89f35e",
+    "scripts/experiments/gemma4-purpose/objective_variants.py": "f1faa1993b0e138de1599e3057db7eb35fcdd375a43d4a8c85db526eaf6462a6",
+    "src/kairyu_bench/wsp/weights/finite_replay.py": "71c424bffac775ba112e709632df0a37351a79c3121827be7c9844f321c7c4d3",
+    "src/kairyu_bench/wsp/weights/editor.py": "0983580f41989c26e84c16c26924f2850dd4e5d3d12917bb9553d7feb92333d2",
+    "src/kairyu_bench/wsp/weights/checkpoint.py": "898297c05e7179cdc4568d6f290b978073bcebafea804ac043b54030e8205bf9",
+    "scripts/experiments/gemma4_lora/finite_module_replay.py": "6f3c1767613d042bbb3b3d8911adac74206b6cffafba279ee4ae3d7b9ff9e8d1",
+    "scripts/experiments/gemma4_lora/module_lora_recipe.py": "ce1dcabe2710d92aaba068a6c4c114efa7a0030df67885b5de1272c49c28e21d",
+    "docs/wsp-finite-response.md": "2124a1076acd63920c7546bf41981780a2dc8b214d1b8031f88f38d92ca63476",
+    "docs/wsp-module-finite-replay.md": "0a5f854854449120fe47e8d8d031806fc0f715a22367959ea014dae39e5b61e4"
+  },
+  "source_bytes_stable": true,
+  "help_results": [
+    {
+      "argv": [
+        "<CPU_PYTHON>",
+        "scripts/experiments/gemma4-purpose/native.py",
+        "--help"
+      ],
+      "returncode": 0,
+      "seconds": 0.14576576801482588,
+      "output": "help-1.txt",
+      "sha256": "3106e36b4ec3b965aa2f13740f68c60e68eb938b2f136bed9885377c1cb54a91"
+    },
+    {
+      "argv": [
+        "<CPU_PYTHON>",
+        "scripts/experiments/gemma4-purpose/matrix.py",
+        "--help"
+      ],
+      "returncode": 0,
+      "seconds": 0.1477818249259144,
+      "output": "help-2.txt",
+      "sha256": "077a7f5537bc7f04361a9c4cf666330eadf0c8918cc333465314426981bc8eb2"
+    },
+    {
+      "argv": [
+        "<CPU_PYTHON>",
+        "scripts/experiments/gemma4-purpose/matrix_full_units.py",
+        "--help"
+      ],
+      "returncode": 0,
+      "seconds": 0.14302568102721125,
+      "output": "help-3.txt",
+      "sha256": "832e718ad991a3c105438749916bdf0cc38fdebb74cabf25c499bd30121193c5"
+    },
+    {
+      "argv": [
+        "<CPU_PYTHON>",
+        "-m",
+        "kairyu_bench.wsp.weights.finite_replay",
+        "--help"
+      ],
+      "returncode": 0,
+      "seconds": 0.11836504796519876,
+      "output": "help-4.txt",
+      "sha256": "3ace8201c1cdd3b29132612113ae6e33c4ffc603765b3908acd96665613af4be"
+    },
+    {
+      "argv": [
+        "<CPU_PYTHON>",
+        "scripts/experiments/gemma4_lora/finite_module_replay.py",
+        "--help"
+      ],
+      "returncode": 0,
+      "seconds": 0.12757937400601804,
+      "output": "help-5.txt",
+      "sha256": "6b50854de8db378c30edaed3b4d000a4a22defff5c3f4f2eadd07bf3e344bd6c"
+    }
+  ],
+  "cpu_dependencies": {
+    "numpy": {
+      "present": true,
+      "version": "2.5.4"
+    },
+    "torch": {
+      "present": false
+    },
+    "transformers": {
+      "present": false
+    },
+    "safetensors": {
+      "present": false
+    }
+  },
+  "existing_F02_finite_evidence": {
+    "owner_plan_sha256": "f820d34c3f2fc2b20481044e5b983ab09ffe54ed19ad5e82e5c3c82a53004bc1",
+    "completion_sha256": "5ae3ad153d3c0212fdfc341d1f4306832d498afc063ac9a5124fa7045a251ece",
+    "provenance_sha256": "b7a305e2a4dee5fe4844c20896dd71b9a976f23996c029546e9d2343b3c6f44b",
+    "runtime_image": "sha256:af9e746b913088cbf6c4464a31d6904a6b7e1d3ba62f0895362ddf13595f7abe",
+    "container_memory": "128g",
+    "observation_policy": {
+      "max_frame_tokens": 2048,
+      "execution_order": "longest_frame_first",
+      "attention_dispatch": {
+        "": "eager",
+        "text_config": "sdpa",
+        "vision_config": "eager",
+        "audio_config": "eager"
+      },
+      "cuda_memory_cap_gib": 88.0,
+      "answer_batching": "serial",
+      "max_cases_per_microbatch": 1
+    },
+    "completion_status": "finished",
+    "returncode": 0,
+    "torch_transformers_versions": "not asserted by this receipt; image identity and prior completion only"
+  },
+  "audit_elapsed_seconds": 0.6894432039698586,
+  "help_failures": 0,
+  "prior_read_only_attempt_notes": [
+    "A source-search path common.py did not exist; corrected to recipe_common.py. No experiment ran.",
+    "A broad source read was display-truncated; relevant ranges were reread narrowly."
+  ]
+}

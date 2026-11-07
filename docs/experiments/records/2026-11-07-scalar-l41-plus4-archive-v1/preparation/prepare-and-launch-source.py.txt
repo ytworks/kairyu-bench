@@ -1,0 +1,36 @@
+python3 - <<'PY'
+from pathlib import Path
+import subprocess,json,hashlib,os,time
+R=Path("/mnt/nvme/kairyu/wsp/gemma4-coding-20261104");B=R/"worktrees/kairyu-bench-weight-tools"
+old=R/"analysis/fresh-purpose-20261107-scalar-l41-minus4-release-plan-v1/read-only-source.py.txt"
+source=old.read_text().replace("scalar-l41-minus4","scalar-l41-plus4")
+# Metadata-only additions preserve the original audit flow and explicitly protect the nested record.
+needle='(D/"read-only-audit.json").write_text'
+extra='''audit["candidate_metadata_directories"]={".eval_results":dict(mode=(C/".eval_results").lstat().st_mode,mtime_ns=(C/".eval_results").lstat().st_mtime_ns,inode=(C/".eval_results").lstat().st_ino)}
+audit["complete_original_inventory"]={str(p.relative_to(base)):stamp(p) for p in base.rglob("*") if p.is_file()}
+audit["complete_candidate_inventory"]={str(p.relative_to(C)):stamp(p) for p in C.rglob("*") if p.is_file()}
+assert audit["complete_candidate_inventory"]==candidate_stats
+audit["non_destructive_archive_only_authorized"]=True
+audit["release_authorized"]=False
+'''
+assert source.count(needle)==1
+source=source.replace(needle,extra+needle)
+p=B/"docs/experiments/scripts/fresh-scalar-l41-plus4-audit-20261107.py"
+assert not p.exists();p.write_text(source)
+env=dict(os.environ,PYTHONDONTWRITEBYTECODE="1",OMP_NUM_THREADS="1",OPENBLAS_NUM_THREADS="1",MKL_NUM_THREADS="1")
+r=subprocess.run([str(R/"infra/weight-tools-ci/bin/python"),"-B",str(p)],capture_output=True,text=True,env=env,timeout=60)
+D=R/"analysis/fresh-purpose-20261107-scalar-l41-plus4-release-plan-v1"
+(D/"read-only-source.py.txt").write_text(source);(D/"audit.stdout").write_text(r.stdout);(D/"audit.stderr").write_text(r.stderr)
+print(r.stdout);print(r.stderr);assert r.returncode==0
+plan=D/"plan.json";ph=hashlib.sha256(plan.read_bytes()).hexdigest()
+src=B/"docs/experiments/scripts/fresh-scalar-l41-minus4-archive-20261107.py"
+dest=B/"docs/experiments/scripts/fresh-scalar-l41-plus4-archive-20261107.py"
+new=src.read_text().replace("scalar-l41-minus4","scalar-l41-plus4").replace("a05e488a2bdd6f88b31dc51f8a654676e41a9857d756e74d332f1102141873ac",ph)
+assert not dest.exists();dest.write_text(new)
+cmd=["nice","-n","15","ionice","-c","3",str(R/"infra/weight-tools-ci/bin/python"),"-B",str(dest)]
+with (D/"archive-owner.stdout").open("x") as out,(D/"archive-owner.stderr").open("x") as err:
+ child=subprocess.Popen(cmd,stdout=out,stderr=err,env=env,start_new_session=True)
+receipt={"pid":child.pid,"argv":cmd,"started_epoch":time.time(),"plan_sha256":ph,"source_sha256":hashlib.sha256(dest.read_bytes()).hexdigest(),"source_prior_sha256":hashlib.sha256(src.read_bytes()).hexdigest(),"scope":"root authorized non-destructive full verify and archive only; no release","during_WSP":"F06 active; nice15 idleIO threads1; background IO is not a baseline latency measurement","release_authorized":False,"model_calls":0}
+(D/"archive-root-authorized-launch.json").write_text(json.dumps(receipt,indent=2)+"\n")
+print("LAUNCH",json.dumps(receipt))
+PY

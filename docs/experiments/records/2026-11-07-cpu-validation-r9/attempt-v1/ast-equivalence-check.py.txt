@@ -1,0 +1,39 @@
+"""Read-only AST equivalence audit; never execute deployment recipes."""
+import ast
+import copy
+import hashlib
+import json
+from pathlib import Path
+R = Path("/mnt/nvme/kairyu/wsp/gemma4-coding-20261104")
+B = R / "worktrees/kairyu-bench-weight-tools"
+D = R / "analysis/fresh-purpose-20261107-cpu-validation-r9"
+source = R / "analysis/fresh-purpose-20261107-av-dev30-deployment-plan-v1/remove-completed-observer-v2.py"
+assert hashlib.sha256(source.read_bytes()).hexdigest() == "99a9cc25006a988d1d7cfe11b8f579ea0bbb857c4de34c39f21bf0769b5a12ce"
+defs = [n.name for n in ast.parse(source.read_text()).body if isinstance(n, ast.FunctionDef)]
+assert all(defs.count(n) == 1 for n in ["inventory", "safe", "lock_evidence"])
+def normalize(tree, added):
+    tree = copy.deepcopy(tree)
+    out = []
+    aliases = []
+    for node in tree.body:
+        if isinstance(node, ast.Import):
+            out.extend(ast.Import(names=[a]) for a in node.names)
+            continue
+        if added and isinstance(node, ast.Assign) and len(node.targets) == 1 and isinstance(node.targets[0], ast.Name):
+            name = node.targets[0].id
+            if name in added and ast.dump(node.value) == ast.dump(ast.parse("globals()[" + repr(name) + "]", mode="eval").body):
+                aliases.append(name)
+                continue
+        out.append(node)
+    tree.body = out
+    return ast.dump(tree), aliases
+rows = []
+for kind, names in [("preview", ["inventory"]), ("apply", ["inventory", "safe", "lock_evidence"])]:
+    rel = f"docs/experiments/scripts/fresh-f03-deploy-{kind}-20261107.py"
+    before = ast.parse((D / "before" / rel).read_text())
+    after = ast.parse((B / rel).read_text())
+    normalized_before, _ = normalize(before, [])
+    normalized_after, aliases = normalize(after, names)
+    assert aliases == names and normalized_before == normalized_after
+    rows.append({"file": rel, "normalized_ast_equal": True, "added_redundant_bindings": aliases, "pinned_source_definitions_present": True})
+print(json.dumps(rows))

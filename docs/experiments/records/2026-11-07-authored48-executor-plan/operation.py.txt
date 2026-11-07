@@ -1,0 +1,87 @@
+from pathlib import Path
+import collections, datetime, hashlib, json, os, shutil, stat, subprocess, sys, time
+B = Path('/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/worktrees/kairyu-bench-weight-tools')
+R = B.parent.parent
+N = R / 'analysis/fresh-purpose-20261107-av-authored120-native-v1'
+I = R / 'analysis/fresh-purpose-20261107-authored120-generation-inputs-v1'
+O = R / 'analysis/fresh-purpose-20261107-av-authored48-execution-plan-v1'
+P = B / 'docs/experiments/records/2026-11-07-authored48-executor-plan'
+PY = Path('/mnt/nvme/kairyu/dev-logs/wsp/venv-scicode/bin/python')
+SOCKET = Path('/var/run/docker.sock')
+IMAGE = 'sha256:c4ab50223f03fca17bf871e4d05f77001e76525a1c574b6c6ee7024db06cfdc2'
+assert O.is_dir() and not (O/'plan.json').exists() and not P.exists()
+start = time.monotonic()
+sha = lambda p: hashlib.sha256(p.read_bytes()).hexdigest()
+save = lambda p, x: p.write_text(json.dumps(x, ensure_ascii=False, indent=2, allow_nan=False)+'\n')
+fingerprint = lambda p: {k:getattr(p.stat(),'st_'+k) for k in ('dev','ino','size','mtime_ns','ctime_ns')}
+def docker(args):
+    return subprocess.check_output(['docker','--host','unix://'+str(SOCKET),*args],text=True)
+info = json.loads(docker(['info','--format','{{json .}}']))
+assert info['ID']=='3e518d2b-6972-43f8-b325-f7f33697a2d2' and info['DockerRootDir']=='/mnt/nvme/docker'
+image = json.loads(docker(['image','inspect',IMAGE]))[0]
+assert image['Id']==IMAGE and image['Config']['User']=='1003:1003'
+assert stat.S_ISSOCK(SOCKET.stat().st_mode)
+runtime = {'socket':str(SOCKET),'socket_stat':fingerprint(SOCKET),'daemon_id':info['ID'],'docker_root_dir':info['DockerRootDir'],'driver':info['Driver'],'default_runtime':info['DefaultRuntime'],'server_version':info['ServerVersion'],'image_id':image['Id'],'image_size_bytes':image['Size'],'image_user':image['Config']['User'],'image_entrypoint':image['Config']['Entrypoint'],'effective_entrypoint':'python3','image_architecture':image['Architecture'],'image_os':image['Os'],'container_created':False}
+save(O/'docker-readonly-evidence.json',runtime)
+done = N/'owner/owner-complete.json'
+completion = json.loads(done.read_text())
+assert completion['cases_received']==120 and completion['errors']==120
+validation = json.loads((I/'validation.json').read_text())
+source_paths = [B/'scripts/experiments/gemma4-purpose'/n for n in ['science_sandbox.py','science_cases.py','advanced_science_cases.py','library_train_cases.py']]
+pins = {str(p):sha(p) for p in source_paths}
+D = source_paths[0].parent
+sys.path.insert(0,str(D))
+import science_sandbox
+runtime_adapter = science_sandbox.Docker(SOCKET,info['ID'],IMAGE,seconds=15,memory_mib=512,cpus=1)
+worker_args = runtime_adapter.arguments('PREVIEW_ONLY_NO_CONTAINER_CREATED','PREVIEW_ONLY')
+worker_digest = hashlib.sha256(science_sandbox.WORKER.encode()).hexdigest()
+assert not any(x in worker_args for x in ['-v','--volume','--mount','--gpus','--privileged'])
+redacted_worker_args = [('<WORKER sha256='+worker_digest+'>') if x==science_sandbox.WORKER else x for x in worker_args]
+batches = []
+preview_results = []
+env = os.environ.copy()
+env.update(PYTHONDONTWRITEBYTECODE='1',OMP_NUM_THREADS='1',OPENBLAS_NUM_THREADS='1',MKL_NUM_THREADS='1',CUDA_VISIBLE_DEVICES='')
+for index,name in enumerate(['basic','advanced-v2','library-train-v1']):
+    partition = next(x for x in validation['partitions'] if x['partition']==name)
+    cases = I/partition['file']
+    response = N/'generations'/f'{index:02d}-{name}'/'train-responses.json'
+    receipt = response.parent/'receipt.json'
+    rd = json.loads(receipt.read_text())
+    assert rd['status']=='completed' and rd['errors']==16
+    raw = response.read_bytes()
+    data = json.loads(raw)
+    assert data['schema_version']==1 and data['split']=='train' and data['cases_sha256']==sha(cases)==partition['sha256']
+    rows = data['responses']
+    ids = [x['id'] for x in rows]
+    assert len(ids)==len(set(ids))==16 and set(ids)==set(partition['ids'])
+    assert data['generation']['reasoning_saved'] is False
+    usable = [x for x in rows if isinstance(x.get('public_answer'),str) and not x.get('error') and not x.get('error_type')]
+    errors = collections.Counter(x.get('error_type') for x in rows)
+    assert not usable and errors=={'HTTPError':16}
+    output = O/'execution-v1'/name
+    preview_output = O/'cpu-preview-v1'/name
+    common = [str(PY),str(source_paths[0]),'--cases',str(cases),'--catalog',name,'--responses',str(response),'--docker-socket',str(SOCKET),'--daemon-id',info['ID'],'--image',IMAGE,'--seed','20261107','--trials','8','--seconds','15','--memory-mib','512','--cpus','1']
+    preview_command = common+['--output',str(preview_output)]
+    began = time.monotonic()
+    result = subprocess.run(preview_command,cwd=B,env=env,capture_output=True,text=True,timeout=30)
+    (O/f'preview-{index}.stdout.txt').write_text(result.stdout)
+    (O/f'preview-{index}.stderr.txt').write_text(result.stderr)
+    assert result.returncode==0
+    report = json.loads((preview_output/'report.json').read_text())
+    assert report['status']=='preview' and report['expected_cases']==report['responses_received']==16 and not report['results']
+    assert response.read_bytes()==raw and rd==json.loads(receipt.read_text())
+    batch = {'catalog':name,'cases':str(cases),'cases_sha256':sha(cases),'responses':str(response),'responses_sha256':sha(response),'responses_stat':fingerprint(response),'generation_receipt':str(receipt),'generation_receipt_sha256':sha(receipt),'expected_ids':partition['ids'],'expected_cases':16,'public_answers':len(usable),'generation_error_counts':dict(errors),'execution_eligible':False,'ineligibility_reason':'completed generation v1 has no public answers; do not launch fixtures for missing responses','output':str(output),'command_without_run':common+['--output',str(output)],'preview_command':preview_command,'preview_report':str(preview_output/'report.json'),'preview_report_sha256':sha(preview_output/'report.json')}
+    batches.append(batch)
+    preview_results.append({'catalog':name,'returncode':result.returncode,'seconds':time.monotonic()-began,'status':report['status'],'expected_cases':16,'response_rows':16,'public_answers':0,'fixture_executions':0})
+assert pins=={p:sha(Path(p)) for p in pins}
+assert sha(I/'validation.json')=='4adfa914b72b98b2c52a8788b597d8a30c5b20c1b43b05b8b5a39180b3d09a12'
+plan = {'schema_version':1,'created_utc':datetime.datetime.now(datetime.timezone.utc).isoformat(),'status':'frozen_preview_only_no_public_answers','approved_for_execution':False,'authorization':None,'scope':'known authored calibration; no WSP score or unseen-performance claim','host_python':str(PY),'host_python_environment_receipt':str(I/'cpu-environment-check-v1/host-science-python.json'),'host_python_environment_receipt_sha256':sha(I/'cpu-environment-check-v1/host-science-python.json'),'generation_completion':str(done),'generation_completion_sha256':sha(done),'generation_cases':120,'generation_errors':120,'generation_public_answers':0,'case_partition_validation':str(I/'validation.json'),'case_partition_validation_sha256':sha(I/'validation.json'),'source_sha256':pins,'source_continuity':True,'docker':runtime,'sandbox_worker_sha256':worker_digest,'sandbox_argument_template':redacted_worker_args,'limits':{'trials':8,'seed':20261107,'seconds_per_case':15,'memory_mib':512,'cpus':1,'network':'none','user':'1003:1003','cap_drop':'ALL','security_opt':'no-new-privileges','read_only':True,'runtime':'runc','host_mounts':[],'gpus':False,'image_pull':'never','sequential_catalogs':True},'batches':batches,'denominators':{'generation':120,'existing_catalog_cases':48,'outside_catalog_unscored':72,'planned_trials_if_all48_have_usable_answers':384,'known_contract_issue_stratum':3,'other_catalog_stratum':45},'contract_issue_ids':['science-cumulative-trapezoid','science-advanced-reset-running-stats','science-advanced-capped-reservoir-chain'],'reporting_rules':['Retain all48 raw statuses, failed tests, unknowns, exceptions and missing answers; do not drop the three contract-issue cases.','Report the 3 known-contract-issue and 45 other catalog strata separately in addition to the full48 raw denominator.','Keep all72 outside catalogs unscored/unknown; do not imply48/120 is a capability score.','Completed HTTP errors are generation failures, not executable-answer failures. No fixture call is useful for these zero-answer files.','No cases_sha256 rewriting, no selected response extraction, no automatic retry.'],'execution_preconditions':['Root explicit execution instruction is required after completed full120 generation.','These v1 response files are currently ineligible because all public answers are missing.','Any explicitly authorized replacement generation requires a new plan with new complete response/receipt hashes; preserve this v1 plan and all120 failures.','Recheck exact source/case/response hashes, socket continuity, daemon ID, NVMe DockerRootDir, and local exact image before any future fixture run.'],'preview_results':preview_results,'model_calls':0,'fixture_executions':0,'containers_created':0,'service_or_lock_changes':0,'operation_sha256':sha(O/'operation.py.txt'),'elapsed_seconds':time.monotonic()-start}
+save(O/'plan.json',plan)
+P.mkdir()
+for path in O.rglob('*'):
+    if path.is_file():
+        target=P/path.relative_to(O);target.parent.mkdir(parents=True,exist_ok=True);shutil.copy2(path,target)
+for base in [O,P]:
+    files=sorted(p for p in base.rglob('*') if p.is_file() and p.name!='SHA256SUMS')
+    (base/'SHA256SUMS').write_text(''.join(f'{sha(p)}  {p.relative_to(base)}\n' for p in files))
+print(json.dumps({'output':str(O),'repo_evidence':str(P.relative_to(B)),'plan_sha256':sha(O/'plan.json'),'docker_evidence_sha256':sha(O/'docker-readonly-evidence.json'),'preview_returncodes':[x['returncode'] for x in preview_results],'public_answers':0,'fixture_executions':0,'elapsed_seconds':plan['elapsed_seconds']}))

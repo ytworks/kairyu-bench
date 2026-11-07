@@ -1,0 +1,49 @@
+{
+  "status": "prepared_only_no_patch",
+  "created_epoch": 1794045938.1874647,
+  "current_pr": {
+    "number": 33,
+    "html_url": "https://github.com/ytworks/kairyu-bench/pull/33",
+    "title": "Add WSP weight editing, observations, and experiment recipes",
+    "updated_at": "2026-11-07T09:23:23Z",
+    "state": "open",
+    "head_sha": "816d67e5fb45e1e5dc0b6a6ed4044a32be777cd4",
+    "head_ref": "codex/weight-observation-tools",
+    "fetched_epoch": 1794045742.5689278,
+    "body_sha256": "696f6188ccfe324e6645c521112ea1a0073f616db1c6f82be58ef0a5af1e9d3b"
+  },
+  "v2_body_sha256": "acfea78fba5ba2795c146def16a996a2eefdca04b0a2546b5f1b2421b44882ad",
+  "body_sha256": "0742b416bdbdebfba1f9ec65b7300b009feb2cedc3c7cbb066c9a8d398c32b75",
+  "update_sha256": "f9fa27b3f76fcf00882d135330fa5c590e885db5bab86fd8afbd2d7d5284c5f8",
+  "source_pins": {
+    "docs/experiments/2026-11-07-f02-payload-release-recipe.md": "c79c1a4858cbf431449fd2ac7c58f4b7161de1342fb79c69ae6ffdf03b2038ea",
+    "docs/experiments/2026-11-07-f03-proposal-and-opus-review.md": "45733e5cb7b161c8057596def5433ae21370864ed9a82801b80a921c41a18a85",
+    "docs/experiments/2026-11-07-f03-native-spec-audit.md": "364c9c88b8cc60f87f18a232d3f2160670a622f8ca724b5940c6c071de2ac669",
+    "docs/experiments/2026-11-07-f03-runtime-source-audit.md": "fc9a3575edb5f3bf994a4daccb6ea95e583c0c9bf4c33c37b0de2a5a18fdaf0c",
+    "docs/experiments/2026-11-07-f03-materialization.md": "5f87618cf6ab7d1f7fe079acae2f789e1cdf9e45d031d23956a62c4eee09eea1",
+    "docs/experiments/2026-11-07-cpu-validation-r8.md": "de0d242b7e79e8a65b17c94c67f649fd852beee82405c1784b94c60d2fded7a2",
+    "docs/experiments/records/2026-11-07-f03-materialization/summary.json": "f40bbec0be82b64e954e894cd98e3344237f2038a3307c0ec464b80282ece6eb",
+    "docs/experiments/records/2026-11-07-f03-proposal-and-review/opus55-review-v1/receipt.json": "8fb53a59888143228426b23dedcb6b17f8d7392affaeae90f5bef7a3626aac58",
+    "docs/experiments/records/2026-11-07-cpu-validation-r8/summary.json": "cedd5b890741e4a0d46607f03fe84a6968aed821dc6303495d5d3dcdb0ebf4a1",
+    "docs/experiments/records/2026-11-07-f02-payload-release-recipe/root-apply-v1/closure.json": "ff283f8e1cefe1ac1b5b58dde53b19090e895aa1c3e8b17a1217fa7c08e7e622",
+    "scripts/experiments/gemma4-purpose/README.md": "ef701a8ee32c1d3bc1fe888a5cc356c5ce16f1c7ffde1e087ab9c1b741feb24e",
+    "docs/wsp-tool-inventory.md": "dc72209b1c1364a61b53c80383cc05826c61e59b5b94ecbf044a87bb0a81f0b2"
+  },
+  "changes": [
+    "F02 private payload release closure replaces stale remains-present statement",
+    "F03 fixed proposal/actual Opus review/post-rounding and runtime limits/full9 verification",
+    "latest user instruction cancels old forward sequence before run; candidate-only12, existing AV reuse, KL unknown",
+    "r8 exact coverage plus separate later focused validations; no new-head CI claim",
+    "official WSP values and incomplete final goals preserved"
+  ],
+  "old_links_preserved": true,
+  "body_update_exact_match": true,
+  "patch_calls": 0,
+  "git_commit_or_push": 0,
+  "model_service_gpu_calls": 0,
+  "limitations": [
+    "PR body must be re-fetched and compared against pinned SHA before PATCH",
+    "Candidate-only execution plan/tool adaptation is not executed by this body preparation",
+    "Earlier Opus review describes its original proposal context, not the later revised execution sequence"
+  ]
+}

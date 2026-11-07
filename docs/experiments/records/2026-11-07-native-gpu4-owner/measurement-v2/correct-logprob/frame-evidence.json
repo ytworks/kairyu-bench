@@ -1,0 +1,131 @@
+{
+  "schema_version": 2,
+  "frame_protocol": "gemma4-public-answer-v2-forced-empty-thought",
+  "template_sha256": "ae53464bf3be25802b3a5b37def7fd89667067d7577049b3b2d74c4d8de4c6d4",
+  "enable_thinking": true,
+  "forced_empty_thought": true,
+  "public_boundary": "<|channel>thought\n<channel|>",
+  "scope": "official ON generation prefix plus explicit OFF-template empty-thought boundary; only public answer tokens scored, closing-turn tokens excluded; no thought read, generated, or scored; not free-thinking ON generation",
+  "frames": {
+    "A": [
+      [
+        {
+          "id": "behavior-A1",
+          "prefix_sha256": "03fe5b76f8a1b65795d1cec9914c4653163abe315afa3a8c9ce82d4c39a9ce25",
+          "prefix_tokens": 118,
+          "correct_tokens": 90,
+          "foil_tokens": 84
+        }
+      ],
+      [
+        {
+          "id": "behavior-A2",
+          "prefix_sha256": "695ead8036bddb4bf0309fb7422995e2e41a4d7cf94a34daca5becab776344f7",
+          "prefix_tokens": 112,
+          "correct_tokens": 69,
+          "foil_tokens": 69
+        }
+      ]
+    ],
+    "B": [
+      [
+        {
+          "id": "behavior-B1",
+          "prefix_sha256": "1acdfe7687c4327b6ff1739905a177f4e74778c76bf19dc68a02a6e952d1035c",
+          "prefix_tokens": 110,
+          "correct_tokens": 89,
+          "foil_tokens": 83
+        }
+      ],
+      [
+        {
+          "id": "behavior-B2",
+          "prefix_sha256": "51a45f7220326b158ae62e0f25ea7c635ca0c59da34fdeb40f0080b2596ce5be",
+          "prefix_tokens": 121,
+          "correct_tokens": 121,
+          "foil_tokens": 108
+        }
+      ]
+    ],
+    "C": [
+      [
+        {
+          "id": "behavior-C1",
+          "prefix_sha256": "16920b4f8bde37f9fdb3aa7992472243e5cdd5585c946798715922028550a31e",
+          "prefix_tokens": 113,
+          "correct_tokens": 42,
+          "foil_tokens": 40
+        }
+      ],
+      [
+        {
+          "id": "behavior-C2",
+          "prefix_sha256": "33628b1a4cb9a3ea82d59db0da783c09c1b581180dde201563b7cb33a87dd9ef",
+          "prefix_tokens": 124,
+          "correct_tokens": 73,
+          "foil_tokens": 96
+        }
+      ]
+    ],
+    "D": [
+      [
+        {
+          "id": "behavior-D1",
+          "prefix_sha256": "3da028f2fb63d94c35a9ded28677aebbfa71b1efd04992b717c6928ce6df3d51",
+          "prefix_tokens": 113,
+          "correct_tokens": 66,
+          "foil_tokens": 66
+        }
+      ],
+      [
+        {
+          "id": "behavior-D2",
+          "prefix_sha256": "95ff961cacda189ebee5dd7de2cf7de28197af430d6ec7820cd4889c158982a6",
+          "prefix_tokens": 121,
+          "correct_tokens": 76,
+          "foil_tokens": 79
+        }
+      ]
+    ],
+    "E": [
+      [
+        {
+          "id": "behavior-E1",
+          "prefix_sha256": "42c1081944c1a661373c6019d97c77dc9ef1fc96c5a6051a025e19c95d664133",
+          "prefix_tokens": 125,
+          "correct_tokens": 133,
+          "foil_tokens": 165
+        }
+      ],
+      [
+        {
+          "id": "behavior-E2",
+          "prefix_sha256": "61bc83f31b2773ec6ac9b7f255036397e4fcd06de094c82d7a035a08d367faac",
+          "prefix_tokens": 111,
+          "correct_tokens": 43,
+          "foil_tokens": 43
+        }
+      ]
+    ],
+    "F": [
+      [
+        {
+          "id": "behavior-F1",
+          "prefix_sha256": "31e770af09a7f4dea71f3a1861f5b4b4eaeac05556bbf6cdc53a3f9ca80d5a31",
+          "prefix_tokens": 92,
+          "correct_tokens": 44,
+          "foil_tokens": 49
+        }
+      ],
+      [
+        {
+          "id": "behavior-F2",
+          "prefix_sha256": "b21a5d25cf159e4acc5811cb47d044ea08663fe1f41f177f82e2d725b767895a",
+          "prefix_tokens": 103,
+          "correct_tokens": 45,
+          "foil_tokens": 49
+        }
+      ]
+    ]
+  }
+}

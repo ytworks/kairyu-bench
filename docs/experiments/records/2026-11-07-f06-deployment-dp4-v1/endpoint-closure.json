@@ -1,0 +1,110 @@
+{
+  "status": "all_four_F06_and_gateway_verified",
+  "gateway": {
+    "cid": "88943a0985ba97dfb17be6b5fb54040eba2570b70ce05126bd410162d3658ffb",
+    "endpoint": "http://172.26.0.9:8000/v1",
+    "model_ids": [
+      "gemma-4-31b",
+      "embeddinggemma-2"
+    ],
+    "healthy": true,
+    "unchanged_protected_service": true
+  },
+  "replicas": {
+    "gemma-0": {
+      "cid": "1ffc862fe747b8f4e6134c72fb7bb322cd6acd7e3fdd012cc1d9614d09932273",
+      "endpoint": "http://172.26.0.8:8000/v1",
+      "models": [
+        "gemma-4-31b"
+      ],
+      "tree": "0fc0ef29346c4d8a06bea8570dee96d8e0ba7038fee0d5aded8db57852474ec5",
+      "checkpoint_mount": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/checkpoints/fresh-lora-mbpp-f06-v1/checkpoint",
+      "checkpoint_readonly": true,
+      "runtime_preserved": true,
+      "mtp_tokens": 4,
+      "tp_size": 2,
+      "native_runtime_flags_preserved": true,
+      "receipt_sha256": "e89a07302ee935c6e1600439ca751b96aef4fac54b3f352938fc2ad8eda1658c",
+      "seconds": 122.91918730735779
+    },
+    "gemma-1": {
+      "cid": "ee04769375d9e78370d8d7372ad3c5de8223e50ce3a4a233ae8adabdc1bff897",
+      "endpoint": "http://172.26.0.6:8000/v1",
+      "models": [
+        "gemma-4-31b"
+      ],
+      "tree": "0fc0ef29346c4d8a06bea8570dee96d8e0ba7038fee0d5aded8db57852474ec5",
+      "checkpoint_mount": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/checkpoints/fresh-lora-mbpp-f06-v1/checkpoint",
+      "checkpoint_readonly": true,
+      "runtime_preserved": true,
+      "mtp_tokens": 4,
+      "tp_size": 2,
+      "native_runtime_flags_preserved": true,
+      "receipt_sha256": "2382f3b52ed7ec4183c2c51f05a8113d73488638e6d34076e13dc2faccfba40d",
+      "seconds": 121.98058581352234
+    },
+    "gemma-2": {
+      "cid": "48551f7b49ceb64b921ffc986de01b04cf1a53386173a1d15ad6af87c50e22ab",
+      "endpoint": "http://172.26.0.5:8000/v1",
+      "models": [
+        "gemma-4-31b"
+      ],
+      "tree": "0fc0ef29346c4d8a06bea8570dee96d8e0ba7038fee0d5aded8db57852474ec5",
+      "checkpoint_mount": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/checkpoints/fresh-lora-mbpp-f06-v1/checkpoint",
+      "checkpoint_readonly": true,
+      "runtime_preserved": true,
+      "mtp_tokens": 4,
+      "tp_size": 2,
+      "native_runtime_flags_preserved": true,
+      "receipt_sha256": "825cda94cea34a297b4c2cb5d3bcd94d8d9a83c1c4b55260661f6e9af56deed2",
+      "seconds": 119.94086503982544
+    },
+    "gemma-3": {
+      "cid": "657399f41b7c641b860a1c406123be1e75960118d6044d2c0aed367859c05461",
+      "endpoint": "http://172.26.0.4:8000/v1",
+      "models": [
+        "gemma-4-31b"
+      ],
+      "tree": "0fc0ef29346c4d8a06bea8570dee96d8e0ba7038fee0d5aded8db57852474ec5",
+      "checkpoint_mount": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/checkpoints/fresh-lora-mbpp-f06-v1/checkpoint",
+      "checkpoint_readonly": true,
+      "runtime_preserved": true,
+      "mtp_tokens": 4,
+      "tp_size": 2,
+      "native_runtime_flags_preserved": true,
+      "receipt_sha256": "8da4816cc175b4437822893f8d3977e17c5f83755001298174c769d51ffe9b24",
+      "seconds": 120.97518754005432
+    }
+  },
+  "logprob_checks": {
+    "gemma-0": {
+      "http_success": true,
+      "model": "gemma-4-31b",
+      "prompt_logprob_positions": 2
+    },
+    "gemma-1": {
+      "http_success": true,
+      "model": "gemma-4-31b",
+      "prompt_logprob_positions": 2
+    },
+    "gemma-2": {
+      "http_success": true,
+      "model": "gemma-4-31b",
+      "prompt_logprob_positions": 2
+    },
+    "gemma-3": {
+      "http_success": true,
+      "model": "gemma-4-31b",
+      "prompt_logprob_positions": 2
+    }
+  },
+  "chat_check": true,
+  "generation_requests": 5,
+  "official_evaluation_requests": 0,
+  "all_four_idle": true,
+  "protected_count": 23,
+  "protected_unchanged": true,
+  "closure_sha256": "102d743fbc5ff4c190be6db13c89f076d367f832e05a490eeacd1241351e8098",
+  "served_record_sha256": "2f23d9975c3633cb1e1d0d2cc17e67ba63163a04df60c2ea6997822758797f09",
+  "created_epoch": 1794059853.9728072
+}

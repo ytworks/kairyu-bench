@@ -1,0 +1,151 @@
+{
+  "schema_version": 1,
+  "split": "train",
+  "cases_sha256": "b42990b0caac24ccc7843e40718c0c5e7ad61dd5baa131ed6852c126bf37f66d",
+  "generation": {
+    "model_id": "gemma-4-31b",
+    "checkpoint_sha256": "5d056eb03f954db80313a85167153c875fe5e436e4f97c281a3f55202d9b3eaf",
+    "frame": "live-server-default-public-answer",
+    "enable_thinking": null,
+    "thinking_control": "server-default",
+    "reasoning_saved": false,
+    "sampling": "server_official_generation_config",
+    "temperature": null,
+    "max_tokens": 32768,
+    "seed": 0
+  },
+  "responses": [
+    {
+      "id": "behavior-D2",
+      "public_answer": "```python\nimport numpy as np\n\ndef solve(matrices, offsets, x):\n    state = np.array(x, dtype=np.float64)\n    for m, o in zip(matrices, offsets):\n        state = m @ state + o\n    return state\n```",
+      "request_id": "chatcmpl-134e2a6b105e4bc4",
+      "finish_reason": "stop",
+      "usage": {
+        "input_tokens": 117,
+        "output_tokens": 631
+      },
+      "seconds": 5.4753332160180435
+    },
+    {
+      "id": "behavior-D1",
+      "public_answer": "```python\nimport numpy as np\n\ndef solve(maps, start):\n    maps = np.asanyarray(maps)\n    T, n = maps.shape\n    results = np.empty(T, dtype=np.float64)\n    current_state = start\n    for t in range(T):\n        current_state = maps[t, current_state]\n        results[t] = current_state\n    return results\n```",
+      "request_id": "chatcmpl-af0bab6e98d54311",
+      "finish_reason": "stop",
+      "usage": {
+        "input_tokens": 109,
+        "output_tokens": 699
+      },
+      "seconds": 5.91647987102624
+    },
+    {
+      "id": "behavior-E1",
+      "public_answer": "```python\nimport numpy as np\n\ndef solve(grid, start, moves):\n    grid = np.asanyarray(grid)\n    H, W = grid.shape\n    r, c = start\n    \n    # Use a temporary sum variable to track values visited\n    total_sum = grid[r, c]\n    \n    # Map move integers to (delta_row, delta_col)\n    # 0: N (-1, 0), 1: E (0, 1), 2: S (1, 0), 3: W (0, -1)\n    dr = [-1, 0, 1, 0]\n    dc = [0, 1, 0, -1]\n    \n    for move in moves:\n        r = (r + dr[move]) % H\n        c = (c + dc[move]) % W\n        total_sum += grid[r, c]\n        \n    return np.array([total_sum], dtype=np.float64)\n```",
+      "request_id": "chatcmpl-f276c8434cc64520",
+      "finish_reason": "stop",
+      "usage": {
+        "input_tokens": 121,
+        "output_tokens": 989
+      },
+      "seconds": 8.047748113051057
+    },
+    {
+      "id": "behavior-C2",
+      "public_answer": "```python\nimport numpy as np\n\ndef rotate_left(xs, k):\n    return np.roll(np.asanyarray(xs), -k).astype(np.float64)\n```",
+      "request_id": "chatcmpl-4ceeac5dfba040c9",
+      "finish_reason": "stop",
+      "usage": {
+        "input_tokens": 120,
+        "output_tokens": 1122
+      },
+      "seconds": 9.092020276933908
+    },
+    {
+      "id": "behavior-A2",
+      "public_answer": "```python\nimport numpy as np\n\ndef solve(A, b, c):\n    A_f = np.asarray(A, dtype=np.float64)\n    b_f = np.asarray(b, dtype=np.float64)\n    c_f = np.asarray(c, dtype=np.float64)\n    \n    # Combine b and c into a single right-hand side matrix of shape (B, n, 2)\n    rhs = np.stack([b_f, c_f], axis=-1)\n    \n    # np.linalg.solve handles batched inputs A(B, n, n) and rhs(B, n, K)\n    # returning solutions X(B, n, K)\n    return np.linalg.solve(A_f, rhs)\n```",
+      "request_id": "chatcmpl-a503f5f1b9b84a17",
+      "finish_reason": "stop",
+      "usage": {
+        "input_tokens": 108,
+        "output_tokens": 1119
+      },
+      "seconds": 9.86415343300905
+    },
+    {
+      "id": "behavior-E2",
+      "public_answer": "```python\nimport numpy as np\n\ndef solve(points, height, width):\n    points = np.asarray(points)\n    n = points.shape[0]\n    if n == 0:\n        return np.empty((0, 2), dtype=np.float64)\n    \n    # Clockwise 90-degree rotation:\n    # new_row = old_col\n    # new_col = (height - 1) - old_row\n    new_points = np.empty((n, 2), dtype=np.float64)\n    new_points[:, 0] = points[:, 1]\n    new_points[:, 1] = (height - 1) - points[:, 0]\n    \n    return new_points\n```",
+      "request_id": "chatcmpl-745c8707dfe1417e",
+      "finish_reason": "stop",
+      "usage": {
+        "input_tokens": 107,
+        "output_tokens": 1311
+      },
+      "seconds": 10.08235736307688
+    },
+    {
+      "id": "behavior-F2",
+      "public_answer": "```python\nimport numpy as np\n\ndef solve(values, k):\n    # Convert input to numpy array if it isn't one, to ensure slicing behavior\n    # and avoid mutation of original list/array.\n    arr = np.asanyarray(values)\n    \n    # Select every kth element starting from the first (index 0)\n    # indices: 0, k, 2k, ...\n    selected_elements = arr[0::k]\n    \n    # Calculate sum; np.sum of empty array is 0\n    total_sum = np.sum(selected_elements)\n    \n    # Return as float64 ndarray with shape (1,)\n    return np.array([total_sum], dtype=np.float64)\n```",
+      "request_id": "chatcmpl-b37b294c0cec48b1",
+      "finish_reason": "stop",
+      "usage": {
+        "input_tokens": 99,
+        "output_tokens": 1209
+      },
+      "seconds": 10.256028582924046
+    },
+    {
+      "id": "behavior-C1",
+      "public_answer": "```python\nimport numpy as np\n\ndef positive_mass(xs):\n    xs_arr = np.asanyarray(xs)\n    pos_sum = np.sum(xs_arr[xs_arr > 0], dtype=np.float64)\n    return np.array([pos_sum], dtype=np.float64)\n```",
+      "request_id": "chatcmpl-5ae09fd2048b4c09",
+      "finish_reason": "stop",
+      "usage": {
+        "input_tokens": 109,
+        "output_tokens": 1256
+      },
+      "seconds": 10.81804951094091
+    },
+    {
+      "id": "behavior-A1",
+      "public_answer": "```python\nimport numpy as np\n\ndef solve(A, b, s):\n    A_arr = np.asarray(A, dtype=np.float64)\n    b_arr = np.asarray(b, dtype=np.float64)\n    s_arr = np.asarray(s, dtype=np.float64)\n    \n    # Compute rhs = s[i] * b[i] for all i\n    # s_arr[:, np.newaxis] shape: (B, 1), b_arr shape: (B, n) -> rhs shape: (B, n)\n    rhs = s_arr[:, np.newaxis] * b_arr\n    \n    # np.linalg.solve broadcasts over the first dimension B\n    return np.linalg.solve(A_arr, rhs)\n```",
+      "request_id": "chatcmpl-20304846662a4b4d",
+      "finish_reason": "stop",
+      "usage": {
+        "input_tokens": 114,
+        "output_tokens": 1424
+      },
+      "seconds": 12.641205227002501
+    },
+    {
+      "id": "behavior-F1",
+      "public_answer": "```python\nimport numpy as np\n\ndef solve(xs):\n    xs_arr = np.asanyarray(xs)\n    result = np.sum(xs_arr[0::2]) - np.sum(xs_arr[1::2])\n    return np.array([result], dtype=np.float64)\n```",
+      "request_id": "chatcmpl-fd989bee85504062",
+      "finish_reason": "stop",
+      "usage": {
+        "input_tokens": 88,
+        "output_tokens": 1661
+      },
+      "seconds": 13.936542310984805
+    },
+    {
+      "id": "behavior-B1",
+      "public_answer": "```python\nimport numpy as np\nimport sympy as sp\n\ndef solve(x, a):\n    x_arr = np.asanyarray(x)\n    t = sp.symbols('t')\n    f = a * t**2 + t\n    df = sp.diff(f, t)\n    func = sp.lambdify(t, df, 'numpy')\n    \n    result = func(x_arr)\n    return np.broadcast_to(result, x_arr.shape).astype(np.float64)\n```",
+      "request_id": "chatcmpl-6e28c654c0eb487e",
+      "finish_reason": "stop",
+      "usage": {
+        "input_tokens": 106,
+        "output_tokens": 1769
+      },
+      "seconds": 15.351406575995497
+    },
+    {
+      "id": "behavior-B2",
+      "public_answer": "```python\nimport numpy as np\nimport sympy as sp\n\ndef solve(x, y, a):\n    x_arr = np.asarray(x, dtype=np.float64)\n    y_arr = np.asarray(y, dtype=np.float64)\n    \n    sx, sy, sa = sp.symbols('x y a')\n    f = sa * sx * sy + sy**2\n    \n    dfdx_expr = sp.diff(f, sx)\n    dfdy_expr = sp.diff(f, sy)\n    \n    fx = sp.lambdify((sx, sy, sa), dfdx_expr, 'numpy')\n    fy = sp.lambdify((sx, sy, sa), dfdy_expr, 'numpy')\n    \n    vx = fx(x_arr, y_arr, a)\n    vy = fy(x_arr, y_arr, a)\n    \n    if x_arr.size == 0:\n        return np.empty((0, 2), dtype=np.float64)\n    \n    # Convert results to arrays to ensure stacking works regardless of lambdify return type\n    res_x = np.asarray(vx, dtype=np.float64)\n    res_y = np.asarray(vy, dtype=np.float64)\n    \n    return np.column_stack((res_x, res_y)).astype(np.float64)\n```",
+      "request_id": "chatcmpl-958eb635e7254874",
+      "finish_reason": "stop",
+      "usage": {
+        "input_tokens": 117,
+        "output_tokens": 1996
+      },
+      "seconds": 16.19538350997027
+    }
+  ]
+}

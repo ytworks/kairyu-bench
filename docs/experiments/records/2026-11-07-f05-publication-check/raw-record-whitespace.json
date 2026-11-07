@@ -1,0 +1,13 @@
+{
+  "epoch": 1794056590.00025,
+  "initial_git_cached_diff_check_exit": 2,
+  "scope": "raw immutable evidence only",
+  "files": [
+    "2026-11-07-f04-native19-gpu4-preparation/owner-and-test.diff",
+    "2026-11-07-f05-deployment-dp4-v1/final-launch.stdout",
+    "2026-11-07-f05-rejected-f04-restore-v1/final-launch.stdout"
+  ],
+  "cause": "literal diff-context blank lines and raw command stdout end-newlines",
+  "action": "Preserve byte/SHA evidence; check executable and prose diff excluding immutable records; no raw-data rewrite",
+  "runtime_or_model_failure": false
+}

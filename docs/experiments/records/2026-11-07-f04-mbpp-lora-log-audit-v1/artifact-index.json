@@ -1,0 +1,82 @@
+[
+  {
+    "file": "all204-coverage.json",
+    "source_path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f04-mbpp-lora-training-v1/log-audit-v1/all204-coverage.json",
+    "raw_sha256": "322e47751c0ee19f349372ce93767705b0a2463f337dc86f57455757fd4c88ef",
+    "stored_sha256": "322e47751c0ee19f349372ce93767705b0a2463f337dc86f57455757fd4c88ef",
+    "raw_bytes": 43049,
+    "gzip": false
+  },
+  {
+    "file": "all410-lifetime.json.gz",
+    "source_path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f04-mbpp-lora-training-v1/log-audit-v1/all410-lifetime.json",
+    "raw_sha256": "ec32e65b751b5726f1d400a4f54ed6c93864a9e446705ad968b5e60c14fff501",
+    "stored_sha256": "0989f86608525b3f1abba80b1201e6b9332f44d2d71fe6cc479aea3c5ebfdf9b",
+    "raw_bytes": 525108,
+    "gzip": true
+  },
+  {
+    "file": "all410-step1-4-64.json.gz",
+    "source_path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f04-mbpp-lora-training-v1/log-audit-v1/all410-step1-4-64.json",
+    "raw_sha256": "bbcaf43cbc965ff5222d3e3744cd8a394b806eccfaa63e1b199e76edc7db75b1",
+    "stored_sha256": "c0665a635088303923a513db461a5aa6db60928dbfbdaf6d59fcc4c34e8fd692",
+    "raw_bytes": 1636497,
+    "gzip": true
+  },
+  {
+    "file": "all52-repeated-case-CE.json",
+    "source_path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f04-mbpp-lora-training-v1/log-audit-v1/all52-repeated-case-CE.json",
+    "raw_sha256": "8805c4ddcf549916748b929547e7a85426ec4ef8f0eeb27ebb68e831ed1e537f",
+    "stored_sha256": "8805c4ddcf549916748b929547e7a85426ec4ef8f0eeb27ebb68e831ed1e537f",
+    "raw_bytes": 14290,
+    "gzip": false
+  },
+  {
+    "file": "all52-repeated-case-CE.tsv",
+    "source_path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f04-mbpp-lora-training-v1/log-audit-v1/all52-repeated-case-CE.tsv",
+    "raw_sha256": "377ec0ba61110a493dbbfc813802117ca961948f1e025171724530c4b136aede",
+    "stored_sha256": "377ec0ba61110a493dbbfc813802117ca961948f1e025171724530c4b136aede",
+    "raw_bytes": 4109,
+    "gzip": false
+  },
+  {
+    "file": "all64-step-summary.json",
+    "source_path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f04-mbpp-lora-training-v1/log-audit-v1/all64-step-summary.json",
+    "raw_sha256": "f54a6f9c33bc02ec8fcc1b93de963d1cafb3864f2f25af85d77c1e108e154f40",
+    "stored_sha256": "f54a6f9c33bc02ec8fcc1b93de963d1cafb3864f2f25af85d77c1e108e154f40",
+    "raw_bytes": 56192,
+    "gzip": false
+  },
+  {
+    "file": "factor-identities.json",
+    "source_path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f04-mbpp-lora-training-v1/log-audit-v1/factor-identities.json",
+    "raw_sha256": "4f60ffd5d2799312a35f900e4efe08622ca3846e9b44d4720085b6fb02f3915f",
+    "stored_sha256": "4f60ffd5d2799312a35f900e4efe08622ca3846e9b44d4720085b6fb02f3915f",
+    "raw_bytes": 1335,
+    "gzip": false
+  },
+  {
+    "file": "input-pins.json",
+    "source_path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f04-mbpp-lora-training-v1/log-audit-v1/input-pins.json",
+    "raw_sha256": "2a87392fe0504ec0ff4c8617e166070b9d2b87b32f7a9ce1c084bde5b9d3ac8b",
+    "stored_sha256": "2a87392fe0504ec0ff4c8617e166070b9d2b87b32f7a9ce1c084bde5b9d3ac8b",
+    "raw_bytes": 3153,
+    "gzip": false
+  },
+  {
+    "file": "summary.json",
+    "source_path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f04-mbpp-lora-training-v1/log-audit-v1/summary.json",
+    "raw_sha256": "11d584718b46174d1a38525249e914d75446a0efce4bd02c9d942a3e7d17ef1b",
+    "stored_sha256": "11d584718b46174d1a38525249e914d75446a0efce4bd02c9d942a3e7d17ef1b",
+    "raw_bytes": 4976,
+    "gzip": false
+  },
+  {
+    "file": "log-audit-package-source.py.txt",
+    "source_path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f04-mbpp-lora-training-v1/log-audit-package-source.py.txt",
+    "raw_sha256": "1707f74003c8685b7e04bd2461569a652bfaa3370564d0d5b1bbfa208e5ddc50",
+    "stored_sha256": "1707f74003c8685b7e04bd2461569a652bfaa3370564d0d5b1bbfa208e5ddc50",
+    "raw_bytes": 7049,
+    "gzip": false
+  }
+]

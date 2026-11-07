@@ -1,0 +1,40 @@
+{
+  "base": {
+    "report_source_prompt_tokens": 5335614,
+    "report_source_completion_tokens": 4094068,
+    "report_source_usage_scope": "Report has zero placeholders for agent/logprob sources; these are not complete total run token counts.",
+    "terminal_reported_episodes": 57,
+    "terminal_tool_calls": 166,
+    "terminal_input_tokens": 426433,
+    "terminal_output_tokens": 109919,
+    "swe_assistant_messages": 123,
+    "swe_announced_tool_calls": 123,
+    "swe_api_calls": 125,
+    "swe_persisted_input_tokens": 1902178,
+    "swe_persisted_output_tokens": 31789,
+    "swe_usage_incomplete_cases": [
+      "swe-bench-pro:instance_ansible__ansible-11c1777d56664b1acb56b387a1ad6aeadef1391d-v0f01c69f1e2528b935359cfe578530722bca2c59",
+      "swe-bench-pro:instance_internetarchive__openlibrary-431442c92887a3aece3f8aa771dd029738a80eb1-v76304ecdb3a5954fcf13feb710e8c40fcf24b73c"
+    ],
+    "swe_usage_scope": "Persisted assistant responses only; unrecorded model-stat calls not zero-filled."
+  },
+  "candidate": {
+    "report_source_prompt_tokens": 5304567,
+    "report_source_completion_tokens": 3999831,
+    "report_source_usage_scope": "Report has zero placeholders for agent/logprob sources; these are not complete total run token counts.",
+    "terminal_reported_episodes": 56,
+    "terminal_tool_calls": 140,
+    "terminal_input_tokens": 377228,
+    "terminal_output_tokens": 76168,
+    "swe_assistant_messages": 127,
+    "swe_announced_tool_calls": 127,
+    "swe_api_calls": 129,
+    "swe_persisted_input_tokens": 2023804,
+    "swe_persisted_output_tokens": 40130,
+    "swe_usage_incomplete_cases": [
+      "swe-bench-pro:instance_internetarchive__openlibrary-431442c92887a3aece3f8aa771dd029738a80eb1-v76304ecdb3a5954fcf13feb710e8c40fcf24b73c",
+      "swe-bench-pro:instance_qutebrowser__qutebrowser-ed19d7f58b2664bb310c7cb6b52c5b9a06ea60b2-v059c6fdc75567943479b23ebca7c07b5e9a7f34c"
+    ],
+    "swe_usage_scope": "Persisted assistant responses only; unrecorded model-stat calls not zero-filled."
+  }
+}

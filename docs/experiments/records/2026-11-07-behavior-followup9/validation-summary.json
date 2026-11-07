@@ -1,0 +1,105 @@
+{
+  "status": "completed",
+  "validation_passed": true,
+  "docker_calls": 18,
+  "model_calls": 0,
+  "elapsed_seconds": 10.988155364990234,
+  "started_epoch": 1794051738.7987063,
+  "ended_epoch": 1794051749.7868617,
+  "wsp_run": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/results/gemma4-fresh-f04-dev30-dp4-20261107-v1",
+  "wsp_state_at_start": "running",
+  "wsp_state_at_end": "running",
+  "protected_missing_after": [],
+  "transfer_generation_or_gradient_used": false,
+  "rows": [
+    {
+      "id": "behavior-G1",
+      "split": "train",
+      "correct_passed": 16,
+      "foil_passed": 13,
+      "fixture_count": 16,
+      "fixed_foil_witness": true,
+      "validation_passed": true
+    },
+    {
+      "id": "behavior-G2",
+      "split": "train",
+      "correct_passed": 16,
+      "foil_passed": 14,
+      "fixture_count": 16,
+      "fixed_foil_witness": true,
+      "validation_passed": true
+    },
+    {
+      "id": "behavior-G3",
+      "split": "transfer",
+      "correct_passed": 16,
+      "foil_passed": 6,
+      "fixture_count": 16,
+      "fixed_foil_witness": true,
+      "validation_passed": true
+    },
+    {
+      "id": "behavior-H1",
+      "split": "train",
+      "correct_passed": 16,
+      "foil_passed": 1,
+      "fixture_count": 16,
+      "fixed_foil_witness": true,
+      "validation_passed": true
+    },
+    {
+      "id": "behavior-H2",
+      "split": "train",
+      "correct_passed": 16,
+      "foil_passed": 2,
+      "fixture_count": 16,
+      "fixed_foil_witness": true,
+      "validation_passed": true
+    },
+    {
+      "id": "behavior-H3",
+      "split": "transfer",
+      "correct_passed": 16,
+      "foil_passed": 1,
+      "fixture_count": 16,
+      "fixed_foil_witness": true,
+      "validation_passed": true
+    },
+    {
+      "id": "behavior-I1",
+      "split": "train",
+      "correct_passed": 16,
+      "foil_passed": 14,
+      "fixture_count": 16,
+      "fixed_foil_witness": true,
+      "validation_passed": true
+    },
+    {
+      "id": "behavior-I2",
+      "split": "train",
+      "correct_passed": 16,
+      "foil_passed": 11,
+      "fixture_count": 16,
+      "fixed_foil_witness": true,
+      "validation_passed": true
+    },
+    {
+      "id": "behavior-I3",
+      "split": "transfer",
+      "correct_passed": 16,
+      "foil_passed": 10,
+      "fixture_count": 16,
+      "fixed_foil_witness": true,
+      "validation_passed": true
+    }
+  ],
+  "correct_fixture_passes": 144,
+  "foil_fixture_passes": 72,
+  "trials_total": 288,
+  "unknown": 0,
+  "raw_report_path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-behavior-followup9-v1/validation/report.json",
+  "raw_report_sha256": "d34b25271c862519518960abca3093e6dff17aef9e27c35824acc6e8eaa15b3f",
+  "command": "nice -n 19 /mnt/nvme/kairyu/dev-logs/wsp/venv-scicode/bin/python docs/experiments/records/2026-11-07-behavior-followup9/validate-authored-once.py.txt --run --wsp-run /mnt/nvme/kairyu/wsp/gemma4-coding-20261104/results/gemma4-fresh-f04-dev30-dp4-20261107-v1",
+  "execution_retry_count": 0
+}

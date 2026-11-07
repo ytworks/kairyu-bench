@@ -1,0 +1,63 @@
+"""One F04 repack/create/verify after explicit parent decision; no model call."""
+from pathlib import Path
+import fcntl, hashlib, json, os, shutil, subprocess, time
+R=Path('/mnt/nvme/kairyu/wsp/gemma4-coding-20261104')
+P=R/'analysis/fresh-purpose-20261107-f04-relative-v1/faststore-plan-v1'
+M=P/'materialization-v1'
+def sha(p): return hashlib.sha256(Path(p).read_bytes()).hexdigest()
+def read(p): return json.loads(Path(p).read_text())
+def save(name,v):
+    with (M/name).open('x') as f: json.dump(v,f,indent=2);f.write('\n')
+def main():
+    assert os.getuid()!=0
+    plan=read(P/'commands.json')
+    av=R/'results/gemma4-fresh-av-dev30-dp4-20261107-v1'
+    f03=R/'results/gemma4-fresh-f03-dev30-dp4-20261107-v1'
+    decision=read(P/'parent-decision.json')
+    assert decision['parent']=='AV' and decision['approved_for_materialization'] is True
+    reports={}
+    for key,p in [('AV',av),('F03',f03)]:
+        status=read(p/'run.json')['status']
+        assert status=='completed' if key=='AV' else status in ('completed','partial')
+        report=read(p/'report.json')
+        assert len(report['areas'])==14
+        if key=='AV': assert not report['unscored'] and not report['missing_areas']
+        else: assert sha(p/'report.json')==decision['f03_report_sha256'] and status==decision['f03_status']
+        reports[key]={'status':status,'code':report['areas']['code'],'overall':report['overall'],'report_sha256':sha(p/'report.json')}
+    if decision['f03_status']=='completed':
+        assert reports['F03']['code']<=reports['AV']['code'], 'Parent changed; do not create AV-derived F04'
+    else:
+        assert decision['reason']=='interrupted_after_1200_second_disconnect_not_ranked'
+    assert sha(R/'analysis/fresh-purpose-20261107-f04-relative-v1/proposal/fresh-native-relative-f04.json')=='52e293bdd36a4c09715c8c211e035562b1eeb26aabb6490e21d4b511f2a0987b'
+    env={**os.environ,**plan['environment_overrides']}
+    started=time.time()
+    with (R/'candidate-evaluation.lock').open('a') as lock:
+        fcntl.flock(lock,fcntl.LOCK_EX|fcntl.LOCK_NB)
+        M.mkdir()
+        save('start.json',{'pid':os.getpid(),'epoch':started,'source_sha256':sha(__file__),'commands_sha256':sha(P/'commands.json'),'parent_decision_sha256':sha(P/'parent-decision.json'),'parent':'AV','recorded_results':reports,'free_bytes':shutil.disk_usage(R).free,'reserve_bytes':5368709120,'model_calls':0})
+        try:
+            store=R/'checkpoints/native-faststore-av-v1/receipt.json'
+            manifest=R/'checkpoints/fresh-native-relative-f04-faststore-v1/manifest.json'
+            for phase in ['build_apply','create_preview','create_apply','verify']:
+                command=list(plan[phase])
+                replacements={}
+                if phase!='build_apply': replacements['<actual-successful-store-receipt-sha256>']=sha(store)
+                if phase=='verify': replacements['<actual-successful-candidate-manifest-sha256>']=sha(manifest)
+                command=[replacements.get(v,v) for v in command]
+                assert not any(v.startswith('<') for v in command)
+                save(phase+'-command.json',{'argv':command,'epoch':time.time()})
+                print(json.dumps({'phase':phase,'started_epoch':time.time()}),flush=True)
+                t=time.time()
+                with (M/(phase+'.stdout')).open('x') as out,(M/(phase+'.stderr')).open('x') as err:
+                    result=subprocess.run(command,env=env,stdout=out,stderr=err)
+                receipt={'phase':phase,'returncode':result.returncode,'seconds':time.time()-t,'free_bytes':shutil.disk_usage(R).free}
+                save(phase+'-execution.json',receipt);print(json.dumps(receipt),flush=True)
+                assert result.returncode==0, phase+' failed; retain artifacts and stop'
+            proof=read(manifest)
+            assert proof['changed_elements']==429 and proof['changed_tensors']==140
+            assert read(M/'verify.stdout')['verified'] is True
+            save('complete.json',{'status':'completed','epoch':time.time(),'seconds':time.time()-started,'manifest_sha256':sha(manifest),'store_receipt_sha256':sha(store),'checkpoint':proof['checkpoint_path'],'tree':proof['control_tree_sha256'],'changed_elements':proof['changed_elements'],'changed_tensors':proof['changed_tensors'],'free_bytes':shutil.disk_usage(R).free,'model_calls':0,'serving_changes':0})
+        except BaseException as error:
+            save('failure.json',{'error_type':type(error).__name__,'message':str(error),'epoch':time.time(),'seconds':time.time()-started,'automatic_retry':False})
+            raise
+if __name__=='__main__': main()

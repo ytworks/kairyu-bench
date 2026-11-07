@@ -1,0 +1,146 @@
+from pathlib import Path
+import hashlib,json,ast
+R=Path('/mnt/nvme/kairyu/wsp/gemma4-coding-20261104');B=R/'worktrees/kairyu-bench-weight-tools'
+V=R/'analysis/fresh-purpose-20261107-body-kl-implementation-v1';V.mkdir(exist_ok=False)
+p=B/'scripts/experiments/gemma4-purpose/train_lora.py';old=p.read_text();(V/'train_lora.before.py.txt').write_text(old)
+s=old.replace('import recipe_common as common','import recipe_common as common\nimport train_lora_body_kl as body_kl')
+anchor='def preflight(args):'
+new='''def teacher_identity(plan, base_identity):
+    pin = plan.get("teacher_checkpoint", plan["checkpoint"])
+    checkpoint = Checkpoint(pin["path"])
+    receipt = json.loads(check_pin(pin["attestation"]).read_text())
+    identity = receipt.get("checkpoint", receipt)
+    current = checkpoint.identity(hash_files=False)
+    if (identity.get("hash_files") is not True
+            or identity.get("identity_level") != "content_sha256"
+            or identity.get("sha256") != pin["tree_sha256"]
+            or len(current["files"]) != len(identity["files"])):
+        raise ValueError("complete explicit teacher attestation required")
+    for prior, actual in zip(identity["files"], current["files"], strict=True):
+        if not re.fullmatch("[0-9a-f]{64}", prior.get("sha256", "")) or any(
+            prior[key] != actual[key] for key in ("path", "size", "stat")
+        ):
+            raise ValueError("teacher full hash/stat continuity lost")
+    base_files = {row["path"]: row["sha256"] for row in base_identity["files"]}
+    teacher_files = {row["path"]: row["sha256"] for row in identity["files"]}
+    for name in ("config.json", "tokenizer.json", "tokenizer_config.json",
+                 "chat_template.jinja", "generation_config.json", "processor_config.json"):
+        if name not in base_files or base_files[name] != teacher_files.get(name):
+            raise ValueError("teacher/base tokenizer or configuration differs: " + name)
+    return checkpoint, identity, current
+
+
+def model_counters(output, forwards, attempts):
+    teacher = body_kl.counters(output)
+    return {**teacher, "student_model_forwards": forwards, "student_forward_attempts": attempts,
+            "model_forwards": forwards + teacher["teacher_model_forwards"],
+            "forward_attempts": attempts + teacher["teacher_forward_attempts"]}
+
+
+'''
+s=s.replace(anchor,new+anchor)
+s=s.replace('    plan = json.loads(plan_path.read_text())\n','    plan = json.loads(plan_path.read_text())\n    use_kl = body_kl.selected(plan)\n',1)
+s=s.replace('        Path(__file__),\n        Path(common.__file__),','        Path(__file__),\n        Path(body_kl.__file__),\n        Path(common.__file__),',1)
+s=s.replace('    states = {str(p.resolve()): common.input_state(p) for p in pinned}','    if use_kl and "teacher_checkpoint" in plan:\n        pinned.append(check_pin(plan["teacher_checkpoint"]["attestation"]))\n    states = {str(p.resolve()): common.input_state(p) for p in pinned}',1)
+s=s.replace('proof.get("frame_protocol") != FRAME_PROTOCOL','proof.get("frame_protocol") != (body_kl.FRAME_PROTOCOL if use_kl else FRAME_PROTOCOL)',1)
+s=s.replace('        or proof.get("ineligible_ids")','        or (use_kl and (proof.get("loss_protocol") != body_kl.PROTOCOL or proof.get("unsupported_ids")))\n        or proof.get("ineligible_ids")',1)
+s=s.replace('    common.assert_inputs(checkpoint, provenance)\n    return plan, checkpoint, rows, proof, mapping, provenance, identity','''    if use_kl:
+        teacher, teacher_full, teacher_current = teacher_identity(plan, identity)
+        provenance.update(teacher_checkpoint=teacher_current, teacher_full_identity=teacher_full)
+        common.assert_inputs(teacher, {**provenance, "checkpoint": teacher_current})
+    common.assert_inputs(checkpoint, provenance)
+    return plan, checkpoint, rows, proof, mapping, provenance, identity''',1)
+s=s.replace('        "claim": "training export only; saved BF16 merge and capability unmeasured",','''        "claim": "training export only; saved BF16 merge and capability unmeasured",
+        **({"loss_protocol": body_kl.PROTOCOL,
+            "teacher_checkpoint": plan.get("teacher_checkpoint", plan["checkpoint"])}
+           if body_kl.selected(plan) else {}),''',1)
+s=s.replace('    frames, actual_proof = prepare_training_frames(tokenizer, rows)','''    use_kl = body_kl.selected(plan)
+    frames, actual_proof = (body_kl.prepare_frames(tokenizer, rows, prepare_training_frames)
+                            if use_kl else prepare_training_frames(tokenizer, rows))''',1)
+oldload='    torch, _, model = common.load_model(args)\n    torch.backends.cuda.matmul.allow_tf32 = False'
+newload='''    teacher_cache = None
+    if use_kl:
+        teacher, _, teacher_current = teacher_identity(plan, identity)
+        teacher_provenance = {**provenance, "checkpoint": teacher_current}
+        teacher_metadata = {
+            "teacher_checkpoint": plan.get("teacher_checkpoint", plan["checkpoint"]),
+            "editing_base_checkpoint": plan["checkpoint"],
+            "frame_evidence_sha256": plan["frame_evidence"]["sha256"],
+            "training_ids": plan["data"]["ids"], "holdout_ids": [],
+            "loss_protocol": body_kl.PROTOCOL,
+        }
+        if teacher.path.resolve() != checkpoint.path.resolve():
+            args.checkpoint = teacher.path
+            torch, _, teacher_model = common.load_model(args)
+            torch.backends.cuda.matmul.allow_tf32 = False
+            teacher_model.eval().requires_grad_(False)
+            teacher_cache = body_kl.cache_teacher(
+                torch, teacher_model, frames, args.output / "teacher-cache", args.device,
+                deadline, teacher_metadata,
+                lambda: common.assert_inputs(teacher, teacher_provenance),
+            )
+            del teacher_model
+            import gc
+            gc.collect()
+            allocated = None
+            if args.device != "cpu":
+                torch.cuda.synchronize()
+                torch.cuda.empty_cache()
+                allocated = torch.cuda.memory_allocated()
+            write_new(args.output / "teacher-release.json", {
+                "separate_teacher": True, "allocated_bytes_after_release": allocated,
+                "base_load_started": False,
+            })
+            if allocated not in (None, 0):
+                raise ValueError("teacher CUDA tensors remain; refusing to load a second model")
+            args.checkpoint = checkpoint.path
+    torch, _, model = common.load_model(args)
+    torch.backends.cuda.matmul.allow_tf32 = False'''
+assert oldload in s;s=s.replace(oldload,newload,1)
+s=s.replace('    frozen = frozen_state(base_parameters)\n    adapters, base_norms = {}, {}','''    frozen = frozen_state(base_parameters)
+    if use_kl and teacher_cache is None:
+        teacher_cache = body_kl.cache_teacher(
+            torch, model, frames, args.output / "teacher-cache", args.device,
+            deadline, teacher_metadata,
+            lambda: common.assert_inputs(teacher, teacher_provenance),
+        )
+    adapters, base_norms = {}, {}''',1)
+s=s.replace('                losses, ids, tokens = [], [], 0','                losses, ids, tokens = [], [], 0\n                objective_terms = []',1)
+s=s.replace('                        loss, count = answer_loss(torch, net, head, frame, args.device)','''                        if use_kl:
+                            loss, count, terms = body_kl.body_kl_loss(
+                                torch, net, head, frame, teacher_cache[frame["id"]], args.device
+                            )
+                            objective_terms.append(terms)
+                        else:
+                            loss, count = answer_loss(torch, net, head, frame, args.device)''',1)
+s=s.replace('                    losses.append(float(loss.detach()))','                    losses.append(terms["body_CE"] if use_kl else float(loss.detach()))',1)
+s=s.replace('                                "backward_completed": True,','                                "backward_completed": True,\n                                **({"loss_terms": terms} if use_kl else {}),',1)
+s=s.replace('                    "modules": modules,\n                    "gpu_peak_allocated":','''                    "modules": modules,
+                    **({"loss_protocol": body_kl.PROTOCOL,
+                        "example_loss_terms": objective_terms,
+                        "mean_total_loss": sum(row["total_loss"] for row in objective_terms) / 4,
+                        "body_target_tokens": tokens} if use_kl else {}),
+                    "gpu_peak_allocated":''',1)
+s=s.replace('                            "model_forwards": forwards,\n                            "base_unchanged": True,','''                            "model_forwards": forwards,
+                            **(model_counters(args.output, forwards, forward_attempts) if use_kl else {}),
+                            "base_unchanged": True,''',1)
+s=s.replace('                "activation_storage": storage.report(),','''                "activation_storage": storage.report(),
+                **({"loss_protocol": body_kl.PROTOCOL,
+                    **model_counters(args.output, forwards, forward_attempts)}
+                   if use_kl else {}),''',1)
+s=s.replace('                    "continuation_wait_seconds": plan["continuation_wait_seconds"],','''                    "continuation_wait_seconds": plan["continuation_wait_seconds"],
+                    **({"loss_protocol": body_kl.PROTOCOL,
+                        "planned_teacher_forwards": len(rows),
+                        "planned_student_forwards": 256,
+                        "teacher_checkpoint": plan.get("teacher_checkpoint", plan["checkpoint"])}
+                       if body_kl.selected(plan) else {}),''',1)
+s=s.replace('                    "error_class": type(exc).__name__,','''                    "error_class": type(exc).__name__,
+                    **(model_counters(args.output, 0, 0) if body_kl.selected(plan) else {}),''',1)
+for name in ('prepare_training_frames','answer_loss','make_adapter'):
+ a=next(x for x in ast.parse(old).body if isinstance(x,ast.FunctionDef) and x.name==name)
+ b=next(x for x in ast.parse(s).body if isinstance(x,ast.FunctionDef) and x.name==name)
+ assert ast.dump(a)==ast.dump(b),name
+p.write_text(s)
+(V/'default-path-ast-proof.json').write_text(json.dumps({'functions_ast_identical':['prepare_training_frames','answer_loss','make_adapter'],'before_sha256':hashlib.sha256(old.encode()).hexdigest(),'after_sha256':hashlib.sha256(s.encode()).hexdigest(),'new_helper':'train_lora_body_kl.py','GPU_modelcalls':0},indent=2)+'\n')
+print({'source_sha256':hashlib.sha256(s.encode()).hexdigest(),'default_functions_preserved':True})
+

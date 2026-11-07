@@ -1,0 +1,160 @@
+"""Read pinned WSP cache without preparing, pulling, scoring or generating.
+
+Run in the immutable runner with network disabled and the cache read-only.
+Only --output is written. Package versions/revision markers are identities,
+not full installed-package/source-tree content attestations.
+"""
+from __future__ import annotations
+
+import argparse
+from collections import Counter
+from datetime import datetime, timezone
+from email.parser import Parser
+import hashlib
+import json
+import os
+from pathlib import Path
+import re
+import time
+
+
+def sha(path: Path) -> str:
+    value = hashlib.sha256()
+    with path.open("rb") as stream:
+        for block in iter(lambda: stream.read(8 * 1024 * 1024), b""):
+            value.update(block)
+    return value.hexdigest()
+
+
+def stat(path: Path) -> dict:
+    value = path.stat()
+    return {key: getattr(value, "st_" + key) for key in ("dev", "ino", "size", "mtime_ns", "ctime_ns", "mode")}
+
+
+def main() -> None:
+    from kairyu_bench.wsp.catalog import SOURCE_BY_NAME
+    from kairyu_bench.wsp.manifest import load_manifest
+    from kairyu_bench.wsp.sources import Loader, adapters
+    from kairyu_bench.wsp.sources.agents import _task_images
+
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--cache", type=Path, required=True)
+    parser.add_argument("--baseline", type=Path, required=True)
+    parser.add_argument("--output", type=Path, required=True)
+    parser.add_argument("--redirect-locks", action="store_true", help="Relocate only advisory lock files into the new output directory; cache remains mounted read-only")
+    parser.add_argument("--tier", type=int, choices=(10, 30, 60), default=30)
+    parser.add_argument("--split", choices=("dev", "test"), default="dev")
+    args = parser.parse_args()
+    if args.output.exists():
+        raise FileExistsError(args.output)
+    started = time.monotonic()
+    baseline = json.loads(args.baseline.read_text())
+    manifest = load_manifest()
+    items = manifest.select(args.tier, args.split)
+    result = {
+        "kind": "read-only-offline-wsp-cache-preflight", "started_at": datetime.now(timezone.utc).isoformat(),
+        "tier": args.tier, "split": args.split, "manifest_sha256": manifest.sha256,
+        "selected_count": len(items), "selected_ids": [item.id for item in items],
+        "source_counts": dict(sorted(Counter(item.source for item in items).items())),
+        "area_counts": dict(sorted(Counter(SOURCE_BY_NAME[item.source].area or "diagnostic" for item in items).items())),
+        "baseline_receipt_sha256": sha(args.baseline), "script_sha256": sha(Path(__file__)),
+        "network_policy": {key: os.environ.get(key) for key in ("HF_HUB_OFFLINE", "HF_DATASETS_OFFLINE")},
+        "venvs": {}, "official_sources": {}, "datasets": [], "sources": {}, "agent_tasks": [], "files": {},
+    }
+
+    if args.redirect_locks:
+        import filelock
+        lock_dir = args.output.parent / "locks"
+        lock_dir.mkdir(exist_ok=False)
+        result["redirected_locks"] = {}
+        original_init = filelock.BaseFileLock.__init__
+
+        def redirected_init(self, lock_file, *positional, **keywords):
+            destination = lock_dir / (hashlib.sha256(os.fsencode(lock_file)).hexdigest() + ".lock")
+            result["redirected_locks"][str(lock_file)] = str(destination)
+            original_init(self, str(destination), *positional, **keywords)
+
+        filelock.BaseFileLock.__init__ = redirected_init
+
+    def save() -> None:
+        args.output.write_text(json.dumps(result, ensure_ascii=False, indent=2) + "\n")
+
+    def norm(text: str) -> str:
+        return re.sub(r"[-_.]+", "-", text).lower()
+
+    for name, record in baseline["venvs"].items():
+        if name.startswith("."):
+            continue
+        path = args.cache / "venvs" / name
+        versions = {}
+        for metadata in path.glob("lib/python*/site-packages/*.dist-info/METADATA"):
+            fields = Parser().parsestr(metadata.read_text())
+            versions[norm(fields["Name"])] = fields["Version"]
+        expected = {norm(key): value for key, value in record["versions"].items()}
+        result["venvs"][name] = {"equal": versions == expected, "count": len(versions), "versions": versions,
+                                "ready_marker": (path / ".kairyu-bench-ready").read_text().splitlines()}
+    source_paths = {}
+    for name, record in baseline["official_sources"].items():
+        path = args.cache / "sources" / name
+        marker = path / ".kairyu-bench-revision"
+        digest = sha(marker)
+        result["official_sources"][name] = {"equal": digest == record["revision_file_sha256"], "revision": marker.read_text().strip(), "marker_sha256": digest}
+        source_paths[name.rsplit("-", 1)[0]] = path
+    python_paths = {}
+    for name in ("wsp", "wsp-evalplus", "wsp-scicode"):
+        digest = sha(Path("/app/scripts/locks") / (name + ".txt"))
+        key = {"wsp": "wsp", "wsp-evalplus": "evalplus", "wsp-scicode": "scicode"}[name]
+        python_paths[key] = args.cache / "venvs" / ("v2-" + name + "-" + digest[:16]) / "bin/python"
+    file_paths = {"scicode-h5": args.cache / "wsp/scicode-test_data.h5",
+                  "evalplus-tasks": args.cache / "wsp/evalplus-0.3.1-tasks.json"}
+    for name, path in file_paths.items():
+        result["files"][name] = {"path": str(path), "stat": stat(path), "sha256": sha(path)}
+    result["files"]["scicode-h5"]["expected_sha256"] = "48b0272a88b17dbd29777c217e1b4fb2b019b92e11cc2add847409db9541b890"
+    result["files"]["scicode-h5"]["equal"] = result["files"]["scicode-h5"]["sha256"] == result["files"]["scicode-h5"]["expected_sha256"]
+
+    class AuditLoader(Loader):
+        def dataset(self, name, **kwargs):
+            value = super().dataset(name, **kwargs)
+            result["datasets"].append({"name": name, "arguments": kwargs, "rows": len(value),
+                                       "cache_files": [{"path": x["filename"], "stat": stat(Path(x["filename"]))} for x in value.cache_files]})
+            return value
+
+        def json_files(self, name, **kwargs):
+            value = super().json_files(name, **kwargs)
+            result["datasets"].append({"name": name, "arguments": kwargs, "rows": len(value),
+                                       "cache_files": [{"path": x["filename"], "stat": stat(Path(x["filename"]))} for x in value.cache_files]})
+            return value
+
+    loader = AuditLoader(sources=source_paths, pythons=python_paths, files=file_paths, data_dir=args.cache / "wsp")
+    registry = adapters()
+    save()
+    for source in result["source_counts"]:
+        before = time.monotonic()
+        selected = [item.id for item in items if item.source == source]
+        try:
+            rows = registry[source].load(loader)
+            missing = [key for key in selected if key not in rows]
+            result["sources"][source] = {"loaded_rows": len(rows), "selected": len(selected), "missing_ids": missing, "error": None}
+            del rows
+        except Exception as error:
+            result["sources"][source] = {"selected": len(selected), "error": f"{type(error).__name__}: {error}"[:3000]}
+        result["sources"][source]["elapsed_seconds"] = time.monotonic() - before
+        print(source, json.dumps(result["sources"][source]), flush=True)
+        save()
+    for item in items:
+        if item.kind != "agent":
+            continue
+        try:
+            names = _task_images(item.source, [item.id.split(":", 1)[1]])
+            result["agent_tasks"].append({"id": item.id, "images": names, "error": None})
+        except Exception as error:
+            result["agent_tasks"].append({"id": item.id, "error": f"{type(error).__name__}: {error}"[:3000]})
+        save()
+    result["all_selected_rows_available"] = all(not row.get("error") and not row.get("missing_ids") for row in result["sources"].values())
+    result["all_package_and_source_identities_equal"] = all(row["equal"] for group in ("venvs", "official_sources") for row in result[group].values())
+    result["elapsed_seconds"] = time.monotonic() - started
+    save()
+
+
+if __name__ == "__main__":
+    main()

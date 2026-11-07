@@ -1,0 +1,67 @@
+{
+  "epoch": 1794060241.2348208,
+  "run": {
+    "schema_version": 1,
+    "kind": "wsp",
+    "status": "running",
+    "tier": 30,
+    "split": "dev",
+    "label": "0fc0ef29346c4d8a06bea8570dee96d8e0ba7038fee0d5aded8db57852474ec5",
+    "model_id": "gemma-4-31b",
+    "endpoint": {
+      "fingerprint": "sha256:6342f06c730514dc"
+    },
+    "manifest_sha256": "a3a0b60e0872a38c6b1abf7e97d7fe729fabf9e25cd3f09a3da9544b9ca39b5b",
+    "items": 2338,
+    "started_at": "2026-11-07T14:01:29.873608Z",
+    "observation": {
+      "capture_id": "56f05db0be5e4b9798f500947fd50c36",
+      "output_dir": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f06-dev30-dp4-v1/http-trace",
+      "run_id": "gemma4-fresh-f06-dev30-dp4-20261107-v1"
+    }
+  },
+  "actual_runner_sha256": "d51935f679546be0ee03a416b30759ec0bed6b2c058a08828751b9e3fee7a0fd",
+  "actual_runner_cid": "f2b596162d9fdc4a1caff278a402e7a95411062c2cc02f374cd16b4a8f1055b1",
+  "observation_timing": "Initial active-run verification at the recorded epoch; not asserted to be the exact launch instant.",
+  "elapsed_since_owner_start": 153.88767266273499,
+  "served_models": [
+    {
+      "service": "gemma-0",
+      "cid": "1ffc862fe747b8f4e6134c72fb7bb322cd6acd7e3fdd012cc1d9614d09932273",
+      "model_ids": [
+        "gemma-4-31b"
+      ]
+    },
+    {
+      "service": "gemma-1",
+      "cid": "ee04769375d9e78370d8d7372ad3c5de8223e50ce3a4a233ae8adabdc1bff897",
+      "model_ids": [
+        "gemma-4-31b"
+      ]
+    },
+    {
+      "service": "gemma-2",
+      "cid": "48551f7b49ceb64b921ffc986de01b04cf1a53386173a1d15ad6af87c50e22ab",
+      "model_ids": [
+        "gemma-4-31b"
+      ]
+    },
+    {
+      "service": "gemma-3",
+      "cid": "657399f41b7c641b860a1c406123be1e75960118d6044d2c0aed367859c05461",
+      "model_ids": [
+        "gemma-4-31b"
+      ]
+    }
+  ],
+  "full_selection": {
+    "manifest_sha256": "a3a0b60e0872a38c6b1abf7e97d7fe729fabf9e25cd3f09a3da9544b9ca39b5b",
+    "items": 2338,
+    "code_items": 90,
+    "excluded_ids": [],
+    "selected_ids_json_sha256": "1fa6ab2b836f8e7d69a110b99c7189e45ba2426ea632f1c2585ba127aa1b02db",
+    "manifest_order_newline_terminated_ids_sha256": "a15df4fb42125148b85a9b98d6961a82d2ef626558ba6c87507e79b65f979f6e"
+  },
+  "served_models_evidence": "Existing successful owner launch-preflight model lists; no additional API read in v2. Original v1 had four read-only model-list requests before its serialization-format assertion.",
+  "repair_note": "v1 wrongly equated sorted JSON hash with manifest-order newline-terminated hash. Both hash encodings now retained and matched to F04/plan respectively; no ID or run changes."
+}

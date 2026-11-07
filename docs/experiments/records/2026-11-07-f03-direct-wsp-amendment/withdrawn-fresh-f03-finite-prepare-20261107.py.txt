@@ -1,0 +1,153 @@
+#!/usr/bin/env python3
+"""Prepare F03's unapproved finite plan and CPU metadata preview; no GPU/API use."""
+from __future__ import annotations
+
+import hashlib
+import importlib.util
+import json
+import os
+from pathlib import Path
+import subprocess
+import time
+
+ROOT = Path("/mnt/nvme/kairyu/wsp/gemma4-coding-20261104")
+REPO = ROOT / "worktrees/kairyu-bench-weight-tools"
+PARENT = ROOT / "analysis/fresh-purpose-20261107-f03-native-v1"
+OUT = PARENT / "finite-gpu4-v1"
+MATERIAL = PARENT / "materialization"
+PR = REPO / "docs/experiments/records/2026-11-07-f03-finite-plan-v1"
+PYTHON = ROOT / "infra/weight-tools-ci/bin/python"
+OWNER_SHA = "39707865f4cc4851290d218d0f4cb6a3fa8768a940a124a9f0ea953ee0d2c5d7"
+
+
+def sha(path):
+    return hashlib.sha256(Path(path).read_bytes()).hexdigest()
+
+
+def pin(path):
+    return dict(path=str(path), sha256=sha(path))
+
+
+def read(path):
+    return json.loads(Path(path).read_text())
+
+
+def save(path, value):
+    with path.open("x") as stream:
+        json.dump(value, stream, indent=2, allow_nan=False)
+        stream.write("\n")
+
+
+def module(path):
+    spec = importlib.util.spec_from_file_location("prepare_only_" + path.stem.replace("-", "_"), path)
+    value = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(value)
+    return value
+
+
+def snapshot(guard):
+    ids = subprocess.check_output(["docker", "ps", "-aq", "--no-trunc"], text=True).split()
+    assert len(ids) == len(set(ids)) == 27
+    raw = json.loads(subprocess.check_output(["docker", "inspect", *ids], text=True))
+    # Only Config/HostConfig SHA and selected safe identity fields are retained.
+    return {row["Name"].lstrip("/"): guard.snapshot(row["Id"]) for row in raw}
+
+
+def main():
+    started = time.time()
+    owner = REPO / "docs/experiments/scripts/fresh-av-native-gpu4-20261107.py"
+    helper = owner.with_name("fresh-f01-finite.py")
+    assert sha(owner) == OWNER_SHA
+    n2 = ROOT / "analysis/fresh-purpose-20261107-av-behavior12-native-gpu4-v2/root-approved-plan.json"
+    old = read(n2)
+    identity = MATERIAL / "fullcandidateidentity.json"
+    verify = MATERIAL / "verify.json"
+    spec = PARENT / "proposal/fresh-native-contract-f03.json"
+    decision = PARENT / "root-finite-decision.json"
+    assert sha(identity) == "b9e5dbd64520196507d1d53fae64b2609d5ea45559c78aee4a60cf701d6876b5"
+    assert sha(verify) == "616806dc095ebecb04ac10d4514ec6c73f9bbd53d3f572d1ef704452320062c4"
+    assert sha(spec) == "e10018748de2795a8af03b98abb6e18362393a152c74f46b7a7892fe4975e878"
+    assert sha(decision) == "68372eac57e73c1a00ebaea9b3dd5f1999224e1ce819f52e4bb64d4515fce3bc"
+    assert read(MATERIAL / "completion.json")["status"] == "completed"
+    assert not OUT.exists() and not PR.exists()
+    OUT.mkdir()
+    PR.mkdir()
+    guard = module(helper)
+    before = snapshot(guard)
+    save(OUT / "containers-before.json", before)
+    source = OUT / "source"
+    copies = [(f, source / f.relative_to(REPO)) for f in sorted((REPO / "src").rglob("*"))
+              if f.is_file() and "__pycache__" not in f.parts and f.suffix != ".pyc"]
+    recipe = "scripts/experiments/gemma4-purpose"
+    copies += [(REPO / recipe / name, source / recipe / name)
+               for name in ("native.py", "recipe_common.py", "objective_variants.py")]
+    copies += [(owner, source / "owner" / owner.name), (helper, source / "owner" / helper.name)]
+    originals = {str(f): sha(f) for f, _ in copies}
+    for src, dst in copies:
+        dst.parent.mkdir(parents=True, exist_ok=True)
+        with dst.open("xb") as stream:
+            stream.write(src.read_bytes())
+        assert sha(dst) == originals[str(src)]
+    executable = source / "owner" / owner.name
+    frozen = module(executable)
+    assert before[frozen.TARGET]["id"] == frozen.CID and before[frozen.TARGET]["image"] == frozen.IMAGE
+    assert before[frozen.TARGET]["running"] and before[frozen.TARGET]["health"] == "healthy"
+    plan = {k: old[k] for k in ("schema_version", "maximum_collection_seconds", "checkpoint",
+                              "cases", "frame", "attestation", "native_behavior_result")}
+    plan.update(mode="finite", approved_for_execution=False, status="prepared_cpu_metadata_only",
+        container_prefix="fresh-f03-behavior12-finite-gpu4-20261107-v1", source_root=str(source), output_root=str(OUT),
+        owner_script=str(executable), target=before[frozen.TARGET],
+        protected={k: v for k, v in before.items() if k != frozen.TARGET},
+        root_finite_decision=pin(decision), pending=["Root exact-plan GPU execution decision; no approval inherited"],
+        api_calls_during_preparation=0, idle_metrics_during_preparation="not called; required immediately before any authorized run",
+        source_pins={str(dst): sha(dst) for _, dst in copies})
+    support = [Path(__file__).resolve(), decision, MATERIAL / "completion.json", MATERIAL / "verify-receipt.json",
+               MATERIAL / "candidate-before-verify-stat.json", MATERIAL / "candidate-after-verify-stat.json",
+               REPO / "docs/experiments/records/2026-11-07-f03-runtime-source/source-audit.json"]
+    plan["source_pins"].update({str(f): sha(f) for f in support})
+    replay = dict(schema_version=1, architecture="gemma4_native_bf16", base_tree_sha256=frozen.TREE,
+        checkpoint_index_sha256=sha(Path(plan["checkpoint"]) / "model.safetensors.index.json"),
+        checkpoint_attestation=plan["attestation"], cases=plan["cases"], frame_evidence=plan["frame"],
+        candidates=[dict(id="fresh-native-contract-f03", spec=str(spec), sha256=sha(spec))],
+        observation_policy=frozen.finite_policy())
+    save(OUT / "finite-plan.json", replay)
+    plan["finite"] = dict(plan=pin(OUT / "finite-plan.json"), spec=pin(spec),
+        manifest=pin(MATERIAL / "edit-manifest.json"), verify=pin(verify), candidate_identity=pin(identity))
+    save(OUT / "owner-plan.json", plan)
+    save(OUT / "source-snapshot.json", dict(originals=originals, copies=plan["source_pins"],
+        prior_native_plan=pin(n2), source_root=str(source)))
+    env = dict(os.environ, PYTHONDONTWRITEBYTECODE="1", PYTHONPATH=str(source / "src"), TMPDIR=str(ROOT / "tmp-ci-r3"))
+    command = [str(PYTHON), "-B", str(executable), "--plan", str(OUT / "owner-plan.json")]
+    t = time.monotonic()
+    with (OUT / "preview.stdout").open("x") as stdout, (OUT / "preview.stderr").open("x") as stderr:
+        result = subprocess.run(command, env=env, cwd=REPO, stdout=stdout, stderr=stderr)
+    save(OUT / "preview-receipt.json", dict(command=command, returncode=result.returncode, seconds=time.monotonic()-t,
+        owner_sha256=sha(executable), plan_sha256=sha(OUT / "owner-plan.json"), model_calls=0, api_calls=0,
+        gpu_calls=0, service_changes=0, scope="CPU metadata and selected BF16 reads; no finite CLI invocation"))
+    assert result.returncode == 0, "Preserved failed metadata preview; no automatic retry"
+    preview = read(OUT / "preview.stdout")
+    save(OUT / "owner-full-preview.json", preview)
+    # No run()/main() call: direct CPU proof extraction from the existing owner.
+    metadata = frozen.finite_metadata(plan)
+    save(OUT / "saved-bf16-metadata-proof.json", metadata)
+    after = snapshot(guard)
+    save(OUT / "containers-after.json", after)
+    assert before == after and all(sha(path) == expected for path, expected in originals.items())
+    assert all(sha(path) == expected for path, expected in plan["source_pins"].items())
+    completion = dict(status="completed_cpu_metadata_preview_only", approved_for_execution=False,
+        seconds=time.time()-started, owner_sha256=sha(executable), owner_plan_sha256=sha(OUT / "owner-plan.json"),
+        finite_plan_sha256=sha(OUT / "finite-plan.json"), all_27_snapshots_unchanged=True,
+        target_started_at=plan["target"]["started_at"], source_pins_count=len(plan["source_pins"]),
+        cases=12, singleton_folds=12, candidate_count=1, **metadata["metrics"],
+        candidate_tree_sha256=metadata["candidate_tree_sha256"], model_calls=0, api_calls=0,
+        gpu_calls=0, service_changes=0, fresh_full_checkpoint_rehash=False, global_lock_acquired=False)
+    save(OUT / "preparation-completion.json", completion)
+    for path in OUT.iterdir():
+        if path.is_file():
+            (PR / path.name).write_bytes(path.read_bytes())
+    (PR / "prepare-source.py.txt").write_bytes(Path(__file__).read_bytes())
+    print(json.dumps(completion))
+
+
+if __name__ == "__main__":
+    main()

@@ -1,0 +1,19 @@
+{
+  "command_prefix": [
+    "docker",
+    "exec",
+    "--user",
+    "1003",
+    "fd4ec2eb9d7deba2ce3e790add6b50c0ee79a6390495320d8697873b32957bcf",
+    "/usr/bin/python3",
+    "-B",
+    "-c"
+  ],
+  "payload_files": [
+    "container-read-v2.py.txt",
+    "container-read-v3.py.txt",
+    "container-read.py.txt"
+  ],
+  "metadata_method": "importlib.metadata distribution file lookup; pathlib source reads; no import of transformers/vllm/Torch model modules",
+  "full_source_read_backup": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f03-runtime-source-v1/full-read-sources-v3.json"
+}

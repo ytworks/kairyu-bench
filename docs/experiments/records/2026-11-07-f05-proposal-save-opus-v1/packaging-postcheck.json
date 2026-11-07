@@ -1,0 +1,10 @@
+{
+  "epoch": 1794055668.574055,
+  "initial_check": "Post-packaging read-only check incorrectly compared completion.source_sha256 against native_faststore.py and raised AssertionError before other checks; no mutation or model call.",
+  "source_field_semantics": "materialize.py uses sha(__file__); this field identifies the one-off materialization owner, not the library.",
+  "corrected_materialize_source_match": true,
+  "materialize_source_sha256": "0b3c63ebe2e922db774add3bd29d42571672db717669f87484f657e977765ad0",
+  "library_snapshot_sha256": "445cc73783bd6bd61890b107bb76ddca1e388a9bf84b630125a01486389578cd",
+  "git_diff_check_exit": 0,
+  "models_docker_services": 0
+}

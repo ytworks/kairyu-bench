@@ -1,0 +1,180 @@
+{
+  "plan_sha256": "e75318f78abae72aa9f1e0be8fa1e8246273e6a549f1965c1f2e1338baffa0c7",
+  "source_hashes": {
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f02/finite-gpu6-v2/finite-plan.json": "e75318f78abae72aa9f1e0be8fa1e8246273e6a549f1965c1f2e1338baffa0c7",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f02/finite-gpu6-v2/source/kairyu_bench/wsp/weights/finite_replay.py": "71c424bffac775ba112e709632df0a37351a79c3121827be7c9844f321c7c4d3",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f02/finite-gpu6-v2/source/kairyu_bench/wsp/weights/checkpoint.py": "898297c05e7179cdc4568d6f290b978073bcebafea804ac043b54030e8205bf9",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/code90-resume-20261106/long-helper-chain-curriculum-v1/train-cases.json": "bd6fcba70e93b1870ee882f6e92893b93490ad4099af7a9a290ba3d324d68951",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/code90-resume-20261106/science-gpu-runs/provisional-av-long-purpose-v3/matrix-correct-logprob/frame-evidence.json": "74c07c8e9e8e53f723c1c857268c35a92f0a26b716a6afb042574dd9a8b298d9",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/code90-resume-20261106/provisional-av-long-purpose-observation-v1/checkpoint-attestation.json": "12ba81915ae02dfc9d898bc5639d4deb689821071b3a36fceb3befa4e0f01755",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f02/proposal/fresh-code-joint-f02.json": "27f000e4933bdb63d29217c6312114d2b912d349a67617fe42d17d263994410b"
+  },
+  "runner_sha256": "71c424bffac775ba112e709632df0a37351a79c3121827be7c9844f321c7c4d3",
+  "checkpoint_identity": {
+    "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/checkpoints/code90-current-ad-helper-av-v1",
+    "files": [
+      {
+        "path": "chat_template.jinja",
+        "size": 18683,
+        "sha256": null,
+        "stat": {
+          "device": 2306,
+          "inode": 181678464,
+          "mtime_ns": 1794014158733915132,
+          "ctime_ns": 1794014158733915132
+        }
+      },
+      {
+        "path": "config.json",
+        "size": 4621,
+        "sha256": null,
+        "stat": {
+          "device": 2306,
+          "inode": 181678465,
+          "mtime_ns": 1794014158734915095,
+          "ctime_ns": 1794014158734915095
+        }
+      },
+      {
+        "path": "generation_config.json",
+        "size": 208,
+        "sha256": null,
+        "stat": {
+          "device": 2306,
+          "inode": 181678466,
+          "mtime_ns": 1794014158734915095,
+          "ctime_ns": 1794014158734915095
+        }
+      },
+      {
+        "path": "model-00001-of-00002.safetensors",
+        "size": 49923154850,
+        "sha256": null,
+        "stat": {
+          "device": 2306,
+          "inode": 181678467,
+          "mtime_ns": 1794014260450139654,
+          "ctime_ns": 1794014260450139654
+        }
+      },
+      {
+        "path": "model-00002-of-00002.safetensors",
+        "size": 12623183414,
+        "sha256": null,
+        "stat": {
+          "device": 2306,
+          "inode": 181678468,
+          "mtime_ns": 1794014261005119199,
+          "ctime_ns": 1794014261005119199
+        }
+      },
+      {
+        "path": "model.safetensors.index.json",
+        "size": 120246,
+        "sha256": null,
+        "stat": {
+          "device": 2306,
+          "inode": 181678469,
+          "mtime_ns": 1794014259954157935,
+          "ctime_ns": 1794014259954157935
+        }
+      },
+      {
+        "path": "processor_config.json",
+        "size": 1689,
+        "sha256": null,
+        "stat": {
+          "device": 2306,
+          "inode": 181678470,
+          "mtime_ns": 1794014259954157935,
+          "ctime_ns": 1794014259954157935
+        }
+      },
+      {
+        "path": "tokenizer.json",
+        "size": 32169626,
+        "sha256": null,
+        "stat": {
+          "device": 2306,
+          "inode": 181678471,
+          "mtime_ns": 1794014259991156571,
+          "ctime_ns": 1794014259991156571
+        }
+      },
+      {
+        "path": "tokenizer_config.json",
+        "size": 3082,
+        "sha256": null,
+        "stat": {
+          "device": 2306,
+          "inode": 181678472,
+          "mtime_ns": 1794014260013155760,
+          "ctime_ns": 1794014260013155760
+        }
+      }
+    ],
+    "sha256": null,
+    "hash_files": false,
+    "identity_level": "stat_only",
+    "input_scope": "indexed_checkpoint",
+    "complete_model_claimed": false,
+    "configuration_names_considered": [
+      "config.json",
+      "generation_config.json",
+      "tokenizer_config.json",
+      "tokenizer.json",
+      "special_tokens_map.json",
+      "chat_template.jinja",
+      "processor_config.json",
+      "preprocessor_config.json",
+      "tokenizer.model",
+      "spiece.model",
+      "vocab.json",
+      "merges.txt",
+      "added_tokens.json"
+    ],
+    "scope": "all referenced shards, index, and recognized configuration/tokenizer files",
+    "source_stable": true
+  },
+  "expected_base_tree_sha256": "5d056eb03f954db80313a85167153c875fe5e436e4f97c281a3f55202d9b3eaf",
+  "full_tree_rehashed_here": false,
+  "dtype": "BF16 weights; FP32 softcap/log-softmax",
+  "attention": "sdpa",
+  "answer_batching": "serial",
+  "threads": 4,
+  "seed": 0,
+  "scope": "Matched teacher-forced public-answer diagnostics only; no free generation or benchmark score.",
+  "observation_policy": {
+    "max_frame_tokens": 2048,
+    "execution_order": "longest_frame_first",
+    "attention_dispatch": {
+      "": "eager",
+      "text_config": "sdpa",
+      "vision_config": "eager",
+      "audio_config": "eager"
+    },
+    "cuda_memory_cap_gib": 88.0,
+    "answer_batching": "serial",
+    "max_cases_per_microbatch": 1
+  },
+  "observation_execution": {
+    "resolved_attention_dispatch": {
+      "": "eager",
+      "text_config": "sdpa",
+      "vision_config": "eager",
+      "audio_config": null
+    },
+    "absent_subconfigs": [
+      "audio_config"
+    ],
+    "cuda_allocator": {
+      "requested_gib": 88.0,
+      "fraction_of_total": 0.9265848686527491,
+      "free_before_load_bytes": 101390548992,
+      "total_device_bytes": 101975851008,
+      "scope": "PyTorch caching allocator only; not a cap on all device allocations"
+    },
+    "backend_policy": "Transformers text SDPA dispatch uses PyTorch automatic kernels, including math; fused/GQA memory savings not asserted",
+    "automatic_attention_api_or_length_retry": false
+  }
+}

@@ -1,0 +1,103 @@
+from pathlib import Path
+import datetime, hashlib, json, os, subprocess, time
+R=Path('/mnt/nvme/kairyu/wsp/gemma4-coding-20261104')
+B=R/'worktrees/kairyu-bench-weight-tools'
+P=R/'analysis/fresh-purpose-20261107-av-authored48-execution-plan-v2'
+S=R/'runtime/fresh-purpose-20261107-av-authored48-execution-v2'
+G=R/'analysis/fresh-purpose-20261107-av-authored120-native-v2'
+PYTHON='/mnt/nvme/kairyu/dev-logs/wsp/venv-scicode/bin/python'
+def h(p): return hashlib.sha256(Path(p).read_bytes()).hexdigest()
+def save(p,d): p.write_text(json.dumps(d,indent=2,ensure_ascii=False,allow_nan=False)+'\n')
+def run(argv): return subprocess.check_output(argv,text=True).strip()
+def pin(p): return {'path':str(p),'sha256':h(p),'bytes':p.stat().st_size}
+assert not P.exists() and not S.exists()
+P.mkdir(); S.mkdir()
+operation=Path(__file__).resolve()
+receipt={'status':'preparing','started_utc':datetime.datetime.now(datetime.timezone.utc).isoformat(),'operation':pin(operation)}
+save(P/'preparation.json',receipt)
+started=time.monotonic()
+try:
+    prior=json.loads((R/'analysis/fresh-purpose-20261107-av-authored48-execution-plan-v1/plan.json').read_text())
+    complete=json.loads((G/'owner/owner-complete.json').read_text())
+    assert len(complete['batches'])==4
+    assert sum(b['received'] for b in complete['batches'])==120
+    assert all(b['receipt']['status']=='completed' and not b['missing_ids'] and b['returncode']==0 for b in complete['batches'])
+    pid=json.loads((G/'detached-launch.json').read_text())['pid']
+    assert not Path(f'/proc/{pid}').exists()
+    commit=run(['git','-C',str(B),'rev-parse','4e088df'])
+    sources={}
+    for filename in ['science_sandbox.py','science_cases.py','advanced_science_cases.py','library_train_cases.py']:
+        path=f'scripts/experiments/gemma4-purpose/{filename}'
+        payload=subprocess.check_output(['git','-C',str(B),'show',f'{commit}:{path}'])
+        target=S/filename
+        target.write_bytes(payload)
+        target.chmod(0o444)
+        sources[filename]={**pin(target),'git_commit':commit,'git_path':path}
+    assert sources['science_sandbox.py']['sha256']=='cf26e77e90d5789422ad2ebd3ac43599ee0a2ebc781b7a1c0c8ae834953a817e'
+    docker=json.loads(run(['docker','--host','unix:///var/run/docker.sock','info','--format','{{json .}}']))
+    assert docker['ID']=='3e518d2b-6972-43f8-b325-f7f33697a2d2'
+    assert docker['DockerRootDir']=='/mnt/nvme/docker'
+    image='sha256:c4ab50223f03fca17bf871e4d05f77001e76525a1c574b6c6ee7024db06cfdc2'
+    actual=run(['docker','--host','unix:///var/run/docker.sock','image','inspect',image,'--format','{{.Id}}'])
+    assert actual==image
+    stat=os.stat('/var/run/docker.sock')
+    plan={k:prior[k] for k in ['scope','contract_issue_ids','denominators','limits']}
+    plan.update(schema_version=2,status='approved_subject_to_previews_and_identity',approved_for_execution=True,
+        authorization='Root explicit 2026-11-07 delegation: after full120 normal completion, freeze commit4e088df, three previews and identity then execute fixed48 once.',
+        created_utc=datetime.datetime.now(datetime.timezone.utc).isoformat(),
+        source=sources,host_python=PYTHON,
+        host_python_environment_receipt=pin(Path(prior['host_python_environment_receipt'])),
+        original_inactive_plan=pin(R/'analysis/fresh-purpose-20261107-av-authored48-execution-plan-v1/plan.json'),
+        generation_completion=pin(G/'owner/owner-complete.json'),generation_owner_pid=pid,generation_owner_absent=True,
+        generation_cases=120,generation_public_answers=120,generation_errors=0,
+        docker={'socket':'/var/run/docker.sock','daemon_id':docker['ID'],'docker_root_dir':docker['DockerRootDir'],'image_id':actual,
+                'socket_stat':{k:getattr(stat,'st_'+k) for k in ['dev','ino','mode','uid','gid']}},
+        immutable_generation_plan=pin(G/'launch-plan-approved.json'),
+        partition_validation=pin(Path(prior['case_partition_validation'])),
+        batches=[],operation=pin(operation))
+    for i,old in enumerate(prior['batches']):
+        name=old['catalog']
+        gen=G/'generations'/f'{i:02d}-{name}'
+        responses=gen/'train-responses.json'
+        data=json.loads(responses.read_text())
+        case=Path(old['cases'])
+        assert h(case)==old['cases_sha256']==data['cases_sha256']
+        ids=[row['id'] for row in data['responses']]
+        assert len(ids)==16 and set(ids)==set(old['expected_ids'])
+        assert h(responses)==complete['batches'][i]['responses_sha256']
+        batch={k:old[k] for k in ['catalog','cases','cases_sha256','expected_ids','expected_cases']}
+        batch.update(responses=str(responses),responses_sha256=h(responses),generation_receipt=pin(gen/'receipt.json'),
+            public_answers=sum(isinstance(row.get('public_answer'),str) for row in data['responses']),
+            generation_errors=sum('error_type' in row for row in data['responses']))
+        base=[PYTHON,str(S/'science_sandbox.py'),'--cases',str(case),'--catalog',name,'--responses',str(responses),
+              '--docker-socket','/var/run/docker.sock','--daemon-id',docker['ID'],'--image',image,
+              '--seed','20261107','--trials','8','--seconds','15','--memory-mib','512','--cpus','1']
+        preview=base+['--output',str(P/'previews'/name)]
+        batch['preview_command']=preview
+        batch['execution_command']=base+['--output',str(P/'execution'/name),'--run']
+        t=time.monotonic()
+        env=os.environ.copy(); env['PYTHONDONTWRITEBYTECODE']='1'
+        preview_result=subprocess.run(preview,env=env,capture_output=True,text=True)
+        log=P/(name+'-preview.log')
+        log.write_text(preview_result.stdout+preview_result.stderr)
+        batch['preview']={'returncode':preview_result.returncode,'seconds':time.monotonic()-t,'log':pin(log)}
+        plan['batches'].append(batch)
+        save(P/'plan-in-progress.json',plan)
+        assert preview_result.returncode==0
+        report=P/'previews'/name/'report.json'
+        d=json.loads(report.read_text())
+        assert d['status']=='preview' and d['expected_cases']==16 and d['responses_received']==16 and d['results']==[]
+        batch['preview']['report']=pin(report)
+    for item in sources.values(): assert h(item['path'])==item['sha256']
+    plan['status']='approved_ready_all3_previews_passed'
+    plan['fixture_executions_before_plan']=0
+    plan['preparation_seconds']=time.monotonic()-started
+    save(P/'plan.json',plan)
+    receipt.update(status='complete',plan=pin(P/'plan.json'),seconds=time.monotonic()-started)
+    save(P/'preparation.json',receipt)
+    print(json.dumps({'plan':receipt['plan'],'preview_counts':[b['expected_cases'] for b in plan['batches']],
+                     'source_sha256':{k:v['sha256'] for k,v in sources.items()},'seconds':receipt['seconds']}))
+except BaseException as exc:
+    receipt.update(status='failed',error_type=type(exc).__name__,seconds=time.monotonic()-started)
+    save(P/'preparation.json',receipt)
+    raise

@@ -1,0 +1,117 @@
+{
+  "eligible": {
+    "coordinates": 1331456,
+    "changed": 429,
+    "positive_delta": 231,
+    "negative_delta": 198,
+    "unchanged": 1331027,
+    "zero_source_coordinates": 0,
+    "source_l2": 70134.96434594429,
+    "actual_delta_l2": 2.035779114517941,
+    "relative_delta_l2": 2.9026593704052615e-05,
+    "max_absolute_delta": 1.0,
+    "max_relative_delta_on_nonzero_source": 0.011764705882352941,
+    "relative_delta_undefined_on_zero_source": 0,
+    "absolute_floor_active_coordinates": 1425,
+    "exceeds_relative_only_radius": 8,
+    "exceeds_declared_continuous_box": 8,
+    "maximum_box_excess": 0.03375,
+    "maximum_actual_to_box_ratio": 1.176470588235294,
+    "sign_flips": 0
+  },
+  "eligible_tensor_count": 361,
+  "all_observed_native_tensor_count": 421,
+  "eligible_denominator": "all 1,331,456 coordinates in all361 eligible vectors",
+  "edited_tensor_full_denominator_l2": 38085.19080826744,
+  "edited_tensor_full_relative_l2": 5.3453299597911405e-05,
+  "changed_coordinate_denominator_l2": 341.82404907263157,
+  "changed_coordinate_relative_l2": 0.005955634543681197,
+  "whole_checkpoint_relative_l2": null,
+  "whole_checkpoint_denominator_note": "Not computed; no whole model payload scan.",
+  "changed_layers": 51,
+  "layer_count": 60,
+  "global_final_norm_changed": true,
+  "rows": [
+    {
+      "family": "input_layernorm.weight",
+      "changed": 67,
+      "changed_tensors": 24,
+      "coordinates": 322560,
+      "source_l2": 40876.25427626437,
+      "actual_delta_l2": 1.798959600922698,
+      "relative_delta_l2": 4.4009893586734547e-05,
+      "exceeds_declared_continuous_box": 0
+    },
+    {
+      "family": "layer_scalar",
+      "changed": 0,
+      "changed_tensors": 0,
+      "coordinates": 60,
+      "source_l2": 6.239437853582468,
+      "actual_delta_l2": 0.0,
+      "relative_delta_l2": 0.0,
+      "exceeds_declared_continuous_box": 0
+    },
+    {
+      "family": "post_attention_layernorm.weight",
+      "changed": 52,
+      "changed_tensors": 22,
+      "coordinates": 322560,
+      "source_l2": 558.6377248847946,
+      "actual_delta_l2": 0.3575892655760581,
+      "relative_delta_l2": 0.0006401094119624702,
+      "exceeds_declared_continuous_box": 3
+    },
+    {
+      "family": "post_feedforward_layernorm.weight",
+      "changed": 34,
+      "changed_tensors": 13,
+      "coordinates": 322560,
+      "source_l2": 781.5805666707763,
+      "actual_delta_l2": 0.7965308549535708,
+      "relative_delta_l2": 0.0010191282753439952,
+      "exceeds_declared_continuous_box": 1
+    },
+    {
+      "family": "pre_feedforward_layernorm.weight",
+      "changed": 18,
+      "changed_tensors": 13,
+      "coordinates": 322560,
+      "source_l2": 56934.280568411596,
+      "actual_delta_l2": 0.2744540256710243,
+      "relative_delta_l2": 4.8205408574759e-06,
+      "exceeds_declared_continuous_box": 0
+    },
+    {
+      "family": "self_attn.k_norm.weight",
+      "changed": 149,
+      "changed_tensors": 35,
+      "coordinates": 17920,
+      "source_l2": 14.753693344523253,
+      "actual_delta_l2": 0.007063220772211637,
+      "relative_delta_l2": 0.00047874254990080766,
+      "exceeds_declared_continuous_box": 2
+    },
+    {
+      "family": "self_attn.q_norm.weight",
+      "changed": 106,
+      "changed_tensors": 32,
+      "coordinates": 17920,
+      "source_l2": 134.59325826009035,
+      "actual_delta_l2": 0.06334872945401115,
+      "relative_delta_l2": 0.0004706679240322347,
+      "exceeds_declared_continuous_box": 2
+    },
+    {
+      "family": "norm.weight",
+      "changed": 3,
+      "changed_tensors": 1,
+      "coordinates": 5376,
+      "source_l2": 2364.6308379910224,
+      "actual_delta_l2": 0.25772370630010444,
+      "relative_delta_l2": 0.00010899109584440044,
+      "exceeds_declared_continuous_box": 0
+    }
+  ],
+  "model_calls": 0
+}

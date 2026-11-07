@@ -1,0 +1,29 @@
+{
+  "argv": [
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/infra/weight-tools-ci/bin/python",
+    "-m",
+    "kairyu_bench.wsp.weights.editor",
+    "create",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/checkpoints/code90-current-ad-helper-av-v1",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/checkpoints/fresh-native-contract-f03",
+    "--spec",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f03-native-v1/proposal/fresh-native-contract-f03.json",
+    "--manifest",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f03-native-v1/materialization/edit-manifest.json",
+    "--reserve-bytes",
+    "53687091200",
+    "--apply"
+  ],
+  "started_epoch": 1794044236.72265,
+  "finished_epoch": 1794044441.8449414,
+  "seconds": 205.12229132652283,
+  "returncode": 0,
+  "source_sha256": {
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f03-native-v1/materialization/source/src/kairyu_bench/__init__.py": "adb3e3c453270cc36bdfe5b78fb4b3543eeb8b1bc8de356847e8580086be0709",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f03-native-v1/materialization/source/src/kairyu_bench/wsp/__init__.py": "066441d666206cec6fe79218c4b94f84b75481769261f88d8092a28bfc2f1927",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f03-native-v1/materialization/source/src/kairyu_bench/wsp/weights/__init__.py": "84407e8a57e31b915d5ba936a309457422b3b6c347fde2056f1dd492ad511cca",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f03-native-v1/materialization/source/src/kairyu_bench/wsp/weights/checkpoint.py": "898297c05e7179cdc4568d6f290b978073bcebafea804ac043b54030e8205bf9",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f03-native-v1/materialization/source/src/kairyu_bench/wsp/weights/editor.py": "0983580f41989c26e84c16c26924f2850dd4e5d3d12917bb9553d7feb92333d2",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f03-native-v1/materialization/source/fresh-f03-materialize-20261107.py": "0b5ff541dabfbdc5e7fbd591b0f4389eb923cc33ba22b69fb4a33ec5b27e9f69"
+  }
+}

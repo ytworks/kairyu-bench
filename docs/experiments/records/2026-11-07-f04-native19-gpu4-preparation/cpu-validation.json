@@ -1,0 +1,15 @@
+{
+  "test_argv": [
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/infra/weight-tools-ci/bin/python",
+    "-m",
+    "unittest",
+    "test_gemma4_native_owner",
+    "-v"
+  ],
+  "test_returncode": 0,
+  "ruff_returncode": 0,
+  "owner_sha256": "56dca4ce4b1508084664a9e8ce9e9a2bb3b7f528d840fb35fb352c07e92f0bd9",
+  "test_sha256": "9487f5f77f3a1e0775b7507afb9423695b13a30432f9e0c2e18032474776996b",
+  "service_operations": 0,
+  "model_calls": 0
+}

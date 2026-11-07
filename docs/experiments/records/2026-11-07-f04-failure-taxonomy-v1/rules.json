@@ -1,0 +1,26 @@
+{
+  "frozen_epoch": 1794059496.0401688,
+  "rules": {
+    "precedence": [
+      "length",
+      "explicit_timeout",
+      "missing_required_entrypoint",
+      "syntax_or_extraction",
+      "assertion_stderr_hint",
+      "unknown"
+    ],
+    "length": "Only saved finish_reason=length; token count alone is insufficient.",
+    "explicit_timeout": "Only saved timed_out=true or explicit timeout status.",
+    "missing_required_entrypoint": "Expected callable absent after pinned sanitizer; AST only.",
+    "syntax_or_extraction": "Empty selected code or AST SyntaxError; no generated-code execution.",
+    "assertion_stderr_hint": "SciCode failed, returncode nonzero, timed_out=false, AssertionError hint. Medium confidence; not raw traceback proof.",
+    "unknown": "Binary rejection, generic fail, or non-assertion exception hint cannot identify assertion vs runtime vs per-test timeout.",
+    "not_inferred": [
+      "No model-capability attribution from weights.",
+      "No hidden-test inputs or reference answers read.",
+      "No benchmark-to-training-data transfer.",
+      "No claimed timeout from long generation or algorithm complexity.",
+      "EvalPlus fail may include internal timeout; only separate timeout is unambiguous."
+    ]
+  }
+}

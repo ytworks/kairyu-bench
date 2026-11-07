@@ -1,0 +1,20 @@
+{
+  "status": "read_only_review_no_blocker",
+  "public_script_sources": [
+    {
+      "path": "docs/experiments/scripts/fresh-f03-deploy-preview-20261107.py",
+      "normalized_AST_equal": true,
+      "sha256": "4c2d9221bd294fbed32f3c789e9fb6a90da1ee947228162945ad89f486a6760c"
+    },
+    {
+      "path": "docs/experiments/scripts/fresh-f03-deploy-apply-20261107.py",
+      "normalized_AST_equal": true,
+      "sha256": "59348490aa6497095c8551989f3c3b004e053fc24fe8430b2fe7907286e5f27d"
+    }
+  ],
+  "config_exact_only_records_extend_exclude": true,
+  "default_rules_and_src_tests_scripts_scope_unchanged": true,
+  "model_calls": 0,
+  "service_operations": 0,
+  "tests_executed": 0
+}

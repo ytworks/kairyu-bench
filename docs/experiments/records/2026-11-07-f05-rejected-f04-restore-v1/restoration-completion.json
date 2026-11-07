@@ -1,0 +1,102 @@
+{
+  "epoch": 1794056408.4737458,
+  "status": "best_complete_F04_restored_current_serving",
+  "best_parent": "F04",
+  "current_model": "F04",
+  "F05_status": "REJECT_AT_NATIVE_SCREEN_OFFICIALLY_UNSCORED",
+  "F05_WSP_started": false,
+  "additional_WSP_runs": 0,
+  "parallel_owner_seconds": 123.53767085075378,
+  "endpoint_launch": {
+    "returncode": 0,
+    "elapsed_seconds": 4.972356557846069
+  },
+  "endpoint_closure_sha256": "c2737913df31a2428e2eff406e32a9014b5f7076b72a8445848c3d14abaf8f52",
+  "four_runtime_weights_closure_sha256": "bd4d27aaa698b67bfd792356c8f59f6429db7965c3f7a9599c73e371def4d8a6",
+  "global_normal_release_sha256": "75435b50e0483f6023df333c85fd32628ff24d6774d0792146f67c0a4fd0e40b",
+  "replicas": {
+    "gemma-0": {
+      "cid": "47207dd45c1819d875951e66728310171dc218dfc55b1221054f704c39eb3009",
+      "endpoint": "http://172.26.0.8:8000/v1",
+      "models": [
+        "gemma-4-31b"
+      ],
+      "tree": "7b9e9488e3cd4e0b6c5f61ae341e5eeccdf5bd31c46d1c8354950dbc29d0f924",
+      "checkpoint_mount": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/checkpoints/fresh-native-relative-f04-faststore-v1/checkpoint",
+      "checkpoint_readonly": true,
+      "runtime_preserved": true,
+      "mtp_tokens": 4,
+      "tp_size": 2,
+      "native_runtime_flags_preserved": true,
+      "receipt_sha256": "0ff494826b0d2b8c0316d7fa3637f76842d6e01b438d773208ae700ba90ba4b9",
+      "seconds": 122.54888892173767
+    },
+    "gemma-1": {
+      "cid": "d1a79f265949e31778ead91834e6a509d3c66af708dc3d7247eb716caa28cef3",
+      "endpoint": "http://172.26.0.6:8000/v1",
+      "models": [
+        "gemma-4-31b"
+      ],
+      "tree": "7b9e9488e3cd4e0b6c5f61ae341e5eeccdf5bd31c46d1c8354950dbc29d0f924",
+      "checkpoint_mount": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/checkpoints/fresh-native-relative-f04-faststore-v1/checkpoint",
+      "checkpoint_readonly": true,
+      "runtime_preserved": true,
+      "mtp_tokens": 4,
+      "tp_size": 2,
+      "native_runtime_flags_preserved": true,
+      "receipt_sha256": "9c4531dccf8625e8d0cf41c14249f722184a82cb04ce91bfd7834f836dbb0d51",
+      "seconds": 120.60865068435669
+    },
+    "gemma-2": {
+      "cid": "07e1b17e7c84d8d178703417bb341c3313653eca7122aba1ad7b3d6d893d5abb",
+      "endpoint": "http://172.26.0.5:8000/v1",
+      "models": [
+        "gemma-4-31b"
+      ],
+      "tree": "7b9e9488e3cd4e0b6c5f61ae341e5eeccdf5bd31c46d1c8354950dbc29d0f924",
+      "checkpoint_mount": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/checkpoints/fresh-native-relative-f04-faststore-v1/checkpoint",
+      "checkpoint_readonly": true,
+      "runtime_preserved": true,
+      "mtp_tokens": 4,
+      "tp_size": 2,
+      "native_runtime_flags_preserved": true,
+      "receipt_sha256": "e1cf4a18fcb52c7fa4474f3ef2acff46e58cbf6e2581361b0b0be22b1fad43c7",
+      "seconds": 120.15939569473267
+    },
+    "gemma-3": {
+      "cid": "41ae0d0831faf5d79939f16ad401da0da8fee0d2d453af12e4e4efd10480f45c",
+      "endpoint": "http://172.26.0.4:8000/v1",
+      "models": [
+        "gemma-4-31b"
+      ],
+      "tree": "7b9e9488e3cd4e0b6c5f61ae341e5eeccdf5bd31c46d1c8354950dbc29d0f924",
+      "checkpoint_mount": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/checkpoints/fresh-native-relative-f04-faststore-v1/checkpoint",
+      "checkpoint_readonly": true,
+      "runtime_preserved": true,
+      "mtp_tokens": 4,
+      "tp_size": 2,
+      "native_runtime_flags_preserved": true,
+      "receipt_sha256": "0ab568a66a0abf517c5dc5665046e40604716129f47afb88eedd15f125fa58eb",
+      "seconds": 122.57048201560974
+    }
+  },
+  "protected_count": 23,
+  "protected_unchanged": true,
+  "endpoint_generation_requests": 5,
+  "official_evaluation_requests": 0,
+  "served_record_update": {
+    "before_sha256": "53985c2d592b92391afbe15adf8ddfb3a101a3b38c9ea50af2cd609e89759e8c",
+    "after_sha256": "4e4b9a1d6670624cab7e4f53accad87970bf10635599ce2d06a2f6d2b0652552",
+    "changed_fields": [
+      "files",
+      "path",
+      "tree_sha256"
+    ],
+    "schema_preserved": true
+  },
+  "same_as_prior_F04_served_record": true,
+  "checkpoint_all9_fullstat_matched_manifest": true,
+  "shared_nlink": 17,
+  "source_sha256": "7cbafc2f149d7d3d82e57527fe5092110ba58ece2ca818fa2d499f1184a096f3",
+  "new_weight_edit": false
+}

@@ -1,0 +1,110 @@
+{
+  "status": "all_four_restored_F04_and_gateway_verified",
+  "gateway": {
+    "cid": "88943a0985ba97dfb17be6b5fb54040eba2570b70ce05126bd410162d3658ffb",
+    "endpoint": "http://172.26.0.9:8000/v1",
+    "model_ids": [
+      "gemma-4-31b",
+      "embeddinggemma-2"
+    ],
+    "healthy": true,
+    "unchanged_protected_service": true
+  },
+  "replicas": {
+    "gemma-0": {
+      "cid": "47207dd45c1819d875951e66728310171dc218dfc55b1221054f704c39eb3009",
+      "endpoint": "http://172.26.0.8:8000/v1",
+      "models": [
+        "gemma-4-31b"
+      ],
+      "tree": "7b9e9488e3cd4e0b6c5f61ae341e5eeccdf5bd31c46d1c8354950dbc29d0f924",
+      "checkpoint_mount": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/checkpoints/fresh-native-relative-f04-faststore-v1/checkpoint",
+      "checkpoint_readonly": true,
+      "runtime_preserved": true,
+      "mtp_tokens": 4,
+      "tp_size": 2,
+      "native_runtime_flags_preserved": true,
+      "receipt_sha256": "0ff494826b0d2b8c0316d7fa3637f76842d6e01b438d773208ae700ba90ba4b9",
+      "seconds": 122.54888892173767
+    },
+    "gemma-1": {
+      "cid": "d1a79f265949e31778ead91834e6a509d3c66af708dc3d7247eb716caa28cef3",
+      "endpoint": "http://172.26.0.6:8000/v1",
+      "models": [
+        "gemma-4-31b"
+      ],
+      "tree": "7b9e9488e3cd4e0b6c5f61ae341e5eeccdf5bd31c46d1c8354950dbc29d0f924",
+      "checkpoint_mount": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/checkpoints/fresh-native-relative-f04-faststore-v1/checkpoint",
+      "checkpoint_readonly": true,
+      "runtime_preserved": true,
+      "mtp_tokens": 4,
+      "tp_size": 2,
+      "native_runtime_flags_preserved": true,
+      "receipt_sha256": "9c4531dccf8625e8d0cf41c14249f722184a82cb04ce91bfd7834f836dbb0d51",
+      "seconds": 120.60865068435669
+    },
+    "gemma-2": {
+      "cid": "07e1b17e7c84d8d178703417bb341c3313653eca7122aba1ad7b3d6d893d5abb",
+      "endpoint": "http://172.26.0.5:8000/v1",
+      "models": [
+        "gemma-4-31b"
+      ],
+      "tree": "7b9e9488e3cd4e0b6c5f61ae341e5eeccdf5bd31c46d1c8354950dbc29d0f924",
+      "checkpoint_mount": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/checkpoints/fresh-native-relative-f04-faststore-v1/checkpoint",
+      "checkpoint_readonly": true,
+      "runtime_preserved": true,
+      "mtp_tokens": 4,
+      "tp_size": 2,
+      "native_runtime_flags_preserved": true,
+      "receipt_sha256": "e1cf4a18fcb52c7fa4474f3ef2acff46e58cbf6e2581361b0b0be22b1fad43c7",
+      "seconds": 120.15939569473267
+    },
+    "gemma-3": {
+      "cid": "41ae0d0831faf5d79939f16ad401da0da8fee0d2d453af12e4e4efd10480f45c",
+      "endpoint": "http://172.26.0.4:8000/v1",
+      "models": [
+        "gemma-4-31b"
+      ],
+      "tree": "7b9e9488e3cd4e0b6c5f61ae341e5eeccdf5bd31c46d1c8354950dbc29d0f924",
+      "checkpoint_mount": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/checkpoints/fresh-native-relative-f04-faststore-v1/checkpoint",
+      "checkpoint_readonly": true,
+      "runtime_preserved": true,
+      "mtp_tokens": 4,
+      "tp_size": 2,
+      "native_runtime_flags_preserved": true,
+      "receipt_sha256": "0ab568a66a0abf517c5dc5665046e40604716129f47afb88eedd15f125fa58eb",
+      "seconds": 122.57048201560974
+    }
+  },
+  "logprob_checks": {
+    "gemma-0": {
+      "http_success": true,
+      "model": "gemma-4-31b",
+      "prompt_logprob_positions": 2
+    },
+    "gemma-1": {
+      "http_success": true,
+      "model": "gemma-4-31b",
+      "prompt_logprob_positions": 2
+    },
+    "gemma-2": {
+      "http_success": true,
+      "model": "gemma-4-31b",
+      "prompt_logprob_positions": 2
+    },
+    "gemma-3": {
+      "http_success": true,
+      "model": "gemma-4-31b",
+      "prompt_logprob_positions": 2
+    }
+  },
+  "chat_check": true,
+  "generation_requests": 5,
+  "official_evaluation_requests": 0,
+  "all_four_idle": true,
+  "protected_count": 23,
+  "protected_unchanged": true,
+  "closure_sha256": "bd4d27aaa698b67bfd792356c8f59f6429db7965c3f7a9599c73e371def4d8a6",
+  "served_record_sha256": "4e4b9a1d6670624cab7e4f53accad87970bf10635599ce2d06a2f6d2b0652552",
+  "created_epoch": 1794056351.8940277
+}

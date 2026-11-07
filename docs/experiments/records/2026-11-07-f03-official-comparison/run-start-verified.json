@@ -1,0 +1,64 @@
+{
+  "epoch": 1794048819.9162512,
+  "run": {
+    "schema_version": 1,
+    "kind": "wsp",
+    "status": "running",
+    "tier": 30,
+    "split": "dev",
+    "label": "504d0914e8f7d2a4e51a0888e5692e2d1a158b82d3a77b600810a14bf7e33b63",
+    "model_id": "gemma-4-31b",
+    "endpoint": {
+      "fingerprint": "sha256:6342f06c730514dc"
+    },
+    "manifest_sha256": "a3a0b60e0872a38c6b1abf7e97d7fe729fabf9e25cd3f09a3da9544b9ca39b5b",
+    "items": 2338,
+    "started_at": "2026-11-07T10:23:58.686443Z",
+    "observation": {
+      "capture_id": "d05e182c3f284d1d9ec124e059b76b6d",
+      "output_dir": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f03-dev30-dp4-v1/http-trace",
+      "run_id": "gemma4-fresh-f03-dev30-dp4-20261107-v1"
+    }
+  },
+  "actual_runner_sha256": "2be05727de40acfada0635966ffe9ce6d9258ac2f45379f3c40432bd33354f9d",
+  "actual_runner_cid": "b947da714bf08c131db8971e36e16f5155a5de5303161ad8898bd48cff4eaa01",
+  "observation_timing": "Mid-run verification; filename kept for existing audit compatibility; not a launch-time observation.",
+  "elapsed_since_owner_start": 1783.7628724575043,
+  "served_models": [
+    {
+      "service": "gemma-0",
+      "cid": "0169d434fd1fa863ec39661a3e4c6b947ac2bef977e6f596ede771c6921bd32b",
+      "model_ids": [
+        "gemma-4-31b"
+      ]
+    },
+    {
+      "service": "gemma-1",
+      "cid": "d782bf8b23562bd19835279b1f8804910df882065d222e8e674cecafbb9b7d5e",
+      "model_ids": [
+        "gemma-4-31b"
+      ]
+    },
+    {
+      "service": "gemma-2",
+      "cid": "3acc0a02d713ae298e7979547db8fac1a14374826cd52fa7eb4453289ffe4072",
+      "model_ids": [
+        "gemma-4-31b"
+      ]
+    },
+    {
+      "service": "gemma-3",
+      "cid": "a7a781b8fa49e81f0a1cd638dbcc70f2d9c8310857e3b8c1ef53250eeafa4a02",
+      "model_ids": [
+        "gemma-4-31b"
+      ]
+    }
+  ],
+  "full_selection": {
+    "manifest_sha256": "a3a0b60e0872a38c6b1abf7e97d7fe729fabf9e25cd3f09a3da9544b9ca39b5b",
+    "items": 2338,
+    "code_items": 90,
+    "excluded_ids": [],
+    "selected_ids_json_sha256": "1fa6ab2b836f8e7d69a110b99c7189e45ba2426ea632f1c2585ba127aa1b02db"
+  }
+}

@@ -1,0 +1,49 @@
+{
+  "schema_version": 1,
+  "status": "proceed_to_one_full_dev30_after_verified_artifact_and_serving_identity",
+  "recorded_epoch": 1794059313.3419185,
+  "candidate": "F06",
+  "parent": "F04",
+  "official_candidate_score": null,
+  "parent_code": 72.9365079365,
+  "parent_overall": 76.9910864328,
+  "opus_receipt_sha256": "a6bc33aa9f33648cd42104ef19b11bf8eda9ef21bf0f5b3284b894c7b1b9dbba",
+  "review_timing": "Reviewed final trained factors and exact merge specification; saved BF16 measurements and verification were explicitly pending in the sent prompt. Final retained norms below were measured after dispatch.",
+  "accepted": [
+    "Full create/verify, parent/candidate hash and actual chat/logprob/MTP serving identity gates.",
+    "All410 saved changed-count/L2/intended-L2/full-matrix-denominator report; zero vanished matrices and all differences recorded.",
+    "One entire unchanged dev30; no parent benchmark rerun and no extra native-generation screen.",
+    "Classify every parent code failure from existing records and pair all code reasoning characters/bytes/content/finish, without calling total completion tokens reasoning tokens.",
+    "Report all2338 items, all domains/sources, failures/unscored, agent steps/tools, runtime, and every attempt."
+  ],
+  "not_adopted": [
+    {
+      "proposal": "Make exact saved/intended cosine an additional mandatory proxy gate.",
+      "reason": "It is not available from the retained records and requires another complete projection read and B@A regeneration. Exact byte-regeneration verifies the intended BF16 artifact; all410 matrices retain nonzero updates, aggregate saved/intended L2 ratio0.9635242872, per-matrix ratios0.68895..1.02730. Norm ratio is not direction retention and cosine remains explicitly unmeasured. No validated cosine threshold establishes capability. Prefer the full functional benchmark over adding a proxy-based selection rule."
+    },
+    {
+      "proposal": "Additional51-row parent/candidate teacher-forced holdout measurement.",
+      "reason": "Reviewer made this conditional on weak retention. Recorded norms do not show the update being erased. No new model calls; preserve51 model-unevaluated holdout rather than selecting a candidate by another likelihood proxy."
+    },
+    {
+      "proposal": "Veto every overall or agentic regression and require statistical significance before acknowledging a measured score gain.",
+      "reason": "User explicitly permits modest losses when the overall tradeoff serves coding improvement. All losses must be reported and weighed; there is no blanket zero-loss veto. A small observed score gain is reported as an observed result with unknown repeatability, never as established general capability."
+    }
+  ],
+  "decision_rules_before_candidate_evaluation": [
+    "Never rank a partial or invalid run as complete. Require all2338 scored under identical conditions.",
+    "Primary comparison is the official equal-source code score. For an exact coding tie, prefer the higher official overall mean, as for F04.",
+    "If coding falls, do not replace F04. If coding rises, disclose every other-domain/agentic loss and explicitly justify whether the complete tradeoff is beneficial before adopting; no changing or hiding the measured metric.",
+    "No claimed statistical significance from small item flips. No baseline repeat solely to make a preferred outcome. Preserve final test for confirmation."
+  ],
+  "hard_stop": [
+    "create/verify failure",
+    "incorrect parent or served candidate identity",
+    "unexpected tensor/nonweight mutation",
+    "nonfinite or entirely erased saved update"
+  ],
+  "cosine_measured": false,
+  "holdout_model_evaluations": 0,
+  "retention_sha256": "1a3ef6c823d2e67d9ac5b0286e60930143820fb1b342f3fdb10592fd22909e20",
+  "capability_claim": false
+}

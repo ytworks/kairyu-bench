@@ -1,0 +1,59 @@
+{
+  "epoch": 1794047036.4637885,
+  "services": [
+    {
+      "service": "gemma-0",
+      "cid": "0169d434fd1fa863ec39661a3e4c6b947ac2bef977e6f596ede771c6921bd32b",
+      "ip": "172.26.0.4",
+      "healthy": true,
+      "idle_counts": [
+        0.0,
+        0.0
+      ],
+      "model_ids": [
+        "gemma-4-31b"
+      ]
+    },
+    {
+      "service": "gemma-1",
+      "cid": "d782bf8b23562bd19835279b1f8804910df882065d222e8e674cecafbb9b7d5e",
+      "ip": "172.26.0.5",
+      "healthy": true,
+      "idle_counts": [
+        0.0,
+        0.0
+      ],
+      "model_ids": [
+        "gemma-4-31b"
+      ]
+    },
+    {
+      "service": "gemma-2",
+      "cid": "3acc0a02d713ae298e7979547db8fac1a14374826cd52fa7eb4453289ffe4072",
+      "ip": "172.26.0.6",
+      "healthy": true,
+      "idle_counts": [
+        0.0,
+        0.0
+      ],
+      "model_ids": [
+        "gemma-4-31b"
+      ]
+    },
+    {
+      "service": "gemma-3",
+      "cid": "a7a781b8fa49e81f0a1cd638dbcc70f2d9c8310857e3b8c1ef53250eeafa4a02",
+      "ip": "172.26.0.8",
+      "healthy": true,
+      "idle_counts": [
+        0.0,
+        0.0
+      ],
+      "model_ids": [
+        "gemma-4-31b"
+      ]
+    }
+  ],
+  "checkpoint_stats_equal": true,
+  "model_generation_calls": 0
+}

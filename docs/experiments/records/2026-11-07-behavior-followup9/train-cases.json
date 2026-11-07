@@ -1,0 +1,62 @@
+{
+  "G": [
+    [
+      {
+        "id": "behavior-G1",
+        "split": "train",
+        "prompt": "Write Python solve(changes, start, lower, upper). changes is a 1D integer array. lower<=upper are integers and start is integer. A balance starts at start and applies changes in order. Return(1,) containing1 iff the initial balance AND every intermediate balance stay in[lower,upper], else0. Return a float64 ndarray with the specified shape; do not mutate inputs. Include required imports and the complete final function, no prose.",
+        "correct": "import numpy as np\n\ndef solve(changes, start, lower, upper):\n    states=np.r_[start,start+np.cumsum(changes)]\n    ok=np.all((states>=lower)&(states<=upper))\n    return np.array([ok],dtype=float)\n",
+        "foil": "import numpy as np\n\ndef solve(changes, start, lower, upper):\n    states=np.r_[start,start+np.cumsum(changes)]\n    ok=(states[-1]>=lower)&(states[-1]<=upper)\n    return np.array([ok],dtype=float)\n"
+      }
+    ],
+    [
+      {
+        "id": "behavior-G2",
+        "split": "train",
+        "prompt": "Write Python solve(bounds, step). bounds is(T,2) integer inclusive intervals [low,high], T>=1, low<=high. step is an integer>=0. Choose one integer at every stage within its interval, with absolute change between consecutive choices<=step. Return(1,) containing1 iff a full valid sequence exists, otherwise0. An impossible prefix cannot be repaired. Return a float64 ndarray with the specified shape; do not mutate inputs. Include required imports and the complete final function, no prose.",
+        "correct": "import numpy as np\n\ndef solve(bounds, step):\n    lo,hi=map(int,bounds[0])\n    for a,b in bounds[1:]:\n        lo=max(int(a),lo-step)\n        hi=min(int(b),hi+step)\n        if lo>hi:\n            return np.array([0.0])\n    return np.array([float(lo<=hi)])\n",
+        "foil": "import numpy as np\n\ndef solve(bounds, step):\n    lo,hi=map(int,bounds[0])\n    for a,b in bounds[1:]:\n        lo=max(int(a),lo-step)\n        hi=min(int(b),hi+step)\n        pass\n    return np.array([float(lo<=hi)])\n"
+      }
+    ]
+  ],
+  "H": [
+    [
+      {
+        "id": "behavior-H1",
+        "split": "train",
+        "prompt": "Write Python solve(times, values). times and values are 1D real arrays of equal length n>=2; times strictly increases. Return(n-1,) where result[i]=(values[i+1]-values[i])/(times[i+1]-times[i]). These are adjacent interval secants, not derivatives at sample points. Return a float64 ndarray with the specified shape; do not mutate inputs. Include required imports and the complete final function, no prose.",
+        "correct": "import numpy as np\n\ndef solve(times, values):\n    return (np.diff(values)/np.diff(times)).astype(float)\n",
+        "foil": "import numpy as np\n\ndef solve(times, values):\n    return (np.gradient(values,times)[:-1]).astype(float)\n"
+      }
+    ],
+    [
+      {
+        "id": "behavior-H2",
+        "split": "train",
+        "prompt": "Write Python solve(values, spacing). values is a 1D real array with n>=3 samples on a uniform grid; spacing is positive. Return(n-2,) containing centered two-neighbor slopes at interior sample points: result[j]=(values[j+2]-values[j])/(2*spacing). Do not use one-sided interval slopes. Return a float64 ndarray with the specified shape; do not mutate inputs. Include required imports and the complete final function, no prose.",
+        "correct": "import numpy as np\n\ndef solve(values, spacing):\n    return ((values[2:]-values[:-2])/(2*spacing)).astype(float)\n",
+        "foil": "import numpy as np\n\ndef solve(values, spacing):\n    return ((values[2:]-values[1:-1])/spacing).astype(float)\n"
+      }
+    ]
+  ],
+  "I": [
+    [
+      {
+        "id": "behavior-I1",
+        "split": "train",
+        "prompt": "Write Python solve(labels). labels is a 1D integer array with values0..9, possibly empty. Return(1,) containing the unique most frequent label. If empty or multiple labels share the highest frequency, return the sentinel -99. Never resolve a frequency tie by numeric order. Return a float64 ndarray with the specified shape; do not mutate inputs. Include required imports and the complete final function, no prose.",
+        "correct": "import numpy as np\n\ndef solve(labels):\n    u,c=np.unique(labels,return_counts=True)\n    if len(u)==0:\n        return np.array([-99.0])\n    w=u[c==c.max()]\n    return np.array([w[0] if len(w)==1 else -99],dtype=float)\n",
+        "foil": "import numpy as np\n\ndef solve(labels):\n    u,c=np.unique(labels,return_counts=True)\n    if len(u)==0:\n        return np.array([-99.0])\n    w=u[c==c.max()]\n    return np.array([w[0]],dtype=float)\n"
+      }
+    ],
+    [
+      {
+        "id": "behavior-I2",
+        "split": "train",
+        "prompt": "Write Python solve(labels). labels is a 1D integer array with values0..9, possibly empty. Rank DISTINCT frequency values from largest to smallest. Return(1,) containing the unique label with the SECOND largest distinct frequency. Return -88 if fewer than two distinct frequencies exist or multiple labels have that second frequency. Return a float64 ndarray with the specified shape; do not mutate inputs. Include required imports and the complete final function, no prose.",
+        "correct": "import numpy as np\n\ndef solve(labels):\n    u,c=np.unique(labels,return_counts=True)\n    f=np.unique(c)\n    if len(f)<2:\n        return np.array([-88.0])\n    w=u[c==f[-2]]\n    return np.array([w[0] if len(w)==1 else -88],dtype=float)\n",
+        "foil": "import numpy as np\n\ndef solve(labels):\n    u,c=np.unique(labels,return_counts=True)\n    f=np.unique(c)\n    if len(f)<2:\n        return np.array([-88.0])\n    w=u[c==f[-2]]\n    return np.array([w[0]],dtype=float)\n"
+      }
+    ]
+  ]
+}

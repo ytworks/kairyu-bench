@@ -1,0 +1,16 @@
+{
+  "cid": "e8ec9f3bbfca4baa44b16590ee771a96bba1e1328a60ff0c904995f2675a31b5",
+  "endpoint": "http://172.26.0.8:8000/v1",
+  "models": [
+    "gemma-4-31b"
+  ],
+  "tree": "5d056eb03f954db80313a85167153c875fe5e436e4f97c281a3f55202d9b3eaf",
+  "checkpoint_mount": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/checkpoints/code90-current-ad-helper-av-v1",
+  "checkpoint_readonly": true,
+  "runtime_preserved": true,
+  "mtp_tokens": 4,
+  "tp_size": 2,
+  "native_runtime_flags_preserved": true,
+  "receipt_sha256": "8116199cf8d2be2465bf90e373ec83c43ec03a510cae8a0f6d33ad29e999e4cf",
+  "seconds": 111.98277974128723
+}

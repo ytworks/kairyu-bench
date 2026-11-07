@@ -1,0 +1,38 @@
+{
+  "schema_version": 1,
+  "architecture": "gemma4_sparse_bf16",
+  "cases": {
+    "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/code90-resume-20261106/long-helper-chain-curriculum-v1/train-cases.json",
+    "sha256": "bd6fcba70e93b1870ee882f6e92893b93490ad4099af7a9a290ba3d324d68951"
+  },
+  "frame_evidence": {
+    "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/code90-resume-20261106/science-gpu-runs/provisional-av-long-purpose-v3/matrix-correct-logprob/frame-evidence.json",
+    "sha256": "74c07c8e9e8e53f723c1c857268c35a92f0a26b716a6afb042574dd9a8b298d9"
+  },
+  "checkpoint_attestation": {
+    "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/code90-resume-20261106/provisional-av-long-purpose-observation-v1/checkpoint-attestation.json",
+    "sha256": "12ba81915ae02dfc9d898bc5639d4deb689821071b3a36fceb3befa4e0f01755"
+  },
+  "checkpoint_index_sha256": "390b7f9a0a502e4526cf20862d22954c911cc318d8aba2cdb745c6fbd98264f6",
+  "base_tree_sha256": "5d056eb03f954db80313a85167153c875fe5e436e4f97c281a3f55202d9b3eaf",
+  "candidates": [
+    {
+      "id": "fresh-code-joint-f02",
+      "spec": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f02/proposal/fresh-code-joint-f02.json",
+      "sha256": "27f000e4933bdb63d29217c6312114d2b912d349a67617fe42d17d263994410b"
+    }
+  ],
+  "observation_policy": {
+    "max_frame_tokens": 2048,
+    "execution_order": "longest_frame_first",
+    "attention_dispatch": {
+      "": "eager",
+      "text_config": "sdpa",
+      "vision_config": "eager",
+      "audio_config": "eager"
+    },
+    "cuda_memory_cap_gib": 88.0,
+    "answer_batching": "serial",
+    "max_cases_per_microbatch": 1
+  }
+}

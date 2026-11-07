@@ -1,0 +1,517 @@
+{
+  "schema_version": 1,
+  "status": "completed",
+  "plan": {
+    "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-av-behavior12-native-gpu4-v2/root-approved-plan.json",
+    "sha256": "5783f8bce04355bcc57d8c2648659e92c9c107c71de9d01c20b0e39dde6fa732",
+    "bytes": 37290
+  },
+  "completion": {
+    "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-av-behavior12-native-gpu4-v2/completion.json",
+    "sha256": "f5c5fd8a3ca9dbb4ab767887028e60ba005210db83cfbf7ff8772ce08da93202",
+    "bytes": 12059
+  },
+  "elapsed_owner_seconds": 237.89717507362366,
+  "objectives": {
+    "correct-logprob": {
+      "summary": {
+        "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-av-behavior12-native-gpu4-v2/work/correct-logprob/summary.json",
+        "sha256": "eabb73cd9d978130dae53f6ac151dd9660fcb0862876f3063e8d6d91b167fccd",
+        "bytes": 118197
+      },
+      "seconds_excluding_model_load": 29.386511074961163,
+      "forward_count": 12,
+      "gpu_peak_allocated_gib": 62.25674533843994,
+      "gpu_peak_reserved_gib": 62.697265625,
+      "saved_activation_metrics": {
+        "saved_tensor_events": 45612,
+        "offloaded_save_events": 24516,
+        "copied_to_cpu_bytes": 65238857728,
+        "offloaded_unpack_events": 24516,
+        "restored_payload_bytes": 65238857728,
+        "byte_interpretation": "Summed copy events, including duplicate saves/unpacks; not unique storage or GPU memory reclaimed."
+      },
+      "runtime": {
+        "torch": "2.14.0+cu130",
+        "transformers": "5.20.2",
+        "device": "cuda:0",
+        "weight_dtype": "BF16",
+        "attention": "sdpa",
+        "observation_policy": {
+          "max_frame_tokens": 1024,
+          "execution_order": "longest_frame_first",
+          "attention_dispatch": {
+            "": "eager",
+            "text_config": "sdpa",
+            "vision_config": "eager",
+            "audio_config": "eager"
+          },
+          "cuda_memory_cap_gib": 88.0,
+          "answer_batching": "serial",
+          "max_cases_per_microbatch": 1
+        },
+        "observation_execution": {
+          "resolved_attention_dispatch": {
+            "": "eager",
+            "text_config": "sdpa",
+            "vision_config": "eager",
+            "audio_config": null
+          },
+          "absent_subconfigs": [
+            "audio_config"
+          ],
+          "cuda_allocator": {
+            "requested_gib": 88.0,
+            "fraction_of_total": 0.9265848686527491,
+            "free_before_load_bytes": 101390548992,
+            "total_device_bytes": 101975851008,
+            "scope": "PyTorch caching allocator only; not a cap on all device allocations"
+          },
+          "backend_policy": "Transformers text SDPA dispatch uses PyTorch automatic kernels, including math; fused/GQA memory savings not asserted",
+          "automatic_attention_api_or_length_retry": false
+        },
+        "gradients": "native BF16 autograd, accumulated FP32",
+        "max_cases_per_microbatch": 1,
+        "gpu_peak_allocated_GiB": 62.25674533843994,
+        "gpu_peak_reserved_GiB": 62.697265625,
+        "native_saved_activation_storage": {
+          "mode": "cpu-fp32",
+          "source_device": "cuda",
+          "dtype": "torch.float32",
+          "minimum_ndim": 2,
+          "nonleaf_only": true,
+          "copy": "blocking_preserve_dtype",
+          "scope": "one answer forward and immediate VJP",
+          "automatic_fallback": false
+        }
+      },
+      "source_values_unchanged": true,
+      "frames_exact": true,
+      "unused_tensors": []
+    },
+    "margin": {
+      "summary": {
+        "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-av-behavior12-native-gpu4-v2/work/margin/summary.json",
+        "sha256": "e9ca36ef7c67a17c25ac849e67a4a3ee027eeba49c1422b602c04d501ec0bc25",
+        "bytes": 118857
+      },
+      "seconds_excluding_model_load": 47.426941744983196,
+      "forward_count": 24,
+      "gpu_peak_allocated_gib": 62.25674533843994,
+      "gpu_peak_reserved_gib": 63.06640625,
+      "saved_activation_metrics": {
+        "saved_tensor_events": 91164,
+        "offloaded_save_events": 49032,
+        "copied_to_cpu_bytes": 130603544576,
+        "offloaded_unpack_events": 49032,
+        "restored_payload_bytes": 130603544576,
+        "byte_interpretation": "Summed copy events, including duplicate saves/unpacks; not unique storage or GPU memory reclaimed."
+      },
+      "runtime": {
+        "torch": "2.14.0+cu130",
+        "transformers": "5.20.2",
+        "device": "cuda:0",
+        "weight_dtype": "BF16",
+        "attention": "sdpa",
+        "observation_policy": {
+          "max_frame_tokens": 1024,
+          "execution_order": "longest_frame_first",
+          "attention_dispatch": {
+            "": "eager",
+            "text_config": "sdpa",
+            "vision_config": "eager",
+            "audio_config": "eager"
+          },
+          "cuda_memory_cap_gib": 88.0,
+          "answer_batching": "serial",
+          "max_cases_per_microbatch": 1
+        },
+        "observation_execution": {
+          "resolved_attention_dispatch": {
+            "": "eager",
+            "text_config": "sdpa",
+            "vision_config": "eager",
+            "audio_config": null
+          },
+          "absent_subconfigs": [
+            "audio_config"
+          ],
+          "cuda_allocator": {
+            "requested_gib": 88.0,
+            "fraction_of_total": 0.9265848686527491,
+            "free_before_load_bytes": 101390548992,
+            "total_device_bytes": 101975851008,
+            "scope": "PyTorch caching allocator only; not a cap on all device allocations"
+          },
+          "backend_policy": "Transformers text SDPA dispatch uses PyTorch automatic kernels, including math; fused/GQA memory savings not asserted",
+          "automatic_attention_api_or_length_retry": false
+        },
+        "gradients": "native BF16 autograd, accumulated FP32",
+        "max_cases_per_microbatch": 1,
+        "gpu_peak_allocated_GiB": 62.25674533843994,
+        "gpu_peak_reserved_GiB": 63.06640625,
+        "native_saved_activation_storage": {
+          "mode": "cpu-fp32",
+          "source_device": "cuda",
+          "dtype": "torch.float32",
+          "minimum_ndim": 2,
+          "nonleaf_only": true,
+          "copy": "blocking_preserve_dtype",
+          "scope": "one answer forward and immediate VJP",
+          "automatic_fallback": false
+        }
+      },
+      "source_values_unchanged": true,
+      "frames_exact": true,
+      "unused_tensors": []
+    }
+  },
+  "cases": [
+    {
+      "id": "behavior-A1",
+      "correct_logprob": -1.3735840320587158,
+      "margin": -0.260095477104187,
+      "native_tests_passed": 0,
+      "native_tests_total": 16,
+      "native_case_passed": false
+    },
+    {
+      "id": "behavior-A2",
+      "correct_logprob": -1.6474626064300537,
+      "margin": 0.2285900115966797,
+      "native_tests_passed": 16,
+      "native_tests_total": 16,
+      "native_case_passed": true
+    },
+    {
+      "id": "behavior-B1",
+      "correct_logprob": -1.7207354307174683,
+      "margin": 0.11619222164154053,
+      "native_tests_passed": 16,
+      "native_tests_total": 16,
+      "native_case_passed": true
+    },
+    {
+      "id": "behavior-B2",
+      "correct_logprob": -1.1079522371292114,
+      "margin": 0.0453791618347168,
+      "native_tests_passed": 16,
+      "native_tests_total": 16,
+      "native_case_passed": true
+    },
+    {
+      "id": "behavior-C1",
+      "correct_logprob": -2.4275448322296143,
+      "margin": 0.6337692737579346,
+      "native_tests_passed": 16,
+      "native_tests_total": 16,
+      "native_case_passed": true
+    },
+    {
+      "id": "behavior-C2",
+      "correct_logprob": -1.2776952981948853,
+      "margin": 0.4167557954788208,
+      "native_tests_passed": 16,
+      "native_tests_total": 16,
+      "native_case_passed": true
+    },
+    {
+      "id": "behavior-D1",
+      "correct_logprob": -1.5119049549102783,
+      "margin": 0.2861894369125366,
+      "native_tests_passed": 16,
+      "native_tests_total": 16,
+      "native_case_passed": true
+    },
+    {
+      "id": "behavior-D2",
+      "correct_logprob": -1.106694221496582,
+      "margin": 0.45308423042297363,
+      "native_tests_passed": 16,
+      "native_tests_total": 16,
+      "native_case_passed": true
+    },
+    {
+      "id": "behavior-E1",
+      "correct_logprob": -1.086647868156433,
+      "margin": 0.04002022743225098,
+      "native_tests_passed": 16,
+      "native_tests_total": 16,
+      "native_case_passed": true
+    },
+    {
+      "id": "behavior-E2",
+      "correct_logprob": -1.8546240329742432,
+      "margin": 0.20876002311706543,
+      "native_tests_passed": 16,
+      "native_tests_total": 16,
+      "native_case_passed": true
+    },
+    {
+      "id": "behavior-F1",
+      "correct_logprob": -2.1094131469726562,
+      "margin": 0.5575046539306641,
+      "native_tests_passed": 16,
+      "native_tests_total": 16,
+      "native_case_passed": true
+    },
+    {
+      "id": "behavior-F2",
+      "correct_logprob": -1.8813127279281616,
+      "margin": 0.5364991426467896,
+      "native_tests_passed": 4,
+      "native_tests_total": 16,
+      "native_case_passed": false
+    }
+  ],
+  "raw_inventory": [
+    {
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-av-behavior12-native-gpu4-v2/work/correct-logprob/coverage.json",
+      "sha256": "88be0e2cd3cbef6fcf85a7dfd5fee307f30db071ed5cb4561320e412738ef4e7",
+      "bytes": 76654
+    },
+    {
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-av-behavior12-native-gpu4-v2/work/correct-logprob/frame-evidence.json",
+      "sha256": "21ae203f395c51f7d973436b42cfeab19f9d72b1c2db18e8c0faa4613fa26f2d",
+      "bytes": 3709
+    },
+    {
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-av-behavior12-native-gpu4-v2/work/correct-logprob/gradient-A-0.npz",
+      "sha256": "372ffb38135b8cbb940fd4b56a9cdf23927d45bfc21a10646f24f1677a51ef06",
+      "bytes": 2948083
+    },
+    {
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-av-behavior12-native-gpu4-v2/work/correct-logprob/gradient-A-1.npz",
+      "sha256": "0ba6e5eb2ff502a20e720775d00d8f6b126b7077c3af0512f274c19c61de85f5",
+      "bytes": 2948089
+    },
+    {
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-av-behavior12-native-gpu4-v2/work/correct-logprob/gradient-B-0.npz",
+      "sha256": "826d7675b4246b9683824da7156b962047ac5f611dbb48124e855f82f07e3201",
+      "bytes": 2945360
+    },
+    {
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-av-behavior12-native-gpu4-v2/work/correct-logprob/gradient-B-1.npz",
+      "sha256": "9b7e5c680283cfb8b4e48bd582ade01f827cd51dd1398264865659ca20815b6d",
+      "bytes": 2946045
+    },
+    {
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-av-behavior12-native-gpu4-v2/work/correct-logprob/gradient-C-0.npz",
+      "sha256": "ba4da32a1e67f84dc351911d30dbe29f23edfe4db035855e7875d7067501e7e8",
+      "bytes": 2947240
+    },
+    {
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-av-behavior12-native-gpu4-v2/work/correct-logprob/gradient-C-1.npz",
+      "sha256": "aea9b5ddd443844ede7f75901d74db4868767dc824bf79630739222efca4d811",
+      "bytes": 2946314
+    },
+    {
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-av-behavior12-native-gpu4-v2/work/correct-logprob/gradient-D-0.npz",
+      "sha256": "14250e45d56db4a2a779ab00c9804b0881597a682ffbfcc1d8b86fbfdd32cecf",
+      "bytes": 2946458
+    },
+    {
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-av-behavior12-native-gpu4-v2/work/correct-logprob/gradient-D-1.npz",
+      "sha256": "33361fe260160a0e960cffaf1de0f33aca415c5ce0f70569ad3b892da3633c69",
+      "bytes": 2947355
+    },
+    {
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-av-behavior12-native-gpu4-v2/work/correct-logprob/gradient-E-0.npz",
+      "sha256": "196d1e309bb1834fe7b4353800a8e6fbbbe1f9d1827ad07d27f55aecafc9645f",
+      "bytes": 2947798
+    },
+    {
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-av-behavior12-native-gpu4-v2/work/correct-logprob/gradient-E-1.npz",
+      "sha256": "4717dc55f4763171f570c585b7f11c14693a73ddbf24475f37604f4f7faf1b41",
+      "bytes": 2946301
+    },
+    {
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-av-behavior12-native-gpu4-v2/work/correct-logprob/gradient-F-0.npz",
+      "sha256": "b4edcf66840ad0b650facaec5442ec7d3593b058c8afa4a1044fdd0cb2168aff",
+      "bytes": 2945925
+    },
+    {
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-av-behavior12-native-gpu4-v2/work/correct-logprob/gradient-F-1.npz",
+      "sha256": "711cee7922a79f2aeff3f0fbd08cdcbbddfa38b143b330c3aeed2a3889f03c05",
+      "bytes": 2947432
+    },
+    {
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-av-behavior12-native-gpu4-v2/work/correct-logprob/progress.json",
+      "sha256": "a33f47abd121bb7796bf5aa5845c0f995a9bacd2d946345875800aa117e4a4ea",
+      "bytes": 521
+    },
+    {
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-av-behavior12-native-gpu4-v2/work/correct-logprob/provenance.json",
+      "sha256": "25754ae2274d420471f322dd25774e6c94d3b226251a4a469002e236683abeb7",
+      "bytes": 8049
+    },
+    {
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-av-behavior12-native-gpu4-v2/work/correct-logprob/saved-activation-storage.json",
+      "sha256": "6b01a614b9c11f19c8f0b598efb6a6d042e17666b897ad3dd0b9f80db32dc7b9",
+      "bytes": 20935
+    },
+    {
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-av-behavior12-native-gpu4-v2/work/correct-logprob/source-native-values.npz",
+      "sha256": "81a10d044bd0776e5a7997e68b7cae65b2f7b2af000873ac0be2fa2385763bac",
+      "bytes": 2029628
+    },
+    {
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-av-behavior12-native-gpu4-v2/work/correct-logprob/summary.json",
+      "sha256": "eabb73cd9d978130dae53f6ac151dd9660fcb0862876f3063e8d6d91b167fccd",
+      "bytes": 118197
+    },
+    {
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-av-behavior12-native-gpu4-v2/work/margin/coverage.json",
+      "sha256": "88be0e2cd3cbef6fcf85a7dfd5fee307f30db071ed5cb4561320e412738ef4e7",
+      "bytes": 76654
+    },
+    {
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-av-behavior12-native-gpu4-v2/work/margin/frame-evidence.json",
+      "sha256": "21ae203f395c51f7d973436b42cfeab19f9d72b1c2db18e8c0faa4613fa26f2d",
+      "bytes": 3709
+    },
+    {
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-av-behavior12-native-gpu4-v2/work/margin/gradient-A-0.npz",
+      "sha256": "8443ebaf42b1a5126cdcc3cebb24052292b8507764ac1184e585bebd054fae6c",
+      "bytes": 3295958
+    },
+    {
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-av-behavior12-native-gpu4-v2/work/margin/gradient-A-1.npz",
+      "sha256": "0b74f88977148590925673a1ea3656035a63f41ef3395eccc79d7f6063fbcf14",
+      "bytes": 3374619
+    },
+    {
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-av-behavior12-native-gpu4-v2/work/margin/gradient-B-0.npz",
+      "sha256": "3128ee4e518edd3213133b0fe592fa6950fb706132158cb8b3e03b6731cc4d81",
+      "bytes": 3337907
+    },
+    {
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-av-behavior12-native-gpu4-v2/work/margin/gradient-B-1.npz",
+      "sha256": "cc17f1964cc47c2e0048862e0a1e410e726a42dbe19fff593abf1662881808a0",
+      "bytes": 3090967
+    },
+    {
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-av-behavior12-native-gpu4-v2/work/margin/gradient-C-0.npz",
+      "sha256": "f491f0ea7661dd02f8d3b33f9e4c4d426a3cd4bc7436fb2ac1985abcc8006cdb",
+      "bytes": 3286486
+    },
+    {
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-av-behavior12-native-gpu4-v2/work/margin/gradient-C-1.npz",
+      "sha256": "f00f6450720b00ac550681f28761a81e65069cfae1690333863d8cfcddf49dd6",
+      "bytes": 3416833
+    },
+    {
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-av-behavior12-native-gpu4-v2/work/margin/gradient-D-0.npz",
+      "sha256": "dd74dd6be90d6f5ea420894a8f2209f4061a007ca003bc4c7e9660472ffd18c2",
+      "bytes": 3149879
+    },
+    {
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-av-behavior12-native-gpu4-v2/work/margin/gradient-D-1.npz",
+      "sha256": "e9baf8a1a011c15300a3a28d338336a85dc2e95a7f5ab909b0a3062eb0da8c9f",
+      "bytes": 3289571
+    },
+    {
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-av-behavior12-native-gpu4-v2/work/margin/gradient-E-0.npz",
+      "sha256": "99942b1242b467e41f8a0ad34ae7068031636feb857082a62d7b2f2fb7a7f1fd",
+      "bytes": 3365490
+    },
+    {
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-av-behavior12-native-gpu4-v2/work/margin/gradient-E-1.npz",
+      "sha256": "a793af69d0deb27b2faaef7911c8543f96fc0312ef4d864ee7ff5302198fc0b9",
+      "bytes": 3200597
+    },
+    {
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-av-behavior12-native-gpu4-v2/work/margin/gradient-F-0.npz",
+      "sha256": "f90dddb9e3b390b1d1763a0ebe04c422261325e60a401431c2a62286bfc5b7c7",
+      "bytes": 3452378
+    },
+    {
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-av-behavior12-native-gpu4-v2/work/margin/gradient-F-1.npz",
+      "sha256": "7f603347f10f8241a084f2c41517a79aacb207b708f9cadfd8b1bb3786e64b04",
+      "bytes": 3244468
+    },
+    {
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-av-behavior12-native-gpu4-v2/work/margin/progress.json",
+      "sha256": "f80afc7ac237b91804f5edf6926383ac05d78cae1290646990825952bf7e24d8",
+      "bytes": 446
+    },
+    {
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-av-behavior12-native-gpu4-v2/work/margin/provenance.json",
+      "sha256": "f35cf7b1849eba5e63f79cb8b9ab2fcd4f04573eceda3e832500a29f3fa59c47",
+      "bytes": 8020
+    },
+    {
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-av-behavior12-native-gpu4-v2/work/margin/saved-activation-storage.json",
+      "sha256": "1708dda64abbb5b26847b3698a50f761fb98d59b1947f827ed9abdd957444ee3",
+      "bytes": 22223
+    },
+    {
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-av-behavior12-native-gpu4-v2/work/margin/source-native-values.npz",
+      "sha256": "81a10d044bd0776e5a7997e68b7cae65b2f7b2af000873ac0be2fa2385763bac",
+      "bytes": 2029628
+    },
+    {
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-av-behavior12-native-gpu4-v2/work/margin/summary.json",
+      "sha256": "e9ca36ef7c67a17c25ac849e67a4a3ee027eeba49c1422b602c04d501ec0bc25",
+      "bytes": 118857
+    }
+  ],
+  "checkpoint_tree_sha256": "5d056eb03f954db80313a85167153c875fe5e436e4f97c281a3f55202d9b3eaf",
+  "failure_files": [],
+  "retries": 0,
+  "source_file_pins_unchanged": true,
+  "checkpoint_all9_stats_unchanged": true,
+  "after": {
+    "epoch": 1794041564.4666083,
+    "target": {
+      "id": "fd4ec2eb9d7deba2ce3e790add6b50c0ee79a6390495320d8697873b32957bcf",
+      "image": "sha256:af9e746b913088cbf6c4464a31d6904a6b7e1d3ba62f0895362ddf13595f7abe",
+      "running": true,
+      "health": "healthy",
+      "started_at": "2026-11-07T08:49:39.993301683Z",
+      "config_sha256": "043cb35e4ea941d42fdc75c8b554ae99e6e2ea01cb928370141da9c80baa530e",
+      "host_config_sha256": "5f5204418ae902e55578755b194b085cee6a0ee9b6c6859d45d483752c9e4a53",
+      "cpuset": "32-47,96-111",
+      "devices": [
+        {
+          "Driver": "nvidia",
+          "Count": 0,
+          "DeviceIDs": [
+            "4",
+            "5"
+          ],
+          "Capabilities": [
+            [
+              "gpu"
+            ]
+          ],
+          "Options": null
+        }
+      ]
+    },
+    "target_queues": {
+      "metrics_sha256": "330c70314b14f5a4b2ae931f182285a3ed05020ba4cec5a1d3d9e7d030e524af",
+      "queues": {
+        "vllm:num_requests_running": [
+          0.0
+        ],
+        "vllm:num_requests_waiting": [
+          0.0
+        ]
+      }
+    },
+    "protected_exact": true,
+    "container_count": 27,
+    "owner_pid_absent": true,
+    "global_lock_rows": []
+  },
+  "new_candidates": 0,
+  "solver_calls": 0,
+  "checkpoint_edits": 0,
+  "transfer_cases": 0,
+  "limits": [
+    "Teacher-forced empty-thought diagnostic; not native-generation accuracy or WSP.",
+    "CPU bytes are cumulative copy events, not peak RAM or unique reclaimed storage.",
+    "No host RAM peak measured. Collector seconds exclude model load; owner wall includes stop/load/collection/restore."
+  ]
+}

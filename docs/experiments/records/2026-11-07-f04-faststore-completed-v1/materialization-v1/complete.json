@@ -1,0 +1,14 @@
+{
+  "status": "completed",
+  "epoch": 1794050352.4375925,
+  "seconds": 284.315486907959,
+  "manifest_sha256": "fd189cf276a1219ad627186d2dfb4a895c79768821f247a0b33d9abd8953d8c1",
+  "store_receipt_sha256": "dbcc501f1f42ca32d9c05fbced2b40d0e0dd49a9446df2fbd0bdd3abd23606f9",
+  "checkpoint": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/checkpoints/fresh-native-relative-f04-faststore-v1/checkpoint",
+  "tree": "7b9e9488e3cd4e0b6c5f61ae341e5eeccdf5bd31c46d1c8354950dbc29d0f924",
+  "changed_elements": 429,
+  "changed_tensors": 140,
+  "free_bytes": 7265869824,
+  "model_calls": 0,
+  "serving_changes": 0
+}

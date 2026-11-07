@@ -1,0 +1,7924 @@
+[
+  {
+    "id": "humaneval-plus:HumanEval/57",
+    "source": "humaneval-plus",
+    "area": "code",
+    "kind": "chat",
+    "tier": 10,
+    "max_tokens": 16384,
+    "samples": 1,
+    "score": 1.0,
+    "sample_scores": [
+      1.0
+    ],
+    "error": null,
+    "audit_issues": [],
+    "actual_item_records": [
+      {
+        "id": "humaneval-plus:HumanEval/57",
+        "source": "humaneval-plus",
+        "area": "code",
+        "kind": "chat",
+        "tier": 10,
+        "max_tokens": 16384,
+        "samples": 1,
+        "score": 1.0,
+        "sample_scores": [
+          1.0
+        ],
+        "error": null,
+        "record_index": 889,
+        "detail": {
+          "samples": [
+            {
+              "base": "pass",
+              "plus": "pass",
+              "passed": true
+            }
+          ]
+        },
+        "generation": [
+          {
+            "finish_reason": "stop",
+            "prompt_tokens": 136,
+            "completion_tokens": 1048
+          }
+        ]
+      }
+    ],
+    "response_records": [
+      {
+        "record_index": 683,
+        "error": null,
+        "outcome_present": true
+      }
+    ],
+    "detail": {
+      "samples": [
+        {
+          "base": "pass",
+          "plus": "pass",
+          "passed": true
+        }
+      ]
+    },
+    "generation": [
+      {
+        "finish_reason": "stop",
+        "prompt_tokens": 136,
+        "completion_tokens": 1048
+      }
+    ],
+    "scoring_status": "scored"
+  },
+  {
+    "id": "humaneval-plus:HumanEval/144",
+    "source": "humaneval-plus",
+    "area": "code",
+    "kind": "chat",
+    "tier": 10,
+    "max_tokens": 16384,
+    "samples": 1,
+    "score": 1.0,
+    "sample_scores": [
+      1.0
+    ],
+    "error": null,
+    "audit_issues": [],
+    "actual_item_records": [
+      {
+        "id": "humaneval-plus:HumanEval/144",
+        "source": "humaneval-plus",
+        "area": "code",
+        "kind": "chat",
+        "tier": 10,
+        "max_tokens": 16384,
+        "samples": 1,
+        "score": 1.0,
+        "sample_scores": [
+          1.0
+        ],
+        "error": null,
+        "record_index": 890,
+        "detail": {
+          "samples": [
+            {
+              "base": "pass",
+              "plus": "pass",
+              "passed": true
+            }
+          ]
+        },
+        "generation": [
+          {
+            "finish_reason": "stop",
+            "prompt_tokens": 206,
+            "completion_tokens": 1210
+          }
+        ]
+      }
+    ],
+    "response_records": [
+      {
+        "record_index": 1008,
+        "error": null,
+        "outcome_present": true
+      }
+    ],
+    "detail": {
+      "samples": [
+        {
+          "base": "pass",
+          "plus": "pass",
+          "passed": true
+        }
+      ]
+    },
+    "generation": [
+      {
+        "finish_reason": "stop",
+        "prompt_tokens": 206,
+        "completion_tokens": 1210
+      }
+    ],
+    "scoring_status": "scored"
+  },
+  {
+    "id": "humaneval-plus:HumanEval/148",
+    "source": "humaneval-plus",
+    "area": "code",
+    "kind": "chat",
+    "tier": 10,
+    "max_tokens": 16384,
+    "samples": 1,
+    "score": 1.0,
+    "sample_scores": [
+      1.0
+    ],
+    "error": null,
+    "audit_issues": [],
+    "actual_item_records": [
+      {
+        "id": "humaneval-plus:HumanEval/148",
+        "source": "humaneval-plus",
+        "area": "code",
+        "kind": "chat",
+        "tier": 10,
+        "max_tokens": 16384,
+        "samples": 1,
+        "score": 1.0,
+        "sample_scores": [
+          1.0
+        ],
+        "error": null,
+        "record_index": 891,
+        "detail": {
+          "samples": [
+            {
+              "base": "pass",
+              "plus": "pass",
+              "passed": true
+            }
+          ]
+        },
+        "generation": [
+          {
+            "finish_reason": "stop",
+            "prompt_tokens": 264,
+            "completion_tokens": 1213
+          }
+        ]
+      }
+    ],
+    "response_records": [
+      {
+        "record_index": 597,
+        "error": null,
+        "outcome_present": true
+      }
+    ],
+    "detail": {
+      "samples": [
+        {
+          "base": "pass",
+          "plus": "pass",
+          "passed": true
+        }
+      ]
+    },
+    "generation": [
+      {
+        "finish_reason": "stop",
+        "prompt_tokens": 264,
+        "completion_tokens": 1213
+      }
+    ],
+    "scoring_status": "scored"
+  },
+  {
+    "id": "humaneval-plus:HumanEval/49",
+    "source": "humaneval-plus",
+    "area": "code",
+    "kind": "chat",
+    "tier": 10,
+    "max_tokens": 16384,
+    "samples": 1,
+    "score": 1.0,
+    "sample_scores": [
+      1.0
+    ],
+    "error": null,
+    "audit_issues": [],
+    "actual_item_records": [
+      {
+        "id": "humaneval-plus:HumanEval/49",
+        "source": "humaneval-plus",
+        "area": "code",
+        "kind": "chat",
+        "tier": 10,
+        "max_tokens": 16384,
+        "samples": 1,
+        "score": 1.0,
+        "sample_scores": [
+          1.0
+        ],
+        "error": null,
+        "record_index": 892,
+        "detail": {
+          "samples": [
+            {
+              "base": "pass",
+              "plus": "pass",
+              "passed": true
+            }
+          ]
+        },
+        "generation": [
+          {
+            "finish_reason": "stop",
+            "prompt_tokens": 165,
+            "completion_tokens": 739
+          }
+        ]
+      }
+    ],
+    "response_records": [
+      {
+        "record_index": 1078,
+        "error": null,
+        "outcome_present": true
+      }
+    ],
+    "detail": {
+      "samples": [
+        {
+          "base": "pass",
+          "plus": "pass",
+          "passed": true
+        }
+      ]
+    },
+    "generation": [
+      {
+        "finish_reason": "stop",
+        "prompt_tokens": 165,
+        "completion_tokens": 739
+      }
+    ],
+    "scoring_status": "scored"
+  },
+  {
+    "id": "humaneval-plus:HumanEval/155",
+    "source": "humaneval-plus",
+    "area": "code",
+    "kind": "chat",
+    "tier": 10,
+    "max_tokens": 16384,
+    "samples": 1,
+    "score": 1.0,
+    "sample_scores": [
+      1.0
+    ],
+    "error": null,
+    "audit_issues": [],
+    "actual_item_records": [
+      {
+        "id": "humaneval-plus:HumanEval/155",
+        "source": "humaneval-plus",
+        "area": "code",
+        "kind": "chat",
+        "tier": 10,
+        "max_tokens": 16384,
+        "samples": 1,
+        "score": 1.0,
+        "sample_scores": [
+          1.0
+        ],
+        "error": null,
+        "record_index": 893,
+        "detail": {
+          "samples": [
+            {
+              "base": "pass",
+              "plus": "pass",
+              "passed": true
+            }
+          ]
+        },
+        "generation": [
+          {
+            "finish_reason": "stop",
+            "prompt_tokens": 125,
+            "completion_tokens": 992
+          }
+        ]
+      }
+    ],
+    "response_records": [
+      {
+        "record_index": 1071,
+        "error": null,
+        "outcome_present": true
+      }
+    ],
+    "detail": {
+      "samples": [
+        {
+          "base": "pass",
+          "plus": "pass",
+          "passed": true
+        }
+      ]
+    },
+    "generation": [
+      {
+        "finish_reason": "stop",
+        "prompt_tokens": 125,
+        "completion_tokens": 992
+      }
+    ],
+    "scoring_status": "scored"
+  },
+  {
+    "id": "humaneval-plus:HumanEval/90",
+    "source": "humaneval-plus",
+    "area": "code",
+    "kind": "chat",
+    "tier": 10,
+    "max_tokens": 16384,
+    "samples": 1,
+    "score": 1.0,
+    "sample_scores": [
+      1.0
+    ],
+    "error": null,
+    "audit_issues": [],
+    "actual_item_records": [
+      {
+        "id": "humaneval-plus:HumanEval/90",
+        "source": "humaneval-plus",
+        "area": "code",
+        "kind": "chat",
+        "tier": 10,
+        "max_tokens": 16384,
+        "samples": 1,
+        "score": 1.0,
+        "sample_scores": [
+          1.0
+        ],
+        "error": null,
+        "record_index": 894,
+        "detail": {
+          "samples": [
+            {
+              "base": "pass",
+              "plus": "pass",
+              "passed": true
+            }
+          ]
+        },
+        "generation": [
+          {
+            "finish_reason": "stop",
+            "prompt_tokens": 175,
+            "completion_tokens": 1044
+          }
+        ]
+      }
+    ],
+    "response_records": [
+      {
+        "record_index": 999,
+        "error": null,
+        "outcome_present": true
+      }
+    ],
+    "detail": {
+      "samples": [
+        {
+          "base": "pass",
+          "plus": "pass",
+          "passed": true
+        }
+      ]
+    },
+    "generation": [
+      {
+        "finish_reason": "stop",
+        "prompt_tokens": 175,
+        "completion_tokens": 1044
+      }
+    ],
+    "scoring_status": "scored"
+  },
+  {
+    "id": "humaneval-plus:HumanEval/22",
+    "source": "humaneval-plus",
+    "area": "code",
+    "kind": "chat",
+    "tier": 10,
+    "max_tokens": 16384,
+    "samples": 1,
+    "score": 1.0,
+    "sample_scores": [
+      1.0
+    ],
+    "error": null,
+    "audit_issues": [],
+    "actual_item_records": [
+      {
+        "id": "humaneval-plus:HumanEval/22",
+        "source": "humaneval-plus",
+        "area": "code",
+        "kind": "chat",
+        "tier": 10,
+        "max_tokens": 16384,
+        "samples": 1,
+        "score": 1.0,
+        "sample_scores": [
+          1.0
+        ],
+        "error": null,
+        "record_index": 895,
+        "detail": {
+          "samples": [
+            {
+              "base": "pass",
+              "plus": "pass",
+              "passed": true
+            }
+          ]
+        },
+        "generation": [
+          {
+            "finish_reason": "stop",
+            "prompt_tokens": 148,
+            "completion_tokens": 1749
+          }
+        ]
+      }
+    ],
+    "response_records": [
+      {
+        "record_index": 982,
+        "error": null,
+        "outcome_present": true
+      }
+    ],
+    "detail": {
+      "samples": [
+        {
+          "base": "pass",
+          "plus": "pass",
+          "passed": true
+        }
+      ]
+    },
+    "generation": [
+      {
+        "finish_reason": "stop",
+        "prompt_tokens": 148,
+        "completion_tokens": 1749
+      }
+    ],
+    "scoring_status": "scored"
+  },
+  {
+    "id": "humaneval-plus:HumanEval/21",
+    "source": "humaneval-plus",
+    "area": "code",
+    "kind": "chat",
+    "tier": 10,
+    "max_tokens": 16384,
+    "samples": 1,
+    "score": 1.0,
+    "sample_scores": [
+      1.0
+    ],
+    "error": null,
+    "audit_issues": [],
+    "actual_item_records": [
+      {
+        "id": "humaneval-plus:HumanEval/21",
+        "source": "humaneval-plus",
+        "area": "code",
+        "kind": "chat",
+        "tier": 10,
+        "max_tokens": 16384,
+        "samples": 1,
+        "score": 1.0,
+        "sample_scores": [
+          1.0
+        ],
+        "error": null,
+        "record_index": 896,
+        "detail": {
+          "samples": [
+            {
+              "base": "pass",
+              "plus": "pass",
+              "passed": true
+            }
+          ]
+        },
+        "generation": [
+          {
+            "finish_reason": "stop",
+            "prompt_tokens": 181,
+            "completion_tokens": 1285
+          }
+        ]
+      }
+    ],
+    "response_records": [
+      {
+        "record_index": 742,
+        "error": null,
+        "outcome_present": true
+      }
+    ],
+    "detail": {
+      "samples": [
+        {
+          "base": "pass",
+          "plus": "pass",
+          "passed": true
+        }
+      ]
+    },
+    "generation": [
+      {
+        "finish_reason": "stop",
+        "prompt_tokens": 181,
+        "completion_tokens": 1285
+      }
+    ],
+    "scoring_status": "scored"
+  },
+  {
+    "id": "humaneval-plus:HumanEval/30",
+    "source": "humaneval-plus",
+    "area": "code",
+    "kind": "chat",
+    "tier": 10,
+    "max_tokens": 16384,
+    "samples": 1,
+    "score": 1.0,
+    "sample_scores": [
+      1.0
+    ],
+    "error": null,
+    "audit_issues": [],
+    "actual_item_records": [
+      {
+        "id": "humaneval-plus:HumanEval/30",
+        "source": "humaneval-plus",
+        "area": "code",
+        "kind": "chat",
+        "tier": 10,
+        "max_tokens": 16384,
+        "samples": 1,
+        "score": 1.0,
+        "sample_scores": [
+          1.0
+        ],
+        "error": null,
+        "record_index": 897,
+        "detail": {
+          "samples": [
+            {
+              "base": "pass",
+              "plus": "pass",
+              "passed": true
+            }
+          ]
+        },
+        "generation": [
+          {
+            "finish_reason": "stop",
+            "prompt_tokens": 173,
+            "completion_tokens": 494
+          }
+        ]
+      }
+    ],
+    "response_records": [
+      {
+        "record_index": 1191,
+        "error": null,
+        "outcome_present": true
+      }
+    ],
+    "detail": {
+      "samples": [
+        {
+          "base": "pass",
+          "plus": "pass",
+          "passed": true
+        }
+      ]
+    },
+    "generation": [
+      {
+        "finish_reason": "stop",
+        "prompt_tokens": 173,
+        "completion_tokens": 494
+      }
+    ],
+    "scoring_status": "scored"
+  },
+  {
+    "id": "humaneval-plus:HumanEval/116",
+    "source": "humaneval-plus",
+    "area": "code",
+    "kind": "chat",
+    "tier": 10,
+    "max_tokens": 16384,
+    "samples": 1,
+    "score": 1.0,
+    "sample_scores": [
+      1.0
+    ],
+    "error": null,
+    "audit_issues": [],
+    "actual_item_records": [
+      {
+        "id": "humaneval-plus:HumanEval/116",
+        "source": "humaneval-plus",
+        "area": "code",
+        "kind": "chat",
+        "tier": 10,
+        "max_tokens": 16384,
+        "samples": 1,
+        "score": 1.0,
+        "sample_scores": [
+          1.0
+        ],
+        "error": null,
+        "record_index": 898,
+        "detail": {
+          "samples": [
+            {
+              "base": "pass",
+              "plus": "pass",
+              "passed": true
+            }
+          ]
+        },
+        "generation": [
+          {
+            "finish_reason": "stop",
+            "prompt_tokens": 229,
+            "completion_tokens": 6306
+          }
+        ]
+      }
+    ],
+    "response_records": [
+      {
+        "record_index": 53,
+        "error": null,
+        "outcome_present": true
+      }
+    ],
+    "detail": {
+      "samples": [
+        {
+          "base": "pass",
+          "plus": "pass",
+          "passed": true
+        }
+      ]
+    },
+    "generation": [
+      {
+        "finish_reason": "stop",
+        "prompt_tokens": 229,
+        "completion_tokens": 6306
+      }
+    ],
+    "scoring_status": "scored"
+  },
+  {
+    "id": "humaneval-plus:HumanEval/135",
+    "source": "humaneval-plus",
+    "area": "code",
+    "kind": "chat",
+    "tier": 30,
+    "max_tokens": 32768,
+    "samples": 1,
+    "score": 1.0,
+    "sample_scores": [
+      1.0
+    ],
+    "error": null,
+    "audit_issues": [],
+    "actual_item_records": [
+      {
+        "id": "humaneval-plus:HumanEval/135",
+        "source": "humaneval-plus",
+        "area": "code",
+        "kind": "chat",
+        "tier": 30,
+        "max_tokens": 32768,
+        "samples": 1,
+        "score": 1.0,
+        "sample_scores": [
+          1.0
+        ],
+        "error": null,
+        "record_index": 899,
+        "detail": {
+          "samples": [
+            {
+              "base": "pass",
+              "plus": "pass",
+              "passed": true
+            }
+          ]
+        },
+        "generation": [
+          {
+            "finish_reason": "stop",
+            "prompt_tokens": 152,
+            "completion_tokens": 1109
+          }
+        ]
+      }
+    ],
+    "response_records": [
+      {
+        "record_index": 759,
+        "error": null,
+        "outcome_present": true
+      }
+    ],
+    "detail": {
+      "samples": [
+        {
+          "base": "pass",
+          "plus": "pass",
+          "passed": true
+        }
+      ]
+    },
+    "generation": [
+      {
+        "finish_reason": "stop",
+        "prompt_tokens": 152,
+        "completion_tokens": 1109
+      }
+    ],
+    "scoring_status": "scored"
+  },
+  {
+    "id": "humaneval-plus:HumanEval/79",
+    "source": "humaneval-plus",
+    "area": "code",
+    "kind": "chat",
+    "tier": 30,
+    "max_tokens": 32768,
+    "samples": 1,
+    "score": 1.0,
+    "sample_scores": [
+      1.0
+    ],
+    "error": null,
+    "audit_issues": [],
+    "actual_item_records": [
+      {
+        "id": "humaneval-plus:HumanEval/79",
+        "source": "humaneval-plus",
+        "area": "code",
+        "kind": "chat",
+        "tier": 30,
+        "max_tokens": 32768,
+        "samples": 1,
+        "score": 1.0,
+        "sample_scores": [
+          1.0
+        ],
+        "error": null,
+        "record_index": 900,
+        "detail": {
+          "samples": [
+            {
+              "base": "pass",
+              "plus": "pass",
+              "passed": true
+            }
+          ]
+        },
+        "generation": [
+          {
+            "finish_reason": "stop",
+            "prompt_tokens": 206,
+            "completion_tokens": 693
+          }
+        ]
+      }
+    ],
+    "response_records": [
+      {
+        "record_index": 1022,
+        "error": null,
+        "outcome_present": true
+      }
+    ],
+    "detail": {
+      "samples": [
+        {
+          "base": "pass",
+          "plus": "pass",
+          "passed": true
+        }
+      ]
+    },
+    "generation": [
+      {
+        "finish_reason": "stop",
+        "prompt_tokens": 206,
+        "completion_tokens": 693
+      }
+    ],
+    "scoring_status": "scored"
+  },
+  {
+    "id": "humaneval-plus:HumanEval/156",
+    "source": "humaneval-plus",
+    "area": "code",
+    "kind": "chat",
+    "tier": 30,
+    "max_tokens": 32768,
+    "samples": 1,
+    "score": 1.0,
+    "sample_scores": [
+      1.0
+    ],
+    "error": null,
+    "audit_issues": [],
+    "actual_item_records": [
+      {
+        "id": "humaneval-plus:HumanEval/156",
+        "source": "humaneval-plus",
+        "area": "code",
+        "kind": "chat",
+        "tier": 30,
+        "max_tokens": 32768,
+        "samples": 1,
+        "score": 1.0,
+        "sample_scores": [
+          1.0
+        ],
+        "error": null,
+        "record_index": 901,
+        "detail": {
+          "samples": [
+            {
+              "base": "pass",
+              "plus": "pass",
+              "passed": true
+            }
+          ]
+        },
+        "generation": [
+          {
+            "finish_reason": "stop",
+            "prompt_tokens": 170,
+            "completion_tokens": 1234
+          }
+        ]
+      }
+    ],
+    "response_records": [
+      {
+        "record_index": 839,
+        "error": null,
+        "outcome_present": true
+      }
+    ],
+    "detail": {
+      "samples": [
+        {
+          "base": "pass",
+          "plus": "pass",
+          "passed": true
+        }
+      ]
+    },
+    "generation": [
+      {
+        "finish_reason": "stop",
+        "prompt_tokens": 170,
+        "completion_tokens": 1234
+      }
+    ],
+    "scoring_status": "scored"
+  },
+  {
+    "id": "humaneval-plus:HumanEval/138",
+    "source": "humaneval-plus",
+    "area": "code",
+    "kind": "chat",
+    "tier": 30,
+    "max_tokens": 32768,
+    "samples": 1,
+    "score": 1.0,
+    "sample_scores": [
+      1.0
+    ],
+    "error": null,
+    "audit_issues": [],
+    "actual_item_records": [
+      {
+        "id": "humaneval-plus:HumanEval/138",
+        "source": "humaneval-plus",
+        "area": "code",
+        "kind": "chat",
+        "tier": 30,
+        "max_tokens": 32768,
+        "samples": 1,
+        "score": 1.0,
+        "sample_scores": [
+          1.0
+        ],
+        "error": null,
+        "record_index": 902,
+        "detail": {
+          "samples": [
+            {
+              "base": "pass",
+              "plus": "pass",
+              "passed": true
+            }
+          ]
+        },
+        "generation": [
+          {
+            "finish_reason": "stop",
+            "prompt_tokens": 140,
+            "completion_tokens": 976
+          }
+        ]
+      }
+    ],
+    "response_records": [
+      {
+        "record_index": 1030,
+        "error": null,
+        "outcome_present": true
+      }
+    ],
+    "detail": {
+      "samples": [
+        {
+          "base": "pass",
+          "plus": "pass",
+          "passed": true
+        }
+      ]
+    },
+    "generation": [
+      {
+        "finish_reason": "stop",
+        "prompt_tokens": 140,
+        "completion_tokens": 976
+      }
+    ],
+    "scoring_status": "scored"
+  },
+  {
+    "id": "humaneval-plus:HumanEval/103",
+    "source": "humaneval-plus",
+    "area": "code",
+    "kind": "chat",
+    "tier": 30,
+    "max_tokens": 32768,
+    "samples": 1,
+    "score": 1.0,
+    "sample_scores": [
+      1.0
+    ],
+    "error": null,
+    "audit_issues": [],
+    "actual_item_records": [
+      {
+        "id": "humaneval-plus:HumanEval/103",
+        "source": "humaneval-plus",
+        "area": "code",
+        "kind": "chat",
+        "tier": 30,
+        "max_tokens": 32768,
+        "samples": 1,
+        "score": 1.0,
+        "sample_scores": [
+          1.0
+        ],
+        "error": null,
+        "record_index": 903,
+        "detail": {
+          "samples": [
+            {
+              "base": "pass",
+              "plus": "pass",
+              "passed": true
+            }
+          ]
+        },
+        "generation": [
+          {
+            "finish_reason": "stop",
+            "prompt_tokens": 209,
+            "completion_tokens": 1508
+          }
+        ]
+      }
+    ],
+    "response_records": [
+      {
+        "record_index": 509,
+        "error": null,
+        "outcome_present": true
+      }
+    ],
+    "detail": {
+      "samples": [
+        {
+          "base": "pass",
+          "plus": "pass",
+          "passed": true
+        }
+      ]
+    },
+    "generation": [
+      {
+        "finish_reason": "stop",
+        "prompt_tokens": 209,
+        "completion_tokens": 1508
+      }
+    ],
+    "scoring_status": "scored"
+  },
+  {
+    "id": "humaneval-plus:HumanEval/47",
+    "source": "humaneval-plus",
+    "area": "code",
+    "kind": "chat",
+    "tier": 30,
+    "max_tokens": 32768,
+    "samples": 1,
+    "score": 1.0,
+    "sample_scores": [
+      1.0
+    ],
+    "error": null,
+    "audit_issues": [],
+    "actual_item_records": [
+      {
+        "id": "humaneval-plus:HumanEval/47",
+        "source": "humaneval-plus",
+        "area": "code",
+        "kind": "chat",
+        "tier": 30,
+        "max_tokens": 32768,
+        "samples": 1,
+        "score": 1.0,
+        "sample_scores": [
+          1.0
+        ],
+        "error": null,
+        "record_index": 904,
+        "detail": {
+          "samples": [
+            {
+              "base": "pass",
+              "plus": "pass",
+              "passed": true
+            }
+          ]
+        },
+        "generation": [
+          {
+            "finish_reason": "stop",
+            "prompt_tokens": 129,
+            "completion_tokens": 5376
+          }
+        ]
+      }
+    ],
+    "response_records": [
+      {
+        "record_index": 801,
+        "error": null,
+        "outcome_present": true
+      }
+    ],
+    "detail": {
+      "samples": [
+        {
+          "base": "pass",
+          "plus": "pass",
+          "passed": true
+        }
+      ]
+    },
+    "generation": [
+      {
+        "finish_reason": "stop",
+        "prompt_tokens": 129,
+        "completion_tokens": 5376
+      }
+    ],
+    "scoring_status": "scored"
+  },
+  {
+    "id": "humaneval-plus:HumanEval/19",
+    "source": "humaneval-plus",
+    "area": "code",
+    "kind": "chat",
+    "tier": 30,
+    "max_tokens": 32768,
+    "samples": 1,
+    "score": 1.0,
+    "sample_scores": [
+      1.0
+    ],
+    "error": null,
+    "audit_issues": [],
+    "actual_item_records": [
+      {
+        "id": "humaneval-plus:HumanEval/19",
+        "source": "humaneval-plus",
+        "area": "code",
+        "kind": "chat",
+        "tier": 30,
+        "max_tokens": 32768,
+        "samples": 1,
+        "score": 1.0,
+        "sample_scores": [
+          1.0
+        ],
+        "error": null,
+        "record_index": 905,
+        "detail": {
+          "samples": [
+            {
+              "base": "pass",
+              "plus": "pass",
+              "passed": true
+            }
+          ]
+        },
+        "generation": [
+          {
+            "finish_reason": "stop",
+            "prompt_tokens": 159,
+            "completion_tokens": 948
+          }
+        ]
+      }
+    ],
+    "response_records": [
+      {
+        "record_index": 1163,
+        "error": null,
+        "outcome_present": true
+      }
+    ],
+    "detail": {
+      "samples": [
+        {
+          "base": "pass",
+          "plus": "pass",
+          "passed": true
+        }
+      ]
+    },
+    "generation": [
+      {
+        "finish_reason": "stop",
+        "prompt_tokens": 159,
+        "completion_tokens": 948
+      }
+    ],
+    "scoring_status": "scored"
+  },
+  {
+    "id": "humaneval-plus:HumanEval/112",
+    "source": "humaneval-plus",
+    "area": "code",
+    "kind": "chat",
+    "tier": 30,
+    "max_tokens": 32768,
+    "samples": 1,
+    "score": 1.0,
+    "sample_scores": [
+      1.0
+    ],
+    "error": null,
+    "audit_issues": [],
+    "actual_item_records": [
+      {
+        "id": "humaneval-plus:HumanEval/112",
+        "source": "humaneval-plus",
+        "area": "code",
+        "kind": "chat",
+        "tier": 30,
+        "max_tokens": 32768,
+        "samples": 1,
+        "score": 1.0,
+        "sample_scores": [
+          1.0
+        ],
+        "error": null,
+        "record_index": 906,
+        "detail": {
+          "samples": [
+            {
+              "base": "pass",
+              "plus": "pass",
+              "passed": true
+            }
+          ]
+        },
+        "generation": [
+          {
+            "finish_reason": "stop",
+            "prompt_tokens": 218,
+            "completion_tokens": 1057
+          }
+        ]
+      }
+    ],
+    "response_records": [
+      {
+        "record_index": 1073,
+        "error": null,
+        "outcome_present": true
+      }
+    ],
+    "detail": {
+      "samples": [
+        {
+          "base": "pass",
+          "plus": "pass",
+          "passed": true
+        }
+      ]
+    },
+    "generation": [
+      {
+        "finish_reason": "stop",
+        "prompt_tokens": 218,
+        "completion_tokens": 1057
+      }
+    ],
+    "scoring_status": "scored"
+  },
+  {
+    "id": "humaneval-plus:HumanEval/152",
+    "source": "humaneval-plus",
+    "area": "code",
+    "kind": "chat",
+    "tier": 30,
+    "max_tokens": 32768,
+    "samples": 1,
+    "score": 0.0,
+    "sample_scores": [
+      0.0
+    ],
+    "error": null,
+    "audit_issues": [],
+    "actual_item_records": [
+      {
+        "id": "humaneval-plus:HumanEval/152",
+        "source": "humaneval-plus",
+        "area": "code",
+        "kind": "chat",
+        "tier": 30,
+        "max_tokens": 32768,
+        "samples": 1,
+        "score": 0.0,
+        "sample_scores": [
+          0.0
+        ],
+        "error": null,
+        "record_index": 907,
+        "detail": {
+          "samples": [
+            {
+              "base": "fail",
+              "plus": "fail",
+              "passed": false
+            }
+          ]
+        },
+        "generation": [
+          {
+            "finish_reason": "stop",
+            "prompt_tokens": 289,
+            "completion_tokens": 1075
+          }
+        ]
+      }
+    ],
+    "response_records": [
+      {
+        "record_index": 777,
+        "error": null,
+        "outcome_present": true
+      }
+    ],
+    "detail": {
+      "samples": [
+        {
+          "base": "fail",
+          "plus": "fail",
+          "passed": false
+        }
+      ]
+    },
+    "generation": [
+      {
+        "finish_reason": "stop",
+        "prompt_tokens": 289,
+        "completion_tokens": 1075
+      }
+    ],
+    "scoring_status": "scored"
+  },
+  {
+    "id": "humaneval-plus:HumanEval/66",
+    "source": "humaneval-plus",
+    "area": "code",
+    "kind": "chat",
+    "tier": 30,
+    "max_tokens": 32768,
+    "samples": 1,
+    "score": 1.0,
+    "sample_scores": [
+      1.0
+    ],
+    "error": null,
+    "audit_issues": [],
+    "actual_item_records": [
+      {
+        "id": "humaneval-plus:HumanEval/66",
+        "source": "humaneval-plus",
+        "area": "code",
+        "kind": "chat",
+        "tier": 30,
+        "max_tokens": 32768,
+        "samples": 1,
+        "score": 1.0,
+        "sample_scores": [
+          1.0
+        ],
+        "error": null,
+        "record_index": 908,
+        "detail": {
+          "samples": [
+            {
+              "base": "pass",
+              "plus": "pass",
+              "passed": true
+            }
+          ]
+        },
+        "generation": [
+          {
+            "finish_reason": "stop",
+            "prompt_tokens": 169,
+            "completion_tokens": 764
+          }
+        ]
+      }
+    ],
+    "response_records": [
+      {
+        "record_index": 1187,
+        "error": null,
+        "outcome_present": true
+      }
+    ],
+    "detail": {
+      "samples": [
+        {
+          "base": "pass",
+          "plus": "pass",
+          "passed": true
+        }
+      ]
+    },
+    "generation": [
+      {
+        "finish_reason": "stop",
+        "prompt_tokens": 169,
+        "completion_tokens": 764
+      }
+    ],
+    "scoring_status": "scored"
+  },
+  {
+    "id": "humaneval-plus:HumanEval/85",
+    "source": "humaneval-plus",
+    "area": "code",
+    "kind": "chat",
+    "tier": 30,
+    "max_tokens": 32768,
+    "samples": 1,
+    "score": 1.0,
+    "sample_scores": [
+      1.0
+    ],
+    "error": null,
+    "audit_issues": [],
+    "actual_item_records": [
+      {
+        "id": "humaneval-plus:HumanEval/85",
+        "source": "humaneval-plus",
+        "area": "code",
+        "kind": "chat",
+        "tier": 30,
+        "max_tokens": 32768,
+        "samples": 1,
+        "score": 1.0,
+        "sample_scores": [
+          1.0
+        ],
+        "error": null,
+        "record_index": 909,
+        "detail": {
+          "samples": [
+            {
+              "base": "pass",
+              "plus": "pass",
+              "passed": true
+            }
+          ]
+        },
+        "generation": [
+          {
+            "finish_reason": "stop",
+            "prompt_tokens": 105,
+            "completion_tokens": 781
+          }
+        ]
+      }
+    ],
+    "response_records": [
+      {
+        "record_index": 964,
+        "error": null,
+        "outcome_present": true
+      }
+    ],
+    "detail": {
+      "samples": [
+        {
+          "base": "pass",
+          "plus": "pass",
+          "passed": true
+        }
+      ]
+    },
+    "generation": [
+      {
+        "finish_reason": "stop",
+        "prompt_tokens": 105,
+        "completion_tokens": 781
+      }
+    ],
+    "scoring_status": "scored"
+  },
+  {
+    "id": "humaneval-plus:HumanEval/146",
+    "source": "humaneval-plus",
+    "area": "code",
+    "kind": "chat",
+    "tier": 30,
+    "max_tokens": 32768,
+    "samples": 1,
+    "score": 1.0,
+    "sample_scores": [
+      1.0
+    ],
+    "error": null,
+    "audit_issues": [],
+    "actual_item_records": [
+      {
+        "id": "humaneval-plus:HumanEval/146",
+        "source": "humaneval-plus",
+        "area": "code",
+        "kind": "chat",
+        "tier": 30,
+        "max_tokens": 32768,
+        "samples": 1,
+        "score": 1.0,
+        "sample_scores": [
+          1.0
+        ],
+        "error": null,
+        "record_index": 910,
+        "detail": {
+          "samples": [
+            {
+              "base": "pass",
+              "plus": "pass",
+              "passed": true
+            }
+          ]
+        },
+        "generation": [
+          {
+            "finish_reason": "stop",
+            "prompt_tokens": 181,
+            "completion_tokens": 1294
+          }
+        ]
+      }
+    ],
+    "response_records": [
+      {
+        "record_index": 626,
+        "error": null,
+        "outcome_present": true
+      }
+    ],
+    "detail": {
+      "samples": [
+        {
+          "base": "pass",
+          "plus": "pass",
+          "passed": true
+        }
+      ]
+    },
+    "generation": [
+      {
+        "finish_reason": "stop",
+        "prompt_tokens": 181,
+        "completion_tokens": 1294
+      }
+    ],
+    "scoring_status": "scored"
+  },
+  {
+    "id": "humaneval-plus:HumanEval/95",
+    "source": "humaneval-plus",
+    "area": "code",
+    "kind": "chat",
+    "tier": 30,
+    "max_tokens": 32768,
+    "samples": 1,
+    "score": 1.0,
+    "sample_scores": [
+      1.0
+    ],
+    "error": null,
+    "audit_issues": [],
+    "actual_item_records": [
+      {
+        "id": "humaneval-plus:HumanEval/95",
+        "source": "humaneval-plus",
+        "area": "code",
+        "kind": "chat",
+        "tier": 30,
+        "max_tokens": 32768,
+        "samples": 1,
+        "score": 1.0,
+        "sample_scores": [
+          1.0
+        ],
+        "error": null,
+        "record_index": 911,
+        "detail": {
+          "samples": [
+            {
+              "base": "pass",
+              "plus": "pass",
+              "passed": true
+            }
+          ]
+        },
+        "generation": [
+          {
+            "finish_reason": "stop",
+            "prompt_tokens": 242,
+            "completion_tokens": 2017
+          }
+        ]
+      }
+    ],
+    "response_records": [
+      {
+        "record_index": 529,
+        "error": null,
+        "outcome_present": true
+      }
+    ],
+    "detail": {
+      "samples": [
+        {
+          "base": "pass",
+          "plus": "pass",
+          "passed": true
+        }
+      ]
+    },
+    "generation": [
+      {
+        "finish_reason": "stop",
+        "prompt_tokens": 242,
+        "completion_tokens": 2017
+      }
+    ],
+    "scoring_status": "scored"
+  },
+  {
+    "id": "humaneval-plus:HumanEval/139",
+    "source": "humaneval-plus",
+    "area": "code",
+    "kind": "chat",
+    "tier": 30,
+    "max_tokens": 32768,
+    "samples": 1,
+    "score": 1.0,
+    "sample_scores": [
+      1.0
+    ],
+    "error": null,
+    "audit_issues": [],
+    "actual_item_records": [
+      {
+        "id": "humaneval-plus:HumanEval/139",
+        "source": "humaneval-plus",
+        "area": "code",
+        "kind": "chat",
+        "tier": 30,
+        "max_tokens": 32768,
+        "samples": 1,
+        "score": 1.0,
+        "sample_scores": [
+          1.0
+        ],
+        "error": null,
+        "record_index": 912,
+        "detail": {
+          "samples": [
+            {
+              "base": "pass",
+              "plus": "pass",
+              "passed": true
+            }
+          ]
+        },
+        "generation": [
+          {
+            "finish_reason": "stop",
+            "prompt_tokens": 150,
+            "completion_tokens": 895
+          }
+        ]
+      }
+    ],
+    "response_records": [
+      {
+        "record_index": 985,
+        "error": null,
+        "outcome_present": true
+      }
+    ],
+    "detail": {
+      "samples": [
+        {
+          "base": "pass",
+          "plus": "pass",
+          "passed": true
+        }
+      ]
+    },
+    "generation": [
+      {
+        "finish_reason": "stop",
+        "prompt_tokens": 150,
+        "completion_tokens": 895
+      }
+    ],
+    "scoring_status": "scored"
+  },
+  {
+    "id": "humaneval-plus:HumanEval/151",
+    "source": "humaneval-plus",
+    "area": "code",
+    "kind": "chat",
+    "tier": 30,
+    "max_tokens": 32768,
+    "samples": 1,
+    "score": 1.0,
+    "sample_scores": [
+      1.0
+    ],
+    "error": null,
+    "audit_issues": [],
+    "actual_item_records": [
+      {
+        "id": "humaneval-plus:HumanEval/151",
+        "source": "humaneval-plus",
+        "area": "code",
+        "kind": "chat",
+        "tier": 30,
+        "max_tokens": 32768,
+        "samples": 1,
+        "score": 1.0,
+        "sample_scores": [
+          1.0
+        ],
+        "error": null,
+        "record_index": 913,
+        "detail": {
+          "samples": [
+            {
+              "base": "pass",
+              "plus": "pass",
+              "passed": true
+            }
+          ]
+        },
+        "generation": [
+          {
+            "finish_reason": "stop",
+            "prompt_tokens": 202,
+            "completion_tokens": 1418
+          }
+        ]
+      }
+    ],
+    "response_records": [
+      {
+        "record_index": 810,
+        "error": null,
+        "outcome_present": true
+      }
+    ],
+    "detail": {
+      "samples": [
+        {
+          "base": "pass",
+          "plus": "pass",
+          "passed": true
+        }
+      ]
+    },
+    "generation": [
+      {
+        "finish_reason": "stop",
+        "prompt_tokens": 202,
+        "completion_tokens": 1418
+      }
+    ],
+    "scoring_status": "scored"
+  },
+  {
+    "id": "humaneval-plus:HumanEval/96",
+    "source": "humaneval-plus",
+    "area": "code",
+    "kind": "chat",
+    "tier": 30,
+    "max_tokens": 32768,
+    "samples": 1,
+    "score": 1.0,
+    "sample_scores": [
+      1.0
+    ],
+    "error": null,
+    "audit_issues": [],
+    "actual_item_records": [
+      {
+        "id": "humaneval-plus:HumanEval/96",
+        "source": "humaneval-plus",
+        "area": "code",
+        "kind": "chat",
+        "tier": 30,
+        "max_tokens": 32768,
+        "samples": 1,
+        "score": 1.0,
+        "sample_scores": [
+          1.0
+        ],
+        "error": null,
+        "record_index": 914,
+        "detail": {
+          "samples": [
+            {
+              "base": "pass",
+              "plus": "pass",
+              "passed": true
+            }
+          ]
+        },
+        "generation": [
+          {
+            "finish_reason": "stop",
+            "prompt_tokens": 226,
+            "completion_tokens": 1751
+          }
+        ]
+      }
+    ],
+    "response_records": [
+      {
+        "record_index": 701,
+        "error": null,
+        "outcome_present": true
+      }
+    ],
+    "detail": {
+      "samples": [
+        {
+          "base": "pass",
+          "plus": "pass",
+          "passed": true
+        }
+      ]
+    },
+    "generation": [
+      {
+        "finish_reason": "stop",
+        "prompt_tokens": 226,
+        "completion_tokens": 1751
+      }
+    ],
+    "scoring_status": "scored"
+  },
+  {
+    "id": "humaneval-plus:HumanEval/52",
+    "source": "humaneval-plus",
+    "area": "code",
+    "kind": "chat",
+    "tier": 30,
+    "max_tokens": 32768,
+    "samples": 1,
+    "score": 1.0,
+    "sample_scores": [
+      1.0
+    ],
+    "error": null,
+    "audit_issues": [],
+    "actual_item_records": [
+      {
+        "id": "humaneval-plus:HumanEval/52",
+        "source": "humaneval-plus",
+        "area": "code",
+        "kind": "chat",
+        "tier": 30,
+        "max_tokens": 32768,
+        "samples": 1,
+        "score": 1.0,
+        "sample_scores": [
+          1.0
+        ],
+        "error": null,
+        "record_index": 915,
+        "detail": {
+          "samples": [
+            {
+              "base": "pass",
+              "plus": "pass",
+              "passed": true
+            }
+          ]
+        },
+        "generation": [
+          {
+            "finish_reason": "stop",
+            "prompt_tokens": 137,
+            "completion_tokens": 440
+          }
+        ]
+      }
+    ],
+    "response_records": [
+      {
+        "record_index": 1262,
+        "error": null,
+        "outcome_present": true
+      }
+    ],
+    "detail": {
+      "samples": [
+        {
+          "base": "pass",
+          "plus": "pass",
+          "passed": true
+        }
+      ]
+    },
+    "generation": [
+      {
+        "finish_reason": "stop",
+        "prompt_tokens": 137,
+        "completion_tokens": 440
+      }
+    ],
+    "scoring_status": "scored"
+  },
+  {
+    "id": "humaneval-plus:HumanEval/44",
+    "source": "humaneval-plus",
+    "area": "code",
+    "kind": "chat",
+    "tier": 30,
+    "max_tokens": 32768,
+    "samples": 1,
+    "score": 1.0,
+    "sample_scores": [
+      1.0
+    ],
+    "error": null,
+    "audit_issues": [],
+    "actual_item_records": [
+      {
+        "id": "humaneval-plus:HumanEval/44",
+        "source": "humaneval-plus",
+        "area": "code",
+        "kind": "chat",
+        "tier": 30,
+        "max_tokens": 32768,
+        "samples": 1,
+        "score": 1.0,
+        "sample_scores": [
+          1.0
+        ],
+        "error": null,
+        "record_index": 916,
+        "detail": {
+          "samples": [
+            {
+              "base": "pass",
+              "plus": "pass",
+              "passed": true
+            }
+          ]
+        },
+        "generation": [
+          {
+            "finish_reason": "stop",
+            "prompt_tokens": 157,
+            "completion_tokens": 1107
+          }
+        ]
+      }
+    ],
+    "response_records": [
+      {
+        "record_index": 1087,
+        "error": null,
+        "outcome_present": true
+      }
+    ],
+    "detail": {
+      "samples": [
+        {
+          "base": "pass",
+          "plus": "pass",
+          "passed": true
+        }
+      ]
+    },
+    "generation": [
+      {
+        "finish_reason": "stop",
+        "prompt_tokens": 157,
+        "completion_tokens": 1107
+      }
+    ],
+    "scoring_status": "scored"
+  },
+  {
+    "id": "humaneval-plus:HumanEval/54",
+    "source": "humaneval-plus",
+    "area": "code",
+    "kind": "chat",
+    "tier": 30,
+    "max_tokens": 32768,
+    "samples": 1,
+    "score": 1.0,
+    "sample_scores": [
+      1.0
+    ],
+    "error": null,
+    "audit_issues": [],
+    "actual_item_records": [
+      {
+        "id": "humaneval-plus:HumanEval/54",
+        "source": "humaneval-plus",
+        "area": "code",
+        "kind": "chat",
+        "tier": 30,
+        "max_tokens": 32768,
+        "samples": 1,
+        "score": 1.0,
+        "sample_scores": [
+          1.0
+        ],
+        "error": null,
+        "record_index": 917,
+        "detail": {
+          "samples": [
+            {
+              "base": "pass",
+              "plus": "pass",
+              "passed": true
+            }
+          ]
+        },
+        "generation": [
+          {
+            "finish_reason": "stop",
+            "prompt_tokens": 205,
+            "completion_tokens": 1316
+          }
+        ]
+      }
+    ],
+    "response_records": [
+      {
+        "record_index": 1641,
+        "error": null,
+        "outcome_present": true
+      }
+    ],
+    "detail": {
+      "samples": [
+        {
+          "base": "pass",
+          "plus": "pass",
+          "passed": true
+        }
+      ]
+    },
+    "generation": [
+      {
+        "finish_reason": "stop",
+        "prompt_tokens": 205,
+        "completion_tokens": 1316
+      }
+    ],
+    "scoring_status": "scored"
+  },
+  {
+    "id": "humaneval-plus:HumanEval/34",
+    "source": "humaneval-plus",
+    "area": "code",
+    "kind": "chat",
+    "tier": 30,
+    "max_tokens": 32768,
+    "samples": 1,
+    "score": 1.0,
+    "sample_scores": [
+      1.0
+    ],
+    "error": null,
+    "audit_issues": [],
+    "actual_item_records": [
+      {
+        "id": "humaneval-plus:HumanEval/34",
+        "source": "humaneval-plus",
+        "area": "code",
+        "kind": "chat",
+        "tier": 30,
+        "max_tokens": 32768,
+        "samples": 1,
+        "score": 1.0,
+        "sample_scores": [
+          1.0
+        ],
+        "error": null,
+        "record_index": 918,
+        "detail": {
+          "samples": [
+            {
+              "base": "pass",
+              "plus": "pass",
+              "passed": true
+            }
+          ]
+        },
+        "generation": [
+          {
+            "finish_reason": "stop",
+            "prompt_tokens": 126,
+            "completion_tokens": 489
+          }
+        ]
+      }
+    ],
+    "response_records": [
+      {
+        "record_index": 1369,
+        "error": null,
+        "outcome_present": true
+      }
+    ],
+    "detail": {
+      "samples": [
+        {
+          "base": "pass",
+          "plus": "pass",
+          "passed": true
+        }
+      ]
+    },
+    "generation": [
+      {
+        "finish_reason": "stop",
+        "prompt_tokens": 126,
+        "completion_tokens": 489
+      }
+    ],
+    "scoring_status": "scored"
+  },
+  {
+    "id": "livecodebench:arc191_c",
+    "source": "livecodebench",
+    "area": "code",
+    "kind": "chat",
+    "tier": 10,
+    "max_tokens": 16384,
+    "samples": 1,
+    "score": 0.0,
+    "sample_scores": [
+      0.0
+    ],
+    "error": null,
+    "audit_issues": [],
+    "actual_item_records": [
+      {
+        "id": "livecodebench:arc191_c",
+        "source": "livecodebench",
+        "area": "code",
+        "kind": "chat",
+        "tier": 10,
+        "max_tokens": 16384,
+        "samples": 1,
+        "score": 0.0,
+        "sample_scores": [
+          0.0
+        ],
+        "error": null,
+        "record_index": 1161,
+        "detail": {
+          "samples": [
+            {
+              "passed": false
+            }
+          ]
+        },
+        "generation": [
+          {
+            "finish_reason": "stop",
+            "prompt_tokens": 613,
+            "completion_tokens": 8824
+          }
+        ]
+      }
+    ],
+    "response_records": [
+      {
+        "record_index": 112,
+        "error": null,
+        "outcome_present": true
+      }
+    ],
+    "detail": {
+      "samples": [
+        {
+          "passed": false
+        }
+      ]
+    },
+    "generation": [
+      {
+        "finish_reason": "stop",
+        "prompt_tokens": 613,
+        "completion_tokens": 8824
+      }
+    ],
+    "scoring_status": "scored"
+  },
+  {
+    "id": "livecodebench:abc397_b",
+    "source": "livecodebench",
+    "area": "code",
+    "kind": "chat",
+    "tier": 10,
+    "max_tokens": 16384,
+    "samples": 1,
+    "score": 1.0,
+    "sample_scores": [
+      1.0
+    ],
+    "error": null,
+    "audit_issues": [],
+    "actual_item_records": [
+      {
+        "id": "livecodebench:abc397_b",
+        "source": "livecodebench",
+        "area": "code",
+        "kind": "chat",
+        "tier": 10,
+        "max_tokens": 16384,
+        "samples": 1,
+        "score": 1.0,
+        "sample_scores": [
+          1.0
+        ],
+        "error": null,
+        "record_index": 1162,
+        "detail": {
+          "samples": [
+            {
+              "passed": true
+            }
+          ]
+        },
+        "generation": [
+          {
+            "finish_reason": "stop",
+            "prompt_tokens": 464,
+            "completion_tokens": 5418
+          }
+        ]
+      }
+    ],
+    "response_records": [
+      {
+        "record_index": 44,
+        "error": null,
+        "outcome_present": true
+      }
+    ],
+    "detail": {
+      "samples": [
+        {
+          "passed": true
+        }
+      ]
+    },
+    "generation": [
+      {
+        "finish_reason": "stop",
+        "prompt_tokens": 464,
+        "completion_tokens": 5418
+      }
+    ],
+    "scoring_status": "scored"
+  },
+  {
+    "id": "livecodebench:abc394_b",
+    "source": "livecodebench",
+    "area": "code",
+    "kind": "chat",
+    "tier": 10,
+    "max_tokens": 16384,
+    "samples": 1,
+    "score": 1.0,
+    "sample_scores": [
+      1.0
+    ],
+    "error": null,
+    "audit_issues": [],
+    "actual_item_records": [
+      {
+        "id": "livecodebench:abc394_b",
+        "source": "livecodebench",
+        "area": "code",
+        "kind": "chat",
+        "tier": 10,
+        "max_tokens": 16384,
+        "samples": 1,
+        "score": 1.0,
+        "sample_scores": [
+          1.0
+        ],
+        "error": null,
+        "record_index": 1163,
+        "detail": {
+          "samples": [
+            {
+              "passed": true
+            }
+          ]
+        },
+        "generation": [
+          {
+            "finish_reason": "stop",
+            "prompt_tokens": 401,
+            "completion_tokens": 558
+          }
+        ]
+      }
+    ],
+    "response_records": [
+      {
+        "record_index": 453,
+        "error": null,
+        "outcome_present": true
+      }
+    ],
+    "detail": {
+      "samples": [
+        {
+          "passed": true
+        }
+      ]
+    },
+    "generation": [
+      {
+        "finish_reason": "stop",
+        "prompt_tokens": 401,
+        "completion_tokens": 558
+      }
+    ],
+    "scoring_status": "scored"
+  },
+  {
+    "id": "livecodebench:abc393_d",
+    "source": "livecodebench",
+    "area": "code",
+    "kind": "chat",
+    "tier": 10,
+    "max_tokens": 16384,
+    "samples": 1,
+    "score": 1.0,
+    "sample_scores": [
+      1.0
+    ],
+    "error": null,
+    "audit_issues": [],
+    "actual_item_records": [
+      {
+        "id": "livecodebench:abc393_d",
+        "source": "livecodebench",
+        "area": "code",
+        "kind": "chat",
+        "tier": 10,
+        "max_tokens": 16384,
+        "samples": 1,
+        "score": 1.0,
+        "sample_scores": [
+          1.0
+        ],
+        "error": null,
+        "record_index": 1164,
+        "detail": {
+          "samples": [
+            {
+              "passed": true
+            }
+          ]
+        },
+        "generation": [
+          {
+            "finish_reason": "stop",
+            "prompt_tokens": 588,
+            "completion_tokens": 6442
+          }
+        ]
+      }
+    ],
+    "response_records": [
+      {
+        "record_index": 502,
+        "error": null,
+        "outcome_present": true
+      }
+    ],
+    "detail": {
+      "samples": [
+        {
+          "passed": true
+        }
+      ]
+    },
+    "generation": [
+      {
+        "finish_reason": "stop",
+        "prompt_tokens": 588,
+        "completion_tokens": 6442
+      }
+    ],
+    "scoring_status": "scored"
+  },
+  {
+    "id": "livecodebench:abc399_c",
+    "source": "livecodebench",
+    "area": "code",
+    "kind": "chat",
+    "tier": 10,
+    "max_tokens": 16384,
+    "samples": 1,
+    "score": 1.0,
+    "sample_scores": [
+      1.0
+    ],
+    "error": null,
+    "audit_issues": [],
+    "actual_item_records": [
+      {
+        "id": "livecodebench:abc399_c",
+        "source": "livecodebench",
+        "area": "code",
+        "kind": "chat",
+        "tier": 10,
+        "max_tokens": 16384,
+        "samples": 1,
+        "score": 1.0,
+        "sample_scores": [
+          1.0
+        ],
+        "error": null,
+        "record_index": 1165,
+        "detail": {
+          "samples": [
+            {
+              "passed": true
+            }
+          ]
+        },
+        "generation": [
+          {
+            "finish_reason": "stop",
+            "prompt_tokens": 512,
+            "completion_tokens": 4120
+          }
+        ]
+      }
+    ],
+    "response_records": [
+      {
+        "record_index": 144,
+        "error": null,
+        "outcome_present": true
+      }
+    ],
+    "detail": {
+      "samples": [
+        {
+          "passed": true
+        }
+      ]
+    },
+    "generation": [
+      {
+        "finish_reason": "stop",
+        "prompt_tokens": 512,
+        "completion_tokens": 4120
+      }
+    ],
+    "scoring_status": "scored"
+  },
+  {
+    "id": "livecodebench:abc395_f",
+    "source": "livecodebench",
+    "area": "code",
+    "kind": "chat",
+    "tier": 10,
+    "max_tokens": 16384,
+    "samples": 1,
+    "score": 1.0,
+    "sample_scores": [
+      1.0
+    ],
+    "error": null,
+    "audit_issues": [],
+    "actual_item_records": [
+      {
+        "id": "livecodebench:abc395_f",
+        "source": "livecodebench",
+        "area": "code",
+        "kind": "chat",
+        "tier": 10,
+        "max_tokens": 16384,
+        "samples": 1,
+        "score": 1.0,
+        "sample_scores": [
+          1.0
+        ],
+        "error": null,
+        "record_index": 1166,
+        "detail": {
+          "samples": [
+            {
+              "passed": true
+            }
+          ]
+        },
+        "generation": [
+          {
+            "finish_reason": "stop",
+            "prompt_tokens": 961,
+            "completion_tokens": 9251
+          }
+        ]
+      }
+    ],
+    "response_records": [
+      {
+        "record_index": 477,
+        "error": null,
+        "outcome_present": true
+      }
+    ],
+    "detail": {
+      "samples": [
+        {
+          "passed": true
+        }
+      ]
+    },
+    "generation": [
+      {
+        "finish_reason": "stop",
+        "prompt_tokens": 961,
+        "completion_tokens": 9251
+      }
+    ],
+    "scoring_status": "scored"
+  },
+  {
+    "id": "livecodebench:abc391_a",
+    "source": "livecodebench",
+    "area": "code",
+    "kind": "chat",
+    "tier": 30,
+    "max_tokens": 32768,
+    "samples": 1,
+    "score": 1.0,
+    "sample_scores": [
+      1.0
+    ],
+    "error": null,
+    "audit_issues": [],
+    "actual_item_records": [
+      {
+        "id": "livecodebench:abc391_a",
+        "source": "livecodebench",
+        "area": "code",
+        "kind": "chat",
+        "tier": 30,
+        "max_tokens": 32768,
+        "samples": 1,
+        "score": 1.0,
+        "sample_scores": [
+          1.0
+        ],
+        "error": null,
+        "record_index": 1167,
+        "detail": {
+          "samples": [
+            {
+              "passed": true
+            }
+          ]
+        },
+        "generation": [
+          {
+            "finish_reason": "stop",
+            "prompt_tokens": 340,
+            "completion_tokens": 939
+          }
+        ]
+      }
+    ],
+    "response_records": [
+      {
+        "record_index": 1105,
+        "error": null,
+        "outcome_present": true
+      }
+    ],
+    "detail": {
+      "samples": [
+        {
+          "passed": true
+        }
+      ]
+    },
+    "generation": [
+      {
+        "finish_reason": "stop",
+        "prompt_tokens": 340,
+        "completion_tokens": 939
+      }
+    ],
+    "scoring_status": "scored"
+  },
+  {
+    "id": "livecodebench:abc390_g",
+    "source": "livecodebench",
+    "area": "code",
+    "kind": "chat",
+    "tier": 30,
+    "max_tokens": 32768,
+    "samples": 1,
+    "score": 1.0,
+    "sample_scores": [
+      1.0
+    ],
+    "error": null,
+    "audit_issues": [],
+    "actual_item_records": [
+      {
+        "id": "livecodebench:abc390_g",
+        "source": "livecodebench",
+        "area": "code",
+        "kind": "chat",
+        "tier": 30,
+        "max_tokens": 32768,
+        "samples": 1,
+        "score": 1.0,
+        "sample_scores": [
+          1.0
+        ],
+        "error": null,
+        "record_index": 1168,
+        "detail": {
+          "samples": [
+            {
+              "passed": true
+            }
+          ]
+        },
+        "generation": [
+          {
+            "finish_reason": "stop",
+            "prompt_tokens": 609,
+            "completion_tokens": 10487
+          }
+        ]
+      }
+    ],
+    "response_records": [
+      {
+        "record_index": 130,
+        "error": null,
+        "outcome_present": true
+      }
+    ],
+    "detail": {
+      "samples": [
+        {
+          "passed": true
+        }
+      ]
+    },
+    "generation": [
+      {
+        "finish_reason": "stop",
+        "prompt_tokens": 609,
+        "completion_tokens": 10487
+      }
+    ],
+    "scoring_status": "scored"
+  },
+  {
+    "id": "livecodebench:3721",
+    "source": "livecodebench",
+    "area": "code",
+    "kind": "chat",
+    "tier": 30,
+    "max_tokens": 32768,
+    "samples": 1,
+    "score": 1.0,
+    "sample_scores": [
+      1.0
+    ],
+    "error": null,
+    "audit_issues": [],
+    "actual_item_records": [
+      {
+        "id": "livecodebench:3721",
+        "source": "livecodebench",
+        "area": "code",
+        "kind": "chat",
+        "tier": 30,
+        "max_tokens": 32768,
+        "samples": 1,
+        "score": 1.0,
+        "sample_scores": [
+          1.0
+        ],
+        "error": null,
+        "record_index": 1169,
+        "detail": {
+          "samples": [
+            {
+              "passed": true
+            }
+          ]
+        },
+        "generation": [
+          {
+            "finish_reason": "stop",
+            "prompt_tokens": 918,
+            "completion_tokens": 4576
+          }
+        ]
+      }
+    ],
+    "response_records": [
+      {
+        "record_index": 81,
+        "error": null,
+        "outcome_present": true
+      }
+    ],
+    "detail": {
+      "samples": [
+        {
+          "passed": true
+        }
+      ]
+    },
+    "generation": [
+      {
+        "finish_reason": "stop",
+        "prompt_tokens": 918,
+        "completion_tokens": 4576
+      }
+    ],
+    "scoring_status": "scored"
+  },
+  {
+    "id": "livecodebench:3788",
+    "source": "livecodebench",
+    "area": "code",
+    "kind": "chat",
+    "tier": 30,
+    "max_tokens": 32768,
+    "samples": 1,
+    "score": 1.0,
+    "sample_scores": [
+      1.0
+    ],
+    "error": null,
+    "audit_issues": [],
+    "actual_item_records": [
+      {
+        "id": "livecodebench:3788",
+        "source": "livecodebench",
+        "area": "code",
+        "kind": "chat",
+        "tier": 30,
+        "max_tokens": 32768,
+        "samples": 1,
+        "score": 1.0,
+        "sample_scores": [
+          1.0
+        ],
+        "error": null,
+        "record_index": 1170,
+        "detail": {
+          "samples": [
+            {
+              "passed": true
+            }
+          ]
+        },
+        "generation": [
+          {
+            "finish_reason": "stop",
+            "prompt_tokens": 430,
+            "completion_tokens": 7531
+          }
+        ]
+      }
+    ],
+    "response_records": [
+      {
+        "record_index": 95,
+        "error": null,
+        "outcome_present": true
+      }
+    ],
+    "detail": {
+      "samples": [
+        {
+          "passed": true
+        }
+      ]
+    },
+    "generation": [
+      {
+        "finish_reason": "stop",
+        "prompt_tokens": 430,
+        "completion_tokens": 7531
+      }
+    ],
+    "scoring_status": "scored"
+  },
+  {
+    "id": "livecodebench:3789",
+    "source": "livecodebench",
+    "area": "code",
+    "kind": "chat",
+    "tier": 30,
+    "max_tokens": 32768,
+    "samples": 1,
+    "score": 1.0,
+    "sample_scores": [
+      1.0
+    ],
+    "error": null,
+    "audit_issues": [],
+    "actual_item_records": [
+      {
+        "id": "livecodebench:3789",
+        "source": "livecodebench",
+        "area": "code",
+        "kind": "chat",
+        "tier": 30,
+        "max_tokens": 32768,
+        "samples": 1,
+        "score": 1.0,
+        "sample_scores": [
+          1.0
+        ],
+        "error": null,
+        "record_index": 1171,
+        "detail": {
+          "samples": [
+            {
+              "passed": true
+            }
+          ]
+        },
+        "generation": [
+          {
+            "finish_reason": "stop",
+            "prompt_tokens": 571,
+            "completion_tokens": 6669
+          }
+        ]
+      }
+    ],
+    "response_records": [
+      {
+        "record_index": 54,
+        "error": null,
+        "outcome_present": true
+      }
+    ],
+    "detail": {
+      "samples": [
+        {
+          "passed": true
+        }
+      ]
+    },
+    "generation": [
+      {
+        "finish_reason": "stop",
+        "prompt_tokens": 571,
+        "completion_tokens": 6669
+      }
+    ],
+    "scoring_status": "scored"
+  },
+  {
+    "id": "livecodebench:3805",
+    "source": "livecodebench",
+    "area": "code",
+    "kind": "chat",
+    "tier": 30,
+    "max_tokens": 32768,
+    "samples": 1,
+    "score": 1.0,
+    "sample_scores": [
+      1.0
+    ],
+    "error": null,
+    "audit_issues": [],
+    "actual_item_records": [
+      {
+        "id": "livecodebench:3805",
+        "source": "livecodebench",
+        "area": "code",
+        "kind": "chat",
+        "tier": 30,
+        "max_tokens": 32768,
+        "samples": 1,
+        "score": 1.0,
+        "sample_scores": [
+          1.0
+        ],
+        "error": null,
+        "record_index": 1172,
+        "detail": {
+          "samples": [
+            {
+              "passed": true
+            }
+          ]
+        },
+        "generation": [
+          {
+            "finish_reason": "stop",
+            "prompt_tokens": 713,
+            "completion_tokens": 10404
+          }
+        ]
+      }
+    ],
+    "response_records": [
+      {
+        "record_index": 672,
+        "error": null,
+        "outcome_present": true
+      }
+    ],
+    "detail": {
+      "samples": [
+        {
+          "passed": true
+        }
+      ]
+    },
+    "generation": [
+      {
+        "finish_reason": "stop",
+        "prompt_tokens": 713,
+        "completion_tokens": 10404
+      }
+    ],
+    "scoring_status": "scored"
+  },
+  {
+    "id": "livecodebench:arc196_a",
+    "source": "livecodebench",
+    "area": "code",
+    "kind": "chat",
+    "tier": 30,
+    "max_tokens": 32768,
+    "samples": 1,
+    "score": 0.0,
+    "sample_scores": [
+      0.0
+    ],
+    "error": null,
+    "audit_issues": [],
+    "actual_item_records": [
+      {
+        "id": "livecodebench:arc196_a",
+        "source": "livecodebench",
+        "area": "code",
+        "kind": "chat",
+        "tier": 30,
+        "max_tokens": 32768,
+        "samples": 1,
+        "score": 0.0,
+        "sample_scores": [
+          0.0
+        ],
+        "error": null,
+        "record_index": 1173,
+        "detail": {
+          "samples": [
+            {
+              "passed": false
+            }
+          ]
+        },
+        "generation": [
+          {
+            "finish_reason": "stop",
+            "prompt_tokens": 482,
+            "completion_tokens": 9139
+          }
+        ]
+      }
+    ],
+    "response_records": [
+      {
+        "record_index": 334,
+        "error": null,
+        "outcome_present": true
+      }
+    ],
+    "detail": {
+      "samples": [
+        {
+          "passed": false
+        }
+      ]
+    },
+    "generation": [
+      {
+        "finish_reason": "stop",
+        "prompt_tokens": 482,
+        "completion_tokens": 9139
+      }
+    ],
+    "scoring_status": "scored"
+  },
+  {
+    "id": "livecodebench:3778",
+    "source": "livecodebench",
+    "area": "code",
+    "kind": "chat",
+    "tier": 30,
+    "max_tokens": 32768,
+    "samples": 1,
+    "score": 1.0,
+    "sample_scores": [
+      1.0
+    ],
+    "error": null,
+    "audit_issues": [],
+    "actual_item_records": [
+      {
+        "id": "livecodebench:3778",
+        "source": "livecodebench",
+        "area": "code",
+        "kind": "chat",
+        "tier": 30,
+        "max_tokens": 32768,
+        "samples": 1,
+        "score": 1.0,
+        "sample_scores": [
+          1.0
+        ],
+        "error": null,
+        "record_index": 1174,
+        "detail": {
+          "samples": [
+            {
+              "passed": true
+            }
+          ]
+        },
+        "generation": [
+          {
+            "finish_reason": "stop",
+            "prompt_tokens": 432,
+            "completion_tokens": 1461
+          }
+        ]
+      }
+    ],
+    "response_records": [
+      {
+        "record_index": 1188,
+        "error": null,
+        "outcome_present": true
+      }
+    ],
+    "detail": {
+      "samples": [
+        {
+          "passed": true
+        }
+      ]
+    },
+    "generation": [
+      {
+        "finish_reason": "stop",
+        "prompt_tokens": 432,
+        "completion_tokens": 1461
+      }
+    ],
+    "scoring_status": "scored"
+  },
+  {
+    "id": "livecodebench:arc190_c",
+    "source": "livecodebench",
+    "area": "code",
+    "kind": "chat",
+    "tier": 30,
+    "max_tokens": 32768,
+    "samples": 1,
+    "score": 0.0,
+    "sample_scores": [
+      0.0
+    ],
+    "error": null,
+    "audit_issues": [],
+    "actual_item_records": [
+      {
+        "id": "livecodebench:arc190_c",
+        "source": "livecodebench",
+        "area": "code",
+        "kind": "chat",
+        "tier": 30,
+        "max_tokens": 32768,
+        "samples": 1,
+        "score": 0.0,
+        "sample_scores": [
+          0.0
+        ],
+        "error": null,
+        "record_index": 1175,
+        "detail": {
+          "samples": [
+            {
+              "passed": false
+            }
+          ]
+        },
+        "generation": [
+          {
+            "finish_reason": "stop",
+            "prompt_tokens": 1796,
+            "completion_tokens": 18846
+          }
+        ]
+      }
+    ],
+    "response_records": [
+      {
+        "record_index": 2319,
+        "error": null,
+        "outcome_present": true
+      }
+    ],
+    "detail": {
+      "samples": [
+        {
+          "passed": false
+        }
+      ]
+    },
+    "generation": [
+      {
+        "finish_reason": "stop",
+        "prompt_tokens": 1796,
+        "completion_tokens": 18846
+      }
+    ],
+    "scoring_status": "scored"
+  },
+  {
+    "id": "livecodebench:abc392_d",
+    "source": "livecodebench",
+    "area": "code",
+    "kind": "chat",
+    "tier": 30,
+    "max_tokens": 32768,
+    "samples": 1,
+    "score": 0.0,
+    "sample_scores": [
+      0.0
+    ],
+    "error": null,
+    "audit_issues": [],
+    "actual_item_records": [
+      {
+        "id": "livecodebench:abc392_d",
+        "source": "livecodebench",
+        "area": "code",
+        "kind": "chat",
+        "tier": 30,
+        "max_tokens": 32768,
+        "samples": 1,
+        "score": 0.0,
+        "sample_scores": [
+          0.0
+        ],
+        "error": null,
+        "record_index": 1176,
+        "detail": {
+          "samples": [
+            {
+              "passed": false
+            }
+          ]
+        },
+        "generation": [
+          {
+            "finish_reason": "stop",
+            "prompt_tokens": 662,
+            "completion_tokens": 7039
+          }
+        ]
+      }
+    ],
+    "response_records": [
+      {
+        "record_index": 57,
+        "error": null,
+        "outcome_present": true
+      }
+    ],
+    "detail": {
+      "samples": [
+        {
+          "passed": false
+        }
+      ]
+    },
+    "generation": [
+      {
+        "finish_reason": "stop",
+        "prompt_tokens": 662,
+        "completion_tokens": 7039
+      }
+    ],
+    "scoring_status": "scored"
+  },
+  {
+    "id": "livecodebench:arc195_b",
+    "source": "livecodebench",
+    "area": "code",
+    "kind": "chat",
+    "tier": 30,
+    "max_tokens": 32768,
+    "samples": 1,
+    "score": 1.0,
+    "sample_scores": [
+      1.0
+    ],
+    "error": null,
+    "audit_issues": [],
+    "actual_item_records": [
+      {
+        "id": "livecodebench:arc195_b",
+        "source": "livecodebench",
+        "area": "code",
+        "kind": "chat",
+        "tier": 30,
+        "max_tokens": 32768,
+        "samples": 1,
+        "score": 1.0,
+        "sample_scores": [
+          1.0
+        ],
+        "error": null,
+        "record_index": 1177,
+        "detail": {
+          "samples": [
+            {
+              "passed": true
+            }
+          ]
+        },
+        "generation": [
+          {
+            "finish_reason": "stop",
+            "prompt_tokens": 698,
+            "completion_tokens": 9681
+          }
+        ]
+      }
+    ],
+    "response_records": [
+      {
+        "record_index": 543,
+        "error": null,
+        "outcome_present": true
+      }
+    ],
+    "detail": {
+      "samples": [
+        {
+          "passed": true
+        }
+      ]
+    },
+    "generation": [
+      {
+        "finish_reason": "stop",
+        "prompt_tokens": 698,
+        "completion_tokens": 9681
+      }
+    ],
+    "scoring_status": "scored"
+  },
+  {
+    "id": "livecodebench:abc394_a",
+    "source": "livecodebench",
+    "area": "code",
+    "kind": "chat",
+    "tier": 30,
+    "max_tokens": 32768,
+    "samples": 1,
+    "score": 1.0,
+    "sample_scores": [
+      1.0
+    ],
+    "error": null,
+    "audit_issues": [],
+    "actual_item_records": [
+      {
+        "id": "livecodebench:abc394_a",
+        "source": "livecodebench",
+        "area": "code",
+        "kind": "chat",
+        "tier": 30,
+        "max_tokens": 32768,
+        "samples": 1,
+        "score": 1.0,
+        "sample_scores": [
+          1.0
+        ],
+        "error": null,
+        "record_index": 1178,
+        "detail": {
+          "samples": [
+            {
+              "passed": true
+            }
+          ]
+        },
+        "generation": [
+          {
+            "finish_reason": "stop",
+            "prompt_tokens": 357,
+            "completion_tokens": 937
+          }
+        ]
+      }
+    ],
+    "response_records": [
+      {
+        "record_index": 1239,
+        "error": null,
+        "outcome_present": true
+      }
+    ],
+    "detail": {
+      "samples": [
+        {
+          "passed": true
+        }
+      ]
+    },
+    "generation": [
+      {
+        "finish_reason": "stop",
+        "prompt_tokens": 357,
+        "completion_tokens": 937
+      }
+    ],
+    "scoring_status": "scored"
+  },
+  {
+    "id": "livecodebench:abc395_c",
+    "source": "livecodebench",
+    "area": "code",
+    "kind": "chat",
+    "tier": 30,
+    "max_tokens": 32768,
+    "samples": 1,
+    "score": 1.0,
+    "sample_scores": [
+      1.0
+    ],
+    "error": null,
+    "audit_issues": [],
+    "actual_item_records": [
+      {
+        "id": "livecodebench:abc395_c",
+        "source": "livecodebench",
+        "area": "code",
+        "kind": "chat",
+        "tier": 30,
+        "max_tokens": 32768,
+        "samples": 1,
+        "score": 1.0,
+        "sample_scores": [
+          1.0
+        ],
+        "error": null,
+        "record_index": 1179,
+        "detail": {
+          "samples": [
+            {
+              "passed": true
+            }
+          ]
+        },
+        "generation": [
+          {
+            "finish_reason": "stop",
+            "prompt_tokens": 475,
+            "completion_tokens": 1772
+          }
+        ]
+      }
+    ],
+    "response_records": [
+      {
+        "record_index": 508,
+        "error": null,
+        "outcome_present": true
+      }
+    ],
+    "detail": {
+      "samples": [
+        {
+          "passed": true
+        }
+      ]
+    },
+    "generation": [
+      {
+        "finish_reason": "stop",
+        "prompt_tokens": 475,
+        "completion_tokens": 1772
+      }
+    ],
+    "scoring_status": "scored"
+  },
+  {
+    "id": "livecodebench:3777",
+    "source": "livecodebench",
+    "area": "code",
+    "kind": "chat",
+    "tier": 30,
+    "max_tokens": 32768,
+    "samples": 1,
+    "score": 0.0,
+    "sample_scores": [
+      0.0
+    ],
+    "error": null,
+    "audit_issues": [],
+    "actual_item_records": [
+      {
+        "id": "livecodebench:3777",
+        "source": "livecodebench",
+        "area": "code",
+        "kind": "chat",
+        "tier": 30,
+        "max_tokens": 32768,
+        "samples": 1,
+        "score": 0.0,
+        "sample_scores": [
+          0.0
+        ],
+        "error": null,
+        "record_index": 1180,
+        "detail": {
+          "samples": [
+            {
+              "passed": false
+            }
+          ]
+        },
+        "generation": [
+          {
+            "finish_reason": "stop",
+            "prompt_tokens": 664,
+            "completion_tokens": 11254
+          }
+        ]
+      }
+    ],
+    "response_records": [
+      {
+        "record_index": 731,
+        "error": null,
+        "outcome_present": true
+      }
+    ],
+    "detail": {
+      "samples": [
+        {
+          "passed": false
+        }
+      ]
+    },
+    "generation": [
+      {
+        "finish_reason": "stop",
+        "prompt_tokens": 664,
+        "completion_tokens": 11254
+      }
+    ],
+    "scoring_status": "scored"
+  },
+  {
+    "id": "mbpp-plus:Mbpp/271",
+    "source": "mbpp-plus",
+    "area": "code",
+    "kind": "chat",
+    "tier": 10,
+    "max_tokens": 16384,
+    "samples": 1,
+    "score": 1.0,
+    "sample_scores": [
+      1.0
+    ],
+    "error": null,
+    "audit_issues": [],
+    "actual_item_records": [
+      {
+        "id": "mbpp-plus:Mbpp/271",
+        "source": "mbpp-plus",
+        "area": "code",
+        "kind": "chat",
+        "tier": 10,
+        "max_tokens": 16384,
+        "samples": 1,
+        "score": 1.0,
+        "sample_scores": [
+          1.0
+        ],
+        "error": null,
+        "record_index": 1251,
+        "detail": {
+          "samples": [
+            {
+              "base": "pass",
+              "plus": "pass",
+              "passed": true
+            }
+          ]
+        },
+        "generation": [
+          {
+            "finish_reason": "stop",
+            "prompt_tokens": 100,
+            "completion_tokens": 818
+          }
+        ]
+      }
+    ],
+    "response_records": [
+      {
+        "record_index": 1309,
+        "error": null,
+        "outcome_present": true
+      }
+    ],
+    "detail": {
+      "samples": [
+        {
+          "base": "pass",
+          "plus": "pass",
+          "passed": true
+        }
+      ]
+    },
+    "generation": [
+      {
+        "finish_reason": "stop",
+        "prompt_tokens": 100,
+        "completion_tokens": 818
+      }
+    ],
+    "scoring_status": "scored"
+  },
+  {
+    "id": "mbpp-plus:Mbpp/801",
+    "source": "mbpp-plus",
+    "area": "code",
+    "kind": "chat",
+    "tier": 10,
+    "max_tokens": 16384,
+    "samples": 1,
+    "score": 1.0,
+    "sample_scores": [
+      1.0
+    ],
+    "error": null,
+    "audit_issues": [],
+    "actual_item_records": [
+      {
+        "id": "mbpp-plus:Mbpp/801",
+        "source": "mbpp-plus",
+        "area": "code",
+        "kind": "chat",
+        "tier": 10,
+        "max_tokens": 16384,
+        "samples": 1,
+        "score": 1.0,
+        "sample_scores": [
+          1.0
+        ],
+        "error": null,
+        "record_index": 1252,
+        "detail": {
+          "samples": [
+            {
+              "base": "pass",
+              "plus": "pass",
+              "passed": true
+            }
+          ]
+        },
+        "generation": [
+          {
+            "finish_reason": "stop",
+            "prompt_tokens": 88,
+            "completion_tokens": 1129
+          }
+        ]
+      }
+    ],
+    "response_records": [
+      {
+        "record_index": 465,
+        "error": null,
+        "outcome_present": true
+      }
+    ],
+    "detail": {
+      "samples": [
+        {
+          "base": "pass",
+          "plus": "pass",
+          "passed": true
+        }
+      ]
+    },
+    "generation": [
+      {
+        "finish_reason": "stop",
+        "prompt_tokens": 88,
+        "completion_tokens": 1129
+      }
+    ],
+    "scoring_status": "scored"
+  },
+  {
+    "id": "mbpp-plus:Mbpp/410",
+    "source": "mbpp-plus",
+    "area": "code",
+    "kind": "chat",
+    "tier": 10,
+    "max_tokens": 16384,
+    "samples": 1,
+    "score": 0.0,
+    "sample_scores": [
+      0.0
+    ],
+    "error": null,
+    "audit_issues": [],
+    "actual_item_records": [
+      {
+        "id": "mbpp-plus:Mbpp/410",
+        "source": "mbpp-plus",
+        "area": "code",
+        "kind": "chat",
+        "tier": 10,
+        "max_tokens": 16384,
+        "samples": 1,
+        "score": 0.0,
+        "sample_scores": [
+          0.0
+        ],
+        "error": null,
+        "record_index": 1253,
+        "detail": {
+          "samples": [
+            {
+              "base": "pass",
+              "plus": "fail",
+              "passed": false
+            }
+          ]
+        },
+        "generation": [
+          {
+            "finish_reason": "stop",
+            "prompt_tokens": 94,
+            "completion_tokens": 766
+          }
+        ]
+      }
+    ],
+    "response_records": [
+      {
+        "record_index": 1381,
+        "error": null,
+        "outcome_present": true
+      }
+    ],
+    "detail": {
+      "samples": [
+        {
+          "base": "pass",
+          "plus": "fail",
+          "passed": false
+        }
+      ]
+    },
+    "generation": [
+      {
+        "finish_reason": "stop",
+        "prompt_tokens": 94,
+        "completion_tokens": 766
+      }
+    ],
+    "scoring_status": "scored"
+  },
+  {
+    "id": "mbpp-plus:Mbpp/567",
+    "source": "mbpp-plus",
+    "area": "code",
+    "kind": "chat",
+    "tier": 10,
+    "max_tokens": 16384,
+    "samples": 1,
+    "score": 1.0,
+    "sample_scores": [
+      1.0
+    ],
+    "error": null,
+    "audit_issues": [],
+    "actual_item_records": [
+      {
+        "id": "mbpp-plus:Mbpp/567",
+        "source": "mbpp-plus",
+        "area": "code",
+        "kind": "chat",
+        "tier": 10,
+        "max_tokens": 16384,
+        "samples": 1,
+        "score": 1.0,
+        "sample_scores": [
+          1.0
+        ],
+        "error": null,
+        "record_index": 1254,
+        "detail": {
+          "samples": [
+            {
+              "base": "pass",
+              "plus": "pass",
+              "passed": true
+            }
+          ]
+        },
+        "generation": [
+          {
+            "finish_reason": "stop",
+            "prompt_tokens": 103,
+            "completion_tokens": 735
+          }
+        ]
+      }
+    ],
+    "response_records": [
+      {
+        "record_index": 1232,
+        "error": null,
+        "outcome_present": true
+      }
+    ],
+    "detail": {
+      "samples": [
+        {
+          "base": "pass",
+          "plus": "pass",
+          "passed": true
+        }
+      ]
+    },
+    "generation": [
+      {
+        "finish_reason": "stop",
+        "prompt_tokens": 103,
+        "completion_tokens": 735
+      }
+    ],
+    "scoring_status": "scored"
+  },
+  {
+    "id": "mbpp-plus:Mbpp/256",
+    "source": "mbpp-plus",
+    "area": "code",
+    "kind": "chat",
+    "tier": 10,
+    "max_tokens": 16384,
+    "samples": 1,
+    "score": 1.0,
+    "sample_scores": [
+      1.0
+    ],
+    "error": null,
+    "audit_issues": [],
+    "actual_item_records": [
+      {
+        "id": "mbpp-plus:Mbpp/256",
+        "source": "mbpp-plus",
+        "area": "code",
+        "kind": "chat",
+        "tier": 10,
+        "max_tokens": 16384,
+        "samples": 1,
+        "score": 1.0,
+        "sample_scores": [
+          1.0
+        ],
+        "error": null,
+        "record_index": 1255,
+        "detail": {
+          "samples": [
+            {
+              "base": "pass",
+              "plus": "pass",
+              "passed": true
+            }
+          ]
+        },
+        "generation": [
+          {
+            "finish_reason": "stop",
+            "prompt_tokens": 97,
+            "completion_tokens": 1441
+          }
+        ]
+      }
+    ],
+    "response_records": [
+      {
+        "record_index": 782,
+        "error": null,
+        "outcome_present": true
+      }
+    ],
+    "detail": {
+      "samples": [
+        {
+          "base": "pass",
+          "plus": "pass",
+          "passed": true
+        }
+      ]
+    },
+    "generation": [
+      {
+        "finish_reason": "stop",
+        "prompt_tokens": 97,
+        "completion_tokens": 1441
+      }
+    ],
+    "scoring_status": "scored"
+  },
+  {
+    "id": "mbpp-plus:Mbpp/63",
+    "source": "mbpp-plus",
+    "area": "code",
+    "kind": "chat",
+    "tier": 10,
+    "max_tokens": 16384,
+    "samples": 1,
+    "score": 1.0,
+    "sample_scores": [
+      1.0
+    ],
+    "error": null,
+    "audit_issues": [],
+    "actual_item_records": [
+      {
+        "id": "mbpp-plus:Mbpp/63",
+        "source": "mbpp-plus",
+        "area": "code",
+        "kind": "chat",
+        "tier": 10,
+        "max_tokens": 16384,
+        "samples": 1,
+        "score": 1.0,
+        "sample_scores": [
+          1.0
+        ],
+        "error": null,
+        "record_index": 1256,
+        "detail": {
+          "samples": [
+            {
+              "base": "pass",
+              "plus": "pass",
+              "passed": true
+            }
+          ]
+        },
+        "generation": [
+          {
+            "finish_reason": "stop",
+            "prompt_tokens": 105,
+            "completion_tokens": 787
+          }
+        ]
+      }
+    ],
+    "response_records": [
+      {
+        "record_index": 926,
+        "error": null,
+        "outcome_present": true
+      }
+    ],
+    "detail": {
+      "samples": [
+        {
+          "base": "pass",
+          "plus": "pass",
+          "passed": true
+        }
+      ]
+    },
+    "generation": [
+      {
+        "finish_reason": "stop",
+        "prompt_tokens": 105,
+        "completion_tokens": 787
+      }
+    ],
+    "scoring_status": "scored"
+  },
+  {
+    "id": "mbpp-plus:Mbpp/792",
+    "source": "mbpp-plus",
+    "area": "code",
+    "kind": "chat",
+    "tier": 10,
+    "max_tokens": 16384,
+    "samples": 1,
+    "score": 1.0,
+    "sample_scores": [
+      1.0
+    ],
+    "error": null,
+    "audit_issues": [],
+    "actual_item_records": [
+      {
+        "id": "mbpp-plus:Mbpp/792",
+        "source": "mbpp-plus",
+        "area": "code",
+        "kind": "chat",
+        "tier": 10,
+        "max_tokens": 16384,
+        "samples": 1,
+        "score": 1.0,
+        "sample_scores": [
+          1.0
+        ],
+        "error": null,
+        "record_index": 1257,
+        "detail": {
+          "samples": [
+            {
+              "base": "pass",
+              "plus": "pass",
+              "passed": true
+            }
+          ]
+        },
+        "generation": [
+          {
+            "finish_reason": "stop",
+            "prompt_tokens": 111,
+            "completion_tokens": 790
+          }
+        ]
+      }
+    ],
+    "response_records": [
+      {
+        "record_index": 1219,
+        "error": null,
+        "outcome_present": true
+      }
+    ],
+    "detail": {
+      "samples": [
+        {
+          "base": "pass",
+          "plus": "pass",
+          "passed": true
+        }
+      ]
+    },
+    "generation": [
+      {
+        "finish_reason": "stop",
+        "prompt_tokens": 111,
+        "completion_tokens": 790
+      }
+    ],
+    "scoring_status": "scored"
+  },
+  {
+    "id": "mbpp-plus:Mbpp/612",
+    "source": "mbpp-plus",
+    "area": "code",
+    "kind": "chat",
+    "tier": 10,
+    "max_tokens": 16384,
+    "samples": 1,
+    "score": 1.0,
+    "sample_scores": [
+      1.0
+    ],
+    "error": null,
+    "audit_issues": [],
+    "actual_item_records": [
+      {
+        "id": "mbpp-plus:Mbpp/612",
+        "source": "mbpp-plus",
+        "area": "code",
+        "kind": "chat",
+        "tier": 10,
+        "max_tokens": 16384,
+        "samples": 1,
+        "score": 1.0,
+        "sample_scores": [
+          1.0
+        ],
+        "error": null,
+        "record_index": 1258,
+        "detail": {
+          "samples": [
+            {
+              "base": "pass",
+              "plus": "pass",
+              "passed": true
+            }
+          ]
+        },
+        "generation": [
+          {
+            "finish_reason": "stop",
+            "prompt_tokens": 142,
+            "completion_tokens": 1582
+          }
+        ]
+      }
+    ],
+    "response_records": [
+      {
+        "record_index": 1393,
+        "error": null,
+        "outcome_present": true
+      }
+    ],
+    "detail": {
+      "samples": [
+        {
+          "base": "pass",
+          "plus": "pass",
+          "passed": true
+        }
+      ]
+    },
+    "generation": [
+      {
+        "finish_reason": "stop",
+        "prompt_tokens": 142,
+        "completion_tokens": 1582
+      }
+    ],
+    "scoring_status": "scored"
+  },
+  {
+    "id": "mbpp-plus:Mbpp/791",
+    "source": "mbpp-plus",
+    "area": "code",
+    "kind": "chat",
+    "tier": 10,
+    "max_tokens": 16384,
+    "samples": 1,
+    "score": 1.0,
+    "sample_scores": [
+      1.0
+    ],
+    "error": null,
+    "audit_issues": [],
+    "actual_item_records": [
+      {
+        "id": "mbpp-plus:Mbpp/791",
+        "source": "mbpp-plus",
+        "area": "code",
+        "kind": "chat",
+        "tier": 10,
+        "max_tokens": 16384,
+        "samples": 1,
+        "score": 1.0,
+        "sample_scores": [
+          1.0
+        ],
+        "error": null,
+        "record_index": 1259,
+        "detail": {
+          "samples": [
+            {
+              "base": "pass",
+              "plus": "pass",
+              "passed": true
+            }
+          ]
+        },
+        "generation": [
+          {
+            "finish_reason": "stop",
+            "prompt_tokens": 104,
+            "completion_tokens": 602
+          }
+        ]
+      }
+    ],
+    "response_records": [
+      {
+        "record_index": 1241,
+        "error": null,
+        "outcome_present": true
+      }
+    ],
+    "detail": {
+      "samples": [
+        {
+          "base": "pass",
+          "plus": "pass",
+          "passed": true
+        }
+      ]
+    },
+    "generation": [
+      {
+        "finish_reason": "stop",
+        "prompt_tokens": 104,
+        "completion_tokens": 602
+      }
+    ],
+    "scoring_status": "scored"
+  },
+  {
+    "id": "mbpp-plus:Mbpp/576",
+    "source": "mbpp-plus",
+    "area": "code",
+    "kind": "chat",
+    "tier": 10,
+    "max_tokens": 16384,
+    "samples": 1,
+    "score": 0.0,
+    "sample_scores": [
+      0.0
+    ],
+    "error": null,
+    "audit_issues": [],
+    "actual_item_records": [
+      {
+        "id": "mbpp-plus:Mbpp/576",
+        "source": "mbpp-plus",
+        "area": "code",
+        "kind": "chat",
+        "tier": 10,
+        "max_tokens": 16384,
+        "samples": 1,
+        "score": 0.0,
+        "sample_scores": [
+          0.0
+        ],
+        "error": null,
+        "record_index": 1260,
+        "detail": {
+          "samples": [
+            {
+              "base": "pass",
+              "plus": "fail",
+              "passed": false
+            }
+          ]
+        },
+        "generation": [
+          {
+            "finish_reason": "stop",
+            "prompt_tokens": 94,
+            "completion_tokens": 1466
+          }
+        ]
+      }
+    ],
+    "response_records": [
+      {
+        "record_index": 1033,
+        "error": null,
+        "outcome_present": true
+      }
+    ],
+    "detail": {
+      "samples": [
+        {
+          "base": "pass",
+          "plus": "fail",
+          "passed": false
+        }
+      ]
+    },
+    "generation": [
+      {
+        "finish_reason": "stop",
+        "prompt_tokens": 94,
+        "completion_tokens": 1466
+      }
+    ],
+    "scoring_status": "scored"
+  },
+  {
+    "id": "mbpp-plus:Mbpp/641",
+    "source": "mbpp-plus",
+    "area": "code",
+    "kind": "chat",
+    "tier": 30,
+    "max_tokens": 32768,
+    "samples": 1,
+    "score": 0.0,
+    "sample_scores": [
+      0.0
+    ],
+    "error": null,
+    "audit_issues": [],
+    "actual_item_records": [
+      {
+        "id": "mbpp-plus:Mbpp/641",
+        "source": "mbpp-plus",
+        "area": "code",
+        "kind": "chat",
+        "tier": 30,
+        "max_tokens": 32768,
+        "samples": 1,
+        "score": 0.0,
+        "sample_scores": [
+          0.0
+        ],
+        "error": null,
+        "record_index": 1261,
+        "detail": {
+          "samples": [
+            {
+              "base": "fail",
+              "plus": "fail",
+              "passed": false
+            }
+          ]
+        },
+        "generation": [
+          {
+            "finish_reason": "stop",
+            "prompt_tokens": 81,
+            "completion_tokens": 1136
+          }
+        ]
+      }
+    ],
+    "response_records": [
+      {
+        "record_index": 1074,
+        "error": null,
+        "outcome_present": true
+      }
+    ],
+    "detail": {
+      "samples": [
+        {
+          "base": "fail",
+          "plus": "fail",
+          "passed": false
+        }
+      ]
+    },
+    "generation": [
+      {
+        "finish_reason": "stop",
+        "prompt_tokens": 81,
+        "completion_tokens": 1136
+      }
+    ],
+    "scoring_status": "scored"
+  },
+  {
+    "id": "mbpp-plus:Mbpp/736",
+    "source": "mbpp-plus",
+    "area": "code",
+    "kind": "chat",
+    "tier": 30,
+    "max_tokens": 32768,
+    "samples": 1,
+    "score": 1.0,
+    "sample_scores": [
+      1.0
+    ],
+    "error": null,
+    "audit_issues": [],
+    "actual_item_records": [
+      {
+        "id": "mbpp-plus:Mbpp/736",
+        "source": "mbpp-plus",
+        "area": "code",
+        "kind": "chat",
+        "tier": 30,
+        "max_tokens": 32768,
+        "samples": 1,
+        "score": 1.0,
+        "sample_scores": [
+          1.0
+        ],
+        "error": null,
+        "record_index": 1262,
+        "detail": {
+          "samples": [
+            {
+              "base": "pass",
+              "plus": "pass",
+              "passed": true
+            }
+          ]
+        },
+        "generation": [
+          {
+            "finish_reason": "stop",
+            "prompt_tokens": 90,
+            "completion_tokens": 1077
+          }
+        ]
+      }
+    ],
+    "response_records": [
+      {
+        "record_index": 783,
+        "error": null,
+        "outcome_present": true
+      }
+    ],
+    "detail": {
+      "samples": [
+        {
+          "base": "pass",
+          "plus": "pass",
+          "passed": true
+        }
+      ]
+    },
+    "generation": [
+      {
+        "finish_reason": "stop",
+        "prompt_tokens": 90,
+        "completion_tokens": 1077
+      }
+    ],
+    "scoring_status": "scored"
+  },
+  {
+    "id": "mbpp-plus:Mbpp/578",
+    "source": "mbpp-plus",
+    "area": "code",
+    "kind": "chat",
+    "tier": 30,
+    "max_tokens": 32768,
+    "samples": 1,
+    "score": 1.0,
+    "sample_scores": [
+      1.0
+    ],
+    "error": null,
+    "audit_issues": [],
+    "actual_item_records": [
+      {
+        "id": "mbpp-plus:Mbpp/578",
+        "source": "mbpp-plus",
+        "area": "code",
+        "kind": "chat",
+        "tier": 30,
+        "max_tokens": 32768,
+        "samples": 1,
+        "score": 1.0,
+        "sample_scores": [
+          1.0
+        ],
+        "error": null,
+        "record_index": 1263,
+        "detail": {
+          "samples": [
+            {
+              "base": "pass",
+              "plus": "pass",
+              "passed": true
+            }
+          ]
+        },
+        "generation": [
+          {
+            "finish_reason": "stop",
+            "prompt_tokens": 229,
+            "completion_tokens": 967
+          }
+        ]
+      }
+    ],
+    "response_records": [
+      {
+        "record_index": 917,
+        "error": null,
+        "outcome_present": true
+      }
+    ],
+    "detail": {
+      "samples": [
+        {
+          "base": "pass",
+          "plus": "pass",
+          "passed": true
+        }
+      ]
+    },
+    "generation": [
+      {
+        "finish_reason": "stop",
+        "prompt_tokens": 229,
+        "completion_tokens": 967
+      }
+    ],
+    "scoring_status": "scored"
+  },
+  {
+    "id": "mbpp-plus:Mbpp/232",
+    "source": "mbpp-plus",
+    "area": "code",
+    "kind": "chat",
+    "tier": 30,
+    "max_tokens": 32768,
+    "samples": 1,
+    "score": 1.0,
+    "sample_scores": [
+      1.0
+    ],
+    "error": null,
+    "audit_issues": [],
+    "actual_item_records": [
+      {
+        "id": "mbpp-plus:Mbpp/232",
+        "source": "mbpp-plus",
+        "area": "code",
+        "kind": "chat",
+        "tier": 30,
+        "max_tokens": 32768,
+        "samples": 1,
+        "score": 1.0,
+        "sample_scores": [
+          1.0
+        ],
+        "error": null,
+        "record_index": 1264,
+        "detail": {
+          "samples": [
+            {
+              "base": "pass",
+              "plus": "pass",
+              "passed": true
+            }
+          ]
+        },
+        "generation": [
+          {
+            "finish_reason": "stop",
+            "prompt_tokens": 145,
+            "completion_tokens": 869
+          }
+        ]
+      }
+    ],
+    "response_records": [
+      {
+        "record_index": 1086,
+        "error": null,
+        "outcome_present": true
+      }
+    ],
+    "detail": {
+      "samples": [
+        {
+          "base": "pass",
+          "plus": "pass",
+          "passed": true
+        }
+      ]
+    },
+    "generation": [
+      {
+        "finish_reason": "stop",
+        "prompt_tokens": 145,
+        "completion_tokens": 869
+      }
+    ],
+    "scoring_status": "scored"
+  },
+  {
+    "id": "mbpp-plus:Mbpp/129",
+    "source": "mbpp-plus",
+    "area": "code",
+    "kind": "chat",
+    "tier": 30,
+    "max_tokens": 32768,
+    "samples": 1,
+    "score": 0.0,
+    "sample_scores": [
+      0.0
+    ],
+    "error": null,
+    "audit_issues": [],
+    "actual_item_records": [
+      {
+        "id": "mbpp-plus:Mbpp/129",
+        "source": "mbpp-plus",
+        "area": "code",
+        "kind": "chat",
+        "tier": 30,
+        "max_tokens": 32768,
+        "samples": 1,
+        "score": 0.0,
+        "sample_scores": [
+          0.0
+        ],
+        "error": null,
+        "record_index": 1265,
+        "detail": {
+          "samples": [
+            {
+              "base": "pass",
+              "plus": "fail",
+              "passed": false
+            }
+          ]
+        },
+        "generation": [
+          {
+            "finish_reason": "stop",
+            "prompt_tokens": 132,
+            "completion_tokens": 2012
+          }
+        ]
+      }
+    ],
+    "response_records": [
+      {
+        "record_index": 547,
+        "error": null,
+        "outcome_present": true
+      }
+    ],
+    "detail": {
+      "samples": [
+        {
+          "base": "pass",
+          "plus": "fail",
+          "passed": false
+        }
+      ]
+    },
+    "generation": [
+      {
+        "finish_reason": "stop",
+        "prompt_tokens": 132,
+        "completion_tokens": 2012
+      }
+    ],
+    "scoring_status": "scored"
+  },
+  {
+    "id": "mbpp-plus:Mbpp/426",
+    "source": "mbpp-plus",
+    "area": "code",
+    "kind": "chat",
+    "tier": 30,
+    "max_tokens": 32768,
+    "samples": 1,
+    "score": 1.0,
+    "sample_scores": [
+      1.0
+    ],
+    "error": null,
+    "audit_issues": [],
+    "actual_item_records": [
+      {
+        "id": "mbpp-plus:Mbpp/426",
+        "source": "mbpp-plus",
+        "area": "code",
+        "kind": "chat",
+        "tier": 30,
+        "max_tokens": 32768,
+        "samples": 1,
+        "score": 1.0,
+        "sample_scores": [
+          1.0
+        ],
+        "error": null,
+        "record_index": 1266,
+        "detail": {
+          "samples": [
+            {
+              "base": "pass",
+              "plus": "pass",
+              "passed": true
+            }
+          ]
+        },
+        "generation": [
+          {
+            "finish_reason": "stop",
+            "prompt_tokens": 112,
+            "completion_tokens": 542
+          }
+        ]
+      }
+    ],
+    "response_records": [
+      {
+        "record_index": 1272,
+        "error": null,
+        "outcome_present": true
+      }
+    ],
+    "detail": {
+      "samples": [
+        {
+          "base": "pass",
+          "plus": "pass",
+          "passed": true
+        }
+      ]
+    },
+    "generation": [
+      {
+        "finish_reason": "stop",
+        "prompt_tokens": 112,
+        "completion_tokens": 542
+      }
+    ],
+    "scoring_status": "scored"
+  },
+  {
+    "id": "mbpp-plus:Mbpp/75",
+    "source": "mbpp-plus",
+    "area": "code",
+    "kind": "chat",
+    "tier": 30,
+    "max_tokens": 32768,
+    "samples": 1,
+    "score": 1.0,
+    "sample_scores": [
+      1.0
+    ],
+    "error": null,
+    "audit_issues": [],
+    "actual_item_records": [
+      {
+        "id": "mbpp-plus:Mbpp/75",
+        "source": "mbpp-plus",
+        "area": "code",
+        "kind": "chat",
+        "tier": 30,
+        "max_tokens": 32768,
+        "samples": 1,
+        "score": 1.0,
+        "sample_scores": [
+          1.0
+        ],
+        "error": null,
+        "record_index": 1267,
+        "detail": {
+          "samples": [
+            {
+              "base": "pass",
+              "plus": "pass",
+              "passed": true
+            }
+          ]
+        },
+        "generation": [
+          {
+            "finish_reason": "stop",
+            "prompt_tokens": 127,
+            "completion_tokens": 776
+          }
+        ]
+      }
+    ],
+    "response_records": [
+      {
+        "record_index": 1184,
+        "error": null,
+        "outcome_present": true
+      }
+    ],
+    "detail": {
+      "samples": [
+        {
+          "base": "pass",
+          "plus": "pass",
+          "passed": true
+        }
+      ]
+    },
+    "generation": [
+      {
+        "finish_reason": "stop",
+        "prompt_tokens": 127,
+        "completion_tokens": 776
+      }
+    ],
+    "scoring_status": "scored"
+  },
+  {
+    "id": "mbpp-plus:Mbpp/77",
+    "source": "mbpp-plus",
+    "area": "code",
+    "kind": "chat",
+    "tier": 30,
+    "max_tokens": 32768,
+    "samples": 1,
+    "score": 1.0,
+    "sample_scores": [
+      1.0
+    ],
+    "error": null,
+    "audit_issues": [],
+    "actual_item_records": [
+      {
+        "id": "mbpp-plus:Mbpp/77",
+        "source": "mbpp-plus",
+        "area": "code",
+        "kind": "chat",
+        "tier": 30,
+        "max_tokens": 32768,
+        "samples": 1,
+        "score": 1.0,
+        "sample_scores": [
+          1.0
+        ],
+        "error": null,
+        "record_index": 1268,
+        "detail": {
+          "samples": [
+            {
+              "base": "pass",
+              "plus": "pass",
+              "passed": true
+            }
+          ]
+        },
+        "generation": [
+          {
+            "finish_reason": "stop",
+            "prompt_tokens": 85,
+            "completion_tokens": 574
+          }
+        ]
+      }
+    ],
+    "response_records": [
+      {
+        "record_index": 1261,
+        "error": null,
+        "outcome_present": true
+      }
+    ],
+    "detail": {
+      "samples": [
+        {
+          "base": "pass",
+          "plus": "pass",
+          "passed": true
+        }
+      ]
+    },
+    "generation": [
+      {
+        "finish_reason": "stop",
+        "prompt_tokens": 85,
+        "completion_tokens": 574
+      }
+    ],
+    "scoring_status": "scored"
+  },
+  {
+    "id": "mbpp-plus:Mbpp/67",
+    "source": "mbpp-plus",
+    "area": "code",
+    "kind": "chat",
+    "tier": 30,
+    "max_tokens": 32768,
+    "samples": 1,
+    "score": 1.0,
+    "sample_scores": [
+      1.0
+    ],
+    "error": null,
+    "audit_issues": [],
+    "actual_item_records": [
+      {
+        "id": "mbpp-plus:Mbpp/67",
+        "source": "mbpp-plus",
+        "area": "code",
+        "kind": "chat",
+        "tier": 30,
+        "max_tokens": 32768,
+        "samples": 1,
+        "score": 1.0,
+        "sample_scores": [
+          1.0
+        ],
+        "error": null,
+        "record_index": 1269,
+        "detail": {
+          "samples": [
+            {
+              "base": "pass",
+              "plus": "pass",
+              "passed": true
+            }
+          ]
+        },
+        "generation": [
+          {
+            "finish_reason": "stop",
+            "prompt_tokens": 81,
+            "completion_tokens": 2516
+          }
+        ]
+      }
+    ],
+    "response_records": [
+      {
+        "record_index": 427,
+        "error": null,
+        "outcome_present": true
+      }
+    ],
+    "detail": {
+      "samples": [
+        {
+          "base": "pass",
+          "plus": "pass",
+          "passed": true
+        }
+      ]
+    },
+    "generation": [
+      {
+        "finish_reason": "stop",
+        "prompt_tokens": 81,
+        "completion_tokens": 2516
+      }
+    ],
+    "scoring_status": "scored"
+  },
+  {
+    "id": "mbpp-plus:Mbpp/240",
+    "source": "mbpp-plus",
+    "area": "code",
+    "kind": "chat",
+    "tier": 30,
+    "max_tokens": 32768,
+    "samples": 1,
+    "score": 1.0,
+    "sample_scores": [
+      1.0
+    ],
+    "error": null,
+    "audit_issues": [],
+    "actual_item_records": [
+      {
+        "id": "mbpp-plus:Mbpp/240",
+        "source": "mbpp-plus",
+        "area": "code",
+        "kind": "chat",
+        "tier": 30,
+        "max_tokens": 32768,
+        "samples": 1,
+        "score": 1.0,
+        "sample_scores": [
+          1.0
+        ],
+        "error": null,
+        "record_index": 1270,
+        "detail": {
+          "samples": [
+            {
+              "base": "pass",
+              "plus": "pass",
+              "passed": true
+            }
+          ]
+        },
+        "generation": [
+          {
+            "finish_reason": "stop",
+            "prompt_tokens": 143,
+            "completion_tokens": 887
+          }
+        ]
+      }
+    ],
+    "response_records": [
+      {
+        "record_index": 1097,
+        "error": null,
+        "outcome_present": true
+      }
+    ],
+    "detail": {
+      "samples": [
+        {
+          "base": "pass",
+          "plus": "pass",
+          "passed": true
+        }
+      ]
+    },
+    "generation": [
+      {
+        "finish_reason": "stop",
+        "prompt_tokens": 143,
+        "completion_tokens": 887
+      }
+    ],
+    "scoring_status": "scored"
+  },
+  {
+    "id": "mbpp-plus:Mbpp/458",
+    "source": "mbpp-plus",
+    "area": "code",
+    "kind": "chat",
+    "tier": 30,
+    "max_tokens": 32768,
+    "samples": 1,
+    "score": 1.0,
+    "sample_scores": [
+      1.0
+    ],
+    "error": null,
+    "audit_issues": [],
+    "actual_item_records": [
+      {
+        "id": "mbpp-plus:Mbpp/458",
+        "source": "mbpp-plus",
+        "area": "code",
+        "kind": "chat",
+        "tier": 30,
+        "max_tokens": 32768,
+        "samples": 1,
+        "score": 1.0,
+        "sample_scores": [
+          1.0
+        ],
+        "error": null,
+        "record_index": 1271,
+        "detail": {
+          "samples": [
+            {
+              "base": "pass",
+              "plus": "pass",
+              "passed": true
+            }
+          ]
+        },
+        "generation": [
+          {
+            "finish_reason": "stop",
+            "prompt_tokens": 81,
+            "completion_tokens": 421
+          }
+        ]
+      }
+    ],
+    "response_records": [
+      {
+        "record_index": 1512,
+        "error": null,
+        "outcome_present": true
+      }
+    ],
+    "detail": {
+      "samples": [
+        {
+          "base": "pass",
+          "plus": "pass",
+          "passed": true
+        }
+      ]
+    },
+    "generation": [
+      {
+        "finish_reason": "stop",
+        "prompt_tokens": 81,
+        "completion_tokens": 421
+      }
+    ],
+    "scoring_status": "scored"
+  },
+  {
+    "id": "mbpp-plus:Mbpp/103",
+    "source": "mbpp-plus",
+    "area": "code",
+    "kind": "chat",
+    "tier": 30,
+    "max_tokens": 32768,
+    "samples": 1,
+    "score": 0.0,
+    "sample_scores": [
+      0.0
+    ],
+    "error": null,
+    "audit_issues": [],
+    "actual_item_records": [
+      {
+        "id": "mbpp-plus:Mbpp/103",
+        "source": "mbpp-plus",
+        "area": "code",
+        "kind": "chat",
+        "tier": 30,
+        "max_tokens": 32768,
+        "samples": 1,
+        "score": 0.0,
+        "sample_scores": [
+          0.0
+        ],
+        "error": null,
+        "record_index": 1272,
+        "detail": {
+          "samples": [
+            {
+              "base": "pass",
+              "plus": "fail",
+              "passed": false
+            }
+          ]
+        },
+        "generation": [
+          {
+            "finish_reason": "stop",
+            "prompt_tokens": 85,
+            "completion_tokens": 2062
+          }
+        ]
+      }
+    ],
+    "response_records": [
+      {
+        "record_index": 695,
+        "error": null,
+        "outcome_present": true
+      }
+    ],
+    "detail": {
+      "samples": [
+        {
+          "base": "pass",
+          "plus": "fail",
+          "passed": false
+        }
+      ]
+    },
+    "generation": [
+      {
+        "finish_reason": "stop",
+        "prompt_tokens": 85,
+        "completion_tokens": 2062
+      }
+    ],
+    "scoring_status": "scored"
+  },
+  {
+    "id": "mbpp-plus:Mbpp/309",
+    "source": "mbpp-plus",
+    "area": "code",
+    "kind": "chat",
+    "tier": 30,
+    "max_tokens": 32768,
+    "samples": 1,
+    "score": 1.0,
+    "sample_scores": [
+      1.0
+    ],
+    "error": null,
+    "audit_issues": [],
+    "actual_item_records": [
+      {
+        "id": "mbpp-plus:Mbpp/309",
+        "source": "mbpp-plus",
+        "area": "code",
+        "kind": "chat",
+        "tier": 30,
+        "max_tokens": 32768,
+        "samples": 1,
+        "score": 1.0,
+        "sample_scores": [
+          1.0
+        ],
+        "error": null,
+        "record_index": 1273,
+        "detail": {
+          "samples": [
+            {
+              "base": "pass",
+              "plus": "pass",
+              "passed": true
+            }
+          ]
+        },
+        "generation": [
+          {
+            "finish_reason": "stop",
+            "prompt_tokens": 80,
+            "completion_tokens": 409
+          }
+        ]
+      }
+    ],
+    "response_records": [
+      {
+        "record_index": 1454,
+        "error": null,
+        "outcome_present": true
+      }
+    ],
+    "detail": {
+      "samples": [
+        {
+          "base": "pass",
+          "plus": "pass",
+          "passed": true
+        }
+      ]
+    },
+    "generation": [
+      {
+        "finish_reason": "stop",
+        "prompt_tokens": 80,
+        "completion_tokens": 409
+      }
+    ],
+    "scoring_status": "scored"
+  },
+  {
+    "id": "mbpp-plus:Mbpp/299",
+    "source": "mbpp-plus",
+    "area": "code",
+    "kind": "chat",
+    "tier": 30,
+    "max_tokens": 32768,
+    "samples": 1,
+    "score": 1.0,
+    "sample_scores": [
+      1.0
+    ],
+    "error": null,
+    "audit_issues": [],
+    "actual_item_records": [
+      {
+        "id": "mbpp-plus:Mbpp/299",
+        "source": "mbpp-plus",
+        "area": "code",
+        "kind": "chat",
+        "tier": 30,
+        "max_tokens": 32768,
+        "samples": 1,
+        "score": 1.0,
+        "sample_scores": [
+          1.0
+        ],
+        "error": null,
+        "record_index": 1274,
+        "detail": {
+          "samples": [
+            {
+              "base": "pass",
+              "plus": "pass",
+              "passed": true
+            }
+          ]
+        },
+        "generation": [
+          {
+            "finish_reason": "stop",
+            "prompt_tokens": 124,
+            "completion_tokens": 840
+          }
+        ]
+      }
+    ],
+    "response_records": [
+      {
+        "record_index": 1172,
+        "error": null,
+        "outcome_present": true
+      }
+    ],
+    "detail": {
+      "samples": [
+        {
+          "base": "pass",
+          "plus": "pass",
+          "passed": true
+        }
+      ]
+    },
+    "generation": [
+      {
+        "finish_reason": "stop",
+        "prompt_tokens": 124,
+        "completion_tokens": 840
+      }
+    ],
+    "scoring_status": "scored"
+  },
+  {
+    "id": "mbpp-plus:Mbpp/775",
+    "source": "mbpp-plus",
+    "area": "code",
+    "kind": "chat",
+    "tier": 30,
+    "max_tokens": 32768,
+    "samples": 1,
+    "score": 1.0,
+    "sample_scores": [
+      1.0
+    ],
+    "error": null,
+    "audit_issues": [],
+    "actual_item_records": [
+      {
+        "id": "mbpp-plus:Mbpp/775",
+        "source": "mbpp-plus",
+        "area": "code",
+        "kind": "chat",
+        "tier": 30,
+        "max_tokens": 32768,
+        "samples": 1,
+        "score": 1.0,
+        "sample_scores": [
+          1.0
+        ],
+        "error": null,
+        "record_index": 1275,
+        "detail": {
+          "samples": [
+            {
+              "base": "pass",
+              "plus": "pass",
+              "passed": true
+            }
+          ]
+        },
+        "generation": [
+          {
+            "finish_reason": "stop",
+            "prompt_tokens": 97,
+            "completion_tokens": 939
+          }
+        ]
+      }
+    ],
+    "response_records": [
+      {
+        "record_index": 1190,
+        "error": null,
+        "outcome_present": true
+      }
+    ],
+    "detail": {
+      "samples": [
+        {
+          "base": "pass",
+          "plus": "pass",
+          "passed": true
+        }
+      ]
+    },
+    "generation": [
+      {
+        "finish_reason": "stop",
+        "prompt_tokens": 97,
+        "completion_tokens": 939
+      }
+    ],
+    "scoring_status": "scored"
+  },
+  {
+    "id": "mbpp-plus:Mbpp/607",
+    "source": "mbpp-plus",
+    "area": "code",
+    "kind": "chat",
+    "tier": 30,
+    "max_tokens": 32768,
+    "samples": 1,
+    "score": 1.0,
+    "sample_scores": [
+      1.0
+    ],
+    "error": null,
+    "audit_issues": [],
+    "actual_item_records": [
+      {
+        "id": "mbpp-plus:Mbpp/607",
+        "source": "mbpp-plus",
+        "area": "code",
+        "kind": "chat",
+        "tier": 30,
+        "max_tokens": 32768,
+        "samples": 1,
+        "score": 1.0,
+        "sample_scores": [
+          1.0
+        ],
+        "error": null,
+        "record_index": 1276,
+        "detail": {
+          "samples": [
+            {
+              "base": "pass",
+              "plus": "pass",
+              "passed": true
+            }
+          ]
+        },
+        "generation": [
+          {
+            "finish_reason": "stop",
+            "prompt_tokens": 116,
+            "completion_tokens": 709
+          }
+        ]
+      }
+    ],
+    "response_records": [
+      {
+        "record_index": 1094,
+        "error": null,
+        "outcome_present": true
+      }
+    ],
+    "detail": {
+      "samples": [
+        {
+          "base": "pass",
+          "plus": "pass",
+          "passed": true
+        }
+      ]
+    },
+    "generation": [
+      {
+        "finish_reason": "stop",
+        "prompt_tokens": 116,
+        "completion_tokens": 709
+      }
+    ],
+    "scoring_status": "scored"
+  },
+  {
+    "id": "mbpp-plus:Mbpp/96",
+    "source": "mbpp-plus",
+    "area": "code",
+    "kind": "chat",
+    "tier": 30,
+    "max_tokens": 32768,
+    "samples": 1,
+    "score": 1.0,
+    "sample_scores": [
+      1.0
+    ],
+    "error": null,
+    "audit_issues": [],
+    "actual_item_records": [
+      {
+        "id": "mbpp-plus:Mbpp/96",
+        "source": "mbpp-plus",
+        "area": "code",
+        "kind": "chat",
+        "tier": 30,
+        "max_tokens": 32768,
+        "samples": 1,
+        "score": 1.0,
+        "sample_scores": [
+          1.0
+        ],
+        "error": null,
+        "record_index": 1277,
+        "detail": {
+          "samples": [
+            {
+              "base": "pass",
+              "plus": "pass",
+              "passed": true
+            }
+          ]
+        },
+        "generation": [
+          {
+            "finish_reason": "stop",
+            "prompt_tokens": 80,
+            "completion_tokens": 764
+          }
+        ]
+      }
+    ],
+    "response_records": [
+      {
+        "record_index": 1027,
+        "error": null,
+        "outcome_present": true
+      }
+    ],
+    "detail": {
+      "samples": [
+        {
+          "base": "pass",
+          "plus": "pass",
+          "passed": true
+        }
+      ]
+    },
+    "generation": [
+      {
+        "finish_reason": "stop",
+        "prompt_tokens": 80,
+        "completion_tokens": 764
+      }
+    ],
+    "scoring_status": "scored"
+  },
+  {
+    "id": "mbpp-plus:Mbpp/639",
+    "source": "mbpp-plus",
+    "area": "code",
+    "kind": "chat",
+    "tier": 30,
+    "max_tokens": 32768,
+    "samples": 1,
+    "score": 0.0,
+    "sample_scores": [
+      0.0
+    ],
+    "error": null,
+    "audit_issues": [],
+    "actual_item_records": [
+      {
+        "id": "mbpp-plus:Mbpp/639",
+        "source": "mbpp-plus",
+        "area": "code",
+        "kind": "chat",
+        "tier": 30,
+        "max_tokens": 32768,
+        "samples": 1,
+        "score": 0.0,
+        "sample_scores": [
+          0.0
+        ],
+        "error": null,
+        "record_index": 1278,
+        "detail": {
+          "samples": [
+            {
+              "base": "pass",
+              "plus": "fail",
+              "passed": false
+            }
+          ]
+        },
+        "generation": [
+          {
+            "finish_reason": "stop",
+            "prompt_tokens": 112,
+            "completion_tokens": 805
+          }
+        ]
+      }
+    ],
+    "response_records": [
+      {
+        "record_index": 1299,
+        "error": null,
+        "outcome_present": true
+      }
+    ],
+    "detail": {
+      "samples": [
+        {
+          "base": "pass",
+          "plus": "fail",
+          "passed": false
+        }
+      ]
+    },
+    "generation": [
+      {
+        "finish_reason": "stop",
+        "prompt_tokens": 112,
+        "completion_tokens": 805
+      }
+    ],
+    "scoring_status": "scored"
+  },
+  {
+    "id": "mbpp-plus:Mbpp/133",
+    "source": "mbpp-plus",
+    "area": "code",
+    "kind": "chat",
+    "tier": 30,
+    "max_tokens": 32768,
+    "samples": 1,
+    "score": 1.0,
+    "sample_scores": [
+      1.0
+    ],
+    "error": null,
+    "audit_issues": [],
+    "actual_item_records": [
+      {
+        "id": "mbpp-plus:Mbpp/133",
+        "source": "mbpp-plus",
+        "area": "code",
+        "kind": "chat",
+        "tier": 30,
+        "max_tokens": 32768,
+        "samples": 1,
+        "score": 1.0,
+        "sample_scores": [
+          1.0
+        ],
+        "error": null,
+        "record_index": 1279,
+        "detail": {
+          "samples": [
+            {
+              "base": "pass",
+              "plus": "pass",
+              "passed": true
+            }
+          ]
+        },
+        "generation": [
+          {
+            "finish_reason": "stop",
+            "prompt_tokens": 114,
+            "completion_tokens": 659
+          }
+        ]
+      }
+    ],
+    "response_records": [
+      {
+        "record_index": 1297,
+        "error": null,
+        "outcome_present": true
+      }
+    ],
+    "detail": {
+      "samples": [
+        {
+          "base": "pass",
+          "plus": "pass",
+          "passed": true
+        }
+      ]
+    },
+    "generation": [
+      {
+        "finish_reason": "stop",
+        "prompt_tokens": 114,
+        "completion_tokens": 659
+      }
+    ],
+    "scoring_status": "scored"
+  },
+  {
+    "id": "mbpp-plus:Mbpp/126",
+    "source": "mbpp-plus",
+    "area": "code",
+    "kind": "chat",
+    "tier": 30,
+    "max_tokens": 32768,
+    "samples": 1,
+    "score": 0.0,
+    "sample_scores": [
+      0.0
+    ],
+    "error": null,
+    "audit_issues": [],
+    "actual_item_records": [
+      {
+        "id": "mbpp-plus:Mbpp/126",
+        "source": "mbpp-plus",
+        "area": "code",
+        "kind": "chat",
+        "tier": 30,
+        "max_tokens": 32768,
+        "samples": 1,
+        "score": 0.0,
+        "sample_scores": [
+          0.0
+        ],
+        "error": null,
+        "record_index": 1280,
+        "detail": {
+          "samples": [
+            {
+              "base": "fail",
+              "plus": "fail",
+              "passed": false
+            }
+          ]
+        },
+        "generation": [
+          {
+            "finish_reason": "stop",
+            "prompt_tokens": 84,
+            "completion_tokens": 989
+          }
+        ]
+      }
+    ],
+    "response_records": [
+      {
+        "record_index": 1026,
+        "error": null,
+        "outcome_present": true
+      }
+    ],
+    "detail": {
+      "samples": [
+        {
+          "base": "fail",
+          "plus": "fail",
+          "passed": false
+        }
+      ]
+    },
+    "generation": [
+      {
+        "finish_reason": "stop",
+        "prompt_tokens": 84,
+        "completion_tokens": 989
+      }
+    ],
+    "scoring_status": "scored"
+  },
+  {
+    "id": "scicode:14",
+    "source": "scicode",
+    "area": "code",
+    "kind": "chat",
+    "tier": 30,
+    "max_tokens": 32768,
+    "samples": 1,
+    "score": 1.0,
+    "sample_scores": [
+      1.0
+    ],
+    "error": null,
+    "audit_issues": [],
+    "actual_item_records": [
+      {
+        "id": "scicode:14",
+        "source": "scicode",
+        "area": "code",
+        "kind": "chat",
+        "tier": 30,
+        "max_tokens": 32768,
+        "samples": 1,
+        "score": 1.0,
+        "sample_scores": [
+          1.0
+        ],
+        "error": null,
+        "record_index": 1790,
+        "detail": {
+          "samples": [
+            {
+              "steps_passed": 2,
+              "steps_tested": 2,
+              "problem_solved": true,
+              "step_diagnostics": [
+                {
+                  "step": "14.1",
+                  "passed": true,
+                  "returncode": 0,
+                  "timed_out": false,
+                  "elapsed_seconds": 3.1026319669326767,
+                  "exception_class": null,
+                  "exception_class_origin": "stderr_allowlisted_hint",
+                  "stdout": {
+                    "bytes": 0,
+                    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+                    "representation": "utf8_of_captured_text"
+                  },
+                  "stderr": {
+                    "bytes": 0,
+                    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+                    "representation": "utf8_of_captured_text"
+                  }
+                },
+                {
+                  "step": "14.2",
+                  "passed": true,
+                  "returncode": 0,
+                  "timed_out": false,
+                  "elapsed_seconds": 56.85971129802056,
+                  "exception_class": null,
+                  "exception_class_origin": "stderr_allowlisted_hint",
+                  "stdout": {
+                    "bytes": 0,
+                    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+                    "representation": "utf8_of_captured_text"
+                  },
+                  "stderr": {
+                    "bytes": 0,
+                    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+                    "representation": "utf8_of_captured_text"
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        "generation": [
+          {
+            "finish_reason": "stop",
+            "prompt_tokens": 2111,
+            "completion_tokens": 12461
+          }
+        ]
+      }
+    ],
+    "response_records": [
+      {
+        "record_index": 552,
+        "error": null,
+        "outcome_present": true
+      }
+    ],
+    "detail": {
+      "samples": [
+        {
+          "steps_passed": 2,
+          "steps_tested": 2,
+          "problem_solved": true,
+          "step_diagnostics": [
+            {
+              "step": "14.1",
+              "passed": true,
+              "returncode": 0,
+              "timed_out": false,
+              "elapsed_seconds": 3.1026319669326767,
+              "exception_class": null,
+              "exception_class_origin": "stderr_allowlisted_hint",
+              "stdout": {
+                "bytes": 0,
+                "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+                "representation": "utf8_of_captured_text"
+              },
+              "stderr": {
+                "bytes": 0,
+                "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+                "representation": "utf8_of_captured_text"
+              }
+            },
+            {
+              "step": "14.2",
+              "passed": true,
+              "returncode": 0,
+              "timed_out": false,
+              "elapsed_seconds": 56.85971129802056,
+              "exception_class": null,
+              "exception_class_origin": "stderr_allowlisted_hint",
+              "stdout": {
+                "bytes": 0,
+                "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+                "representation": "utf8_of_captured_text"
+              },
+              "stderr": {
+                "bytes": 0,
+                "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+                "representation": "utf8_of_captured_text"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "generation": [
+      {
+        "finish_reason": "stop",
+        "prompt_tokens": 2111,
+        "completion_tokens": 12461
+      }
+    ],
+    "scoring_status": "scored"
+  },
+  {
+    "id": "scicode:58",
+    "source": "scicode",
+    "area": "code",
+    "kind": "chat",
+    "tier": 30,
+    "max_tokens": 32768,
+    "samples": 1,
+    "score": 1.0,
+    "sample_scores": [
+      1.0
+    ],
+    "error": null,
+    "audit_issues": [],
+    "actual_item_records": [
+      {
+        "id": "scicode:58",
+        "source": "scicode",
+        "area": "code",
+        "kind": "chat",
+        "tier": 30,
+        "max_tokens": 32768,
+        "samples": 1,
+        "score": 1.0,
+        "sample_scores": [
+          1.0
+        ],
+        "error": null,
+        "record_index": 1791,
+        "detail": {
+          "samples": [
+            {
+              "steps_passed": 5,
+              "steps_tested": 5,
+              "problem_solved": true,
+              "step_diagnostics": [
+                {
+                  "step": "58.1",
+                  "passed": true,
+                  "returncode": 0,
+                  "timed_out": false,
+                  "elapsed_seconds": 2.4893602820811793,
+                  "exception_class": null,
+                  "exception_class_origin": "stderr_allowlisted_hint",
+                  "stdout": {
+                    "bytes": 0,
+                    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+                    "representation": "utf8_of_captured_text"
+                  },
+                  "stderr": {
+                    "bytes": 0,
+                    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+                    "representation": "utf8_of_captured_text"
+                  }
+                },
+                {
+                  "step": "58.2",
+                  "passed": true,
+                  "returncode": 0,
+                  "timed_out": false,
+                  "elapsed_seconds": 2.596332243992947,
+                  "exception_class": null,
+                  "exception_class_origin": "stderr_allowlisted_hint",
+                  "stdout": {
+                    "bytes": 0,
+                    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+                    "representation": "utf8_of_captured_text"
+                  },
+                  "stderr": {
+                    "bytes": 0,
+                    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+                    "representation": "utf8_of_captured_text"
+                  }
+                },
+                {
+                  "step": "58.3",
+                  "passed": true,
+                  "returncode": 0,
+                  "timed_out": false,
+                  "elapsed_seconds": 2.8304629860213026,
+                  "exception_class": null,
+                  "exception_class_origin": "stderr_allowlisted_hint",
+                  "stdout": {
+                    "bytes": 0,
+                    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+                    "representation": "utf8_of_captured_text"
+                  },
+                  "stderr": {
+                    "bytes": 0,
+                    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+                    "representation": "utf8_of_captured_text"
+                  }
+                },
+                {
+                  "step": "58.4",
+                  "passed": true,
+                  "returncode": 0,
+                  "timed_out": false,
+                  "elapsed_seconds": 2.8496913340641186,
+                  "exception_class": null,
+                  "exception_class_origin": "stderr_allowlisted_hint",
+                  "stdout": {
+                    "bytes": 0,
+                    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+                    "representation": "utf8_of_captured_text"
+                  },
+                  "stderr": {
+                    "bytes": 0,
+                    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+                    "representation": "utf8_of_captured_text"
+                  }
+                },
+                {
+                  "step": "58.5",
+                  "passed": true,
+                  "returncode": 0,
+                  "timed_out": false,
+                  "elapsed_seconds": 2.804361818009056,
+                  "exception_class": null,
+                  "exception_class_origin": "stderr_allowlisted_hint",
+                  "stdout": {
+                    "bytes": 0,
+                    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+                    "representation": "utf8_of_captured_text"
+                  },
+                  "stderr": {
+                    "bytes": 0,
+                    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+                    "representation": "utf8_of_captured_text"
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        "generation": [
+          {
+            "finish_reason": "stop",
+            "prompt_tokens": 6832,
+            "completion_tokens": 12552
+          }
+        ]
+      }
+    ],
+    "response_records": [
+      {
+        "record_index": 2088,
+        "error": null,
+        "outcome_present": true
+      }
+    ],
+    "detail": {
+      "samples": [
+        {
+          "steps_passed": 5,
+          "steps_tested": 5,
+          "problem_solved": true,
+          "step_diagnostics": [
+            {
+              "step": "58.1",
+              "passed": true,
+              "returncode": 0,
+              "timed_out": false,
+              "elapsed_seconds": 2.4893602820811793,
+              "exception_class": null,
+              "exception_class_origin": "stderr_allowlisted_hint",
+              "stdout": {
+                "bytes": 0,
+                "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+                "representation": "utf8_of_captured_text"
+              },
+              "stderr": {
+                "bytes": 0,
+                "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+                "representation": "utf8_of_captured_text"
+              }
+            },
+            {
+              "step": "58.2",
+              "passed": true,
+              "returncode": 0,
+              "timed_out": false,
+              "elapsed_seconds": 2.596332243992947,
+              "exception_class": null,
+              "exception_class_origin": "stderr_allowlisted_hint",
+              "stdout": {
+                "bytes": 0,
+                "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+                "representation": "utf8_of_captured_text"
+              },
+              "stderr": {
+                "bytes": 0,
+                "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+                "representation": "utf8_of_captured_text"
+              }
+            },
+            {
+              "step": "58.3",
+              "passed": true,
+              "returncode": 0,
+              "timed_out": false,
+              "elapsed_seconds": 2.8304629860213026,
+              "exception_class": null,
+              "exception_class_origin": "stderr_allowlisted_hint",
+              "stdout": {
+                "bytes": 0,
+                "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+                "representation": "utf8_of_captured_text"
+              },
+              "stderr": {
+                "bytes": 0,
+                "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+                "representation": "utf8_of_captured_text"
+              }
+            },
+            {
+              "step": "58.4",
+              "passed": true,
+              "returncode": 0,
+              "timed_out": false,
+              "elapsed_seconds": 2.8496913340641186,
+              "exception_class": null,
+              "exception_class_origin": "stderr_allowlisted_hint",
+              "stdout": {
+                "bytes": 0,
+                "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+                "representation": "utf8_of_captured_text"
+              },
+              "stderr": {
+                "bytes": 0,
+                "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+                "representation": "utf8_of_captured_text"
+              }
+            },
+            {
+              "step": "58.5",
+              "passed": true,
+              "returncode": 0,
+              "timed_out": false,
+              "elapsed_seconds": 2.804361818009056,
+              "exception_class": null,
+              "exception_class_origin": "stderr_allowlisted_hint",
+              "stdout": {
+                "bytes": 0,
+                "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+                "representation": "utf8_of_captured_text"
+              },
+              "stderr": {
+                "bytes": 0,
+                "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+                "representation": "utf8_of_captured_text"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "generation": [
+      {
+        "finish_reason": "stop",
+        "prompt_tokens": 6832,
+        "completion_tokens": 12552
+      }
+    ],
+    "scoring_status": "scored"
+  },
+  {
+    "id": "scicode:18",
+    "source": "scicode",
+    "area": "code",
+    "kind": "chat",
+    "tier": 30,
+    "max_tokens": 32768,
+    "samples": 1,
+    "score": 0.0,
+    "sample_scores": [
+      0.0
+    ],
+    "error": null,
+    "audit_issues": [],
+    "actual_item_records": [
+      {
+        "id": "scicode:18",
+        "source": "scicode",
+        "area": "code",
+        "kind": "chat",
+        "tier": 30,
+        "max_tokens": 32768,
+        "samples": 1,
+        "score": 0.0,
+        "sample_scores": [
+          0.0
+        ],
+        "error": null,
+        "record_index": 1792,
+        "detail": {
+          "samples": [
+            {
+              "steps_passed": 0,
+              "steps_tested": 2,
+              "problem_solved": false,
+              "step_diagnostics": [
+                {
+                  "step": "18.1",
+                  "passed": false,
+                  "returncode": 1,
+                  "timed_out": false,
+                  "elapsed_seconds": 2.4960610079579055,
+                  "exception_class": "TypeError",
+                  "exception_class_origin": "stderr_allowlisted_hint",
+                  "stdout": {
+                    "bytes": 0,
+                    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+                    "representation": "utf8_of_captured_text"
+                  },
+                  "stderr": {
+                    "bytes": 367,
+                    "sha256": "165d3cc69c5bec6520c4766c5ff8ff3018e1ea81013f6b64851bf139a49bf159",
+                    "representation": "utf8_of_captured_text"
+                  }
+                },
+                {
+                  "step": "18.2",
+                  "passed": false,
+                  "returncode": 1,
+                  "timed_out": false,
+                  "elapsed_seconds": 2.3155502509325743,
+                  "exception_class": "IndexError",
+                  "exception_class_origin": "stderr_allowlisted_hint",
+                  "stdout": {
+                    "bytes": 0,
+                    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+                    "representation": "utf8_of_captured_text"
+                  },
+                  "stderr": {
+                    "bytes": 528,
+                    "sha256": "d4d7fb4a21a807c72443331e57ed6cfdf0affdc87edd489b869e31e779430d72",
+                    "representation": "utf8_of_captured_text"
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        "generation": [
+          {
+            "finish_reason": "stop",
+            "prompt_tokens": 1891,
+            "completion_tokens": 13728
+          }
+        ]
+      }
+    ],
+    "response_records": [
+      {
+        "record_index": 628,
+        "error": null,
+        "outcome_present": true
+      }
+    ],
+    "detail": {
+      "samples": [
+        {
+          "steps_passed": 0,
+          "steps_tested": 2,
+          "problem_solved": false,
+          "step_diagnostics": [
+            {
+              "step": "18.1",
+              "passed": false,
+              "returncode": 1,
+              "timed_out": false,
+              "elapsed_seconds": 2.4960610079579055,
+              "exception_class": "TypeError",
+              "exception_class_origin": "stderr_allowlisted_hint",
+              "stdout": {
+                "bytes": 0,
+                "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+                "representation": "utf8_of_captured_text"
+              },
+              "stderr": {
+                "bytes": 367,
+                "sha256": "165d3cc69c5bec6520c4766c5ff8ff3018e1ea81013f6b64851bf139a49bf159",
+                "representation": "utf8_of_captured_text"
+              }
+            },
+            {
+              "step": "18.2",
+              "passed": false,
+              "returncode": 1,
+              "timed_out": false,
+              "elapsed_seconds": 2.3155502509325743,
+              "exception_class": "IndexError",
+              "exception_class_origin": "stderr_allowlisted_hint",
+              "stdout": {
+                "bytes": 0,
+                "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+                "representation": "utf8_of_captured_text"
+              },
+              "stderr": {
+                "bytes": 528,
+                "sha256": "d4d7fb4a21a807c72443331e57ed6cfdf0affdc87edd489b869e31e779430d72",
+                "representation": "utf8_of_captured_text"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "generation": [
+      {
+        "finish_reason": "stop",
+        "prompt_tokens": 1891,
+        "completion_tokens": 13728
+      }
+    ],
+    "scoring_status": "scored"
+  },
+  {
+    "id": "scicode:45",
+    "source": "scicode",
+    "area": "code",
+    "kind": "chat",
+    "tier": 30,
+    "max_tokens": 32768,
+    "samples": 1,
+    "score": 0.0,
+    "sample_scores": [
+      0.0
+    ],
+    "error": null,
+    "audit_issues": [],
+    "actual_item_records": [
+      {
+        "id": "scicode:45",
+        "source": "scicode",
+        "area": "code",
+        "kind": "chat",
+        "tier": 30,
+        "max_tokens": 32768,
+        "samples": 1,
+        "score": 0.0,
+        "sample_scores": [
+          0.0
+        ],
+        "error": null,
+        "record_index": 1793,
+        "detail": {
+          "samples": [
+            {
+              "steps_passed": 0,
+              "steps_tested": 4,
+              "problem_solved": false,
+              "step_diagnostics": [
+                {
+                  "step": "45.1",
+                  "passed": false,
+                  "returncode": 1,
+                  "timed_out": false,
+                  "elapsed_seconds": 2.532417829032056,
+                  "exception_class": "ValueError",
+                  "exception_class_origin": "stderr_allowlisted_hint",
+                  "stdout": {
+                    "bytes": 72,
+                    "sha256": "e4d362ff77d839a410fcfe264059cb4b37502f1964d1ffa331c5acf1e9b44e5d",
+                    "representation": "utf8_of_captured_text"
+                  },
+                  "stderr": {
+                    "bytes": 1491,
+                    "sha256": "f64076a31a07bf3f643450eb425342f7cdcdd1de2324db38146d6d6ea1666ec4",
+                    "representation": "utf8_of_captured_text"
+                  }
+                },
+                {
+                  "step": "45.2",
+                  "passed": false,
+                  "returncode": 1,
+                  "timed_out": false,
+                  "elapsed_seconds": 2.3197860750369728,
+                  "exception_class": "AttributeError",
+                  "exception_class_origin": "stderr_allowlisted_hint",
+                  "stdout": {
+                    "bytes": 0,
+                    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+                    "representation": "utf8_of_captured_text"
+                  },
+                  "stderr": {
+                    "bytes": 478,
+                    "sha256": "f100e4d3aef66d0cbdfd0007c8b6eb2bbc0071aa3949eadf380c34f6c89b4e2c",
+                    "representation": "utf8_of_captured_text"
+                  }
+                },
+                {
+                  "step": "45.3",
+                  "passed": false,
+                  "returncode": 1,
+                  "timed_out": false,
+                  "elapsed_seconds": 2.0503016960574314,
+                  "exception_class": "AttributeError",
+                  "exception_class_origin": "stderr_allowlisted_hint",
+                  "stdout": {
+                    "bytes": 0,
+                    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+                    "representation": "utf8_of_captured_text"
+                  },
+                  "stderr": {
+                    "bytes": 474,
+                    "sha256": "2fc09a128c889a8534240fd442abde3bd6126f50fe1dcc48d1aa1e31c6df3f84",
+                    "representation": "utf8_of_captured_text"
+                  }
+                },
+                {
+                  "step": "45.4",
+                  "passed": false,
+                  "returncode": 1,
+                  "timed_out": false,
+                  "elapsed_seconds": 2.186455957009457,
+                  "exception_class": "AssertionError",
+                  "exception_class_origin": "stderr_allowlisted_hint",
+                  "stdout": {
+                    "bytes": 0,
+                    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+                    "representation": "utf8_of_captured_text"
+                  },
+                  "stderr": {
+                    "bytes": 208,
+                    "sha256": "47e00f12bd9a4e9774823539c3c30b874fcc5a647ec32a0ec78782723cc0f8d8",
+                    "representation": "utf8_of_captured_text"
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        "generation": [
+          {
+            "finish_reason": "stop",
+            "prompt_tokens": 7974,
+            "completion_tokens": 12984
+          }
+        ]
+      }
+    ],
+    "response_records": [
+      {
+        "record_index": 601,
+        "error": null,
+        "outcome_present": true
+      }
+    ],
+    "detail": {
+      "samples": [
+        {
+          "steps_passed": 0,
+          "steps_tested": 4,
+          "problem_solved": false,
+          "step_diagnostics": [
+            {
+              "step": "45.1",
+              "passed": false,
+              "returncode": 1,
+              "timed_out": false,
+              "elapsed_seconds": 2.532417829032056,
+              "exception_class": "ValueError",
+              "exception_class_origin": "stderr_allowlisted_hint",
+              "stdout": {
+                "bytes": 72,
+                "sha256": "e4d362ff77d839a410fcfe264059cb4b37502f1964d1ffa331c5acf1e9b44e5d",
+                "representation": "utf8_of_captured_text"
+              },
+              "stderr": {
+                "bytes": 1491,
+                "sha256": "f64076a31a07bf3f643450eb425342f7cdcdd1de2324db38146d6d6ea1666ec4",
+                "representation": "utf8_of_captured_text"
+              }
+            },
+            {
+              "step": "45.2",
+              "passed": false,
+              "returncode": 1,
+              "timed_out": false,
+              "elapsed_seconds": 2.3197860750369728,
+              "exception_class": "AttributeError",
+              "exception_class_origin": "stderr_allowlisted_hint",
+              "stdout": {
+                "bytes": 0,
+                "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+                "representation": "utf8_of_captured_text"
+              },
+              "stderr": {
+                "bytes": 478,
+                "sha256": "f100e4d3aef66d0cbdfd0007c8b6eb2bbc0071aa3949eadf380c34f6c89b4e2c",
+                "representation": "utf8_of_captured_text"
+              }
+            },
+            {
+              "step": "45.3",
+              "passed": false,
+              "returncode": 1,
+              "timed_out": false,
+              "elapsed_seconds": 2.0503016960574314,
+              "exception_class": "AttributeError",
+              "exception_class_origin": "stderr_allowlisted_hint",
+              "stdout": {
+                "bytes": 0,
+                "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+                "representation": "utf8_of_captured_text"
+              },
+              "stderr": {
+                "bytes": 474,
+                "sha256": "2fc09a128c889a8534240fd442abde3bd6126f50fe1dcc48d1aa1e31c6df3f84",
+                "representation": "utf8_of_captured_text"
+              }
+            },
+            {
+              "step": "45.4",
+              "passed": false,
+              "returncode": 1,
+              "timed_out": false,
+              "elapsed_seconds": 2.186455957009457,
+              "exception_class": "AssertionError",
+              "exception_class_origin": "stderr_allowlisted_hint",
+              "stdout": {
+                "bytes": 0,
+                "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+                "representation": "utf8_of_captured_text"
+              },
+              "stderr": {
+                "bytes": 208,
+                "sha256": "47e00f12bd9a4e9774823539c3c30b874fcc5a647ec32a0ec78782723cc0f8d8",
+                "representation": "utf8_of_captured_text"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "generation": [
+      {
+        "finish_reason": "stop",
+        "prompt_tokens": 7974,
+        "completion_tokens": 12984
+      }
+    ],
+    "scoring_status": "scored"
+  },
+  {
+    "id": "scicode:72",
+    "source": "scicode",
+    "area": "code",
+    "kind": "chat",
+    "tier": 30,
+    "max_tokens": 32768,
+    "samples": 1,
+    "score": 0.8888888888888888,
+    "sample_scores": [
+      0.8888888888888888
+    ],
+    "error": null,
+    "audit_issues": [],
+    "actual_item_records": [
+      {
+        "id": "scicode:72",
+        "source": "scicode",
+        "area": "code",
+        "kind": "chat",
+        "tier": 30,
+        "max_tokens": 32768,
+        "samples": 1,
+        "score": 0.8888888888888888,
+        "sample_scores": [
+          0.8888888888888888
+        ],
+        "error": null,
+        "record_index": 1794,
+        "detail": {
+          "samples": [
+            {
+              "steps_passed": 8,
+              "steps_tested": 9,
+              "problem_solved": false,
+              "step_diagnostics": [
+                {
+                  "step": "72.1",
+                  "passed": true,
+                  "returncode": 0,
+                  "timed_out": false,
+                  "elapsed_seconds": 2.2414687830023468,
+                  "exception_class": null,
+                  "exception_class_origin": "stderr_allowlisted_hint",
+                  "stdout": {
+                    "bytes": 0,
+                    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+                    "representation": "utf8_of_captured_text"
+                  },
+                  "stderr": {
+                    "bytes": 0,
+                    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+                    "representation": "utf8_of_captured_text"
+                  }
+                },
+                {
+                  "step": "72.2",
+                  "passed": true,
+                  "returncode": 0,
+                  "timed_out": false,
+                  "elapsed_seconds": 2.3983632050221786,
+                  "exception_class": null,
+                  "exception_class_origin": "stderr_allowlisted_hint",
+                  "stdout": {
+                    "bytes": 0,
+                    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+                    "representation": "utf8_of_captured_text"
+                  },
+                  "stderr": {
+                    "bytes": 0,
+                    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+                    "representation": "utf8_of_captured_text"
+                  }
+                },
+                {
+                  "step": "72.3",
+                  "passed": true,
+                  "returncode": 0,
+                  "timed_out": false,
+                  "elapsed_seconds": 2.3206560839898884,
+                  "exception_class": null,
+                  "exception_class_origin": "stderr_allowlisted_hint",
+                  "stdout": {
+                    "bytes": 0,
+                    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+                    "representation": "utf8_of_captured_text"
+                  },
+                  "stderr": {
+                    "bytes": 0,
+                    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+                    "representation": "utf8_of_captured_text"
+                  }
+                },
+                {
+                  "step": "72.4",
+                  "passed": true,
+                  "returncode": 0,
+                  "timed_out": false,
+                  "elapsed_seconds": 2.353474286966957,
+                  "exception_class": null,
+                  "exception_class_origin": "stderr_allowlisted_hint",
+                  "stdout": {
+                    "bytes": 0,
+                    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+                    "representation": "utf8_of_captured_text"
+                  },
+                  "stderr": {
+                    "bytes": 0,
+                    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+                    "representation": "utf8_of_captured_text"
+                  }
+                },
+                {
+                  "step": "72.5",
+                  "passed": false,
+                  "returncode": 1,
+                  "timed_out": false,
+                  "elapsed_seconds": 2.0003950719255954,
+                  "exception_class": "AssertionError",
+                  "exception_class_origin": "stderr_allowlisted_hint",
+                  "stdout": {
+                    "bytes": 0,
+                    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+                    "representation": "utf8_of_captured_text"
+                  },
+                  "stderr": {
+                    "bytes": 290,
+                    "sha256": "4de4410386d1a2532fffead5b0fb84b7a343899b7cc55efe324111e4b22878c3",
+                    "representation": "utf8_of_captured_text"
+                  }
+                },
+                {
+                  "step": "72.6",
+                  "passed": true,
+                  "returncode": 0,
+                  "timed_out": false,
+                  "elapsed_seconds": 2.3811475120019168,
+                  "exception_class": null,
+                  "exception_class_origin": "stderr_allowlisted_hint",
+                  "stdout": {
+                    "bytes": 0,
+                    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+                    "representation": "utf8_of_captured_text"
+                  },
+                  "stderr": {
+                    "bytes": 0,
+                    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+                    "representation": "utf8_of_captured_text"
+                  }
+                },
+                {
+                  "step": "72.7",
+                  "passed": true,
+                  "returncode": 0,
+                  "timed_out": false,
+                  "elapsed_seconds": 1.8936971019720659,
+                  "exception_class": null,
+                  "exception_class_origin": "stderr_allowlisted_hint",
+                  "stdout": {
+                    "bytes": 0,
+                    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+                    "representation": "utf8_of_captured_text"
+                  },
+                  "stderr": {
+                    "bytes": 0,
+                    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+                    "representation": "utf8_of_captured_text"
+                  }
+                },
+                {
+                  "step": "72.8",
+                  "passed": true,
+                  "returncode": 0,
+                  "timed_out": false,
+                  "elapsed_seconds": 2.8629932129988447,
+                  "exception_class": null,
+                  "exception_class_origin": "stderr_allowlisted_hint",
+                  "stdout": {
+                    "bytes": 0,
+                    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+                    "representation": "utf8_of_captured_text"
+                  },
+                  "stderr": {
+                    "bytes": 0,
+                    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+                    "representation": "utf8_of_captured_text"
+                  }
+                },
+                {
+                  "step": "72.9",
+                  "passed": true,
+                  "returncode": 0,
+                  "timed_out": false,
+                  "elapsed_seconds": 70.68692372296937,
+                  "exception_class": null,
+                  "exception_class_origin": "stderr_allowlisted_hint",
+                  "stdout": {
+                    "bytes": 0,
+                    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+                    "representation": "utf8_of_captured_text"
+                  },
+                  "stderr": {
+                    "bytes": 0,
+                    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+                    "representation": "utf8_of_captured_text"
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        "generation": [
+          {
+            "finish_reason": "stop",
+            "prompt_tokens": 22081,
+            "completion_tokens": 18471
+          }
+        ]
+      }
+    ],
+    "response_records": [
+      {
+        "record_index": 2321,
+        "error": null,
+        "outcome_present": true
+      }
+    ],
+    "detail": {
+      "samples": [
+        {
+          "steps_passed": 8,
+          "steps_tested": 9,
+          "problem_solved": false,
+          "step_diagnostics": [
+            {
+              "step": "72.1",
+              "passed": true,
+              "returncode": 0,
+              "timed_out": false,
+              "elapsed_seconds": 2.2414687830023468,
+              "exception_class": null,
+              "exception_class_origin": "stderr_allowlisted_hint",
+              "stdout": {
+                "bytes": 0,
+                "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+                "representation": "utf8_of_captured_text"
+              },
+              "stderr": {
+                "bytes": 0,
+                "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+                "representation": "utf8_of_captured_text"
+              }
+            },
+            {
+              "step": "72.2",
+              "passed": true,
+              "returncode": 0,
+              "timed_out": false,
+              "elapsed_seconds": 2.3983632050221786,
+              "exception_class": null,
+              "exception_class_origin": "stderr_allowlisted_hint",
+              "stdout": {
+                "bytes": 0,
+                "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+                "representation": "utf8_of_captured_text"
+              },
+              "stderr": {
+                "bytes": 0,
+                "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+                "representation": "utf8_of_captured_text"
+              }
+            },
+            {
+              "step": "72.3",
+              "passed": true,
+              "returncode": 0,
+              "timed_out": false,
+              "elapsed_seconds": 2.3206560839898884,
+              "exception_class": null,
+              "exception_class_origin": "stderr_allowlisted_hint",
+              "stdout": {
+                "bytes": 0,
+                "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+                "representation": "utf8_of_captured_text"
+              },
+              "stderr": {
+                "bytes": 0,
+                "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+                "representation": "utf8_of_captured_text"
+              }
+            },
+            {
+              "step": "72.4",
+              "passed": true,
+              "returncode": 0,
+              "timed_out": false,
+              "elapsed_seconds": 2.353474286966957,
+              "exception_class": null,
+              "exception_class_origin": "stderr_allowlisted_hint",
+              "stdout": {
+                "bytes": 0,
+                "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+                "representation": "utf8_of_captured_text"
+              },
+              "stderr": {
+                "bytes": 0,
+                "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+                "representation": "utf8_of_captured_text"
+              }
+            },
+            {
+              "step": "72.5",
+              "passed": false,
+              "returncode": 1,
+              "timed_out": false,
+              "elapsed_seconds": 2.0003950719255954,
+              "exception_class": "AssertionError",
+              "exception_class_origin": "stderr_allowlisted_hint",
+              "stdout": {
+                "bytes": 0,
+                "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+                "representation": "utf8_of_captured_text"
+              },
+              "stderr": {
+                "bytes": 290,
+                "sha256": "4de4410386d1a2532fffead5b0fb84b7a343899b7cc55efe324111e4b22878c3",
+                "representation": "utf8_of_captured_text"
+              }
+            },
+            {
+              "step": "72.6",
+              "passed": true,
+              "returncode": 0,
+              "timed_out": false,
+              "elapsed_seconds": 2.3811475120019168,
+              "exception_class": null,
+              "exception_class_origin": "stderr_allowlisted_hint",
+              "stdout": {
+                "bytes": 0,
+                "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+                "representation": "utf8_of_captured_text"
+              },
+              "stderr": {
+                "bytes": 0,
+                "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+                "representation": "utf8_of_captured_text"
+              }
+            },
+            {
+              "step": "72.7",
+              "passed": true,
+              "returncode": 0,
+              "timed_out": false,
+              "elapsed_seconds": 1.8936971019720659,
+              "exception_class": null,
+              "exception_class_origin": "stderr_allowlisted_hint",
+              "stdout": {
+                "bytes": 0,
+                "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+                "representation": "utf8_of_captured_text"
+              },
+              "stderr": {
+                "bytes": 0,
+                "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+                "representation": "utf8_of_captured_text"
+              }
+            },
+            {
+              "step": "72.8",
+              "passed": true,
+              "returncode": 0,
+              "timed_out": false,
+              "elapsed_seconds": 2.8629932129988447,
+              "exception_class": null,
+              "exception_class_origin": "stderr_allowlisted_hint",
+              "stdout": {
+                "bytes": 0,
+                "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+                "representation": "utf8_of_captured_text"
+              },
+              "stderr": {
+                "bytes": 0,
+                "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+                "representation": "utf8_of_captured_text"
+              }
+            },
+            {
+              "step": "72.9",
+              "passed": true,
+              "returncode": 0,
+              "timed_out": false,
+              "elapsed_seconds": 70.68692372296937,
+              "exception_class": null,
+              "exception_class_origin": "stderr_allowlisted_hint",
+              "stdout": {
+                "bytes": 0,
+                "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+                "representation": "utf8_of_captured_text"
+              },
+              "stderr": {
+                "bytes": 0,
+                "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+                "representation": "utf8_of_captured_text"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "generation": [
+      {
+        "finish_reason": "stop",
+        "prompt_tokens": 22081,
+        "completion_tokens": 18471
+      }
+    ],
+    "scoring_status": "scored"
+  },
+  {
+    "id": "scicode:80",
+    "source": "scicode",
+    "area": "code",
+    "kind": "chat",
+    "tier": 30,
+    "max_tokens": 32768,
+    "samples": 1,
+    "score": 0.2857142857142857,
+    "sample_scores": [
+      0.2857142857142857
+    ],
+    "error": null,
+    "audit_issues": [],
+    "actual_item_records": [
+      {
+        "id": "scicode:80",
+        "source": "scicode",
+        "area": "code",
+        "kind": "chat",
+        "tier": 30,
+        "max_tokens": 32768,
+        "samples": 1,
+        "score": 0.2857142857142857,
+        "sample_scores": [
+          0.2857142857142857
+        ],
+        "error": null,
+        "record_index": 1795,
+        "detail": {
+          "samples": [
+            {
+              "steps_passed": 2,
+              "steps_tested": 7,
+              "problem_solved": false,
+              "step_diagnostics": [
+                {
+                  "step": "80.1",
+                  "passed": true,
+                  "returncode": 0,
+                  "timed_out": false,
+                  "elapsed_seconds": 2.8053879409562796,
+                  "exception_class": null,
+                  "exception_class_origin": "stderr_allowlisted_hint",
+                  "stdout": {
+                    "bytes": 0,
+                    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+                    "representation": "utf8_of_captured_text"
+                  },
+                  "stderr": {
+                    "bytes": 0,
+                    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+                    "representation": "utf8_of_captured_text"
+                  }
+                },
+                {
+                  "step": "80.2",
+                  "passed": true,
+                  "returncode": 0,
+                  "timed_out": false,
+                  "elapsed_seconds": 2.6349181019468233,
+                  "exception_class": null,
+                  "exception_class_origin": "stderr_allowlisted_hint",
+                  "stdout": {
+                    "bytes": 0,
+                    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+                    "representation": "utf8_of_captured_text"
+                  },
+                  "stderr": {
+                    "bytes": 0,
+                    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+                    "representation": "utf8_of_captured_text"
+                  }
+                },
+                {
+                  "step": "80.3",
+                  "passed": false,
+                  "returncode": 1,
+                  "timed_out": false,
+                  "elapsed_seconds": 2.2692363989772275,
+                  "exception_class": "AssertionError",
+                  "exception_class_origin": "stderr_allowlisted_hint",
+                  "stdout": {
+                    "bytes": 0,
+                    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+                    "representation": "utf8_of_captured_text"
+                  },
+                  "stderr": {
+                    "bytes": 272,
+                    "sha256": "cb7a2d2bc85e4d399d2f4da5b69ea3bde9f3b3194aa95c3638e778502680c89d",
+                    "representation": "utf8_of_captured_text"
+                  }
+                },
+                {
+                  "step": "80.4",
+                  "passed": false,
+                  "returncode": 1,
+                  "timed_out": false,
+                  "elapsed_seconds": 2.8248261240078136,
+                  "exception_class": "AssertionError",
+                  "exception_class_origin": "stderr_allowlisted_hint",
+                  "stdout": {
+                    "bytes": 0,
+                    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+                    "representation": "utf8_of_captured_text"
+                  },
+                  "stderr": {
+                    "bytes": 234,
+                    "sha256": "4564208f7248c2eed296e50a8381389bcfe1091cbb286a30c0d9c3399ad02838",
+                    "representation": "utf8_of_captured_text"
+                  }
+                },
+                {
+                  "step": "80.5",
+                  "passed": false,
+                  "returncode": 1,
+                  "timed_out": false,
+                  "elapsed_seconds": 2.520503655890934,
+                  "exception_class": "AssertionError",
+                  "exception_class_origin": "stderr_allowlisted_hint",
+                  "stdout": {
+                    "bytes": 0,
+                    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+                    "representation": "utf8_of_captured_text"
+                  },
+                  "stderr": {
+                    "bytes": 272,
+                    "sha256": "4895a221fb9e272512632bb90859eca181b6af56d85f94c27462346bdf2e1048",
+                    "representation": "utf8_of_captured_text"
+                  }
+                },
+                {
+                  "step": "80.6",
+                  "passed": false,
+                  "returncode": 1,
+                  "timed_out": false,
+                  "elapsed_seconds": 2.714750571991317,
+                  "exception_class": "AssertionError",
+                  "exception_class_origin": "stderr_allowlisted_hint",
+                  "stdout": {
+                    "bytes": 0,
+                    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+                    "representation": "utf8_of_captured_text"
+                  },
+                  "stderr": {
+                    "bytes": 324,
+                    "sha256": "8bf4a19d1565dbff7b6af8f963f766c6949443b56eea215ec8f5e2218b0ea685",
+                    "representation": "utf8_of_captured_text"
+                  }
+                },
+                {
+                  "step": "80.7",
+                  "passed": false,
+                  "returncode": 1,
+                  "timed_out": false,
+                  "elapsed_seconds": 2.7432283689267933,
+                  "exception_class": "ValueError",
+                  "exception_class_origin": "stderr_allowlisted_hint",
+                  "stdout": {
+                    "bytes": 0,
+                    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+                    "representation": "utf8_of_captured_text"
+                  },
+                  "stderr": {
+                    "bytes": 1026,
+                    "sha256": "23797fbbce944168e17b291c0de3ba002d447b281d116ee5f5f95e28e1e5e339",
+                    "representation": "utf8_of_captured_text"
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        "generation": [
+          {
+            "finish_reason": "stop",
+            "prompt_tokens": 18843,
+            "completion_tokens": 25027
+          }
+        ]
+      }
+    ],
+    "response_records": [
+      {
+        "record_index": 2325,
+        "error": null,
+        "outcome_present": true
+      }
+    ],
+    "detail": {
+      "samples": [
+        {
+          "steps_passed": 2,
+          "steps_tested": 7,
+          "problem_solved": false,
+          "step_diagnostics": [
+            {
+              "step": "80.1",
+              "passed": true,
+              "returncode": 0,
+              "timed_out": false,
+              "elapsed_seconds": 2.8053879409562796,
+              "exception_class": null,
+              "exception_class_origin": "stderr_allowlisted_hint",
+              "stdout": {
+                "bytes": 0,
+                "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+                "representation": "utf8_of_captured_text"
+              },
+              "stderr": {
+                "bytes": 0,
+                "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+                "representation": "utf8_of_captured_text"
+              }
+            },
+            {
+              "step": "80.2",
+              "passed": true,
+              "returncode": 0,
+              "timed_out": false,
+              "elapsed_seconds": 2.6349181019468233,
+              "exception_class": null,
+              "exception_class_origin": "stderr_allowlisted_hint",
+              "stdout": {
+                "bytes": 0,
+                "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+                "representation": "utf8_of_captured_text"
+              },
+              "stderr": {
+                "bytes": 0,
+                "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+                "representation": "utf8_of_captured_text"
+              }
+            },
+            {
+              "step": "80.3",
+              "passed": false,
+              "returncode": 1,
+              "timed_out": false,
+              "elapsed_seconds": 2.2692363989772275,
+              "exception_class": "AssertionError",
+              "exception_class_origin": "stderr_allowlisted_hint",
+              "stdout": {
+                "bytes": 0,
+                "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+                "representation": "utf8_of_captured_text"
+              },
+              "stderr": {
+                "bytes": 272,
+                "sha256": "cb7a2d2bc85e4d399d2f4da5b69ea3bde9f3b3194aa95c3638e778502680c89d",
+                "representation": "utf8_of_captured_text"
+              }
+            },
+            {
+              "step": "80.4",
+              "passed": false,
+              "returncode": 1,
+              "timed_out": false,
+              "elapsed_seconds": 2.8248261240078136,
+              "exception_class": "AssertionError",
+              "exception_class_origin": "stderr_allowlisted_hint",
+              "stdout": {
+                "bytes": 0,
+                "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+                "representation": "utf8_of_captured_text"
+              },
+              "stderr": {
+                "bytes": 234,
+                "sha256": "4564208f7248c2eed296e50a8381389bcfe1091cbb286a30c0d9c3399ad02838",
+                "representation": "utf8_of_captured_text"
+              }
+            },
+            {
+              "step": "80.5",
+              "passed": false,
+              "returncode": 1,
+              "timed_out": false,
+              "elapsed_seconds": 2.520503655890934,
+              "exception_class": "AssertionError",
+              "exception_class_origin": "stderr_allowlisted_hint",
+              "stdout": {
+                "bytes": 0,
+                "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+                "representation": "utf8_of_captured_text"
+              },
+              "stderr": {
+                "bytes": 272,
+                "sha256": "4895a221fb9e272512632bb90859eca181b6af56d85f94c27462346bdf2e1048",
+                "representation": "utf8_of_captured_text"
+              }
+            },
+            {
+              "step": "80.6",
+              "passed": false,
+              "returncode": 1,
+              "timed_out": false,
+              "elapsed_seconds": 2.714750571991317,
+              "exception_class": "AssertionError",
+              "exception_class_origin": "stderr_allowlisted_hint",
+              "stdout": {
+                "bytes": 0,
+                "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+                "representation": "utf8_of_captured_text"
+              },
+              "stderr": {
+                "bytes": 324,
+                "sha256": "8bf4a19d1565dbff7b6af8f963f766c6949443b56eea215ec8f5e2218b0ea685",
+                "representation": "utf8_of_captured_text"
+              }
+            },
+            {
+              "step": "80.7",
+              "passed": false,
+              "returncode": 1,
+              "timed_out": false,
+              "elapsed_seconds": 2.7432283689267933,
+              "exception_class": "ValueError",
+              "exception_class_origin": "stderr_allowlisted_hint",
+              "stdout": {
+                "bytes": 0,
+                "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+                "representation": "utf8_of_captured_text"
+              },
+              "stderr": {
+                "bytes": 1026,
+                "sha256": "23797fbbce944168e17b291c0de3ba002d447b281d116ee5f5f95e28e1e5e339",
+                "representation": "utf8_of_captured_text"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "generation": [
+      {
+        "finish_reason": "stop",
+        "prompt_tokens": 18843,
+        "completion_tokens": 25027
+      }
+    ],
+    "scoring_status": "scored"
+  },
+  {
+    "id": "scicode:9",
+    "source": "scicode",
+    "area": "code",
+    "kind": "chat",
+    "tier": 30,
+    "max_tokens": 32768,
+    "samples": 1,
+    "score": 0.0,
+    "sample_scores": [
+      0.0
+    ],
+    "error": null,
+    "audit_issues": [],
+    "actual_item_records": [
+      {
+        "id": "scicode:9",
+        "source": "scicode",
+        "area": "code",
+        "kind": "chat",
+        "tier": 30,
+        "max_tokens": 32768,
+        "samples": 1,
+        "score": 0.0,
+        "sample_scores": [
+          0.0
+        ],
+        "error": null,
+        "record_index": 1796,
+        "detail": {
+          "samples": [
+            {
+              "steps_passed": 0,
+              "steps_tested": 1,
+              "problem_solved": false,
+              "step_diagnostics": [
+                {
+                  "step": "9.1",
+                  "passed": false,
+                  "returncode": 1,
+                  "timed_out": false,
+                  "elapsed_seconds": 2.371371078072116,
+                  "exception_class": "AssertionError",
+                  "exception_class_origin": "stderr_allowlisted_hint",
+                  "stdout": {
+                    "bytes": 0,
+                    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+                    "representation": "utf8_of_captured_text"
+                  },
+                  "stderr": {
+                    "bytes": 242,
+                    "sha256": "be43d77d8b8605b4285f33abd7709c87cf6ce707b7c2bfb90484d7479949fd5e",
+                    "representation": "utf8_of_captured_text"
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        "generation": [
+          {
+            "finish_reason": "stop",
+            "prompt_tokens": 722,
+            "completion_tokens": 6375
+          }
+        ]
+      }
+    ],
+    "response_records": [
+      {
+        "record_index": 851,
+        "error": null,
+        "outcome_present": true
+      }
+    ],
+    "detail": {
+      "samples": [
+        {
+          "steps_passed": 0,
+          "steps_tested": 1,
+          "problem_solved": false,
+          "step_diagnostics": [
+            {
+              "step": "9.1",
+              "passed": false,
+              "returncode": 1,
+              "timed_out": false,
+              "elapsed_seconds": 2.371371078072116,
+              "exception_class": "AssertionError",
+              "exception_class_origin": "stderr_allowlisted_hint",
+              "stdout": {
+                "bytes": 0,
+                "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+                "representation": "utf8_of_captured_text"
+              },
+              "stderr": {
+                "bytes": 242,
+                "sha256": "be43d77d8b8605b4285f33abd7709c87cf6ce707b7c2bfb90484d7479949fd5e",
+                "representation": "utf8_of_captured_text"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "generation": [
+      {
+        "finish_reason": "stop",
+        "prompt_tokens": 722,
+        "completion_tokens": 6375
+      }
+    ],
+    "scoring_status": "scored"
+  },
+  {
+    "id": "scicode:17",
+    "source": "scicode",
+    "area": "code",
+    "kind": "chat",
+    "tier": 30,
+    "max_tokens": 32768,
+    "samples": 1,
+    "score": 0.0,
+    "sample_scores": [
+      0.0
+    ],
+    "error": null,
+    "audit_issues": [],
+    "actual_item_records": [
+      {
+        "id": "scicode:17",
+        "source": "scicode",
+        "area": "code",
+        "kind": "chat",
+        "tier": 30,
+        "max_tokens": 32768,
+        "samples": 1,
+        "score": 0.0,
+        "sample_scores": [
+          0.0
+        ],
+        "error": null,
+        "record_index": 1797,
+        "detail": {
+          "samples": [
+            {
+              "steps_passed": 0,
+              "steps_tested": 2,
+              "problem_solved": false,
+              "step_diagnostics": [
+                {
+                  "step": "17.1",
+                  "passed": false,
+                  "returncode": 1,
+                  "timed_out": false,
+                  "elapsed_seconds": 2.4538459760369733,
+                  "exception_class": "AssertionError",
+                  "exception_class_origin": "stderr_allowlisted_hint",
+                  "stdout": {
+                    "bytes": 0,
+                    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+                    "representation": "utf8_of_captured_text"
+                  },
+                  "stderr": {
+                    "bytes": 255,
+                    "sha256": "a67fb3062b51988e7913bc09864bf2e738bd108036be084f52a1a0d4f8d69c44",
+                    "representation": "utf8_of_captured_text"
+                  }
+                },
+                {
+                  "step": "17.2",
+                  "passed": false,
+                  "returncode": 1,
+                  "timed_out": false,
+                  "elapsed_seconds": 2.4473015409894288,
+                  "exception_class": "AssertionError",
+                  "exception_class_origin": "stderr_allowlisted_hint",
+                  "stdout": {
+                    "bytes": 0,
+                    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+                    "representation": "utf8_of_captured_text"
+                  },
+                  "stderr": {
+                    "bytes": 275,
+                    "sha256": "fb7092df36da2ca247f858c58a67b68d40d90a8102e6a538e5ea064129fd2c1f",
+                    "representation": "utf8_of_captured_text"
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        "generation": [
+          {
+            "finish_reason": "stop",
+            "prompt_tokens": 1759,
+            "completion_tokens": 6815
+          }
+        ]
+      }
+    ],
+    "response_records": [
+      {
+        "record_index": 146,
+        "error": null,
+        "outcome_present": true
+      }
+    ],
+    "detail": {
+      "samples": [
+        {
+          "steps_passed": 0,
+          "steps_tested": 2,
+          "problem_solved": false,
+          "step_diagnostics": [
+            {
+              "step": "17.1",
+              "passed": false,
+              "returncode": 1,
+              "timed_out": false,
+              "elapsed_seconds": 2.4538459760369733,
+              "exception_class": "AssertionError",
+              "exception_class_origin": "stderr_allowlisted_hint",
+              "stdout": {
+                "bytes": 0,
+                "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+                "representation": "utf8_of_captured_text"
+              },
+              "stderr": {
+                "bytes": 255,
+                "sha256": "a67fb3062b51988e7913bc09864bf2e738bd108036be084f52a1a0d4f8d69c44",
+                "representation": "utf8_of_captured_text"
+              }
+            },
+            {
+              "step": "17.2",
+              "passed": false,
+              "returncode": 1,
+              "timed_out": false,
+              "elapsed_seconds": 2.4473015409894288,
+              "exception_class": "AssertionError",
+              "exception_class_origin": "stderr_allowlisted_hint",
+              "stdout": {
+                "bytes": 0,
+                "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+                "representation": "utf8_of_captured_text"
+              },
+              "stderr": {
+                "bytes": 275,
+                "sha256": "fb7092df36da2ca247f858c58a67b68d40d90a8102e6a538e5ea064129fd2c1f",
+                "representation": "utf8_of_captured_text"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "generation": [
+      {
+        "finish_reason": "stop",
+        "prompt_tokens": 1759,
+        "completion_tokens": 6815
+      }
+    ],
+    "scoring_status": "scored"
+  },
+  {
+    "id": "scicode:46",
+    "source": "scicode",
+    "area": "code",
+    "kind": "chat",
+    "tier": 30,
+    "max_tokens": 32768,
+    "samples": 1,
+    "score": 0.5,
+    "sample_scores": [
+      0.5
+    ],
+    "error": null,
+    "audit_issues": [],
+    "actual_item_records": [
+      {
+        "id": "scicode:46",
+        "source": "scicode",
+        "area": "code",
+        "kind": "chat",
+        "tier": 30,
+        "max_tokens": 32768,
+        "samples": 1,
+        "score": 0.5,
+        "sample_scores": [
+          0.5
+        ],
+        "error": null,
+        "record_index": 1798,
+        "detail": {
+          "samples": [
+            {
+              "steps_passed": 2,
+              "steps_tested": 4,
+              "problem_solved": false,
+              "step_diagnostics": [
+                {
+                  "step": "46.1",
+                  "passed": true,
+                  "returncode": 0,
+                  "timed_out": false,
+                  "elapsed_seconds": 2.5239341988926753,
+                  "exception_class": null,
+                  "exception_class_origin": "stderr_allowlisted_hint",
+                  "stdout": {
+                    "bytes": 0,
+                    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+                    "representation": "utf8_of_captured_text"
+                  },
+                  "stderr": {
+                    "bytes": 0,
+                    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+                    "representation": "utf8_of_captured_text"
+                  }
+                },
+                {
+                  "step": "46.2",
+                  "passed": true,
+                  "returncode": 0,
+                  "timed_out": false,
+                  "elapsed_seconds": 2.306496722972952,
+                  "exception_class": null,
+                  "exception_class_origin": "stderr_allowlisted_hint",
+                  "stdout": {
+                    "bytes": 0,
+                    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+                    "representation": "utf8_of_captured_text"
+                  },
+                  "stderr": {
+                    "bytes": 0,
+                    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+                    "representation": "utf8_of_captured_text"
+                  }
+                },
+                {
+                  "step": "46.3",
+                  "passed": false,
+                  "returncode": 1,
+                  "timed_out": false,
+                  "elapsed_seconds": 2.378435813006945,
+                  "exception_class": "AssertionError",
+                  "exception_class_origin": "stderr_allowlisted_hint",
+                  "stdout": {
+                    "bytes": 0,
+                    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+                    "representation": "utf8_of_captured_text"
+                  },
+                  "stderr": {
+                    "bytes": 328,
+                    "sha256": "5e93a0751a275c6d5e16d202aa7297f00e2a6a4595de1508aea5351668af8c8a",
+                    "representation": "utf8_of_captured_text"
+                  }
+                },
+                {
+                  "step": "46.4",
+                  "passed": false,
+                  "returncode": 1,
+                  "timed_out": false,
+                  "elapsed_seconds": 2.2379587630275637,
+                  "exception_class": "AssertionError",
+                  "exception_class_origin": "stderr_allowlisted_hint",
+                  "stdout": {
+                    "bytes": 0,
+                    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+                    "representation": "utf8_of_captured_text"
+                  },
+                  "stderr": {
+                    "bytes": 350,
+                    "sha256": "afbc4fc758f1e4d8b81074e455f90b724dd8a400e5cba9639a5e357c9b27a1c7",
+                    "representation": "utf8_of_captured_text"
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        "generation": [
+          {
+            "finish_reason": "stop",
+            "prompt_tokens": 8079,
+            "completion_tokens": 9319
+          }
+        ]
+      }
+    ],
+    "response_records": [
+      {
+        "record_index": 540,
+        "error": null,
+        "outcome_present": true
+      }
+    ],
+    "detail": {
+      "samples": [
+        {
+          "steps_passed": 2,
+          "steps_tested": 4,
+          "problem_solved": false,
+          "step_diagnostics": [
+            {
+              "step": "46.1",
+              "passed": true,
+              "returncode": 0,
+              "timed_out": false,
+              "elapsed_seconds": 2.5239341988926753,
+              "exception_class": null,
+              "exception_class_origin": "stderr_allowlisted_hint",
+              "stdout": {
+                "bytes": 0,
+                "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+                "representation": "utf8_of_captured_text"
+              },
+              "stderr": {
+                "bytes": 0,
+                "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+                "representation": "utf8_of_captured_text"
+              }
+            },
+            {
+              "step": "46.2",
+              "passed": true,
+              "returncode": 0,
+              "timed_out": false,
+              "elapsed_seconds": 2.306496722972952,
+              "exception_class": null,
+              "exception_class_origin": "stderr_allowlisted_hint",
+              "stdout": {
+                "bytes": 0,
+                "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+                "representation": "utf8_of_captured_text"
+              },
+              "stderr": {
+                "bytes": 0,
+                "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+                "representation": "utf8_of_captured_text"
+              }
+            },
+            {
+              "step": "46.3",
+              "passed": false,
+              "returncode": 1,
+              "timed_out": false,
+              "elapsed_seconds": 2.378435813006945,
+              "exception_class": "AssertionError",
+              "exception_class_origin": "stderr_allowlisted_hint",
+              "stdout": {
+                "bytes": 0,
+                "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+                "representation": "utf8_of_captured_text"
+              },
+              "stderr": {
+                "bytes": 328,
+                "sha256": "5e93a0751a275c6d5e16d202aa7297f00e2a6a4595de1508aea5351668af8c8a",
+                "representation": "utf8_of_captured_text"
+              }
+            },
+            {
+              "step": "46.4",
+              "passed": false,
+              "returncode": 1,
+              "timed_out": false,
+              "elapsed_seconds": 2.2379587630275637,
+              "exception_class": "AssertionError",
+              "exception_class_origin": "stderr_allowlisted_hint",
+              "stdout": {
+                "bytes": 0,
+                "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+                "representation": "utf8_of_captured_text"
+              },
+              "stderr": {
+                "bytes": 350,
+                "sha256": "afbc4fc758f1e4d8b81074e455f90b724dd8a400e5cba9639a5e357c9b27a1c7",
+                "representation": "utf8_of_captured_text"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "generation": [
+      {
+        "finish_reason": "stop",
+        "prompt_tokens": 8079,
+        "completion_tokens": 9319
+      }
+    ],
+    "scoring_status": "scored"
+  },
+  {
+    "id": "scicode:35",
+    "source": "scicode",
+    "area": "code",
+    "kind": "chat",
+    "tier": 30,
+    "max_tokens": 32768,
+    "samples": 1,
+    "score": 0.6666666666666666,
+    "sample_scores": [
+      0.6666666666666666
+    ],
+    "error": null,
+    "audit_issues": [],
+    "actual_item_records": [
+      {
+        "id": "scicode:35",
+        "source": "scicode",
+        "area": "code",
+        "kind": "chat",
+        "tier": 30,
+        "max_tokens": 32768,
+        "samples": 1,
+        "score": 0.6666666666666666,
+        "sample_scores": [
+          0.6666666666666666
+        ],
+        "error": null,
+        "record_index": 1799,
+        "detail": {
+          "samples": [
+            {
+              "steps_passed": 2,
+              "steps_tested": 3,
+              "problem_solved": false,
+              "step_diagnostics": [
+                {
+                  "step": "35.1",
+                  "passed": true,
+                  "returncode": 0,
+                  "timed_out": false,
+                  "elapsed_seconds": 2.346009475993924,
+                  "exception_class": null,
+                  "exception_class_origin": "stderr_allowlisted_hint",
+                  "stdout": {
+                    "bytes": 0,
+                    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+                    "representation": "utf8_of_captured_text"
+                  },
+                  "stderr": {
+                    "bytes": 0,
+                    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+                    "representation": "utf8_of_captured_text"
+                  }
+                },
+                {
+                  "step": "35.2",
+                  "passed": true,
+                  "returncode": 0,
+                  "timed_out": false,
+                  "elapsed_seconds": 2.026524494984187,
+                  "exception_class": null,
+                  "exception_class_origin": "stderr_allowlisted_hint",
+                  "stdout": {
+                    "bytes": 0,
+                    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+                    "representation": "utf8_of_captured_text"
+                  },
+                  "stderr": {
+                    "bytes": 0,
+                    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+                    "representation": "utf8_of_captured_text"
+                  }
+                },
+                {
+                  "step": "35.3",
+                  "passed": false,
+                  "returncode": 1,
+                  "timed_out": false,
+                  "elapsed_seconds": 1.9283052360406145,
+                  "exception_class": "AssertionError",
+                  "exception_class_origin": "stderr_allowlisted_hint",
+                  "stdout": {
+                    "bytes": 0,
+                    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+                    "representation": "utf8_of_captured_text"
+                  },
+                  "stderr": {
+                    "bytes": 216,
+                    "sha256": "40571393eebe90b602443d204b35e84e5bd276a536181af24b1b7868124bcb78",
+                    "representation": "utf8_of_captured_text"
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        "generation": [
+          {
+            "finish_reason": "stop",
+            "prompt_tokens": 3831,
+            "completion_tokens": 17642
+          }
+        ]
+      }
+    ],
+    "response_records": [
+      {
+        "record_index": 2309,
+        "error": null,
+        "outcome_present": true
+      }
+    ],
+    "detail": {
+      "samples": [
+        {
+          "steps_passed": 2,
+          "steps_tested": 3,
+          "problem_solved": false,
+          "step_diagnostics": [
+            {
+              "step": "35.1",
+              "passed": true,
+              "returncode": 0,
+              "timed_out": false,
+              "elapsed_seconds": 2.346009475993924,
+              "exception_class": null,
+              "exception_class_origin": "stderr_allowlisted_hint",
+              "stdout": {
+                "bytes": 0,
+                "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+                "representation": "utf8_of_captured_text"
+              },
+              "stderr": {
+                "bytes": 0,
+                "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+                "representation": "utf8_of_captured_text"
+              }
+            },
+            {
+              "step": "35.2",
+              "passed": true,
+              "returncode": 0,
+              "timed_out": false,
+              "elapsed_seconds": 2.026524494984187,
+              "exception_class": null,
+              "exception_class_origin": "stderr_allowlisted_hint",
+              "stdout": {
+                "bytes": 0,
+                "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+                "representation": "utf8_of_captured_text"
+              },
+              "stderr": {
+                "bytes": 0,
+                "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+                "representation": "utf8_of_captured_text"
+              }
+            },
+            {
+              "step": "35.3",
+              "passed": false,
+              "returncode": 1,
+              "timed_out": false,
+              "elapsed_seconds": 1.9283052360406145,
+              "exception_class": "AssertionError",
+              "exception_class_origin": "stderr_allowlisted_hint",
+              "stdout": {
+                "bytes": 0,
+                "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+                "representation": "utf8_of_captured_text"
+              },
+              "stderr": {
+                "bytes": 216,
+                "sha256": "40571393eebe90b602443d204b35e84e5bd276a536181af24b1b7868124bcb78",
+                "representation": "utf8_of_captured_text"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "generation": [
+      {
+        "finish_reason": "stop",
+        "prompt_tokens": 3831,
+        "completion_tokens": 17642
+      }
+    ],
+    "scoring_status": "scored"
+  }
+]

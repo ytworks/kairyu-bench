@@ -1,0 +1,14 @@
+{
+  "command": [
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/infra/weight-tools-ci/bin/python",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/worktrees/kairyu-bench-weight-tools/docs/experiments/scripts/fresh-four-parallel-redeploy-20261107.py",
+    "--plan",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f06-lora-deployment-plan-v1/plan-unbound.json"
+  ],
+  "returncode": 0,
+  "seconds": 0.17472243309020996,
+  "model_calls": 0,
+  "service_mutations": 0,
+  "plan_sha256": "6ab5726feb9424fcd4fc1801a7d13bdb81c335ea000495fb5ba8419470ef6233",
+  "source_changed": false
+}

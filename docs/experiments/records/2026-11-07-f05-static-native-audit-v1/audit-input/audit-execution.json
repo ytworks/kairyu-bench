@@ -1,0 +1,25 @@
+{
+  "command": [
+    "nice",
+    "-n",
+    "15",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/infra/weight-tools-ci/bin/python",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/worktrees/kairyu-bench-weight-tools/scripts/experiments/gemma4-purpose/native_spec_audit.py",
+    "--root",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f05-native-contract-v1/audit-input-v1",
+    "--plan-sha256",
+    "0981476fd24eea3c43a3aea87e3550aec8066f934830f4096afd51198405cfd1",
+    "--output",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f05-native-contract-v1/static-native-audit-v1"
+  ],
+  "returncode": 0,
+  "elapsed_seconds": 3.759282350540161,
+  "original_files_unchanged": true,
+  "stdout_sha256": "71b6f4326977c6d572e0fd8ffdffb2a653e77f77e5af0db4a816fe7064eb3cc6",
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "audit_source": {
+    "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/worktrees/kairyu-bench-weight-tools/scripts/experiments/gemma4-purpose/native_spec_audit.py",
+    "sha256": "38237dcf8706a64493c8bd041df614e0273ce9b550f151ce8650018b8e98dcbc",
+    "bytes": 14143
+  }
+}

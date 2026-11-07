@@ -1,0 +1,22 @@
+{
+  "checkpoint_tree_sha256": "7b9e9488e3cd4e0b6c5f61ae341e5eeccdf5bd31c46d1c8354950dbc29d0f924",
+  "native_measurement_closure": {
+    "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f04-native19-gpu4-v1/completion.json",
+    "sha256": "b92b26603c4040139ed3043e45c3f740173a8664d148045434fecf5ba71864d3"
+  },
+  "native_behavior_result": {
+    "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f04-native19-gpu4-prepare-v1/root-native-behavior-identity.json",
+    "sha256": "e4ebc7204f0ad4bdf4337402cb0715f03483bb9e489858a607c583dff6926f23"
+  },
+  "comparison_status": "F04 complete same-condition code tie with AV; higher overall breaks tie; F04 selected parent, code improvement not claimed. No new WSP baseline run.",
+  "policy": {
+    "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f05-native-contract-v1/pre-observation-policy.json",
+    "sha256": "db8f8ceb855699386b6bc8d6fd25b6f4bd0e90c4d29a2caf56ae9f00b4de3056"
+  },
+  "restrictions": [
+    "All19 both objectives retained; all38 constraints",
+    "No transfer or benchmark answers used as training target",
+    "One fixed CPU proposal; all rounds/shortfalls retained; no automatic rescale",
+    "Predicted LL/margin changes are not WSP scores"
+  ]
+}

@@ -1,0 +1,8 @@
+{
+  "scope": "post-run reporting audit, not CI execution",
+  "status": "initial_assertion_failed",
+  "cause": "counted463 inline ok lines but omitted12 standalone ok lines",
+  "resolution": "463+12=475 passes, reconciled with532 total and57 skips",
+  "ci_rerun": false,
+  "source_or_original_log_changed": false
+}

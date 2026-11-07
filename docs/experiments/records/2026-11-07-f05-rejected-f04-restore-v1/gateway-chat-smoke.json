@@ -1,0 +1,21 @@
+{
+  "request": {
+    "model": "gemma-4-31b",
+    "messages": [
+      {
+        "role": "user",
+        "content": "Reply with the single word ready."
+      }
+    ],
+    "max_tokens": 256
+  },
+  "model": "gemma-4-31b",
+  "usage": {
+    "prompt_tokens": 23,
+    "completion_tokens": 60,
+    "total_tokens": 83,
+    "prompt_tokens_details": null
+  },
+  "finish_reason": "stop",
+  "public_answer": "ready"
+}

@@ -1,0 +1,13 @@
+Traceback (most recent call last):
+  File "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/worktrees/kairyu-bench-weight-tools/docs/experiments/scripts/fresh-av-dev30-20261107.py", line 98, in <module>
+    raise SystemExit(main())
+                     ^^^^^^
+  File "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/worktrees/kairyu-bench-weight-tools/docs/experiments/scripts/fresh-av-dev30-20261107.py", line 31, in main
+    plan = json.loads(args.plan.read_text())
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/infra/managed-python/cpython-3.12.13-linux-x86_64-gnu/lib/python3.12/json/__init__.py", line 346, in loads
+    return _default_decoder.decode(s)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/infra/managed-python/cpython-3.12.13-linux-x86_64-gnu/lib/python3.12/json/decoder.py", line 341, in decode
+    raise JSONDecodeError("Extra data", s, end)
+json.decoder.JSONDecodeError: Extra data: line 391 column 2 (char 18717)

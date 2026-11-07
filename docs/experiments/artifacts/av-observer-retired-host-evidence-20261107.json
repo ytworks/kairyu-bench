@@ -1,0 +1,61 @@
+{
+  "host_evidence_check": {
+    "capture_config_sha_matches_identity_receipt": true,
+    "worker_closed_receipt_matches_current": {
+      "gemma-0-tp1": true,
+      "gemma-0-tp0": true
+    },
+    "small_official_metadata_sha_match": {
+      "run.json": true,
+      "report.json": true
+    },
+    "deployment_state_safe": {
+      "observer_id": "21aaf4aed1096bd7205fb5369528d6c84d61672b01fc5ef36bfd57bbbbb690cd",
+      "operation_id": "2d07e82b608141f69838b913376671bd",
+      "original_id": "4e545c35bc0e277344b302058eb9ffa758747f3012bc8e395e417f28d97aa56e",
+      "original_sha256": "bed9c1a72cf3e5561e99b422911a38807ffab79277755c68de19094e5cf17577",
+      "status": "restored"
+    },
+    "private_original_backup_sha256": "bed9c1a72cf3e5561e99b422911a38807ffab79277755c68de19094e5cf17577",
+    "merged_bytes": 2890586309,
+    "trace_payload_rehashed": false,
+    "recorded_epoch": 1794029108.501724,
+    "service_mutation_performed": false
+  },
+  "retired_label_reconstruction": {
+    "recorded_epoch": 1794029180.3679857,
+    "original_id": "4e545c35bc0e277344b302058eb9ffa758747f3012bc8e395e417f28d97aa56e",
+    "observer_id": "21aaf4aed1096bd7205fb5369528d6c84d61672b01fc5ef36bfd57bbbbb690cd",
+    "operation_id": "2d07e82b608141f69838b913376671bd",
+    "original_saved_labels": {
+      "com.docker.compose.project": "gemma-4-31b-8gpu",
+      "com.docker.compose.service": "gemma-0",
+      "com.docker.compose.container-number": "1",
+      "com.docker.compose.oneoff": "False"
+    },
+    "original_backup_sha256": "bed9c1a72cf3e5561e99b422911a38807ffab79277755c68de19094e5cf17577",
+    "source_file": "scripts/observe-docker.py",
+    "source_sha256": "c25c4ef70d1825686c0c9d93066432c5ffff15abcb813b86b5aeca6d80b4d97b",
+    "runner_archive_source_sha256": "c25c4ef70d1825686c0c9d93066432c5ffff15abcb813b86b5aeca6d80b4d97b",
+    "evidence_kind": "Saved original inspect labels plus recorded successful observer creation/restore and source-defined label copying; no separately persisted actual observer inspect label snapshot was found.",
+    "construction": "prepare() copies original Config, then overlays only the observer-operation and capture-id labels; apply_attach sends this config to Docker create. restore only renames/stops the observer.",
+    "inferred_observer_compose_labels": {
+      "com.docker.compose.project": "gemma-4-31b-8gpu",
+      "com.docker.compose.service": "gemma-0",
+      "com.docker.compose.container-number": "1",
+      "com.docker.compose.oneoff": "False"
+    },
+    "observer_container_currently_absent": true,
+    "observer_stdout_exported_to_host_by_owner": false,
+    "host_saved_logs": [
+      "wsp.log",
+      "merge.log",
+      "owner.log",
+      "capture-init.log"
+    ],
+    "capture_and_metadata_preserved": true,
+    "private_config_or_env_disclosed": false,
+    "pre_attach_plan_source_sha256": "c25c4ef70d1825686c0c9d93066432c5ffff15abcb813b86b5aeca6d80b4d97b"
+  },
+  "scope": "Read-only audit after another owner deployment failed; no service or cleanup operation by this audit"
+}

@@ -1,0 +1,372 @@
+{
+  "schema_version": 1,
+  "attempts": [
+    {
+      "version": 1,
+      "seconds": 28.81507633801084,
+      "validation_passed": false,
+      "docker_calls": 33,
+      "raw_worker_outputs": 0,
+      "report_sha256": "c2f003095510117cfba2e99882375f063d2921fd7bc5448b685b9492a988de66",
+      "failed_case_ids": [
+        "behavior-B2",
+        "behavior-B3",
+        "behavior-E2"
+      ]
+    },
+    {
+      "version": 2,
+      "seconds": 28.526596643030643,
+      "validation_passed": true,
+      "docker_calls": 33,
+      "raw_worker_outputs": 0,
+      "report_sha256": "bc7969a45dac651e47445e1c05da784f35bf2eee8e401cbe8ee5100749eee2fa",
+      "failed_case_ids": []
+    },
+    {
+      "version": 3,
+      "seconds": 29.0381968539441,
+      "validation_passed": true,
+      "docker_calls": 33,
+      "raw_worker_outputs": 33,
+      "report_sha256": "f0956824dcc53fd96c4737daf0ddd133c2a390fd98bd6fa42d5de84d6156d88b",
+      "failed_case_ids": []
+    },
+    {
+      "version": 4,
+      "seconds": 29.085551984026097,
+      "validation_passed": true,
+      "docker_calls": 33,
+      "raw_worker_outputs": 33,
+      "report_sha256": "39adbafa7884b2abd2ba58b1408a6ad9a0cdcf8ccd4ad0534ef34dfc253ed300",
+      "failed_case_ids": []
+    }
+  ],
+  "case_rows": [
+    {
+      "id": "behavior-A1",
+      "split": "train",
+      "correct_passed": true,
+      "correct_trials_passed": 16,
+      "foil_passed": false,
+      "foil_tests_passed": 0,
+      "foil_tests_total": 16,
+      "foil_entrypoint_contract_passed": null,
+      "foil_failed_fixed_trials": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "method_requirement_checked": null,
+      "fixture_sha256": "901b0fb880b012133d754679e128b1808c28dc924ee5bdd08d01d8e9bc2a19cd"
+    },
+    {
+      "id": "behavior-A2",
+      "split": "train",
+      "correct_passed": true,
+      "correct_trials_passed": 16,
+      "foil_passed": false,
+      "foil_tests_passed": 0,
+      "foil_tests_total": 16,
+      "foil_entrypoint_contract_passed": null,
+      "foil_failed_fixed_trials": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "method_requirement_checked": null,
+      "fixture_sha256": "f6fe983b5a57d5594adf105eb442732e86dcf2c4f6ec0283612fdf7492bd5f6d"
+    },
+    {
+      "id": "behavior-A3",
+      "split": "transfer",
+      "correct_passed": true,
+      "correct_trials_passed": 16,
+      "foil_passed": false,
+      "foil_tests_passed": 0,
+      "foil_tests_total": 16,
+      "foil_entrypoint_contract_passed": null,
+      "foil_failed_fixed_trials": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "method_requirement_checked": null,
+      "fixture_sha256": "d709639423cdbc1cf87ebd67b4f749f017e84c37da3f30efc3993dc6f244005d"
+    },
+    {
+      "id": "behavior-B1",
+      "split": "train",
+      "correct_passed": true,
+      "correct_trials_passed": 16,
+      "foil_passed": false,
+      "foil_tests_passed": 8,
+      "foil_tests_total": 16,
+      "foil_entrypoint_contract_passed": null,
+      "foil_failed_fixed_trials": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "method_requirement_checked": false,
+      "fixture_sha256": "3d59ae84e03cbbe609ea10f40302090e1bb145e84c2ec205f8e2989db3f8a029"
+    },
+    {
+      "id": "behavior-B2",
+      "split": "train",
+      "correct_passed": true,
+      "correct_trials_passed": 16,
+      "foil_passed": false,
+      "foil_tests_passed": 8,
+      "foil_tests_total": 16,
+      "foil_entrypoint_contract_passed": null,
+      "foil_failed_fixed_trials": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "method_requirement_checked": false,
+      "fixture_sha256": "8c4c276e9012bdc9896867722349aa15b5787c4b2e8167e7372ad5611718fc2e"
+    },
+    {
+      "id": "behavior-B3",
+      "split": "transfer",
+      "correct_passed": true,
+      "correct_trials_passed": 16,
+      "foil_passed": false,
+      "foil_tests_passed": 8,
+      "foil_tests_total": 16,
+      "foil_entrypoint_contract_passed": null,
+      "foil_failed_fixed_trials": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "method_requirement_checked": false,
+      "fixture_sha256": "543d49d5eda7b4d28f42948b53fe3e568bc45d75825ef281d0c28ad98c8e9669"
+    },
+    {
+      "id": "behavior-C1",
+      "split": "train",
+      "correct_passed": true,
+      "correct_trials_passed": 16,
+      "foil_passed": false,
+      "foil_tests_passed": null,
+      "foil_tests_total": null,
+      "foil_entrypoint_contract_passed": false,
+      "foil_failed_fixed_trials": [],
+      "method_requirement_checked": null,
+      "fixture_sha256": "f6aa801b31d06758f5e76ad4a3977b1d5f4056e21d8e7f5b94d35ac11f41ab4f"
+    },
+    {
+      "id": "behavior-C2",
+      "split": "train",
+      "correct_passed": true,
+      "correct_trials_passed": 16,
+      "foil_passed": false,
+      "foil_tests_passed": null,
+      "foil_tests_total": null,
+      "foil_entrypoint_contract_passed": false,
+      "foil_failed_fixed_trials": [],
+      "method_requirement_checked": null,
+      "fixture_sha256": "50ca80ccaf61d4223b85388d8628cce38b8fe2cdf6a26ec553ec062c8559a4ce"
+    },
+    {
+      "id": "behavior-C3",
+      "split": "transfer",
+      "correct_passed": true,
+      "correct_trials_passed": 16,
+      "foil_passed": false,
+      "foil_tests_passed": null,
+      "foil_tests_total": null,
+      "foil_entrypoint_contract_passed": false,
+      "foil_failed_fixed_trials": [],
+      "method_requirement_checked": null,
+      "fixture_sha256": "2020cce62303652742473efcadcb64b06d28c120a42be8b4c3b49a7e5ac3483e"
+    },
+    {
+      "id": "behavior-D1",
+      "split": "train",
+      "correct_passed": true,
+      "correct_trials_passed": 16,
+      "foil_passed": false,
+      "foil_tests_passed": 10,
+      "foil_tests_total": 16,
+      "foil_entrypoint_contract_passed": null,
+      "foil_failed_fixed_trials": [
+        0,
+        3,
+        5,
+        7
+      ],
+      "method_requirement_checked": null,
+      "fixture_sha256": "0350a02a9d05aac5fc09b39545d9eea52df524d13a170d0bdd76370316d3b94f"
+    },
+    {
+      "id": "behavior-D2",
+      "split": "train",
+      "correct_passed": true,
+      "correct_trials_passed": 16,
+      "foil_passed": false,
+      "foil_tests_passed": 6,
+      "foil_tests_total": 16,
+      "foil_entrypoint_contract_passed": null,
+      "foil_failed_fixed_trials": [
+        0,
+        3,
+        4,
+        5,
+        6
+      ],
+      "method_requirement_checked": null,
+      "fixture_sha256": "172cfe8de5bd45d24073a3e4d7fa792cd9b6e5aaaed4d4c015cdebd9902d9709"
+    },
+    {
+      "id": "behavior-D3",
+      "split": "transfer",
+      "correct_passed": true,
+      "correct_trials_passed": 16,
+      "foil_passed": false,
+      "foil_tests_passed": 4,
+      "foil_tests_total": 16,
+      "foil_entrypoint_contract_passed": null,
+      "foil_failed_fixed_trials": [
+        0,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "method_requirement_checked": null,
+      "fixture_sha256": "47d98e2be1b2b631f779f950a2dd5019bcd203a7fe69f9eac596b8bdb1a9cf50"
+    },
+    {
+      "id": "behavior-E1",
+      "split": "train",
+      "correct_passed": true,
+      "correct_trials_passed": 16,
+      "foil_passed": false,
+      "foil_tests_passed": 11,
+      "foil_tests_total": 16,
+      "foil_entrypoint_contract_passed": null,
+      "foil_failed_fixed_trials": [
+        0,
+        2,
+        6
+      ],
+      "method_requirement_checked": null,
+      "fixture_sha256": "ee9a3097f2c3190e1e1d3a17d06a5ad76e38348ed784dbf9786345a87216cee4"
+    },
+    {
+      "id": "behavior-E2",
+      "split": "train",
+      "correct_passed": true,
+      "correct_trials_passed": 16,
+      "foil_passed": false,
+      "foil_tests_passed": 6,
+      "foil_tests_total": 16,
+      "foil_entrypoint_contract_passed": null,
+      "foil_failed_fixed_trials": [
+        0,
+        2,
+        3,
+        6,
+        7
+      ],
+      "method_requirement_checked": null,
+      "fixture_sha256": "22f68ce545edc107a58ce64975a79bd897a51f8b4d66f10e1004009c72117af4"
+    },
+    {
+      "id": "behavior-E3",
+      "split": "transfer",
+      "correct_passed": true,
+      "correct_trials_passed": 16,
+      "foil_passed": false,
+      "foil_tests_passed": 6,
+      "foil_tests_total": 16,
+      "foil_entrypoint_contract_passed": null,
+      "foil_failed_fixed_trials": [
+        0,
+        2,
+        3,
+        6,
+        7
+      ],
+      "method_requirement_checked": null,
+      "fixture_sha256": "de518905ff3378bec0830128cf2ce76258f00b1a7f77deca594ebbee464cf58e"
+    },
+    {
+      "id": "behavior-F1",
+      "split": "train",
+      "correct_passed": true,
+      "correct_trials_passed": 16,
+      "foil_passed": false,
+      "foil_tests_passed": 14,
+      "foil_tests_total": 16,
+      "foil_entrypoint_contract_passed": null,
+      "foil_failed_fixed_trials": [
+        0,
+        4
+      ],
+      "method_requirement_checked": null,
+      "fixture_sha256": "75873177553dac51b61e438d23bf187a5e9ea71c7cc9e3df30bc2b30378bb646"
+    },
+    {
+      "id": "behavior-F2",
+      "split": "train",
+      "correct_passed": true,
+      "correct_trials_passed": 16,
+      "foil_passed": false,
+      "foil_tests_passed": 14,
+      "foil_tests_total": 16,
+      "foil_entrypoint_contract_passed": null,
+      "foil_failed_fixed_trials": [
+        0
+      ],
+      "method_requirement_checked": null,
+      "fixture_sha256": "0f8a646d4cc97ece3da5a038a19db1d66fd5bceccbcceb552855e41c947f8224"
+    },
+    {
+      "id": "behavior-F3",
+      "split": "transfer",
+      "correct_passed": true,
+      "correct_trials_passed": 16,
+      "foil_passed": false,
+      "foil_tests_passed": 12,
+      "foil_tests_total": 16,
+      "foil_entrypoint_contract_passed": null,
+      "foil_failed_fixed_trials": [
+        0,
+        4
+      ],
+      "method_requirement_checked": null,
+      "fixture_sha256": "fb8174401799bf7ca8d2826b174d4c19ec4233e66181d29e1ace72e606551cc4"
+    }
+  ],
+  "correct_trials_passed": 288,
+  "correct_trials_total": 288,
+  "foil_numeric_trials": 240,
+  "foil_contract_rejections": 3,
+  "model_calls": 0,
+  "scope": "Authored source-owned pre-model validation; transfer not generated.",
+  "known_prevalidation_failure": "First Ruff check found37 E701/E702 formatting diagnostics; formatter fixed syntax layout without a model/container call."
+}

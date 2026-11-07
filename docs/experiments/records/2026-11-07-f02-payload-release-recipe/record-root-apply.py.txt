@@ -1,0 +1,73 @@
+"""Record one completed root apply without invoking apply or acquiring a lock."""
+from pathlib import Path
+import hashlib
+import importlib.util
+import json
+import os
+
+R=Path('/mnt/nvme/kairyu/wsp/gemma4-coding-20261104')
+B=R/'worktrees/kairyu-bench-weight-tools'
+O=R/'analysis/fresh-purpose-20261107-f02/lossless-release-apply-v1'
+D=B/'docs/experiments/records/2026-11-07-f02-payload-release-recipe'
+C=D/'root-apply-v1'
+C.mkdir(exist_ok=False)
+sha=lambda p:hashlib.sha256(p.read_bytes()).hexdigest()
+source=B/'docs/experiments/scripts/fresh-f02-payload-release-20261107.py'
+assert sha(source)=='435e01109887123db12519c100e304fa7bd4f5a71b772e6c96eedce1b130f894'
+sp=importlib.util.spec_from_file_location('release_closure_readonly',source)
+m=importlib.util.module_from_spec(sp);sp.loader.exec_module(m)
+receipt=json.loads((O/'receipt.json').read_text())
+assert sha(O/'receipt.json')=='04080a3e93263761195977decab7d9ace7f7c95817c5b4eebd00703b28e67635'
+assert receipt['status']=='completed_two_private_payloads_represented_by_archive' and receipt['postclosure'] is True
+assert receipt['operation_sha256']==sha(source) and receipt['plan_sha256']==m.PLAN_SHA
+assert receipt['released_logical_bytes']==62546338264
+assert [Path(t['path']).name for t in receipt['released']]==list(m.NAMES)
+assert len(receipt['archive_checks'])==135 and len(receipt['base_stat'])==len(receipt['candidate_stat'])==9
+marker=m.CANDIDATE/'ARCHIVED.json'
+mark=json.loads(marker.read_text())
+assert sha(marker)==receipt['final_marker_sha256']
+assert mark['state']=='archived_losslessly' and mark['not_a_saved_model'] is True
+assert mark['released']==receipt['released'] and mark['mandatory_base']==str(m.BASE) and mark['archive']==str(m.ARCHIVE)
+assert all(not os.path.lexists(m.CANDIDATE/n) for n in m.NAMES)
+plan=json.loads(m.PLAN.read_text())
+assert sha(m.PLAN)==m.PLAN_SHA and sha(m.ARCHIVE/'SHA256SUMS')==plan['archive_checksum_list_sha256']
+assert sha(m.ARCHIVE/'archive.json')==plan['archive_json_sha256']
+archive=json.loads((m.ARCHIVE/'archive.json').read_text())
+m.checkpoint_guard(archive,list(m.NAMES),True)
+assert m.mounts()==receipt['protected_containers']
+assert not Path('/proc',str(receipt['pid'])).exists()
+lockrows=[r for r in Path('/proc/locks').read_text().splitlines() if len(r.split())>4 and r.split()[4]==str(receipt['pid'])]
+assert not lockrows
+for i in range(2):
+ intent=json.loads((O/f'journal-{i}-intent.json').read_text())
+ done=json.loads((O/f'journal-{i}-released.json').read_text())
+ assert intent['target']==receipt['released'][i] and intent['previously_released']==receipt['released'][:i]
+ assert done['released']==receipt['released'][:i+1]
+copies=[]
+for p in sorted(O.iterdir()):
+ assert p.is_file() and not p.is_symlink()
+ target=C/p.name
+ with target.open('xb') as f:f.write(p.read_bytes())
+ assert sha(target)==sha(p)
+ copies.append({'path':p.name,'sha256':sha(target)})
+with (C/'ARCHIVED.json').open('xb') as f:f.write(marker.read_bytes())
+record={'status':'read_only_closure_confirmed','operation_count_reported_by_root':1,'operator_observation':'The first exec returned empty stdout. Root did not repeat apply; a separate read confirmed the completed receipt and state.','receipt_sha256':sha(O/'receipt.json'),'marker_sha256':sha(marker),'operation_sha256':sha(source),'plan_sha256':m.PLAN_SHA,'all135_archive_hashes_verified_in_completed_operation':True,'archive_index_identity_rechecked_here':True,'all135_archive_payloads_rehashed_here':False,'current_av9_nonweight7_full_stat_match':True,'current_all27_service_snapshot_match':True,'two_targets_absent':True,'four_journals_match_order_and_targets':True,'pid_absent':True,'pid_lock_rows':lockrows,'released_logical_bytes':receipt['released_logical_bytes'],'free_bytes_before':receipt['free_bytes_before'],'free_bytes_after':receipt['free_bytes_after'],'observed_free_bytes_delta':receipt['free_bytes_delta'],'elapsed_seconds':receipt['elapsed_seconds'],'copies':copies,'physical_reconstruction':False,'fresh_checkpoint_payload_hash':False,'additional_apply_or_lock_or_service_operations':0,'limits':['Historical fullhash plus current stat continuity is not a new complete checkpoint hash.','Other-UID/inaccessible open references remain the operation-reported visibility limit.','Actual logical released bytes and observed free-space delta are distinct.']}
+with (C/'closure.json').open('x') as f:json.dump(record,f,indent=2);f.write(chr(10))
+doc=B/'docs/experiments/2026-11-07-f02-payload-release-recipe.md'
+before=doc.read_bytes()
+with (C/'pre-apply-guide.md').open('xb') as f:f.write(before)
+text=before.decode()
+headline='# F02 private-payload archive recipe (2026-11-07)\n'
+assert text.startswith(headline)
+note='\nSubsequent state: root executed the exact two-file representation change once; closure is complete. Earlier preparation statements below are preserved historically. See the completion section at the end.\n'
+text=text.replace(headline,headline+note,1)
+text+='\n## Root execution completed: one apply, no retry\n\nRoot executed the pinned operation once into analysis/fresh-purpose-20261107-f02/lossless-release-apply-v1. The first exec returned empty stdout; root did not rerun it and instead read the durable receipt/state. Independent read-only closure confirmed completed_two_private_payloads_represented_by_archive and postclosure=true in **10.971487s**. The [receipt](records/2026-11-07-f02-payload-release-recipe/root-apply-v1/receipt.json) SHA is 04080a3e93263761195977decab7d9ace7f7c95817c5b4eebd00703b28e67635.\n\nOnly the two specified private payload entries were released: **62,546,338,264 logical bytes**. Free space changed from **71,021,838,336 to 133,568,122,880 bytes**; observed delta **62,546,284,544 bytes** is not substituted for the logical byte count. All four durable intent/released journals match the exact target order and final released list.\n\nBoth payload entries are absent. [ARCHIVED.json](records/2026-11-07-f02-payload-release-recipe/root-apply-v1/ARCHIVED.json), SHA 8eaa2f057f10d23782b9139a29c725e3af15df4e4c60116d0776f86ac17f2ac4, states archived_losslessly and not_a_saved_model=true and pins the mandatory AV/archive, original nine-file hashes and reconstruction instructions. The complete operation verified all135 archive files and retained AV9/nonweight7/all27 containers. The independent closure read rechecked current AV9/nonweight7 full stats, archive identity/checksum-list hashes, all27 safe service snapshots, marker and journals, and PID953739 absence/no locks. It did not repeat all135 archive content hashes, rehash checkpoint payloads, physically reconstruct the candidate, acquire a lock or operate a service. F03 work is outside this closure.\n\n[Closure evidence](records/2026-11-07-f02-payload-release-recipe/root-apply-v1/closure.json), all original operation receipts, the previous guide bytes and [the read-only recording source](records/2026-11-07-f02-payload-release-recipe/record-root-apply.py.txt) are retained. All trial results/specs/manifests and the seven F02 nonweight files remain. The representation change does not alter official scores or adoption decisions.\n'
+doc.write_text(text)
+old=D/'SHA256SUMS'
+previous=D/'SHA256SUMS.before-root-closure'
+assert not previous.exists()
+old.rename(previous)
+with old.open('x') as f:
+ for p in sorted(D.rglob('*')):
+  if p.is_file() and p!=old:f.write(sha(p)+'  '+str(p.relative_to(D))+chr(10))
+print(json.dumps({'doc_sha256':sha(doc),'closure_sha256':sha(C/'closure.json'),'records_manifest_sha256':sha(old),'status':record['status']}))

@@ -1,0 +1,222 @@
+{
+  "checkpoint": {
+    "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/checkpoints/fresh-native-relative-f04-faststore-v1/checkpoint",
+    "files": [
+      {
+        "path": "chat_template.jinja",
+        "size": 18683,
+        "sha256": null,
+        "stat": {
+          "device": 2306,
+          "inode": 182193236,
+          "mtime_ns": 1794050350349847250,
+          "ctime_ns": 1794050350349847250
+        }
+      },
+      {
+        "path": "config.json",
+        "size": 4621,
+        "sha256": null,
+        "stat": {
+          "device": 2306,
+          "inode": 182193237,
+          "mtime_ns": 1794050350349847250,
+          "ctime_ns": 1794050350349847250
+        }
+      },
+      {
+        "path": "generation_config.json",
+        "size": 208,
+        "sha256": null,
+        "stat": {
+          "device": 2306,
+          "inode": 182193238,
+          "mtime_ns": 1794050350350847215,
+          "ctime_ns": 1794050350350847215
+        }
+      },
+      {
+        "path": "model.safetensors.index.json",
+        "size": 103577,
+        "sha256": null,
+        "stat": {
+          "device": 2306,
+          "inode": 182193239,
+          "mtime_ns": 1794050350350847215,
+          "ctime_ns": 1794050350350847215
+        }
+      },
+      {
+        "path": "native.safetensors",
+        "size": 2714560,
+        "sha256": null,
+        "stat": {
+          "device": 2306,
+          "inode": 182193240,
+          "mtime_ns": 1794050350572839477,
+          "ctime_ns": 1794050350572839477
+        }
+      },
+      {
+        "path": "processor_config.json",
+        "size": 1689,
+        "sha256": null,
+        "stat": {
+          "device": 2306,
+          "inode": 182193241,
+          "mtime_ns": 1794050350361846832,
+          "ctime_ns": 1794050350361846832
+        }
+      },
+      {
+        "path": "shared.safetensors",
+        "size": 62543620336,
+        "sha256": null,
+        "stat": {
+          "device": 2306,
+          "inode": 182192842,
+          "mtime_ns": 1794050230365028683,
+          "ctime_ns": 1794050243644565979
+        }
+      },
+      {
+        "path": "tokenizer.json",
+        "size": 32169626,
+        "sha256": null,
+        "stat": {
+          "device": 2306,
+          "inode": 182193242,
+          "mtime_ns": 1794050350405845298,
+          "ctime_ns": 1794050350405845298
+        }
+      },
+      {
+        "path": "tokenizer_config.json",
+        "size": 3082,
+        "sha256": null,
+        "stat": {
+          "device": 2306,
+          "inode": 182193243,
+          "mtime_ns": 1794050350569839582,
+          "ctime_ns": 1794050350569839582
+        }
+      }
+    ],
+    "sha256": null,
+    "hash_files": false,
+    "identity_level": "stat_only",
+    "input_scope": "indexed_checkpoint",
+    "complete_model_claimed": false,
+    "configuration_names_considered": [
+      "config.json",
+      "generation_config.json",
+      "tokenizer_config.json",
+      "tokenizer.json",
+      "special_tokens_map.json",
+      "chat_template.jinja",
+      "processor_config.json",
+      "preprocessor_config.json",
+      "tokenizer.model",
+      "spiece.model",
+      "vocab.json",
+      "merges.txt",
+      "added_tokens.json"
+    ],
+    "scope": "all referenced shards, index, and recognized configuration/tokenizer files",
+    "source_stable": true
+  },
+  "full_tree_rehashed_here": false,
+  "attestation_receipt_sha256": "0603eda94113c56f5e574666af62d2e4213ed71376d1e6e0a4323ec877220b12",
+  "input_sha256": {
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-behavior19-inputs-v1/train-cases.json": "74e1cd2000fda0abdc03f4454b18f4231b9891360af266391744e13976f199f1",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-av-behavior12-native-gpu4-v2/source/scripts/experiments/gemma4-purpose/native.py": "c9b294242d6e1c8c2786b1f4264dfcaf6d1c8927d576e815c53c96fca51ec108",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-av-behavior12-native-gpu4-v2/source/scripts/experiments/gemma4-purpose/recipe_common.py": "fddbca286f3423e5e4a0bb046663600967f2060d0e055558d1c8659fcd89f35e",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-av-behavior12-native-gpu4-v2/source/src/kairyu_bench/wsp/weights/finite_replay.py": "71c424bffac775ba112e709632df0a37351a79c3121827be7c9844f321c7c4d3",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f04-dev30-dp4-v1/http-trace/capture.json": "0603eda94113c56f5e574666af62d2e4213ed71376d1e6e0a4323ec877220b12",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-av-behavior12-native-gpu4-v2/source/scripts/experiments/gemma4-purpose/objective_variants.py": "f1faa1993b0e138de1599e3057db7eb35fcdd375a43d4a8c85db526eaf6462a6"
+  },
+  "input_stat": {
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-behavior19-inputs-v1/train-cases.json": {
+      "device": 2306,
+      "inode": 181574596,
+      "size": 17423,
+      "mtime_ns": 1794054146522744581,
+      "ctime_ns": 1794054146522744581
+    },
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-av-behavior12-native-gpu4-v2/source/scripts/experiments/gemma4-purpose/native.py": {
+      "device": 2306,
+      "inode": 182191705,
+      "size": 17930,
+      "mtime_ns": 1794040518258759898,
+      "ctime_ns": 1794041027145203143
+    },
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-av-behavior12-native-gpu4-v2/source/scripts/experiments/gemma4-purpose/recipe_common.py": {
+      "device": 2306,
+      "inode": 182191707,
+      "size": 17709,
+      "mtime_ns": 1794040518258759898,
+      "ctime_ns": 1794041027145203143
+    },
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-av-behavior12-native-gpu4-v2/source/src/kairyu_bench/wsp/weights/finite_replay.py": {
+      "device": 2306,
+      "inode": 182191781,
+      "size": 42890,
+      "mtime_ns": 1794017934613500754,
+      "ctime_ns": 1794041027150202971
+    },
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f04-dev30-dp4-v1/http-trace/capture.json": {
+      "device": 2306,
+      "inode": 182193555,
+      "size": 4997,
+      "mtime_ns": 1794051599470579120,
+      "ctime_ns": 1794051599470579120
+    },
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-av-behavior12-native-gpu4-v2/source/scripts/experiments/gemma4-purpose/objective_variants.py": {
+      "device": 2306,
+      "inode": 182191706,
+      "size": 6128,
+      "mtime_ns": 1794040518259759864,
+      "ctime_ns": 1794041027145203143
+    }
+  },
+  "calibration_scope": "Explicit caller cases only; no evaluation dataset/result lookup or independent holdout claim",
+  "mode": "chat-public-answer",
+  "device": "cuda:0",
+  "threads": 4,
+  "seed": 0,
+  "max_cases_per_microbatch": 1,
+  "purposes": 10,
+  "folds": 19,
+  "cases": 19,
+  "model_forwards": "explicitly_requested",
+  "new_checkpoints": 0,
+  "wsp_calls": 0,
+  "observation_policy": {
+    "max_frame_tokens": 1024,
+    "execution_order": "longest_frame_first",
+    "attention_dispatch": {
+      "": "eager",
+      "text_config": "sdpa",
+      "vision_config": "eager",
+      "audio_config": "eager"
+    },
+    "cuda_memory_cap_gib": 88.0,
+    "answer_batching": "serial",
+    "max_cases_per_microbatch": 1
+  },
+  "objective_kind": "correct-logprob",
+  "objective_forward_layout": "one case/answer per forward and immediate VJP; original paired-pack token padding width; good-minus-foil or good-only; FP32 answer-gradient accumulation",
+  "objective_units": "mean correct-answer token log probability (maximize)",
+  "virtual_unit_gains": false,
+  "answer_batching": "serial",
+  "native_saved_activation_storage": {
+    "mode": "cpu-fp32",
+    "source_device": "cuda",
+    "dtype": "torch.float32",
+    "minimum_ndim": 2,
+    "nonleaf_only": true,
+    "copy": "blocking_preserve_dtype",
+    "scope": "one answer forward and immediate VJP",
+    "automatic_fallback": false
+  }
+}

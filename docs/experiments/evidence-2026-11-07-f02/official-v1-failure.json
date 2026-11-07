@@ -1,0 +1,8 @@
+{
+  "status": "analysis_failed_before_comparison",
+  "error": "KeyError: operation",
+  "cause": "Client trace also contains item lifecycle rows; first analyzer did not filter request scope.",
+  "source_sha256": "ab2549c664d764fc78de531bccafc6dcf4e40db4228de876232621a7de5e3e37",
+  "model_run_changed": false,
+  "rerun_model": false
+}

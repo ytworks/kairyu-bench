@@ -1,0 +1,9 @@
+{
+  "original": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f04-relative-v1/solve-execution.json",
+  "original_sha256": "2cbfc03e941f121ea1e838b3271837a5b1116ee41947ae197bfca7f1068d2d7a",
+  "compatible_name": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f04-relative-v1/solver-execution.json",
+  "compatible_sha256": "2cbfc03e941f121ea1e838b3271837a5b1116ee41947ae197bfca7f1068d2d7a",
+  "exact_bytes": true,
+  "reason": "Existing static audit expects solver-execution.json; F04 originally used solve-execution.json",
+  "solver_reexecuted": false
+}

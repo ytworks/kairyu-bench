@@ -70,7 +70,7 @@ class DeepSWESettings:
 
     @classmethod
     def from_env(cls, env: Mapping[str, str]) -> "DeepSWESettings":
-        workers = _integer(env, "WORKERS", 4, 1, 16)
+        workers = _integer(env, "WORKERS", 4, 1, 32)
         attempts = _integer(env, "ATTEMPTS", 1, 1, 4)
         if attempts not in {1, 4}:
             raise ValueError("KAIRYU_BENCH_DEEPSWE_ATTEMPTS must be 1 or 4")

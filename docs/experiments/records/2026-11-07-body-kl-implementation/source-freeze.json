@@ -1,0 +1,9 @@
+{
+  "trainer_final_sha256": "c9406e597d015ec4f3cf1d626b0208d26fd6de7d673c6efca580af7001756374",
+  "helper_sha256": "ca06473df9d80ea0aec0d7d4c6fcc26db175798a16fe10d837b4b40a7a08d444",
+  "default_function_AST_preserved": true,
+  "post_numeric_test_change": "opt-in log removes misleading answer_EOS_tokens; body_target_tokens already present; math and token helper unchanged",
+  "final_ruff_returncode": 0,
+  "source_changes_complete": true,
+  "GPU_training_validated": false
+}

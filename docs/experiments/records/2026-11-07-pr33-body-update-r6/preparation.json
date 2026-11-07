@@ -1,0 +1,32 @@
+{
+  "schema_version": 1,
+  "status": "prepared_not_patched",
+  "repository": "ytworks/kairyu-bench",
+  "pull_request": 33,
+  "url": "https://github.com/ytworks/kairyu-bench/pull/33",
+  "head_branch": "codex/weight-observation-tools",
+  "existing_updated_at": "2026-11-07T07:49:40Z",
+  "expected_existing_body_sha256": "af84bfae62699ac2d2b4a6d141726c2e2a145ee64e5e1366e67996720a4da7e1",
+  "proposed_body_sha256": "696f6188ccfe324e6645c521112ea1a0073f616db1c6f82be58ef0a5af1e9d3b",
+  "update_json_sha256": "16c0bcbad355fec4d00c7176fda24a18234f064661bd3b197b2d03567dea7914",
+  "existing_bytes": 10865,
+  "proposed_bytes": 13476,
+  "added_bytes": 2611,
+  "preservation": "All prior body content retained; only CPU suite label changed to Earlier CPU suite to avoid confusing old and latest validation. No title change.",
+  "pre_apply_checks": [
+    "Push the linked source/evidence files first.",
+    "Fetch the current PR body and confirm its SHA still equals expected_existing_body_sha256; if the body changed, merge the additions instead of overwriting it.",
+    "Apply update.json only after root review/instruction."
+  ],
+  "patch_performed": false,
+  "commit_or_push_performed": false,
+  "prepared_patch_argv": [
+    "gh",
+    "api",
+    "--method",
+    "PATCH",
+    "repos/ytworks/kairyu-bench/pulls/33",
+    "--input",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-pr33-body-update-r6-v1/update.json"
+  ]
+}

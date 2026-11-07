@@ -1,0 +1,836 @@
+{
+  "plan": {
+    "schema_version": 1,
+    "status": "preview_unapproved",
+    "approved_for_execution": false,
+    "authorization": null,
+    "created_epoch": 1794036791.6873722,
+    "run_id": "fresh-purpose-20261107-av-authored120-native-v1",
+    "cwd": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/worktrees/kairyu-bench-weight-tools",
+    "python": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/infra/weight-tools-ci/bin/python",
+    "python_version": "Python 3.12.13",
+    "generator": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/worktrees/kairyu-bench-weight-tools/scripts/experiments/gemma4-purpose/science_generate.py",
+    "owner": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/worktrees/kairyu-bench-weight-tools/docs/experiments/scripts/fresh-av-authored120-20261107.py",
+    "owner_sha256": "7cc455a29250f04819bc287397d45b594be742c2f7ff69cfaefb5a81024080d1",
+    "owner_output": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-av-authored120-native-v1/owner",
+    "global_lock": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/candidate-evaluation.lock",
+    "network": "gemma-4-31b-8gpu_default",
+    "serving": {
+      "model": "gemma-4-31b",
+      "checkpoint": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/checkpoints/code90-current-ad-helper-av-v1",
+      "tree_sha256": "5d056eb03f954db80313a85167153c875fe5e436e4f97c281a3f55202d9b3eaf",
+      "replicas": 4,
+      "tp_size": 2,
+      "mtp_tokens": 4,
+      "dtype": "native BF16",
+      "ordinary_only": true,
+      "service_cids": {
+        "gemma-0": "baf23e529c4e217801633d0c62b04801e3991b24f6267274104f9d3e355e62c3",
+        "gemma-1": "ce1a67f4ec204a90e486092534e3f700f3abf2fbc9f1e68f87668009104ee00d",
+        "gemma-2": "fd4ec2eb9d7deba2ce3e790add6b50c0ee79a6390495320d8697873b32957bcf",
+        "gemma-3": "e8ec9f3bbfca4baa44b16590ee771a96bba1e1328a60ff0c904995f2675a31b5"
+      },
+      "gateway": "gemma-4-31b-8gpu-kairyu-1",
+      "closures": [
+        {
+          "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-av-dev30-deployment-plan-v1/gemma-0-closure-v1.json",
+          "sha256": "cfc339e7beceb357c07a125df0a043560a20cef2294cfdd876a1cffd7172bcd7"
+        },
+        {
+          "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-av-dev30-deployment-plan-v1/gemma-1-closure-v1.json",
+          "sha256": "e9dfc418cc404194730db14eec021f3a61b22c06f4f0416e268c36267424f7aa"
+        },
+        {
+          "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-av-dev30-deployment-plan-v1/gemma-2-closure-v1.json",
+          "sha256": "b8842587448a8c692f80f422c48135795579829c62062980fda730f0b62f1f1d"
+        },
+        {
+          "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-av-dev30-deployment-plan-v1/gemma-3-closure-v1.json",
+          "sha256": "14dcfc57f6041cd3649991e32ab83f1a039d9465fb401cc49d5a889e1db5665d"
+        }
+      ],
+      "four_replica_closure": {
+        "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-av-dev30-deployment-plan-v1/four-apply-closure.json",
+        "sha256": "671fc7f0b4f7853631e7dff05e5cb9d76c4d9b95b66927d32fa0393ed2ed82ee"
+      }
+    },
+    "gateway": {
+      "cid": "88943a0985ba97dfb17be6b5fb54040eba2570b70ce05126bd410162d3658ffb",
+      "endpoint": "http://172.26.0.9:8000/v1",
+      "model_ids": [
+        "gemma-4-31b",
+        "embeddinggemma-2"
+      ],
+      "image_id": "sha256:8e6c37a16eea6f7855b2142fb75555250b676cfc3a7c5c2d9a748bfd1175001b",
+      "healthy": true,
+      "unchanged_protected_service": true
+    },
+    "checkpoint_files": [
+      {
+        "path": "chat_template.jinja",
+        "size": 18683,
+        "sha256": "ae53464bf3be25802b3a5b37def7fd89667067d7577049b3b2d74c4d8de4c6d4",
+        "stat": {
+          "device": 2306,
+          "inode": 181678464,
+          "mtime_ns": 1794014158733915132,
+          "ctime_ns": 1794014158733915132
+        }
+      },
+      {
+        "path": "config.json",
+        "size": 4621,
+        "sha256": "e967dd38bc5cfd38bd09a995a7bf4a754075df2b46aba68f7fbb5a791e6d8dd1",
+        "stat": {
+          "device": 2306,
+          "inode": 181678465,
+          "mtime_ns": 1794014158734915095,
+          "ctime_ns": 1794014158734915095
+        }
+      },
+      {
+        "path": "generation_config.json",
+        "size": 208,
+        "sha256": "d4226bbe3117d2d253ba4609720ba82c6c4ce4627a9a6ae05387c78983ac03de",
+        "stat": {
+          "device": 2306,
+          "inode": 181678466,
+          "mtime_ns": 1794014158734915095,
+          "ctime_ns": 1794014158734915095
+        }
+      },
+      {
+        "path": "model-00001-of-00002.safetensors",
+        "size": 49923154850,
+        "sha256": "0589dc8a7a3afba79fe2d8444221dae410db57ce1be33eb72d9be637d70fcf10",
+        "stat": {
+          "device": 2306,
+          "inode": 181678467,
+          "mtime_ns": 1794014260450139654,
+          "ctime_ns": 1794014260450139654
+        }
+      },
+      {
+        "path": "model-00002-of-00002.safetensors",
+        "size": 12623183414,
+        "sha256": "9be24bc9910dbbe54f3f46154189c729071fd56dc41331f4a97a6ad3e02b3b56",
+        "stat": {
+          "device": 2306,
+          "inode": 181678468,
+          "mtime_ns": 1794014261005119199,
+          "ctime_ns": 1794014261005119199
+        }
+      },
+      {
+        "path": "model.safetensors.index.json",
+        "size": 120246,
+        "sha256": "390b7f9a0a502e4526cf20862d22954c911cc318d8aba2cdb745c6fbd98264f6",
+        "stat": {
+          "device": 2306,
+          "inode": 181678469,
+          "mtime_ns": 1794014259954157935,
+          "ctime_ns": 1794014259954157935
+        }
+      },
+      {
+        "path": "processor_config.json",
+        "size": 1689,
+        "sha256": "32bdf45d2ad4cc29a0822ddd157a182de76644f0419a6228d151495256e9813c",
+        "stat": {
+          "device": 2306,
+          "inode": 181678470,
+          "mtime_ns": 1794014259954157935,
+          "ctime_ns": 1794014259954157935
+        }
+      },
+      {
+        "path": "tokenizer.json",
+        "size": 32169626,
+        "sha256": "cc8d3a0ce36466ccc1278bf987df5f71db1719b9ca6b4118264f45cb627bfe0f",
+        "stat": {
+          "device": 2306,
+          "inode": 181678471,
+          "mtime_ns": 1794014259991156571,
+          "ctime_ns": 1794014259991156571
+        }
+      },
+      {
+        "path": "tokenizer_config.json",
+        "size": 3082,
+        "sha256": "9f4fec4b1dc6ecddf8f4a92e9caea5971c0e67d81309f3f9066a2bee8c362633",
+        "stat": {
+          "device": 2306,
+          "inode": 181678472,
+          "mtime_ns": 1794014260013155760,
+          "ctime_ns": 1794014260013155760
+        }
+      }
+    ],
+    "pins": [
+      {
+        "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/worktrees/kairyu-bench-weight-tools/scripts/experiments/gemma4-purpose/science_generate.py",
+        "bytes": 9071,
+        "sha256": "8d05c960d4b8dbb3112f7fd2214df50b7b31c29c78f07ad1294f021a5fafb8af"
+      },
+      {
+        "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/infra/managed-python/cpython-3.12.13-linux-x86_64-gnu/bin/python3.12",
+        "bytes": 30979368,
+        "sha256": "7d43f6e86a6c6dd12005ec77eb2055f1be3f1bb3adedf8afe0a87973fa7371ce"
+      },
+      {
+        "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/code90-resume-20261106/long-helper-chain-curriculum-v1/train-cases.json",
+        "bytes": 148701,
+        "sha256": "bd6fcba70e93b1870ee882f6e92893b93490ad4099af7a9a290ba3d324d68951"
+      },
+      {
+        "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-authored120-generation-inputs-v1/validation.json",
+        "bytes": 23813,
+        "sha256": "4adfa914b72b98b2c52a8788b597d8a30c5b20c1b43b05b8b5a39180b3d09a12"
+      },
+      {
+        "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-av-dev30-dp4-v1/http-trace/capture.json",
+        "bytes": 5009,
+        "sha256": "8e4b57eacaeca88260281c4d39a0f347b55ed0a7f1cabcac3ff0507d1e6d9e74"
+      },
+      {
+        "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-av-dev30-dp4-v1/execution-closure.json",
+        "bytes": 1937,
+        "sha256": "adaa36a1c3a5eb233566628a6d62479c408142831d549c28ff754aab277e3b80"
+      },
+      {
+        "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-av-dev30-deployment-plan-v1/four-apply-closure.json",
+        "bytes": 5486,
+        "sha256": "671fc7f0b4f7853631e7dff05e5cb9d76c4d9b95b66927d32fa0393ed2ed82ee"
+      },
+      {
+        "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-av-dev30-deployment-plan-v1/endpoint-closure.json",
+        "bytes": 3508,
+        "sha256": "32d3850eba9b4c0d10c19d7229e526f68929620d946f2f88cf8aacbfe90c4e65"
+      },
+      {
+        "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-authored120-generation-inputs-v1/inputs/basic-train-cases.json",
+        "bytes": 17531,
+        "sha256": "ed17e06c04c8d6416168e67501b4a07e9490fa4a76d5355a746370447ba99ae4"
+      },
+      {
+        "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-authored120-generation-inputs-v1/inputs/advanced-v2-train-cases.json",
+        "bytes": 21482,
+        "sha256": "9d51dfdeaa9e61a4d989b23459c4eff8b3d5b7d7d9291de3258bd3c12921797b"
+      },
+      {
+        "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-authored120-generation-inputs-v1/inputs/library-train-v1-cases.json",
+        "bytes": 21503,
+        "sha256": "d3059d4d1c073ba372d103ace9760398341a1add1133e70e306cfefab94db6fc"
+      },
+      {
+        "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-authored120-generation-inputs-v1/inputs/uncataloged72-train-cases.json",
+        "bytes": 93781,
+        "sha256": "30606fd3b14b4c7809a488fda2bc7bdf318fead9543228b50e7617b0754ca7be"
+      }
+    ],
+    "original_ids": [
+      "guard_code_0_0",
+      "guard_code_0_1",
+      "guard_code_0_2",
+      "guard_code_0_3",
+      "guard_code_0_4",
+      "guard_code_1_0",
+      "guard_code_1_1",
+      "guard_code_1_2",
+      "guard_code_1_3",
+      "guard_code_1_4",
+      "painted_bins",
+      "advance_ticket",
+      "whole_units",
+      "call_and_close",
+      "segment_count",
+      "fetch_job",
+      "read_level",
+      "write_if_acquired",
+      "commit_only_fix",
+      "validate_before_publish",
+      "archive_only_revision",
+      "record_verified_rename",
+      "discard_only_unstaged",
+      "cleanup_and_preserve_status",
+      "requested_temperature_conversion",
+      "inventory_lookup_required",
+      "inspect_account_quota",
+      "parcel_tracking_required",
+      "missing_timer_duration",
+      "answer_from_supplied_poster",
+      "missing_meeting_time",
+      "answer_arithmetic_without_tool",
+      "preserve_false_smoothing",
+      "preserve_sample_period",
+      "preserve_label_prefix",
+      "preserve_reserved_window_filter",
+      "gate_hops",
+      "cover_span",
+      "best_schedule",
+      "best_indices",
+      "min_toll",
+      "near_pairs",
+      "voucher_count",
+      "solve_ledger",
+      "too_wide_hoop",
+      "rollable_cover",
+      "heat_protection",
+      "too_narrow_passage",
+      "loose_anchor",
+      "brittle_support",
+      "spool_checkpoint",
+      "courier_checkpoint",
+      "room_checkpoint",
+      "tool_checkpoint",
+      "permit_checkpoint",
+      "stage_checkpoint",
+      "science-weighted-moments",
+      "science-periodic-laplacian",
+      "science-ridge-intercept",
+      "science-orthogonal-residual",
+      "science-library-sparse-solve-fixed-boundary",
+      "science-library-spectral-contract-linear-convolution",
+      "science-cumulative-trapezoid",
+      "science-row-softmax",
+      "science-markov-row-state",
+      "science-weighted-density",
+      "science-library-sparse-solve-banded-factor",
+      "science-library-spectral-contract-periodic-correlation",
+      "science-sample-covariance",
+      "science-implicit-decay",
+      "science-velocity-verlet",
+      "science-piecewise-linear",
+      "science-library-symbolic-numeric-variable-order",
+      "science-library-optimizer-feasibility-simplex-equality",
+      "science-conservative-flux",
+      "science-merge-population-moments",
+      "science-segment-means",
+      "science-batched-linear-system",
+      "science-library-symbolic-numeric-chain-coordinates",
+      "science-library-optimizer-feasibility-weighted-hyperplane",
+      "science-advanced-reset-running-stats",
+      "science-advanced-capped-reservoir-chain",
+      "science-library-residual-jacobian-decay-fit",
+      "science-library-root-contract-implicit-sensitivity",
+      "science-advanced-affine-state-history",
+      "science-advanced-projected-gradient-chain",
+      "science-library-residual-jacobian-weighted-affine",
+      "science-library-root-contract-log-coordinate",
+      "science-advanced-merge-event-multiplicity",
+      "science-advanced-budget-prefix-cardinality",
+      "science-advanced-lexicographic-pair-ranking",
+      "science-advanced-weighted-lattice-cardinality",
+      "science-advanced-gaussian-pair-energy-force",
+      "science-advanced-reflecting-wall-flight",
+      "science-library-quadrature-callback-piecewise-moments",
+      "science-advanced-periodic-kick-drift",
+      "science-advanced-inelastic-two-body",
+      "science-library-quadrature-callback-domain-transform",
+      "science-advanced-injected-metropolis-chain",
+      "science-advanced-piecewise-linear-density-cdf",
+      "science-library-distribution-interface-batched-logdensity",
+      "science-advanced-categorical-without-replacement",
+      "science-advanced-log-survival-event-masses",
+      "science-library-distribution-interface-lognormal-moments",
+      "chain-whitened-fit-1",
+      "chain-quadrature-mixture-1",
+      "chain-boundary-response-1",
+      "chain-log-mixture-score-1",
+      "chain-whitened-fit-2",
+      "chain-quadrature-mixture-2",
+      "chain-boundary-response-2",
+      "chain-log-mixture-score-2",
+      "long-weighted-constraint-1",
+      "long-affine-state-history-1",
+      "long-conditional-covariance-1",
+      "long-affine-mixture-moments-1",
+      "long-weighted-constraint-2",
+      "long-affine-state-history-2",
+      "long-conditional-covariance-2",
+      "long-affine-mixture-moments-2"
+    ],
+    "batches": [
+      {
+        "name": "basic",
+        "input_partition": "basic",
+        "cases": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-authored120-generation-inputs-v1/inputs/basic-train-cases.json",
+        "cases_sha256": "ed17e06c04c8d6416168e67501b4a07e9490fa4a76d5355a746370447ba99ae4",
+        "ids": [
+          "science-weighted-moments",
+          "science-periodic-laplacian",
+          "science-ridge-intercept",
+          "science-orthogonal-residual",
+          "science-cumulative-trapezoid",
+          "science-row-softmax",
+          "science-markov-row-state",
+          "science-weighted-density",
+          "science-sample-covariance",
+          "science-implicit-decay",
+          "science-velocity-verlet",
+          "science-piecewise-linear",
+          "science-conservative-flux",
+          "science-merge-population-moments",
+          "science-segment-means",
+          "science-batched-linear-system"
+        ],
+        "output": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-av-authored120-native-v1/generations/00-basic",
+        "command": [
+          "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/infra/weight-tools-ci/bin/python",
+          "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/worktrees/kairyu-bench-weight-tools/scripts/experiments/gemma4-purpose/science_generate.py",
+          "--cases",
+          "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-authored120-generation-inputs-v1/inputs/basic-train-cases.json",
+          "--split",
+          "train",
+          "--endpoint",
+          "http://172.26.0.9:8000/v1",
+          "--model",
+          "gemma-4-31b",
+          "--checkpoint-sha256",
+          "5d056eb03f954db80313a85167153c875fe5e436e4f97c281a3f55202d9b3eaf",
+          "--output",
+          "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-av-authored120-native-v1/generations/00-basic",
+          "--concurrency",
+          "16",
+          "--max-tokens",
+          "32768",
+          "--timeout",
+          "1200",
+          "--seed",
+          "0"
+        ],
+        "executable_catalog": true,
+        "scoring_performed_by_this_owner": false
+      },
+      {
+        "name": "advanced-v2",
+        "input_partition": "advanced-v2",
+        "cases": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-authored120-generation-inputs-v1/inputs/advanced-v2-train-cases.json",
+        "cases_sha256": "9d51dfdeaa9e61a4d989b23459c4eff8b3d5b7d7d9291de3258bd3c12921797b",
+        "ids": [
+          "science-advanced-reset-running-stats",
+          "science-advanced-capped-reservoir-chain",
+          "science-advanced-affine-state-history",
+          "science-advanced-projected-gradient-chain",
+          "science-advanced-merge-event-multiplicity",
+          "science-advanced-budget-prefix-cardinality",
+          "science-advanced-lexicographic-pair-ranking",
+          "science-advanced-weighted-lattice-cardinality",
+          "science-advanced-gaussian-pair-energy-force",
+          "science-advanced-reflecting-wall-flight",
+          "science-advanced-periodic-kick-drift",
+          "science-advanced-inelastic-two-body",
+          "science-advanced-injected-metropolis-chain",
+          "science-advanced-piecewise-linear-density-cdf",
+          "science-advanced-categorical-without-replacement",
+          "science-advanced-log-survival-event-masses"
+        ],
+        "output": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-av-authored120-native-v1/generations/01-advanced-v2",
+        "command": [
+          "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/infra/weight-tools-ci/bin/python",
+          "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/worktrees/kairyu-bench-weight-tools/scripts/experiments/gemma4-purpose/science_generate.py",
+          "--cases",
+          "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-authored120-generation-inputs-v1/inputs/advanced-v2-train-cases.json",
+          "--split",
+          "train",
+          "--endpoint",
+          "http://172.26.0.9:8000/v1",
+          "--model",
+          "gemma-4-31b",
+          "--checkpoint-sha256",
+          "5d056eb03f954db80313a85167153c875fe5e436e4f97c281a3f55202d9b3eaf",
+          "--output",
+          "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-av-authored120-native-v1/generations/01-advanced-v2",
+          "--concurrency",
+          "16",
+          "--max-tokens",
+          "32768",
+          "--timeout",
+          "1200",
+          "--seed",
+          "0"
+        ],
+        "executable_catalog": true,
+        "scoring_performed_by_this_owner": false
+      },
+      {
+        "name": "library-train-v1",
+        "input_partition": "library-train-v1",
+        "cases": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-authored120-generation-inputs-v1/inputs/library-train-v1-cases.json",
+        "cases_sha256": "d3059d4d1c073ba372d103ace9760398341a1add1133e70e306cfefab94db6fc",
+        "ids": [
+          "science-library-sparse-solve-fixed-boundary",
+          "science-library-spectral-contract-linear-convolution",
+          "science-library-sparse-solve-banded-factor",
+          "science-library-spectral-contract-periodic-correlation",
+          "science-library-symbolic-numeric-variable-order",
+          "science-library-optimizer-feasibility-simplex-equality",
+          "science-library-symbolic-numeric-chain-coordinates",
+          "science-library-optimizer-feasibility-weighted-hyperplane",
+          "science-library-residual-jacobian-decay-fit",
+          "science-library-root-contract-implicit-sensitivity",
+          "science-library-residual-jacobian-weighted-affine",
+          "science-library-root-contract-log-coordinate",
+          "science-library-quadrature-callback-piecewise-moments",
+          "science-library-quadrature-callback-domain-transform",
+          "science-library-distribution-interface-batched-logdensity",
+          "science-library-distribution-interface-lognormal-moments"
+        ],
+        "output": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-av-authored120-native-v1/generations/02-library-train-v1",
+        "command": [
+          "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/infra/weight-tools-ci/bin/python",
+          "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/worktrees/kairyu-bench-weight-tools/scripts/experiments/gemma4-purpose/science_generate.py",
+          "--cases",
+          "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-authored120-generation-inputs-v1/inputs/library-train-v1-cases.json",
+          "--split",
+          "train",
+          "--endpoint",
+          "http://172.26.0.9:8000/v1",
+          "--model",
+          "gemma-4-31b",
+          "--checkpoint-sha256",
+          "5d056eb03f954db80313a85167153c875fe5e436e4f97c281a3f55202d9b3eaf",
+          "--output",
+          "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-av-authored120-native-v1/generations/02-library-train-v1",
+          "--concurrency",
+          "16",
+          "--max-tokens",
+          "32768",
+          "--timeout",
+          "1200",
+          "--seed",
+          "0"
+        ],
+        "executable_catalog": true,
+        "scoring_performed_by_this_owner": false
+      },
+      {
+        "name": "unsupported72",
+        "input_partition": "uncataloged72",
+        "cases": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-authored120-generation-inputs-v1/inputs/uncataloged72-train-cases.json",
+        "cases_sha256": "30606fd3b14b4c7809a488fda2bc7bdf318fead9543228b50e7617b0754ca7be",
+        "ids": [
+          "guard_code_0_0",
+          "guard_code_0_1",
+          "guard_code_0_2",
+          "guard_code_0_3",
+          "guard_code_0_4",
+          "guard_code_1_0",
+          "guard_code_1_1",
+          "guard_code_1_2",
+          "guard_code_1_3",
+          "guard_code_1_4",
+          "painted_bins",
+          "advance_ticket",
+          "whole_units",
+          "call_and_close",
+          "segment_count",
+          "fetch_job",
+          "read_level",
+          "write_if_acquired",
+          "commit_only_fix",
+          "validate_before_publish",
+          "archive_only_revision",
+          "record_verified_rename",
+          "discard_only_unstaged",
+          "cleanup_and_preserve_status",
+          "requested_temperature_conversion",
+          "inventory_lookup_required",
+          "inspect_account_quota",
+          "parcel_tracking_required",
+          "missing_timer_duration",
+          "answer_from_supplied_poster",
+          "missing_meeting_time",
+          "answer_arithmetic_without_tool",
+          "preserve_false_smoothing",
+          "preserve_sample_period",
+          "preserve_label_prefix",
+          "preserve_reserved_window_filter",
+          "gate_hops",
+          "cover_span",
+          "best_schedule",
+          "best_indices",
+          "min_toll",
+          "near_pairs",
+          "voucher_count",
+          "solve_ledger",
+          "too_wide_hoop",
+          "rollable_cover",
+          "heat_protection",
+          "too_narrow_passage",
+          "loose_anchor",
+          "brittle_support",
+          "spool_checkpoint",
+          "courier_checkpoint",
+          "room_checkpoint",
+          "tool_checkpoint",
+          "permit_checkpoint",
+          "stage_checkpoint",
+          "chain-whitened-fit-1",
+          "chain-quadrature-mixture-1",
+          "chain-boundary-response-1",
+          "chain-log-mixture-score-1",
+          "chain-whitened-fit-2",
+          "chain-quadrature-mixture-2",
+          "chain-boundary-response-2",
+          "chain-log-mixture-score-2",
+          "long-weighted-constraint-1",
+          "long-affine-state-history-1",
+          "long-conditional-covariance-1",
+          "long-affine-mixture-moments-1",
+          "long-weighted-constraint-2",
+          "long-affine-state-history-2",
+          "long-conditional-covariance-2",
+          "long-affine-mixture-moments-2"
+        ],
+        "output": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-av-authored120-native-v1/generations/03-unsupported72",
+        "command": [
+          "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/infra/weight-tools-ci/bin/python",
+          "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/worktrees/kairyu-bench-weight-tools/scripts/experiments/gemma4-purpose/science_generate.py",
+          "--cases",
+          "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-authored120-generation-inputs-v1/inputs/uncataloged72-train-cases.json",
+          "--split",
+          "train",
+          "--endpoint",
+          "http://172.26.0.9:8000/v1",
+          "--model",
+          "gemma-4-31b",
+          "--checkpoint-sha256",
+          "5d056eb03f954db80313a85167153c875fe5e436e4f97c281a3f55202d9b3eaf",
+          "--output",
+          "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-av-authored120-native-v1/generations/03-unsupported72",
+          "--concurrency",
+          "16",
+          "--max-tokens",
+          "32768",
+          "--timeout",
+          "1200",
+          "--seed",
+          "0"
+        ],
+        "executable_catalog": false,
+        "scoring_performed_by_this_owner": false
+      }
+    ],
+    "native_generation_config": {
+      "bos_token_id": 2,
+      "do_sample": true,
+      "eos_token_id": [
+        1,
+        106,
+        50
+      ],
+      "pad_token_id": 0,
+      "temperature": 1.0,
+      "top_k": 64,
+      "top_p": 0.95,
+      "transformers_version": "5.5.0.dev0"
+    },
+    "source_git_head_at_preparation": "fe51456db65b0f8af7297018572ff70ee2441b25",
+    "sampling": {
+      "each_case_attempts": 1,
+      "seed": 0,
+      "enable_thinking": true,
+      "temperature_override": null,
+      "top_p_override": null,
+      "max_tokens": 32768,
+      "concurrency": 16,
+      "timeout_seconds": 1200,
+      "retries": 0
+    },
+    "scope": {
+      "generation_only": true,
+      "answer_execution": false,
+      "service_changes": false,
+      "wsp_score": false,
+      "known_authored_calibration": true,
+      "unseen_claim": false,
+      "executable_catalog_cases": 48,
+      "unsupported_cases": 72,
+      "contract_question_stratum_cases": 3,
+      "unsupported_unknown_is_not_zero": true
+    },
+    "failures": {
+      "response_error": "preserve error_type, continue fixed batch and no retry",
+      "process_or_preflight_error": "retain partial outputs and unstarted IDs; no automatic restart",
+      "termination": "retain issued responses; wait for live generator process before releasing global lock; no next batch"
+    },
+    "comparison_limits": [
+      "Four fixed sequential batches; any future comparison must preserve their order and settings.",
+      "Input prompts only are sent; correct/foil reference text is not sent.",
+      "Per-case result order is completion order, joined by unique ID.",
+      "Generation success is not correctness; CPU answer execution is separately authorized later.",
+      "Native sampling with seed0 is recorded, not asserted bitwise deterministic across future runs."
+    ]
+  },
+  "plan_pin": {
+    "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-av-authored120-native-v1/launch-plan.json",
+    "bytes": 26471,
+    "sha256": "97a3da29997bc14734cb461eca6c174385f8f8180d48da8018a65c054fb20e21"
+  },
+  "generator_previews": [
+    {
+      "batch": "basic",
+      "receipt": {
+        "status": "preview",
+        "cases": 16,
+        "endpoint": "http://172.26.0.9:8000/v1",
+        "case_path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-authored120-generation-inputs-v1/inputs/basic-train-cases.json",
+        "case_stat": {
+          "dev": 2306,
+          "ino": 182190611,
+          "size": 17531,
+          "mtime_ns": 1794036576796790271,
+          "ctime_ns": 1794036576796790271
+        },
+        "cases_sha256": "ed17e06c04c8d6416168e67501b4a07e9490fa4a76d5355a746370447ba99ae4",
+        "source_sha256": "8d05c960d4b8dbb3112f7fd2214df50b7b31c29c78f07ad1294f021a5fafb8af",
+        "source_stat": {
+          "dev": 2306,
+          "ino": 181419428,
+          "size": 9071,
+          "mtime_ns": 1793934045142900055,
+          "ctime_ns": 1793934045142900055
+        },
+        "checkpoint_identity": "caller-supplied; establish serving identity separately",
+        "concurrency": 16,
+        "timeout_seconds": 1200.0,
+        "retries": 0,
+        "hidden_reasoning_saved": false,
+        "answer_execution": false
+      },
+      "execution": {
+        "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-av-authored120-native-v1/generator-preview-0.json",
+        "bytes": 1063,
+        "sha256": "26b097429ea17c34c5899e9e36bfa80f9f8a6a5a915d11a26db5e7d5eda9c483"
+      }
+    },
+    {
+      "batch": "advanced-v2",
+      "receipt": {
+        "status": "preview",
+        "cases": 16,
+        "endpoint": "http://172.26.0.9:8000/v1",
+        "case_path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-authored120-generation-inputs-v1/inputs/advanced-v2-train-cases.json",
+        "case_stat": {
+          "dev": 2306,
+          "ino": 182190619,
+          "size": 21482,
+          "mtime_ns": 1794036576797790232,
+          "ctime_ns": 1794036576797790232
+        },
+        "cases_sha256": "9d51dfdeaa9e61a4d989b23459c4eff8b3d5b7d7d9291de3258bd3c12921797b",
+        "source_sha256": "8d05c960d4b8dbb3112f7fd2214df50b7b31c29c78f07ad1294f021a5fafb8af",
+        "source_stat": {
+          "dev": 2306,
+          "ino": 181419428,
+          "size": 9071,
+          "mtime_ns": 1793934045142900055,
+          "ctime_ns": 1793934045142900055
+        },
+        "checkpoint_identity": "caller-supplied; establish serving identity separately",
+        "concurrency": 16,
+        "timeout_seconds": 1200.0,
+        "retries": 0,
+        "hidden_reasoning_saved": false,
+        "answer_execution": false
+      },
+      "execution": {
+        "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-av-authored120-native-v1/generator-preview-1.json",
+        "bytes": 1076,
+        "sha256": "b56e0d7a4f203e76b58557e2a2732b72b26a64350ad0a863ef19cb2514022a92"
+      }
+    },
+    {
+      "batch": "library-train-v1",
+      "receipt": {
+        "status": "preview",
+        "cases": 16,
+        "endpoint": "http://172.26.0.9:8000/v1",
+        "case_path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-authored120-generation-inputs-v1/inputs/library-train-v1-cases.json",
+        "case_stat": {
+          "dev": 2306,
+          "ino": 182190632,
+          "size": 21503,
+          "mtime_ns": 1794036576798790193,
+          "ctime_ns": 1794036576798790193
+        },
+        "cases_sha256": "d3059d4d1c073ba372d103ace9760398341a1add1133e70e306cfefab94db6fc",
+        "source_sha256": "8d05c960d4b8dbb3112f7fd2214df50b7b31c29c78f07ad1294f021a5fafb8af",
+        "source_stat": {
+          "dev": 2306,
+          "ino": 181419428,
+          "size": 9071,
+          "mtime_ns": 1793934045142900055,
+          "ctime_ns": 1793934045142900055
+        },
+        "checkpoint_identity": "caller-supplied; establish serving identity separately",
+        "concurrency": 16,
+        "timeout_seconds": 1200.0,
+        "retries": 0,
+        "hidden_reasoning_saved": false,
+        "answer_execution": false
+      },
+      "execution": {
+        "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-av-authored120-native-v1/generator-preview-2.json",
+        "bytes": 1080,
+        "sha256": "86f28a696a8b69abe5a4b589195889f2a1459b0697e0b18e8fa32dee1c3e66b9"
+      }
+    },
+    {
+      "batch": "unsupported72",
+      "receipt": {
+        "status": "preview",
+        "cases": 72,
+        "endpoint": "http://172.26.0.9:8000/v1",
+        "case_path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-authored120-generation-inputs-v1/inputs/uncataloged72-train-cases.json",
+        "case_stat": {
+          "dev": 2306,
+          "ino": 182190826,
+          "size": 93781,
+          "mtime_ns": 1794036576800790114,
+          "ctime_ns": 1794036576800790114
+        },
+        "cases_sha256": "30606fd3b14b4c7809a488fda2bc7bdf318fead9543228b50e7617b0754ca7be",
+        "source_sha256": "8d05c960d4b8dbb3112f7fd2214df50b7b31c29c78f07ad1294f021a5fafb8af",
+        "source_stat": {
+          "dev": 2306,
+          "ino": 181419428,
+          "size": 9071,
+          "mtime_ns": 1793934045142900055,
+          "ctime_ns": 1793934045142900055
+        },
+        "checkpoint_identity": "caller-supplied; establish serving identity separately",
+        "concurrency": 16,
+        "timeout_seconds": 1200.0,
+        "retries": 0,
+        "hidden_reasoning_saved": false,
+        "answer_execution": false
+      },
+      "execution": {
+        "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-av-authored120-native-v1/generator-preview-3.json",
+        "bytes": 1080,
+        "sha256": "e5604e88c68fc863e289f8185eeb6b76f8d2ebf6fb7c672ce8b6a0204f1d7313"
+      }
+    }
+  ],
+  "owner_preview": {
+    "command": [
+      "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/infra/weight-tools-ci/bin/python",
+      "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/worktrees/kairyu-bench-weight-tools/docs/experiments/scripts/fresh-av-authored120-20261107.py",
+      "--plan",
+      "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-av-authored120-native-v1/launch-plan.json"
+    ],
+    "returncode": 0,
+    "stdout": "{\"status\": \"preview\", \"plan_sha256\": \"97a3da29997bc14734cb461eca6c174385f8f8180d48da8018a65c054fb20e21\", \"approved\": false, \"cases\": 120, \"batch_sizes\": [16, 16, 16, 72], \"generation_calls\": 0, \"network_calls\": 0, \"service_changes\": 0}\n",
+    "stderr": "",
+    "model_calls": 0
+  },
+  "owner_pin": {
+    "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/worktrees/kairyu-bench-weight-tools/docs/experiments/scripts/fresh-av-authored120-20261107.py",
+    "bytes": 8414,
+    "sha256": "7cc455a29250f04819bc287397d45b594be742c2f7ff69cfaefb5a81024080d1"
+  },
+  "model_calls": 0,
+  "service_changes": 0
+}

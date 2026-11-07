@@ -1,0 +1,49 @@
+"""Read-only evidence extraction; no generated-code execution or scoring."""
+import hashlib
+import json
+from pathlib import Path
+ROOT = Path("/mnt/nvme/kairyu/wsp/gemma4-coding-20261104")
+REPO = ROOT / "worktrees/kairyu-bench-weight-tools"
+OUT = REPO / "docs/experiments/records/2026-11-07-f03-code-delta/facts.json"
+IDS = {"humaneval-plus:HumanEval/152", "livecodebench:3777", "livecodebench:abc395_f", "mbpp-plus:Mbpp/801", "scicode:72"}
+def sha(data):
+    return hashlib.sha256(data).hexdigest()
+facts = {
+    "method": "Saved public content/verdicts only; no reasoning, gold, model calls, generated-code execution or rescoring.",
+    "prior_reader_failure": "Loose substring filter selected unrelated public rows, then KeyError samples at non-chat row; read-only, no scoring. Corrected exact-ID reader follows.",
+    "prior_packaging_failure": "One orchestration JS parse error before SSH; no remote execution or mutation.",
+    "responses": {},
+}
+for label, run in [("AV", "gemma4-fresh-av-dev30-dp4-20261107-v1"), ("F03", "gemma4-fresh-f03-dev30-dp4-20261107-v1")]:
+    path = ROOT / "results" / run / "responses.jsonl"
+    rows = []
+    with path.open("rb") as handle:
+        for number, raw in enumerate(handle, 1):
+            row = json.loads(raw)
+            if row["id"] not in IDS:
+                continue
+            sample = row["outcome"]["samples"][0]
+            pointer = "outcome.samples[0].content"
+            if row["id"] == "scicode:72":
+                assert len(sample["calls"]) == 9
+                content = sample["calls"][8]["content"]
+                pointer = "outcome.samples[0].calls[8].content"
+            else:
+                content = sample["content"]
+            rows.append({"id": row["id"], "line_number": number, "raw_jsonl_line_sha256_including_newline": sha(raw), "public_content_json_pointer": pointer, "public_content_utf8_sha256": sha(content.encode()), "public_content_bytes": len(content.encode()), "response_error": row.get("error")})
+    assert {r["id"] for r in rows} == IDS
+    facts["responses"][label] = {"path": str(path), "rows": rows}
+path = ROOT / "analysis/fresh-purpose-20261107-f03-dev30-dp4-v1/official-partial-comparison-v1/code-90-paired-items.json"
+pairs = json.loads(path.read_text())
+changed = [r for r in pairs if r["delta"] != 0]
+assert {r["id"] for r in changed} == IDS
+facts["official_scores"] = {"path": str(path), "sha256": sha(path.read_bytes()), "code_items": len(pairs), "changed": len(changed), "unchanged": len(pairs)-len(changed), "rows": [{k: r[k] for k in ["id", "base_score", "candidate_score", "delta", "base_detail", "candidate_detail"]} for r in changed], "full_run_status": "partial: terminal-bench:polyglot-c-py unknown; code90 fully scored"}
+path = ROOT / "analysis/fresh-purpose-20261107-av-dev30-dp4-v1/independent-audit-v2/public-contracts.json"
+contracts = json.loads(path.read_text())
+he = next(r for r in contracts["evalplus"] if r["id"] == "humaneval-plus:HumanEval/152")
+facts["av_sanitizer_evidence"] = {"path": str(path), "sha256": sha(path.read_bytes()), "selector": "evalplus[id=humaneval-plus:HumanEval/152]", "sanitized_sha256": he["sanitized_sha256"], "sanitized_sha256_recomputed": sha(he["sanitized_code"].encode())}
+path = ROOT / "analysis/fresh-purpose-20261107-behavior18-inputs-v1/train-cases.json"
+facts["behavior12_contracts"] = {"path": str(path), "sha256": sha(path.read_bytes())}
+facts["limitations"] = ["No hidden failing input/reference solution inspected.", "Binary verdict does not identify exact failing test or universal correctness.", "SciCode72.9 has cumulative helper source: changed stencil is not isolated causal proof.", "Five transitions do not localize abilities to weights."]
+OUT.write_text(json.dumps(facts, indent=2, ensure_ascii=False)+"\n")
+print(json.dumps({"path": str(OUT), "sha256": sha(OUT.read_bytes()), "selected_public_rows": 10, "official_changed_items": 5}))

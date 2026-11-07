@@ -1,0 +1,69 @@
+from pathlib import Path
+from collections import Counter
+import hashlib, json, subprocess, time
+R=Path('/mnt/nvme/kairyu/wsp/gemma4-coding-20261104')
+B=R/'worktrees/kairyu-bench-weight-tools'
+P=R/'analysis/fresh-purpose-20261107-av-authored48-execution-plan-v2'
+G=R/'analysis/fresh-purpose-20261107-av-authored120-native-v2'
+D=B/'docs/experiments/records/2026-11-07-authored48-execution-v2'
+def h(p): return hashlib.sha256(Path(p).read_bytes()).hexdigest()
+def save(p,d): p.write_text(json.dumps(d,ensure_ascii=False,indent=2,allow_nan=False)+'\n')
+plan=json.loads((P/'plan.json').read_text())
+receipt=json.loads((P/'execution-receipt.json').read_text())
+assert receipt['status']=='completed'
+sources={}
+for name,pin in plan['source'].items():
+    assert h(pin['path'])==pin['sha256']
+    dest=D/(name+'.txt'); assert not dest.exists(); dest.write_bytes(Path(pin['path']).read_bytes())
+    sources[name]={'sha256':h(dest),'path':str(dest.relative_to(B))}
+allrows=[]
+reports=[]
+for batch in plan['batches']:
+    path=P/'execution'/batch['catalog']/'report.json'
+    report=json.loads(path.read_text())
+    assert report['status']=='completed' and len(report['results'])==16
+    assert set(r['id'] for r in report['results'])==set(batch['expected_ids'])
+    assert h(batch['cases'])==batch['cases_sha256']
+    assert h(batch['responses'])==batch['responses_sha256']
+    for row in report['results']:
+        allrows.append(dict(row,catalog=batch['catalog'],stratum='contract-question' if row['id'] in plan['contract_issue_ids'] else 'other-catalog'))
+    dest=D/(batch['catalog']+'-report.json');dest.write_bytes(path.read_bytes())
+    reports.append({'catalog':batch['catalog'],'sha256':h(dest),'path':str(dest.relative_to(B)),
+                    **{k:report[k] for k in ['passed','failed','unknown','expected_cases']}})
+def counts(rows):
+    return {'cases':len(rows),'passed':sum(r['passed'] is True for r in rows),'failed':sum(r['passed'] is False for r in rows),'unknown':sum(r['passed'] is None for r in rows),
+            'tests_passed':sum(r.get('tests_passed',0) for r in rows),'tests_total':sum(r.get('tests_total',0) for r in rows)}
+assert len(allrows)==48
+summary={'schema_version':1,'scope':'known authored calibration; fixed48 only, no official WSP score',
+ 'plan_sha256':h(P/'plan.json'),'execution_receipt_sha256':h(P/'execution-receipt.json'),
+ 'counts':counts(allrows),'strata':{s:counts([r for r in allrows if r['stratum']==s]) for s in ['contract-question','other-catalog']},
+ 'status_counts':dict(Counter(r['status'] for r in allrows)),
+ 'seconds':receipt['seconds'],'batches':reports,'sources':sources,'all48':allrows,
+ 'outside_catalog_unscored_at_this_stage':72,'generation_calls':0,'fixture_retries':0,'service_operations':0}
+save(P/'summary.json',summary)
+(D/'summary.json').write_bytes((P/'summary.json').read_bytes())
+for name in ['plan.json','preparation.json','execution-receipt.json']:
+    (D/name).write_bytes((P/name).read_bytes())
+for batch in plan['batches']:
+    for suffix in ['preview','execution']:
+        src=P/(batch['catalog']+'-'+suffix+'.log'); (D/src.name).write_bytes(src.read_bytes())
+    src=P/'previews'/batch['catalog']/'report.json'
+    (D/(batch['catalog']+'-preview-report.json')).write_bytes(src.read_bytes())
+rows_by_id={row['id']:row for row in allrows}
+stage=[]
+for f in sorted((G/'generations').glob('*/train-responses.json')):
+    doc=json.loads(f.read_text())
+    for row in doc['responses']:
+        if row['id'] in rows_by_id:
+            status=rows_by_id[row['id']]
+            stage.append({k:status[k] for k in ['id','catalog','status','passed','stratum']})
+        else:
+            stage.append({'id':row['id'],'catalog':None,'status':'unsupported_not_scored_at_fixed48_stage','passed':None,'stratum':'outside-fixed48'})
+assert len(stage)==120 and len({r['id'] for r in stage})==120
+save(P/'all120-fixed48-stage.json',stage)
+(D/'all120-fixed48-stage.json').write_bytes((P/'all120-fixed48-stage.json').read_bytes())
+remaining=subprocess.check_output(['docker','--host','unix:///var/run/docker.sock','ps','--all','--no-trunc','--filter','label=kairyu.science-sandbox','--format','{{.ID}}'],text=True).splitlines()
+closure={'epoch':time.time(),'execution_pid_absent':not Path(f"/proc/{receipt['pid']}").exists(),'science_sandbox_label_remaining':remaining,'no_removal_operation':True,'source_hashes_unchanged':True,'all_cases_responses_hashes_unchanged':True}
+save(P/'closure.json',closure);(D/'closure.json').write_bytes((P/'closure.json').read_bytes())
+(D/'SHA256SUMS').write_text('\n'.join(h(f)+'  '+f.name for f in sorted(D.iterdir()) if f.is_file() and f.name!='SHA256SUMS')+'\n')
+print(json.dumps({'counts':summary['counts'],'strata':summary['strata'],'seconds':summary['seconds'],'summary_sha256':h(P/'summary.json'),'closure':closure,'record_files':len(list(D.iterdir()))}))

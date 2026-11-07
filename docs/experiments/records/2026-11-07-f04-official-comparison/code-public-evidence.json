@@ -1,0 +1,115 @@
+{
+  "method": "Saved public content and official diagnostics only; no reasoning, benchmark reference answer, model call or generated-code execution.",
+  "score_pairs": {
+    "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f04-dev30-dp4-v1/official-comparison-v1/code-90-paired-items.json",
+    "sha256": "cff162f07bffd11c0e1210cd50ca199fa53c13ad72ad40ee5ccea5ea8c4e1992"
+  },
+  "responses": {
+    "AV": {
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/results/gemma4-fresh-av-dev30-dp4-20261107-v1/responses.jsonl",
+      "rows": [
+        {
+          "id": "livecodebench:abc390_g",
+          "line_number": 131,
+          "raw_line_sha256_including_newline": "9eec8981fecf6c14d9e88e07443c208a7bb1db2b5fdb3c61328fcfd437566c2c",
+          "public_content_pointer": "outcome.samples[0].content",
+          "public_content_sha256": "6ec58bb1b38da274f92505b41ede4f0b2df6d9066a86d15827f00fa0fad2a4f1",
+          "public_content_bytes": 4379
+        },
+        {
+          "id": "mbpp-plus:Mbpp/801",
+          "line_number": 466,
+          "raw_line_sha256_including_newline": "a264161e19fbebf0f3fb74f7eb87e0a3b8d13154a49c051441977b635c22cdf3",
+          "public_content_pointer": "outcome.samples[0].content",
+          "public_content_sha256": "142d38239fe435c78168c58f19cc15e994cb75f892dda44438ad0ad87fdeddbe",
+          "public_content_bytes": 689
+        },
+        {
+          "id": "livecodebench:3777",
+          "line_number": 732,
+          "raw_line_sha256_including_newline": "b9954149df8ea731e6206dab51d2a1d58a404f88f1876f6ce92d60963a9354e5",
+          "public_content_pointer": "outcome.samples[0].content",
+          "public_content_sha256": "c55d112c326f224d68ac9e0f6f308cf0cd0ae4eca3bf10af487861ea003444f5",
+          "public_content_bytes": 3451
+        },
+        {
+          "id": "humaneval-plus:HumanEval/152",
+          "line_number": 778,
+          "raw_line_sha256_including_newline": "168a6aef140715586bd3541e62366753fb1755285f87b92b06bb141ec0780bd9",
+          "public_content_pointer": "outcome.samples[0].content",
+          "public_content_sha256": "64aab42ca85072a0c723680dc25b24bb554b97190246bed0ab8938be1562de13",
+          "public_content_bytes": 1636
+        },
+        {
+          "id": "humaneval-plus:HumanEval/151",
+          "line_number": 811,
+          "raw_line_sha256_including_newline": "746a701fbed788b93f567593550698b2af929754029e4853bc84b4890463ef47",
+          "public_content_pointer": "outcome.samples[0].content",
+          "public_content_sha256": "d01eaae8f131639381cfd53f44cee44bf85c73912914d0a62560a5716c64cbb9",
+          "public_content_bytes": 1263
+        },
+        {
+          "id": "mbpp-plus:Mbpp/641",
+          "line_number": 1075,
+          "raw_line_sha256_including_newline": "e131ddcd89360c0dbee7fca7a13cd81ffbcc3c335714b0c363d7e0f584b9740c",
+          "public_content_pointer": "outcome.samples[0].content",
+          "public_content_sha256": "e517679354e823c28569d3d0a17df4190e468b9cb788ae248160f97f65104298",
+          "public_content_bytes": 833
+        }
+      ]
+    },
+    "F04": {
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/results/gemma4-fresh-f04-dev30-dp4-20261107-v1/responses.jsonl",
+      "rows": [
+        {
+          "id": "livecodebench:abc390_g",
+          "line_number": 459,
+          "raw_line_sha256_including_newline": "f4d15a12f723756ac5ecfb6fe5b79824c65178c63ab6fd1377dbe2e945575dc2",
+          "public_content_pointer": "outcome.samples[0].content",
+          "public_content_sha256": "586d868d081c286a14c2e6844973420a3e50d74cf4faa74337500e38296d17bc",
+          "public_content_bytes": 3330
+        },
+        {
+          "id": "mbpp-plus:Mbpp/801",
+          "line_number": 570,
+          "raw_line_sha256_including_newline": "15a5a7cabf071c7859af45d08b9f7a34cf3f805193d23cbed6bee9ee079ca566",
+          "public_content_pointer": "outcome.samples[0].content",
+          "public_content_sha256": "dfdde74bec34f706c5a69ff8e54fba1e06ca5091dd32ce2ab72ea3a86dcdb019",
+          "public_content_bytes": 1006
+        },
+        {
+          "id": "humaneval-plus:HumanEval/152",
+          "line_number": 724,
+          "raw_line_sha256_including_newline": "7aa20e4bbeac193197f8abc3faa59fb17811a3caa9ffb851422726ecd1f25aab",
+          "public_content_pointer": "outcome.samples[0].content",
+          "public_content_sha256": "ddc0ef87cab41947973d6576e07fcf4e0eac301be8b563d9758b6dc81aa003ad",
+          "public_content_bytes": 1735
+        },
+        {
+          "id": "humaneval-plus:HumanEval/151",
+          "line_number": 753,
+          "raw_line_sha256_including_newline": "fae51610c7a73975596454f83f9865799c48a4976645ae7425b15f1cd420c9b7",
+          "public_content_pointer": "outcome.samples[0].content",
+          "public_content_sha256": "746fb65f2ab4bd0220b5abf1e8e8ad4b4361eae0faf3d5c12ca568e5d6535836",
+          "public_content_bytes": 1216
+        },
+        {
+          "id": "livecodebench:3777",
+          "line_number": 1086,
+          "raw_line_sha256_including_newline": "05bbd1a7bd47cea32a531b7a5beeaddeeef0da50ac55a604c69f871efc1dc47d",
+          "public_content_pointer": "outcome.samples[0].content",
+          "public_content_sha256": "93f8d9daf59162e7909ebf2ff37ab0fcaccbf5ddf0694ddbee65f95e43e1dad3",
+          "public_content_bytes": 4147
+        },
+        {
+          "id": "mbpp-plus:Mbpp/641",
+          "line_number": 1087,
+          "raw_line_sha256_including_newline": "e9afce901f19c0b502526f5a52c04b7f528830e027ac5282fffb5242468180c8",
+          "public_content_pointer": "outcome.samples[0].content",
+          "public_content_sha256": "f965ae270b2c3531f34e28bff6e9addac64d44b8abdb2a9c7bbe7a6854555921",
+          "public_content_bytes": 1232
+        }
+      ]
+    }
+  }
+}

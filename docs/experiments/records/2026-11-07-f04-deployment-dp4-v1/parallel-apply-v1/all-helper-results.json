@@ -1,0 +1,34 @@
+{
+  "results": [
+    {
+      "service": "gemma-0",
+      "returncode": 0,
+      "receipt_sha256": "a9f9547a4f46791f1a68a51a9fad0c211ee13d8094bd6b9ea9a98a00b1cc004e",
+      "status": "completed",
+      "seconds": 121.67430925369263
+    },
+    {
+      "service": "gemma-1",
+      "returncode": 0,
+      "receipt_sha256": "f68a7586d6e903a8cdbc18cddb37f76b978bdba189e0baa285627308b2772bf7",
+      "status": "completed",
+      "seconds": 123.28558373451233
+    },
+    {
+      "service": "gemma-2",
+      "returncode": 0,
+      "receipt_sha256": "1a1f34ac1b449f4c126cb897e4a4d6ab1ba1380491597d2989bbd4a7f718e522",
+      "status": "completed",
+      "seconds": 120.32164788246155
+    },
+    {
+      "service": "gemma-3",
+      "returncode": 0,
+      "receipt_sha256": "80d6c1b59b37e4014618579a09bb73779949277ec325c7c3f0ceb1cb45ba1bf8",
+      "status": "completed",
+      "seconds": 126.6384449005127
+    }
+  ],
+  "all_children_joined": true,
+  "interrupts": []
+}

@@ -1,0 +1,49 @@
+{
+  "status": "user_instruction_amendment",
+  "epoch": 1794047120.0535026,
+  "withdrawn_source_sha256": "4bbc3cb9afaee0811890cb566e2e37ef21dc9ef6daca0b9927f0ee93b1ca8c1b",
+  "original_source_path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/worktrees/kairyu-bench-weight-tools/docs/experiments/scripts/fresh-f03-finite-prepare-20261107.py",
+  "stored_source_path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/worktrees/kairyu-bench-weight-tools/docs/experiments/records/2026-11-07-f03-direct-wsp-amendment/withdrawn-fresh-f03-finite-prepare-20261107.py.txt",
+  "unexecuted_finite_output_absent_at_move": true,
+  "generic_finite_owner_and_historical_review_decision_unchanged": {
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/worktrees/kairyu-bench-weight-tools/docs/experiments/scripts/fresh-av-native-gpu4-20261107.py": "39707865f4cc4851290d218d0f4cb6a3fa8768a940a124a9f0ea953ee0d2c5d7",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/worktrees/kairyu-bench-weight-tools/docs/experiments/records/2026-11-07-f03-proposal-and-review/opus55-review-v1/receipt.json": "8fb53a59888143228426b23dedcb6b17f8d7392affaeae90f5bef7a3626aac58",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/worktrees/kairyu-bench-weight-tools/docs/experiments/records/2026-11-07-f03-proposal-and-review/root-finite-decision.json": "68372eac57e73c1a00ebaea9b3dd5f1999224e1ce819f52e4bb64d4515fce3bc"
+  },
+  "current_plan": "One full canonical F03 dev30 run; reuse the completed AV run under the same conditions. No baseline repeat, extra finite/proxy or transfer diagnostic.",
+  "approved_plan_path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f03-dev30-dp4-v1/launch-plan-approved.json",
+  "approved_plan_sha256": "5b36b98234658c63b460cbb6cba821812b177b7e49477cc1a2fcabb1cba6095a",
+  "previous_body_v3_sha256": "0742b416bdbdebfba1f9ec65b7300b009feb2cedc3c7cbb066c9a8d398c32b75",
+  "previous_body_v3_status": "Superseded candidate-only proposal; preserve but do not PATCH",
+  "owner_pid": 1078351,
+  "root_launch_epoch": 1794047035.9261813,
+  "evidence_copies": [
+    {
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f03-dev30-dp4-v1/compare-help-build-incident.json",
+      "stored": "compare-help-build-incident.json",
+      "sha256": "4d7301ad53c1a1107b171d487c30d4a1b027f2b27dbfce55eb08c046398a41bd"
+    },
+    {
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f03-dev30-dp4-v1/compare-help-build-incident-correction.json",
+      "stored": "compare-help-build-incident-correction.json",
+      "sha256": "0b789855a41d36ca7cedd1764310ab7314bee08186f6dd72f47644321e75b724"
+    },
+    {
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f03-dev30-dp4-v1/root-launch.json",
+      "stored": "root-launch.json",
+      "sha256": "b0ffc1ed3fcdd367c5a177066d405e44cae6091ff9ac603e5abfd6153abe8e7d"
+    },
+    {
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f03-dev30-dp4-v1/owner-start.json",
+      "stored": "owner-start.json",
+      "sha256": "daf0c7d456d23ad6cedab5f08bdf0184ceda724c5688860e37ff4a0a27782be7"
+    },
+    {
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f03-dev30-dp4-v1/launch-preflight.json",
+      "stored": "launch-preflight.json",
+      "sha256": "fe7b42826e74afed844e342f79ef2867f50c0ba9edd6425949736c0784eed6bb"
+    }
+  ],
+  "incident_correction": "The unnecessary unpinned-wrapper help build ended before the cancellation check. No signal was sent; build exit status was not retained. The fixed f91 evaluation runner was unchanged; model/service operations from that incident were zero.",
+  "additional_model_service_or_lock_operations_here": 0
+}

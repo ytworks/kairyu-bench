@@ -1,0 +1,11 @@
+from pathlib import Path
+import json,hashlib
+root=Path("/usr/local/lib/python3.12/dist-packages")
+result={}
+for name in ["transformers/models/gemma4/modeling_gemma4.py","vllm/model_executor/models/gemma4.py"]:
+ p=root/name;s=p.read_text();lines=s.splitlines();ranges=[]
+ for i,l in enumerate(lines):
+  if any(v in l for v in ["self.q_norm =","self.k_norm =","q = self.q_norm","k = self.k_norm","query_states = self.q_norm","key_states = self.k_norm","self.head_dim =","self.num_heads =","self.num_kv_heads ="]):
+   ranges.append({"first_line":max(1,i-4),"last_line":min(len(lines),i+7),"text":"\n".join(lines[max(0,i-5):i+7])})
+ result[name]={"sha256":hashlib.sha256(p.read_bytes()).hexdigest(),"bytes":p.stat().st_size,"excerpts":ranges}
+print(json.dumps(result))

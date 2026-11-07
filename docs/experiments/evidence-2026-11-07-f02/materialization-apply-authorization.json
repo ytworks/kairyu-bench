@@ -1,0 +1,18 @@
+{
+  "status": "precheck_v2_pass",
+  "authorization": "Parent explicitly approved apply and complete verify after actual Opus review and frozen post-data protocol amendment; failed finite gate remains failed.",
+  "plan_sha256": "d63108fa2969fc62714253e7d34ab1991d34f2c09ed66a6096afd0e4e4755534",
+  "freeze_envelope": {
+    "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f02/transfer-amendment-freeze.json",
+    "sha256": "344993b8b1b2e3622c581d363d2a4ccdfc28b914e7d22e8c51151f43a8fcdfc3"
+  },
+  "amendment": {
+    "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/worktrees/kairyu-bench-weight-tools/docs/experiments/2026-11-07-f02-transfer-amendment.md",
+    "sha256": "1b6df2b79abb7d4db023651df632509a49d0b35e816c40c6d342d3884691a1ae"
+  },
+  "frozen_at": "2026-11-07T05:05:22.705316+00:00",
+  "materialized_before_freeze": false,
+  "spec_sha256": "27f000e4933bdb63d29217c6312114d2b912d349a67617fe42d17d263994410b",
+  "started_epoch": 1794028069.7492635,
+  "pid": 129727
+}

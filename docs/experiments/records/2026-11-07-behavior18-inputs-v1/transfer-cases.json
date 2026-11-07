@@ -1,0 +1,48 @@
+{
+  "split": "transfer",
+  "gradient_allowed": false,
+  "cases": [
+    {
+      "id": "behavior-A3",
+      "split": "transfer",
+      "prompt": "Write Python solve(A, loads). A is(B,n,n) SPD and loads is(B,n,q); B,n,q>=1. Solve each column independently and return squared Euclidean norms of the solutions, shape(B,q). Return a float64 ndarray with the specified shape; do not mutate inputs. Include required imports and the complete final function, no prose.",
+      "correct": "import numpy as np\n\ndef solve(A, loads):\n    x=np.linalg.solve(np.asarray(A,dtype=np.float64),np.asarray(loads,dtype=np.float64))\n    return np.sum(x*x,axis=1)\n",
+      "foil": "import numpy as np\n\ndef solve(A, loads):\n    x=np.linalg.solve(np.asarray(A,dtype=np.float64),np.asarray(loads,dtype=np.float64))\n    return np.sum(x*x,axis=2)\n"
+    },
+    {
+      "id": "behavior-B3",
+      "split": "transfer",
+      "prompt": "Write Python solve(x, a, b, c). x is a 1D real array, possibly empty; a,b,c are real including0. Use SymPy then lambdify for the first and second derivatives of f(t)=a*t**3+b*t+c. Return rows[f'(x),f''(x)], shape(len(x),2). Return a float64 ndarray with the specified shape; do not mutate inputs. Include required imports and the complete final function, no prose.",
+      "correct": "import numpy as np\nimport sympy as sp\n\ndef solve(x, a, b, c):\n    t=sp.symbols('t')\n    f=a*t**3+b*t+c\n    d1,d2=sp.lambdify(t,(sp.diff(f,t),sp.diff(f,t,2)),'numpy')(x)\n    d1=np.broadcast_to(d1,x.shape)\n    d2=np.broadcast_to(d2,x.shape)\n    return np.column_stack((d1,d2)).astype(np.float64)\n",
+      "foil": "import numpy as np\nimport sympy as sp\n\ndef solve(x, a, b, c):\n    t=sp.symbols('t')\n    f=a*t**3+b*t+c\n    d1,d2=sp.lambdify(t,(sp.diff(f,t),sp.diff(f,t,2)),'numpy')(x)\n    pass\n    return np.column_stack((d1,d2)).astype(np.float64)\n"
+    },
+    {
+      "id": "behavior-C3",
+      "split": "transfer",
+      "prompt": "Write Python run_count(xs). xs is a 1D integer array. Count maximal adjacent runs of equal values and return shape(1,); the empty array has0 runs. Return a float64 ndarray with the specified shape; do not mutate inputs. Only imports and one top-level function definition with this exact name are allowed; no other top-level statements or definitions. Include required imports and the complete final function, no prose.",
+      "correct": "import numpy as np\n\ndef run_count(xs):\n    n=0 if len(xs)==0 else 1+sum(xs[i]!=xs[i-1] for i in range(1,len(xs)))\n    return np.array([n],dtype=np.float64)\n",
+      "foil": "import numpy as np\n\ndef count_runs(xs):\n    n=0 if len(xs)==0 else 1+sum(xs[i]!=xs[i-1] for i in range(1,len(xs)))\n    return np.array([n],dtype=np.float64)\n"
+    },
+    {
+      "id": "behavior-D3",
+      "split": "transfer",
+      "prompt": "Write Python solve(keys, deltas, initial). initial is(K,) account balances, keys is(N,) valid integer account indices, deltas is(N,). Apply each delta only to its key in event order. Return that account's post-event balance as(N,). Negative balances and N=0 are allowed. Return a float64 ndarray with the specified shape; do not mutate inputs. Include required imports and the complete final function, no prose.",
+      "correct": "import numpy as np\n\ndef solve(keys, deltas, initial):\n    balances=np.asarray(initial,dtype=np.float64).copy()\n    out=[]\n    for key,delta in zip(keys,deltas):\n        balances[key]=balances[key]+delta\n        out.append(balances[key])\n    return np.asarray(out,dtype=np.float64)\n",
+      "foil": "import numpy as np\n\ndef solve(keys, deltas, initial):\n    balances=np.asarray(initial,dtype=np.float64).copy()\n    out=[]\n    for key,delta in zip(keys,deltas):\n        balances[key]=initial[key]+delta\n        out.append(balances[key])\n    return np.asarray(out,dtype=np.float64)\n"
+    },
+    {
+      "id": "behavior-E3",
+      "split": "transfer",
+      "prompt": "Write Python solve(grid, queries). grid is a nonempty HxW integer array. queries is(N,2) valid coordinates in the clockwise90-degree rotated WxH grid. Without constructing the rotated grid, look up their values in the original, returning(N,). Return a float64 ndarray with the specified shape; do not mutate inputs. Include required imports and the complete final function, no prose.",
+      "correct": "import numpy as np\n\ndef solve(grid, queries):\n    h,w=grid.shape\n    return np.asarray([grid[h-1-int(c),int(r)] for r,c in queries],dtype=np.float64)\n",
+      "foil": "import numpy as np\n\ndef solve(grid, queries):\n    h,w=grid.shape\n    return np.asarray([grid[w-1-int(c),int(r)] for r,c in queries],dtype=np.float64)\n"
+    },
+    {
+      "id": "behavior-F3",
+      "split": "transfer",
+      "prompt": "Write Python solve(xs, k). xs is a 1D integer array, 0<=k<=len(xs)<=10. Select exactly k elements in original order to maximize alternating-sign sum by selection position, first positive. Return(1,); k=0 returns[0]. Return a float64 ndarray with the specified shape; do not mutate inputs. Include required imports and the complete final function, no prose.",
+      "correct": "import numpy as np\n\ndef solve(xs, k):\n    from itertools import combinations\n    best=max((sum((-1)**i*int(v) for i,v in enumerate(row)) for row in combinations(xs,k)),default=-np.inf)\n    return np.array([best],dtype=np.float64)\n",
+      "foil": "import numpy as np\n\ndef solve(xs, k):\n    from itertools import combinations\n    best=max((sum((-1)**i*int(v) for i,v in enumerate(row)) for row in combinations(xs[xs!=0],k)),default=-np.inf)\n    return np.array([best],dtype=np.float64)\n"
+    }
+  ]
+}

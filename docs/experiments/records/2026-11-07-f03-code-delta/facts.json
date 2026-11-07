@@ -1,0 +1,592 @@
+{
+  "method": "Saved public content/verdicts only; no reasoning, gold, model calls, generated-code execution or rescoring.",
+  "prior_reader_failure": "Loose substring filter selected unrelated public rows, then KeyError samples at non-chat row; read-only, no scoring. Corrected exact-ID reader follows.",
+  "prior_packaging_failure": "One orchestration JS parse error before SSH; no remote execution or mutation.",
+  "responses": {
+    "AV": {
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/results/gemma4-fresh-av-dev30-dp4-20261107-v1/responses.jsonl",
+      "rows": [
+        {
+          "id": "mbpp-plus:Mbpp/801",
+          "line_number": 466,
+          "raw_jsonl_line_sha256_including_newline": "a264161e19fbebf0f3fb74f7eb87e0a3b8d13154a49c051441977b635c22cdf3",
+          "public_content_json_pointer": "outcome.samples[0].content",
+          "public_content_utf8_sha256": "142d38239fe435c78168c58f19cc15e994cb75f892dda44438ad0ad87fdeddbe",
+          "public_content_bytes": 689,
+          "response_error": null
+        },
+        {
+          "id": "livecodebench:abc395_f",
+          "line_number": 478,
+          "raw_jsonl_line_sha256_including_newline": "a8a2003e566e769901f8a4f71db49d5c8a653179fee968d6acb69dce3c968fca",
+          "public_content_json_pointer": "outcome.samples[0].content",
+          "public_content_utf8_sha256": "f45a415e3ea9ce3b42931d6f7aa0581c5a3e58538b55d3ade11797f188e5d7b6",
+          "public_content_bytes": 3027,
+          "response_error": null
+        },
+        {
+          "id": "livecodebench:3777",
+          "line_number": 732,
+          "raw_jsonl_line_sha256_including_newline": "b9954149df8ea731e6206dab51d2a1d58a404f88f1876f6ce92d60963a9354e5",
+          "public_content_json_pointer": "outcome.samples[0].content",
+          "public_content_utf8_sha256": "c55d112c326f224d68ac9e0f6f308cf0cd0ae4eca3bf10af487861ea003444f5",
+          "public_content_bytes": 3451,
+          "response_error": null
+        },
+        {
+          "id": "humaneval-plus:HumanEval/152",
+          "line_number": 778,
+          "raw_jsonl_line_sha256_including_newline": "168a6aef140715586bd3541e62366753fb1755285f87b92b06bb141ec0780bd9",
+          "public_content_json_pointer": "outcome.samples[0].content",
+          "public_content_utf8_sha256": "64aab42ca85072a0c723680dc25b24bb554b97190246bed0ab8938be1562de13",
+          "public_content_bytes": 1636,
+          "response_error": null
+        },
+        {
+          "id": "scicode:72",
+          "line_number": 2322,
+          "raw_jsonl_line_sha256_including_newline": "d752666fae3331a4e7abf2d5490121df96aa6c17abd877e36a5aa3adf95e5087",
+          "public_content_json_pointer": "outcome.samples[0].calls[8].content",
+          "public_content_utf8_sha256": "ab541882429d9efa711329c66a687b72838f747785904d0460420391fca7d5d5",
+          "public_content_bytes": 1840,
+          "response_error": null
+        }
+      ]
+    },
+    "F03": {
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/results/gemma4-fresh-f03-dev30-dp4-20261107-v1/responses.jsonl",
+      "rows": [
+        {
+          "id": "livecodebench:3777",
+          "line_number": 201,
+          "raw_jsonl_line_sha256_including_newline": "975fcc8192b3f11ba248991704efab1c4337318f9d7f72bfc73613dea70a2ce4",
+          "public_content_json_pointer": "outcome.samples[0].content",
+          "public_content_utf8_sha256": "01f12881eb50d7856cec13c6fb6bfb1eb45f09275c4f32cc01c7c67c0e375d89",
+          "public_content_bytes": 4281,
+          "response_error": null
+        },
+        {
+          "id": "livecodebench:abc395_f",
+          "line_number": 235,
+          "raw_jsonl_line_sha256_including_newline": "33732396f772e4f1acf1659307a76a918d3fd8a33abbcb9dfe1053992746825c",
+          "public_content_json_pointer": "outcome.samples[0].content",
+          "public_content_utf8_sha256": "9759fd1465b183d015353b825a23ead5293a35e2d2fce196d9eec01bd270df7d",
+          "public_content_bytes": 2395,
+          "response_error": null
+        },
+        {
+          "id": "mbpp-plus:Mbpp/801",
+          "line_number": 448,
+          "raw_jsonl_line_sha256_including_newline": "422a65693a94045342c024c262eb51fc4413be727989470cb5d312d4a01db35f",
+          "public_content_json_pointer": "outcome.samples[0].content",
+          "public_content_utf8_sha256": "4ff30b843bf01370b2329033f1488e56cfe0074ada2bd32e8fad8ee8b2333cc8",
+          "public_content_bytes": 656,
+          "response_error": null
+        },
+        {
+          "id": "humaneval-plus:HumanEval/152",
+          "line_number": 616,
+          "raw_jsonl_line_sha256_including_newline": "c4a9360a844db332f0be49170f5a78451f1004322189ba15377d29337b85cc98",
+          "public_content_json_pointer": "outcome.samples[0].content",
+          "public_content_utf8_sha256": "40357af0538f65c9d4bb0194be6fff8c14b68751e28ef5cc084b9492a4acfd73",
+          "public_content_bytes": 1270,
+          "response_error": null
+        },
+        {
+          "id": "scicode:72",
+          "line_number": 2324,
+          "raw_jsonl_line_sha256_including_newline": "6d977f6aa81e08606875b4f1827a6147e0592ace39d94cb9a56e9437514c72b1",
+          "public_content_json_pointer": "outcome.samples[0].calls[8].content",
+          "public_content_utf8_sha256": "1407e2394669c5728711248ee0629173c44ac87c0448d66755bccca4033bd858",
+          "public_content_bytes": 1843,
+          "response_error": null
+        }
+      ]
+    }
+  },
+  "official_scores": {
+    "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f03-dev30-dp4-v1/official-partial-comparison-v1/code-90-paired-items.json",
+    "sha256": "4c2257c924feff28a9204f424802954203f129d630b64495f50f97357a63c9e8",
+    "code_items": 90,
+    "changed": 5,
+    "unchanged": 85,
+    "rows": [
+      {
+        "id": "humaneval-plus:HumanEval/152",
+        "base_score": 0.0,
+        "candidate_score": 1.0,
+        "delta": 1.0,
+        "base_detail": {
+          "samples": [
+            {
+              "base": "fail",
+              "plus": "fail",
+              "passed": false
+            }
+          ]
+        },
+        "candidate_detail": {
+          "samples": [
+            {
+              "base": "pass",
+              "plus": "pass",
+              "passed": true
+            }
+          ]
+        }
+      },
+      {
+        "id": "livecodebench:3777",
+        "base_score": 0.0,
+        "candidate_score": 1.0,
+        "delta": 1.0,
+        "base_detail": {
+          "samples": [
+            {
+              "passed": false
+            }
+          ]
+        },
+        "candidate_detail": {
+          "samples": [
+            {
+              "passed": true
+            }
+          ]
+        }
+      },
+      {
+        "id": "livecodebench:abc395_f",
+        "base_score": 1.0,
+        "candidate_score": 0.0,
+        "delta": -1.0,
+        "base_detail": {
+          "samples": [
+            {
+              "passed": true
+            }
+          ]
+        },
+        "candidate_detail": {
+          "samples": [
+            {
+              "passed": false
+            }
+          ]
+        }
+      },
+      {
+        "id": "mbpp-plus:Mbpp/801",
+        "base_score": 1.0,
+        "candidate_score": 0.0,
+        "delta": -1.0,
+        "base_detail": {
+          "samples": [
+            {
+              "base": "pass",
+              "plus": "pass",
+              "passed": true
+            }
+          ]
+        },
+        "candidate_detail": {
+          "samples": [
+            {
+              "base": "fail",
+              "plus": "fail",
+              "passed": false
+            }
+          ]
+        }
+      },
+      {
+        "id": "scicode:72",
+        "base_score": 0.8888888888888888,
+        "candidate_score": 0.7777777777777778,
+        "delta": -0.11111111111111105,
+        "base_detail": {
+          "samples": [
+            {
+              "steps_passed": 8,
+              "steps_tested": 9,
+              "problem_solved": false,
+              "step_diagnostics": [
+                {
+                  "step": "72.1",
+                  "passed": true,
+                  "returncode": 0,
+                  "timed_out": false,
+                  "elapsed_seconds": 2.2414687830023468,
+                  "exception_class": null,
+                  "exception_class_origin": "stderr_allowlisted_hint",
+                  "stdout": {
+                    "bytes": 0,
+                    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+                    "representation": "utf8_of_captured_text"
+                  },
+                  "stderr": {
+                    "bytes": 0,
+                    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+                    "representation": "utf8_of_captured_text"
+                  }
+                },
+                {
+                  "step": "72.2",
+                  "passed": true,
+                  "returncode": 0,
+                  "timed_out": false,
+                  "elapsed_seconds": 2.3983632050221786,
+                  "exception_class": null,
+                  "exception_class_origin": "stderr_allowlisted_hint",
+                  "stdout": {
+                    "bytes": 0,
+                    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+                    "representation": "utf8_of_captured_text"
+                  },
+                  "stderr": {
+                    "bytes": 0,
+                    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+                    "representation": "utf8_of_captured_text"
+                  }
+                },
+                {
+                  "step": "72.3",
+                  "passed": true,
+                  "returncode": 0,
+                  "timed_out": false,
+                  "elapsed_seconds": 2.3206560839898884,
+                  "exception_class": null,
+                  "exception_class_origin": "stderr_allowlisted_hint",
+                  "stdout": {
+                    "bytes": 0,
+                    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+                    "representation": "utf8_of_captured_text"
+                  },
+                  "stderr": {
+                    "bytes": 0,
+                    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+                    "representation": "utf8_of_captured_text"
+                  }
+                },
+                {
+                  "step": "72.4",
+                  "passed": true,
+                  "returncode": 0,
+                  "timed_out": false,
+                  "elapsed_seconds": 2.353474286966957,
+                  "exception_class": null,
+                  "exception_class_origin": "stderr_allowlisted_hint",
+                  "stdout": {
+                    "bytes": 0,
+                    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+                    "representation": "utf8_of_captured_text"
+                  },
+                  "stderr": {
+                    "bytes": 0,
+                    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+                    "representation": "utf8_of_captured_text"
+                  }
+                },
+                {
+                  "step": "72.5",
+                  "passed": false,
+                  "returncode": 1,
+                  "timed_out": false,
+                  "elapsed_seconds": 2.0003950719255954,
+                  "exception_class": "AssertionError",
+                  "exception_class_origin": "stderr_allowlisted_hint",
+                  "stdout": {
+                    "bytes": 0,
+                    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+                    "representation": "utf8_of_captured_text"
+                  },
+                  "stderr": {
+                    "bytes": 290,
+                    "sha256": "4de4410386d1a2532fffead5b0fb84b7a343899b7cc55efe324111e4b22878c3",
+                    "representation": "utf8_of_captured_text"
+                  }
+                },
+                {
+                  "step": "72.6",
+                  "passed": true,
+                  "returncode": 0,
+                  "timed_out": false,
+                  "elapsed_seconds": 2.3811475120019168,
+                  "exception_class": null,
+                  "exception_class_origin": "stderr_allowlisted_hint",
+                  "stdout": {
+                    "bytes": 0,
+                    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+                    "representation": "utf8_of_captured_text"
+                  },
+                  "stderr": {
+                    "bytes": 0,
+                    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+                    "representation": "utf8_of_captured_text"
+                  }
+                },
+                {
+                  "step": "72.7",
+                  "passed": true,
+                  "returncode": 0,
+                  "timed_out": false,
+                  "elapsed_seconds": 1.8936971019720659,
+                  "exception_class": null,
+                  "exception_class_origin": "stderr_allowlisted_hint",
+                  "stdout": {
+                    "bytes": 0,
+                    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+                    "representation": "utf8_of_captured_text"
+                  },
+                  "stderr": {
+                    "bytes": 0,
+                    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+                    "representation": "utf8_of_captured_text"
+                  }
+                },
+                {
+                  "step": "72.8",
+                  "passed": true,
+                  "returncode": 0,
+                  "timed_out": false,
+                  "elapsed_seconds": 2.8629932129988447,
+                  "exception_class": null,
+                  "exception_class_origin": "stderr_allowlisted_hint",
+                  "stdout": {
+                    "bytes": 0,
+                    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+                    "representation": "utf8_of_captured_text"
+                  },
+                  "stderr": {
+                    "bytes": 0,
+                    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+                    "representation": "utf8_of_captured_text"
+                  }
+                },
+                {
+                  "step": "72.9",
+                  "passed": true,
+                  "returncode": 0,
+                  "timed_out": false,
+                  "elapsed_seconds": 70.68692372296937,
+                  "exception_class": null,
+                  "exception_class_origin": "stderr_allowlisted_hint",
+                  "stdout": {
+                    "bytes": 0,
+                    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+                    "representation": "utf8_of_captured_text"
+                  },
+                  "stderr": {
+                    "bytes": 0,
+                    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+                    "representation": "utf8_of_captured_text"
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        "candidate_detail": {
+          "samples": [
+            {
+              "steps_passed": 7,
+              "steps_tested": 9,
+              "problem_solved": false,
+              "step_diagnostics": [
+                {
+                  "step": "72.1",
+                  "passed": true,
+                  "returncode": 0,
+                  "timed_out": false,
+                  "elapsed_seconds": 2.2372833150438964,
+                  "exception_class": null,
+                  "exception_class_origin": "stderr_allowlisted_hint",
+                  "stdout": {
+                    "bytes": 0,
+                    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+                    "representation": "utf8_of_captured_text"
+                  },
+                  "stderr": {
+                    "bytes": 0,
+                    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+                    "representation": "utf8_of_captured_text"
+                  }
+                },
+                {
+                  "step": "72.2",
+                  "passed": true,
+                  "returncode": 0,
+                  "timed_out": false,
+                  "elapsed_seconds": 2.327408868004568,
+                  "exception_class": null,
+                  "exception_class_origin": "stderr_allowlisted_hint",
+                  "stdout": {
+                    "bytes": 0,
+                    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+                    "representation": "utf8_of_captured_text"
+                  },
+                  "stderr": {
+                    "bytes": 0,
+                    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+                    "representation": "utf8_of_captured_text"
+                  }
+                },
+                {
+                  "step": "72.3",
+                  "passed": true,
+                  "returncode": 0,
+                  "timed_out": false,
+                  "elapsed_seconds": 2.052493966068141,
+                  "exception_class": null,
+                  "exception_class_origin": "stderr_allowlisted_hint",
+                  "stdout": {
+                    "bytes": 0,
+                    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+                    "representation": "utf8_of_captured_text"
+                  },
+                  "stderr": {
+                    "bytes": 0,
+                    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+                    "representation": "utf8_of_captured_text"
+                  }
+                },
+                {
+                  "step": "72.4",
+                  "passed": true,
+                  "returncode": 0,
+                  "timed_out": false,
+                  "elapsed_seconds": 2.428982776007615,
+                  "exception_class": null,
+                  "exception_class_origin": "stderr_allowlisted_hint",
+                  "stdout": {
+                    "bytes": 0,
+                    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+                    "representation": "utf8_of_captured_text"
+                  },
+                  "stderr": {
+                    "bytes": 0,
+                    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+                    "representation": "utf8_of_captured_text"
+                  }
+                },
+                {
+                  "step": "72.5",
+                  "passed": false,
+                  "returncode": 1,
+                  "timed_out": false,
+                  "elapsed_seconds": 2.512387941009365,
+                  "exception_class": "AssertionError",
+                  "exception_class_origin": "stderr_allowlisted_hint",
+                  "stdout": {
+                    "bytes": 0,
+                    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+                    "representation": "utf8_of_captured_text"
+                  },
+                  "stderr": {
+                    "bytes": 290,
+                    "sha256": "e3ac66d03677e9c1a09645bf90509e01796357ed62687be206d3a20e9e2dc13f",
+                    "representation": "utf8_of_captured_text"
+                  }
+                },
+                {
+                  "step": "72.6",
+                  "passed": true,
+                  "returncode": 0,
+                  "timed_out": false,
+                  "elapsed_seconds": 2.319061691989191,
+                  "exception_class": null,
+                  "exception_class_origin": "stderr_allowlisted_hint",
+                  "stdout": {
+                    "bytes": 0,
+                    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+                    "representation": "utf8_of_captured_text"
+                  },
+                  "stderr": {
+                    "bytes": 0,
+                    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+                    "representation": "utf8_of_captured_text"
+                  }
+                },
+                {
+                  "step": "72.7",
+                  "passed": true,
+                  "returncode": 0,
+                  "timed_out": false,
+                  "elapsed_seconds": 2.3495308829005808,
+                  "exception_class": null,
+                  "exception_class_origin": "stderr_allowlisted_hint",
+                  "stdout": {
+                    "bytes": 0,
+                    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+                    "representation": "utf8_of_captured_text"
+                  },
+                  "stderr": {
+                    "bytes": 0,
+                    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+                    "representation": "utf8_of_captured_text"
+                  }
+                },
+                {
+                  "step": "72.8",
+                  "passed": true,
+                  "returncode": 0,
+                  "timed_out": false,
+                  "elapsed_seconds": 2.5576757760718465,
+                  "exception_class": null,
+                  "exception_class_origin": "stderr_allowlisted_hint",
+                  "stdout": {
+                    "bytes": 0,
+                    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+                    "representation": "utf8_of_captured_text"
+                  },
+                  "stderr": {
+                    "bytes": 0,
+                    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+                    "representation": "utf8_of_captured_text"
+                  }
+                },
+                {
+                  "step": "72.9",
+                  "passed": false,
+                  "returncode": 1,
+                  "timed_out": false,
+                  "elapsed_seconds": 2.538179575931281,
+                  "exception_class": "AssertionError",
+                  "exception_class_origin": "stderr_allowlisted_hint",
+                  "stdout": {
+                    "bytes": 0,
+                    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+                    "representation": "utf8_of_captured_text"
+                  },
+                  "stderr": {
+                    "bytes": 236,
+                    "sha256": "ea50a4cc05f12781dce3861218ed038068e2b637a336ade44bfcda0dca33e8e6",
+                    "representation": "utf8_of_captured_text"
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      }
+    ],
+    "full_run_status": "partial: terminal-bench:polyglot-c-py unknown; code90 fully scored"
+  },
+  "av_sanitizer_evidence": {
+    "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-av-dev30-dp4-v1/independent-audit-v2/public-contracts.json",
+    "sha256": "51eda8cfaadbd2531492eecaf9351314bea26b8bd2d7a874e5845e636a910346",
+    "selector": "evalplus[id=humaneval-plus:HumanEval/152]",
+    "sanitized_sha256": "e0516306c5bee1a3ea252fba96cdb2ef07d19bbc299051139912927c2399790b",
+    "sanitized_sha256_recomputed": "e0516306c5bee1a3ea252fba96cdb2ef07d19bbc299051139912927c2399790b"
+  },
+  "behavior12_contracts": {
+    "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-behavior18-inputs-v1/train-cases.json",
+    "sha256": "b42990b0caac24ccc7843e40718c0c5e7ad61dd5baa131ed6852c126bf37f66d"
+  },
+  "limitations": [
+    "No hidden failing input/reference solution inspected.",
+    "Binary verdict does not identify exact failing test or universal correctness.",
+    "SciCode72.9 has cumulative helper source: changed stencil is not isolated causal proof.",
+    "Five transitions do not localize abilities to weights."
+  ]
+}

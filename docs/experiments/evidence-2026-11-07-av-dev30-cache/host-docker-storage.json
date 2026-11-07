@@ -1,0 +1,14 @@
+{
+  "docker_root_dir": "/mnt/nvme/docker",
+  "mount": {
+    "filesystems": [
+      {
+        "target": "/mnt/nvme",
+        "source": "/dev/md2",
+        "fstype": "ext4"
+      }
+    ]
+  },
+  "tiktoken_source_program": "import inspect,tiktoken_ext.openai_public;print(inspect.getsource(tiktoken_ext.openai_public.o200k_base))",
+  "runner_tmp": "/tmp (default tempfile.gettempdir; normal wrapper does not override TMPDIR/TIKTOKEN_CACHE_DIR)"
+}

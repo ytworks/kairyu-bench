@@ -1,0 +1,204 @@
+diff --git a/docs/experiments/scripts/fresh-av-native-gpu4-20261107.py b/docs/experiments/scripts/fresh-av-native-gpu4-20261107.py
+index 00f60e7..c04ac1c 100644
+--- a/docs/experiments/scripts/fresh-av-native-gpu4-20261107.py
++++ b/docs/experiments/scripts/fresh-av-native-gpu4-20261107.py
+@@ -260,14 +260,41 @@ def command(plan, objective, plan_sha):
+     return args + [IMAGE, *payload]
+ 
+ 
++def expected_cohort(plan):
++    legacy = [(g, i, "behavior-" + g + str(i + 1)) for g in "ABCDEF" for i in range(2)]
++    if "native_cohort" not in plan:
++        return legacy
++    require(stages(plan) == OBJECTIVES, "explicit cohort is native only")
++    cohort = plan["native_cohort"]
++    require(set(cohort) == {"count", "rows"} and type(cohort["count"]) is int
++            and 1 <= cohort["count"] <= 64 and len(cohort["rows"]) == cohort["count"], "explicit bounded native cohort required")
++    rows = cohort["rows"]
++    require(all(set(r) == {"purpose", "fold", "id"} and isinstance(r["purpose"], str)
++                and r["purpose"] and type(r["fold"]) is int and r["fold"] >= 0
++                and isinstance(r["id"], str) and r["id"] for r in rows), "invalid native cohort row")
++    expected = [(r["purpose"], r["fold"], r["id"]) for r in rows]
++    require(len({r[2] for r in expected}) == len({r[:2] for r in expected}) == len(expected),
++            "duplicate native cohort ID/fold")
++    return expected
++
++
+ def validate(plan, for_run=False):
+     jobs = stages(plan)
+     require(plan["schema_version"] == 1 and plan["maximum_collection_seconds"] == 900, "fixed collection scope")
+-    require(plan["target"]["id"] == CID and plan["target"]["image"] == IMAGE, "exact target/image required")
++    require(re.fullmatch(r"[0-9a-f]{64}", plan["target"]["id"]) and plan["target"]["image"] == IMAGE, "exact target/image required")
++    if jobs == ("finite",):
++        require(plan["target"]["id"] == CID, "legacy finite target required")
+     protected_ids = {v["id"] for v in plan["protected"].values()}
+-    require(len(plan["protected"]) == len(protected_ids) == 26 and CID not in protected_ids, "other26 unique required")
++    require(len(plan["protected"]) == len(protected_ids) == 26 and plan["target"]["id"] not in protected_ids, "other26 unique required")
+     require(re.fullmatch(r"[a-z0-9][a-z0-9_.-]{1,90}", plan["container_prefix"]), "safe owned-container prefix required")
+-    require(plan["checkpoint"] == str(ROOT / "checkpoints/code90-current-ad-helper-av-v1"), "AV checkpoint required")
++    parent_tree = plan.get("checkpoint_tree_sha256", TREE)
++    checkpoint = Path(plan["checkpoint"])
++    require(checkpoint.is_absolute() and checkpoint.resolve() == checkpoint
++            and checkpoint.is_relative_to(ROOT / "checkpoints") and checkpoint.is_dir()
++            and re.fullmatch(r"[0-9a-f]{64}", parent_tree), "explicit NVMe checkpoint/tree required")
++    if jobs == ("finite",) or "checkpoint_tree_sha256" not in plan:
++        require(plan["checkpoint"] == str(ROOT / "checkpoints/code90-current-ad-helper-av-v1")
++                and parent_tree == TREE, "legacy AV checkpoint required")
+     for key in ("source_root", "output_root"):
+         path = Path(plan[key])
+         require(path.is_absolute() and path.resolve().is_relative_to(ROOT), "NVMe task path required")
+@@ -288,8 +315,10 @@ def validate(plan, for_run=False):
+     for path, expected in plan["source_pins"].items():
+         require(sha(path) == expected, "source changed: " + path)
+     att = pinned(plan["attestation"])["checkpoint"]
+-    require(att["path"] == plan["checkpoint"] and att["sha256"] == TREE and att["hash_files"] is True
+-            and att["identity_level"] == "content_sha256" and len(att["files"]) == 9, "full AV attestation required")
++    require(att["path"] == plan["checkpoint"] and att["sha256"] == parent_tree and att["hash_files"] is True
++            and att["identity_level"] == "content_sha256" and len(att["files"]) == 9, "full parent attestation required")
++    if "checkpoint_tree_sha256" in plan:
++        full_identity(att, checkpoint)
+     for row in att["files"]:
+         st = (Path(plan["checkpoint"]) / row["path"]).stat()
+         actual = dict(device=st.st_dev, inode=st.st_ino, mtime_ns=st.st_mtime_ns, ctime_ns=st.st_ctime_ns)
+@@ -298,18 +327,18 @@ def validate(plan, for_run=False):
+     require(cases.get("split", "train") == "train" and cases.get("gradient_allowed") is not False,
+             "transfer/evaluation envelope prohibited")
+     groups = cases.get("cases", cases)
+-    require(list(groups) == list("ABCDEF"), "exact six train groups required")
++    expected = expected_cohort(plan)
++    require(list(groups) == list(dict.fromkeys(row[0] for row in expected)), "exact declared train groups required")
+     folds = [(group, i, rows) for group, fs in groups.items() for i, rows in enumerate(fs)]
+-    require(len(folds) == 12 and all(len(rows) == 1 for _, _, rows in folds), "12 singleton train folds required")
+-    expected = [(g, i, "behavior-" + g + str(i + 1)) for g in "ABCDEF" for i in range(2)]
++    require(len(folds) == len(expected) and all(len(rows) == 1 for _, _, rows in folds), "declared singleton train folds required")
+     require([(g, i, rows[0]["id"]) for g, i, rows in folds] == expected
+             and all(rows[0].get("split") == "train" and rows[0].get("gradient_allowed") is not False
+-                    for _, _, rows in folds), "exact train12 IDs/row split required; transfer/duplicates prohibited")
++                    for _, _, rows in folds), "exact declared train IDs/row split required; transfer/duplicates prohibited")
+     ids = [row[2] for row in expected]
+     frames = pinned(plan["frame"])
+     observed = {(g, i, row["id"]) for g, fs in frames["frames"].items() for i, rows in enumerate(fs) for row in rows}
+     require(observed == {(g, i, rows[0]["id"]) for g, i, rows in folds}
+-            and sum(len(rows) for fs in frames["frames"].values() for rows in fs) == 12, "exact train frame join required")
++            and sum(len(rows) for fs in frames["frames"].values() for rows in fs) == len(expected), "exact train frame join required")
+     require(all(row["prefix_tokens"] + max(row["correct_tokens"], row["foil_tokens"]) <= 1024
+                 for fs in frames["frames"].values() for rows in fs for row in rows), "complete frame exceeds1024")
+     for objective in (() if jobs == ("finite",) else OBJECTIVES):
+@@ -340,8 +369,8 @@ def services(plan, guard, serving=True):
+         require(guard.snapshot(TARGET) == plan["target"], "target changed before stop")
+ 
+ 
+-def idle(guard):
+-    result = guard.target_metrics(CID)
++def idle(guard, plan):
++    result = guard.target_metrics(plan["target"]["id"])
+     require(all(v == 0 for values in result["queues"].values() for v in values), "target not idle")
+     return result
+ 
+@@ -407,14 +436,14 @@ def finish(plan, guard, process, stopped, status, plan_sha):
+     status["collector_client_finished"] = client_finished
+     if stopped and safe:
+         try:
+-            guard.docker("start", CID)
++            guard.docker("start", plan["target"]["id"])
+             deadline = time.monotonic() + 600
+             while time.monotonic() < deadline:
+                 actual = guard.snapshot(TARGET)
+                 require(all(actual[k] == v for k, v in plan["target"].items() if k not in
+                             ("started_at", "running", "health")), "restored identity differs")
+                 if actual["running"] and actual["health"] == "healthy":
+-                    status["after_queues"] = idle(guard)
++                    status["after_queues"] = idle(guard, plan)
+                     status["restored"] = True
+                     break
+                 time.sleep(2)
+@@ -446,9 +475,9 @@ def run(plan, expected_sha, plan_path):
+         status["lock_proof"] = guard.lock_owner_proof(ROOT / "candidate-evaluation.lock", os.getpid(), 1003)
+         validate(plan, for_run=True)
+         services(plan, guard)
+-        status["before_queues"] = idle(guard)
++        status["before_queues"] = idle(guard, plan)
+         require(set(guard.docker("ps", "-aq", "--no-trunc").split()) ==
+-                {CID, *(v["id"] for v in plan["protected"].values())}, "container inventory changed")
++                {plan["target"]["id"], *(v["id"] for v in plan["protected"].values())}, "container inventory changed")
+         save(out / "launch.json", status)
+         for path in (out / "work", out / "work/tmp", out / "work/cache"):
+             path.mkdir()
+@@ -459,8 +488,8 @@ def run(plan, expected_sha, plan_path):
+             signal.signal(sig, interrupted)
+         try:
+             stopped = True  # Stop may succeed even if its client is interrupted.
+-            guard.docker("stop", "--time", "90", CID)
+-            require(not guard.inspect(CID)["State"]["Running"], "target still running")
++            guard.docker("stop", "--time", "90", plan["target"]["id"])
++            require(not guard.inspect(plan["target"]["id"])["State"]["Running"], "target still running")
+             free = int(subprocess.check_output(["nvidia-smi", "-i", "4", "--query-gpu=memory.free",
+                                                 "--format=csv,noheader,nounits"], text=True).strip())
+             require(free >= 92 * 1024, "need88GiB allocator plus4GiB reserve")
+@@ -484,8 +513,8 @@ def run(plan, expected_sha, plan_path):
+                 else:
+                     summary = read(result / "summary.json")
+                     require(summary["status"] == "completed" and summary["objective_kind"] == objective
+-                            and summary["source_values_unchanged"] is True and len(summary["folds"]) == 12
+-                            and sum(v["examples"] for v in summary["folds"]) == 12, "partial collector result")
++                            and summary["source_values_unchanged"] is True and len(summary["folds"]) == len(expected_cohort(plan))
++                            and sum(v["examples"] for v in summary["folds"]) == len(expected_cohort(plan)), "partial collector result")
+                     require(summary["coverage"]["native_tensors"] == 421
+                             and summary["coverage"]["native_coordinates"] == 1331516, "native inventory differs")
+                     require(read(result / "frame-evidence.json") == pinned(plan["frame"]), "measured frame mismatch")
+diff --git a/tests/test_gemma4_native_owner.py b/tests/test_gemma4_native_owner.py
+index 2d6ae71..228ebb7 100644
+--- a/tests/test_gemma4_native_owner.py
++++ b/tests/test_gemma4_native_owner.py
+@@ -79,6 +79,36 @@ class NativeOwnerGuards(unittest.TestCase):
+                 self.assertIn(OWNER.IMAGE, cmd)
+                 self.assertEqual(cmd.count("--run"), 1)
+ 
++    def test_new_parent_and_explicit_19_case_cohort_preview_rejects_omission(self):
++        old = Path(self.plan["checkpoint"])
++        cp = old.with_name("new-parent-faststore")
++        old.rename(cp)
++        identity = OWNER.read(self.plan["attestation"]["path"])["checkpoint"]
++        identity.update(path=str(cp), source_stable=True)
++        canonical = [{k: row[k] for k in ("path", "size", "sha256")} for row in identity["files"]]
++        import hashlib
++        identity["sha256"] = hashlib.sha256(json.dumps(canonical, sort_keys=True, separators=(",", ":")).encode()).hexdigest()
++        self.plan.update(checkpoint=str(cp), checkpoint_tree_sha256=identity["sha256"])
++        self.plan["target"]["id"] = "f" * 64
++        self.plan["attestation"] = self.pin(Path(self.plan["attestation"]["path"]), dict(checkpoint=identity))
++        cases = {g: [[dict(id=f"behavior-{g}{i + 1}", split="train", prompt="p", correct="a", foil="b")]
++                      for i in range(1 if g == "J" else 2)] for g in "ABCDEFGHIJ"}
++        rows = [dict(purpose=g, fold=i, id=fold[0]["id"]) for g, folds in cases.items() for i, fold in enumerate(folds)]
++        self.plan["native_cohort"] = dict(count=19, rows=rows)
++        self.plan["cases"] = self.pin(Path(self.plan["cases"]["path"]), cases)
++        frames = {g: [[dict(id=fold[0]["id"], prefix_tokens=20, correct_tokens=4, foil_tokens=5)] for fold in folds]
++                  for g, folds in cases.items()}
++        self.plan["frame"] = self.pin(Path(self.plan["frame"]["path"]), dict(frames=frames))
++        self.plan["cpu_previews"] = {objective: self.pin(Path(self.plan["output_root"]) / (objective + "-preview.json"), dict(
++            returncode=0, model_calls=0, collector_arguments=OWNER.native_args(self.plan, objective)))
++            for objective in OWNER.OBJECTIVES}
++        with patch.object(OWNER.subprocess, "Popen", side_effect=AssertionError("no process")):
++            self.assertEqual(OWNER.validate(self.plan), [r["id"] for r in rows])
++            cases["J"].clear()
++            self.plan["cases"] = self.pin(Path(self.plan["cases"]["path"]), cases)
++            with self.assertRaisesRegex(ValueError, "singleton train folds"):
++                OWNER.validate(self.plan)
++
+     def test_unapproved_plan_rejected_before_helper_or_lock(self):
+         path = Path(self.plan["output_root"]) / "plan.json"
+         path.write_text(json.dumps(self.plan))
+@@ -149,10 +179,13 @@ class NativeOwnerGuards(unittest.TestCase):
+             target_metrics=lambda cid: dict(queues={"running": [0], "waiting": [0]})), calls
+ 
+     def test_exact_restart_and_protected_drift_reported(self):
++        # Rebinding to a new ordinary parent must never restart the old AV CID.
++        self.plan["target"]["id"] = "e" * 64
+         guard, calls = self.fake_guard(drift=True)
+         status = dict(restored=False, protected_exact=False)
+         OWNER.finish(self.plan, guard, None, True, status, "a" * 64)
+-        self.assertIn(("start", OWNER.CID), calls)
++        self.assertIn(("start", self.plan["target"]["id"]), calls)
++        self.assertNotIn(("start", OWNER.CID), calls)
+         self.assertTrue(status["restored"])
+         self.assertFalse(status["protected_exact"])
+         self.assertEqual(status["protected_error_type"], "ValueError")

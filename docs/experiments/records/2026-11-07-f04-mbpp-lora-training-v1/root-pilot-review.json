@@ -1,0 +1,17 @@
+{
+  "status": "continue",
+  "pilot_sha256": "72fde50fe4897a3b3e219a6bc7822e58972e3305641440720dd5421ed586b0c8",
+  "pilot_steps": 4,
+  "model_forwards": 16,
+  "complete_modules": 410,
+  "finite_all_gradients": true,
+  "all410_A_and_B_nonzero_step4": true,
+  "base_unchanged": true,
+  "peak_GiB": 62.52128267288208,
+  "max_relative_delta": 0.00044762569024081735,
+  "training_step_seconds": 31.228651017067023,
+  "next_step": 64,
+  "capability_claim": false,
+  "reason": "Exact parent/data, all410 calls and gradients, finite CE/gradient, stable memory and bounded continuous update. Distinct-batch CE values do not establish generalization. Continue same optimizer/model; no reload or baseline measurement.",
+  "reviewed_epoch": 1794057690.6427498
+}

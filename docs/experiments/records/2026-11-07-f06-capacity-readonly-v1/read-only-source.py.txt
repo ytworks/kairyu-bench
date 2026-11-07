@@ -1,0 +1,30 @@
+from pathlib import Path
+import os,json,collections,subprocess,time
+R=Path("/mnt/nvme/kairyu/wsp/gemma4-coding-20261104");C=R/"checkpoints"
+raw=subprocess.run(["docker","ps","-aq","--no-trunc"],capture_output=True,text=True,check=True).stdout.split()
+containers=json.loads(subprocess.run(["docker","inspect",*raw],capture_output=True,text=True,check=True).stdout)
+mounts=[dict(id=d["Id"],name=d["Name"].lstrip("/"),running=d["State"]["Running"],source=m["Source"],destination=m["Destination"],rw=m["RW"]) for d in containers for m in d["Mounts"] if m.get("Type")=="bind" and (str(C) in m["Source"] or m["Source"]==str(R))]
+inodes=collections.defaultdict(list);groups={}
+for top in C.iterdir():
+ if not top.is_dir():continue
+ rows=[]
+ for base,dirs,files in os.walk(top,followlinks=False):
+  for name in files:
+   if not name.endswith(".safetensors"):continue
+   p=Path(base)/name;st=p.stat()
+   row=dict(path=str(p),size=st.st_size,allocated=st.st_blocks*512,device=st.st_dev,inode=st.st_ino,nlink=st.st_nlink,symlink=p.is_symlink())
+   rows.append(row);inodes[(st.st_dev,st.st_ino)].append(str(p))
+ groups[top.name]=rows
+out=[]
+for name,rows in groups.items():
+ private=[r for r in rows if r["nlink"]==1 and not r["symlink"]]
+ refs=[m for m in mounts if m["source"]==str(C/name) or m["source"].startswith(str(C/name)+"/")]
+ out.append(dict(name=name,safetensors=len(rows),logical=sum(r["size"] for r in rows),private_payload_bytes=sum(r["size"] for r in private),private_allocated=sum(r["allocated"] for r in private),shared_files=sum(r["nlink"]>1 for r in rows),refs=refs,large_private=[r for r in private if r["size"]>2**30]))
+D=R/"analysis/fresh-purpose-20261107-f06-capacity-readonly-v1";D.mkdir()
+v=os.statvfs(C)
+report=dict(epoch=time.time(),scope=str(C),free_bytes=v.f_bavail*v.f_frsize,all_containers=len(containers),checkpoint_rows=out,model_calls=0,filesystem_mutations_to_checkpoint=0,limitations="nlink1/stat/mount-only inventory; absence of direct mount is not proof of no logical reconstruction dependency")
+(D/"stat-inventory.json").write_text(json.dumps(report,indent=2)+"\n")
+print(json.dumps(dict(free_bytes=report["free_bytes"],rows=[{k:v for k,v in r.items() if k!="large_private"} for r in out]),indent=2))
+N=R/"analysis/fresh-purpose-20261107-f04-mbpp-lora-training-v1"
+if(N/"completion.json").exists():
+ d=json.loads((N/"completion.json").read_text());print("OWNER",{k:d.get(k) for k in ("status","elapsed_seconds","restored","protected_exact","error_type")})

@@ -1,0 +1,32 @@
+{
+  "apply": false,
+  "elapsed_seconds": 0.5517230033874512,
+  "error_message": "live same-UID process references inaccessible",
+  "error_type": "ValueError",
+  "finished_epoch": 1794050882.3047247,
+  "free_bytes_after": 7264862208,
+  "fresh_payload_hash": false,
+  "global_lock_acquired": true,
+  "global_lock_stat": {
+    "ctime_ns": 1793844261043624533,
+    "device": 2306,
+    "gid": 1003,
+    "inode": 181180584,
+    "mode": 33204,
+    "mtime_ns": 1793844261043624533,
+    "nlink": 1,
+    "size": 0,
+    "uid": 1003
+  },
+  "model_calls": 0,
+  "observed_absent_targets": [],
+  "operation_sha256": "435e01109887123db12519c100e304fa7bd4f5a71b772e6c96eedce1b130f894",
+  "physical_reconstruction": false,
+  "pid": 1280936,
+  "plan_sha256": "82c8cbddd59f8d7aecf599b53aa781a8c69475c2c9344190ce845ff426dbd9fa",
+  "released": [],
+  "released_logical_bytes": 0,
+  "service_operations": 0,
+  "started_epoch": 1794050881.7530017,
+  "status": "partial_or_failed_no_automatic_retry"
+}

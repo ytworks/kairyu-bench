@@ -1,0 +1,54 @@
+{
+  "epoch": 1794048819.729555,
+  "runner": {
+    "cid": "b947da714bf08c131db8971e36e16f5155a5de5303161ad8898bd48cff4eaa01",
+    "image_id": "sha256:f91bdcf997af6d7b194bec229812fd018277158f6795de7d91e58448936e7ad8",
+    "configured_image": "sha256:f91bdcf997af6d7b194bec229812fd018277158f6795de7d91e58448936e7ad8",
+    "command": [
+      "wsp",
+      "run",
+      "http://kairyu:8000/v1",
+      "--tier",
+      "30",
+      "--split",
+      "dev",
+      "--label",
+      "504d0914e8f7d2a4e51a0888e5692e2d1a158b82d3a77b600810a14bf7e33b63",
+      "--run-id",
+      "gemma4-fresh-f03-dev30-dp4-20261107-v1",
+      "--results-dir",
+      "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/results",
+      "--chat-concurrency",
+      "256",
+      "--logprob-concurrency",
+      "32",
+      "--agent-concurrency",
+      "4",
+      "--logprob-endpoint",
+      "http://gemma-0:8000/v1",
+      "--logprob-endpoint",
+      "http://gemma-1:8000/v1",
+      "--logprob-endpoint",
+      "http://gemma-2:8000/v1",
+      "--logprob-endpoint",
+      "http://gemma-3:8000/v1",
+      "--observe-config",
+      "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f03-dev30-dp4-v1/http-trace/capture.json"
+    ],
+    "created": "2026-11-07T10:23:56.61217601Z",
+    "working_dir": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/results",
+    "state": {
+      "Status": "running",
+      "Running": true,
+      "Pid": 1078731,
+      "StartedAt": "2026-11-07T10:23:56.647943483Z"
+    }
+  },
+  "credential_environment_omitted": true,
+  "observation_timing": "Captured during the active run, not at launch; Created/StartedAt are Docker fields.",
+  "source_receipts": {
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f03-dev30-dp4-v1/launch-plan-approved.json": "5b36b98234658c63b460cbb6cba821812b177b7e49477cc1a2fcabb1cba6095a",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f03-dev30-dp4-v1/wrapper-start.json": "e1b8e39c734c0fb669771a9e8b1079fd5b3fbb3cabfd33ea299f3182adc00973",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f03-dev30-dp4-v1/launch-preflight.json": "fe7b42826e74afed844e342f79ef2867f50c0ba9edd6425949736c0784eed6bb"
+  }
+}

@@ -1,0 +1,250 @@
+{
+  "results": {
+    "unittest": {
+      "command": [
+        "python",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests",
+        "-v"
+      ],
+      "returncode": 0,
+      "seconds": 47.96312641201075
+    },
+    "ruff": {
+      "command": [
+        "ruff",
+        "check",
+        "."
+      ],
+      "returncode": 0,
+      "seconds": 0.05081323999911547
+    },
+    "mypy": {
+      "command": [
+        "mypy",
+        "--ignore-missing-imports",
+        "src"
+      ],
+      "returncode": 0,
+      "seconds": 0.34845886297989637
+    },
+    "data": {
+      "command": [
+        "python",
+        "scripts/update_model_comparison.py",
+        "--check"
+      ],
+      "returncode": 0,
+      "seconds": 0.0640257530612871
+    }
+  },
+  "shell": [
+    {
+      "file": "adapters/long-context-reasoning/run.sh",
+      "returncode": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "file": "adapters/deepswe/run.sh",
+      "returncode": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "file": "adapters/mrcr-v2/run.sh",
+      "returncode": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "file": "adapters/tau-bench-banking/run.sh",
+      "returncode": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "file": "adapters/swe-bench-verified/run.sh",
+      "returncode": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "file": "adapters/scicode/run.sh",
+      "returncode": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "file": "adapters/hle/run.sh",
+      "returncode": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "file": "adapters/livecodebench/run.sh",
+      "returncode": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "file": "adapters/terminal-bench/run.sh",
+      "returncode": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "file": "adapters/swe-bench-pro/run.sh",
+      "returncode": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "file": "adapters/charxiv-reasoning/run.sh",
+      "returncode": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "file": "adapters/terminal-bench-4/run.sh",
+      "returncode": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "file": "adapters/gpqa-diamond/run.sh",
+      "returncode": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "file": "adapters/livecodebench-pro/run.sh",
+      "returncode": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "file": "scripts/lib/worker-pool.sh",
+      "returncode": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "file": "scripts/lib/official.sh",
+      "returncode": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "file": "scripts/container-entrypoint.sh",
+      "returncode": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "file": "tests/fixtures/terminal-bench-4/gpu-request/solution/solve.sh",
+      "returncode": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "file": "tests/fixtures/terminal-bench-4/gpu-request/tests/test.sh",
+      "returncode": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "file": "scripts/harnesses/hle.sh",
+      "returncode": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "file": "scripts/harnesses/charxiv-reasoning.sh",
+      "returncode": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "file": "scripts/harnesses/tau-bench-banking.sh",
+      "returncode": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "file": "scripts/harnesses/wsp.sh",
+      "returncode": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "file": "scripts/harnesses/terminal-bench.sh",
+      "returncode": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "file": "scripts/harnesses/swebench.sh",
+      "returncode": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "file": "scripts/harnesses/terminal-bench-4.sh",
+      "returncode": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "file": "scripts/harnesses/livecodebench-pro.sh",
+      "returncode": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "file": "scripts/harnesses/livecodebench.sh",
+      "returncode": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "file": "scripts/harnesses/deepswe.sh",
+      "returncode": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "file": "scripts/harnesses/scicode.sh",
+      "returncode": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "file": "scripts/experiments/gemma4_lora/build-kernel.sh",
+      "returncode": 0,
+      "stdout": "",
+      "stderr": ""
+    }
+  ],
+  "before": {
+    "scripts/experiments/gemma4-purpose/science_generate.py": "df88767ebcd5a3138747a36fe7e0976dbb0c2ceb5b0f1eece74740818f0b7f89",
+    "scripts/experiments/gemma4-purpose/science_sandbox.py": "4a19f0f5fc235f56d702d39dd9bc9e403eba98ffdeadabe4c6365b41566131a4",
+    "scripts/experiments/gemma4-purpose/helper_stage_offline.py": "23da9fae9cf2dafaef18a3291f4e4e7e751832d023fde53a13a8aa5954c30396",
+    "tests/test_gemma4_science_generate.py": "b9d11de5931cd35ba5fd281c5b812c028e7535ca913e7c804325e79c2906d226",
+    "tests/test_gemma4_science_sandbox.py": "b9dbabbc97a4a66a7a24748dc111e66b992228113c7af0123e5aed783169af4e",
+    "tests/test_gemma4_helper_chains.py": "3ab75cc59f023c25ac0ea36857e17d5ff4fb85d70623a5465aaa5eb8d563e57e"
+  },
+  "after": {
+    "scripts/experiments/gemma4-purpose/science_generate.py": "df88767ebcd5a3138747a36fe7e0976dbb0c2ceb5b0f1eece74740818f0b7f89",
+    "scripts/experiments/gemma4-purpose/science_sandbox.py": "4a19f0f5fc235f56d702d39dd9bc9e403eba98ffdeadabe4c6365b41566131a4",
+    "scripts/experiments/gemma4-purpose/helper_stage_offline.py": "23da9fae9cf2dafaef18a3291f4e4e7e751832d023fde53a13a8aa5954c30396",
+    "tests/test_gemma4_science_generate.py": "b9d11de5931cd35ba5fd281c5b812c028e7535ca913e7c804325e79c2906d226",
+    "tests/test_gemma4_science_sandbox.py": "b9dbabbc97a4a66a7a24748dc111e66b992228113c7af0123e5aed783169af4e",
+    "tests/test_gemma4_helper_chains.py": "3ab75cc59f023c25ac0ea36857e17d5ff4fb85d70623a5465aaa5eb8d563e57e"
+  },
+  "source_unchanged": true,
+  "gpu_validation": false
+}

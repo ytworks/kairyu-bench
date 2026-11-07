@@ -1,0 +1,74 @@
+{
+  "status": "completed",
+  "epoch": 1794039706.5782566,
+  "operation_sha256": "589ab9e46dde4cfd81aaaddad664d5df7ab0026f212651946f4e7dba7799ecc1",
+  "source": {
+    "behavior_cases.py": {
+      "source_path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/worktrees/kairyu-bench-weight-tools/scripts/experiments/gemma4-purpose/behavior_cases.py",
+      "runtime_path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/runtime/fresh-purpose-20261107-behavior18-validation-v1/behavior_cases.py",
+      "sha256": "10ba3e480c8685933904060629b351758cf7b61362756179e55779435d01a310"
+    },
+    "behavior_offline.py": {
+      "source_path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/worktrees/kairyu-bench-weight-tools/scripts/experiments/gemma4-purpose/behavior_offline.py",
+      "runtime_path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/runtime/fresh-purpose-20261107-behavior18-validation-v1/behavior_offline.py",
+      "sha256": "2d6d1abe77fd24da6905bd9a19a93b1e31b6e5e81bbf4fba7d356eea7956c88a"
+    },
+    "science_sandbox.py": {
+      "source_path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/worktrees/kairyu-bench-weight-tools/scripts/experiments/gemma4-purpose/science_sandbox.py",
+      "runtime_path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/runtime/fresh-purpose-20261107-behavior18-validation-v1/science_sandbox.py",
+      "sha256": "4a19f0f5fc235f56d702d39dd9bc9e403eba98ffdeadabe4c6365b41566131a4"
+    },
+    "science_cases.py": {
+      "source_path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/worktrees/kairyu-bench-weight-tools/scripts/experiments/gemma4-purpose/science_cases.py",
+      "runtime_path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/runtime/fresh-purpose-20261107-behavior18-validation-v1/science_cases.py",
+      "sha256": "2c4cc6e75c92c41b98e737ca2c0a653e0f7a7675c6150a6ad33e3f954122a26b"
+    }
+  },
+  "docker": {
+    "daemon_id": "3e518d2b-6972-43f8-b325-f7f33697a2d2",
+    "root": "/mnt/nvme/docker",
+    "image_id": "sha256:c4ab50223f03fca17bf871e4d05f77001e76525a1c574b6c6ee7024db06cfdc2"
+  },
+  "preview": {
+    "command": [
+      "/mnt/nvme/kairyu/dev-logs/wsp/venv-scicode/bin/python",
+      "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/runtime/fresh-purpose-20261107-behavior18-validation-v1/behavior_offline.py",
+      "--mode",
+      "validate-authored",
+      "--docker-socket",
+      "/var/run/docker.sock",
+      "--daemon-id",
+      "3e518d2b-6972-43f8-b325-f7f33697a2d2",
+      "--image",
+      "sha256:c4ab50223f03fca17bf871e4d05f77001e76525a1c574b6c6ee7024db06cfdc2",
+      "--output",
+      "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-behavior18-validation-v1/preview"
+    ],
+    "started_epoch": 1794039706.8097584,
+    "returncode": 0,
+    "seconds": 0.18343964905943722
+  },
+  "execute": {
+    "command": [
+      "/mnt/nvme/kairyu/dev-logs/wsp/venv-scicode/bin/python",
+      "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/runtime/fresh-purpose-20261107-behavior18-validation-v1/behavior_offline.py",
+      "--mode",
+      "validate-authored",
+      "--docker-socket",
+      "/var/run/docker.sock",
+      "--daemon-id",
+      "3e518d2b-6972-43f8-b325-f7f33697a2d2",
+      "--image",
+      "sha256:c4ab50223f03fca17bf871e4d05f77001e76525a1c574b6c6ee7024db06cfdc2",
+      "--output",
+      "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-behavior18-validation-v1/execute",
+      "--run"
+    ],
+    "started_epoch": 1794039706.9942327,
+    "returncode": 0,
+    "seconds": 28.396976650110446
+  },
+  "validation_passed": false,
+  "seconds": 28.81507633801084,
+  "ended_epoch": 1794039735.393705
+}

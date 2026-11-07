@@ -1,0 +1,47 @@
+import hashlib,json,subprocess,time,urllib.request
+from pathlib import Path
+from kairyu_bench.wsp.manifest import load_manifest
+R=Path("/mnt/nvme/kairyu/wsp/gemma4-coding-20261104")
+N=R/"analysis/fresh-purpose-20261107-f03-dev30-dp4-v1"
+RUN=R/"results/gemma4-fresh-f03-dev30-dp4-20261107-v1"
+def read(p): return json.loads(p.read_text())
+def sha(p): return hashlib.sha256(p.read_bytes()).hexdigest()
+def save(p,d):
+ with p.open("x") as f:f.write(json.dumps(d,indent=2)+"\n")
+plan=read(N/"launch-plan-approved.json")
+image=plan["source_identity"]["actual_runner_image_id"]
+ids=subprocess.check_output(["docker","ps","--no-trunc","--filter","ancestor="+image,"--format","{{.ID}}"],text=True).split()
+assert len(ids)==1,ids
+fmt='{"cid":{{json .Id}},"image_id":{{json .Image}},"configured_image":{{json .Config.Image}},"command":{{json .Config.Cmd}},"created":{{json .Created}},"working_dir":{{json .Config.WorkingDir}},"state":{"Status":{{json .State.Status}},"Running":{{json .State.Running}},"Pid":{{json .State.Pid}},"StartedAt":{{json .State.StartedAt}}}}'
+runner=json.loads(subprocess.check_output(["docker","inspect","--format",fmt,ids[0]],text=True))
+assert runner["image_id"]==image and runner["command"]==plan["command"][1:]
+assert runner["command"]==read(N/"wrapper-start.json")["command"][1:]
+assert runner["state"]["Running"]
+epoch=time.time()
+actual={"epoch":epoch,"runner":runner,"credential_environment_omitted":True,
+        "observation_timing":"Captured during the active run, not at launch; Created/StartedAt are Docker fields.",
+        "source_receipts":{str(N/x):sha(N/x) for x in ["launch-plan-approved.json","wrapper-start.json","launch-preflight.json"]}}
+save(N/"actual-runner.json",actual)
+manifest=load_manifest()
+selected=manifest.select(30,"dev")
+run=read(RUN/"run.json")
+assert run["status"]=="running" and run["items"]==len(selected)==2338
+assert run["manifest_sha256"]==plan["selection"]["manifest_sha256"]==manifest.sha256
+assert run["label"]==plan["expected_serving"]["tree_sha256"]
+assert plan["selection"]["excluded_ids"]==[] and plan["selection"]["only"] is None
+models=[]
+for service in read(N/"launch-preflight.json")["services"]:
+ actualcid=subprocess.check_output(["docker","inspect","--format","{{.Id}}",service["cid"]],text=True).strip()
+ assert actualcid==plan["expected_serving"]["service_cids"][service["service"]]
+ with urllib.request.urlopen("http://"+service["ip"]+":8000/v1/models",timeout=10) as response:
+  modelids=[x["id"] for x in json.load(response)["data"]]
+ assert modelids==[run["model_id"]]
+ models.append({"service":service["service"],"cid":actualcid,"model_ids":modelids})
+verified={"epoch":time.time(),"run":run,"actual_runner_sha256":sha(N/"actual-runner.json"),
+          "actual_runner_cid":runner["cid"],"observation_timing":"Mid-run verification; filename kept for existing audit compatibility; not a launch-time observation.",
+          "elapsed_since_owner_start":time.time()-read(N/"owner-start.json")["epoch"],
+          "served_models":models,"full_selection":{"manifest_sha256":manifest.sha256,"items":len(selected),
+          "code_items":sum(x.source in {"humaneval-plus","mbpp-plus","livecodebench","scicode"} for x in selected),
+          "excluded_ids":[],"selected_ids_json_sha256":hashlib.sha256(json.dumps(sorted(x.id for x in selected)).encode()).hexdigest()}}
+save(N/"run-start-verified.json",verified)
+print(json.dumps({"actual_runner_sha256":sha(N/"actual-runner.json"),"run_start_verified_sha256":sha(N/"run-start-verified.json"),"cid":runner["cid"],"epoch":epoch,"elapsed":verified["elapsed_since_owner_start"],"items":len(selected),"code_items":verified["full_selection"]["code_items"]}))

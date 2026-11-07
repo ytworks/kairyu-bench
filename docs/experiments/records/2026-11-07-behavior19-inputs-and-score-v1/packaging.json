@@ -1,0 +1,177 @@
+{
+  "epoch": 1794054588.2425504,
+  "rows": [
+    {
+      "path": "inputs/freeze.json",
+      "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-behavior19-inputs-v1/freeze.json",
+      "raw_sha256": "975e9087c66b72e15d666fbad8ab08f6b390e48fb2bc4428cc814e89bde85374",
+      "stored_sha256": "975e9087c66b72e15d666fbad8ab08f6b390e48fb2bc4428cc814e89bde85374",
+      "bytes": 4250
+    },
+    {
+      "path": "inputs/new-case-validation.json",
+      "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-behavior19-inputs-v1/new-case-validation.json",
+      "raw_sha256": "fc87b0c5626cb9a38d5ff65214c45e59db86163e1909d2e32bbfd7c056e2f3d6",
+      "stored_sha256": "fc87b0c5626cb9a38d5ff65214c45e59db86163e1909d2e32bbfd7c056e2f3d6",
+      "bytes": 14086
+    },
+    {
+      "path": "inputs/ordered-case-map.json",
+      "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-behavior19-inputs-v1/ordered-case-map.json",
+      "raw_sha256": "a595a4ea3f7f7ec973eb07f61ec0b49c9f8d31d80e9f3ee6cc266a1a88541a88",
+      "stored_sha256": "a595a4ea3f7f7ec973eb07f61ec0b49c9f8d31d80e9f3ee6cc266a1a88541a88",
+      "bytes": 2929
+    },
+    {
+      "path": "inputs/preview.json",
+      "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-behavior19-inputs-v1/preview.json",
+      "raw_sha256": "06123147774f7d3fe283f19c5598391d212b0cb33d8ad01dd52080b2d20a32cf",
+      "stored_sha256": "06123147774f7d3fe283f19c5598391d212b0cb33d8ad01dd52080b2d20a32cf",
+      "bytes": 4322
+    },
+    {
+      "path": "inputs/train-cases.json",
+      "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-behavior19-inputs-v1/train-cases.json",
+      "raw_sha256": "74e1cd2000fda0abdc03f4454b18f4231b9891360af266391744e13976f199f1",
+      "stored_sha256": "74e1cd2000fda0abdc03f4454b18f4231b9891360af266391744e13976f199f1",
+      "bytes": 17423
+    },
+    {
+      "path": "score/cleanup-closure.json",
+      "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f04-behavior19-native-v1/score-v1/cleanup-closure.json",
+      "raw_sha256": "7a1c2ff04c16ec20dbdab9a0e81df981b8870320337ec1827eebb18f87222c66",
+      "stored_sha256": "7a1c2ff04c16ec20dbdab9a0e81df981b8870320337ec1827eebb18f87222c66",
+      "bytes": 521
+    },
+    {
+      "path": "score/plan.json",
+      "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f04-behavior19-native-v1/score-v1/plan.json",
+      "raw_sha256": "47f86176d6fb8194bca9541f650dee861bb66ffaeb8964e568cc0863781f6a0e",
+      "stored_sha256": "47f86176d6fb8194bca9541f650dee861bb66ffaeb8964e568cc0863781f6a0e",
+      "bytes": 5156
+    },
+    {
+      "path": "score/report.json.gz",
+      "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f04-behavior19-native-v1/score-v1/report.json",
+      "raw_sha256": "1599a3c564aa9fe019087618f9373a4d65d268ab2c11d7fb56859dab70cd9c82",
+      "stored_sha256": "ea7013060adfa1e51650c2ea37ed81ba79e4229d06d86168208a91a97fcbebf1",
+      "bytes": 15153
+    },
+    {
+      "path": "score/summary.json",
+      "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f04-behavior19-native-v1/score-v1/summary.json",
+      "raw_sha256": "2907a3768ecb3c4370a11ae43bc475309e251122afaa15929490a8f5acec8408",
+      "stored_sha256": "2907a3768ecb3c4370a11ae43bc475309e251122afaa15929490a8f5acec8408",
+      "bytes": 4285
+    },
+    {
+      "path": "preparation/fresh-purpose-20261107-behavior19-prepare-failure-v1.json",
+      "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-behavior19-prepare-failure-v1.json",
+      "raw_sha256": "5073c98dcac2e8daab189c90c0a40e9e45901a8c425ab7fd69c4b58bf448f78e",
+      "stored_sha256": "5073c98dcac2e8daab189c90c0a40e9e45901a8c425ab7fd69c4b58bf448f78e",
+      "bytes": 242
+    },
+    {
+      "path": "preparation/fresh-purpose-20261107-behavior19-prepare-failure-v2.json",
+      "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-behavior19-prepare-failure-v2.json",
+      "raw_sha256": "4c8e2586644c7c8071b1217bb3b7ae6dd1c1fb522008b4c01e58893533946bab",
+      "stored_sha256": "4c8e2586644c7c8071b1217bb3b7ae6dd1c1fb522008b4c01e58893533946bab",
+      "bytes": 471
+    },
+    {
+      "path": "preparation/fresh-purpose-20261107-behavior19-prepare-v2.py.txt",
+      "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-behavior19-prepare-v2.py.txt",
+      "raw_sha256": "ea3c842144ba2fa932904eea5b2db8c3a4223fbf61df3811aa62149988be390f",
+      "stored_sha256": "ea3c842144ba2fa932904eea5b2db8c3a4223fbf61df3811aa62149988be390f",
+      "bytes": 5853
+    },
+    {
+      "path": "preparation/fresh-purpose-20261107-behavior19-prepare-v3.py.txt",
+      "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-behavior19-prepare-v3.py.txt",
+      "raw_sha256": "8d03880432f2c5513b03e24e7ac8b00f49af8fb23b7f2b948045aa27fb7be875",
+      "stored_sha256": "8d03880432f2c5513b03e24e7ac8b00f49af8fb23b7f2b948045aa27fb7be875",
+      "bytes": 6176
+    },
+    {
+      "path": "preparation/fresh-purpose-20261107-behavior19-prepare.py.txt",
+      "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-behavior19-prepare.py.txt",
+      "raw_sha256": "f2d54e7f287f9cd1bf08d9383c8bc4fabad57c8fd6e6f13a48e8afeff8ffd2fe",
+      "stored_sha256": "f2d54e7f287f9cd1bf08d9383c8bc4fabad57c8fd6e6f13a48e8afeff8ffd2fe",
+      "bytes": 5821
+    },
+    {
+      "path": "score-driver.py.txt",
+      "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f04-behavior19-native-v1/score-driver.py.txt",
+      "raw_sha256": "2f9ff999f37c1f7f4f785a86c57ce142897c0eeaa4b4da3f1068903b845f317b",
+      "stored_sha256": "2f9ff999f37c1f7f4f785a86c57ce142897c0eeaa4b4da3f1068903b845f317b",
+      "bytes": 5233
+    },
+    {
+      "path": "generation/train-responses.json",
+      "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f04-behavior19-native-v1/generation/train-responses.json",
+      "raw_sha256": "4105a5c87f9c54a4fa552a31927ce1bf8e330a5831a3a78d23cb0b1802cbc07f",
+      "stored_sha256": "4105a5c87f9c54a4fa552a31927ce1bf8e330a5831a3a78d23cb0b1802cbc07f",
+      "bytes": 13534
+    },
+    {
+      "path": "generation/receipt.json",
+      "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f04-behavior19-native-v1/generation/receipt.json",
+      "raw_sha256": "6a84159ea6b1e2367c322693fbea39bd8a3a72562772544449eb405312d07a45",
+      "stored_sha256": "6a84159ea6b1e2367c322693fbea39bd8a3a72562772544449eb405312d07a45",
+      "bytes": 985
+    },
+    {
+      "path": "generation/owner-closure.json",
+      "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f04-behavior19-native-v1/owner/owner-closure.json",
+      "raw_sha256": "a105512c4ccf33115dd58b9b4f05ec6e5f32b198872ff512910f623fbb7306ac",
+      "stored_sha256": "a105512c4ccf33115dd58b9b4f05ec6e5f32b198872ff512910f623fbb7306ac",
+      "bytes": 202
+    },
+    {
+      "path": "generation/normal-lock-release.json",
+      "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f04-behavior19-native-v1/owner/normal-lock-release.json",
+      "raw_sha256": "907a5c0c77699c8f23bba35c9b97007bab3c42cc7ce9d859bf6c90b3877f4115",
+      "stored_sha256": "907a5c0c77699c8f23bba35c9b97007bab3c42cc7ce9d859bf6c90b3877f4115",
+      "bytes": 54
+    },
+    {
+      "path": "source/behavior_followup_cases.py.txt",
+      "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/worktrees/kairyu-bench-weight-tools/scripts/experiments/gemma4-purpose/behavior_followup_cases.py",
+      "raw_sha256": "c8c5fc34e6c2103de106599809e97f3b5dcc9810a68fd847595d0b491540f4fe",
+      "stored_sha256": "c8c5fc34e6c2103de106599809e97f3b5dcc9810a68fd847595d0b491540f4fe",
+      "bytes": 11644
+    },
+    {
+      "path": "source/behavior_cases.py.txt",
+      "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/worktrees/kairyu-bench-weight-tools/scripts/experiments/gemma4-purpose/behavior_cases.py",
+      "raw_sha256": "10ba3e480c8685933904060629b351758cf7b61362756179e55779435d01a310",
+      "stored_sha256": "10ba3e480c8685933904060629b351758cf7b61362756179e55779435d01a310",
+      "bytes": 22945
+    },
+    {
+      "path": "source/behavior_offline.py.txt",
+      "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/worktrees/kairyu-bench-weight-tools/scripts/experiments/gemma4-purpose/behavior_offline.py",
+      "raw_sha256": "30715a30e02c7fab8ec4e1ffad28e57c4925b16fb45048680d6f5735bd3af9e5",
+      "stored_sha256": "30715a30e02c7fab8ec4e1ffad28e57c4925b16fb45048680d6f5735bd3af9e5",
+      "bytes": 13272
+    },
+    {
+      "path": "source/science_sandbox.py.txt",
+      "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/worktrees/kairyu-bench-weight-tools/scripts/experiments/gemma4-purpose/science_sandbox.py",
+      "raw_sha256": "4a65378e493fb2f109afdaf0d98b5b93dc067d6d3f48d2a4cf17017f1aadcb78",
+      "stored_sha256": "4a65378e493fb2f109afdaf0d98b5b93dc067d6d3f48d2a4cf17017f1aadcb78",
+      "bytes": 29092
+    },
+    {
+      "path": "package.py.txt",
+      "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-behavior19-package.py.txt",
+      "raw_sha256": "cd0590300250ef23c732f0e14966aad48397630e1f2e662efa494910d71ec576",
+      "stored_sha256": "cd0590300250ef23c732f0e14966aad48397630e1f2e662efa494910d71ec576",
+      "bytes": 6148
+    }
+  ],
+  "lossless": true,
+  "all_trials_retained": true,
+  "model_calls": 0,
+  "service_operations": 0
+}

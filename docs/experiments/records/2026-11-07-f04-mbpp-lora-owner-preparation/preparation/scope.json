@@ -1,0 +1,12 @@
+{
+  "epoch": 1794056691.8561478,
+  "mode": "train-lora",
+  "maximum_training_seconds_upper_bound": 3600,
+  "native_deadline_unchanged": 900,
+  "authorization": "root explicitly authorized minimal train-lora onejob owner branch and CPU tests/preview only",
+  "gpu_run_authorized": false,
+  "target_expected": "07e1b17e7c84d8d178703417bb341c3313653eca7122aba1ad7b3d6d893d5abb",
+  "training_parameters_owned_by": "final_eval_audit trainer pinned plan",
+  "quality_gate": "all actual training IDs reference-pass, holdout never gradients",
+  "lifecycle": "same existing global/GPU4 flock and cleanup/same-CID restore"
+}

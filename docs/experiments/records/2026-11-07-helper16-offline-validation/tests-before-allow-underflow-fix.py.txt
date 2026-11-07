@@ -1,0 +1,268 @@
+from __future__ import annotations
+
+import hashlib
+import importlib.util
+import json
+from pathlib import Path
+import sys
+import tempfile
+import unittest
+
+
+DIRECTORY = Path(__file__).resolve().parents[1] / "scripts/experiments/gemma4-purpose"
+sys.path.insert(0, str(DIRECTORY))
+import helper_chain_cases as CHAINS  # noqa: E402
+import recipe_common as COMMON  # noqa: E402
+import long_helper_chain_cases as LONG  # noqa: E402
+import helper_stage_offline as OFFLINE  # noqa: E402
+
+
+class HelperChainsTest(unittest.TestCase):
+    @unittest.skipUnless(
+        importlib.util.find_spec("scipy"),
+        "optional SciPy authored reference environment",
+    )
+    def test_bundle_and_sequential_public_helpers_preserve_dependency_failures(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            old = {
+                "code": [
+                    [{"id": "old0", "prompt": "p", "correct": "c", "foil": "f"}],
+                    [{"id": "old1", "prompt": "p", "correct": "c", "foil": "f"}],
+                ]
+            }
+            base = root / "base.json"
+            base.write_text(json.dumps(old))
+            before = base.read_bytes()
+            output = root / "bundle"
+            report = CHAINS.write_bundle(
+                output,
+                base=base,
+                base_sha256=hashlib.sha256(before).hexdigest(),
+                trials=4,
+            )
+            combined = json.loads((output / "train-cases.json").read_text())
+            self.assertEqual(combined["code"], old["code"])
+            self.assertEqual(base.read_bytes(), before)
+            self.assertEqual(
+                sum(
+                    len(f)
+                    for fs in COMMON.read_cases(output / "train-cases.json").values()
+                    for f in fs
+                ),
+                10,
+            )
+            extension = json.loads((output / "train-extension.json").read_text())
+            families = {}
+            for purpose, folds in extension.items():
+                for fold, rows in enumerate(folds):
+                    for row in rows:
+                        families.setdefault(row["family"], set()).add(fold)
+                        self.assertEqual(
+                            row["stage"], 1 if purpose == "science_helper_stage" else 2
+                        )
+            self.assertTrue(all(len(folds) == 1 for folds in families.values()))
+            self.assertEqual(
+                sum(len(x["foils"]) for x in report["validation"]["chains"]), 24
+            )
+            with self.assertRaises(FileExistsError):
+                CHAINS.write_bundle(output)
+            self.assertEqual(base.read_bytes(), before)
+
+            chain = next(
+                c for c in CHAINS.catalog() if c.family == "quadrature-mixture"
+            )
+            called = []
+
+            def request(row):
+                called.append(row)
+                code = (
+                    chain.helper.code(0)
+                    if row["id"].endswith("helper")
+                    else chain.downstream.code()
+                )
+                return {
+                    "id": row["id"],
+                    "public_answer": code,
+                    "finish_reason": "stop",
+                    "usage": {"input_tokens": 1, "output_tokens": 2},
+                    "seconds": 0,
+                    "reasoning_content": "must-not-appear",
+                }
+
+            result = CHAINS.evaluate_requests(
+                chain, request, CHAINS.trusted_run, trials=4
+            )
+            self.assertEqual(result["call_count"], 3)
+            self.assertFalse(result["helper_stage"]["passed"])
+            self.assertTrue(result["oracle_helper_downstream"]["passed"])
+            self.assertFalse(result["generated_helper_downstream"]["passed"])
+            self.assertFalse(result["whole_chain_passed"])
+            self.assertIn("weights.copy()", called[2]["prompt"])
+            self.assertNotIn("weights.copy()", called[1]["prompt"])
+            self.assertNotIn("must-not-appear", json.dumps(result))
+            self.assertNotIn(
+                "public_answer", json.dumps(result).replace("public_answers_saved", "")
+            )
+            with self.assertRaises(ValueError):
+                CHAINS.trusted_run({"code": "raise RuntimeError('arbitrary')"})
+
+            # The longer catalog reuses the three-call evaluator with its own
+            # semantic sample oracle; the prior case objects are preserved.
+            long_output = root / "long-bundle"
+            long_report = LONG.write_bundle(
+                long_output,
+                base=base,
+                base_sha256=hashlib.sha256(before).hexdigest(),
+                trials=4,
+            )
+            long_cases = json.loads((long_output / "train-cases.json").read_text())
+            self.assertEqual(long_cases["code"], old["code"])
+            self.assertEqual(base.read_bytes(), before)
+            self.assertTrue(long_report["old_objects_preserved"])
+            self.assertTrue(
+                all(
+                    f["kind"] == "numeric"
+                    for c in long_report["validation"]["chains"]
+                    for foil in c["foils"]
+                    for f in foil["outcome"]["failures"]
+                )
+            )
+            long_chain = LONG.catalog()[0]
+
+            def long_request(row):
+                code = (
+                    long_chain.helper.code(1)
+                    if row["id"].endswith("helper")
+                    else long_chain.downstream.code()
+                )
+                return {"public_answer": code, "finish_reason": "stop", "usage": {}}
+
+            result = LONG.evaluate_requests(
+                long_chain, long_request, LONG.trusted_run, trials=4
+            )
+            self.assertEqual(result["call_count"], 3)
+            self.assertFalse(result["helper_stage"]["passed"])
+            self.assertTrue(result["oracle_helper_downstream"]["passed"])
+            self.assertFalse(result["generated_helper_downstream"]["passed"])
+            with self.assertRaises(FileExistsError):
+                LONG.write_bundle(long_output)
+            self.assertEqual(base.read_bytes(), before)
+
+
+class OfflineHelperStagesTest(unittest.TestCase):
+    def fixture(self, root):
+        selected = OFFLINE.targets()
+        rows = [chain.row(stage) for _, chain, stage in selected.values()]
+        rows += [{"id": f"other-{i}", "prompt": "Not targeted.",
+                  "split": "train", "correct": "c", "foil": "f"} for i in range(56)]
+        cases = root / "cases.json"
+        cases.write_text(json.dumps({"cases": {"fixture": [rows, []]}}))
+        responses = root / "responses.json"
+        responses.write_text(json.dumps({
+            "schema_version": 1, "split": "train",
+            "cases_sha256": OFFLINE.sandbox.sha(cases.read_bytes()),
+            "generation": {"reasoning_saved": False},
+            "responses": [{"id": row["id"], "error_type": "HTTPError",
+                           "http_status": 400} for row in rows],
+        }))
+        return cases, responses
+
+    def read(self, cases, responses):
+        return OFFLINE.read_inputs(
+            cases, responses, OFFLINE.sandbox.sha(cases.read_bytes()),
+            OFFLINE.sandbox.sha(responses.read_bytes())
+        )
+
+    def test_full_identity_and_public_response_rejections(self):
+        with tempfile.TemporaryDirectory() as directory:
+            cases, responses = self.fixture(Path(directory))
+            selected, answers, _, _, rows = self.read(cases, responses)
+            self.assertEqual((len(selected), len(answers), len(rows)), (16, 72, 72))
+            with self.assertRaisesRegex(ValueError, "SHA mismatch"):
+                OFFLINE.read_inputs(cases, responses, "0" * 64,
+                                    OFFLINE.sandbox.sha(responses.read_bytes()))
+            original = json.loads(responses.read_text())
+            for bad in [
+                {**original, "cases_sha256": "0" * 64},
+                {**original, "responses": [{"id": "unknown"}]},
+                {**original, "responses": [original["responses"][0]] * 2},
+                {**original, "responses": [{"id": next(iter(selected)),
+                                           "reasoning_content": "not accepted"}]},
+            ]:
+                responses.write_text(json.dumps(bad))
+                with self.assertRaises(ValueError):
+                    self.read(cases, responses)
+            responses.write_text(json.dumps(original))
+            data = json.loads(cases.read_text())
+            data["cases"]["fixture"][0][0]["prompt"] += "changed"
+            cases.write_text(json.dumps(data))
+            original["cases_sha256"] = OFFLINE.sandbox.sha(cases.read_bytes())
+            responses.write_text(json.dumps(original))
+            with self.assertRaisesRegex(ValueError, "changed fixed"):
+                self.read(cases, responses)
+
+    def test_preview_and_all_errors_never_execute_answers(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            cases, responses = self.fixture(root)
+            args = ["--cases", str(cases), "--responses", str(responses),
+                    "--cases-sha256", OFFLINE.sandbox.sha(cases.read_bytes()),
+                    "--responses-sha256", OFFLINE.sandbox.sha(responses.read_bytes()),
+                    "--docker-socket", "/not-a-real-socket", "--daemon-id", "fixture",
+                    "--image", "sha256:" + "a" * 64]
+            def forbidden(*_args, **_kwargs):
+                self.fail("preview constructed Docker")
+            result = OFFLINE.main(args + ["--output", str(root / "preview")],
+                                  docker_factory=forbidden)
+            self.assertEqual(result["not_targeted_cases"], 56)
+
+            class NoAnswerDocker:
+                def __init__(self, *_args, **_kwargs):
+                    pass
+
+                def check_image(self):
+                    pass
+
+                def run(self, _payload):
+                    raise AssertionError("generation error reached execution")
+
+            result = OFFLINE.main(args + ["--output", str(root / "run"), "--run"],
+                                  docker_factory=NoAnswerDocker)
+            self.assertEqual(result["counts"], {
+                "expected": 16, "passed": 0, "failed": 0, "unknown": 16})
+            self.assertEqual(result["strata"]["known_dtype_contract_issue"]["unknown"], 3)
+            self.assertTrue(all(x["status"] == "generation_error" for x in result["results"]))
+
+    @unittest.skipUnless(importlib.util.find_spec("scipy"), "optional scientific CPU environment")
+    def test_all16_authored_correct_foil_and_fixed_helper_e2e(self):
+        for identifier, target in OFFLINE.targets().items():
+            module, chain, stage = target
+            authored = chain.row(stage)
+            def trusted_only(payload):
+                # No expected values enter the worker. The only code executed
+                # on the host is in the existing source-owned strict allowlist.
+                self.assertEqual(set(payload), {"code", "parameters", "trials"})
+                return module.trusted_run(payload)
+            with self.subTest(id=identifier):
+                correct = OFFLINE.score_answer(
+                    target, {"public_answer": authored["correct"]},
+                    trusted_only, 20261107, 4)
+                foil = OFFLINE.score_answer(
+                    target, {"public_answer": authored["foil"]},
+                    trusted_only, 20261107, 4)
+                self.assertTrue(correct["passed"])
+                self.assertFalse(foil["passed"])
+                if stage:
+                    self.assertEqual(correct["supplied_helper_sha256"],
+                                     OFFLINE.sandbox.sha(CHAINS.as_helper(
+                                         chain.helper.code()).encode()))
+        target = next(iter(OFFLINE.targets().values()))
+        def forbidden(_payload):
+            self.fail("missing answer reached execution")
+        self.assertIsNone(OFFLINE.score_answer(
+            target, {}, forbidden, 20261107, 4)["passed"])
+
+
+if __name__ == "__main__":
+    unittest.main()

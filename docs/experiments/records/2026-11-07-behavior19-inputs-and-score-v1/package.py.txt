@@ -1,0 +1,50 @@
+import gzip,hashlib,json,pathlib,time
+R=pathlib.Path('/mnt/nvme/kairyu/wsp/gemma4-coding-20261104');B=R/'worktrees/kairyu-bench-weight-tools';E=B/'docs/experiments';I=R/'analysis/fresh-purpose-20261107-behavior19-inputs-v1';N=R/'analysis/fresh-purpose-20261107-f04-behavior19-native-v1';O=E/'records/2026-11-07-behavior19-inputs-and-score-v1';O.mkdir()
+def sha(b):return hashlib.sha256(b).hexdigest()
+rows=[]
+def cp(src,rel):
+ data=src.read_bytes();dest=O/rel
+ if len(data)>65536:dest=dest.with_name(dest.name+'.gz');stored=gzip.compress(data,mtime=0);assert gzip.decompress(stored)==data
+ else:stored=data
+ dest.parent.mkdir(parents=True,exist_ok=True)
+ with dest.open('xb') as f:f.write(stored)
+ rows.append(dict(path=str(dest.relative_to(O)),source=str(src),raw_sha256=sha(data),stored_sha256=sha(stored),bytes=len(stored)))
+for root,rel in [(I,'inputs'),(N/'score-v1','score')]:
+ for p in sorted(root.iterdir()):
+  if p.is_file():cp(p,pathlib.Path(rel)/p.name)
+for p in sorted((R/'analysis').glob('fresh-purpose-20261107-behavior19-prepare*')):
+ if p.is_file():cp(p,pathlib.Path('preparation')/p.name)
+cp(N/'score-driver.py.txt','score-driver.py.txt')
+for name in ['train-responses.json','receipt.json']:
+ p=N/'generation'/name
+ if p.exists():cp(p,pathlib.Path('generation')/name)
+for name in ['owner-closure.json','normal-lock-release.json']:cp(N/'owner'/name,pathlib.Path('generation')/name)
+for name in ['behavior_followup_cases.py','behavior_cases.py','behavior_offline.py','science_sandbox.py']:cp(B/'scripts/experiments/gemma4-purpose'/name,pathlib.Path('source')/(name+'.txt'))
+cp(pathlib.Path(__file__),'package.py.txt')
+(O/'packaging.json').write_text(json.dumps({'epoch':time.time(),'rows':rows,'lossless':True,'all_trials_retained':True,'model_calls':0,'service_operations':0},indent=2)+chr(10))
+files=sorted(p for p in O.rglob('*') if p.is_file())
+(O/'SHA256SUMS').write_text(''.join(sha(p.read_bytes())+'  '+str(p.relative_to(O))+chr(10) for p in files))
+doc="""# F04 train19 input and first public-answer score
+
+F04 is the next parent after complete dev30 code tied AV (72.9365079365) and overall improved to76.9910864328. This authored calibration score is not added to WSP scores.
+
+The input preserves all original A–F12 and G–I6 train rows exactly, in two singleton folds per purpose. J adds one singleton with ID behavior-J1: the original F2 public prompt and correct program, with the observed wrong foil values[0::k] contrasting required values[k-1::k]. Original F2 and its zero-removal foil remain unchanged. These are **19 calibration entries including one repeated prompt with a new foil**, not19 independent tasks. Old transfer6 and follow-up transfer3 files remain byte-identical and unused.
+
+Input SHA256:74e1cd2000fda0abdc03f4454b18f4231b9891360af266391744e13976f199f1. Freeze:975e9087c66b72e15d666fbad8ab08f6b390e48fb2bc4428cc814e89bde85374. Ordered purpose/fold/ID and row hashes are retained. Existing behavior_followup_cases.training_payload()/training_catalog() compose the cohort. Fixture dispatch reuses original A–F and new G–I functions; no new numerical oracle.
+
+Only J1's authored correct/foil were validated: two existing Docker worker calls,16 fixtures each,1.303934s. Correct passed16/16; offset foil passed4/16 and failed a fixed witness. Existing18 were not rerun. Expected values stay outside the worker. Code executes with network none, no host mount/GPU, uid1003, cap-drop-all, CPU1/512MiB/15s.
+
+Root generated all19 once from F04: owner26.399529s,19 responses,0error/empty/length/retry. After normal lock release, the full CPU score ran once in15.267588s: **16 PASS /3 FAIL /0unknown;264/304 fixtures**,19 Docker calls. A1 failed0/16, F2 and J1 each4/16; every other case passed16/16. B1/B2 numeric success does not prove the required SymPy method.
+
+Report SHA256:1599a3c564aa9fe019087618f9373a4d65d268ab2c11d7fb56859dab70cd9c82. Summary:2907a3768ecb3c4370a11ae43bc475309e251122afaa15929490a8f5acec8408. Cleanup confirmed zero science-sandbox containers and total27 host containers before GPU handoff. All pre-existing running services remained present; extra model/service operations0.
+
+Preparation failures are retained: missing repository src import, then an incorrect equality check between raw rows and a reader that intentionally removes split metadata. Both stopped before Docker. The exported input stayed unchanged during resume. One metadata-only cleanup attempt used system Python lacking NumPy and was retried with scientific Python; it issued no Docker command. A pre-SSH documentation quoting error made no remote changes. No authored/generated program was rerun to hide failures.
+
+[Inputs, source, lineage, every public response and every worker/trial result](records/2026-11-07-behavior19-inputs-and-score-v1/) include original/stored SHA256 and all one-off sources. The new preservation test covers old rows/foils, unique19 IDs and transfer exclusion. Shared scorer/worker and old case source are unchanged. Full post-change CI is separately tracked as r10.
+"""
+(E/'2026-11-07-behavior19-inputs-and-f04-score.md').write_text(doc)
+for p,entry in [
+(B/'scripts/experiments/gemma4-purpose/README.md','\nThe behavior_followup_cases.training_payload()/training_catalog() exports compose unchanged A–F12 and G–I6 train rows plus separate J1 offset contrast. A–I keep two singleton folds; J has one. Original F2 and nine transfer rows remain unchanged. This is18 prompts plus one repeated prompt/new foil. See [input and full F04 CPU score](../../../docs/experiments/2026-11-07-behavior19-inputs-and-f04-score.md).\n'),
+(B/'docs/wsp-tool-inventory.md','\nThe experiment-owned behavior follow-up module exports training_payload()/training_catalog() for fixed19 calibration entries; existing fixtures and worker are reused, transfers excluded. [Input, lineage and F04 CPU score](experiments/2026-11-07-behavior19-inputs-and-f04-score.md).\n')]:
+ with p.open('a') as f:f.write(entry)
+print(json.dumps({'record':str(O),'files':len(files),'manifest_sha256':sha((O/'SHA256SUMS').read_bytes()),'doc_sha256':sha((E/'2026-11-07-behavior19-inputs-and-f04-score.md').read_bytes())}))

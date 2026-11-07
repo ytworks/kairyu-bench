@@ -1,0 +1,45 @@
+{
+  "reference_commit": "4e088df",
+  "sandbox_before_sha256": "cf26e77e90d5789422ad2ebd3ac43599ee0a2ebc781b7a1c0c8ae834953a817e",
+  "sandbox_after_sha256": "4a19f0f5fc235f56d702d39dd9bc9e403eba98ffdeadabe4c6365b41566131a4",
+  "unchanged_ast_or_worker_bytes": {
+    "WORKER": true,
+    "Docker": true,
+    "prepare": true,
+    "compare": true,
+    "extract": true,
+    "bounded_command": true,
+    "main": true
+  },
+  "unchanged_oracle_sources": {
+    "helper_chain_cases.py": {
+      "sha256": "08b27e7f0d36d90211fd7c9435d42fa5d53f1681e2a9b20f945ef65f05c44c6d",
+      "bytes_unchanged": true
+    },
+    "long_helper_chain_cases.py": {
+      "sha256": "9531f78cce00c5e41a5e1cd4d79f9f968c7730940b60e95fcbe2099eb66f4e0e",
+      "bytes_unchanged": true
+    },
+    "science_cases.py": {
+      "sha256": "2c4cc6e75c92c41b98e737ca2c0a653e0f7a7675c6150a6ad33e3f954122a26b",
+      "bytes_unchanged": true
+    },
+    "advanced_science_cases.py": {
+      "sha256": "544bcf6ef8671c13038420169508419d433199ea8f41dc8abed195d59eaef1d4",
+      "bytes_unchanged": true
+    },
+    "library_train_cases.py": {
+      "sha256": "7371327bb781ce6dc0d0df379208ae9704210626bc7b9e184b01a764fcc3628a",
+      "bytes_unchanged": true
+    }
+  },
+  "cpu_ci_tests": {
+    "collected": 3,
+    "passed": 2,
+    "optional_scipy_skipped": 1,
+    "elapsed_seconds": 0.081
+  },
+  "focused_ruff": "passed",
+  "git_diff_check": "passed",
+  "no_real_docker_or_generated_code_execution": true
+}

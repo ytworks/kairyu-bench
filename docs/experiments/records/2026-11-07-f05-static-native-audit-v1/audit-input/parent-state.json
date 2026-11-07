@@ -1,0 +1,40 @@
+{
+  "checkpoint_tree_sha256": "7b9e9488e3cd4e0b6c5f61ae341e5eeccdf5bd31c46d1c8354950dbc29d0f924",
+  "native_measurement_closure": {
+    "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f04-native19-gpu4-v1/completion.json",
+    "sha256": "b92b26603c4040139ed3043e45c3f740173a8664d148045434fecf5ba71864d3"
+  },
+  "native_behavior_result": {
+    "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f04-native19-gpu4-prepare-v1/root-native-behavior-identity.json",
+    "sha256": "e4ebc7204f0ad4bdf4337402cb0715f03483bb9e489858a607c583dff6926f23"
+  },
+  "comparison_status": "F04 complete same-condition code tie with AV; higher overall breaks tie; F04 selected parent, code improvement not claimed. No new WSP baseline run.",
+  "policy": {
+    "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f05-native-contract-v1/pre-observation-policy.json",
+    "sha256": "db8f8ceb855699386b6bc8d6fd25b6f4bd0e90c4d29a2caf56ae9f00b4de3056"
+  },
+  "restrictions": [
+    "All19 both objectives retained; all38 constraints",
+    "No transfer or benchmark answers used as training target",
+    "One fixed CPU proposal; all rounds/shortfalls retained; no automatic rescale",
+    "Predicted LL/margin changes are not WSP scores"
+  ],
+  "dependency": {
+    "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f05-native-contract-v1/audit-input-v1/dependency.json",
+    "sha256": "fb65f020e9753fea525de3b84474f98412550b83e45879f1df5228bfb3e6bc9a",
+    "bytes": 4847
+  },
+  "audit_derivation": {
+    "original_parent_state": {
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f05-native-contract-v1/parent-state.json",
+      "sha256": "75596a03213dcde2eee5856c070b54b110aff2300d09b2c985022c805433acf1",
+      "bytes": 1318
+    },
+    "original_plan": {
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f05-native-contract-v1/proposal-plan.json",
+      "sha256": "f0ca2df4c3a73bd1f032e9602aed42733afc2b9fa919324fc81feef648569ffa",
+      "bytes": 30780
+    },
+    "scope": "Only opaque parent-state reference augmented for existing static audit. All solver numeric fields unchanged."
+  }
+}

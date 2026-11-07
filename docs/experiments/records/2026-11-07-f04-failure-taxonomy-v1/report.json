@@ -1,0 +1,3510 @@
+{
+  "status": "complete_saved_record_taxonomy",
+  "created_epoch": 1794059497.5889153,
+  "scope": {
+    "failed_standard_items": 13,
+    "failed_scicode_steps": 18,
+    "all_scicode_steps": 39
+  },
+  "rules": {
+    "precedence": [
+      "length",
+      "explicit_timeout",
+      "missing_required_entrypoint",
+      "syntax_or_extraction",
+      "assertion_stderr_hint",
+      "unknown"
+    ],
+    "length": "Only saved finish_reason=length; token count alone is insufficient.",
+    "explicit_timeout": "Only saved timed_out=true or explicit timeout status.",
+    "missing_required_entrypoint": "Expected callable absent after pinned sanitizer; AST only.",
+    "syntax_or_extraction": "Empty selected code or AST SyntaxError; no generated-code execution.",
+    "assertion_stderr_hint": "SciCode failed, returncode nonzero, timed_out=false, AssertionError hint. Medium confidence; not raw traceback proof.",
+    "unknown": "Binary rejection, generic fail, or non-assertion exception hint cannot identify assertion vs runtime vs per-test timeout.",
+    "not_inferred": [
+      "No model-capability attribution from weights.",
+      "No hidden-test inputs or reference answers read.",
+      "No benchmark-to-training-data transfer.",
+      "No claimed timeout from long generation or algorithm complexity.",
+      "EvalPlus fail may include internal timeout; only separate timeout is unambiguous."
+    ]
+  },
+  "counts": {
+    "unknown": 17,
+    "format_extraction_syntax": 1,
+    "functional_assertion_hint": 13
+  },
+  "rows": [
+    {
+      "item_id": "humaneval-plus:HumanEval/151",
+      "source": "humaneval-plus",
+      "official_score": 0.0,
+      "finish_reason": "stop",
+      "completion_tokens": 1394,
+      "api_error": null,
+      "line": 914,
+      "line_sha256": "5e682ad6273a860f4f13f057d54e7f2e6c556d06080ed39c710049979acaeb7a",
+      "input_path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/results/gemma4-fresh-f04-dev30-dp4-20261107-v1/items.jsonl",
+      "id": "humaneval-plus:HumanEval/151",
+      "detail": {
+        "samples": [
+          {
+            "base": "pass",
+            "plus": "fail",
+            "passed": false
+          }
+        ]
+      },
+      "public_content_sha256": "746fb65f2ab4bd0220b5abf1e8e8ad4b4361eae0faf3d5c12ca568e5d6535836",
+      "public_content_bytes": 1216,
+      "code_pointer": "outcome.samples[0].content",
+      "extracted_code": {
+        "bytes": 853,
+        "sha256": "94fc352a56ae6cddeab7bb21ce83aa89a65566fa4913dcf9febb202cfcda55f1",
+        "empty": false,
+        "parse_ok": true,
+        "top_level_definitions": [
+          "double_the_difference"
+        ],
+        "duplicate_top_level_definitions": {}
+      },
+      "extraction_method": "cached evalplus sanitizer; pure string/tree parsing",
+      "expected_entrypoint": "double_the_difference",
+      "category": "unknown",
+      "certainty": "underdetermined",
+      "missing_required_entrypoint": false,
+      "observable_rejection": "Saved official tests rejected the submitted code; no per-test failure detail or stderr retained.",
+      "static_note": "Observed: type(num)==int excludes bool/subclasses. Plausible contract edge; actual failing input unavailable.",
+      "full_stderr_available": false,
+      "generated_code_executions": 0
+    },
+    {
+      "item_id": "livecodebench:arc191_c",
+      "source": "livecodebench",
+      "official_score": 0.0,
+      "finish_reason": "stop",
+      "completion_tokens": 9738,
+      "api_error": null,
+      "line": 1162,
+      "line_sha256": "00954b5781bfc1a6b4ad8373eb2629f0cb2f4fe66b3e8cbddad6f955b790aeeb",
+      "input_path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/results/gemma4-fresh-f04-dev30-dp4-20261107-v1/items.jsonl",
+      "id": "livecodebench:arc191_c",
+      "detail": {
+        "samples": [
+          {
+            "passed": false
+          }
+        ]
+      },
+      "public_content_sha256": "96239cd6f8bdad4fb83a0d0199cbb5e11693fd0509c9f595a7367f8acd67c3e5",
+      "public_content_bytes": 3706,
+      "code_pointer": "outcome.samples[0].content",
+      "extracted_code": {
+        "bytes": 3692,
+        "sha256": "426a477c222a2f5ff66c76dec12585d879c55232f9e283640df7ecfc858bce88",
+        "empty": false,
+        "parse_ok": true,
+        "top_level_definitions": [
+          "solve"
+        ],
+        "duplicate_top_level_definitions": {}
+      },
+      "extraction_method": "cached official LiveCodeBench OpenAIChat extractor; last fenced block",
+      "expected_entrypoint": null,
+      "category": "unknown",
+      "certainty": "underdetermined",
+      "missing_required_entrypoint": false,
+      "observable_rejection": "Saved official tests rejected the submitted code; no per-test failure detail or stderr retained.",
+      "static_note": "Observed: bounded search for prime k*N+1 and A; unsuccessful search emits no line. Whether this triggered rejection is unknown.",
+      "full_stderr_available": false,
+      "generated_code_executions": 0
+    },
+    {
+      "item_id": "livecodebench:abc390_g",
+      "source": "livecodebench",
+      "official_score": 0.0,
+      "finish_reason": "stop",
+      "completion_tokens": 13032,
+      "api_error": null,
+      "line": 1169,
+      "line_sha256": "5427ca14f38947a56dde87052fdf0367144052737c11bddd74513af16621a461",
+      "input_path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/results/gemma4-fresh-f04-dev30-dp4-20261107-v1/items.jsonl",
+      "id": "livecodebench:abc390_g",
+      "detail": {
+        "samples": [
+          {
+            "passed": false
+          }
+        ]
+      },
+      "public_content_sha256": "586d868d081c286a14c2e6844973420a3e50d74cf4faa74337500e38296d17bc",
+      "public_content_bytes": 3330,
+      "code_pointer": "outcome.samples[0].content",
+      "extracted_code": {
+        "bytes": 3316,
+        "sha256": "f7be914505119769f3cad35cdc84a66d1aebd161f259aeca9fb98aeaaf7ac5c3",
+        "empty": false,
+        "parse_ok": true,
+        "top_level_definitions": [
+          "solve"
+        ],
+        "duplicate_top_level_definitions": {}
+      },
+      "extraction_method": "cached official LiveCodeBench OpenAIChat extractor; last fenced block",
+      "expected_entrypoint": null,
+      "category": "unknown",
+      "certainty": "underdetermined",
+      "missing_required_entrypoint": false,
+      "observable_rejection": "Saved official tests rejected the submitted code; no per-test failure detail or stderr retained.",
+      "static_note": "Observed: nested coefficient convolution; recurrence changes. Complexity risk is not an observed timeout.",
+      "full_stderr_available": false,
+      "generated_code_executions": 0
+    },
+    {
+      "item_id": "livecodebench:arc196_a",
+      "source": "livecodebench",
+      "official_score": 0.0,
+      "finish_reason": "stop",
+      "completion_tokens": 8856,
+      "api_error": null,
+      "line": 1174,
+      "line_sha256": "e3b698248dbd7cda2c50116a81d6fa8b2cdc827c384f3e360d84dfd51a72cf23",
+      "input_path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/results/gemma4-fresh-f04-dev30-dp4-20261107-v1/items.jsonl",
+      "id": "livecodebench:arc196_a",
+      "detail": {
+        "samples": [
+          {
+            "passed": false
+          }
+        ]
+      },
+      "public_content_sha256": "e19d783e96322755fdee18c08a522230ac5ec806d9e8bd0146ed18e90b63caee",
+      "public_content_bytes": 3110,
+      "code_pointer": "outcome.samples[0].content",
+      "extracted_code": {
+        "bytes": 3096,
+        "sha256": "8b727b1b2bbe3f70b7a3d9a88d755b1647be12f6ad69dc263b8dc7286f1882b4",
+        "empty": false,
+        "parse_ok": true,
+        "top_level_definitions": [
+          "solve"
+        ],
+        "duplicate_top_level_definitions": {}
+      },
+      "extraction_method": "cached official LiveCodeBench OpenAIChat extractor; last fenced block",
+      "expected_entrypoint": null,
+      "category": "unknown",
+      "certainty": "underdetermined",
+      "missing_required_entrypoint": false,
+      "observable_rejection": "Saved official tests rejected the submitted code; no per-test failure detail or stderr retained.",
+      "static_note": "Observed: sorts odd/even position pools then pairs extremes. Feasibility reduction is an unverified algorithm hypothesis.",
+      "full_stderr_available": false,
+      "generated_code_executions": 0
+    },
+    {
+      "item_id": "livecodebench:arc190_c",
+      "source": "livecodebench",
+      "official_score": 0.0,
+      "finish_reason": "stop",
+      "completion_tokens": 13758,
+      "api_error": null,
+      "line": 1176,
+      "line_sha256": "64bade0b366ee9366391601a7cc3235ebb44cbeb2a3c986632814b8734edf162",
+      "input_path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/results/gemma4-fresh-f04-dev30-dp4-20261107-v1/items.jsonl",
+      "id": "livecodebench:arc190_c",
+      "detail": {
+        "samples": [
+          {
+            "passed": false
+          }
+        ]
+      },
+      "public_content_sha256": "3dd44aab986146fe5d13d5ebd61afebb47675e52e7e3e3e048a11e0785886878",
+      "public_content_bytes": 8482,
+      "code_pointer": "outcome.samples[0].content",
+      "extracted_code": {
+        "bytes": 1465,
+        "sha256": "b864a21334554c0fe3a83112dcd2107d970ea88278f652b8819f9bfb09d54dd4",
+        "empty": false,
+        "parse_ok": true,
+        "top_level_definitions": [
+          "solve"
+        ],
+        "duplicate_top_level_definitions": {}
+      },
+      "extraction_method": "cached official LiveCodeBench OpenAIChat extractor; last fenced block",
+      "expected_entrypoint": null,
+      "category": "unknown",
+      "certainty": "underdetermined",
+      "missing_required_entrypoint": false,
+      "observable_rejection": "Saved official tests rejected the submitted code; no per-test failure detail or stderr retained.",
+      "static_note": "Observed: two markdown code blocks; official extractor selects the last, valid block. It recomputes full grid DP per query; no saved timeout evidence.",
+      "full_stderr_available": false,
+      "generated_code_executions": 0
+    },
+    {
+      "item_id": "livecodebench:abc392_d",
+      "source": "livecodebench",
+      "official_score": 0.0,
+      "finish_reason": "stop",
+      "completion_tokens": 6356,
+      "api_error": null,
+      "line": 1177,
+      "line_sha256": "a8d5eba2818e230f7bddce90f91d5af70b41a501316929df48bf528bc617a20d",
+      "input_path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/results/gemma4-fresh-f04-dev30-dp4-20261107-v1/items.jsonl",
+      "id": "livecodebench:abc392_d",
+      "detail": {
+        "samples": [
+          {
+            "passed": false
+          }
+        ]
+      },
+      "public_content_sha256": "1ad5149a5e854066ff959d2254fd9a01709f73f030861a1354c34be2f22d5aac",
+      "public_content_bytes": 3112,
+      "code_pointer": "outcome.samples[0].content",
+      "extracted_code": {
+        "bytes": 3098,
+        "sha256": "c1ec6405d20834b81d7cf16372d0db83c6d9e8a836c050198e59ec300cc6e13d",
+        "empty": false,
+        "parse_ok": true,
+        "top_level_definitions": [
+          "solve"
+        ],
+        "duplicate_top_level_definitions": {}
+      },
+      "extraction_method": "cached official LiveCodeBench OpenAIChat extractor; last fenced block",
+      "expected_entrypoint": null,
+      "category": "unknown",
+      "certainty": "underdetermined",
+      "missing_required_entrypoint": false,
+      "observable_rejection": "Saved official tests rejected the submitted code; no per-test failure detail or stderr retained.",
+      "static_note": "Observed: pairwise Counter overlap and 15-decimal output. Binary result gives no concrete cause.",
+      "full_stderr_available": false,
+      "generated_code_executions": 0
+    },
+    {
+      "item_id": "mbpp-plus:Mbpp/801",
+      "source": "mbpp-plus",
+      "official_score": 0.0,
+      "finish_reason": "stop",
+      "completion_tokens": 1413,
+      "api_error": null,
+      "line": 1253,
+      "line_sha256": "205436586fac27de5f8b92a3a13c3ce254064e09662ee81f7571d2cee58af012",
+      "input_path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/results/gemma4-fresh-f04-dev30-dp4-20261107-v1/items.jsonl",
+      "id": "mbpp-plus:Mbpp/801",
+      "detail": {
+        "samples": [
+          {
+            "base": "fail",
+            "plus": "fail",
+            "passed": false
+          }
+        ]
+      },
+      "public_content_sha256": "dfdde74bec34f706c5a69ff8e54fba1e06ca5091dd32ce2ab72ea3a86dcdb019",
+      "public_content_bytes": 1006,
+      "code_pointer": "outcome.samples[0].content",
+      "extracted_code": {
+        "bytes": 610,
+        "sha256": "52236738f65742903fa96e5753c94b00bfcfab8c125683c1c0fe92e3e68d9e88",
+        "empty": false,
+        "parse_ok": true,
+        "top_level_definitions": [
+          "test_three_equal"
+        ],
+        "duplicate_top_level_definitions": {}
+      },
+      "extraction_method": "cached evalplus sanitizer; pure string/tree parsing",
+      "expected_entrypoint": "test_three_equal",
+      "category": "unknown",
+      "certainty": "underdetermined",
+      "missing_required_entrypoint": false,
+      "observable_rejection": "Saved official tests rejected the submitted code; no per-test failure detail or stderr retained.",
+      "static_note": "Observed: max frequency returns 1 when all three distinct. Sentinel semantics are a plausible functional issue; exact failing test unavailable.",
+      "full_stderr_available": false,
+      "generated_code_executions": 0
+    },
+    {
+      "item_id": "mbpp-plus:Mbpp/410",
+      "source": "mbpp-plus",
+      "official_score": 0.0,
+      "finish_reason": "stop",
+      "completion_tokens": 806,
+      "api_error": null,
+      "line": 1254,
+      "line_sha256": "557517229057c4272e23025370bc824670b1bc5b35e4a78edd11416486cd9899",
+      "input_path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/results/gemma4-fresh-f04-dev30-dp4-20261107-v1/items.jsonl",
+      "id": "mbpp-plus:Mbpp/410",
+      "detail": {
+        "samples": [
+          {
+            "base": "pass",
+            "plus": "fail",
+            "passed": false
+          }
+        ]
+      },
+      "public_content_sha256": "ac0b507fdc2595bc1ae429b45e16c2c48107b3d3ed707b17cb562efcb8b862dc",
+      "public_content_bytes": 953,
+      "code_pointer": "outcome.samples[0].content",
+      "extracted_code": {
+        "bytes": 613,
+        "sha256": "4ae45977cac5b2cfa13b7667247efeed87700c31be7bc973100ba1c4412c4da8",
+        "empty": false,
+        "parse_ok": true,
+        "top_level_definitions": [
+          "min_val"
+        ],
+        "duplicate_top_level_definitions": {}
+      },
+      "extraction_method": "cached evalplus sanitizer; pure string/tree parsing",
+      "expected_entrypoint": "min_val",
+      "category": "unknown",
+      "certainty": "underdetermined",
+      "missing_required_entrypoint": false,
+      "observable_rejection": "Saved official tests rejected the submitted code; no per-test failure detail or stderr retained.",
+      "static_note": "Observed: numeric filtering followed by min without an empty guard. Edge contract/runtime cause remains unknown.",
+      "full_stderr_available": false,
+      "generated_code_executions": 0
+    },
+    {
+      "item_id": "mbpp-plus:Mbpp/576",
+      "source": "mbpp-plus",
+      "official_score": 0.0,
+      "finish_reason": "stop",
+      "completion_tokens": 1334,
+      "api_error": null,
+      "line": 1261,
+      "line_sha256": "dd504b96661ee3879178d199ce4b5f84a2cd780775f149729d1770b9d196202f",
+      "input_path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/results/gemma4-fresh-f04-dev30-dp4-20261107-v1/items.jsonl",
+      "id": "mbpp-plus:Mbpp/576",
+      "detail": {
+        "samples": [
+          {
+            "base": "pass",
+            "plus": "fail",
+            "passed": false
+          }
+        ]
+      },
+      "public_content_sha256": "7e09bff8a72dfc767548fe67c4dcb581bf712e1d6ae8d8445be3d867df3f4b43",
+      "public_content_bytes": 1736,
+      "code_pointer": "outcome.samples[0].content",
+      "extracted_code": {
+        "bytes": 1037,
+        "sha256": "326d698277d6fbc4d0f5bf89b5e060349cd9a55ddc65b1c1c525c409390138ab",
+        "empty": false,
+        "parse_ok": true,
+        "top_level_definitions": [
+          "is_Sub_Array"
+        ],
+        "duplicate_top_level_definitions": {}
+      },
+      "extraction_method": "cached evalplus sanitizer; pure string/tree parsing",
+      "expected_entrypoint": "is_Sub_Array",
+      "category": "unknown",
+      "certainty": "underdetermined",
+      "missing_required_entrypoint": false,
+      "observable_rejection": "Saved official tests rejected the submitted code; no per-test failure detail or stderr retained.",
+      "static_note": "Observed: contiguous slicing, with empty sublist returning True. Exact rejected edge unavailable.",
+      "full_stderr_available": false,
+      "generated_code_executions": 0
+    },
+    {
+      "item_id": "mbpp-plus:Mbpp/129",
+      "source": "mbpp-plus",
+      "official_score": 0.0,
+      "finish_reason": "stop",
+      "completion_tokens": 1604,
+      "api_error": null,
+      "line": 1266,
+      "line_sha256": "86b025df1499e615268b2ed776347eb5b25ad913f56a8aa3e45e71340286b5c9",
+      "input_path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/results/gemma4-fresh-f04-dev30-dp4-20261107-v1/items.jsonl",
+      "id": "mbpp-plus:Mbpp/129",
+      "detail": {
+        "samples": [
+          {
+            "base": "pass",
+            "plus": "fail",
+            "passed": false
+          }
+        ]
+      },
+      "public_content_sha256": "8bda417ceb19a4d792a4fd497760c5fea0c63f3efe89c6b02e3e47026efc4b74",
+      "public_content_bytes": 2047,
+      "code_pointer": "outcome.samples[0].content",
+      "extracted_code": {
+        "bytes": 1339,
+        "sha256": "06591e1544594a0d02406455476d38c79d7342b9a358e6bcbcc6beabc5d34e0e",
+        "empty": false,
+        "parse_ok": true,
+        "top_level_definitions": [
+          "magic_square_test"
+        ],
+        "duplicate_top_level_definitions": {}
+      },
+      "extraction_method": "cached evalplus sanitizer; pure string/tree parsing",
+      "expected_entrypoint": "magic_square_test",
+      "category": "unknown",
+      "certainty": "underdetermined",
+      "missing_required_entrypoint": false,
+      "observable_rejection": "Saved official tests rejected the submitted code; no per-test failure detail or stderr retained.",
+      "static_note": "Observed: imposes a complete 1..n^2 set in addition to equal sums. Contract interpretation is a hypothesis.",
+      "full_stderr_available": false,
+      "generated_code_executions": 0
+    },
+    {
+      "item_id": "mbpp-plus:Mbpp/103",
+      "source": "mbpp-plus",
+      "official_score": 0.0,
+      "finish_reason": "stop",
+      "completion_tokens": 2541,
+      "api_error": null,
+      "line": 1273,
+      "line_sha256": "87851a1d07e7d96eaca7374af20841e025dfb4b4f2d7923f9609e05ca564b4d2",
+      "input_path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/results/gemma4-fresh-f04-dev30-dp4-20261107-v1/items.jsonl",
+      "id": "mbpp-plus:Mbpp/103",
+      "detail": {
+        "samples": [
+          {
+            "base": "pass",
+            "plus": "fail",
+            "passed": false
+          }
+        ]
+      },
+      "public_content_sha256": "231ba1f805d63024f0fff283394b6b2d1f213f341cc674cb9f2eadb8b40c66c6",
+      "public_content_bytes": 1737,
+      "code_pointer": "outcome.samples[0].content",
+      "extracted_code": {
+        "bytes": 1215,
+        "sha256": "e2967ca1004e75e58ccae0cf7b4184858d4450f2753c767ea8fb24a59ce7bf7e",
+        "empty": false,
+        "parse_ok": true,
+        "top_level_definitions": [
+          "eulerian_num"
+        ],
+        "duplicate_top_level_definitions": {}
+      },
+      "extraction_method": "cached evalplus sanitizer; pure string/tree parsing",
+      "expected_entrypoint": "eulerian_num",
+      "category": "unknown",
+      "certainty": "underdetermined",
+      "missing_required_entrypoint": false,
+      "observable_rejection": "Saved official tests rejected the submitted code; no per-test failure detail or stderr retained.",
+      "static_note": "Observed: explicit n=0/m<0/m>=n branches and quadratic DP. Boundary or resource cause not separable.",
+      "full_stderr_available": false,
+      "generated_code_executions": 0
+    },
+    {
+      "item_id": "mbpp-plus:Mbpp/639",
+      "source": "mbpp-plus",
+      "official_score": 0.0,
+      "finish_reason": "stop",
+      "completion_tokens": 809,
+      "api_error": null,
+      "line": 1279,
+      "line_sha256": "b89bc1a886a11cae985efc116bb11c073810cff3139ed2117ee6ad55170d2247",
+      "input_path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/results/gemma4-fresh-f04-dev30-dp4-20261107-v1/items.jsonl",
+      "id": "mbpp-plus:Mbpp/639",
+      "detail": {
+        "samples": [
+          {
+            "base": "pass",
+            "plus": "fail",
+            "passed": false
+          }
+        ]
+      },
+      "public_content_sha256": "4ee647fa3762f5e9addecb30726bf3f7536c18bd97603654ff256c5bde8571f5",
+      "public_content_bytes": 783,
+      "code_pointer": "outcome.samples[0].content",
+      "extracted_code": {
+        "bytes": 347,
+        "sha256": "8f879e82900b2776671091f885922457bf60da45be2c163e75d5829a7b02c90e",
+        "empty": false,
+        "parse_ok": true,
+        "top_level_definitions": [
+          "sample_nam"
+        ],
+        "duplicate_top_level_definitions": {}
+      },
+      "extraction_method": "cached evalplus sanitizer; pure string/tree parsing",
+      "expected_entrypoint": "sample_nam",
+      "category": "unknown",
+      "certainty": "underdetermined",
+      "missing_required_entrypoint": false,
+      "observable_rejection": "Saved official tests rejected the submitted code; no per-test failure detail or stderr retained.",
+      "static_note": "Observed: requires first character isupper, not merely non-lowercase. Non-letter edge is a hypothesis.",
+      "full_stderr_available": false,
+      "generated_code_executions": 0
+    },
+    {
+      "item_id": "mbpp-plus:Mbpp/126",
+      "source": "mbpp-plus",
+      "official_score": 0.0,
+      "finish_reason": "stop",
+      "completion_tokens": 999,
+      "api_error": null,
+      "line": 1281,
+      "line_sha256": "b5f4a623458b29b58e915e2ef373905003597c05f751dbff1675b76e944531eb",
+      "input_path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/results/gemma4-fresh-f04-dev30-dp4-20261107-v1/items.jsonl",
+      "id": "mbpp-plus:Mbpp/126",
+      "detail": {
+        "samples": [
+          {
+            "base": "fail",
+            "plus": "fail",
+            "passed": false
+          }
+        ]
+      },
+      "public_content_sha256": "cd62e0b12d6231b70b1c521a7eb705492dda81f37f1fdbfb838e0b31f14a69f3",
+      "public_content_bytes": 1500,
+      "code_pointer": "outcome.samples[0].content",
+      "extracted_code": {
+        "bytes": 11,
+        "sha256": "b67c9ddef3e0c3715a3708ecfa296cc461a164bde94c8ba3fd112789b5bed926",
+        "empty": false,
+        "parse_ok": true,
+        "top_level_definitions": [],
+        "duplicate_top_level_definitions": {}
+      },
+      "extraction_method": "cached evalplus sanitizer; pure string/tree parsing",
+      "expected_entrypoint": "sum",
+      "category": "format_extraction_syntax",
+      "certainty": "high_static",
+      "missing_required_entrypoint": true,
+      "observable_rejection": "Saved official tests rejected the submitted code; no per-test failure detail or stderr retained.",
+      "static_note": "Expected entry point sum; saved public code defines sum_common_divisors. Pinned sanitizer retains only import math; no required callable.",
+      "full_stderr_available": false,
+      "generated_code_executions": 0
+    },
+    {
+      "item_id": "scicode:18",
+      "source": "scicode",
+      "official_score": 0.0,
+      "finish_reason": "stop",
+      "completion_tokens": 10459,
+      "api_error": null,
+      "line": 1793,
+      "line_sha256": "24c2a4bc0e4c2070fc7afd687d25f590611a27de1424e1f5f02c2e2f5ddaa4cd",
+      "input_path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/results/gemma4-fresh-f04-dev30-dp4-20261107-v1/items.jsonl",
+      "id": "scicode:18:18.1",
+      "step": "18.1",
+      "diagnostic": {
+        "step": "18.1",
+        "passed": false,
+        "returncode": 1,
+        "timed_out": false,
+        "elapsed_seconds": 2.2494444960029796,
+        "exception_class": "AssertionError",
+        "exception_class_origin": "stderr_allowlisted_hint",
+        "stdout": {
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "representation": "utf8_of_captured_text"
+        },
+        "stderr": {
+          "bytes": 227,
+          "sha256": "7ccc378f4380f9eb65bfa7934a4e23f1401cb85828c88e09d3f128389477ddf2",
+          "representation": "utf8_of_captured_text"
+        }
+      },
+      "step_finish_reason": "stop",
+      "step_code": {
+        "bytes": 1859,
+        "sha256": "af86ae23aa16da99356d33ac1993099835dc8de46327d0d52c75beff7fbef23f",
+        "empty": false,
+        "parse_ok": true,
+        "top_level_definitions": [
+          "Bspline"
+        ],
+        "duplicate_top_level_definitions": {}
+      },
+      "step_public_sha256": "d2dd5e4ba4c63f237ba4ffb8da3e0e57edd9db8df339759a47b210c66224f17f",
+      "code_pointer": "outcome.samples[0].files.18.1",
+      "category": "functional_assertion_hint",
+      "certainty": "medium_hint_only",
+      "causal_explanation": "Unavailable: saved stderr contains only digest, size and allowlisted class hint; full stderr and appended tests were not retained.",
+      "mechanism_note": "Stored step includes dependencies and earlier generated helpers; failure may be in an earlier helper or current function. No blanket propagation claim."
+    },
+    {
+      "item_id": "scicode:18",
+      "source": "scicode",
+      "official_score": 0.0,
+      "finish_reason": "stop",
+      "completion_tokens": 10459,
+      "api_error": null,
+      "line": 1793,
+      "line_sha256": "24c2a4bc0e4c2070fc7afd687d25f590611a27de1424e1f5f02c2e2f5ddaa4cd",
+      "input_path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/results/gemma4-fresh-f04-dev30-dp4-20261107-v1/items.jsonl",
+      "id": "scicode:18:18.2",
+      "step": "18.2",
+      "diagnostic": {
+        "step": "18.2",
+        "passed": false,
+        "returncode": 1,
+        "timed_out": false,
+        "elapsed_seconds": 2.7160479800077155,
+        "exception_class": "IndexError",
+        "exception_class_origin": "stderr_allowlisted_hint",
+        "stdout": {
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "representation": "utf8_of_captured_text"
+        },
+        "stderr": {
+          "bytes": 469,
+          "sha256": "3c2457e39e192e8943d0a0c8cfd5b9a4a527ab42645196d1f928bc015ece31f9",
+          "representation": "utf8_of_captured_text"
+        }
+      },
+      "step_finish_reason": "stop",
+      "step_code": {
+        "bytes": 5104,
+        "sha256": "3e80032b08e6fbde6b893fbc8c52b584b01c1af5d2471529e00972807e194373",
+        "empty": false,
+        "parse_ok": true,
+        "top_level_definitions": [
+          "Bspline",
+          "NURBS_2D"
+        ],
+        "duplicate_top_level_definitions": {}
+      },
+      "step_public_sha256": "6c874e4fb6f3f52a7af74d5a94ee7080e70cba68ebe2ff2e739a72208806b611",
+      "code_pointer": "outcome.samples[0].files.18.2",
+      "category": "unknown",
+      "certainty": "underdetermined",
+      "causal_explanation": "Unavailable: saved stderr contains only digest, size and allowlisted class hint; full stderr and appended tests were not retained.",
+      "mechanism_note": "Stored step includes dependencies and earlier generated helpers; failure may be in an earlier helper or current function. No blanket propagation claim."
+    },
+    {
+      "item_id": "scicode:45",
+      "source": "scicode",
+      "official_score": 0.0,
+      "finish_reason": "stop",
+      "completion_tokens": 10933,
+      "api_error": null,
+      "line": 1794,
+      "line_sha256": "18412eb42b29f7e2354ed63c85af947279d4fb92b2724b4d59258c889077336f",
+      "input_path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/results/gemma4-fresh-f04-dev30-dp4-20261107-v1/items.jsonl",
+      "id": "scicode:45:45.1",
+      "step": "45.1",
+      "diagnostic": {
+        "step": "45.1",
+        "passed": false,
+        "returncode": 1,
+        "timed_out": false,
+        "elapsed_seconds": 2.698289650026709,
+        "exception_class": "ValueError",
+        "exception_class_origin": "stderr_allowlisted_hint",
+        "stdout": {
+          "bytes": 72,
+          "sha256": "e4d362ff77d839a410fcfe264059cb4b37502f1964d1ffa331c5acf1e9b44e5d",
+          "representation": "utf8_of_captured_text"
+        },
+        "stderr": {
+          "bytes": 1491,
+          "sha256": "085205900035270658a7860f65467de00bfaf7a55dd3b70bf7c1b916f60c4d8f",
+          "representation": "utf8_of_captured_text"
+        }
+      },
+      "step_finish_reason": "stop",
+      "step_code": {
+        "bytes": 2753,
+        "sha256": "cfc33c0bb7565616d55e7537261dc15deb9996a04e8ea3614ba02a45e5e2a2cb",
+        "empty": false,
+        "parse_ok": true,
+        "top_level_definitions": [
+          "init_grid"
+        ],
+        "duplicate_top_level_definitions": {}
+      },
+      "step_public_sha256": "b8415c6754f66b8b536af79054808d49ddd03a77ff7a2c45d43b63add74e13be",
+      "code_pointer": "outcome.samples[0].files.45.1",
+      "category": "unknown",
+      "certainty": "underdetermined",
+      "causal_explanation": "Unavailable: saved stderr contains only digest, size and allowlisted class hint; full stderr and appended tests were not retained.",
+      "mechanism_note": "Stored step includes dependencies and earlier generated helpers; failure may be in an earlier helper or current function. No blanket propagation claim."
+    },
+    {
+      "item_id": "scicode:45",
+      "source": "scicode",
+      "official_score": 0.0,
+      "finish_reason": "stop",
+      "completion_tokens": 10933,
+      "api_error": null,
+      "line": 1794,
+      "line_sha256": "18412eb42b29f7e2354ed63c85af947279d4fb92b2724b4d59258c889077336f",
+      "input_path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/results/gemma4-fresh-f04-dev30-dp4-20261107-v1/items.jsonl",
+      "id": "scicode:45:45.2",
+      "step": "45.2",
+      "diagnostic": {
+        "step": "45.2",
+        "passed": false,
+        "returncode": 1,
+        "timed_out": false,
+        "elapsed_seconds": 2.315012797014788,
+        "exception_class": "ValueError",
+        "exception_class_origin": "stderr_allowlisted_hint",
+        "stdout": {
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "representation": "utf8_of_captured_text"
+        },
+        "stderr": {
+          "bytes": 949,
+          "sha256": "699179d9995424a3f4cea45b0bd3a2849a271ea7481ec4e04ec75474450353fa",
+          "representation": "utf8_of_captured_text"
+        }
+      },
+      "step_finish_reason": "stop",
+      "step_code": {
+        "bytes": 4887,
+        "sha256": "badd811645a34e784199358ebbd69e70b116c16e1ea497e21223e3a567da2518",
+        "empty": false,
+        "parse_ok": true,
+        "top_level_definitions": [
+          "init_grid",
+          "add_dirichlet_bc"
+        ],
+        "duplicate_top_level_definitions": {}
+      },
+      "step_public_sha256": "f7f1b131a5907314737d63f159858b4e8d3915c3d9fdb63fa53161610c57c1ca",
+      "code_pointer": "outcome.samples[0].files.45.2",
+      "category": "unknown",
+      "certainty": "underdetermined",
+      "causal_explanation": "Unavailable: saved stderr contains only digest, size and allowlisted class hint; full stderr and appended tests were not retained.",
+      "mechanism_note": "Stored step includes dependencies and earlier generated helpers; failure may be in an earlier helper or current function. No blanket propagation claim."
+    },
+    {
+      "item_id": "scicode:45",
+      "source": "scicode",
+      "official_score": 0.0,
+      "finish_reason": "stop",
+      "completion_tokens": 10933,
+      "api_error": null,
+      "line": 1794,
+      "line_sha256": "18412eb42b29f7e2354ed63c85af947279d4fb92b2724b4d59258c889077336f",
+      "input_path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/results/gemma4-fresh-f04-dev30-dp4-20261107-v1/items.jsonl",
+      "id": "scicode:45:45.3",
+      "step": "45.3",
+      "diagnostic": {
+        "step": "45.3",
+        "passed": false,
+        "returncode": 1,
+        "timed_out": false,
+        "elapsed_seconds": 1.9333717710105702,
+        "exception_class": "ValueError",
+        "exception_class_origin": "stderr_allowlisted_hint",
+        "stdout": {
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "representation": "utf8_of_captured_text"
+        },
+        "stderr": {
+          "bytes": 945,
+          "sha256": "dd01725218ca524018648218dd30476c28d5b871e6c79471dec6e9e7168456d7",
+          "representation": "utf8_of_captured_text"
+        }
+      },
+      "step_finish_reason": "stop",
+      "step_code": {
+        "bytes": 8837,
+        "sha256": "c94b5a522c6c7e6b1aa3e509fe39d6777f35484be59d77b729726aaabb4965a6",
+        "empty": false,
+        "parse_ok": true,
+        "top_level_definitions": [
+          "init_grid",
+          "add_dirichlet_bc",
+          "add_neumann_bc"
+        ],
+        "duplicate_top_level_definitions": {}
+      },
+      "step_public_sha256": "36feddbfecc34a4f1dc53d1cdfb883d368e742a5d161ffc98b0bd56eaee73897",
+      "code_pointer": "outcome.samples[0].files.45.3",
+      "category": "unknown",
+      "certainty": "underdetermined",
+      "causal_explanation": "Unavailable: saved stderr contains only digest, size and allowlisted class hint; full stderr and appended tests were not retained.",
+      "mechanism_note": "Stored step includes dependencies and earlier generated helpers; failure may be in an earlier helper or current function. No blanket propagation claim."
+    },
+    {
+      "item_id": "scicode:45",
+      "source": "scicode",
+      "official_score": 0.0,
+      "finish_reason": "stop",
+      "completion_tokens": 10933,
+      "api_error": null,
+      "line": 1794,
+      "line_sha256": "18412eb42b29f7e2354ed63c85af947279d4fb92b2724b4d59258c889077336f",
+      "input_path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/results/gemma4-fresh-f04-dev30-dp4-20261107-v1/items.jsonl",
+      "id": "scicode:45:45.4",
+      "step": "45.4",
+      "diagnostic": {
+        "step": "45.4",
+        "passed": false,
+        "returncode": 1,
+        "timed_out": false,
+        "elapsed_seconds": 2.5944874139968306,
+        "exception_class": "AssertionError",
+        "exception_class_origin": "stderr_allowlisted_hint",
+        "stdout": {
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "representation": "utf8_of_captured_text"
+        },
+        "stderr": {
+          "bytes": 208,
+          "sha256": "8f24849676e39c8a1472dd63a1d1e5db474618d0455e939ff4865b41600d4722",
+          "representation": "utf8_of_captured_text"
+        }
+      },
+      "step_finish_reason": "stop",
+      "step_code": {
+        "bytes": 12486,
+        "sha256": "0ca952fcbe5cf154c132e7f6c0b0df107ee4caf708922843d4d5bea40d4fac25",
+        "empty": false,
+        "parse_ok": true,
+        "top_level_definitions": [
+          "init_grid",
+          "add_dirichlet_bc",
+          "add_neumann_bc",
+          "heat_equation"
+        ],
+        "duplicate_top_level_definitions": {}
+      },
+      "step_public_sha256": "2e710d752a9be2c95bf7063ba957d6ba8b2579c4063d9715a2739f47a2ff6398",
+      "code_pointer": "outcome.samples[0].files.45.4",
+      "category": "functional_assertion_hint",
+      "certainty": "medium_hint_only",
+      "causal_explanation": "Unavailable: saved stderr contains only digest, size and allowlisted class hint; full stderr and appended tests were not retained.",
+      "mechanism_note": "Stored step includes dependencies and earlier generated helpers; failure may be in an earlier helper or current function. No blanket propagation claim."
+    },
+    {
+      "item_id": "scicode:72",
+      "source": "scicode",
+      "official_score": 0.8888888888888888,
+      "finish_reason": "stop",
+      "completion_tokens": 17659,
+      "api_error": null,
+      "line": 1795,
+      "line_sha256": "afb6e7d8e981a51f68a0ff1f51d7473381fe6312401ae783536b34f7b68dc99f",
+      "input_path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/results/gemma4-fresh-f04-dev30-dp4-20261107-v1/items.jsonl",
+      "id": "scicode:72:72.5",
+      "step": "72.5",
+      "diagnostic": {
+        "step": "72.5",
+        "passed": false,
+        "returncode": 1,
+        "timed_out": false,
+        "elapsed_seconds": 2.3215730489464477,
+        "exception_class": "AssertionError",
+        "exception_class_origin": "stderr_allowlisted_hint",
+        "stdout": {
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "representation": "utf8_of_captured_text"
+        },
+        "stderr": {
+          "bytes": 290,
+          "sha256": "931d0b74c593abea39e1387dee88107c7376724456865f6a3faa82fe6de6e458",
+          "representation": "utf8_of_captured_text"
+        }
+      },
+      "step_finish_reason": "stop",
+      "step_code": {
+        "bytes": 6984,
+        "sha256": "1a198aa454963fcf0a2072e49dbbafbb2618fc980577a793dd2900467c122d35",
+        "empty": false,
+        "parse_ok": true,
+        "top_level_definitions": [
+          "neighbor_list",
+          "energy_site",
+          "energy",
+          "magnetization",
+          "get_flip_probability_magnetization"
+        ],
+        "duplicate_top_level_definitions": {}
+      },
+      "step_public_sha256": "d8da5a85d325be83877af022f3eab98985ca0e38242d264cdfa6040ec3cffebf",
+      "code_pointer": "outcome.samples[0].files.72.5",
+      "category": "functional_assertion_hint",
+      "certainty": "medium_hint_only",
+      "causal_explanation": "Unavailable: saved stderr contains only digest, size and allowlisted class hint; full stderr and appended tests were not retained.",
+      "mechanism_note": "Stored step includes dependencies and earlier generated helpers; failure may be in an earlier helper or current function. No blanket propagation claim."
+    },
+    {
+      "item_id": "scicode:80",
+      "source": "scicode",
+      "official_score": 0.2857142857142857,
+      "finish_reason": "stop",
+      "completion_tokens": 28741,
+      "api_error": null,
+      "line": 1796,
+      "line_sha256": "707f2ffdf9f7a13c3a85cd76649568b439452c9eb8cb5a7e255f17fc1c5ced57",
+      "input_path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/results/gemma4-fresh-f04-dev30-dp4-20261107-v1/items.jsonl",
+      "id": "scicode:80:80.3",
+      "step": "80.3",
+      "diagnostic": {
+        "step": "80.3",
+        "passed": false,
+        "returncode": 1,
+        "timed_out": false,
+        "elapsed_seconds": 2.3627045860048383,
+        "exception_class": "AssertionError",
+        "exception_class_origin": "stderr_allowlisted_hint",
+        "stdout": {
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "representation": "utf8_of_captured_text"
+        },
+        "stderr": {
+          "bytes": 272,
+          "sha256": "890b31dc3202f9ce501034e821f44cc8fbfe9c16c2a89bd8292d388ea9ae268c",
+          "representation": "utf8_of_captured_text"
+        }
+      },
+      "step_finish_reason": "stop",
+      "step_code": {
+        "bytes": 6040,
+        "sha256": "9af8e5d8078d38664a9c43d02c49750d40e1368ba6855d0cfb0c557d71930a63",
+        "empty": false,
+        "parse_ok": true,
+        "top_level_definitions": [
+          "dist",
+          "E_ij",
+          "E_pot"
+        ],
+        "duplicate_top_level_definitions": {}
+      },
+      "step_public_sha256": "eb501d223ec31e2d6d218c88b8aaf9815eba080d9dac4a548572f9062e692bd4",
+      "code_pointer": "outcome.samples[0].files.80.3",
+      "category": "functional_assertion_hint",
+      "certainty": "medium_hint_only",
+      "causal_explanation": "Unavailable: saved stderr contains only digest, size and allowlisted class hint; full stderr and appended tests were not retained.",
+      "mechanism_note": "Stored step includes dependencies and earlier generated helpers; failure may be in an earlier helper or current function. No blanket propagation claim."
+    },
+    {
+      "item_id": "scicode:80",
+      "source": "scicode",
+      "official_score": 0.2857142857142857,
+      "finish_reason": "stop",
+      "completion_tokens": 28741,
+      "api_error": null,
+      "line": 1796,
+      "line_sha256": "707f2ffdf9f7a13c3a85cd76649568b439452c9eb8cb5a7e255f17fc1c5ced57",
+      "input_path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/results/gemma4-fresh-f04-dev30-dp4-20261107-v1/items.jsonl",
+      "id": "scicode:80:80.4",
+      "step": "80.4",
+      "diagnostic": {
+        "step": "80.4",
+        "passed": false,
+        "returncode": 1,
+        "timed_out": false,
+        "elapsed_seconds": 2.5741791089531034,
+        "exception_class": "AssertionError",
+        "exception_class_origin": "stderr_allowlisted_hint",
+        "stdout": {
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "representation": "utf8_of_captured_text"
+        },
+        "stderr": {
+          "bytes": 234,
+          "sha256": "f6b14abe90739806df33d905f30a52bb8e0973cf821c988b7e810d0c0546fe98",
+          "representation": "utf8_of_captured_text"
+        }
+      },
+      "step_finish_reason": "stop",
+      "step_code": {
+        "bytes": 8682,
+        "sha256": "d22f94919069c9fd8219f2425e9e6a6ac2fa35c96b536c931a06fb846c4c3614",
+        "empty": false,
+        "parse_ok": true,
+        "top_level_definitions": [
+          "dist",
+          "E_ij",
+          "E_pot",
+          "f_ij"
+        ],
+        "duplicate_top_level_definitions": {}
+      },
+      "step_public_sha256": "100ceddd8e996c70212e0b4afba4a3a0cbf569d8a3ea0724bbb8cfb0d38cc626",
+      "code_pointer": "outcome.samples[0].files.80.4",
+      "category": "functional_assertion_hint",
+      "certainty": "medium_hint_only",
+      "causal_explanation": "Unavailable: saved stderr contains only digest, size and allowlisted class hint; full stderr and appended tests were not retained.",
+      "mechanism_note": "Stored step includes dependencies and earlier generated helpers; failure may be in an earlier helper or current function. No blanket propagation claim."
+    },
+    {
+      "item_id": "scicode:80",
+      "source": "scicode",
+      "official_score": 0.2857142857142857,
+      "finish_reason": "stop",
+      "completion_tokens": 28741,
+      "api_error": null,
+      "line": 1796,
+      "line_sha256": "707f2ffdf9f7a13c3a85cd76649568b439452c9eb8cb5a7e255f17fc1c5ced57",
+      "input_path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/results/gemma4-fresh-f04-dev30-dp4-20261107-v1/items.jsonl",
+      "id": "scicode:80:80.5",
+      "step": "80.5",
+      "diagnostic": {
+        "step": "80.5",
+        "passed": false,
+        "returncode": 1,
+        "timed_out": false,
+        "elapsed_seconds": 2.5692631730344146,
+        "exception_class": "AssertionError",
+        "exception_class_origin": "stderr_allowlisted_hint",
+        "stdout": {
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "representation": "utf8_of_captured_text"
+        },
+        "stderr": {
+          "bytes": 272,
+          "sha256": "5c2deed0b1b208a90e18e1f06cb810aff9a6c7b6bcd0376064384fbccbcca0fa",
+          "representation": "utf8_of_captured_text"
+        }
+      },
+      "step_finish_reason": "stop",
+      "step_code": {
+        "bytes": 12427,
+        "sha256": "1811913f60dd175422b90a5c41a56ae37b1171599982cba8f6c029b7f117d19b",
+        "empty": false,
+        "parse_ok": true,
+        "top_level_definitions": [
+          "dist",
+          "E_ij",
+          "E_pot",
+          "f_ij",
+          "forces"
+        ],
+        "duplicate_top_level_definitions": {}
+      },
+      "step_public_sha256": "9da17adc2804b4ca3a01bb2071b97431e941195d244094a5d36c79dbf74f5eb9",
+      "code_pointer": "outcome.samples[0].files.80.5",
+      "category": "functional_assertion_hint",
+      "certainty": "medium_hint_only",
+      "causal_explanation": "Unavailable: saved stderr contains only digest, size and allowlisted class hint; full stderr and appended tests were not retained.",
+      "mechanism_note": "Stored step includes dependencies and earlier generated helpers; failure may be in an earlier helper or current function. No blanket propagation claim."
+    },
+    {
+      "item_id": "scicode:80",
+      "source": "scicode",
+      "official_score": 0.2857142857142857,
+      "finish_reason": "stop",
+      "completion_tokens": 28741,
+      "api_error": null,
+      "line": 1796,
+      "line_sha256": "707f2ffdf9f7a13c3a85cd76649568b439452c9eb8cb5a7e255f17fc1c5ced57",
+      "input_path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/results/gemma4-fresh-f04-dev30-dp4-20261107-v1/items.jsonl",
+      "id": "scicode:80:80.6",
+      "step": "80.6",
+      "diagnostic": {
+        "step": "80.6",
+        "passed": false,
+        "returncode": 1,
+        "timed_out": false,
+        "elapsed_seconds": 2.706223994027823,
+        "exception_class": "AssertionError",
+        "exception_class_origin": "stderr_allowlisted_hint",
+        "stdout": {
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "representation": "utf8_of_captured_text"
+        },
+        "stderr": {
+          "bytes": 324,
+          "sha256": "916fc091b18334cd6a4a70fdbf9a2a1985946d6e068dfe7934b1497f32899bf3",
+          "representation": "utf8_of_captured_text"
+        }
+      },
+      "step_finish_reason": "stop",
+      "step_code": {
+        "bytes": 15847,
+        "sha256": "b1cded1baed2ebffe2af1edd42fe41642f03b3275a38249bbc6657a22f16472a",
+        "empty": false,
+        "parse_ok": true,
+        "top_level_definitions": [
+          "dist",
+          "E_ij",
+          "E_pot",
+          "f_ij",
+          "forces",
+          "velocity_verlet"
+        ],
+        "duplicate_top_level_definitions": {}
+      },
+      "step_public_sha256": "ea3bf5e750c753508de7f4ed86873a15777fd94fc88aa048c2d4f2e289d1e403",
+      "code_pointer": "outcome.samples[0].files.80.6",
+      "category": "functional_assertion_hint",
+      "certainty": "medium_hint_only",
+      "causal_explanation": "Unavailable: saved stderr contains only digest, size and allowlisted class hint; full stderr and appended tests were not retained.",
+      "mechanism_note": "Stored step includes dependencies and earlier generated helpers; failure may be in an earlier helper or current function. No blanket propagation claim."
+    },
+    {
+      "item_id": "scicode:80",
+      "source": "scicode",
+      "official_score": 0.2857142857142857,
+      "finish_reason": "stop",
+      "completion_tokens": 28741,
+      "api_error": null,
+      "line": 1796,
+      "line_sha256": "707f2ffdf9f7a13c3a85cd76649568b439452c9eb8cb5a7e255f17fc1c5ced57",
+      "input_path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/results/gemma4-fresh-f04-dev30-dp4-20261107-v1/items.jsonl",
+      "id": "scicode:80:80.7",
+      "step": "80.7",
+      "diagnostic": {
+        "step": "80.7",
+        "passed": false,
+        "returncode": 1,
+        "timed_out": false,
+        "elapsed_seconds": 3.2502637550933287,
+        "exception_class": "ValueError",
+        "exception_class_origin": "stderr_allowlisted_hint",
+        "stdout": {
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "representation": "utf8_of_captured_text"
+        },
+        "stderr": {
+          "bytes": 1008,
+          "sha256": "08af192a1d1326769359e47ad58b6fb7ef5da24454175e02d60a551c93b4e115",
+          "representation": "utf8_of_captured_text"
+        }
+      },
+      "step_finish_reason": "stop",
+      "step_code": {
+        "bytes": 21195,
+        "sha256": "2b040d880464c1102e28ed66d9c2c789f4652a241aa6208a4e441da868762dbf",
+        "empty": false,
+        "parse_ok": true,
+        "top_level_definitions": [
+          "dist",
+          "E_ij",
+          "E_pot",
+          "f_ij",
+          "forces",
+          "velocity_verlet",
+          "MD_NVT"
+        ],
+        "duplicate_top_level_definitions": {}
+      },
+      "step_public_sha256": "f0f0cd8eabb1bc5f411f5ed280dcee8a75c8974a9034e95b939735a4a2fdfd3d",
+      "code_pointer": "outcome.samples[0].files.80.7",
+      "category": "unknown",
+      "certainty": "underdetermined",
+      "causal_explanation": "Unavailable: saved stderr contains only digest, size and allowlisted class hint; full stderr and appended tests were not retained.",
+      "mechanism_note": "Stored step includes dependencies and earlier generated helpers; failure may be in an earlier helper or current function. No blanket propagation claim."
+    },
+    {
+      "item_id": "scicode:9",
+      "source": "scicode",
+      "official_score": 0.0,
+      "finish_reason": "stop",
+      "completion_tokens": 1925,
+      "api_error": null,
+      "line": 1797,
+      "line_sha256": "adbca745885e9c4b6c2015824e188ee8672163595f999a2525e843fc14a5cc54",
+      "input_path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/results/gemma4-fresh-f04-dev30-dp4-20261107-v1/items.jsonl",
+      "id": "scicode:9:9.1",
+      "step": "9.1",
+      "diagnostic": {
+        "step": "9.1",
+        "passed": false,
+        "returncode": 1,
+        "timed_out": false,
+        "elapsed_seconds": 2.1065338810440153,
+        "exception_class": "AssertionError",
+        "exception_class_origin": "stderr_allowlisted_hint",
+        "stdout": {
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "representation": "utf8_of_captured_text"
+        },
+        "stderr": {
+          "bytes": 242,
+          "sha256": "63c6a1a07147e41624b99f4ca3a41c663fe5268c0563b6c55524e0b97455058f",
+          "representation": "utf8_of_captured_text"
+        }
+      },
+      "step_finish_reason": "stop",
+      "step_code": {
+        "bytes": 2615,
+        "sha256": "71bf8c0dfdcf0e27fc05694e7476c14da55bef8785fcd521c9f6bedd01dc37a4",
+        "empty": false,
+        "parse_ok": true,
+        "top_level_definitions": [
+          "WJ"
+        ],
+        "duplicate_top_level_definitions": {}
+      },
+      "step_public_sha256": "221944c1c7173abd080012f3fcf3f0ecbad4f82d7a7c9da912d2e8707da9b986",
+      "code_pointer": "outcome.samples[0].files.9.1",
+      "category": "functional_assertion_hint",
+      "certainty": "medium_hint_only",
+      "causal_explanation": "Unavailable: saved stderr contains only digest, size and allowlisted class hint; full stderr and appended tests were not retained.",
+      "mechanism_note": "Stored step includes dependencies and earlier generated helpers; failure may be in an earlier helper or current function. No blanket propagation claim."
+    },
+    {
+      "item_id": "scicode:17",
+      "source": "scicode",
+      "official_score": 0.0,
+      "finish_reason": "stop",
+      "completion_tokens": 9628,
+      "api_error": null,
+      "line": 1798,
+      "line_sha256": "4699e61b3eb856bb2cfc57eb170b2793101a6abacb917f86b906851475c7969f",
+      "input_path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/results/gemma4-fresh-f04-dev30-dp4-20261107-v1/items.jsonl",
+      "id": "scicode:17:17.1",
+      "step": "17.1",
+      "diagnostic": {
+        "step": "17.1",
+        "passed": false,
+        "returncode": 1,
+        "timed_out": false,
+        "elapsed_seconds": 2.565894377999939,
+        "exception_class": "AssertionError",
+        "exception_class_origin": "stderr_allowlisted_hint",
+        "stdout": {
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "representation": "utf8_of_captured_text"
+        },
+        "stderr": {
+          "bytes": 255,
+          "sha256": "3d73dbfb9aa3f3b72f23d355308439683f44de3598a695cada9a1736ca360d29",
+          "representation": "utf8_of_captured_text"
+        }
+      },
+      "step_finish_reason": "stop",
+      "step_code": {
+        "bytes": 2368,
+        "sha256": "806d18ae36f5a338aa151cab767a296588820da4b155aa0d8021f48ab26ea41b",
+        "empty": false,
+        "parse_ok": true,
+        "top_level_definitions": [
+          "init_eji_array"
+        ],
+        "duplicate_top_level_definitions": {}
+      },
+      "step_public_sha256": "ffcd6b5f5c051fa8363e0fc6dc683779f33faeae1bb1a5982286c5d72f0c280a",
+      "code_pointer": "outcome.samples[0].files.17.1",
+      "category": "functional_assertion_hint",
+      "certainty": "medium_hint_only",
+      "causal_explanation": "Unavailable: saved stderr contains only digest, size and allowlisted class hint; full stderr and appended tests were not retained.",
+      "mechanism_note": "Stored step includes dependencies and earlier generated helpers; failure may be in an earlier helper or current function. No blanket propagation claim."
+    },
+    {
+      "item_id": "scicode:17",
+      "source": "scicode",
+      "official_score": 0.0,
+      "finish_reason": "stop",
+      "completion_tokens": 9628,
+      "api_error": null,
+      "line": 1798,
+      "line_sha256": "4699e61b3eb856bb2cfc57eb170b2793101a6abacb917f86b906851475c7969f",
+      "input_path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/results/gemma4-fresh-f04-dev30-dp4-20261107-v1/items.jsonl",
+      "id": "scicode:17:17.2",
+      "step": "17.2",
+      "diagnostic": {
+        "step": "17.2",
+        "passed": false,
+        "returncode": 1,
+        "timed_out": false,
+        "elapsed_seconds": 2.0802978470455855,
+        "exception_class": "AssertionError",
+        "exception_class_origin": "stderr_allowlisted_hint",
+        "stdout": {
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "representation": "utf8_of_captured_text"
+        },
+        "stderr": {
+          "bytes": 276,
+          "sha256": "87705b3146425f574815b3cbdc4ae35cd327b00aa6b0402cd7dc8cde59850bfe",
+          "representation": "utf8_of_captured_text"
+        }
+      },
+      "step_finish_reason": "stop",
+      "step_code": {
+        "bytes": 4876,
+        "sha256": "d05b31ff7e4549a272015ff4d5d5a2434cfceafe2083dff5b36ab261fbb68c47",
+        "empty": false,
+        "parse_ok": true,
+        "top_level_definitions": [
+          "init_eji_array",
+          "integrate_DOS"
+        ],
+        "duplicate_top_level_definitions": {}
+      },
+      "step_public_sha256": "bf78bbbb817c126fa8993efd186e7aeecafbd3d1a6349cf33c11d26e45c9acd4",
+      "code_pointer": "outcome.samples[0].files.17.2",
+      "category": "functional_assertion_hint",
+      "certainty": "medium_hint_only",
+      "causal_explanation": "Unavailable: saved stderr contains only digest, size and allowlisted class hint; full stderr and appended tests were not retained.",
+      "mechanism_note": "Stored step includes dependencies and earlier generated helpers; failure may be in an earlier helper or current function. No blanket propagation claim."
+    },
+    {
+      "item_id": "scicode:46",
+      "source": "scicode",
+      "official_score": 0.5,
+      "finish_reason": "stop",
+      "completion_tokens": 10229,
+      "api_error": null,
+      "line": 1799,
+      "line_sha256": "f0f5e4419753e841f8f77256bfc090c6408eadaa17a65e9ab721f575eb4ef752",
+      "input_path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/results/gemma4-fresh-f04-dev30-dp4-20261107-v1/items.jsonl",
+      "id": "scicode:46:46.3",
+      "step": "46.3",
+      "diagnostic": {
+        "step": "46.3",
+        "passed": false,
+        "returncode": 1,
+        "timed_out": false,
+        "elapsed_seconds": 2.2231750820064917,
+        "exception_class": "AssertionError",
+        "exception_class_origin": "stderr_allowlisted_hint",
+        "stdout": {
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "representation": "utf8_of_captured_text"
+        },
+        "stderr": {
+          "bytes": 328,
+          "sha256": "1b973a698a2255c0412b48fcaaef75516c2d271a45682ecf2efc05956f5161d9",
+          "representation": "utf8_of_captured_text"
+        }
+      },
+      "step_finish_reason": "stop",
+      "step_code": {
+        "bytes": 8092,
+        "sha256": "d289cfbf3c10c11998d29d94a379417e196e0bc2eca97aef4c20219a6d372c21",
+        "empty": false,
+        "parse_ok": true,
+        "top_level_definitions": [
+          "Slater",
+          "Hamiltonian",
+          "metropolis"
+        ],
+        "duplicate_top_level_definitions": {}
+      },
+      "step_public_sha256": "9911888fd762a4f5c604db8aca18bbb696e7f0a5724e8166e1470be3006e1813",
+      "code_pointer": "outcome.samples[0].files.46.3",
+      "category": "functional_assertion_hint",
+      "certainty": "medium_hint_only",
+      "causal_explanation": "Unavailable: saved stderr contains only digest, size and allowlisted class hint; full stderr and appended tests were not retained.",
+      "mechanism_note": "Stored step includes dependencies and earlier generated helpers; failure may be in an earlier helper or current function. No blanket propagation claim."
+    },
+    {
+      "item_id": "scicode:46",
+      "source": "scicode",
+      "official_score": 0.5,
+      "finish_reason": "stop",
+      "completion_tokens": 10229,
+      "api_error": null,
+      "line": 1799,
+      "line_sha256": "f0f5e4419753e841f8f77256bfc090c6408eadaa17a65e9ab721f575eb4ef752",
+      "input_path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/results/gemma4-fresh-f04-dev30-dp4-20261107-v1/items.jsonl",
+      "id": "scicode:46:46.4",
+      "step": "46.4",
+      "diagnostic": {
+        "step": "46.4",
+        "passed": false,
+        "returncode": 1,
+        "timed_out": false,
+        "elapsed_seconds": 2.89188313705381,
+        "exception_class": "AssertionError",
+        "exception_class_origin": "stderr_allowlisted_hint",
+        "stdout": {
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "representation": "utf8_of_captured_text"
+        },
+        "stderr": {
+          "bytes": 350,
+          "sha256": "3e580d46dcdfaf1669f6e549a13fb94f4f6962f4194ce59f73414fc32c8d0a5f",
+          "representation": "utf8_of_captured_text"
+        }
+      },
+      "step_finish_reason": "stop",
+      "step_code": {
+        "bytes": 10840,
+        "sha256": "cad5e028a170f96e940faa595b2c50d6dbf3aadb1afe41f46e3f7a47084de2c6",
+        "empty": false,
+        "parse_ok": true,
+        "top_level_definitions": [
+          "Slater",
+          "Hamiltonian",
+          "metropolis",
+          "calc_energy"
+        ],
+        "duplicate_top_level_definitions": {}
+      },
+      "step_public_sha256": "aba47a1556d78c0af170def10b2362c1d7645ae344933daef76809f4c011288f",
+      "code_pointer": "outcome.samples[0].files.46.4",
+      "category": "functional_assertion_hint",
+      "certainty": "medium_hint_only",
+      "causal_explanation": "Unavailable: saved stderr contains only digest, size and allowlisted class hint; full stderr and appended tests were not retained.",
+      "mechanism_note": "Stored step includes dependencies and earlier generated helpers; failure may be in an earlier helper or current function. No blanket propagation claim."
+    },
+    {
+      "item_id": "scicode:35",
+      "source": "scicode",
+      "official_score": 0.6666666666666666,
+      "finish_reason": "stop",
+      "completion_tokens": 11455,
+      "api_error": null,
+      "line": 1800,
+      "line_sha256": "6d9dd18cd57fc4610684758c6957cb898c1209e987fa41fc319e483f5b379f16",
+      "input_path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/results/gemma4-fresh-f04-dev30-dp4-20261107-v1/items.jsonl",
+      "id": "scicode:35:35.3",
+      "step": "35.3",
+      "diagnostic": {
+        "step": "35.3",
+        "passed": false,
+        "returncode": 1,
+        "timed_out": false,
+        "elapsed_seconds": 1.960433037020266,
+        "exception_class": "AssertionError",
+        "exception_class_origin": "stderr_allowlisted_hint",
+        "stdout": {
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "representation": "utf8_of_captured_text"
+        },
+        "stderr": {
+          "bytes": 216,
+          "sha256": "fff7b41a65be8fd0195599acbf6368fa6a8f329c7143d0c675041c6706e50fca",
+          "representation": "utf8_of_captured_text"
+        }
+      },
+      "step_finish_reason": "stop",
+      "step_code": {
+        "bytes": 6794,
+        "sha256": "c57854ed8e9e6d57b5aa6f8ce559158f3aca68243abb96046b274f350e5aba25",
+        "empty": false,
+        "parse_ok": true,
+        "top_level_definitions": [
+          "ground_state_wavelength",
+          "generate_quadratic_combinations",
+          "absorption"
+        ],
+        "duplicate_top_level_definitions": {}
+      },
+      "step_public_sha256": "059e2315a5ed684a4e18dedbca5906bc4962a18a98a693b829120f655a6235ec",
+      "code_pointer": "outcome.samples[0].files.35.3",
+      "category": "functional_assertion_hint",
+      "certainty": "medium_hint_only",
+      "causal_explanation": "Unavailable: saved stderr contains only digest, size and allowlisted class hint; full stderr and appended tests were not retained.",
+      "mechanism_note": "Stored step includes dependencies and earlier generated helpers; failure may be in an earlier helper or current function. No blanket propagation claim."
+    }
+  ],
+  "all_scicode_steps": [
+    {
+      "item_id": "scicode:14",
+      "source": "scicode",
+      "official_score": 1.0,
+      "finish_reason": "stop",
+      "completion_tokens": 13438,
+      "api_error": null,
+      "line": 1791,
+      "line_sha256": "f28c1a7e5fe719b7b471519d0ea0ea82b0fae9ed8e1be7077a5d6b67b9b2ac80",
+      "input_path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/results/gemma4-fresh-f04-dev30-dp4-20261107-v1/items.jsonl",
+      "id": "scicode:14:14.1",
+      "step": "14.1",
+      "diagnostic": {
+        "step": "14.1",
+        "passed": true,
+        "returncode": 0,
+        "timed_out": false,
+        "elapsed_seconds": 3.181665407959372,
+        "exception_class": null,
+        "exception_class_origin": "stderr_allowlisted_hint",
+        "stdout": {
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "representation": "utf8_of_captured_text"
+        },
+        "stderr": {
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "representation": "utf8_of_captured_text"
+        }
+      },
+      "step_finish_reason": "stop",
+      "step_code": {
+        "bytes": 3394,
+        "sha256": "bfbff6f9cdb7721e07101449ad35ee01de5adec8001cb5f5ea0beb17c6d67d1a",
+        "empty": false,
+        "parse_ok": true,
+        "top_level_definitions": [
+          "harmonic_mannella_leapfrog"
+        ],
+        "duplicate_top_level_definitions": {}
+      },
+      "step_public_sha256": "726ff512bfdb5ca0f6e503a22e2f5603ef8df162ddec6c31a277a2f7fbd570d9",
+      "code_pointer": "outcome.samples[0].files.14.1"
+    },
+    {
+      "item_id": "scicode:14",
+      "source": "scicode",
+      "official_score": 1.0,
+      "finish_reason": "stop",
+      "completion_tokens": 13438,
+      "api_error": null,
+      "line": 1791,
+      "line_sha256": "f28c1a7e5fe719b7b471519d0ea0ea82b0fae9ed8e1be7077a5d6b67b9b2ac80",
+      "input_path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/results/gemma4-fresh-f04-dev30-dp4-20261107-v1/items.jsonl",
+      "id": "scicode:14:14.2",
+      "step": "14.2",
+      "diagnostic": {
+        "step": "14.2",
+        "passed": true,
+        "returncode": 0,
+        "timed_out": false,
+        "elapsed_seconds": 60.73465647303965,
+        "exception_class": null,
+        "exception_class_origin": "stderr_allowlisted_hint",
+        "stdout": {
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "representation": "utf8_of_captured_text"
+        },
+        "stderr": {
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "representation": "utf8_of_captured_text"
+        }
+      },
+      "step_finish_reason": "stop",
+      "step_code": {
+        "bytes": 6741,
+        "sha256": "4cadbb068cba6f0cdf66caab27384fe721fd9e316c8090f8c19d1927584c87d2",
+        "empty": false,
+        "parse_ok": true,
+        "top_level_definitions": [
+          "harmonic_mannella_leapfrog",
+          "calculate_msd"
+        ],
+        "duplicate_top_level_definitions": {}
+      },
+      "step_public_sha256": "0333aa40ab59ff3cda90d0fc6ec2a5d67d85b3e07f5a96199565c08f431d1bde",
+      "code_pointer": "outcome.samples[0].files.14.2"
+    },
+    {
+      "item_id": "scicode:58",
+      "source": "scicode",
+      "official_score": 1.0,
+      "finish_reason": "stop",
+      "completion_tokens": 15886,
+      "api_error": null,
+      "line": 1792,
+      "line_sha256": "b4fd923bed211224edb69a71411f643aff3008884c5d1eead4e037710dc35b7f",
+      "input_path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/results/gemma4-fresh-f04-dev30-dp4-20261107-v1/items.jsonl",
+      "id": "scicode:58:58.1",
+      "step": "58.1",
+      "diagnostic": {
+        "step": "58.1",
+        "passed": true,
+        "returncode": 0,
+        "timed_out": false,
+        "elapsed_seconds": 2.7871863819891587,
+        "exception_class": null,
+        "exception_class_origin": "stderr_allowlisted_hint",
+        "stdout": {
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "representation": "utf8_of_captured_text"
+        },
+        "stderr": {
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "representation": "utf8_of_captured_text"
+        }
+      },
+      "step_finish_reason": "stop",
+      "step_code": {
+        "bytes": 961,
+        "sha256": "6610d43320e083cea6ed87f6f403285949f73dac3a353ad17e6cb5a41716c758",
+        "empty": false,
+        "parse_ok": true,
+        "top_level_definitions": [
+          "eos_press_from_rho"
+        ],
+        "duplicate_top_level_definitions": {}
+      },
+      "step_public_sha256": "9fe3e0fba2f2e50a02eb05f52c73bbc00c9efb6df32a5277c4084d97e80ca4cb",
+      "code_pointer": "outcome.samples[0].files.58.1"
+    },
+    {
+      "item_id": "scicode:58",
+      "source": "scicode",
+      "official_score": 1.0,
+      "finish_reason": "stop",
+      "completion_tokens": 15886,
+      "api_error": null,
+      "line": 1792,
+      "line_sha256": "b4fd923bed211224edb69a71411f643aff3008884c5d1eead4e037710dc35b7f",
+      "input_path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/results/gemma4-fresh-f04-dev30-dp4-20261107-v1/items.jsonl",
+      "id": "scicode:58:58.2",
+      "step": "58.2",
+      "diagnostic": {
+        "step": "58.2",
+        "passed": true,
+        "returncode": 0,
+        "timed_out": false,
+        "elapsed_seconds": 2.7908129680436105,
+        "exception_class": null,
+        "exception_class_origin": "stderr_allowlisted_hint",
+        "stdout": {
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "representation": "utf8_of_captured_text"
+        },
+        "stderr": {
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "representation": "utf8_of_captured_text"
+        }
+      },
+      "step_finish_reason": "stop",
+      "step_code": {
+        "bytes": 1755,
+        "sha256": "7202bb9b0086a12f7ad6d1a1754a77995ad2ddaf413e68586666de608c9f87a0",
+        "empty": false,
+        "parse_ok": true,
+        "top_level_definitions": [
+          "eos_press_from_rho",
+          "eos_rho_from_press"
+        ],
+        "duplicate_top_level_definitions": {}
+      },
+      "step_public_sha256": "5f440c10b1f3a4720d09fc1ac36de6c08afc522cce158218010c9d94b7962492",
+      "code_pointer": "outcome.samples[0].files.58.2"
+    },
+    {
+      "item_id": "scicode:58",
+      "source": "scicode",
+      "official_score": 1.0,
+      "finish_reason": "stop",
+      "completion_tokens": 15886,
+      "api_error": null,
+      "line": 1792,
+      "line_sha256": "b4fd923bed211224edb69a71411f643aff3008884c5d1eead4e037710dc35b7f",
+      "input_path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/results/gemma4-fresh-f04-dev30-dp4-20261107-v1/items.jsonl",
+      "id": "scicode:58:58.3",
+      "step": "58.3",
+      "diagnostic": {
+        "step": "58.3",
+        "passed": true,
+        "returncode": 0,
+        "timed_out": false,
+        "elapsed_seconds": 2.606036879005842,
+        "exception_class": null,
+        "exception_class_origin": "stderr_allowlisted_hint",
+        "stdout": {
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "representation": "utf8_of_captured_text"
+        },
+        "stderr": {
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "representation": "utf8_of_captured_text"
+        }
+      },
+      "step_finish_reason": "stop",
+      "step_code": {
+        "bytes": 2911,
+        "sha256": "9037dd2b6a62f0f567d57f45dc1886c97c615cbedc5b95cc2b42d385fa5a4bbb",
+        "empty": false,
+        "parse_ok": true,
+        "top_level_definitions": [
+          "eos_press_from_rho",
+          "eos_rho_from_press",
+          "eos_eps_from_press"
+        ],
+        "duplicate_top_level_definitions": {}
+      },
+      "step_public_sha256": "c528d7c5436ddbadc9a1c261915e817a8beb9e874913f93abc0433f55d4f151e",
+      "code_pointer": "outcome.samples[0].files.58.3"
+    },
+    {
+      "item_id": "scicode:58",
+      "source": "scicode",
+      "official_score": 1.0,
+      "finish_reason": "stop",
+      "completion_tokens": 15886,
+      "api_error": null,
+      "line": 1792,
+      "line_sha256": "b4fd923bed211224edb69a71411f643aff3008884c5d1eead4e037710dc35b7f",
+      "input_path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/results/gemma4-fresh-f04-dev30-dp4-20261107-v1/items.jsonl",
+      "id": "scicode:58:58.4",
+      "step": "58.4",
+      "diagnostic": {
+        "step": "58.4",
+        "passed": true,
+        "returncode": 0,
+        "timed_out": false,
+        "elapsed_seconds": 3.0163870719261467,
+        "exception_class": null,
+        "exception_class_origin": "stderr_allowlisted_hint",
+        "stdout": {
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "representation": "utf8_of_captured_text"
+        },
+        "stderr": {
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "representation": "utf8_of_captured_text"
+        }
+      },
+      "step_finish_reason": "stop",
+      "step_code": {
+        "bytes": 5928,
+        "sha256": "ee2f6265d7defa544b50be469ad91f67decf1b60bfbc298ef8ad747f3788362b",
+        "empty": false,
+        "parse_ok": true,
+        "top_level_definitions": [
+          "eos_press_from_rho",
+          "eos_rho_from_press",
+          "eos_eps_from_press",
+          "rho_from_press",
+          "eps_from_press",
+          "tov_RHS"
+        ],
+        "duplicate_top_level_definitions": {}
+      },
+      "step_public_sha256": "c7f84460fdbe14cd0771bc317ed7df04e338a3d6823ae3bac49e59068e3bd955",
+      "code_pointer": "outcome.samples[0].files.58.4"
+    },
+    {
+      "item_id": "scicode:58",
+      "source": "scicode",
+      "official_score": 1.0,
+      "finish_reason": "stop",
+      "completion_tokens": 15886,
+      "api_error": null,
+      "line": 1792,
+      "line_sha256": "b4fd923bed211224edb69a71411f643aff3008884c5d1eead4e037710dc35b7f",
+      "input_path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/results/gemma4-fresh-f04-dev30-dp4-20261107-v1/items.jsonl",
+      "id": "scicode:58:58.5",
+      "step": "58.5",
+      "diagnostic": {
+        "step": "58.5",
+        "passed": true,
+        "returncode": 0,
+        "timed_out": false,
+        "elapsed_seconds": 3.0038644470041618,
+        "exception_class": null,
+        "exception_class_origin": "stderr_allowlisted_hint",
+        "stdout": {
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "representation": "utf8_of_captured_text"
+        },
+        "stderr": {
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "representation": "utf8_of_captured_text"
+        }
+      },
+      "step_finish_reason": "stop",
+      "step_code": {
+        "bytes": 10286,
+        "sha256": "6ce969b5446d167a872d9a8809b003c816812a4ac77f5685bd7a25124e84e9e5",
+        "empty": false,
+        "parse_ok": true,
+        "top_level_definitions": [
+          "eos_press_from_rho",
+          "eos_rho_from_press",
+          "eos_eps_from_press",
+          "rho_from_press",
+          "eps_from_press",
+          "tov_RHS",
+          "press_from_rho",
+          "rho_from_press",
+          "eps_from_press",
+          "tov_RHS",
+          "tov"
+        ],
+        "duplicate_top_level_definitions": {
+          "rho_from_press": 2,
+          "eps_from_press": 2,
+          "tov_RHS": 2
+        }
+      },
+      "step_public_sha256": "cdd6c8574e9e2209c2dddf5a389f4fa7b6563d23d8c5d36e85cc4e0a1a2c2146",
+      "code_pointer": "outcome.samples[0].files.58.5"
+    },
+    {
+      "item_id": "scicode:18",
+      "source": "scicode",
+      "official_score": 0.0,
+      "finish_reason": "stop",
+      "completion_tokens": 10459,
+      "api_error": null,
+      "line": 1793,
+      "line_sha256": "24c2a4bc0e4c2070fc7afd687d25f590611a27de1424e1f5f02c2e2f5ddaa4cd",
+      "input_path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/results/gemma4-fresh-f04-dev30-dp4-20261107-v1/items.jsonl",
+      "id": "scicode:18:18.1",
+      "step": "18.1",
+      "diagnostic": {
+        "step": "18.1",
+        "passed": false,
+        "returncode": 1,
+        "timed_out": false,
+        "elapsed_seconds": 2.2494444960029796,
+        "exception_class": "AssertionError",
+        "exception_class_origin": "stderr_allowlisted_hint",
+        "stdout": {
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "representation": "utf8_of_captured_text"
+        },
+        "stderr": {
+          "bytes": 227,
+          "sha256": "7ccc378f4380f9eb65bfa7934a4e23f1401cb85828c88e09d3f128389477ddf2",
+          "representation": "utf8_of_captured_text"
+        }
+      },
+      "step_finish_reason": "stop",
+      "step_code": {
+        "bytes": 1859,
+        "sha256": "af86ae23aa16da99356d33ac1993099835dc8de46327d0d52c75beff7fbef23f",
+        "empty": false,
+        "parse_ok": true,
+        "top_level_definitions": [
+          "Bspline"
+        ],
+        "duplicate_top_level_definitions": {}
+      },
+      "step_public_sha256": "d2dd5e4ba4c63f237ba4ffb8da3e0e57edd9db8df339759a47b210c66224f17f",
+      "code_pointer": "outcome.samples[0].files.18.1",
+      "category": "functional_assertion_hint",
+      "certainty": "medium_hint_only",
+      "causal_explanation": "Unavailable: saved stderr contains only digest, size and allowlisted class hint; full stderr and appended tests were not retained.",
+      "mechanism_note": "Stored step includes dependencies and earlier generated helpers; failure may be in an earlier helper or current function. No blanket propagation claim."
+    },
+    {
+      "item_id": "scicode:18",
+      "source": "scicode",
+      "official_score": 0.0,
+      "finish_reason": "stop",
+      "completion_tokens": 10459,
+      "api_error": null,
+      "line": 1793,
+      "line_sha256": "24c2a4bc0e4c2070fc7afd687d25f590611a27de1424e1f5f02c2e2f5ddaa4cd",
+      "input_path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/results/gemma4-fresh-f04-dev30-dp4-20261107-v1/items.jsonl",
+      "id": "scicode:18:18.2",
+      "step": "18.2",
+      "diagnostic": {
+        "step": "18.2",
+        "passed": false,
+        "returncode": 1,
+        "timed_out": false,
+        "elapsed_seconds": 2.7160479800077155,
+        "exception_class": "IndexError",
+        "exception_class_origin": "stderr_allowlisted_hint",
+        "stdout": {
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "representation": "utf8_of_captured_text"
+        },
+        "stderr": {
+          "bytes": 469,
+          "sha256": "3c2457e39e192e8943d0a0c8cfd5b9a4a527ab42645196d1f928bc015ece31f9",
+          "representation": "utf8_of_captured_text"
+        }
+      },
+      "step_finish_reason": "stop",
+      "step_code": {
+        "bytes": 5104,
+        "sha256": "3e80032b08e6fbde6b893fbc8c52b584b01c1af5d2471529e00972807e194373",
+        "empty": false,
+        "parse_ok": true,
+        "top_level_definitions": [
+          "Bspline",
+          "NURBS_2D"
+        ],
+        "duplicate_top_level_definitions": {}
+      },
+      "step_public_sha256": "6c874e4fb6f3f52a7af74d5a94ee7080e70cba68ebe2ff2e739a72208806b611",
+      "code_pointer": "outcome.samples[0].files.18.2",
+      "category": "unknown",
+      "certainty": "underdetermined",
+      "causal_explanation": "Unavailable: saved stderr contains only digest, size and allowlisted class hint; full stderr and appended tests were not retained.",
+      "mechanism_note": "Stored step includes dependencies and earlier generated helpers; failure may be in an earlier helper or current function. No blanket propagation claim."
+    },
+    {
+      "item_id": "scicode:45",
+      "source": "scicode",
+      "official_score": 0.0,
+      "finish_reason": "stop",
+      "completion_tokens": 10933,
+      "api_error": null,
+      "line": 1794,
+      "line_sha256": "18412eb42b29f7e2354ed63c85af947279d4fb92b2724b4d59258c889077336f",
+      "input_path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/results/gemma4-fresh-f04-dev30-dp4-20261107-v1/items.jsonl",
+      "id": "scicode:45:45.1",
+      "step": "45.1",
+      "diagnostic": {
+        "step": "45.1",
+        "passed": false,
+        "returncode": 1,
+        "timed_out": false,
+        "elapsed_seconds": 2.698289650026709,
+        "exception_class": "ValueError",
+        "exception_class_origin": "stderr_allowlisted_hint",
+        "stdout": {
+          "bytes": 72,
+          "sha256": "e4d362ff77d839a410fcfe264059cb4b37502f1964d1ffa331c5acf1e9b44e5d",
+          "representation": "utf8_of_captured_text"
+        },
+        "stderr": {
+          "bytes": 1491,
+          "sha256": "085205900035270658a7860f65467de00bfaf7a55dd3b70bf7c1b916f60c4d8f",
+          "representation": "utf8_of_captured_text"
+        }
+      },
+      "step_finish_reason": "stop",
+      "step_code": {
+        "bytes": 2753,
+        "sha256": "cfc33c0bb7565616d55e7537261dc15deb9996a04e8ea3614ba02a45e5e2a2cb",
+        "empty": false,
+        "parse_ok": true,
+        "top_level_definitions": [
+          "init_grid"
+        ],
+        "duplicate_top_level_definitions": {}
+      },
+      "step_public_sha256": "b8415c6754f66b8b536af79054808d49ddd03a77ff7a2c45d43b63add74e13be",
+      "code_pointer": "outcome.samples[0].files.45.1",
+      "category": "unknown",
+      "certainty": "underdetermined",
+      "causal_explanation": "Unavailable: saved stderr contains only digest, size and allowlisted class hint; full stderr and appended tests were not retained.",
+      "mechanism_note": "Stored step includes dependencies and earlier generated helpers; failure may be in an earlier helper or current function. No blanket propagation claim."
+    },
+    {
+      "item_id": "scicode:45",
+      "source": "scicode",
+      "official_score": 0.0,
+      "finish_reason": "stop",
+      "completion_tokens": 10933,
+      "api_error": null,
+      "line": 1794,
+      "line_sha256": "18412eb42b29f7e2354ed63c85af947279d4fb92b2724b4d59258c889077336f",
+      "input_path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/results/gemma4-fresh-f04-dev30-dp4-20261107-v1/items.jsonl",
+      "id": "scicode:45:45.2",
+      "step": "45.2",
+      "diagnostic": {
+        "step": "45.2",
+        "passed": false,
+        "returncode": 1,
+        "timed_out": false,
+        "elapsed_seconds": 2.315012797014788,
+        "exception_class": "ValueError",
+        "exception_class_origin": "stderr_allowlisted_hint",
+        "stdout": {
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "representation": "utf8_of_captured_text"
+        },
+        "stderr": {
+          "bytes": 949,
+          "sha256": "699179d9995424a3f4cea45b0bd3a2849a271ea7481ec4e04ec75474450353fa",
+          "representation": "utf8_of_captured_text"
+        }
+      },
+      "step_finish_reason": "stop",
+      "step_code": {
+        "bytes": 4887,
+        "sha256": "badd811645a34e784199358ebbd69e70b116c16e1ea497e21223e3a567da2518",
+        "empty": false,
+        "parse_ok": true,
+        "top_level_definitions": [
+          "init_grid",
+          "add_dirichlet_bc"
+        ],
+        "duplicate_top_level_definitions": {}
+      },
+      "step_public_sha256": "f7f1b131a5907314737d63f159858b4e8d3915c3d9fdb63fa53161610c57c1ca",
+      "code_pointer": "outcome.samples[0].files.45.2",
+      "category": "unknown",
+      "certainty": "underdetermined",
+      "causal_explanation": "Unavailable: saved stderr contains only digest, size and allowlisted class hint; full stderr and appended tests were not retained.",
+      "mechanism_note": "Stored step includes dependencies and earlier generated helpers; failure may be in an earlier helper or current function. No blanket propagation claim."
+    },
+    {
+      "item_id": "scicode:45",
+      "source": "scicode",
+      "official_score": 0.0,
+      "finish_reason": "stop",
+      "completion_tokens": 10933,
+      "api_error": null,
+      "line": 1794,
+      "line_sha256": "18412eb42b29f7e2354ed63c85af947279d4fb92b2724b4d59258c889077336f",
+      "input_path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/results/gemma4-fresh-f04-dev30-dp4-20261107-v1/items.jsonl",
+      "id": "scicode:45:45.3",
+      "step": "45.3",
+      "diagnostic": {
+        "step": "45.3",
+        "passed": false,
+        "returncode": 1,
+        "timed_out": false,
+        "elapsed_seconds": 1.9333717710105702,
+        "exception_class": "ValueError",
+        "exception_class_origin": "stderr_allowlisted_hint",
+        "stdout": {
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "representation": "utf8_of_captured_text"
+        },
+        "stderr": {
+          "bytes": 945,
+          "sha256": "dd01725218ca524018648218dd30476c28d5b871e6c79471dec6e9e7168456d7",
+          "representation": "utf8_of_captured_text"
+        }
+      },
+      "step_finish_reason": "stop",
+      "step_code": {
+        "bytes": 8837,
+        "sha256": "c94b5a522c6c7e6b1aa3e509fe39d6777f35484be59d77b729726aaabb4965a6",
+        "empty": false,
+        "parse_ok": true,
+        "top_level_definitions": [
+          "init_grid",
+          "add_dirichlet_bc",
+          "add_neumann_bc"
+        ],
+        "duplicate_top_level_definitions": {}
+      },
+      "step_public_sha256": "36feddbfecc34a4f1dc53d1cdfb883d368e742a5d161ffc98b0bd56eaee73897",
+      "code_pointer": "outcome.samples[0].files.45.3",
+      "category": "unknown",
+      "certainty": "underdetermined",
+      "causal_explanation": "Unavailable: saved stderr contains only digest, size and allowlisted class hint; full stderr and appended tests were not retained.",
+      "mechanism_note": "Stored step includes dependencies and earlier generated helpers; failure may be in an earlier helper or current function. No blanket propagation claim."
+    },
+    {
+      "item_id": "scicode:45",
+      "source": "scicode",
+      "official_score": 0.0,
+      "finish_reason": "stop",
+      "completion_tokens": 10933,
+      "api_error": null,
+      "line": 1794,
+      "line_sha256": "18412eb42b29f7e2354ed63c85af947279d4fb92b2724b4d59258c889077336f",
+      "input_path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/results/gemma4-fresh-f04-dev30-dp4-20261107-v1/items.jsonl",
+      "id": "scicode:45:45.4",
+      "step": "45.4",
+      "diagnostic": {
+        "step": "45.4",
+        "passed": false,
+        "returncode": 1,
+        "timed_out": false,
+        "elapsed_seconds": 2.5944874139968306,
+        "exception_class": "AssertionError",
+        "exception_class_origin": "stderr_allowlisted_hint",
+        "stdout": {
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "representation": "utf8_of_captured_text"
+        },
+        "stderr": {
+          "bytes": 208,
+          "sha256": "8f24849676e39c8a1472dd63a1d1e5db474618d0455e939ff4865b41600d4722",
+          "representation": "utf8_of_captured_text"
+        }
+      },
+      "step_finish_reason": "stop",
+      "step_code": {
+        "bytes": 12486,
+        "sha256": "0ca952fcbe5cf154c132e7f6c0b0df107ee4caf708922843d4d5bea40d4fac25",
+        "empty": false,
+        "parse_ok": true,
+        "top_level_definitions": [
+          "init_grid",
+          "add_dirichlet_bc",
+          "add_neumann_bc",
+          "heat_equation"
+        ],
+        "duplicate_top_level_definitions": {}
+      },
+      "step_public_sha256": "2e710d752a9be2c95bf7063ba957d6ba8b2579c4063d9715a2739f47a2ff6398",
+      "code_pointer": "outcome.samples[0].files.45.4",
+      "category": "functional_assertion_hint",
+      "certainty": "medium_hint_only",
+      "causal_explanation": "Unavailable: saved stderr contains only digest, size and allowlisted class hint; full stderr and appended tests were not retained.",
+      "mechanism_note": "Stored step includes dependencies and earlier generated helpers; failure may be in an earlier helper or current function. No blanket propagation claim."
+    },
+    {
+      "item_id": "scicode:72",
+      "source": "scicode",
+      "official_score": 0.8888888888888888,
+      "finish_reason": "stop",
+      "completion_tokens": 17659,
+      "api_error": null,
+      "line": 1795,
+      "line_sha256": "afb6e7d8e981a51f68a0ff1f51d7473381fe6312401ae783536b34f7b68dc99f",
+      "input_path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/results/gemma4-fresh-f04-dev30-dp4-20261107-v1/items.jsonl",
+      "id": "scicode:72:72.1",
+      "step": "72.1",
+      "diagnostic": {
+        "step": "72.1",
+        "passed": true,
+        "returncode": 0,
+        "timed_out": false,
+        "elapsed_seconds": 2.1371900980593637,
+        "exception_class": null,
+        "exception_class_origin": "stderr_allowlisted_hint",
+        "stdout": {
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "representation": "utf8_of_captured_text"
+        },
+        "stderr": {
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "representation": "utf8_of_captured_text"
+        }
+      },
+      "step_finish_reason": "stop",
+      "step_code": {
+        "bytes": 1188,
+        "sha256": "ee0fbc0ffaa99b3b348d7ec6ba2720bb551cf783aedb5866d7ead35d584cd3e8",
+        "empty": false,
+        "parse_ok": true,
+        "top_level_definitions": [
+          "neighbor_list"
+        ],
+        "duplicate_top_level_definitions": {}
+      },
+      "step_public_sha256": "2be4a3adc8b3619467fbd3c2387d26d20ec9917b10542e1189c7da12a832c009",
+      "code_pointer": "outcome.samples[0].files.72.1"
+    },
+    {
+      "item_id": "scicode:72",
+      "source": "scicode",
+      "official_score": 0.8888888888888888,
+      "finish_reason": "stop",
+      "completion_tokens": 17659,
+      "api_error": null,
+      "line": 1795,
+      "line_sha256": "afb6e7d8e981a51f68a0ff1f51d7473381fe6312401ae783536b34f7b68dc99f",
+      "input_path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/results/gemma4-fresh-f04-dev30-dp4-20261107-v1/items.jsonl",
+      "id": "scicode:72:72.2",
+      "step": "72.2",
+      "diagnostic": {
+        "step": "72.2",
+        "passed": true,
+        "returncode": 0,
+        "timed_out": false,
+        "elapsed_seconds": 2.4081272560870275,
+        "exception_class": null,
+        "exception_class_origin": "stderr_allowlisted_hint",
+        "stdout": {
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "representation": "utf8_of_captured_text"
+        },
+        "stderr": {
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "representation": "utf8_of_captured_text"
+        }
+      },
+      "step_finish_reason": "stop",
+      "step_code": {
+        "bytes": 2665,
+        "sha256": "387871f28ceb68607a9449e06c2de1ca736297bf5778ad9ab1243f346e1c5004",
+        "empty": false,
+        "parse_ok": true,
+        "top_level_definitions": [
+          "neighbor_list",
+          "energy_site"
+        ],
+        "duplicate_top_level_definitions": {}
+      },
+      "step_public_sha256": "6257c719eb7b627db83694acbc0feb4cb205d491fc049ddd1813cbc7d1322692",
+      "code_pointer": "outcome.samples[0].files.72.2"
+    },
+    {
+      "item_id": "scicode:72",
+      "source": "scicode",
+      "official_score": 0.8888888888888888,
+      "finish_reason": "stop",
+      "completion_tokens": 17659,
+      "api_error": null,
+      "line": 1795,
+      "line_sha256": "afb6e7d8e981a51f68a0ff1f51d7473381fe6312401ae783536b34f7b68dc99f",
+      "input_path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/results/gemma4-fresh-f04-dev30-dp4-20261107-v1/items.jsonl",
+      "id": "scicode:72:72.3",
+      "step": "72.3",
+      "diagnostic": {
+        "step": "72.3",
+        "passed": true,
+        "returncode": 0,
+        "timed_out": false,
+        "elapsed_seconds": 2.3732168760616332,
+        "exception_class": null,
+        "exception_class_origin": "stderr_allowlisted_hint",
+        "stdout": {
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "representation": "utf8_of_captured_text"
+        },
+        "stderr": {
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "representation": "utf8_of_captured_text"
+        }
+      },
+      "step_finish_reason": "stop",
+      "step_code": {
+        "bytes": 4258,
+        "sha256": "5b0d75ed55a3e7a8221b04c61908368cd2bf4b2fa59e3c9a6f41719c98d2a99b",
+        "empty": false,
+        "parse_ok": true,
+        "top_level_definitions": [
+          "neighbor_list",
+          "energy_site",
+          "energy"
+        ],
+        "duplicate_top_level_definitions": {}
+      },
+      "step_public_sha256": "f20eddd15878a56f04979addb2d249032785f9d8d1f5485a6db8ef9b664a53d0",
+      "code_pointer": "outcome.samples[0].files.72.3"
+    },
+    {
+      "item_id": "scicode:72",
+      "source": "scicode",
+      "official_score": 0.8888888888888888,
+      "finish_reason": "stop",
+      "completion_tokens": 17659,
+      "api_error": null,
+      "line": 1795,
+      "line_sha256": "afb6e7d8e981a51f68a0ff1f51d7473381fe6312401ae783536b34f7b68dc99f",
+      "input_path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/results/gemma4-fresh-f04-dev30-dp4-20261107-v1/items.jsonl",
+      "id": "scicode:72:72.4",
+      "step": "72.4",
+      "diagnostic": {
+        "step": "72.4",
+        "passed": true,
+        "returncode": 0,
+        "timed_out": false,
+        "elapsed_seconds": 2.608895748038776,
+        "exception_class": null,
+        "exception_class_origin": "stderr_allowlisted_hint",
+        "stdout": {
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "representation": "utf8_of_captured_text"
+        },
+        "stderr": {
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "representation": "utf8_of_captured_text"
+        }
+      },
+      "step_finish_reason": "stop",
+      "step_code": {
+        "bytes": 5108,
+        "sha256": "fa2614b76d36c28897b78adb4a0a2a1d19000a222a42aa28fd4931238adb097d",
+        "empty": false,
+        "parse_ok": true,
+        "top_level_definitions": [
+          "neighbor_list",
+          "energy_site",
+          "energy",
+          "magnetization"
+        ],
+        "duplicate_top_level_definitions": {}
+      },
+      "step_public_sha256": "5d78d7086cf413ecb221f4285dd771ce76b11a242b5563634ca40dd22de1d854",
+      "code_pointer": "outcome.samples[0].files.72.4"
+    },
+    {
+      "item_id": "scicode:72",
+      "source": "scicode",
+      "official_score": 0.8888888888888888,
+      "finish_reason": "stop",
+      "completion_tokens": 17659,
+      "api_error": null,
+      "line": 1795,
+      "line_sha256": "afb6e7d8e981a51f68a0ff1f51d7473381fe6312401ae783536b34f7b68dc99f",
+      "input_path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/results/gemma4-fresh-f04-dev30-dp4-20261107-v1/items.jsonl",
+      "id": "scicode:72:72.5",
+      "step": "72.5",
+      "diagnostic": {
+        "step": "72.5",
+        "passed": false,
+        "returncode": 1,
+        "timed_out": false,
+        "elapsed_seconds": 2.3215730489464477,
+        "exception_class": "AssertionError",
+        "exception_class_origin": "stderr_allowlisted_hint",
+        "stdout": {
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "representation": "utf8_of_captured_text"
+        },
+        "stderr": {
+          "bytes": 290,
+          "sha256": "931d0b74c593abea39e1387dee88107c7376724456865f6a3faa82fe6de6e458",
+          "representation": "utf8_of_captured_text"
+        }
+      },
+      "step_finish_reason": "stop",
+      "step_code": {
+        "bytes": 6984,
+        "sha256": "1a198aa454963fcf0a2072e49dbbafbb2618fc980577a793dd2900467c122d35",
+        "empty": false,
+        "parse_ok": true,
+        "top_level_definitions": [
+          "neighbor_list",
+          "energy_site",
+          "energy",
+          "magnetization",
+          "get_flip_probability_magnetization"
+        ],
+        "duplicate_top_level_definitions": {}
+      },
+      "step_public_sha256": "d8da5a85d325be83877af022f3eab98985ca0e38242d264cdfa6040ec3cffebf",
+      "code_pointer": "outcome.samples[0].files.72.5",
+      "category": "functional_assertion_hint",
+      "certainty": "medium_hint_only",
+      "causal_explanation": "Unavailable: saved stderr contains only digest, size and allowlisted class hint; full stderr and appended tests were not retained.",
+      "mechanism_note": "Stored step includes dependencies and earlier generated helpers; failure may be in an earlier helper or current function. No blanket propagation claim."
+    },
+    {
+      "item_id": "scicode:72",
+      "source": "scicode",
+      "official_score": 0.8888888888888888,
+      "finish_reason": "stop",
+      "completion_tokens": 17659,
+      "api_error": null,
+      "line": 1795,
+      "line_sha256": "afb6e7d8e981a51f68a0ff1f51d7473381fe6312401ae783536b34f7b68dc99f",
+      "input_path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/results/gemma4-fresh-f04-dev30-dp4-20261107-v1/items.jsonl",
+      "id": "scicode:72:72.6",
+      "step": "72.6",
+      "diagnostic": {
+        "step": "72.6",
+        "passed": true,
+        "returncode": 0,
+        "timed_out": false,
+        "elapsed_seconds": 2.2266868150327355,
+        "exception_class": null,
+        "exception_class_origin": "stderr_allowlisted_hint",
+        "stdout": {
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "representation": "utf8_of_captured_text"
+        },
+        "stderr": {
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "representation": "utf8_of_captured_text"
+        }
+      },
+      "step_finish_reason": "stop",
+      "step_code": {
+        "bytes": 8650,
+        "sha256": "8a6ddc1f06c9f81ef466b5137ec44d10bd512a48004c70ce25b96e90883367fa",
+        "empty": false,
+        "parse_ok": true,
+        "top_level_definitions": [
+          "neighbor_list",
+          "energy_site",
+          "energy",
+          "magnetization",
+          "get_flip_probability_magnetization",
+          "flip"
+        ],
+        "duplicate_top_level_definitions": {}
+      },
+      "step_public_sha256": "69c3085457bffd68b1bff88bac5d41ef9e9f87b64344960466307a3faaed83fb",
+      "code_pointer": "outcome.samples[0].files.72.6"
+    },
+    {
+      "item_id": "scicode:72",
+      "source": "scicode",
+      "official_score": 0.8888888888888888,
+      "finish_reason": "stop",
+      "completion_tokens": 17659,
+      "api_error": null,
+      "line": 1795,
+      "line_sha256": "afb6e7d8e981a51f68a0ff1f51d7473381fe6312401ae783536b34f7b68dc99f",
+      "input_path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/results/gemma4-fresh-f04-dev30-dp4-20261107-v1/items.jsonl",
+      "id": "scicode:72:72.7",
+      "step": "72.7",
+      "diagnostic": {
+        "step": "72.7",
+        "passed": true,
+        "returncode": 0,
+        "timed_out": false,
+        "elapsed_seconds": 2.3147236980730668,
+        "exception_class": null,
+        "exception_class_origin": "stderr_allowlisted_hint",
+        "stdout": {
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "representation": "utf8_of_captured_text"
+        },
+        "stderr": {
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "representation": "utf8_of_captured_text"
+        }
+      },
+      "step_finish_reason": "stop",
+      "step_code": {
+        "bytes": 10563,
+        "sha256": "ad73e7f461cafd8835e6f1719c2895c8c66c5ce25ceba4c4b3c28f27bfbad6d9",
+        "empty": false,
+        "parse_ok": true,
+        "top_level_definitions": [
+          "neighbor_list",
+          "energy_site",
+          "energy",
+          "magnetization",
+          "get_flip_probability_magnetization",
+          "flip",
+          "run"
+        ],
+        "duplicate_top_level_definitions": {}
+      },
+      "step_public_sha256": "b68126ca109a45643e1528f15dd20ee7acf3a28436c71670e749b985f1da1145",
+      "code_pointer": "outcome.samples[0].files.72.7"
+    },
+    {
+      "item_id": "scicode:72",
+      "source": "scicode",
+      "official_score": 0.8888888888888888,
+      "finish_reason": "stop",
+      "completion_tokens": 17659,
+      "api_error": null,
+      "line": 1795,
+      "line_sha256": "afb6e7d8e981a51f68a0ff1f51d7473381fe6312401ae783536b34f7b68dc99f",
+      "input_path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/results/gemma4-fresh-f04-dev30-dp4-20261107-v1/items.jsonl",
+      "id": "scicode:72:72.8",
+      "step": "72.8",
+      "diagnostic": {
+        "step": "72.8",
+        "passed": true,
+        "returncode": 0,
+        "timed_out": false,
+        "elapsed_seconds": 2.8909671399742365,
+        "exception_class": null,
+        "exception_class_origin": "stderr_allowlisted_hint",
+        "stdout": {
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "representation": "utf8_of_captured_text"
+        },
+        "stderr": {
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "representation": "utf8_of_captured_text"
+        }
+      },
+      "step_finish_reason": "stop",
+      "step_code": {
+        "bytes": 12120,
+        "sha256": "e3761f0a2b99f6dccd24386a57ac72341da7c6e64a4cc878b325d1e5bbd03a19",
+        "empty": false,
+        "parse_ok": true,
+        "top_level_definitions": [
+          "neighbor_list",
+          "energy_site",
+          "energy",
+          "magnetization",
+          "get_flip_probability_magnetization",
+          "flip",
+          "run",
+          "scan_T"
+        ],
+        "duplicate_top_level_definitions": {}
+      },
+      "step_public_sha256": "4b2bfe8e8f51168ebdec19568ad8fb09e594af0f97e6b77d77ccbd5f4ed573cf",
+      "code_pointer": "outcome.samples[0].files.72.8"
+    },
+    {
+      "item_id": "scicode:72",
+      "source": "scicode",
+      "official_score": 0.8888888888888888,
+      "finish_reason": "stop",
+      "completion_tokens": 17659,
+      "api_error": null,
+      "line": 1795,
+      "line_sha256": "afb6e7d8e981a51f68a0ff1f51d7473381fe6312401ae783536b34f7b68dc99f",
+      "input_path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/results/gemma4-fresh-f04-dev30-dp4-20261107-v1/items.jsonl",
+      "id": "scicode:72:72.9",
+      "step": "72.9",
+      "diagnostic": {
+        "step": "72.9",
+        "passed": true,
+        "returncode": 0,
+        "timed_out": false,
+        "elapsed_seconds": 64.60769300407264,
+        "exception_class": null,
+        "exception_class_origin": "stderr_allowlisted_hint",
+        "stdout": {
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "representation": "utf8_of_captured_text"
+        },
+        "stderr": {
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "representation": "utf8_of_captured_text"
+        }
+      },
+      "step_finish_reason": "stop",
+      "step_code": {
+        "bytes": 13832,
+        "sha256": "e7ffb4733055fc26043d53e39a62e1a8303962af59bb3265e43b0769dbc2d0c9",
+        "empty": false,
+        "parse_ok": true,
+        "top_level_definitions": [
+          "neighbor_list",
+          "energy_site",
+          "energy",
+          "magnetization",
+          "get_flip_probability_magnetization",
+          "flip",
+          "run",
+          "scan_T",
+          "calc_transition"
+        ],
+        "duplicate_top_level_definitions": {}
+      },
+      "step_public_sha256": "e803b29886368ed90e4c22d577669dea17615ee37c54018165bd7495add97b12",
+      "code_pointer": "outcome.samples[0].files.72.9"
+    },
+    {
+      "item_id": "scicode:80",
+      "source": "scicode",
+      "official_score": 0.2857142857142857,
+      "finish_reason": "stop",
+      "completion_tokens": 28741,
+      "api_error": null,
+      "line": 1796,
+      "line_sha256": "707f2ffdf9f7a13c3a85cd76649568b439452c9eb8cb5a7e255f17fc1c5ced57",
+      "input_path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/results/gemma4-fresh-f04-dev30-dp4-20261107-v1/items.jsonl",
+      "id": "scicode:80:80.1",
+      "step": "80.1",
+      "diagnostic": {
+        "step": "80.1",
+        "passed": true,
+        "returncode": 0,
+        "timed_out": false,
+        "elapsed_seconds": 2.5118062890833244,
+        "exception_class": null,
+        "exception_class_origin": "stderr_allowlisted_hint",
+        "stdout": {
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "representation": "utf8_of_captured_text"
+        },
+        "stderr": {
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "representation": "utf8_of_captured_text"
+        }
+      },
+      "step_finish_reason": "stop",
+      "step_code": {
+        "bytes": 1805,
+        "sha256": "8b5d59bcba3d85d73e12895539167d18d9b017e965fa9a356d6be3918928d99a",
+        "empty": false,
+        "parse_ok": true,
+        "top_level_definitions": [
+          "dist"
+        ],
+        "duplicate_top_level_definitions": {}
+      },
+      "step_public_sha256": "44c25c4af369984afe3ffd4c3c1b0f70dd38a95dd9dbc13164b6208e5bbc2bef",
+      "code_pointer": "outcome.samples[0].files.80.1"
+    },
+    {
+      "item_id": "scicode:80",
+      "source": "scicode",
+      "official_score": 0.2857142857142857,
+      "finish_reason": "stop",
+      "completion_tokens": 28741,
+      "api_error": null,
+      "line": 1796,
+      "line_sha256": "707f2ffdf9f7a13c3a85cd76649568b439452c9eb8cb5a7e255f17fc1c5ced57",
+      "input_path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/results/gemma4-fresh-f04-dev30-dp4-20261107-v1/items.jsonl",
+      "id": "scicode:80:80.2",
+      "step": "80.2",
+      "diagnostic": {
+        "step": "80.2",
+        "passed": true,
+        "returncode": 0,
+        "timed_out": false,
+        "elapsed_seconds": 2.475060864002444,
+        "exception_class": null,
+        "exception_class_origin": "stderr_allowlisted_hint",
+        "stdout": {
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "representation": "utf8_of_captured_text"
+        },
+        "stderr": {
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "representation": "utf8_of_captured_text"
+        }
+      },
+      "step_finish_reason": "stop",
+      "step_code": {
+        "bytes": 3907,
+        "sha256": "6f7633592750f36015eed0f6d2d7847f41b2f719ce6df11dd37dd07bf9b5b595",
+        "empty": false,
+        "parse_ok": true,
+        "top_level_definitions": [
+          "dist",
+          "E_ij"
+        ],
+        "duplicate_top_level_definitions": {}
+      },
+      "step_public_sha256": "a19a48b4cdfdb2f9ae89250f9907942ca8d8b44429385464affb8e11055fc517",
+      "code_pointer": "outcome.samples[0].files.80.2"
+    },
+    {
+      "item_id": "scicode:80",
+      "source": "scicode",
+      "official_score": 0.2857142857142857,
+      "finish_reason": "stop",
+      "completion_tokens": 28741,
+      "api_error": null,
+      "line": 1796,
+      "line_sha256": "707f2ffdf9f7a13c3a85cd76649568b439452c9eb8cb5a7e255f17fc1c5ced57",
+      "input_path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/results/gemma4-fresh-f04-dev30-dp4-20261107-v1/items.jsonl",
+      "id": "scicode:80:80.3",
+      "step": "80.3",
+      "diagnostic": {
+        "step": "80.3",
+        "passed": false,
+        "returncode": 1,
+        "timed_out": false,
+        "elapsed_seconds": 2.3627045860048383,
+        "exception_class": "AssertionError",
+        "exception_class_origin": "stderr_allowlisted_hint",
+        "stdout": {
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "representation": "utf8_of_captured_text"
+        },
+        "stderr": {
+          "bytes": 272,
+          "sha256": "890b31dc3202f9ce501034e821f44cc8fbfe9c16c2a89bd8292d388ea9ae268c",
+          "representation": "utf8_of_captured_text"
+        }
+      },
+      "step_finish_reason": "stop",
+      "step_code": {
+        "bytes": 6040,
+        "sha256": "9af8e5d8078d38664a9c43d02c49750d40e1368ba6855d0cfb0c557d71930a63",
+        "empty": false,
+        "parse_ok": true,
+        "top_level_definitions": [
+          "dist",
+          "E_ij",
+          "E_pot"
+        ],
+        "duplicate_top_level_definitions": {}
+      },
+      "step_public_sha256": "eb501d223ec31e2d6d218c88b8aaf9815eba080d9dac4a548572f9062e692bd4",
+      "code_pointer": "outcome.samples[0].files.80.3",
+      "category": "functional_assertion_hint",
+      "certainty": "medium_hint_only",
+      "causal_explanation": "Unavailable: saved stderr contains only digest, size and allowlisted class hint; full stderr and appended tests were not retained.",
+      "mechanism_note": "Stored step includes dependencies and earlier generated helpers; failure may be in an earlier helper or current function. No blanket propagation claim."
+    },
+    {
+      "item_id": "scicode:80",
+      "source": "scicode",
+      "official_score": 0.2857142857142857,
+      "finish_reason": "stop",
+      "completion_tokens": 28741,
+      "api_error": null,
+      "line": 1796,
+      "line_sha256": "707f2ffdf9f7a13c3a85cd76649568b439452c9eb8cb5a7e255f17fc1c5ced57",
+      "input_path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/results/gemma4-fresh-f04-dev30-dp4-20261107-v1/items.jsonl",
+      "id": "scicode:80:80.4",
+      "step": "80.4",
+      "diagnostic": {
+        "step": "80.4",
+        "passed": false,
+        "returncode": 1,
+        "timed_out": false,
+        "elapsed_seconds": 2.5741791089531034,
+        "exception_class": "AssertionError",
+        "exception_class_origin": "stderr_allowlisted_hint",
+        "stdout": {
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "representation": "utf8_of_captured_text"
+        },
+        "stderr": {
+          "bytes": 234,
+          "sha256": "f6b14abe90739806df33d905f30a52bb8e0973cf821c988b7e810d0c0546fe98",
+          "representation": "utf8_of_captured_text"
+        }
+      },
+      "step_finish_reason": "stop",
+      "step_code": {
+        "bytes": 8682,
+        "sha256": "d22f94919069c9fd8219f2425e9e6a6ac2fa35c96b536c931a06fb846c4c3614",
+        "empty": false,
+        "parse_ok": true,
+        "top_level_definitions": [
+          "dist",
+          "E_ij",
+          "E_pot",
+          "f_ij"
+        ],
+        "duplicate_top_level_definitions": {}
+      },
+      "step_public_sha256": "100ceddd8e996c70212e0b4afba4a3a0cbf569d8a3ea0724bbb8cfb0d38cc626",
+      "code_pointer": "outcome.samples[0].files.80.4",
+      "category": "functional_assertion_hint",
+      "certainty": "medium_hint_only",
+      "causal_explanation": "Unavailable: saved stderr contains only digest, size and allowlisted class hint; full stderr and appended tests were not retained.",
+      "mechanism_note": "Stored step includes dependencies and earlier generated helpers; failure may be in an earlier helper or current function. No blanket propagation claim."
+    },
+    {
+      "item_id": "scicode:80",
+      "source": "scicode",
+      "official_score": 0.2857142857142857,
+      "finish_reason": "stop",
+      "completion_tokens": 28741,
+      "api_error": null,
+      "line": 1796,
+      "line_sha256": "707f2ffdf9f7a13c3a85cd76649568b439452c9eb8cb5a7e255f17fc1c5ced57",
+      "input_path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/results/gemma4-fresh-f04-dev30-dp4-20261107-v1/items.jsonl",
+      "id": "scicode:80:80.5",
+      "step": "80.5",
+      "diagnostic": {
+        "step": "80.5",
+        "passed": false,
+        "returncode": 1,
+        "timed_out": false,
+        "elapsed_seconds": 2.5692631730344146,
+        "exception_class": "AssertionError",
+        "exception_class_origin": "stderr_allowlisted_hint",
+        "stdout": {
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "representation": "utf8_of_captured_text"
+        },
+        "stderr": {
+          "bytes": 272,
+          "sha256": "5c2deed0b1b208a90e18e1f06cb810aff9a6c7b6bcd0376064384fbccbcca0fa",
+          "representation": "utf8_of_captured_text"
+        }
+      },
+      "step_finish_reason": "stop",
+      "step_code": {
+        "bytes": 12427,
+        "sha256": "1811913f60dd175422b90a5c41a56ae37b1171599982cba8f6c029b7f117d19b",
+        "empty": false,
+        "parse_ok": true,
+        "top_level_definitions": [
+          "dist",
+          "E_ij",
+          "E_pot",
+          "f_ij",
+          "forces"
+        ],
+        "duplicate_top_level_definitions": {}
+      },
+      "step_public_sha256": "9da17adc2804b4ca3a01bb2071b97431e941195d244094a5d36c79dbf74f5eb9",
+      "code_pointer": "outcome.samples[0].files.80.5",
+      "category": "functional_assertion_hint",
+      "certainty": "medium_hint_only",
+      "causal_explanation": "Unavailable: saved stderr contains only digest, size and allowlisted class hint; full stderr and appended tests were not retained.",
+      "mechanism_note": "Stored step includes dependencies and earlier generated helpers; failure may be in an earlier helper or current function. No blanket propagation claim."
+    },
+    {
+      "item_id": "scicode:80",
+      "source": "scicode",
+      "official_score": 0.2857142857142857,
+      "finish_reason": "stop",
+      "completion_tokens": 28741,
+      "api_error": null,
+      "line": 1796,
+      "line_sha256": "707f2ffdf9f7a13c3a85cd76649568b439452c9eb8cb5a7e255f17fc1c5ced57",
+      "input_path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/results/gemma4-fresh-f04-dev30-dp4-20261107-v1/items.jsonl",
+      "id": "scicode:80:80.6",
+      "step": "80.6",
+      "diagnostic": {
+        "step": "80.6",
+        "passed": false,
+        "returncode": 1,
+        "timed_out": false,
+        "elapsed_seconds": 2.706223994027823,
+        "exception_class": "AssertionError",
+        "exception_class_origin": "stderr_allowlisted_hint",
+        "stdout": {
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "representation": "utf8_of_captured_text"
+        },
+        "stderr": {
+          "bytes": 324,
+          "sha256": "916fc091b18334cd6a4a70fdbf9a2a1985946d6e068dfe7934b1497f32899bf3",
+          "representation": "utf8_of_captured_text"
+        }
+      },
+      "step_finish_reason": "stop",
+      "step_code": {
+        "bytes": 15847,
+        "sha256": "b1cded1baed2ebffe2af1edd42fe41642f03b3275a38249bbc6657a22f16472a",
+        "empty": false,
+        "parse_ok": true,
+        "top_level_definitions": [
+          "dist",
+          "E_ij",
+          "E_pot",
+          "f_ij",
+          "forces",
+          "velocity_verlet"
+        ],
+        "duplicate_top_level_definitions": {}
+      },
+      "step_public_sha256": "ea3bf5e750c753508de7f4ed86873a15777fd94fc88aa048c2d4f2e289d1e403",
+      "code_pointer": "outcome.samples[0].files.80.6",
+      "category": "functional_assertion_hint",
+      "certainty": "medium_hint_only",
+      "causal_explanation": "Unavailable: saved stderr contains only digest, size and allowlisted class hint; full stderr and appended tests were not retained.",
+      "mechanism_note": "Stored step includes dependencies and earlier generated helpers; failure may be in an earlier helper or current function. No blanket propagation claim."
+    },
+    {
+      "item_id": "scicode:80",
+      "source": "scicode",
+      "official_score": 0.2857142857142857,
+      "finish_reason": "stop",
+      "completion_tokens": 28741,
+      "api_error": null,
+      "line": 1796,
+      "line_sha256": "707f2ffdf9f7a13c3a85cd76649568b439452c9eb8cb5a7e255f17fc1c5ced57",
+      "input_path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/results/gemma4-fresh-f04-dev30-dp4-20261107-v1/items.jsonl",
+      "id": "scicode:80:80.7",
+      "step": "80.7",
+      "diagnostic": {
+        "step": "80.7",
+        "passed": false,
+        "returncode": 1,
+        "timed_out": false,
+        "elapsed_seconds": 3.2502637550933287,
+        "exception_class": "ValueError",
+        "exception_class_origin": "stderr_allowlisted_hint",
+        "stdout": {
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "representation": "utf8_of_captured_text"
+        },
+        "stderr": {
+          "bytes": 1008,
+          "sha256": "08af192a1d1326769359e47ad58b6fb7ef5da24454175e02d60a551c93b4e115",
+          "representation": "utf8_of_captured_text"
+        }
+      },
+      "step_finish_reason": "stop",
+      "step_code": {
+        "bytes": 21195,
+        "sha256": "2b040d880464c1102e28ed66d9c2c789f4652a241aa6208a4e441da868762dbf",
+        "empty": false,
+        "parse_ok": true,
+        "top_level_definitions": [
+          "dist",
+          "E_ij",
+          "E_pot",
+          "f_ij",
+          "forces",
+          "velocity_verlet",
+          "MD_NVT"
+        ],
+        "duplicate_top_level_definitions": {}
+      },
+      "step_public_sha256": "f0f0cd8eabb1bc5f411f5ed280dcee8a75c8974a9034e95b939735a4a2fdfd3d",
+      "code_pointer": "outcome.samples[0].files.80.7",
+      "category": "unknown",
+      "certainty": "underdetermined",
+      "causal_explanation": "Unavailable: saved stderr contains only digest, size and allowlisted class hint; full stderr and appended tests were not retained.",
+      "mechanism_note": "Stored step includes dependencies and earlier generated helpers; failure may be in an earlier helper or current function. No blanket propagation claim."
+    },
+    {
+      "item_id": "scicode:9",
+      "source": "scicode",
+      "official_score": 0.0,
+      "finish_reason": "stop",
+      "completion_tokens": 1925,
+      "api_error": null,
+      "line": 1797,
+      "line_sha256": "adbca745885e9c4b6c2015824e188ee8672163595f999a2525e843fc14a5cc54",
+      "input_path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/results/gemma4-fresh-f04-dev30-dp4-20261107-v1/items.jsonl",
+      "id": "scicode:9:9.1",
+      "step": "9.1",
+      "diagnostic": {
+        "step": "9.1",
+        "passed": false,
+        "returncode": 1,
+        "timed_out": false,
+        "elapsed_seconds": 2.1065338810440153,
+        "exception_class": "AssertionError",
+        "exception_class_origin": "stderr_allowlisted_hint",
+        "stdout": {
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "representation": "utf8_of_captured_text"
+        },
+        "stderr": {
+          "bytes": 242,
+          "sha256": "63c6a1a07147e41624b99f4ca3a41c663fe5268c0563b6c55524e0b97455058f",
+          "representation": "utf8_of_captured_text"
+        }
+      },
+      "step_finish_reason": "stop",
+      "step_code": {
+        "bytes": 2615,
+        "sha256": "71bf8c0dfdcf0e27fc05694e7476c14da55bef8785fcd521c9f6bedd01dc37a4",
+        "empty": false,
+        "parse_ok": true,
+        "top_level_definitions": [
+          "WJ"
+        ],
+        "duplicate_top_level_definitions": {}
+      },
+      "step_public_sha256": "221944c1c7173abd080012f3fcf3f0ecbad4f82d7a7c9da912d2e8707da9b986",
+      "code_pointer": "outcome.samples[0].files.9.1",
+      "category": "functional_assertion_hint",
+      "certainty": "medium_hint_only",
+      "causal_explanation": "Unavailable: saved stderr contains only digest, size and allowlisted class hint; full stderr and appended tests were not retained.",
+      "mechanism_note": "Stored step includes dependencies and earlier generated helpers; failure may be in an earlier helper or current function. No blanket propagation claim."
+    },
+    {
+      "item_id": "scicode:17",
+      "source": "scicode",
+      "official_score": 0.0,
+      "finish_reason": "stop",
+      "completion_tokens": 9628,
+      "api_error": null,
+      "line": 1798,
+      "line_sha256": "4699e61b3eb856bb2cfc57eb170b2793101a6abacb917f86b906851475c7969f",
+      "input_path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/results/gemma4-fresh-f04-dev30-dp4-20261107-v1/items.jsonl",
+      "id": "scicode:17:17.1",
+      "step": "17.1",
+      "diagnostic": {
+        "step": "17.1",
+        "passed": false,
+        "returncode": 1,
+        "timed_out": false,
+        "elapsed_seconds": 2.565894377999939,
+        "exception_class": "AssertionError",
+        "exception_class_origin": "stderr_allowlisted_hint",
+        "stdout": {
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "representation": "utf8_of_captured_text"
+        },
+        "stderr": {
+          "bytes": 255,
+          "sha256": "3d73dbfb9aa3f3b72f23d355308439683f44de3598a695cada9a1736ca360d29",
+          "representation": "utf8_of_captured_text"
+        }
+      },
+      "step_finish_reason": "stop",
+      "step_code": {
+        "bytes": 2368,
+        "sha256": "806d18ae36f5a338aa151cab767a296588820da4b155aa0d8021f48ab26ea41b",
+        "empty": false,
+        "parse_ok": true,
+        "top_level_definitions": [
+          "init_eji_array"
+        ],
+        "duplicate_top_level_definitions": {}
+      },
+      "step_public_sha256": "ffcd6b5f5c051fa8363e0fc6dc683779f33faeae1bb1a5982286c5d72f0c280a",
+      "code_pointer": "outcome.samples[0].files.17.1",
+      "category": "functional_assertion_hint",
+      "certainty": "medium_hint_only",
+      "causal_explanation": "Unavailable: saved stderr contains only digest, size and allowlisted class hint; full stderr and appended tests were not retained.",
+      "mechanism_note": "Stored step includes dependencies and earlier generated helpers; failure may be in an earlier helper or current function. No blanket propagation claim."
+    },
+    {
+      "item_id": "scicode:17",
+      "source": "scicode",
+      "official_score": 0.0,
+      "finish_reason": "stop",
+      "completion_tokens": 9628,
+      "api_error": null,
+      "line": 1798,
+      "line_sha256": "4699e61b3eb856bb2cfc57eb170b2793101a6abacb917f86b906851475c7969f",
+      "input_path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/results/gemma4-fresh-f04-dev30-dp4-20261107-v1/items.jsonl",
+      "id": "scicode:17:17.2",
+      "step": "17.2",
+      "diagnostic": {
+        "step": "17.2",
+        "passed": false,
+        "returncode": 1,
+        "timed_out": false,
+        "elapsed_seconds": 2.0802978470455855,
+        "exception_class": "AssertionError",
+        "exception_class_origin": "stderr_allowlisted_hint",
+        "stdout": {
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "representation": "utf8_of_captured_text"
+        },
+        "stderr": {
+          "bytes": 276,
+          "sha256": "87705b3146425f574815b3cbdc4ae35cd327b00aa6b0402cd7dc8cde59850bfe",
+          "representation": "utf8_of_captured_text"
+        }
+      },
+      "step_finish_reason": "stop",
+      "step_code": {
+        "bytes": 4876,
+        "sha256": "d05b31ff7e4549a272015ff4d5d5a2434cfceafe2083dff5b36ab261fbb68c47",
+        "empty": false,
+        "parse_ok": true,
+        "top_level_definitions": [
+          "init_eji_array",
+          "integrate_DOS"
+        ],
+        "duplicate_top_level_definitions": {}
+      },
+      "step_public_sha256": "bf78bbbb817c126fa8993efd186e7aeecafbd3d1a6349cf33c11d26e45c9acd4",
+      "code_pointer": "outcome.samples[0].files.17.2",
+      "category": "functional_assertion_hint",
+      "certainty": "medium_hint_only",
+      "causal_explanation": "Unavailable: saved stderr contains only digest, size and allowlisted class hint; full stderr and appended tests were not retained.",
+      "mechanism_note": "Stored step includes dependencies and earlier generated helpers; failure may be in an earlier helper or current function. No blanket propagation claim."
+    },
+    {
+      "item_id": "scicode:46",
+      "source": "scicode",
+      "official_score": 0.5,
+      "finish_reason": "stop",
+      "completion_tokens": 10229,
+      "api_error": null,
+      "line": 1799,
+      "line_sha256": "f0f5e4419753e841f8f77256bfc090c6408eadaa17a65e9ab721f575eb4ef752",
+      "input_path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/results/gemma4-fresh-f04-dev30-dp4-20261107-v1/items.jsonl",
+      "id": "scicode:46:46.1",
+      "step": "46.1",
+      "diagnostic": {
+        "step": "46.1",
+        "passed": true,
+        "returncode": 0,
+        "timed_out": false,
+        "elapsed_seconds": 2.4328321990324184,
+        "exception_class": null,
+        "exception_class_origin": "stderr_allowlisted_hint",
+        "stdout": {
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "representation": "utf8_of_captured_text"
+        },
+        "stderr": {
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "representation": "utf8_of_captured_text"
+        }
+      },
+      "step_finish_reason": "stop",
+      "step_code": {
+        "bytes": 3177,
+        "sha256": "af223ce0a4ab6edd0a7f8ced0e51da49ac72d8f8714409c9d0e3eeea50161291",
+        "empty": false,
+        "parse_ok": true,
+        "top_level_definitions": [
+          "Slater"
+        ],
+        "duplicate_top_level_definitions": {}
+      },
+      "step_public_sha256": "cda45323905e9323ce109f9a6d76865099bd638d48eb8bce8daf6a55111b3ba2",
+      "code_pointer": "outcome.samples[0].files.46.1"
+    },
+    {
+      "item_id": "scicode:46",
+      "source": "scicode",
+      "official_score": 0.5,
+      "finish_reason": "stop",
+      "completion_tokens": 10229,
+      "api_error": null,
+      "line": 1799,
+      "line_sha256": "f0f5e4419753e841f8f77256bfc090c6408eadaa17a65e9ab721f575eb4ef752",
+      "input_path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/results/gemma4-fresh-f04-dev30-dp4-20261107-v1/items.jsonl",
+      "id": "scicode:46:46.2",
+      "step": "46.2",
+      "diagnostic": {
+        "step": "46.2",
+        "passed": true,
+        "returncode": 0,
+        "timed_out": false,
+        "elapsed_seconds": 2.1738088929560035,
+        "exception_class": null,
+        "exception_class_origin": "stderr_allowlisted_hint",
+        "stdout": {
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "representation": "utf8_of_captured_text"
+        },
+        "stderr": {
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "representation": "utf8_of_captured_text"
+        }
+      },
+      "step_finish_reason": "stop",
+      "step_code": {
+        "bytes": 5431,
+        "sha256": "caa1aba2e1279aaf9a46455ebc7e90680bbd45c8620de5e7d2b2a284af5ee761",
+        "empty": false,
+        "parse_ok": true,
+        "top_level_definitions": [
+          "Slater",
+          "Hamiltonian"
+        ],
+        "duplicate_top_level_definitions": {}
+      },
+      "step_public_sha256": "f711dc9772cbf66b6d9af68ad00499921b4b42ff45fffd9f71b010ae93a87827",
+      "code_pointer": "outcome.samples[0].files.46.2"
+    },
+    {
+      "item_id": "scicode:46",
+      "source": "scicode",
+      "official_score": 0.5,
+      "finish_reason": "stop",
+      "completion_tokens": 10229,
+      "api_error": null,
+      "line": 1799,
+      "line_sha256": "f0f5e4419753e841f8f77256bfc090c6408eadaa17a65e9ab721f575eb4ef752",
+      "input_path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/results/gemma4-fresh-f04-dev30-dp4-20261107-v1/items.jsonl",
+      "id": "scicode:46:46.3",
+      "step": "46.3",
+      "diagnostic": {
+        "step": "46.3",
+        "passed": false,
+        "returncode": 1,
+        "timed_out": false,
+        "elapsed_seconds": 2.2231750820064917,
+        "exception_class": "AssertionError",
+        "exception_class_origin": "stderr_allowlisted_hint",
+        "stdout": {
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "representation": "utf8_of_captured_text"
+        },
+        "stderr": {
+          "bytes": 328,
+          "sha256": "1b973a698a2255c0412b48fcaaef75516c2d271a45682ecf2efc05956f5161d9",
+          "representation": "utf8_of_captured_text"
+        }
+      },
+      "step_finish_reason": "stop",
+      "step_code": {
+        "bytes": 8092,
+        "sha256": "d289cfbf3c10c11998d29d94a379417e196e0bc2eca97aef4c20219a6d372c21",
+        "empty": false,
+        "parse_ok": true,
+        "top_level_definitions": [
+          "Slater",
+          "Hamiltonian",
+          "metropolis"
+        ],
+        "duplicate_top_level_definitions": {}
+      },
+      "step_public_sha256": "9911888fd762a4f5c604db8aca18bbb696e7f0a5724e8166e1470be3006e1813",
+      "code_pointer": "outcome.samples[0].files.46.3",
+      "category": "functional_assertion_hint",
+      "certainty": "medium_hint_only",
+      "causal_explanation": "Unavailable: saved stderr contains only digest, size and allowlisted class hint; full stderr and appended tests were not retained.",
+      "mechanism_note": "Stored step includes dependencies and earlier generated helpers; failure may be in an earlier helper or current function. No blanket propagation claim."
+    },
+    {
+      "item_id": "scicode:46",
+      "source": "scicode",
+      "official_score": 0.5,
+      "finish_reason": "stop",
+      "completion_tokens": 10229,
+      "api_error": null,
+      "line": 1799,
+      "line_sha256": "f0f5e4419753e841f8f77256bfc090c6408eadaa17a65e9ab721f575eb4ef752",
+      "input_path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/results/gemma4-fresh-f04-dev30-dp4-20261107-v1/items.jsonl",
+      "id": "scicode:46:46.4",
+      "step": "46.4",
+      "diagnostic": {
+        "step": "46.4",
+        "passed": false,
+        "returncode": 1,
+        "timed_out": false,
+        "elapsed_seconds": 2.89188313705381,
+        "exception_class": "AssertionError",
+        "exception_class_origin": "stderr_allowlisted_hint",
+        "stdout": {
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "representation": "utf8_of_captured_text"
+        },
+        "stderr": {
+          "bytes": 350,
+          "sha256": "3e580d46dcdfaf1669f6e549a13fb94f4f6962f4194ce59f73414fc32c8d0a5f",
+          "representation": "utf8_of_captured_text"
+        }
+      },
+      "step_finish_reason": "stop",
+      "step_code": {
+        "bytes": 10840,
+        "sha256": "cad5e028a170f96e940faa595b2c50d6dbf3aadb1afe41f46e3f7a47084de2c6",
+        "empty": false,
+        "parse_ok": true,
+        "top_level_definitions": [
+          "Slater",
+          "Hamiltonian",
+          "metropolis",
+          "calc_energy"
+        ],
+        "duplicate_top_level_definitions": {}
+      },
+      "step_public_sha256": "aba47a1556d78c0af170def10b2362c1d7645ae344933daef76809f4c011288f",
+      "code_pointer": "outcome.samples[0].files.46.4",
+      "category": "functional_assertion_hint",
+      "certainty": "medium_hint_only",
+      "causal_explanation": "Unavailable: saved stderr contains only digest, size and allowlisted class hint; full stderr and appended tests were not retained.",
+      "mechanism_note": "Stored step includes dependencies and earlier generated helpers; failure may be in an earlier helper or current function. No blanket propagation claim."
+    },
+    {
+      "item_id": "scicode:35",
+      "source": "scicode",
+      "official_score": 0.6666666666666666,
+      "finish_reason": "stop",
+      "completion_tokens": 11455,
+      "api_error": null,
+      "line": 1800,
+      "line_sha256": "6d9dd18cd57fc4610684758c6957cb898c1209e987fa41fc319e483f5b379f16",
+      "input_path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/results/gemma4-fresh-f04-dev30-dp4-20261107-v1/items.jsonl",
+      "id": "scicode:35:35.1",
+      "step": "35.1",
+      "diagnostic": {
+        "step": "35.1",
+        "passed": true,
+        "returncode": 0,
+        "timed_out": false,
+        "elapsed_seconds": 2.138560537947342,
+        "exception_class": null,
+        "exception_class_origin": "stderr_allowlisted_hint",
+        "stdout": {
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "representation": "utf8_of_captured_text"
+        },
+        "stderr": {
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "representation": "utf8_of_captured_text"
+        }
+      },
+      "step_finish_reason": "stop",
+      "step_code": {
+        "bytes": 1694,
+        "sha256": "f3af582087515f5787ed897608ff3e1e75a25a68977c9b746ce66e0d36cec0c9",
+        "empty": false,
+        "parse_ok": true,
+        "top_level_definitions": [
+          "ground_state_wavelength"
+        ],
+        "duplicate_top_level_definitions": {}
+      },
+      "step_public_sha256": "936ebe6ec5a14db78d7917102a40d3ad4cc858a5d75aeed818bc21a52de82d9f",
+      "code_pointer": "outcome.samples[0].files.35.1"
+    },
+    {
+      "item_id": "scicode:35",
+      "source": "scicode",
+      "official_score": 0.6666666666666666,
+      "finish_reason": "stop",
+      "completion_tokens": 11455,
+      "api_error": null,
+      "line": 1800,
+      "line_sha256": "6d9dd18cd57fc4610684758c6957cb898c1209e987fa41fc319e483f5b379f16",
+      "input_path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/results/gemma4-fresh-f04-dev30-dp4-20261107-v1/items.jsonl",
+      "id": "scicode:35:35.2",
+      "step": "35.2",
+      "diagnostic": {
+        "step": "35.2",
+        "passed": true,
+        "returncode": 0,
+        "timed_out": false,
+        "elapsed_seconds": 1.942557223024778,
+        "exception_class": null,
+        "exception_class_origin": "stderr_allowlisted_hint",
+        "stdout": {
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "representation": "utf8_of_captured_text"
+        },
+        "stderr": {
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "representation": "utf8_of_captured_text"
+        }
+      },
+      "step_finish_reason": "stop",
+      "step_code": {
+        "bytes": 3968,
+        "sha256": "37ddf9a93a4c649c066e870c2347cbd3697d439c096f4b5249551677918600ad",
+        "empty": false,
+        "parse_ok": true,
+        "top_level_definitions": [
+          "ground_state_wavelength",
+          "generate_quadratic_combinations"
+        ],
+        "duplicate_top_level_definitions": {}
+      },
+      "step_public_sha256": "c7a1f21280a32facfb11d30033b9b9770bf1a78356073aca41ccdbf1c133f2b6",
+      "code_pointer": "outcome.samples[0].files.35.2"
+    },
+    {
+      "item_id": "scicode:35",
+      "source": "scicode",
+      "official_score": 0.6666666666666666,
+      "finish_reason": "stop",
+      "completion_tokens": 11455,
+      "api_error": null,
+      "line": 1800,
+      "line_sha256": "6d9dd18cd57fc4610684758c6957cb898c1209e987fa41fc319e483f5b379f16",
+      "input_path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/results/gemma4-fresh-f04-dev30-dp4-20261107-v1/items.jsonl",
+      "id": "scicode:35:35.3",
+      "step": "35.3",
+      "diagnostic": {
+        "step": "35.3",
+        "passed": false,
+        "returncode": 1,
+        "timed_out": false,
+        "elapsed_seconds": 1.960433037020266,
+        "exception_class": "AssertionError",
+        "exception_class_origin": "stderr_allowlisted_hint",
+        "stdout": {
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "representation": "utf8_of_captured_text"
+        },
+        "stderr": {
+          "bytes": 216,
+          "sha256": "fff7b41a65be8fd0195599acbf6368fa6a8f329c7143d0c675041c6706e50fca",
+          "representation": "utf8_of_captured_text"
+        }
+      },
+      "step_finish_reason": "stop",
+      "step_code": {
+        "bytes": 6794,
+        "sha256": "c57854ed8e9e6d57b5aa6f8ce559158f3aca68243abb96046b274f350e5aba25",
+        "empty": false,
+        "parse_ok": true,
+        "top_level_definitions": [
+          "ground_state_wavelength",
+          "generate_quadratic_combinations",
+          "absorption"
+        ],
+        "duplicate_top_level_definitions": {}
+      },
+      "step_public_sha256": "059e2315a5ed684a4e18dedbca5906bc4962a18a98a693b829120f655a6235ec",
+      "code_pointer": "outcome.samples[0].files.35.3",
+      "category": "functional_assertion_hint",
+      "certainty": "medium_hint_only",
+      "causal_explanation": "Unavailable: saved stderr contains only digest, size and allowlisted class hint; full stderr and appended tests were not retained.",
+      "mechanism_note": "Stored step includes dependencies and earlier generated helpers; failure may be in an earlier helper or current function. No blanket propagation claim."
+    }
+  ],
+  "input_source_pins": [
+    {
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/worktrees/kairyu-bench-weight-tools/docs/experiments/scripts/fresh-f04-code-failure-taxonomy-20261107.py",
+      "bytes": 11757,
+      "sha256": "a707f10599abb8897d44d62e04c53fe43d19312d6bb0f5b62dcbfbfb733df8fd"
+    },
+    {
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/results/gemma4-fresh-f04-dev30-dp4-20261107-v1/items.jsonl",
+      "bytes": 32900667,
+      "sha256": "112225547aa681dad402e7a3e62a2cbcafd15301e84987ad4610f2b08fffba65"
+    },
+    {
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/results/gemma4-fresh-f04-dev30-dp4-20261107-v1/report.json",
+      "bytes": 11121,
+      "sha256": "1a062c114b0acae4d27930040c30ccc2e01a20c3e1062490fa1f84656278fd85"
+    },
+    {
+      "path": "/mnt/nvme/kairyu/dev-logs/wsp/cache/evalplus-tasks.json",
+      "bytes": 174600,
+      "sha256": "675540f17fdf4c9dcc0cad6a1ddd556bd1d21db5281d0941fce912f72974a8c0"
+    },
+    {
+      "path": "/mnt/nvme/kairyu/dev-logs/wsp/venv-evalplus/lib/python3.12/site-packages/evalplus/sanitize.py",
+      "bytes": 7910,
+      "sha256": "12fec16b93bfc4d9d9103f227b864dee3c510fe946539b567e6a7805de7d09b5"
+    },
+    {
+      "path": "/mnt/nvme/kairyu/dev-logs/wsp/src/livecodebench/lcb_runner/utils/extraction_utils.py",
+      "bytes": 2395,
+      "sha256": "1267d1724c6d4ea6d237b907dd6b53dfc6f1787a04b1616b85c3bc8377446879"
+    },
+    {
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/runtime/fresh-purpose-20261107-av-live10-v1/runner-app/src/kairyu_bench/wsp/sources/code.py",
+      "bytes": 13645,
+      "sha256": "523ab727598a80f06f49d7118ad6cfb4206fdae9c1135a63d64b87b3ed5a31c6",
+      "current_source_byte_equal": true
+    },
+    {
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/runtime/fresh-purpose-20261107-av-live10-v1/runner-app/src/kairyu_bench/wsp/sources/__init__.py",
+      "bytes": 10788,
+      "sha256": "92a8db31d765d06a8f3c111bf42618fa8f49b8db0b7d2915d0eea0ef6b8ccc4a",
+      "current_source_byte_equal": true
+    },
+    {
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/runtime/fresh-purpose-20261107-av-live10-v1/runner-app/src/kairyu_bench/wsp/scorers/evalplus_score.py",
+      "bytes": 3503,
+      "sha256": "142c57786f1658d28c3d3927115c1ebb574ac2e5d2f7e54772c704db31b56291",
+      "current_source_byte_equal": true
+    },
+    {
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/runtime/fresh-purpose-20261107-av-live10-v1/runner-app/src/kairyu_bench/wsp/scorers/livecodebench_score.py",
+      "bytes": 1267,
+      "sha256": "45ea6a0f27150a148904f1b3a145f51fe2ac9953874e4c7fc7e5e1feda550f60",
+      "current_source_byte_equal": true
+    },
+    {
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/runtime/fresh-purpose-20261107-av-live10-v1/runner-app/src/kairyu_bench/wsp/scorers/scicode_score.py",
+      "bytes": 5316,
+      "sha256": "623c459292e33fb406cbeef5aae446657644faef9913af4bb149addbacd0641c",
+      "current_source_byte_equal": true
+    },
+    {
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f04-dev30-dp4-v1/actual-runner.json",
+      "bytes": 2299,
+      "sha256": "845d30e351721b2dace0936c75d01a1c79ceb5028b533b9232c863bf83bfbbc4"
+    },
+    {
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f04-dev30-dp4-v1/launch-plan-approved.json",
+      "bytes": 14188,
+      "sha256": "26c44c8b15af2c5c0fefeebb1d0aaa94203c381ada65c69eab16ea127b44ef07"
+    }
+  ],
+  "method_limits": "AST/sanitizer/extractor parsing only. No scoring, code exec, model API, benchmark references, weight edit or training data creation. Cached extractor identity recorded; runner extraction payload was temporary and not independently retained.",
+  "model_calls": 0,
+  "scoring_calls": 0,
+  "generated_code_executions": 0,
+  "seconds": 1.5487542152404785
+}

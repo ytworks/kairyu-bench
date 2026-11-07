@@ -1,0 +1,33 @@
+{
+  "command": [
+    "/mnt/nvme/kairyu/dev-logs/wsp/venv-scicode/bin/python",
+    "scripts/experiments/gemma4-purpose/helper_stage_offline.py",
+    "--cases",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-authored120-generation-inputs-v1/inputs/uncataloged72-train-cases.json",
+    "--cases-sha256",
+    "30606fd3b14b4c7809a488fda2bc7bdf318fead9543228b50e7617b0754ca7be",
+    "--responses",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-av-authored120-native-v2/generations/03-unsupported72/train-responses.json",
+    "--responses-sha256",
+    "9803f7a2fd8f331c74805b7dd8cf5111e9efbfa4c15415bb10988edf50c54876",
+    "--output",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-helper16-offline-validation-v1/actual-v2-preview",
+    "--docker-socket",
+    "/var/run/docker.sock",
+    "--daemon-id",
+    "3e518d2b-6972-43f8-b325-f7f33697a2d2",
+    "--image",
+    "sha256:c4ab50223f03fca17bf871e4d05f77001e76525a1c574b6c6ee7024db06cfdc2"
+  ],
+  "returncode": 0,
+  "elapsed_seconds": 0.22017402690835297,
+  "cases_sha256": "30606fd3b14b4c7809a488fda2bc7bdf318fead9543228b50e7617b0754ca7be",
+  "responses_sha256": "9803f7a2fd8f331c74805b7dd8cf5111e9efbfa4c15415bb10988edf50c54876",
+  "report_sha256": "ada6c2a1cf2713fdc5beb72526af0d4f0894d67300f2a0b7c5e719e83c7023aa",
+  "status": "preview",
+  "target_cases": 16,
+  "input_cases": 72,
+  "not_targeted": 56,
+  "real_docker_calls": 0,
+  "generated_code_executions": 0
+}

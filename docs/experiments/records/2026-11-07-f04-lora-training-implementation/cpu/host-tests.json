@@ -1,0 +1,15 @@
+{
+  "returncode": 0,
+  "seconds": 3.98294035193976,
+  "command": [
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/infra/weight-tools-ci/bin/python",
+    "-m",
+    "unittest",
+    "discover",
+    "-s",
+    "tests",
+    "-p",
+    "test_gemma4_lora*.py",
+    "-v"
+  ]
+}

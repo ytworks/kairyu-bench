@@ -1,0 +1,25 @@
+{
+  "command": [
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/infra/weight-tools-ci/bin/python",
+    "-m",
+    "kairyu_bench.wsp.weights.editor",
+    "create",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/checkpoints/code90-current-ad-helper-av-v1",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/checkpoints/fresh-code-joint-f02",
+    "--spec",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f02/proposal/fresh-code-joint-f02.json",
+    "--manifest",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f02/materialization/edit-manifest.json",
+    "--reserve-bytes",
+    "53687091200"
+  ],
+  "returncode": 0,
+  "seconds": 2.5150757499504834,
+  "stdout": "{\"changed_elements\": 203419, \"changed_tensors\": 410, \"delta_l2\": 1.1089462630318312, \"copy_bytes_upper_bound\": 62578656419, \"hardlink_bytes\": 0, \"reserve_bytes\": 53687091200, \"applied\": false}\n",
+  "stderr": "",
+  "plan_sha256": "d63108fa2969fc62714253e7d34ab1991d34f2c09ed66a6096afd0e4e4755534",
+  "spec_sha256": "27f000e4933bdb63d29217c6312114d2b912d349a67617fe42d17d263994410b",
+  "candidate_exists_after": false,
+  "manifest_exists_after": false,
+  "free_bytes_after": 137547403264
+}

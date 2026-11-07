@@ -1,0 +1,77 @@
+from pathlib import Path
+import ast,hashlib,json,time
+R=Path("/mnt/nvme/kairyu/wsp/gemma4-coding-20261104");B=R/"worktrees/kairyu-bench-weight-tools"
+V=R/"analysis/fresh-purpose-20261107-wsp-progress-cli-fix-v1";V.mkdir(exist_ok=False)
+p=B/"docs/experiments/scripts/fresh-av-dev30-progress-20261107.py";old=p.read_bytes();(V/"before.py.txt").write_bytes(old)
+N=R/"analysis/fresh-purpose-20261107-av-dev30-dp4-v1";progress=N/"progress.jsonl";raw=progress.read_bytes();lines=raw.splitlines(keepends=True)
+matches=[(i,line,json.loads(line)) for i,line in enumerate(lines,1) if json.loads(line).get("epoch")==1794059547.4666736]
+assert len(matches)==1
+i,line,value=matches[0];(V/"unintended-appended-line.json").write_bytes(line)
+receipt={"kind":"help_invocation_with_unintended_monitor_append","reported_invocation":"fresh-av-dev30-progress-20261107.py --help","reported_epoch":1794059547.4666736,"verified_line_number":i,"progress_line_count":len(lines),"progress_file_sha256_at_inspection":hashlib.sha256(raw).hexdigest(),"line_sha256":hashlib.sha256(line).hexdigest(),"old_source_sha256":hashlib.sha256(old).hexdigest(),"root_cause":"no argparse; argv ignored and hardcoded old AV monitor executed","side_effect":"one old-AV progress.jsonl append and read-only metrics requests","model_generation_or_new_evaluation_calls":0,"reported_existing_result_scores_unchanged":True,"line_preserved":True,"created_epoch":time.time()}
+(V/"incident.json").write_text(json.dumps(receipt,indent=2)+"\n")
+s=old.decode().replace('"""Read-only snapshot for this complete AV dev30 run; never ranks partial scores."""','"""Append one monitoring snapshot for an explicitly bound complete-manifest dev30 run."""')
+s=s.replace("import collections\n","import argparse\nimport collections\nimport hashlib\n")
+s=s.replace('N = R / "analysis/fresh-purpose-20261107-av-dev30-dp4-v1"\n','').replace('RUN = R / "results/gemma4-fresh-av-dev30-dp4-20261107-v1"\n','')
+s=s.replace("def main() -> None:\n    now = time.time()","def collect(N: Path, RUN: Path) -> None:\n    now = time.time()")
+newmain='''
+def validate_roots(analysis_root: Path, run_root: Path) -> None:
+    """Bind the explicit pair to the plan actually started by the existing owner."""
+    owner = json.loads((analysis_root / "owner-start.json").read_text())
+    digest = owner["plan_sha256"]
+    if not re.fullmatch(r"[0-9a-f]{64}", digest):
+        raise ValueError("invalid owner plan identity")
+    plans = [
+        path for path in sorted(analysis_root.glob("*.json"))
+        if hashlib.sha256(path.read_bytes()).hexdigest() == digest
+    ]
+    if not plans:
+        raise ValueError("owner plan SHA has no matching plan in analysis root")
+    plan = json.loads(plans[0].read_text())
+    command = plan["command"]
+
+    def flag(name: str) -> str:
+        if command.count(name) != 1:
+            raise ValueError("missing or repeated plan flag: " + name)
+        return command[command.index(name) + 1]
+
+    config_path = analysis_root / "http-trace/capture.json"
+    run = json.loads((run_root / "run.json").read_text())
+    observation = run.get("observation") or {}
+    if (
+        (Path(plan["cwd"]) / plan["run_id"]).resolve() != run_root
+        or plan["run_id"] != run_root.name
+        or flag("--run-id") != plan["run_id"]
+        or Path(flag("--results-dir")).resolve() != run_root.parent
+        or Path(flag("--observe-config")).resolve() != config_path
+        or Path(plan["http_trace"]["config"]["path"]).resolve() != config_path
+        or hashlib.sha256(config_path.read_bytes()).hexdigest()
+        != plan["http_trace"]["config"]["sha256"]
+        or observation.get("run_id") != plan["run_id"]
+        or Path(observation.get("output_dir", "")).resolve() != config_path.parent
+        or run.get("kind") != "wsp"
+        or str(run.get("tier")) != flag("--tier")
+        or run.get("split") != flag("--split")
+        or run.get("label") != flag("--label")
+    ):
+        raise ValueError("analysis root, run metadata, and owner plan do not match")
+
+
+def main() -> None:
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--analysis-root", type=Path, required=True)
+    parser.add_argument("--run-root", type=Path, required=True)
+    args = parser.parse_args()
+    analysis_root = args.analysis_root.resolve(strict=True)
+    run_root = args.run_root.resolve(strict=True)
+    validate_roots(analysis_root, run_root)
+    collect(analysis_root, run_root)
+
+'''
+s=s.replace('\n\nif __name__ == "__main__":', '\n'+newmain+'\nif __name__ == "__main__":')
+oldbody=next(x for x in ast.parse(old).body if isinstance(x,ast.FunctionDef) and x.name=="main").body
+newbody=next(x for x in ast.parse(s).body if isinstance(x,ast.FunctionDef) and x.name=="collect").body
+assert ast.dump(ast.Module(body=oldbody,type_ignores=[]))==ast.dump(ast.Module(body=newbody,type_ignores=[]))
+p.write_text(s)
+(V/"change.json").write_text(json.dumps({"source_before_sha256":hashlib.sha256(old).hexdigest(),"source_after_sha256":hashlib.sha256(s.encode()).hexdigest(),"collect_body_ast_identical":True,"old_progress_bytes_unchanged":progress.read_bytes()==raw,"new_cli_model_calls":0},indent=2)+"\n")
+print({"source_sha256":hashlib.sha256(s.encode()).hexdigest(),"incident_line":i,"collect_AST_identical":True})
+

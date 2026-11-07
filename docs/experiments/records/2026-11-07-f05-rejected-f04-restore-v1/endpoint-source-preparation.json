@@ -1,0 +1,16 @@
+{
+  "epoch": 1794056222.6649096,
+  "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/worktrees/kairyu-bench-weight-tools/docs/experiments/scripts/fresh-f04-restored-endpoint-closure-20261107.py",
+  "source_sha256": "7cbafc2f149d7d3d82e57527fe5092110ba58ece2ca818fa2d499f1184a096f3",
+  "source_parent_sha256": "8ee58d4a172504835a94af394ac598d735bf8aef8200a67c64532940ee324f7d",
+  "expected_before_served_record_sha256": "53985c2d592b92391afbe15adf8ddfb3a101a3b38c9ea50af2cd609e89759e8c",
+  "changes": [
+    "F05 deployment dir -> F04 restore dir",
+    "status identifies restored F04",
+    "current F05 served-record expected SHA",
+    "unique restore tmprecord"
+  ],
+  "source_invoked": false,
+  "model_calls": 0,
+  "service_changes": 0
+}

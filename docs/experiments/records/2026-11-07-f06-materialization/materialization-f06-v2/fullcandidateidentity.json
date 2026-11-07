@@ -1,0 +1,338 @@
+{
+  "schema_version": 1,
+  "kind": "completed_dense_recipe_identity_v1",
+  "created_epoch": 1794059461.7042248,
+  "source": {
+    "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/checkpoints/fresh-native-relative-f04-faststore-v1/checkpoint",
+    "tree_sha256": "7b9e9488e3cd4e0b6c5f61ae341e5eeccdf5bd31c46d1c8354950dbc29d0f924",
+    "files": [
+      {
+        "path": "chat_template.jinja",
+        "size": 18683,
+        "sha256": "ae53464bf3be25802b3a5b37def7fd89667067d7577049b3b2d74c4d8de4c6d4"
+      },
+      {
+        "path": "config.json",
+        "size": 4621,
+        "sha256": "e967dd38bc5cfd38bd09a995a7bf4a754075df2b46aba68f7fbb5a791e6d8dd1"
+      },
+      {
+        "path": "generation_config.json",
+        "size": 208,
+        "sha256": "d4226bbe3117d2d253ba4609720ba82c6c4ce4627a9a6ae05387c78983ac03de"
+      },
+      {
+        "path": "model.safetensors.index.json",
+        "size": 103577,
+        "sha256": "2eeef6577e663781958c7e17a8809e5f5953ebe1fdb4bf4906cb7f943946bca3"
+      },
+      {
+        "path": "native.safetensors",
+        "size": 2714560,
+        "sha256": "dde45065af919d9b463529f8f12f249266af2c256ffa9a0ef0b1b8a3ee3c572c"
+      },
+      {
+        "path": "processor_config.json",
+        "size": 1689,
+        "sha256": "32bdf45d2ad4cc29a0822ddd157a182de76644f0419a6228d151495256e9813c"
+      },
+      {
+        "path": "shared.safetensors",
+        "size": 62543620336,
+        "sha256": "d4690e5b5c1eea2099685025676b80409c9ba0636c869c523b8e9b88a4066432"
+      },
+      {
+        "path": "tokenizer.json",
+        "size": 32169626,
+        "sha256": "cc8d3a0ce36466ccc1278bf987df5f71db1719b9ca6b4118264f45cb627bfe0f"
+      },
+      {
+        "path": "tokenizer_config.json",
+        "size": 3082,
+        "sha256": "9f4fec4b1dc6ecddf8f4a92e9caea5971c0e67d81309f3f9066a2bee8c362633"
+      }
+    ],
+    "inventory_stat": {
+      "chat_template.jinja": {
+        "dev": 2306,
+        "inode": 182193236,
+        "size": 18683,
+        "mtime_ns": 1794050350349847250,
+        "ctime_ns": 1794050350349847250,
+        "mode": 33152,
+        "uid": 1003,
+        "gid": 1003,
+        "nlink": 1
+      },
+      "config.json": {
+        "dev": 2306,
+        "inode": 182193237,
+        "size": 4621,
+        "mtime_ns": 1794050350349847250,
+        "ctime_ns": 1794050350349847250,
+        "mode": 33152,
+        "uid": 1003,
+        "gid": 1003,
+        "nlink": 1
+      },
+      "generation_config.json": {
+        "dev": 2306,
+        "inode": 182193238,
+        "size": 208,
+        "mtime_ns": 1794050350350847215,
+        "ctime_ns": 1794050350350847215,
+        "mode": 33152,
+        "uid": 1003,
+        "gid": 1003,
+        "nlink": 1
+      },
+      "model.safetensors.index.json": {
+        "dev": 2306,
+        "inode": 182193239,
+        "size": 103577,
+        "mtime_ns": 1794050350350847215,
+        "ctime_ns": 1794050350350847215,
+        "mode": 33152,
+        "uid": 1003,
+        "gid": 1003,
+        "nlink": 1
+      },
+      "native.safetensors": {
+        "dev": 2306,
+        "inode": 182193240,
+        "size": 2714560,
+        "mtime_ns": 1794050350572839477,
+        "ctime_ns": 1794050350572839477,
+        "mode": 33152,
+        "uid": 1003,
+        "gid": 1003,
+        "nlink": 1
+      },
+      "processor_config.json": {
+        "dev": 2306,
+        "inode": 182193241,
+        "size": 1689,
+        "mtime_ns": 1794050350361846832,
+        "ctime_ns": 1794050350361846832,
+        "mode": 33152,
+        "uid": 1003,
+        "gid": 1003,
+        "nlink": 1
+      },
+      "shared.safetensors": {
+        "dev": 2306,
+        "inode": 182192842,
+        "size": 62543620336,
+        "mtime_ns": 1794050230365028683,
+        "ctime_ns": 1794050243644565979,
+        "mode": 33060,
+        "uid": 1003,
+        "gid": 1003,
+        "nlink": 17
+      },
+      "tokenizer.json": {
+        "dev": 2306,
+        "inode": 182193242,
+        "size": 32169626,
+        "mtime_ns": 1794050350405845298,
+        "ctime_ns": 1794050350405845298,
+        "mode": 33152,
+        "uid": 1003,
+        "gid": 1003,
+        "nlink": 1
+      },
+      "tokenizer_config.json": {
+        "dev": 2306,
+        "inode": 182193243,
+        "size": 3082,
+        "mtime_ns": 1794050350569839582,
+        "ctime_ns": 1794050350569839582,
+        "mode": 33152,
+        "uid": 1003,
+        "gid": 1003,
+        "nlink": 1
+      }
+    }
+  },
+  "candidate": {
+    "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/checkpoints/fresh-lora-mbpp-f06-v1/checkpoint",
+    "tree_sha256": "0fc0ef29346c4d8a06bea8570dee96d8e0ba7038fee0d5aded8db57852474ec5",
+    "files": [
+      {
+        "path": "chat_template.jinja",
+        "size": 18683,
+        "sha256": "ae53464bf3be25802b3a5b37def7fd89667067d7577049b3b2d74c4d8de4c6d4"
+      },
+      {
+        "path": "config.json",
+        "size": 4621,
+        "sha256": "e967dd38bc5cfd38bd09a995a7bf4a754075df2b46aba68f7fbb5a791e6d8dd1"
+      },
+      {
+        "path": "generation_config.json",
+        "size": 208,
+        "sha256": "d4226bbe3117d2d253ba4609720ba82c6c4ce4627a9a6ae05387c78983ac03de"
+      },
+      {
+        "path": "model.safetensors.index.json",
+        "size": 103577,
+        "sha256": "2eeef6577e663781958c7e17a8809e5f5953ebe1fdb4bf4906cb7f943946bca3"
+      },
+      {
+        "path": "native.safetensors",
+        "size": 2714560,
+        "sha256": "dde45065af919d9b463529f8f12f249266af2c256ffa9a0ef0b1b8a3ee3c572c"
+      },
+      {
+        "path": "processor_config.json",
+        "size": 1689,
+        "sha256": "32bdf45d2ad4cc29a0822ddd157a182de76644f0419a6228d151495256e9813c"
+      },
+      {
+        "path": "shared.safetensors",
+        "size": 62543620336,
+        "sha256": "fb2aac1ce71c98290e61b517db35cf2c828b205b2282e8e2cb46707f76f9dfe1"
+      },
+      {
+        "path": "tokenizer.json",
+        "size": 32169626,
+        "sha256": "cc8d3a0ce36466ccc1278bf987df5f71db1719b9ca6b4118264f45cb627bfe0f"
+      },
+      {
+        "path": "tokenizer_config.json",
+        "size": 3082,
+        "sha256": "9f4fec4b1dc6ecddf8f4a92e9caea5971c0e67d81309f3f9066a2bee8c362633"
+      }
+    ],
+    "inventory_stat": {
+      "chat_template.jinja": {
+        "dev": 2306,
+        "inode": 182195655,
+        "size": 18683,
+        "mtime_ns": 1794050350349847250,
+        "ctime_ns": 1794058670971191223,
+        "mode": 33152,
+        "uid": 1003,
+        "gid": 1003,
+        "nlink": 1
+      },
+      "config.json": {
+        "dev": 2306,
+        "inode": 182195656,
+        "size": 4621,
+        "mtime_ns": 1794050350349847250,
+        "ctime_ns": 1794058670971191223,
+        "mode": 33152,
+        "uid": 1003,
+        "gid": 1003,
+        "nlink": 1
+      },
+      "generation_config.json": {
+        "dev": 2306,
+        "inode": 182195657,
+        "size": 208,
+        "mtime_ns": 1794050350350847215,
+        "ctime_ns": 1794058670972191189,
+        "mode": 33152,
+        "uid": 1003,
+        "gid": 1003,
+        "nlink": 1
+      },
+      "model.safetensors.index.json": {
+        "dev": 2306,
+        "inode": 182195658,
+        "size": 103577,
+        "mtime_ns": 1794050350350847215,
+        "ctime_ns": 1794058670972191189,
+        "mode": 33152,
+        "uid": 1003,
+        "gid": 1003,
+        "nlink": 1
+      },
+      "native.safetensors": {
+        "dev": 2306,
+        "inode": 182195659,
+        "size": 2714560,
+        "mtime_ns": 1794050350572839477,
+        "ctime_ns": 1794058670973191155,
+        "mode": 33152,
+        "uid": 1003,
+        "gid": 1003,
+        "nlink": 1
+      },
+      "processor_config.json": {
+        "dev": 2306,
+        "inode": 182195660,
+        "size": 1689,
+        "mtime_ns": 1794050350361846832,
+        "ctime_ns": 1794058670974191121,
+        "mode": 33152,
+        "uid": 1003,
+        "gid": 1003,
+        "nlink": 1
+      },
+      "shared.safetensors": {
+        "dev": 2306,
+        "inode": 182195661,
+        "size": 62543620336,
+        "mtime_ns": 1794058934876158971,
+        "ctime_ns": 1794058934876158971,
+        "mode": 33188,
+        "uid": 1003,
+        "gid": 1003,
+        "nlink": 1
+      },
+      "tokenizer.json": {
+        "dev": 2306,
+        "inode": 182195829,
+        "size": 32169626,
+        "mtime_ns": 1794050350405845298,
+        "ctime_ns": 1794058724022374961,
+        "mode": 33152,
+        "uid": 1003,
+        "gid": 1003,
+        "nlink": 1
+      },
+      "tokenizer_config.json": {
+        "dev": 2306,
+        "inode": 182195830,
+        "size": 3082,
+        "mtime_ns": 1794050350569839582,
+        "ctime_ns": 1794058724022374961,
+        "mode": 33152,
+        "uid": 1003,
+        "gid": 1003,
+        "nlink": 1
+      }
+    }
+  },
+  "manifest": {
+    "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/checkpoints/fresh-lora-mbpp-f06-v1/manifest.json",
+    "sha256": "22b0603cc2dc9a2060c76f8baf99c28eceac08b56116727173bc61a719b5c0d4"
+  },
+  "verify": {
+    "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f04-mbpp-lora-training-v1/materialization-f06-v2/verify.stdout",
+    "sha256": "42140a38d3f2412887952c0dfe836433f0fabb6a8aa68196978eb8e5e479788d",
+    "result": {
+      "verified": true,
+      "kind": "dense_lora_recipe_v1",
+      "changed_elements": 8193921391,
+      "delta_l2": 3.708003317513851,
+      "candidate_tree_sha256": "0fc0ef29346c4d8a06bea8570dee96d8e0ba7038fee0d5aded8db57852474ec5"
+    }
+  },
+  "completion": {
+    "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f04-mbpp-lora-training-v1/materialization-f06-v2/completion.json",
+    "sha256": "08f248e42f865ef744670dea710d84b60ccd5e6a09698d5ac30926196343cc39"
+  },
+  "stat_evidence": {
+    "captured_after_verify": true,
+    "all_file_mtime_ctime_no_newer_than_verify_output": true,
+    "verify_output_mtime_ns": 1794059354483869434,
+    "verification_snapshot_compared_internally_before_and_after": true,
+    "original_internal_snapshot_not_separately_saved": true,
+    "payload_freshhash_for_this_identity": false,
+    "hash_origin": "existing completed create/verify whole-tree streams, including exact block recipe regeneration and nonrecipe byte comparisons"
+  },
+  "identity_source_sha256": "3ab13e49d08537016b39787a2d3c330b7f148b89f859fb8c411c1dc1d9e89d72"
+}

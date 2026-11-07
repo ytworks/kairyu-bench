@@ -1,0 +1,121 @@
+{
+  "mode": "send",
+  "prompt_sha256": "ea173756d8911c49ea3d36f4f5e2a6845bb73f7c701e9a689625dafc84a39d13",
+  "prompt_bytes": 8141,
+  "requested_model": "claude-opus-5-5",
+  "labels": "A",
+  "fallback_model": null,
+  "allow_text_review": false,
+  "anonymity": "pattern lint only; caller must review every prompt byte for private identifiers and measurements",
+  "schema_version": 1,
+  "started_at": "2026-11-07T13:38:09.087519+00:00",
+  "scope": "User-reviewed anonymous prompt retained with this receipt; the review is not a model capability measurement",
+  "verified_requested_model": true,
+  "controls": {
+    "safe_mode": true,
+    "restricted": true,
+    "tools": [],
+    "mcp_servers": [],
+    "session_persistence": false,
+    "custom_generic_system_prompt": true
+  },
+  "raw_stream_persisted": false,
+  "thinking_blocks_persisted": false,
+  "environment_persisted": false,
+  "returncode": 0,
+  "stderr_bytes": 0,
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "assistant_models": [
+    "claude-opus-5-5"
+  ],
+  "model_usage": {
+    "claude-opus-5-5": {
+      "inputTokens": 2,
+      "outputTokens": 11156,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 3547,
+      "webSearchRequests": 0,
+      "costUSD": 0.251504,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 128000,
+      "canonicalModel": "claude-opus-5-5"
+    }
+  },
+  "is_error": false,
+  "labels_match": true,
+  "tool_uses": 0,
+  "event_types": {
+    "system": 65,
+    "assistant": 2,
+    "rate_limit_event": 1,
+    "result": 1
+  },
+  "review_format": "json_reviews",
+  "review_usable": true,
+  "review_context_label": null,
+  "public_final_text": null,
+  "response": {
+    "reviews": [
+      {
+        "label": "A",
+        "verdict": "conditionally_worth_one_full_canonical_dev30_evaluation; no invalidating design defect identified; several identity and retention gates must pass first; efficacy is uncertain and the overall goal is not plausibly reached by this candidate alone",
+        "reasons": [
+          "The method is a real change, not a repeat. Iterative supervised optimization over all 410 text projections (rank-8 factors, fixed 64-step protocol, no checkpoint selection, no LR sweep) is different from the rejected local-sensitivity / native-vector approach. The fixed protocol limits selection bias.",
+          "Data hygiene is adequate for a dev-suite run. The whole MBPP+ pool was excluded (108 of 374 rows), plus 11 exact/near matches against MBPP, HumanEval+, SciCode and LiveCodeBench. Holdout, WSP and calibration answers were kept out of the gradients. All exclusion reasons are preserved. Residual semantic overlap with MBPP+ cannot be ruled out, which is acknowledged.",
+          "The training mechanics are internally consistent. 64/64 steps ran, all 204 TRAIN rows were visited, no holdout gradients, every module received gradients, and no cap or projection violations occurred. The input frames were reproduced token-for-token with no truncation or padding.",
+          "The planned evaluation design is correct. It uses the entire unchanged dev30 suite (manifest 2338) and the identical serving stack, compared against the already-complete F04 records. Re-running the parent is not needed and would be wasteful without a concrete comparability defect.",
+          "None of the declared risks invalidates the run. The direct-code-target risk, the merge non-equivalence and the small test sets are all efficacy or interpretation risks that the full run itself measures. They are not identity or design defects.",
+          "The CE drop from 2.53 to 0.56 nat/token is in-training fit on repeated TRAIN cases only. It carries no generalization or capability information. The high starting CE (2.53 nat/token for reference code from a strong coder) is consistent with a large format or channel mismatch component, such as code appearing where the thinking-ON template expects a thought. So part of the drop plausibly reflects style or format learning."
+        ],
+        "risks": [
+          "BF16 rounding may partly erase or distort the update. This is concrete and measurable now. The mean continuous update is about 0.00145 of the matrix Frobenius norm (max about 0.0027). BF16 round-to-nearest discards per-element changes smaller than roughly 0.002–0.004 of |W_ij|. Many large-magnitude entries may therefore stay unchanged, and the saved delta will include rounding noise of the same order as the signal. The saved artifact could behave much closer to F04 than the training fit suggests, repeating the earlier pattern where predicted changes did not appear in native execution. This is an order-of-magnitude estimate, not a measurement.",
+          "Training on direct code targets may suppress or shorten reasoning. If so, LiveCodeBench, SciCode and agentic terminal/SWE behavior could regress while MBPP+-style items improve.",
+          "MBPP-style overfitting. Roughly 1.25 epochs at about 0.56 nat/token on repeated rows suggests partial memorization of reference style. Any MBPP+ gains are the most contamination-suspect and style-suspect, because MBPP+ derives from MBPP and the deduplication is not guaranteed complete.",
+          "The test sets are small. One item flip moves the code mean by about 0.83 points (HumanEval+ or MBPP+), about 1.25 points (LiveCodeBench), or up to about 2.5 points (a SciCode problem). A net change of 1–2 items may not be distinguishable from sampling variation. Run-to-run variance at these settings is not established in the supplied facts.",
+          "The goal gap is large. Reaching a code mean above 90 needs at least 360 source-points versus the current 291.75, a gain of about 68. HumanEval+ can add at most about 3.3. A small MBPP-trained update is very unlikely to close most of this gap. Treat a positive result as incremental.",
+          "Regressions outside coding. All 410 projections changed, so the other 13 domains and the overall mean could move even if coding improves.",
+          "Runtime confound from MTP-4 speculative decoding. If the draft/MTP weights are unchanged while the base model changes, acceptance rate and runtime may shift. Runtime differences should not be read as reasoning or capability differences.",
+          "Artifact identity after the failed first creation. The run must be shown to load the verified re-materialized candidate, not the parent and not a stale partial output."
+        ],
+        "required_before_full_evaluation": [
+          "Finish re-materialization. The existing create/verify must pass: exact FP32 edits regenerated, BF16 bytes matched, all unrelated bytes checked, private inodes confirmed, and full parent and candidate hashes recorded. A failed or partial verify is a hard stop.",
+          "Identity binding. The full parent content hash from create/verify must equal the hash of the F04 weights that produced the existing 2338-item result. Record the candidate hash in the evaluation manifest. Confirm that non-weight files (config, tokenizer, chat template, generation config) and any MTP/draft weights are byte-identical or intentionally unchanged. Confirm from server-side load logs or a loaded-checkpoint hash that the served model is the candidate.",
+          "Saved-BF16 retention report. This needs no model calls and is a minimum gate. For each of the 410 matrices report: count of changed elements, saved-delta L2 versus intended continuous delta L2, and cosine between saved and intended delta. Then report aggregate values and list any matrix with zero or near-zero retained change. Pre-state a stop rule. For example, if aggregate cosine or norm retention is very low, do not run dev30 on this artifact.",
+          "Pre-register the decision rule and analysis before results arrive. Specify which deltas count as improvement, how an exact coding tie is resolved (the previous practice was overall mean), and that agentic or overall regressions block adoption. State that small net flips will be reported as inconclusive rather than as improvement.",
+          "Pre-classify the parent failures from existing records. This is a cheap analysis covering the 1 HumanEval+ failure, 5 LiveCodeBench failures, 7 MBPP+ failures, and the SciCode partial-credit tests. Label each as format/extraction/finish-length versus functional (wrong logic) versus timeout. This fixes in advance what a style-only gain would look like.",
+          "Optional but cheap, and conditionally required if retention is weak: a teacher-forced CE pass of the saved BF16 artifact and F04 on the 51 HOLDOUT rows. Split CE into the first few target tokens versus the remainder. Use the holdout once only, as a stop/go gate. This is not a parent-benchmark repeat. It does not test the direct-output risk, which the full run measures, but it detects an artifact whose fit did not survive the merge, or a fit concentrated in format tokens."
+        ],
+        "recommendation": "Run exactly one full unchanged canonical dev30 evaluation of A after the verify, identity-binding and retention gates pass. Do not re-run the parent. No further candidate-only generation diagnostic is needed for the direct-output risk, because the full run with matched reasoning comparisons measures it directly. The only candidate-only diagnostic worth adding is the low-cost 51-row holdout teacher-forced CE on the saved artifact, and it becomes mandatory if retention looks weak. Best existing-record discriminator: pre-classify parent failures by type now. After the run, cross-tabulate each code item's pass/fail transition against the matched change in reasoning characters/UTF-8 bytes and finish reason, stratified by source. Style-fitting signature: reasoning length collapses, gains fall on parent format failures or mostly on MBPP+, losses appear on LiveCodeBench, SciCode or terminal/SWE. Functional signature: gains fall on parent logic failures with reasoning length roughly preserved, and the harder sources and agentic tasks do not regress. Use characters and bytes only; never relabel completion tokens as reasoning tokens. Do not claim progress toward the >90 goal from training CE, retention statistics or holdout CE."
+      }
+    ],
+    "sequence": [
+      "1. Complete re-materialization and full create/verify of candidate A. Hard stop on any failure.",
+      "2. Bind identities: parent full hash equals the F04 hash behind the existing dev30 result; candidate hash goes into the evaluation manifest; non-weight files and MTP/draft weights confirmed.",
+      "3. Saved-BF16 retention report per matrix (changed counts, saved vs intended L2, cosine). Apply the pre-stated stop rule.",
+      "4. Pre-register the decision rule and classify parent code failures by type from existing records.",
+      "5. If retention is weak, required; otherwise optional but cheap: single-use 51-HOLDOUT teacher-forced CE of A vs F04, split into early-token and remainder CE. Go/no-go only.",
+      "6. One full unchanged canonical dev30 run of A on the identical serving stack; confirm server-side that the loaded checkpoint is the candidate.",
+      "7. Paired analysis against the existing F04 records: per-item flips by source and domain, error and incomplete counts, agent steps and tools, reasoning characters/bytes and finish reasons cross-tabulated with flips. Treat runtime separately as possibly MTP-confounded.",
+      "8. Adopt or reject under the pre-registered rule. Do not touch full-60/test or DeepSWE until a dev30 adoption decision exists."
+    ],
+    "evidence_limits": [
+      "No saved-BF16 measurements exist yet. Continuous delta statistics do not describe the merged artifact, and unmerged training forward is not bit-equivalent to the merged model.",
+      "The CE evidence is in-training fit on repeated TRAIN cases. It is not holdout generalization, not generated-code pass rate, and not a capability score.",
+      "The 51 HOLDOUT rows have not been evaluated, so no generalization evidence of any kind exists.",
+      "The activation summaries use different batches at steps 1/4/64 and are not benchmark live-hook evidence.",
+      "No fresh full parent content hash was taken during training. Continuity rests on version, storage and stat checks until create/verify completes.",
+      "Reasoning token counts were not recorded for the parent. Only reasoning characters, bytes, content and finish reason can be compared.",
+      "The dev30 code sources are small (30/20/30/10), and run-to-run variance at the configured sampling is not quantified in the supplied facts.",
+      "MBPP reference tests are small and do not guarantee specification correctness. Semantic deduplication against MBPP+ is not guaranteed complete.",
+      "F06 has no official score and is not adopted. Nothing in this evidence shows progress toward a code mean above 90."
+    ],
+    "fresh_reserve": {
+      "holdout_51": "Model-unevaluated so far. Use at most once, as a stop/go gate for this artifact. Never use it to tune factors, coefficient or steps.",
+      "final_full60_test": "Keep untouched. Run only after a dev30 adoption decision, and never use it for selection between variants.",
+      "deepswe_113_at_32_workers": "Keep untouched until the final stage. It gates weight publication, which happens only if DeepSWE improves over the original.",
+      "previous_19_calibration_rows": "Already used by the rejected approach. Do not treat them as fresh evidence or a selection signal for A."
+    }
+  },
+  "finished_at": "2026-11-07T13:40:06.591042+00:00",
+  "duration_seconds": 117.50355136394501
+}

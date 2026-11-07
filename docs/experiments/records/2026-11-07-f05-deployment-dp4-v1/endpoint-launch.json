@@ -1,0 +1,17 @@
+{
+  "argv": [
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/infra/weight-tools-ci/bin/python",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/worktrees/kairyu-bench-weight-tools/docs/experiments/scripts/fresh-f05-endpoint-closure-20261107.py",
+    "--plan-sha256",
+    "ec377967cf4e93015dacd8396c84fa0dcb17e87ed59cc6aadc3ce4e7b441b719",
+    "--owner-pid",
+    "1547860",
+    "--closure-sha256",
+    "336e50b435e33332b8aba42562d7dddb7c3d899b5cf37d2528d5dfe59bf61bf3"
+  ],
+  "epoch": 1794055655.2058194,
+  "source_sha256": "8ee58d4a172504835a94af394ac598d735bf8aef8200a67c64532940ee324f7d",
+  "root_authorized": true,
+  "planned_generation_requests": 5,
+  "official_benchmark_requests": 0
+}

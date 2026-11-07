@@ -1,0 +1,156 @@
+{
+  "schema_version": 1,
+  "status": "approved_complete19_cpu_score_once",
+  "inputs": [
+    {
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f05-behavior19-native-v1/score-driver.py.txt",
+      "sha256": "ddc882ae34fe94a6eb47d6ebe33cd23c79e08d2e0226e3f30e0ce029fee18026",
+      "stat": {
+        "dev": 2306,
+        "ino": 182194901,
+        "size": 5233,
+        "mtime_ns": 1794055831898342477,
+        "ctime_ns": 1794055831898342477
+      }
+    },
+    {
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-behavior19-inputs-v1/train-cases.json",
+      "sha256": "74e1cd2000fda0abdc03f4454b18f4231b9891360af266391744e13976f199f1",
+      "stat": {
+        "dev": 2306,
+        "ino": 181574596,
+        "size": 17423,
+        "mtime_ns": 1794054146522744581,
+        "ctime_ns": 1794054146522744581
+      }
+    },
+    {
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f05-behavior19-native-v1/generation/train-responses.json",
+      "sha256": "17d808d34f7fd7867fadaee6acfae2579d11dc1c5b0d75025d8cadb71a296ad3",
+      "stat": {
+        "dev": 2306,
+        "ino": 182194878,
+        "size": 13369,
+        "mtime_ns": 1794055733712775928,
+        "ctime_ns": 1794055733712775928
+      }
+    },
+    {
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f05-behavior19-native-v1/owner/normal-lock-release.json",
+      "sha256": "56718321fd8f7355d4704ba2c48e8a6ea22f2a618ade0516c2e9c6bda24b85f4",
+      "stat": {
+        "dev": 2306,
+        "ino": 182194884,
+        "size": 54,
+        "mtime_ns": 1794055734722740508,
+        "ctime_ns": 1794055734722740508
+      }
+    },
+    {
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/worktrees/kairyu-bench-weight-tools/scripts/experiments/gemma4-purpose/behavior_followup_cases.py",
+      "sha256": "c8c5fc34e6c2103de106599809e97f3b5dcc9810a68fd847595d0b491540f4fe",
+      "stat": {
+        "dev": 2306,
+        "ino": 181443598,
+        "size": 11644,
+        "mtime_ns": 1794054074291186222,
+        "ctime_ns": 1794054074291186222
+      }
+    },
+    {
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/worktrees/kairyu-bench-weight-tools/scripts/experiments/gemma4-purpose/behavior_cases.py",
+      "sha256": "10ba3e480c8685933904060629b351758cf7b61362756179e55779435d01a310",
+      "stat": {
+        "dev": 2306,
+        "ino": 181443577,
+        "size": 22945,
+        "mtime_ns": 1794039620099355316,
+        "ctime_ns": 1794039620099355316
+      }
+    },
+    {
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/worktrees/kairyu-bench-weight-tools/scripts/experiments/gemma4-purpose/behavior_offline.py",
+      "sha256": "30715a30e02c7fab8ec4e1ffad28e57c4925b16fb45048680d6f5735bd3af9e5",
+      "stat": {
+        "dev": 2306,
+        "ino": 181443578,
+        "size": 13272,
+        "mtime_ns": 1794039975698227153,
+        "ctime_ns": 1794039975698227153
+      }
+    },
+    {
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/worktrees/kairyu-bench-weight-tools/scripts/experiments/gemma4-purpose/science_sandbox.py",
+      "sha256": "4a65378e493fb2f109afdaf0d98b5b93dc067d6d3f48d2a4cf17017f1aadcb78",
+      "stat": {
+        "dev": 2306,
+        "ino": 181419342,
+        "size": 29092,
+        "mtime_ns": 1794039975691227392,
+        "ctime_ns": 1794039975691227392
+      }
+    },
+    {
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/worktrees/kairyu-bench-weight-tools/scripts/experiments/gemma4-purpose/science_cases.py",
+      "sha256": "2c4cc6e75c92c41b98e737ca2c0a653e0f7a7675c6150a6ad33e3f954122a26b",
+      "stat": {
+        "dev": 2306,
+        "ino": 181419270,
+        "size": 35229,
+        "mtime_ns": 1793939595408268372,
+        "ctime_ns": 1793939595408268372
+      }
+    }
+  ],
+  "target_ids": [
+    "behavior-A1",
+    "behavior-A2",
+    "behavior-B1",
+    "behavior-B2",
+    "behavior-C1",
+    "behavior-C2",
+    "behavior-D1",
+    "behavior-D2",
+    "behavior-E1",
+    "behavior-E2",
+    "behavior-F1",
+    "behavior-F2",
+    "behavior-G1",
+    "behavior-G2",
+    "behavior-H1",
+    "behavior-H2",
+    "behavior-I1",
+    "behavior-I2",
+    "behavior-J1"
+  ],
+  "case_count": 19,
+  "trials_per_case": 16,
+  "generation": {
+    "model_id": "gemma-4-31b",
+    "checkpoint_sha256": "fcc4681343c1a0c338157bee767df2024f37290469e55dbc417723717f4ac176",
+    "frame": "live-server-default-public-answer",
+    "enable_thinking": null,
+    "thinking_control": "server-default",
+    "reasoning_saved": false,
+    "sampling": "server_official_generation_config",
+    "temperature": null,
+    "max_tokens": 32768,
+    "seed": 0
+  },
+  "model_calls": 0,
+  "repeat": 1,
+  "image": "sha256:c4ab50223f03fca17bf871e4d05f77001e76525a1c574b6c6ee7024db06cfdc2",
+  "daemon_id": "3e518d2b-6972-43f8-b325-f7f33697a2d2",
+  "socket": "/var/run/docker.sock",
+  "seconds": 15,
+  "memory_mib": 512,
+  "cpus": 1,
+  "host_mounts": [],
+  "network": "none",
+  "gpus": false,
+  "expected_values_passed_to_worker": false,
+  "method_requirement_not_proved": [
+    "behavior-B1",
+    "behavior-B2"
+  ]
+}

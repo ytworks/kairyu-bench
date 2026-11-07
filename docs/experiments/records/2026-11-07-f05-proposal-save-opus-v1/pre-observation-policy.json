@@ -1,0 +1,45 @@
+{
+  "schema_version": 1,
+  "created_epoch": 1794054498.4587963,
+  "parent": "F04",
+  "parent_tree_sha256": "7b9e9488e3cd4e0b6c5f61ae341e5eeccdf5bd31c46d1c8354950dbc29d0f924",
+  "model": "fresh-native-contract-f05",
+  "cases_sha256": "74e1cd2000fda0abdc03f4454b18f4231b9891360af266391744e13976f199f1",
+  "execution_report_sha256": "1599a3c564aa9fe019087618f9373a4d65d268ab2c11d7fb56859dab70cd9c82",
+  "observations": "all421 native tensors /19 cases /correct-logprob and margin; new F04 parent only",
+  "eligible": "361 complete norm vectors, layer scalars frozen",
+  "constraints": {
+    "correct_logprob_failure_minimum_delta": 0.1,
+    "correct_logprob_success_minimum_delta": -0.01,
+    "correct_logprob_failure_ids": [
+      "behavior-A1",
+      "behavior-F2",
+      "behavior-J1"
+    ],
+    "margin_target_ids": [
+      "behavior-A1",
+      "behavior-J1"
+    ],
+    "margin_target_minimum_delta": 0.2,
+    "margin_target_final_floor": 0.1,
+    "other_margin_minimum_delta": -0.02
+  },
+  "cost_metric": {
+    "type": "relative",
+    "floor": 0.0001
+  },
+  "rounding": {
+    "relative_radius": 0.01,
+    "absolute_radius": 1e-06,
+    "rounds": 16
+  },
+  "selection": "one fixed proposal, all38 constraints retained including unmet; no automatic rescale/retry",
+  "rationale": "Native thinking execution still fails batched RHS singleton axis and one-based sampling offset. Original zero-filter foil retained as separate guard; J1 specifically compares the actual offset error. New six boundary/numerical/tie contracts all pass and remain simultaneous guards. Linear constraints are diagnostic predictions, never ability scores.",
+  "duplicates": "F2/J1 share public prompt and correct program; LL constraints semantically duplicate but differing foil padding can alter BF16 values, so retain both measured rows and disclose.",
+  "verification": "same-condition canonical full dev30 against completed F04; no repeated parent WSP; actual Opus5.5 candidate review before deployment",
+  "non_claims": [
+    "No proof this improves general coding",
+    "No claim teacher-forced empty-thought equals native thinking",
+    "No assignment of a native tensor to a specific capability from correlations"
+  ]
+}

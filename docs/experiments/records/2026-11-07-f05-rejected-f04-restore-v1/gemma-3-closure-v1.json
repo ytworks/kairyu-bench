@@ -1,0 +1,16 @@
+{
+  "cid": "41ae0d0831faf5d79939f16ad401da0da8fee0d2d453af12e4e4efd10480f45c",
+  "endpoint": "http://172.26.0.4:8000/v1",
+  "models": [
+    "gemma-4-31b"
+  ],
+  "tree": "7b9e9488e3cd4e0b6c5f61ae341e5eeccdf5bd31c46d1c8354950dbc29d0f924",
+  "checkpoint_mount": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/checkpoints/fresh-native-relative-f04-faststore-v1/checkpoint",
+  "checkpoint_readonly": true,
+  "runtime_preserved": true,
+  "mtp_tokens": 4,
+  "tp_size": 2,
+  "native_runtime_flags_preserved": true,
+  "receipt_sha256": "0ab568a66a0abf517c5dc5665046e40604716129f47afb88eedd15f125fa58eb",
+  "seconds": 122.57048201560974
+}

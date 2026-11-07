@@ -1,0 +1,30 @@
+{
+  "status": "prepared_not_launched",
+  "baseline_plan_sha256": "bdd8d4ab62d7a2b31aa697e8cf0554858fb931a216a6612a971f824e1532a5e7",
+  "candidate_plan_sha256": "8eb529735a2d2b5e770279a19257d817764af2305af966d94949267b28472dc4",
+  "selection_exact_equal": true,
+  "environment8_exact_equal": true,
+  "runner_image_exact": "sha256:f91bdcf997af6d7b194bec229812fd018277158f6795de7d91e58448936e7ad8",
+  "wrapper_sha256": "56b53b7d72d75efcb2bef24643322f73625eba5c08a645c2f847768e558b6176",
+  "owner_sha256": "956af488fe54578c32c9baa856e9c32170dc49c1bbce2b1ba5db9af9ea1dd524",
+  "command_changed_values": {
+    "--label": {
+      "baseline": "5d056eb03f954db80313a85167153c875fe5e436e4f97c281a3f55202d9b3eaf",
+      "candidate": "504d0914e8f7d2a4e51a0888e5692e2d1a158b82d3a77b600810a14bf7e33b63"
+    },
+    "--run-id": {
+      "baseline": "gemma4-fresh-av-dev30-dp4-20261107-v1",
+      "candidate": "gemma4-fresh-f03-dev30-dp4-20261107-v1"
+    },
+    "--observe-config": {
+      "baseline": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-av-dev30-dp4-v1/http-trace/capture.json",
+      "candidate": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f03-dev30-dp4-v1/http-trace/capture.json"
+    }
+  },
+  "selected_items_sha256": "e65de5600f4e489e967260550a798398a4215955e5799d2a687a928a25ae442e",
+  "owner_source_modified": false,
+  "cpu_preview_executions": 0,
+  "generation_runs": 0,
+  "service_changes": 0,
+  "additional_payload_hash": false
+}

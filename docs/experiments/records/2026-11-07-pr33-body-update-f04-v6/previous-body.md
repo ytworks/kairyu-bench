@@ -1,0 +1,32 @@
+Saved-weight editing now has inspectable weight/activation evidence, exact BF16 edit verification, bounded experiment owners, and complete per-trial records. The coding target of **more than 90 official equal-source points remains unmet**.
+
+Current experimental state:
+
+| Model / evaluation | Official coding score | Coverage and decision |
+|---|---:|---|
+| AV, canonical dev10 | 87.7778 | Completed; different source cohort from dev30 |
+| AV, canonical dev30 | 72.9365 | 2,338/2,338 scored, overall 76.7201; latest completed comparable parent |
+| F02, canonical dev10 | 87.7778 | Completed, coding tie; not adopted |
+| F03, canonical dev30 | 72.6587 | All 90 coding items scored; run partial: 2,337/2,338 scored, polyglot unscored; not ranked or adopted |
+| F04, canonical dev30 | Pending | Full 2,338-item run started; no capability claim yet |
+
+F03 changes five coding outcomes: HumanEval/152 and LiveCodeBench/3777 improve; LiveCodeBench/abc395_f, MBPP/801, and SciCode/72 lose points. Its code-probe NLL improves while coding accuracy falls. The full paired record retains 44 improved and 54 worsened scored capability items, plus all unchanged and unscored items. A 1,200-second client disconnect in the final Terminal-Bench task was followed by continued generation; only this run's Harbor child received one SIGTERM. The main WSP process preserved its normal partial report and all 2,338 selected items. This interrupted result is not presented as a completed comparison.
+
+F04 is a separately reviewed relative-cost native-vector proposal from AV: 429 saved BF16 elements across 140 tensors and seven vector families; whole-layer scalars remain fixed. Its 24/24 linear predicted bounds are proxy evidence only. An independent saved-byte audit found eight BF16-rounded coordinates beyond the continuous box (maximum relative change 1.17647%); every excess is retained. One real Claude Opus 5.5 response was identity-verified and retained, including its low-confidence and overfitting concerns. F04 uses the unchanged canonical dev30 selection, immutable f91 runner, TP2 × 4, MTP4, native thinking settings, and 256/32/4 concurrency. Existing AV results are reused; no additional AV evaluation or finite model sweep was added.
+
+The existing native faststore has now been exercised on the real checkpoint: all 1,188 tensors were independently checked for identical names, dtypes, shapes, and raw bytes during one repack. Shared bulk bytes retain the initial full hash plus exact inode/stat continuity; private native files are freshly verified. Initial build took 279.879 seconds; F04 create and verify took 1.540 and 1.558 seconds. Four existing inference services were recreated in parallel in 127.653 seconds, with 23 other containers protected, all-four rollback on failure, and five successful endpoint checks. F03's private 62.55 GB payloads were replaced by a verified dependent lossless archive in 9.846 seconds; the initial visibility-check failure, revised process-visibility boundary, original source, and unlink journals remain recorded.
+
+The tools include weight statistics/spectra/alignment, request-bound activation capture and HTML comparisons, native/matrix/coherent-unit sensitivity recipes, explicit BF16 editing/verification, bounded finite replay, and reproducible experiment/deployment/storage owners. Every source and operator recipe used in the experiments is retained in this branch. The [tool inventory](docs/wsp-tool-inventory.md) is the entry point.
+
+Key evidence:
+
+- [Complete AV dev30](docs/experiments/2026-11-07-av-dev30-dp4-run.md)
+- [F03 partial official results and all-item deltas](docs/experiments/2026-11-07-f03-partial-official-result.md), [functional code differences](docs/experiments/2026-11-07-f03-code-delta-interpretation.md)
+- [F04 proposal](docs/experiments/2026-11-07-f04-relative-proposal.md), [actual Opus 5.5 review](docs/experiments/2026-11-07-f04-opus55-review.md)
+- [F04 real save/deployment](docs/experiments/2026-11-07-f04-faststore-and-parallel-plan.md), [full dev30 launch](docs/experiments/2026-11-07-f04-dev30-launch.md)
+- [F03 archive release, including failures](docs/experiments/2026-11-07-f03-payload-release-completed.md)
+- [New independent contract cases](docs/experiments/2026-11-07-behavior-followup9.md): 144/144 reference fixtures pass and all nine foils have fixed counterexamples; these are CPU data checks, not model scores.
+
+Validation: the latest complete CPU suite passed **571 tests: 514 passed and 57 optional skips**, with full Ruff and mypy over 74 source files passing. The 47.835-second check retained identical hashes for 278 live sources and preserved 141 immutable snapshots, including the running F04 owner. Initial lint failures (immutable byte-exact evidence and two unformatted published scripts) and the first suite's 20 errors (19 environment issues and one stale fixture filename) were preserved and repaired. Immutable evidence alone is excluded from lint; active code checks remain enforced. [Full validation and failures](docs/experiments/2026-11-07-cpu-validation-r9.md) and the [F04 saved-byte audit](docs/experiments/2026-11-07-f04-native-spec-audit.md) separate CPU verification from actual model/serving evidence.
+
+Remaining work: establish a coding improvement and exceed 90 under the declared official source mean; confirm with the existing full 30/60 tiers and final test split; run the final edited model on all 113 DeepSWE tasks once at 32 workers; append the wiki; publish edited weights to Hugging Face only if DeepSWE improves over the original model. None of these unfinished outcomes is claimed here.

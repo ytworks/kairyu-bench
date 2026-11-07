@@ -1,0 +1,24 @@
+test_rejects_full_checkpoint_mismatch_even_with_same_native_values_and_bad_cohort (test_gemma4_native_objectives.NativeCoupledTests.test_rejects_full_checkpoint_mismatch_even_with_same_native_values_and_bad_cohort) ... ok
+test_two_objectives_produce_exact_bf16_spec_without_touching_source (test_gemma4_native_objectives.NativeCoupledTests.test_two_objectives_produce_exact_bf16_spec_without_touching_source) ... ERROR
+test_bf16_spacing_handles_signed_zero_and_asymmetric_powers (test_gemma4_native_objectives.NativeDependencyGeometryTests.test_bf16_spacing_handles_signed_zero_and_asymmetric_powers) ... ok
+test_group_contribution_preserves_opposition_and_zero_is_unknown (test_gemma4_native_objectives.NativeDependencyGeometryTests.test_group_contribution_preserves_opposition_and_zero_is_unknown) ... ok
+test_realized_box_excess_and_zero_denominator_are_not_hidden (test_gemma4_native_objectives.NativeSpecAuditTests.test_realized_box_excess_and_zero_denominator_are_not_hidden) ... ok
+test_sparse_spec_cannot_overwrite_duplicate_or_round_invalid_values (test_gemma4_native_objectives.NativeSpecAuditTests.test_sparse_spec_cannot_overwrite_duplicate_or_round_invalid_values) ... ok
+
+======================================================================
+ERROR: test_two_objectives_produce_exact_bf16_spec_without_touching_source (test_gemma4_native_objectives.NativeCoupledTests.test_two_objectives_produce_exact_bf16_spec_without_touching_source)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/worktrees/kairyu-bench-weight-tools/tests/test_gemma4_native_objectives.py", line 194, in test_two_objectives_produce_exact_bf16_spec_without_touching_source
+    audit = load("native_spec_audit").audit(self.root, self.sha(audit_path))
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/worktrees/kairyu-bench-weight-tools/scripts/experiments/gemma4-purpose/native_spec_audit.py", line 140, in audit
+    require(target_sha == method["rounding"]["stored_f32_sha256"]
+  File "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/worktrees/kairyu-bench-weight-tools/scripts/experiments/gemma4-purpose/native_spec_audit.py", line 17, in require
+    raise ValueError(message)
+ValueError: stored-word hash or realized diff disagrees with solver
+
+----------------------------------------------------------------------
+Ran 6 tests in 0.112s
+
+FAILED (errors=1)

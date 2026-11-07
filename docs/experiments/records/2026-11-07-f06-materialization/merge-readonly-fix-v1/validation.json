@@ -1,0 +1,51 @@
+[
+  {
+    "label": "tests",
+    "args": [
+      "nice",
+      "-n",
+      "15",
+      "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/infra/weight-tools-ci/bin/python",
+      "-m",
+      "unittest",
+      "discover",
+      "-s",
+      "tests",
+      "-p",
+      "test_gemma4_lora_recipes.py",
+      "-v"
+    ],
+    "returncode": 0,
+    "seconds": 3.7610096000134945,
+    "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stderr_sha256": "d0c0d5a28e2da90335c733a5f9c56d229e0d931ad410585c0a861ff6f69a38a3"
+  },
+  {
+    "label": "ruff",
+    "args": [
+      "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/infra/weight-tools-ci/bin/ruff",
+      "check",
+      "scripts/experiments/gemma4_lora/dense_lora_recipe.py",
+      "tests/test_gemma4_lora_recipes.py"
+    ],
+    "returncode": 0,
+    "seconds": 0.032555812038481236,
+    "stdout_sha256": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "label": "diffcheck",
+    "args": [
+      "git",
+      "diff",
+      "--check",
+      "--",
+      "scripts/experiments/gemma4_lora/dense_lora_recipe.py",
+      "tests/test_gemma4_lora_recipes.py"
+    ],
+    "returncode": 0,
+    "seconds": 0.005253405077382922,
+    "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  }
+]

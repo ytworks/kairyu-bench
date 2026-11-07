@@ -1,0 +1,18 @@
+{
+  "command": [
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/infra/weight-tools-ci/bin/python",
+    "-B",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/worktrees/kairyu-bench-weight-tools/docs/experiments/scripts/fresh-av-native-gpu4-20261107.py",
+    "--plan",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f04-mbpp-lora-training-v1/owner-plan.json"
+  ],
+  "returncode": 0,
+  "elapsed_seconds": 0.08684611320495605,
+  "model_calls": 0,
+  "service_changes": 0,
+  "plan": {
+    "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f04-mbpp-lora-training-v1/owner-plan.json",
+    "sha256": "c3de99ec89a2730d1350d645b557d6d7fe8bb7f94a8a209085b3cf9634eccd67"
+  },
+  "source_unchanged": true
+}

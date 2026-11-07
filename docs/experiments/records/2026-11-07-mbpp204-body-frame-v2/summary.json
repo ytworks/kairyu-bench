@@ -1,0 +1,42 @@
+{
+  "status": "passed",
+  "rows": 204,
+  "failed_ids": [],
+  "unsupported_ids": [],
+  "ineligible_ids": [],
+  "complete_tokens_total": 22922,
+  "complete_tokens_maximum": 336,
+  "body_target_tokens_total": 12621,
+  "body_target_tokens_minimum": 3,
+  "body_target_tokens_maximum": 281,
+  "following_definition_ids": [
+    671,
+    702,
+    717,
+    896,
+    905,
+    926,
+    940,
+    949,
+    962
+  ],
+  "following_definition_target_tokens": {
+    "671": 94,
+    "702": 99,
+    "717": 74,
+    "896": 21,
+    "905": 36,
+    "926": 130,
+    "940": 180,
+    "949": 36,
+    "962": 42
+  },
+  "scope": "First top-level function's first non-docstring statement through assistant-code end. Later function headers remain targets in nine rows; this is not the union of function-body-only AST spans.",
+  "model_forwards": 0,
+  "teacher_forwards": 0,
+  "gradient_calls": 0,
+  "generated_or_reference_code_execution": 0,
+  "truncation": false,
+  "holdout_tokenized_here": 0,
+  "seconds": 2.762309522018768
+}

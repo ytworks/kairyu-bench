@@ -1,0 +1,40 @@
+import datetime,hashlib,json,subprocess,time
+from pathlib import Path
+P=Path("/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-pr33-body-update-f04-v6")
+preparation=json.loads((P/"preparation.json").read_text())
+before=(P/"previous-body.md").read_text()
+body=(P/"body.md").read_text()
+assert hashlib.sha256(before.encode()).hexdigest()==preparation["previous_body_sha256"]
+assert hashlib.sha256(body.encode()).hexdigest()==preparation["new_body_sha256"]
+assert json.loads((P/"update.json").read_text())=={"body":body}
+receipt={"started_utc":datetime.datetime.now(datetime.timezone.utc).isoformat(),"endpoint":"repos/ytworks/kairyu-bench/pulls/33","method":"PATCH","patch_attempts":0,"previous_body_sha256":preparation["previous_body_sha256"],"requested_body_sha256":preparation["new_body_sha256"],"new_model_calls":0,"git_commit_or_push":False}
+started=time.time()
+def api(args):
+    result=subprocess.run(["gh","api",*args],capture_output=True,text=True)
+    if result.returncode:
+        receipt["status"]="api_command_failed"
+        receipt["returncode"]=result.returncode
+        receipt["stderr_omitted"]="No authentication/error body is displayed or recorded."
+        raise RuntimeError("GitHub API command failed; sensitive stderr omitted")
+    return json.loads(result.stdout)
+try:
+    current=api([receipt["endpoint"],"--jq","{body:.body,updated_at:.updated_at,html_url:.html_url}"])
+    observed=hashlib.sha256(current["body"].encode()).hexdigest()
+    receipt["prepatch_observed_body_sha256"]=observed
+    if observed!=preparation["previous_body_sha256"]:
+        receipt["status"]="concurrent_body_change_refused"
+        raise RuntimeError("Current PR body changed; PATCH not sent")
+    (P/"prepatch-current.json").write_text(json.dumps(current,indent=2,ensure_ascii=False)+"\n")
+    receipt["patch_attempts"]=1
+    returned=api(["--method","PATCH",receipt["endpoint"],"--input",str(P/"update.json"),"--jq","{body:.body,updated_at:.updated_at,html_url:.html_url,number:.number}"])
+    (P/"returned-pr.json").write_text(json.dumps(returned,indent=2,ensure_ascii=False)+"\n")
+    receipt["returned_body_sha256"]=hashlib.sha256(returned["body"].encode()).hexdigest()
+    receipt["returned_body_exactly_matches_requested"]=returned["body"]==body
+    receipt["updated_at"]=returned["updated_at"]
+    receipt["url"]=returned["html_url"]
+    assert returned["number"]==33 and receipt["returned_body_exactly_matches_requested"]
+    receipt["status"]="updated_and_response_matched"
+finally:
+    receipt["elapsed_seconds"]=time.time()-started
+    (P/"patch-receipt.json").write_text(json.dumps(receipt,indent=2)+"\n")
+print(json.dumps({k:receipt[k] for k in ["status","patch_attempts","returned_body_exactly_matches_requested","returned_body_sha256","url","elapsed_seconds"]}))

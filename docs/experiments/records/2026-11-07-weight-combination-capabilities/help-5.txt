@@ -1,0 +1,29 @@
+usage: finite_module_replay.py [-h] --checkpoint CHECKPOINT --plan PLAN
+                               --output OUTPUT
+                               [--maximum-seconds MAXIMUM_SECONDS]
+                               [--maximum-host-cache-gib MAXIMUM_HOST_CACHE_GIB]
+                               [--device {cuda:0}]
+                               [--answer-batching {paired,serial}]
+                               [--device-proof {roundtrip,staged-int16}]
+                               [--gpu-exclusive-approved] [--run]
+
+Replay fixed signed-module LoRA recipes in actual BF16 model RAM. Preview is
+the default. No checkpoint payloads are written. CPU caches contain one
+original BF16 matrix set and one FP32 2BA set, never six candidate copies.
+
+options:
+  -h, --help            show this help message and exit
+  --checkpoint CHECKPOINT
+  --plan PLAN
+  --output OUTPUT
+  --maximum-seconds MAXIMUM_SECONDS
+  --maximum-host-cache-gib MAXIMUM_HOST_CACHE_GIB
+  --device {cuda:0}
+  --answer-batching {paired,serial}
+                        serial: one public answer per forward, with each
+                        correct/foil pair's shared padding width
+  --device-proof {roundtrip,staged-int16}
+                        staged-int16 proves CPU target SHA by all-element
+                        device equality; default retains full D2H readback
+  --gpu-exclusive-approved
+  --run

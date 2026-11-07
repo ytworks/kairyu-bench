@@ -1,0 +1,81 @@
+"""One CPU read of completed F04 native19 gradients; no solve/model/service call."""
+from pathlib import Path
+import hashlib, json, re, sys, time
+import numpy as np
+R=Path("/mnt/nvme/kairyu/wsp/gemma4-coding-20261104")
+N=R/"analysis/fresh-purpose-20261107-f04-native19-gpu4-v1"
+P=R/"analysis/fresh-purpose-20261107-f04-native19-gpu4-prepare-v1/root-plan-ready.json"
+D=Path(__file__).resolve().parent
+plan=json.loads(P.read_text()); src=R/"worktrees/kairyu-bench-weight-tools"
+sys.path[:0]=[str(src/"scripts/experiments/gemma4-purpose"),str(src/"src")]
+import joint
+started=time.time(); closure=N/"completion.json"; done=json.loads(closure.read_text())
+assert done["status"]=="completed" and done["restored"] and done["protected_exact"] and done["collections_completed"]
+assert done["collector_client_finished"] and all(x["proven_inactive"] for x in done["collector_cleanup"])
+pins={str(P):joint.common.sha(P),str(closure):joint.common.sha(closure)}
+cohort=plan["native_cohort"]["rows"]; assert len(cohort)==19
+constraints=[dict(purpose=x["purpose"],fold=x["fold"],minimum_delta=0.) for x in cohort]
+arrays=[]; labels=[]; summaries={}; frames={}; runtime={}
+for objective in ["correct-logprob","margin"]:
+    directory=N/"work"/objective
+    base,g,_,layout,coords,rows,hashes,mode,provenance=joint.read_collection(directory,{"constraints":constraints})
+    assert len(layout)==421 and base.size==1331516 and g.shape==(19,1331516) and coords is None
+    assert mode=="chat-public-answer" and provenance["objective_kind"]==objective
+    if arrays: assert np.array_equal(base,priorbase) and layout==priorlayout
+    priorbase=base.copy(); priorlayout=layout; arrays.append(g);pins.update(hashes)
+    labels.extend(dict(objective=objective,**x) for x in cohort)
+    summary=json.loads((directory/"summary.json").read_text()); summaries[objective]=summary
+    frame=directory/"frame-evidence.json";pins[str(frame)]=joint.common.sha(frame);frames[objective]=json.loads(frame.read_text())
+    rt=summary["runtime"];saved=rt.get("saved_activation_metrics",{})
+    runtime[objective]={"seconds":summary["seconds"],"gpu_peak_allocated_GiB":rt["gpu_peak_allocated_GiB"],"gpu_peak_reserved_GiB":rt["gpu_peak_reserved_GiB"],"cpu_copied_bytes_cumulative":saved.get("copied_to_cpu_bytes"),"restored_payload_bytes_cumulative":saved.get("restored_payload_bytes"),"forward_count":sum(x["model_forward_count"] for x in summary["folds"]),"source_values_unchanged":summary["source_values_unchanged"]}
+assert frames["correct-logprob"]==frames["margin"]
+g=np.concatenate(arrays);del arrays; scale=np.maximum(np.abs(base),1e-4)
+family={};offset=0;eligible=np.ones(base.size,dtype=bool)
+for entry in layout:
+    name=re.sub(r"^model.language_model.layers.\d+\.","",entry["tensor"]).removeprefix("model.language_model.")
+    count=entry["count"];sl=slice(offset,offset+count); part=g[:,sl]; rel=part*scale[sl]
+    if name=="layer_scalar":eligible[sl]=False
+    f=family.setdefault(name,dict(coordinates=0,tensors=0,source_l2_squared=0.,floor_coordinates=0,raw=np.zeros((38,38)),relative=np.zeros((38,38))))
+    f["coordinates"]+=count;f["tensors"]+=1;f["source_l2_squared"]+=float(base[sl]@base[sl]);f["floor_coordinates"]+=int(np.count_nonzero(np.abs(base[sl])<1e-4));f["raw"]+=part@part.T;f["relative"]+=rel@rel.T;offset+=count
+assert offset==base.size and len(family)==8 and int(eligible.sum())==1331456
+
+def geometry(gram):
+    norm=np.sqrt(np.diag(gram));assert np.all(norm>0)
+    cos=gram/np.outer(norm,norm);eigs=np.linalg.eigvalsh(cos)
+    return dict(energy=np.diag(gram).tolist(),gradient_l2=norm.tolist(),cosine=cos.tolist(),normalized_gram_eigenvalues=eigs.tolist(),rank_at_eigenvalue_gt_1e_minus_8=int((eigs>1e-8).sum()))
+metrics={}
+for support in ["all421","eligible361"]:
+    for metric in ["raw","relative"]:
+        metrics[support+"_"+metric]=geometry(sum(f[metric] for name,f in family.items() if support=="all421" or name!="layer_scalar"))
+for f in family.values():
+    for metric in ["raw","relative"]:
+        energy=np.diag(f[metric]);f[metric]=dict(energy=energy.tolist(),fraction_all421=(energy/np.asarray(metrics["all421_"+metric]["energy"])).tolist())
+    f["source_l2"]=float(np.sqrt(f.pop("source_l2_squared")))
+ids=[r["id"] for r in cohort];failed={"behavior-A1","behavior-F2","behavior-J1"};success=[i for i,x in enumerate(ids) if x not in failed];assert len(success)==16
+percase=[]
+for x in cohort:
+    row=dict(x,native_execution_passed=x["id"] not in failed)
+    for objective,summary in summaries.items():
+        f=next(y for y in summary["folds"] if y["purpose"]==x["purpose"] and y["fold"]==x["fold"])
+        row[objective]=f["mean_correct_logprob" if objective=="correct-logprob" else "mean_margin"]
+    row["frame"]=frames["margin"]["frames"][x["purpose"]][x["fold"]][0];percase.append(row)
+focus={}
+for metric,value in metrics.items():
+    focus[metric]={}
+    for identifier in sorted(failed):
+        i=ids.index(identifier);focus[metric][identifier]={}
+        for objective,offset in [("correct-logprob",0),("margin",19)]:
+            k=i+offset
+            focus[metric][identifier][objective]={"against_success16_same_objective":[dict(id=ids[j],cosine=value["cosine"][k][j+offset]) for j in success],"same_case_LL_margin_cosine":value["cosine"][i][i+19]}
+f2=ids.index("behavior-F2");j1=ids.index("behavior-J1");duplicate={}
+for objective,offset in [("correct-logprob",0),("margin",19)]:
+    a=g[f2+offset];b=g[j1+offset];diff=b-a
+    duplicate[objective]={"exact_gradient_array_equal":bool(np.array_equal(a,b)),"different_coordinates_all421":int(np.count_nonzero(diff)),"max_absolute_difference":float(np.max(np.abs(diff))),"raw_difference_l2":float(np.linalg.norm(diff)),"metrics":{k:{"cosine":v["cosine"][f2+offset][j1+offset]} for k,v in metrics.items()}}
+for mod in list(sys.modules.values()):
+    p=getattr(mod,"__file__",None)
+    if p and str(src) in p and p.endswith(".py"):pins[p]=joint.common.sha(Path(p))
+pins[str(Path(__file__).resolve())]=joint.common.sha(Path(__file__))
+assert all(joint.common.sha(Path(p))==h for p,h in pins.items())
+report=dict(status="completed",seconds=time.time()-started,parent="F04",checkpoint_tree_sha256=plan["checkpoint_tree_sha256"],definition="g_relative = g * max(abs(weight), 1e-4), no proposed delta",native_tensors=421,eligible_vector_tensors=361,observed_coordinates=int(base.size),eligible_coordinates=int(eligible.sum()),runtime=runtime,owner_elapsed_seconds=done["elapsed_seconds"],all19_cases=percase,all38_labels=labels,all38_by38=metrics,families=family,focus_failures=focus,F2_J1=duplicate,input_sha256=pins,model_calls=0,solver_calls=0,limitations=["Teacher-forced BF16 derivatives and local cosine do not establish native generation or WSP gains.","All 421 observed tensors retained; eligible361 excludes the 60 whole-layer scalars by pre-observation policy.","F2/J1 share correct text and public prompt; exact numeric equality is checked rather than assumed.","CPU copy bytes count repeated save/unpack events, not resident host RAM or memory reclaimed."])
+p=D/"report.json";assert not p.exists();p.write_text(json.dumps(report,indent=2,allow_nan=False)+"\n")
+print(json.dumps({"status":"completed","seconds":report["seconds"],"report_sha256":joint.common.sha(p),"rows":38,"cases":19,"F2_J1":duplicate}))

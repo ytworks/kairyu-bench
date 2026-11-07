@@ -1,0 +1,18 @@
+{
+  "argv": [
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/infra/weight-tools-ci/bin/python",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/worktrees/kairyu-bench-weight-tools/docs/experiments/scripts/fresh-f04-restored-endpoint-closure-20261107.py",
+    "--plan-sha256",
+    "1623a1bb1ca8d18ba84cd6cc7557feacd7792fbda57afde7b98c548ab861b625",
+    "--owner-pid",
+    "1597236",
+    "--closure-sha256",
+    "a76059bfa003dc15bd96b6d9c6c0182fc151392864b193677b1c8c1023eb53c0"
+  ],
+  "epoch": 1794056346.9776983,
+  "source_sha256": "7cbafc2f149d7d3d82e57527fe5092110ba58ece2ca818fa2d499f1184a096f3",
+  "root_authorized": true,
+  "planned_generation_requests": 5,
+  "official_benchmark_requests": 0,
+  "purpose": "Restore serving to best complete F04"
+}

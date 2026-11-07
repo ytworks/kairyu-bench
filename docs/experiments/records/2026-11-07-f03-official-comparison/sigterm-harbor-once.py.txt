@@ -1,0 +1,39 @@
+import hashlib,json,subprocess,time
+from pathlib import Path
+R=Path("/mnt/nvme/kairyu/wsp/gemma4-coding-20261104")
+N=R/"analysis/fresh-purpose-20261107-f03-dev30-dp4-v1"
+CID="b947da714bf08c131db8971e36e16f5155a5de5303161ad8898bd48cff4eaa01"
+PID=1083709
+EXPECTED="f985746ca14ec580bcebfd60545e169104368dd43f727b58604e3faeecb83be3"
+def save(name,d):
+ with (N/name).open("x") as f:f.write(json.dumps(d,indent=2)+"\n")
+proc=Path("/proc")/str(PID)
+before={"epoch":time.time(),"approved_host_pid":PID,"approved_runner_cid":CID,"signals_sent":0,
+ "reason":"Parent authorized ending this F03 attempt as incomplete after a 1200s disconnect and prolonged regeneration. No complete-run ranking or adoption.",
+ "host_root_or_sudo_used":False}
+if not proc.exists():
+ before["action"]="already_exited_no_signal";save("terminal-graceful-stop-before.json",before);print(json.dumps(before));raise SystemExit(0)
+raw=(proc/"cmdline").read_bytes()
+assert hashlib.sha256(raw).hexdigest()==EXPECTED
+stat=(proc/"stat").read_text().rsplit(")",1)[1].split()
+assert stat[19]=="69562253" and int(stat[1])==1083647
+state=json.loads(subprocess.check_output(["docker","inspect","--format",'{"cid":{{json .Id}},"pid":{{json .State.Pid}},"running":{{json .State.Running}}}',CID],text=True))
+assert state=={"cid":CID,"pid":1078731,"running":True}
+assert int((Path("/proc/1083647/stat")).read_text().rsplit(")",1)[1].split()[1])==1078731
+status=dict(line.split(":",1) for line in (proc/"status").read_text().splitlines() if ":" in line)
+ns=[int(x) for x in status["NSpid"].split()]
+assert ns[0]==PID and len(ns)>=2
+before.update(argv_sha256=EXPECTED,starttime=stat[19],ppid=int(stat[1]),namespace_pids=ns,
+              signal="SIGTERM",target_container_pid=ns[-1],method="docker exec in this existing root-owned runner; no host root or sudo")
+ids=subprocess.check_output(["docker","ps","--no-trunc","--format","{{.ID}}"],text=True).split()
+before["running_container_ids"]=ids
+save("terminal-graceful-stop-before.json",before)
+# Last exact host identity check immediately before the one authorized signal.
+assert hashlib.sha256((proc/"cmdline").read_bytes()).hexdigest()==EXPECTED
+assert (proc/"stat").read_text().rsplit(")",1)[1].split()[19]=="69562253"
+command=["docker","exec",CID,"/bin/kill","-TERM",str(ns[-1])]
+p=subprocess.run(command,capture_output=True,text=True)
+result={"epoch":time.time(),"command":command,"returncode":p.returncode,"stdout":p.stdout,"stderr":p.stderr,
+        "sigterm_commands":1,"repeat_signal_authorized":False,"sigkill_used":False}
+save("terminal-graceful-stop-signal.json",result)
+print(json.dumps(result))

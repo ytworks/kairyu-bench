@@ -1,0 +1,236 @@
+{
+  "status": "preview",
+  "apply_requested": false,
+  "ssh_uid": 1003,
+  "service": "gemma-1",
+  "baseline_path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f05-native-contract-v1/deployment-dp4-v1/all-chat-before.json",
+  "baseline_sha256": "7388092f579cc49b1f028d1efc860bb090575365e3dc7ddd8289f0c453feb6aa",
+  "control_sha256": "fc9a78bc232f9cc331926a0737e64f4b4fe14946574f4a02bc1aacb9a800b851",
+  "helper_sha256": "2e9da820fe30ba9b2436fb600cf14a533b1c496b2fed48ac3649fffb9d2bc9ae",
+  "candidate_identity": {
+    "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/checkpoints/fresh-native-contract-f05-faststore-v1/checkpoint",
+    "tree_sha256": "fcc4681343c1a0c338157bee767df2024f37290469e55dbc417723717f4ac176",
+    "files": [
+      {
+        "path": "chat_template.jinja",
+        "size": 18683,
+        "sha256": "ae53464bf3be25802b3a5b37def7fd89667067d7577049b3b2d74c4d8de4c6d4"
+      },
+      {
+        "path": "config.json",
+        "size": 4621,
+        "sha256": "e967dd38bc5cfd38bd09a995a7bf4a754075df2b46aba68f7fbb5a791e6d8dd1"
+      },
+      {
+        "path": "generation_config.json",
+        "size": 208,
+        "sha256": "d4226bbe3117d2d253ba4609720ba82c6c4ce4627a9a6ae05387c78983ac03de"
+      },
+      {
+        "path": "model.safetensors.index.json",
+        "size": 103577,
+        "sha256": "2eeef6577e663781958c7e17a8809e5f5953ebe1fdb4bf4906cb7f943946bca3"
+      },
+      {
+        "path": "native.safetensors",
+        "size": 2714560,
+        "sha256": "22443993b4fc965395d4b5ae0a7ee0291c0d1d6e1c8f892b35b89be8f3980cce"
+      },
+      {
+        "path": "processor_config.json",
+        "size": 1689,
+        "sha256": "32bdf45d2ad4cc29a0822ddd157a182de76644f0419a6228d151495256e9813c"
+      },
+      {
+        "path": "shared.safetensors",
+        "size": 62543620336,
+        "sha256": "d4690e5b5c1eea2099685025676b80409c9ba0636c869c523b8e9b88a4066432"
+      },
+      {
+        "path": "tokenizer.json",
+        "size": 32169626,
+        "sha256": "cc8d3a0ce36466ccc1278bf987df5f71db1719b9ca6b4118264f45cb627bfe0f"
+      },
+      {
+        "path": "tokenizer_config.json",
+        "size": 3082,
+        "sha256": "9f4fec4b1dc6ecddf8f4a92e9caea5971c0e67d81309f3f9066a2bee8c362633"
+      }
+    ],
+    "stat": {
+      "chat_template.jinja": {
+        "device": 2306,
+        "inode": 182194441,
+        "size": 18683,
+        "mtime_ns": 1794054966057854315,
+        "ctime_ns": 1794054966057854315,
+        "uid": 1003,
+        "gid": 1003,
+        "mode": 33152,
+        "nlink": 1
+      },
+      "config.json": {
+        "device": 2306,
+        "inode": 182194442,
+        "size": 4621,
+        "mtime_ns": 1794054966058854276,
+        "ctime_ns": 1794054966058854276,
+        "uid": 1003,
+        "gid": 1003,
+        "mode": 33152,
+        "nlink": 1
+      },
+      "generation_config.json": {
+        "device": 2306,
+        "inode": 182194443,
+        "size": 208,
+        "mtime_ns": 1794054966058854276,
+        "ctime_ns": 1794054966058854276,
+        "uid": 1003,
+        "gid": 1003,
+        "mode": 33152,
+        "nlink": 1
+      },
+      "model.safetensors.index.json": {
+        "device": 2306,
+        "inode": 182194444,
+        "size": 103577,
+        "mtime_ns": 1794054966058854276,
+        "ctime_ns": 1794054966058854276,
+        "uid": 1003,
+        "gid": 1003,
+        "mode": 33152,
+        "nlink": 1
+      },
+      "native.safetensors": {
+        "device": 2306,
+        "inode": 182194445,
+        "size": 2714560,
+        "mtime_ns": 1794054966143850959,
+        "ctime_ns": 1794054966143850959,
+        "uid": 1003,
+        "gid": 1003,
+        "mode": 33152,
+        "nlink": 1
+      },
+      "processor_config.json": {
+        "device": 2306,
+        "inode": 182194446,
+        "size": 1689,
+        "mtime_ns": 1794054966066853964,
+        "ctime_ns": 1794054966066853964,
+        "uid": 1003,
+        "gid": 1003,
+        "mode": 33152,
+        "nlink": 1
+      },
+      "shared.safetensors": {
+        "device": 2306,
+        "inode": 182192842,
+        "size": 62543620336,
+        "mtime_ns": 1794050230365028683,
+        "ctime_ns": 1794050243644565979,
+        "uid": 1003,
+        "gid": 1003,
+        "mode": 33060,
+        "nlink": 17
+      },
+      "tokenizer.json": {
+        "device": 2306,
+        "inode": 182194447,
+        "size": 32169626,
+        "mtime_ns": 1794054966111852207,
+        "ctime_ns": 1794054966111852207,
+        "uid": 1003,
+        "gid": 1003,
+        "mode": 33152,
+        "nlink": 1
+      },
+      "tokenizer_config.json": {
+        "device": 2306,
+        "inode": 182194450,
+        "size": 3082,
+        "mtime_ns": 1794054966130851466,
+        "ctime_ns": 1794054966130851466,
+        "uid": 1003,
+        "gid": 1003,
+        "mode": 33152,
+        "nlink": 1
+      }
+    },
+    "proof": {
+      "kind": "saved_full_hash_plus_exact_stat_continuity",
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/checkpoints/fresh-native-contract-f05-faststore-v1/manifest.json",
+      "sha256": "09ea569a08f138efd438055d7149f0697dc1d6edd08332f2b6c7c09b1da7c24c",
+      "full_payload_rehashed_here": false
+    }
+  },
+  "before": {
+    "id": "08037f93d105bc27be35b05b93fed55b463fc4776e446c1152fa5c6cb4563052",
+    "name": "/gemma-4-31b-8gpu-gemma-1-1",
+    "image_id": "sha256:af9e746b913088cbf6c4464a31d6904a6b7e1d3ba62f0895362ddf13595f7abe",
+    "command_sha256": "f9de227590524bb32445ccde524ca54dc387431068e55b4bd10e2491f17ebc47",
+    "environment_sha256": "e7bc877f2b9eb1b944340aa38c42a093bae14a5512fdb17a8c1c5091ac8bca9b",
+    "user": "",
+    "working_dir": "/vllm-workspace",
+    "healthcheck_sha256": "93daf63c822ca65a2983b12827944e72a088dc50bded4768d4145a97c99b457d",
+    "cpuset": "16-31,80-95",
+    "devices": [
+      {
+        "Driver": "nvidia",
+        "Count": 0,
+        "DeviceIDs": [
+          "2",
+          "3"
+        ],
+        "Capabilities": [
+          [
+            "gpu"
+          ]
+        ],
+        "Options": null
+      }
+    ],
+    "ipc_mode": "host",
+    "mounts": [
+      {
+        "type": "bind",
+        "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/checkpoints/fresh-native-relative-f04-faststore-v1/checkpoint",
+        "target": "/checkpoint",
+        "read_only": true
+      },
+      {
+        "type": "bind",
+        "source": "/mnt/nvme/kairyu/model-volumes/gemma-4-31b-8gpu/models",
+        "target": "/models",
+        "read_only": true
+      },
+      {
+        "type": "bind",
+        "source": "/mnt/nvme/kairyu/model-volumes/gemma-4-31b-8gpu/compile-cache",
+        "target": "/root/.cache",
+        "read_only": false
+      }
+    ],
+    "networks": [
+      "gemma-4-31b-8gpu_default"
+    ],
+    "checkpoint_path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/checkpoints/fresh-native-relative-f04-faststore-v1/checkpoint",
+    "checkpoint_readonly": true,
+    "tree": "7b9e9488e3cd4e0b6c5f61ae341e5eeccdf5bd31c46d1c8354950dbc29d0f924",
+    "running": true,
+    "health": "healthy"
+  },
+  "rendered_service_sha256": "d26d149f1ab4c133d00983e54f37fd2d7d9bd408388f416d523f5e39e3d34915",
+  "daemon_id": "3e518d2b-6972-43f8-b325-f7f33697a2d2",
+  "compose_selection": {
+    "project": "gemma-4-31b-8gpu",
+    "service": "gemma-1",
+    "container_ids": [
+      "08037f93d105bc27be35b05b93fed55b463fc4776e446c1152fa5c6cb4563052"
+    ],
+    "includes_stopped": true
+  },
+  "compose_remove_orphans": false,
+  "scope": "Existing Compose service only; global served-checkpoint record is not updated; never benchmark mixed gateway."
+}

@@ -1,0 +1,1745 @@
+{
+  "epoch": 1794037996.271981,
+  "scope": "Only generation POST /v1/chat/completions for authored-v1, independent-ready-smoke, authored-v2; read-only preflight GETs are not generation attempts",
+  "generation_post_attempts": 241,
+  "successful_http200": 121,
+  "failed_http400": 120,
+  "retries_per_case_in_each_trial": 0,
+  "all_trials_retained": true,
+  "audits": [
+    {
+      "trial": "v1",
+      "window": [
+        1794036880,
+        1794036892
+      ],
+      "generation_post_count": 120,
+      "status_counts": {
+        "400": 120
+      },
+      "access_metadata": [
+        {
+          "ts": "2026-11-07T07:34:45+0000",
+          "method": "POST",
+          "path": "/v1/chat/completions",
+          "code": 400,
+          "duration_ms": 6.49
+        },
+        {
+          "ts": "2026-11-07T07:34:45+0000",
+          "method": "POST",
+          "path": "/v1/chat/completions",
+          "code": 400,
+          "duration_ms": 8.01
+        },
+        {
+          "ts": "2026-11-07T07:34:45+0000",
+          "method": "POST",
+          "path": "/v1/chat/completions",
+          "code": 400,
+          "duration_ms": 9.34
+        },
+        {
+          "ts": "2026-11-07T07:34:45+0000",
+          "method": "POST",
+          "path": "/v1/chat/completions",
+          "code": 400,
+          "duration_ms": 10.07
+        },
+        {
+          "ts": "2026-11-07T07:34:45+0000",
+          "method": "POST",
+          "path": "/v1/chat/completions",
+          "code": 400,
+          "duration_ms": 9.61
+        },
+        {
+          "ts": "2026-11-07T07:34:45+0000",
+          "method": "POST",
+          "path": "/v1/chat/completions",
+          "code": 400,
+          "duration_ms": 10.7
+        },
+        {
+          "ts": "2026-11-07T07:34:45+0000",
+          "method": "POST",
+          "path": "/v1/chat/completions",
+          "code": 400,
+          "duration_ms": 9.14
+        },
+        {
+          "ts": "2026-11-07T07:34:45+0000",
+          "method": "POST",
+          "path": "/v1/chat/completions",
+          "code": 400,
+          "duration_ms": 9.93
+        },
+        {
+          "ts": "2026-11-07T07:34:45+0000",
+          "method": "POST",
+          "path": "/v1/chat/completions",
+          "code": 400,
+          "duration_ms": 10.68
+        },
+        {
+          "ts": "2026-11-07T07:34:45+0000",
+          "method": "POST",
+          "path": "/v1/chat/completions",
+          "code": 400,
+          "duration_ms": 10.83
+        },
+        {
+          "ts": "2026-11-07T07:34:45+0000",
+          "method": "POST",
+          "path": "/v1/chat/completions",
+          "code": 400,
+          "duration_ms": 10.81
+        },
+        {
+          "ts": "2026-11-07T07:34:45+0000",
+          "method": "POST",
+          "path": "/v1/chat/completions",
+          "code": 400,
+          "duration_ms": 11.21
+        },
+        {
+          "ts": "2026-11-07T07:34:45+0000",
+          "method": "POST",
+          "path": "/v1/chat/completions",
+          "code": 400,
+          "duration_ms": 11.27
+        },
+        {
+          "ts": "2026-11-07T07:34:45+0000",
+          "method": "POST",
+          "path": "/v1/chat/completions",
+          "code": 400,
+          "duration_ms": 11.52
+        },
+        {
+          "ts": "2026-11-07T07:34:45+0000",
+          "method": "POST",
+          "path": "/v1/chat/completions",
+          "code": 400,
+          "duration_ms": 11.52
+        },
+        {
+          "ts": "2026-11-07T07:34:45+0000",
+          "method": "POST",
+          "path": "/v1/chat/completions",
+          "code": 400,
+          "duration_ms": 11.82
+        },
+        {
+          "ts": "2026-11-07T07:34:46+0000",
+          "method": "POST",
+          "path": "/v1/chat/completions",
+          "code": 400,
+          "duration_ms": 5.34
+        },
+        {
+          "ts": "2026-11-07T07:34:46+0000",
+          "method": "POST",
+          "path": "/v1/chat/completions",
+          "code": 400,
+          "duration_ms": 7.19
+        },
+        {
+          "ts": "2026-11-07T07:34:46+0000",
+          "method": "POST",
+          "path": "/v1/chat/completions",
+          "code": 400,
+          "duration_ms": 9.17
+        },
+        {
+          "ts": "2026-11-07T07:34:46+0000",
+          "method": "POST",
+          "path": "/v1/chat/completions",
+          "code": 400,
+          "duration_ms": 9.68
+        },
+        {
+          "ts": "2026-11-07T07:34:46+0000",
+          "method": "POST",
+          "path": "/v1/chat/completions",
+          "code": 400,
+          "duration_ms": 9.83
+        },
+        {
+          "ts": "2026-11-07T07:34:46+0000",
+          "method": "POST",
+          "path": "/v1/chat/completions",
+          "code": 400,
+          "duration_ms": 10.08
+        },
+        {
+          "ts": "2026-11-07T07:34:46+0000",
+          "method": "POST",
+          "path": "/v1/chat/completions",
+          "code": 400,
+          "duration_ms": 11.16
+        },
+        {
+          "ts": "2026-11-07T07:34:46+0000",
+          "method": "POST",
+          "path": "/v1/chat/completions",
+          "code": 400,
+          "duration_ms": 10.75
+        },
+        {
+          "ts": "2026-11-07T07:34:46+0000",
+          "method": "POST",
+          "path": "/v1/chat/completions",
+          "code": 400,
+          "duration_ms": 11.04
+        },
+        {
+          "ts": "2026-11-07T07:34:46+0000",
+          "method": "POST",
+          "path": "/v1/chat/completions",
+          "code": 400,
+          "duration_ms": 11.32
+        },
+        {
+          "ts": "2026-11-07T07:34:46+0000",
+          "method": "POST",
+          "path": "/v1/chat/completions",
+          "code": 400,
+          "duration_ms": 11.44
+        },
+        {
+          "ts": "2026-11-07T07:34:46+0000",
+          "method": "POST",
+          "path": "/v1/chat/completions",
+          "code": 400,
+          "duration_ms": 11.85
+        },
+        {
+          "ts": "2026-11-07T07:34:46+0000",
+          "method": "POST",
+          "path": "/v1/chat/completions",
+          "code": 400,
+          "duration_ms": 12.12
+        },
+        {
+          "ts": "2026-11-07T07:34:46+0000",
+          "method": "POST",
+          "path": "/v1/chat/completions",
+          "code": 400,
+          "duration_ms": 12.59
+        },
+        {
+          "ts": "2026-11-07T07:34:46+0000",
+          "method": "POST",
+          "path": "/v1/chat/completions",
+          "code": 400,
+          "duration_ms": 13.24
+        },
+        {
+          "ts": "2026-11-07T07:34:46+0000",
+          "method": "POST",
+          "path": "/v1/chat/completions",
+          "code": 400,
+          "duration_ms": 12.7
+        },
+        {
+          "ts": "2026-11-07T07:34:46+0000",
+          "method": "POST",
+          "path": "/v1/chat/completions",
+          "code": 400,
+          "duration_ms": 4.15
+        },
+        {
+          "ts": "2026-11-07T07:34:46+0000",
+          "method": "POST",
+          "path": "/v1/chat/completions",
+          "code": 400,
+          "duration_ms": 4.43
+        },
+        {
+          "ts": "2026-11-07T07:34:46+0000",
+          "method": "POST",
+          "path": "/v1/chat/completions",
+          "code": 400,
+          "duration_ms": 7.77
+        },
+        {
+          "ts": "2026-11-07T07:34:46+0000",
+          "method": "POST",
+          "path": "/v1/chat/completions",
+          "code": 400,
+          "duration_ms": 9.25
+        },
+        {
+          "ts": "2026-11-07T07:34:46+0000",
+          "method": "POST",
+          "path": "/v1/chat/completions",
+          "code": 400,
+          "duration_ms": 9.54
+        },
+        {
+          "ts": "2026-11-07T07:34:46+0000",
+          "method": "POST",
+          "path": "/v1/chat/completions",
+          "code": 400,
+          "duration_ms": 10.45
+        },
+        {
+          "ts": "2026-11-07T07:34:46+0000",
+          "method": "POST",
+          "path": "/v1/chat/completions",
+          "code": 400,
+          "duration_ms": 10.61
+        },
+        {
+          "ts": "2026-11-07T07:34:46+0000",
+          "method": "POST",
+          "path": "/v1/chat/completions",
+          "code": 400,
+          "duration_ms": 10.54
+        },
+        {
+          "ts": "2026-11-07T07:34:46+0000",
+          "method": "POST",
+          "path": "/v1/chat/completions",
+          "code": 400,
+          "duration_ms": 12.83
+        },
+        {
+          "ts": "2026-11-07T07:34:46+0000",
+          "method": "POST",
+          "path": "/v1/chat/completions",
+          "code": 400,
+          "duration_ms": 11.76
+        },
+        {
+          "ts": "2026-11-07T07:34:46+0000",
+          "method": "POST",
+          "path": "/v1/chat/completions",
+          "code": 400,
+          "duration_ms": 9.38
+        },
+        {
+          "ts": "2026-11-07T07:34:46+0000",
+          "method": "POST",
+          "path": "/v1/chat/completions",
+          "code": 400,
+          "duration_ms": 11.42
+        },
+        {
+          "ts": "2026-11-07T07:34:46+0000",
+          "method": "POST",
+          "path": "/v1/chat/completions",
+          "code": 400,
+          "duration_ms": 9.89
+        },
+        {
+          "ts": "2026-11-07T07:34:46+0000",
+          "method": "POST",
+          "path": "/v1/chat/completions",
+          "code": 400,
+          "duration_ms": 9.92
+        },
+        {
+          "ts": "2026-11-07T07:34:46+0000",
+          "method": "POST",
+          "path": "/v1/chat/completions",
+          "code": 400,
+          "duration_ms": 10.36
+        },
+        {
+          "ts": "2026-11-07T07:34:46+0000",
+          "method": "POST",
+          "path": "/v1/chat/completions",
+          "code": 400,
+          "duration_ms": 10.08
+        },
+        {
+          "ts": "2026-11-07T07:34:46+0000",
+          "method": "POST",
+          "path": "/v1/chat/completions",
+          "code": 400,
+          "duration_ms": 5.37
+        },
+        {
+          "ts": "2026-11-07T07:34:46+0000",
+          "method": "POST",
+          "path": "/v1/chat/completions",
+          "code": 400,
+          "duration_ms": 6.87
+        },
+        {
+          "ts": "2026-11-07T07:34:46+0000",
+          "method": "POST",
+          "path": "/v1/chat/completions",
+          "code": 400,
+          "duration_ms": 7.84
+        },
+        {
+          "ts": "2026-11-07T07:34:46+0000",
+          "method": "POST",
+          "path": "/v1/chat/completions",
+          "code": 400,
+          "duration_ms": 9.68
+        },
+        {
+          "ts": "2026-11-07T07:34:46+0000",
+          "method": "POST",
+          "path": "/v1/chat/completions",
+          "code": 400,
+          "duration_ms": 9.03
+        },
+        {
+          "ts": "2026-11-07T07:34:46+0000",
+          "method": "POST",
+          "path": "/v1/chat/completions",
+          "code": 400,
+          "duration_ms": 8.76
+        },
+        {
+          "ts": "2026-11-07T07:34:46+0000",
+          "method": "POST",
+          "path": "/v1/chat/completions",
+          "code": 400,
+          "duration_ms": 9.66
+        },
+        {
+          "ts": "2026-11-07T07:34:46+0000",
+          "method": "POST",
+          "path": "/v1/chat/completions",
+          "code": 400,
+          "duration_ms": 11.46
+        },
+        {
+          "ts": "2026-11-07T07:34:46+0000",
+          "method": "POST",
+          "path": "/v1/chat/completions",
+          "code": 400,
+          "duration_ms": 11.52
+        },
+        {
+          "ts": "2026-11-07T07:34:46+0000",
+          "method": "POST",
+          "path": "/v1/chat/completions",
+          "code": 400,
+          "duration_ms": 13.38
+        },
+        {
+          "ts": "2026-11-07T07:34:46+0000",
+          "method": "POST",
+          "path": "/v1/chat/completions",
+          "code": 400,
+          "duration_ms": 12.64
+        },
+        {
+          "ts": "2026-11-07T07:34:46+0000",
+          "method": "POST",
+          "path": "/v1/chat/completions",
+          "code": 400,
+          "duration_ms": 14.27
+        },
+        {
+          "ts": "2026-11-07T07:34:46+0000",
+          "method": "POST",
+          "path": "/v1/chat/completions",
+          "code": 400,
+          "duration_ms": 14.68
+        },
+        {
+          "ts": "2026-11-07T07:34:46+0000",
+          "method": "POST",
+          "path": "/v1/chat/completions",
+          "code": 400,
+          "duration_ms": 15.35
+        },
+        {
+          "ts": "2026-11-07T07:34:46+0000",
+          "method": "POST",
+          "path": "/v1/chat/completions",
+          "code": 400,
+          "duration_ms": 16.34
+        },
+        {
+          "ts": "2026-11-07T07:34:46+0000",
+          "method": "POST",
+          "path": "/v1/chat/completions",
+          "code": 400,
+          "duration_ms": 17.68
+        },
+        {
+          "ts": "2026-11-07T07:34:46+0000",
+          "method": "POST",
+          "path": "/v1/chat/completions",
+          "code": 400,
+          "duration_ms": 17.99
+        },
+        {
+          "ts": "2026-11-07T07:34:46+0000",
+          "method": "POST",
+          "path": "/v1/chat/completions",
+          "code": 400,
+          "duration_ms": 18.42
+        },
+        {
+          "ts": "2026-11-07T07:34:46+0000",
+          "method": "POST",
+          "path": "/v1/chat/completions",
+          "code": 400,
+          "duration_ms": 18.24
+        },
+        {
+          "ts": "2026-11-07T07:34:46+0000",
+          "method": "POST",
+          "path": "/v1/chat/completions",
+          "code": 400,
+          "duration_ms": 18.46
+        },
+        {
+          "ts": "2026-11-07T07:34:46+0000",
+          "method": "POST",
+          "path": "/v1/chat/completions",
+          "code": 400,
+          "duration_ms": 16.68
+        },
+        {
+          "ts": "2026-11-07T07:34:46+0000",
+          "method": "POST",
+          "path": "/v1/chat/completions",
+          "code": 400,
+          "duration_ms": 17.97
+        },
+        {
+          "ts": "2026-11-07T07:34:46+0000",
+          "method": "POST",
+          "path": "/v1/chat/completions",
+          "code": 400,
+          "duration_ms": 18.48
+        },
+        {
+          "ts": "2026-11-07T07:34:46+0000",
+          "method": "POST",
+          "path": "/v1/chat/completions",
+          "code": 400,
+          "duration_ms": 18.09
+        },
+        {
+          "ts": "2026-11-07T07:34:46+0000",
+          "method": "POST",
+          "path": "/v1/chat/completions",
+          "code": 400,
+          "duration_ms": 18.78
+        },
+        {
+          "ts": "2026-11-07T07:34:46+0000",
+          "method": "POST",
+          "path": "/v1/chat/completions",
+          "code": 400,
+          "duration_ms": 17.91
+        },
+        {
+          "ts": "2026-11-07T07:34:46+0000",
+          "method": "POST",
+          "path": "/v1/chat/completions",
+          "code": 400,
+          "duration_ms": 18.86
+        },
+        {
+          "ts": "2026-11-07T07:34:46+0000",
+          "method": "POST",
+          "path": "/v1/chat/completions",
+          "code": 400,
+          "duration_ms": 16.8
+        },
+        {
+          "ts": "2026-11-07T07:34:46+0000",
+          "method": "POST",
+          "path": "/v1/chat/completions",
+          "code": 400,
+          "duration_ms": 17.28
+        },
+        {
+          "ts": "2026-11-07T07:34:46+0000",
+          "method": "POST",
+          "path": "/v1/chat/completions",
+          "code": 400,
+          "duration_ms": 17.73
+        },
+        {
+          "ts": "2026-11-07T07:34:46+0000",
+          "method": "POST",
+          "path": "/v1/chat/completions",
+          "code": 400,
+          "duration_ms": 18.49
+        },
+        {
+          "ts": "2026-11-07T07:34:46+0000",
+          "method": "POST",
+          "path": "/v1/chat/completions",
+          "code": 400,
+          "duration_ms": 17.73
+        },
+        {
+          "ts": "2026-11-07T07:34:47+0000",
+          "method": "POST",
+          "path": "/v1/chat/completions",
+          "code": 400,
+          "duration_ms": 16.5
+        },
+        {
+          "ts": "2026-11-07T07:34:47+0000",
+          "method": "POST",
+          "path": "/v1/chat/completions",
+          "code": 400,
+          "duration_ms": 18.43
+        },
+        {
+          "ts": "2026-11-07T07:34:47+0000",
+          "method": "POST",
+          "path": "/v1/chat/completions",
+          "code": 400,
+          "duration_ms": 18.26
+        },
+        {
+          "ts": "2026-11-07T07:34:47+0000",
+          "method": "POST",
+          "path": "/v1/chat/completions",
+          "code": 400,
+          "duration_ms": 18.2
+        },
+        {
+          "ts": "2026-11-07T07:34:47+0000",
+          "method": "POST",
+          "path": "/v1/chat/completions",
+          "code": 400,
+          "duration_ms": 19.37
+        },
+        {
+          "ts": "2026-11-07T07:34:47+0000",
+          "method": "POST",
+          "path": "/v1/chat/completions",
+          "code": 400,
+          "duration_ms": 18.46
+        },
+        {
+          "ts": "2026-11-07T07:34:47+0000",
+          "method": "POST",
+          "path": "/v1/chat/completions",
+          "code": 400,
+          "duration_ms": 18.85
+        },
+        {
+          "ts": "2026-11-07T07:34:47+0000",
+          "method": "POST",
+          "path": "/v1/chat/completions",
+          "code": 400,
+          "duration_ms": 18.71
+        },
+        {
+          "ts": "2026-11-07T07:34:47+0000",
+          "method": "POST",
+          "path": "/v1/chat/completions",
+          "code": 400,
+          "duration_ms": 18.08
+        },
+        {
+          "ts": "2026-11-07T07:34:47+0000",
+          "method": "POST",
+          "path": "/v1/chat/completions",
+          "code": 400,
+          "duration_ms": 17.82
+        },
+        {
+          "ts": "2026-11-07T07:34:47+0000",
+          "method": "POST",
+          "path": "/v1/chat/completions",
+          "code": 400,
+          "duration_ms": 18.6
+        },
+        {
+          "ts": "2026-11-07T07:34:47+0000",
+          "method": "POST",
+          "path": "/v1/chat/completions",
+          "code": 400,
+          "duration_ms": 19.19
+        },
+        {
+          "ts": "2026-11-07T07:34:47+0000",
+          "method": "POST",
+          "path": "/v1/chat/completions",
+          "code": 400,
+          "duration_ms": 20.23
+        },
+        {
+          "ts": "2026-11-07T07:34:47+0000",
+          "method": "POST",
+          "path": "/v1/chat/completions",
+          "code": 400,
+          "duration_ms": 18.36
+        },
+        {
+          "ts": "2026-11-07T07:34:47+0000",
+          "method": "POST",
+          "path": "/v1/chat/completions",
+          "code": 400,
+          "duration_ms": 18.94
+        },
+        {
+          "ts": "2026-11-07T07:34:47+0000",
+          "method": "POST",
+          "path": "/v1/chat/completions",
+          "code": 400,
+          "duration_ms": 18.26
+        },
+        {
+          "ts": "2026-11-07T07:34:47+0000",
+          "method": "POST",
+          "path": "/v1/chat/completions",
+          "code": 400,
+          "duration_ms": 17.31
+        },
+        {
+          "ts": "2026-11-07T07:34:47+0000",
+          "method": "POST",
+          "path": "/v1/chat/completions",
+          "code": 400,
+          "duration_ms": 17.32
+        },
+        {
+          "ts": "2026-11-07T07:34:47+0000",
+          "method": "POST",
+          "path": "/v1/chat/completions",
+          "code": 400,
+          "duration_ms": 17.08
+        },
+        {
+          "ts": "2026-11-07T07:34:47+0000",
+          "method": "POST",
+          "path": "/v1/chat/completions",
+          "code": 400,
+          "duration_ms": 17.08
+        },
+        {
+          "ts": "2026-11-07T07:34:47+0000",
+          "method": "POST",
+          "path": "/v1/chat/completions",
+          "code": 400,
+          "duration_ms": 14.7
+        },
+        {
+          "ts": "2026-11-07T07:34:47+0000",
+          "method": "POST",
+          "path": "/v1/chat/completions",
+          "code": 400,
+          "duration_ms": 15.7
+        },
+        {
+          "ts": "2026-11-07T07:34:47+0000",
+          "method": "POST",
+          "path": "/v1/chat/completions",
+          "code": 400,
+          "duration_ms": 15.67
+        },
+        {
+          "ts": "2026-11-07T07:34:47+0000",
+          "method": "POST",
+          "path": "/v1/chat/completions",
+          "code": 400,
+          "duration_ms": 12.82
+        },
+        {
+          "ts": "2026-11-07T07:34:47+0000",
+          "method": "POST",
+          "path": "/v1/chat/completions",
+          "code": 400,
+          "duration_ms": 12.93
+        },
+        {
+          "ts": "2026-11-07T07:34:47+0000",
+          "method": "POST",
+          "path": "/v1/chat/completions",
+          "code": 400,
+          "duration_ms": 11.4
+        },
+        {
+          "ts": "2026-11-07T07:34:47+0000",
+          "method": "POST",
+          "path": "/v1/chat/completions",
+          "code": 400,
+          "duration_ms": 11.8
+        },
+        {
+          "ts": "2026-11-07T07:34:47+0000",
+          "method": "POST",
+          "path": "/v1/chat/completions",
+          "code": 400,
+          "duration_ms": 10.75
+        },
+        {
+          "ts": "2026-11-07T07:34:47+0000",
+          "method": "POST",
+          "path": "/v1/chat/completions",
+          "code": 400,
+          "duration_ms": 3.77
+        },
+        {
+          "ts": "2026-11-07T07:34:47+0000",
+          "method": "POST",
+          "path": "/v1/chat/completions",
+          "code": 400,
+          "duration_ms": 4.29
+        },
+        {
+          "ts": "2026-11-07T07:34:47+0000",
+          "method": "POST",
+          "path": "/v1/chat/completions",
+          "code": 400,
+          "duration_ms": 4.8
+        },
+        {
+          "ts": "2026-11-07T07:34:47+0000",
+          "method": "POST",
+          "path": "/v1/chat/completions",
+          "code": 400,
+          "duration_ms": 5.89
+        },
+        {
+          "ts": "2026-11-07T07:34:47+0000",
+          "method": "POST",
+          "path": "/v1/chat/completions",
+          "code": 400,
+          "duration_ms": 6.59
+        },
+        {
+          "ts": "2026-11-07T07:34:47+0000",
+          "method": "POST",
+          "path": "/v1/chat/completions",
+          "code": 400,
+          "duration_ms": 6.77
+        },
+        {
+          "ts": "2026-11-07T07:34:47+0000",
+          "method": "POST",
+          "path": "/v1/chat/completions",
+          "code": 400,
+          "duration_ms": 7.43
+        },
+        {
+          "ts": "2026-11-07T07:34:47+0000",
+          "method": "POST",
+          "path": "/v1/chat/completions",
+          "code": 400,
+          "duration_ms": 7.92
+        },
+        {
+          "ts": "2026-11-07T07:34:47+0000",
+          "method": "POST",
+          "path": "/v1/chat/completions",
+          "code": 400,
+          "duration_ms": 7.61
+        },
+        {
+          "ts": "2026-11-07T07:34:47+0000",
+          "method": "POST",
+          "path": "/v1/chat/completions",
+          "code": 400,
+          "duration_ms": 8.05
+        },
+        {
+          "ts": "2026-11-07T07:34:47+0000",
+          "method": "POST",
+          "path": "/v1/chat/completions",
+          "code": 400,
+          "duration_ms": 8.43
+        },
+        {
+          "ts": "2026-11-07T07:34:47+0000",
+          "method": "POST",
+          "path": "/v1/chat/completions",
+          "code": 400,
+          "duration_ms": 8.79
+        }
+      ]
+    },
+    {
+      "trial": "smoke",
+      "window": [
+        1794037615,
+        1794037619
+      ],
+      "generation_post_count": 1,
+      "status_counts": {
+        "200": 1
+      },
+      "access_metadata": [
+        {
+          "ts": "2026-11-07T07:46:56+0000",
+          "method": "POST",
+          "path": "/v1/chat/completions",
+          "code": 200,
+          "duration_ms": 380.31
+        }
+      ]
+    },
+    {
+      "trial": "v2",
+      "window": [
+        1794037702,
+        1794037837
+      ],
+      "generation_post_count": 120,
+      "status_counts": {
+        "200": 120
+      },
+      "access_metadata": [
+        {
+          "ts": "2026-11-07T07:48:26+0000",
+          "method": "POST",
+          "path": "/v1/chat/completions",
+          "code": 200,
+          "duration_ms": 3332.37
+        },
+        {
+          "ts": "2026-11-07T07:48:27+0000",
+          "method": "POST",
+          "path": "/v1/chat/completions",
+          "code": 200,
+          "duration_ms": 4564.91
+        },
+        {
+          "ts": "2026-11-07T07:48:28+0000",
+          "method": "POST",
+          "path": "/v1/chat/completions",
+          "code": 200,
+          "duration_ms": 5257.95
+        },
+        {
+          "ts": "2026-11-07T07:48:28+0000",
+          "method": "POST",
+          "path": "/v1/chat/completions",
+          "code": 200,
+          "duration_ms": 5295.89
+        },
+        {
+          "ts": "2026-11-07T07:48:28+0000",
+          "method": "POST",
+          "path": "/v1/chat/completions",
+          "code": 200,
+          "duration_ms": 5586.38
+        },
+        {
+          "ts": "2026-11-07T07:48:29+0000",
+          "method": "POST",
+          "path": "/v1/chat/completions",
+          "code": 200,
+          "duration_ms": 5896.0
+        },
+        {
+          "ts": "2026-11-07T07:48:29+0000",
+          "method": "POST",
+          "path": "/v1/chat/completions",
+          "code": 200,
+          "duration_ms": 6446.67
+        },
+        {
+          "ts": "2026-11-07T07:48:29+0000",
+          "method": "POST",
+          "path": "/v1/chat/completions",
+          "code": 200,
+          "duration_ms": 6599.98
+        },
+        {
+          "ts": "2026-11-07T07:48:30+0000",
+          "method": "POST",
+          "path": "/v1/chat/completions",
+          "code": 200,
+          "duration_ms": 7372.09
+        },
+        {
+          "ts": "2026-11-07T07:48:30+0000",
+          "method": "POST",
+          "path": "/v1/chat/completions",
+          "code": 200,
+          "duration_ms": 7546.22
+        },
+        {
+          "ts": "2026-11-07T07:48:31+0000",
+          "method": "POST",
+          "path": "/v1/chat/completions",
+          "code": 200,
+          "duration_ms": 7975.87
+        },
+        {
+          "ts": "2026-11-07T07:48:31+0000",
+          "method": "POST",
+          "path": "/v1/chat/completions",
+          "code": 200,
+          "duration_ms": 8161.25
+        },
+        {
+          "ts": "2026-11-07T07:48:31+0000",
+          "method": "POST",
+          "path": "/v1/chat/completions",
+          "code": 200,
+          "duration_ms": 8245.1
+        },
+        {
+          "ts": "2026-11-07T07:48:31+0000",
+          "method": "POST",
+          "path": "/v1/chat/completions",
+          "code": 200,
+          "duration_ms": 8312.13
+        },
+        {
+          "ts": "2026-11-07T07:48:32+0000",
+          "method": "POST",
+          "path": "/v1/chat/completions",
+          "code": 200,
+          "duration_ms": 9450.06
+        },
+        {
+          "ts": "2026-11-07T07:48:32+0000",
+          "method": "POST",
+          "path": "/v1/chat/completions",
+          "code": 200,
+          "duration_ms": 9674.75
+        },
+        {
+          "ts": "2026-11-07T07:48:38+0000",
+          "method": "POST",
+          "path": "/v1/chat/completions",
+          "code": 200,
+          "duration_ms": 5705.46
+        },
+        {
+          "ts": "2026-11-07T07:48:39+0000",
+          "method": "POST",
+          "path": "/v1/chat/completions",
+          "code": 200,
+          "duration_ms": 5875.62
+        },
+        {
+          "ts": "2026-11-07T07:48:39+0000",
+          "method": "POST",
+          "path": "/v1/chat/completions",
+          "code": 200,
+          "duration_ms": 6365.93
+        },
+        {
+          "ts": "2026-11-07T07:48:41+0000",
+          "method": "POST",
+          "path": "/v1/chat/completions",
+          "code": 200,
+          "duration_ms": 8695.21
+        },
+        {
+          "ts": "2026-11-07T07:48:42+0000",
+          "method": "POST",
+          "path": "/v1/chat/completions",
+          "code": 200,
+          "duration_ms": 9165.37
+        },
+        {
+          "ts": "2026-11-07T07:48:43+0000",
+          "method": "POST",
+          "path": "/v1/chat/completions",
+          "code": 200,
+          "duration_ms": 9963.62
+        },
+        {
+          "ts": "2026-11-07T07:48:43+0000",
+          "method": "POST",
+          "path": "/v1/chat/completions",
+          "code": 200,
+          "duration_ms": 10371.51
+        },
+        {
+          "ts": "2026-11-07T07:48:47+0000",
+          "method": "POST",
+          "path": "/v1/chat/completions",
+          "code": 200,
+          "duration_ms": 14715.52
+        },
+        {
+          "ts": "2026-11-07T07:48:48+0000",
+          "method": "POST",
+          "path": "/v1/chat/completions",
+          "code": 200,
+          "duration_ms": 15156.64
+        },
+        {
+          "ts": "2026-11-07T07:48:49+0000",
+          "method": "POST",
+          "path": "/v1/chat/completions",
+          "code": 200,
+          "duration_ms": 16346.68
+        },
+        {
+          "ts": "2026-11-07T07:48:49+0000",
+          "method": "POST",
+          "path": "/v1/chat/completions",
+          "code": 200,
+          "duration_ms": 16418.46
+        },
+        {
+          "ts": "2026-11-07T07:48:50+0000",
+          "method": "POST",
+          "path": "/v1/chat/completions",
+          "code": 200,
+          "duration_ms": 17177.9
+        },
+        {
+          "ts": "2026-11-07T07:48:50+0000",
+          "method": "POST",
+          "path": "/v1/chat/completions",
+          "code": 200,
+          "duration_ms": 17537.47
+        },
+        {
+          "ts": "2026-11-07T07:48:52+0000",
+          "method": "POST",
+          "path": "/v1/chat/completions",
+          "code": 200,
+          "duration_ms": 19640.6
+        },
+        {
+          "ts": "2026-11-07T07:48:54+0000",
+          "method": "POST",
+          "path": "/v1/chat/completions",
+          "code": 200,
+          "duration_ms": 21469.02
+        },
+        {
+          "ts": "2026-11-07T07:49:14+0000",
+          "method": "POST",
+          "path": "/v1/chat/completions",
+          "code": 200,
+          "duration_ms": 41696.56
+        },
+        {
+          "ts": "2026-11-07T07:49:18+0000",
+          "method": "POST",
+          "path": "/v1/chat/completions",
+          "code": 200,
+          "duration_ms": 3826.58
+        },
+        {
+          "ts": "2026-11-07T07:49:19+0000",
+          "method": "POST",
+          "path": "/v1/chat/completions",
+          "code": 200,
+          "duration_ms": 4029.78
+        },
+        {
+          "ts": "2026-11-07T07:49:20+0000",
+          "method": "POST",
+          "path": "/v1/chat/completions",
+          "code": 200,
+          "duration_ms": 5731.18
+        },
+        {
+          "ts": "2026-11-07T07:49:23+0000",
+          "method": "POST",
+          "path": "/v1/chat/completions",
+          "code": 200,
+          "duration_ms": 7894.83
+        },
+        {
+          "ts": "2026-11-07T07:49:23+0000",
+          "method": "POST",
+          "path": "/v1/chat/completions",
+          "code": 200,
+          "duration_ms": 8262.95
+        },
+        {
+          "ts": "2026-11-07T07:49:23+0000",
+          "method": "POST",
+          "path": "/v1/chat/completions",
+          "code": 200,
+          "duration_ms": 8295.98
+        },
+        {
+          "ts": "2026-11-07T07:49:23+0000",
+          "method": "POST",
+          "path": "/v1/chat/completions",
+          "code": 200,
+          "duration_ms": 8590.81
+        },
+        {
+          "ts": "2026-11-07T07:49:24+0000",
+          "method": "POST",
+          "path": "/v1/chat/completions",
+          "code": 200,
+          "duration_ms": 8922.66
+        },
+        {
+          "ts": "2026-11-07T07:49:25+0000",
+          "method": "POST",
+          "path": "/v1/chat/completions",
+          "code": 200,
+          "duration_ms": 9941.84
+        },
+        {
+          "ts": "2026-11-07T07:49:26+0000",
+          "method": "POST",
+          "path": "/v1/chat/completions",
+          "code": 200,
+          "duration_ms": 11754.37
+        },
+        {
+          "ts": "2026-11-07T07:49:26+0000",
+          "method": "POST",
+          "path": "/v1/chat/completions",
+          "code": 200,
+          "duration_ms": 11821.21
+        },
+        {
+          "ts": "2026-11-07T07:49:27+0000",
+          "method": "POST",
+          "path": "/v1/chat/completions",
+          "code": 200,
+          "duration_ms": 12143.58
+        },
+        {
+          "ts": "2026-11-07T07:49:27+0000",
+          "method": "POST",
+          "path": "/v1/chat/completions",
+          "code": 200,
+          "duration_ms": 12365.34
+        },
+        {
+          "ts": "2026-11-07T07:49:28+0000",
+          "method": "POST",
+          "path": "/v1/chat/completions",
+          "code": 200,
+          "duration_ms": 13369.29
+        },
+        {
+          "ts": "2026-11-07T07:49:31+0000",
+          "method": "POST",
+          "path": "/v1/chat/completions",
+          "code": 200,
+          "duration_ms": 16359.26
+        },
+        {
+          "ts": "2026-11-07T07:49:32+0000",
+          "method": "POST",
+          "path": "/v1/chat/completions",
+          "code": 200,
+          "duration_ms": 17506.08
+        },
+        {
+          "ts": "2026-11-07T07:49:34+0000",
+          "method": "POST",
+          "path": "/v1/chat/completions",
+          "code": 200,
+          "duration_ms": 1141.72
+        },
+        {
+          "ts": "2026-11-07T07:49:34+0000",
+          "method": "POST",
+          "path": "/v1/chat/completions",
+          "code": 200,
+          "duration_ms": 1180.11
+        },
+        {
+          "ts": "2026-11-07T07:49:34+0000",
+          "method": "POST",
+          "path": "/v1/chat/completions",
+          "code": 200,
+          "duration_ms": 1203.05
+        },
+        {
+          "ts": "2026-11-07T07:49:34+0000",
+          "method": "POST",
+          "path": "/v1/chat/completions",
+          "code": 200,
+          "duration_ms": 1241.0
+        },
+        {
+          "ts": "2026-11-07T07:49:34+0000",
+          "method": "POST",
+          "path": "/v1/chat/completions",
+          "code": 200,
+          "duration_ms": 1406.79
+        },
+        {
+          "ts": "2026-11-07T07:49:34+0000",
+          "method": "POST",
+          "path": "/v1/chat/completions",
+          "code": 200,
+          "duration_ms": 1453.06
+        },
+        {
+          "ts": "2026-11-07T07:49:34+0000",
+          "method": "POST",
+          "path": "/v1/chat/completions",
+          "code": 200,
+          "duration_ms": 1428.71
+        },
+        {
+          "ts": "2026-11-07T07:49:34+0000",
+          "method": "POST",
+          "path": "/v1/chat/completions",
+          "code": 200,
+          "duration_ms": 1578.24
+        },
+        {
+          "ts": "2026-11-07T07:49:34+0000",
+          "method": "POST",
+          "path": "/v1/chat/completions",
+          "code": 200,
+          "duration_ms": 1644.99
+        },
+        {
+          "ts": "2026-11-07T07:49:34+0000",
+          "method": "POST",
+          "path": "/v1/chat/completions",
+          "code": 200,
+          "duration_ms": 1866.86
+        },
+        {
+          "ts": "2026-11-07T07:49:35+0000",
+          "method": "POST",
+          "path": "/v1/chat/completions",
+          "code": 200,
+          "duration_ms": 740.7
+        },
+        {
+          "ts": "2026-11-07T07:49:36+0000",
+          "method": "POST",
+          "path": "/v1/chat/completions",
+          "code": 200,
+          "duration_ms": 930.19
+        },
+        {
+          "ts": "2026-11-07T07:49:37+0000",
+          "method": "POST",
+          "path": "/v1/chat/completions",
+          "code": 200,
+          "duration_ms": 1122.05
+        },
+        {
+          "ts": "2026-11-07T07:49:39+0000",
+          "method": "POST",
+          "path": "/v1/chat/completions",
+          "code": 200,
+          "duration_ms": 4311.95
+        },
+        {
+          "ts": "2026-11-07T07:49:39+0000",
+          "method": "POST",
+          "path": "/v1/chat/completions",
+          "code": 200,
+          "duration_ms": 6668.01
+        },
+        {
+          "ts": "2026-11-07T07:49:39+0000",
+          "method": "POST",
+          "path": "/v1/chat/completions",
+          "code": 200,
+          "duration_ms": 5243.0
+        },
+        {
+          "ts": "2026-11-07T07:49:40+0000",
+          "method": "POST",
+          "path": "/v1/chat/completions",
+          "code": 200,
+          "duration_ms": 7108.25
+        },
+        {
+          "ts": "2026-11-07T07:49:41+0000",
+          "method": "POST",
+          "path": "/v1/chat/completions",
+          "code": 200,
+          "duration_ms": 6603.85
+        },
+        {
+          "ts": "2026-11-07T07:49:41+0000",
+          "method": "POST",
+          "path": "/v1/chat/completions",
+          "code": 200,
+          "duration_ms": 1071.01
+        },
+        {
+          "ts": "2026-11-07T07:49:41+0000",
+          "method": "POST",
+          "path": "/v1/chat/completions",
+          "code": 200,
+          "duration_ms": 7167.72
+        },
+        {
+          "ts": "2026-11-07T07:49:41+0000",
+          "method": "POST",
+          "path": "/v1/chat/completions",
+          "code": 200,
+          "duration_ms": 8574.84
+        },
+        {
+          "ts": "2026-11-07T07:49:42+0000",
+          "method": "POST",
+          "path": "/v1/chat/completions",
+          "code": 200,
+          "duration_ms": 1149.41
+        },
+        {
+          "ts": "2026-11-07T07:49:42+0000",
+          "method": "POST",
+          "path": "/v1/chat/completions",
+          "code": 200,
+          "duration_ms": 8458.21
+        },
+        {
+          "ts": "2026-11-07T07:49:43+0000",
+          "method": "POST",
+          "path": "/v1/chat/completions",
+          "code": 200,
+          "duration_ms": 8863.25
+        },
+        {
+          "ts": "2026-11-07T07:49:43+0000",
+          "method": "POST",
+          "path": "/v1/chat/completions",
+          "code": 200,
+          "duration_ms": 10015.94
+        },
+        {
+          "ts": "2026-11-07T07:49:44+0000",
+          "method": "POST",
+          "path": "/v1/chat/completions",
+          "code": 200,
+          "duration_ms": 3006.62
+        },
+        {
+          "ts": "2026-11-07T07:49:44+0000",
+          "method": "POST",
+          "path": "/v1/chat/completions",
+          "code": 200,
+          "duration_ms": 11523.5
+        },
+        {
+          "ts": "2026-11-07T07:49:45+0000",
+          "method": "POST",
+          "path": "/v1/chat/completions",
+          "code": 200,
+          "duration_ms": 10827.86
+        },
+        {
+          "ts": "2026-11-07T07:49:45+0000",
+          "method": "POST",
+          "path": "/v1/chat/completions",
+          "code": 200,
+          "duration_ms": 5665.52
+        },
+        {
+          "ts": "2026-11-07T07:49:45+0000",
+          "method": "POST",
+          "path": "/v1/chat/completions",
+          "code": 200,
+          "duration_ms": 4701.56
+        },
+        {
+          "ts": "2026-11-07T07:49:48+0000",
+          "method": "POST",
+          "path": "/v1/chat/completions",
+          "code": 200,
+          "duration_ms": 3113.95
+        },
+        {
+          "ts": "2026-11-07T07:49:48+0000",
+          "method": "POST",
+          "path": "/v1/chat/completions",
+          "code": 200,
+          "duration_ms": 3096.96
+        },
+        {
+          "ts": "2026-11-07T07:49:50+0000",
+          "method": "POST",
+          "path": "/v1/chat/completions",
+          "code": 200,
+          "duration_ms": 15931.01
+        },
+        {
+          "ts": "2026-11-07T07:49:51+0000",
+          "method": "POST",
+          "path": "/v1/chat/completions",
+          "code": 200,
+          "duration_ms": 2827.75
+        },
+        {
+          "ts": "2026-11-07T07:49:52+0000",
+          "method": "POST",
+          "path": "/v1/chat/completions",
+          "code": 200,
+          "duration_ms": 3688.16
+        },
+        {
+          "ts": "2026-11-07T07:49:52+0000",
+          "method": "POST",
+          "path": "/v1/chat/completions",
+          "code": 200,
+          "duration_ms": 2747.85
+        },
+        {
+          "ts": "2026-11-07T07:49:53+0000",
+          "method": "POST",
+          "path": "/v1/chat/completions",
+          "code": 200,
+          "duration_ms": 13899.77
+        },
+        {
+          "ts": "2026-11-07T07:49:53+0000",
+          "method": "POST",
+          "path": "/v1/chat/completions",
+          "code": 200,
+          "duration_ms": 16401.76
+        },
+        {
+          "ts": "2026-11-07T07:49:54+0000",
+          "method": "POST",
+          "path": "/v1/chat/completions",
+          "code": 200,
+          "duration_ms": 2743.96
+        },
+        {
+          "ts": "2026-11-07T07:49:54+0000",
+          "method": "POST",
+          "path": "/v1/chat/completions",
+          "code": 200,
+          "duration_ms": 2072.13
+        },
+        {
+          "ts": "2026-11-07T07:49:55+0000",
+          "method": "POST",
+          "path": "/v1/chat/completions",
+          "code": 200,
+          "duration_ms": 15706.84
+        },
+        {
+          "ts": "2026-11-07T07:49:55+0000",
+          "method": "POST",
+          "path": "/v1/chat/completions",
+          "code": 200,
+          "duration_ms": 1819.15
+        },
+        {
+          "ts": "2026-11-07T07:49:56+0000",
+          "method": "POST",
+          "path": "/v1/chat/completions",
+          "code": 200,
+          "duration_ms": 3347.74
+        },
+        {
+          "ts": "2026-11-07T07:49:57+0000",
+          "method": "POST",
+          "path": "/v1/chat/completions",
+          "code": 200,
+          "duration_ms": 3368.16
+        },
+        {
+          "ts": "2026-11-07T07:49:57+0000",
+          "method": "POST",
+          "path": "/v1/chat/completions",
+          "code": 200,
+          "duration_ms": 2958.43
+        },
+        {
+          "ts": "2026-11-07T07:49:57+0000",
+          "method": "POST",
+          "path": "/v1/chat/completions",
+          "code": 200,
+          "duration_ms": 4618.28
+        },
+        {
+          "ts": "2026-11-07T07:49:58+0000",
+          "method": "POST",
+          "path": "/v1/chat/completions",
+          "code": 200,
+          "duration_ms": 13785.66
+        },
+        {
+          "ts": "2026-11-07T07:49:58+0000",
+          "method": "POST",
+          "path": "/v1/chat/completions",
+          "code": 200,
+          "duration_ms": 15459.34
+        },
+        {
+          "ts": "2026-11-07T07:49:59+0000",
+          "method": "POST",
+          "path": "/v1/chat/completions",
+          "code": 200,
+          "duration_ms": 17728.99
+        },
+        {
+          "ts": "2026-11-07T07:50:01+0000",
+          "method": "POST",
+          "path": "/v1/chat/completions",
+          "code": 200,
+          "duration_ms": 5331.07
+        },
+        {
+          "ts": "2026-11-07T07:50:01+0000",
+          "method": "POST",
+          "path": "/v1/chat/completions",
+          "code": 200,
+          "duration_ms": 18689.46
+        },
+        {
+          "ts": "2026-11-07T07:50:01+0000",
+          "method": "POST",
+          "path": "/v1/chat/completions",
+          "code": 200,
+          "duration_ms": 6057.69
+        },
+        {
+          "ts": "2026-11-07T07:50:01+0000",
+          "method": "POST",
+          "path": "/v1/chat/completions",
+          "code": 200,
+          "duration_ms": 16620.74
+        },
+        {
+          "ts": "2026-11-07T07:50:02+0000",
+          "method": "POST",
+          "path": "/v1/chat/completions",
+          "code": 200,
+          "duration_ms": 5083.54
+        },
+        {
+          "ts": "2026-11-07T07:50:02+0000",
+          "method": "POST",
+          "path": "/v1/chat/completions",
+          "code": 200,
+          "duration_ms": 29963.83
+        },
+        {
+          "ts": "2026-11-07T07:50:03+0000",
+          "method": "POST",
+          "path": "/v1/chat/completions",
+          "code": 200,
+          "duration_ms": 20637.11
+        },
+        {
+          "ts": "2026-11-07T07:50:04+0000",
+          "method": "POST",
+          "path": "/v1/chat/completions",
+          "code": 200,
+          "duration_ms": 29494.46
+        },
+        {
+          "ts": "2026-11-07T07:50:05+0000",
+          "method": "POST",
+          "path": "/v1/chat/completions",
+          "code": 200,
+          "duration_ms": 22280.08
+        },
+        {
+          "ts": "2026-11-07T07:50:05+0000",
+          "method": "POST",
+          "path": "/v1/chat/completions",
+          "code": 200,
+          "duration_ms": 7770.6
+        },
+        {
+          "ts": "2026-11-07T07:50:06+0000",
+          "method": "POST",
+          "path": "/v1/chat/completions",
+          "code": 200,
+          "duration_ms": 7717.06
+        },
+        {
+          "ts": "2026-11-07T07:50:06+0000",
+          "method": "POST",
+          "path": "/v1/chat/completions",
+          "code": 200,
+          "duration_ms": 22176.19
+        },
+        {
+          "ts": "2026-11-07T07:50:06+0000",
+          "method": "POST",
+          "path": "/v1/chat/completions",
+          "code": 200,
+          "duration_ms": 8623.18
+        },
+        {
+          "ts": "2026-11-07T07:50:08+0000",
+          "method": "POST",
+          "path": "/v1/chat/completions",
+          "code": 200,
+          "duration_ms": 11183.55
+        },
+        {
+          "ts": "2026-11-07T07:50:09+0000",
+          "method": "POST",
+          "path": "/v1/chat/completions",
+          "code": 200,
+          "duration_ms": 12937.32
+        },
+        {
+          "ts": "2026-11-07T07:50:17+0000",
+          "method": "POST",
+          "path": "/v1/chat/completions",
+          "code": 200,
+          "duration_ms": 16287.76
+        },
+        {
+          "ts": "2026-11-07T07:50:17+0000",
+          "method": "POST",
+          "path": "/v1/chat/completions",
+          "code": 200,
+          "duration_ms": 14872.23
+        },
+        {
+          "ts": "2026-11-07T07:50:18+0000",
+          "method": "POST",
+          "path": "/v1/chat/completions",
+          "code": 200,
+          "duration_ms": 19269.94
+        },
+        {
+          "ts": "2026-11-07T07:50:19+0000",
+          "method": "POST",
+          "path": "/v1/chat/completions",
+          "code": 200,
+          "duration_ms": 16557.1
+        },
+        {
+          "ts": "2026-11-07T07:50:20+0000",
+          "method": "POST",
+          "path": "/v1/chat/completions",
+          "code": 200,
+          "duration_ms": 19000.96
+        },
+        {
+          "ts": "2026-11-07T07:50:20+0000",
+          "method": "POST",
+          "path": "/v1/chat/completions",
+          "code": 200,
+          "duration_ms": 19502.59
+        },
+        {
+          "ts": "2026-11-07T07:50:21+0000",
+          "method": "POST",
+          "path": "/v1/chat/completions",
+          "code": 200,
+          "duration_ms": 20668.49
+        },
+        {
+          "ts": "2026-11-07T07:50:35+0000",
+          "method": "POST",
+          "path": "/v1/chat/completions",
+          "code": 200,
+          "duration_ms": 32005.44
+        }
+      ]
+    }
+  ],
+  "new_model_requests_during_audit": 0,
+  "logs_saved_fields_only": [
+    "ts",
+    "method",
+    "path",
+    "code",
+    "duration_ms"
+  ]
+}

@@ -1,0 +1,103 @@
+{
+  "status": "complete19_train_inputs_newcase_validated",
+  "train": {
+    "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-behavior19-inputs-v1/train-cases.json",
+    "sha256": "74e1cd2000fda0abdc03f4454b18f4231b9891360af266391744e13976f199f1"
+  },
+  "case_map_sha256": "a595a4ea3f7f7ec973eb07f61ec0b49c9f8d31d80e9f3ee6cc266a1a88541a88",
+  "preview_sha256": "06123147774f7d3fe283f19c5598391d212b0cb33d8ad01dd52080b2d20a32cf",
+  "validation_sha256": "fc87b0c5626cb9a38d5ff65214c45e59db86163e1909d2e32bbfd7c056e2f3d6",
+  "source_pins": [
+    {
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-behavior19-prepare-v3.py.txt",
+      "sha256": "8d03880432f2c5513b03e24e7ac8b00f49af8fb23b7f2b948045aa27fb7be875",
+      "stat": {
+        "dev": 2306,
+        "ino": 181181725,
+        "size": 6176,
+        "mtime_ns": 1794054202727851515,
+        "ctime_ns": 1794054202727851515
+      }
+    },
+    {
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/worktrees/kairyu-bench-weight-tools/scripts/experiments/gemma4-purpose/behavior_followup_cases.py",
+      "sha256": "c8c5fc34e6c2103de106599809e97f3b5dcc9810a68fd847595d0b491540f4fe",
+      "stat": {
+        "dev": 2306,
+        "ino": 181443598,
+        "size": 11644,
+        "mtime_ns": 1794054074291186222,
+        "ctime_ns": 1794054074291186222
+      }
+    },
+    {
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/worktrees/kairyu-bench-weight-tools/scripts/experiments/gemma4-purpose/behavior_cases.py",
+      "sha256": "10ba3e480c8685933904060629b351758cf7b61362756179e55779435d01a310",
+      "stat": {
+        "dev": 2306,
+        "ino": 181443577,
+        "size": 22945,
+        "mtime_ns": 1794039620099355316,
+        "ctime_ns": 1794039620099355316
+      }
+    },
+    {
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/worktrees/kairyu-bench-weight-tools/scripts/experiments/gemma4-purpose/behavior_offline.py",
+      "sha256": "30715a30e02c7fab8ec4e1ffad28e57c4925b16fb45048680d6f5735bd3af9e5",
+      "stat": {
+        "dev": 2306,
+        "ino": 181443578,
+        "size": 13272,
+        "mtime_ns": 1794039975698227153,
+        "ctime_ns": 1794039975698227153
+      }
+    },
+    {
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/worktrees/kairyu-bench-weight-tools/scripts/experiments/gemma4-purpose/science_sandbox.py",
+      "sha256": "4a65378e493fb2f109afdaf0d98b5b93dc067d6d3f48d2a4cf17017f1aadcb78",
+      "stat": {
+        "dev": 2306,
+        "ino": 181419342,
+        "size": 29092,
+        "mtime_ns": 1794039975691227392,
+        "ctime_ns": 1794039975691227392
+      }
+    },
+    {
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/worktrees/kairyu-bench-weight-tools/scripts/experiments/gemma4-purpose/science_cases.py",
+      "sha256": "2c4cc6e75c92c41b98e737ca2c0a653e0f7a7675c6150a6ad33e3f954122a26b",
+      "stat": {
+        "dev": 2306,
+        "ino": 181419270,
+        "size": 35229,
+        "mtime_ns": 1793939595408268372,
+        "ctime_ns": 1793939595408268372
+      }
+    }
+  ],
+  "old_inputs": {
+    "old_train": {
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-behavior18-inputs-v1/train-cases.json",
+      "sha256": "b42990b0caac24ccc7843e40718c0c5e7ad61dd5baa131ed6852c126bf37f66d",
+      "bytes": 10872
+    },
+    "old_transfer": {
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-behavior18-inputs-v1/transfer-cases.json",
+      "sha256": "4951c70a686ebcd7135919c48d4038c6aa6d359abc018730aee73c1afe9f4b55",
+      "bytes": 5635
+    },
+    "followup_train": {
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-behavior-followup9-v1/train-cases.json",
+      "sha256": "adc645385045ea8a0dc8da7ba70fe62743f426424e6e1021060aaab36a932ac4",
+      "bytes": 5793
+    },
+    "followup_transfer": {
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-behavior-followup9-v1/transfer-cases.json",
+      "sha256": "d237511d22b8c88685f3062fc2cacf2ddccadbd8df40bcefeedeee83fe881ce5",
+      "bytes": 3110
+    }
+  },
+  "model_calls": 0,
+  "case_count": 19,
+  "transfer_used": false
+}

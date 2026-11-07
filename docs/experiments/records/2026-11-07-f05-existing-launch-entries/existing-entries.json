@@ -1,0 +1,66 @@
+{
+  "scope": "Read-only successful existing command/source inventory; no F05 candidate, plan or execution created",
+  "model_calls": 0,
+  "service_operations": 0,
+  "entries": {
+    "parallel_apply": {
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/worktrees/kairyu-bench-weight-tools/docs/experiments/records/2026-11-07-f04-deployment-dp4-v1/root-launch.json",
+      "sha256": "2c53fd2f905a12bbb1793d82d8c36db86ef047f6cc928e092a6bc4c9e4ddcde0",
+      "successful_F04_argv": [
+        "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/infra/weight-tools-ci/bin/python",
+        "-B",
+        "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/worktrees/kairyu-bench-weight-tools/docs/experiments/scripts/fresh-four-parallel-redeploy-20261107.py",
+        "--plan",
+        "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f04-relative-v1/deployment-dp4-v1/plan-bound-approved.json",
+        "--apply",
+        "--approved-plan-sha256",
+        "ea8742fea2e187ab29cddc86d1f9dbbec9d0f4003c84c82bcc539d08988b5b60"
+      ]
+    },
+    "endpoint_closure": {
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/worktrees/kairyu-bench-weight-tools/docs/experiments/records/2026-11-07-f04-deployment-dp4-v1/endpoint-command.json",
+      "sha256": "314ae1f792fb5afc0440f2b7adbbb58d98fc4a675c37bad65d5883c6281360d9",
+      "successful_F04_argv": [
+        "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/infra/weight-tools-ci/bin/python",
+        "-B",
+        "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/worktrees/kairyu-bench-weight-tools/docs/experiments/scripts/fresh-f04-endpoint-closure-20261107.py"
+      ]
+    },
+    "wsp_launch": {
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/worktrees/kairyu-bench-weight-tools/docs/experiments/records/2026-11-07-f04-dev30-bound-v1/root-launch.json",
+      "sha256": "b627602e393923c6a265aefb2d5902cfcb76f557c770cb6bfb294b9c2c53a820",
+      "successful_F04_argv": [
+        "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/infra/weight-tools-ci/bin/python",
+        "-B",
+        "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/worktrees/kairyu-bench-weight-tools/docs/experiments/scripts/fresh-av-dev30-20261107.py",
+        "--plan",
+        "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f04-dev30-dp4-v1/launch-plan-approved.json",
+        "--run"
+      ]
+    },
+    "deploy_binding": {
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/worktrees/kairyu-bench-weight-tools/docs/experiments/records/2026-11-07-f04-deployment-dp4-v1/preview-source.py",
+      "sha256": "273cc259fd0b90bc08ad56e2680cc6ec986f6b13c65f96eb6963abaa4cc77ff1"
+    },
+    "wsp_binding": {
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/worktrees/kairyu-bench-weight-tools/docs/experiments/records/2026-11-07-f04-dev30-bound-v1/bind-and-preview.py.txt",
+      "sha256": "77c5b2439a6730698d27ea31706b0b0ffdc2ce87610da1a0acfccdcb47d432b9"
+    },
+    "fresh-four-parallel-redeploy-20261107.py": {
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/worktrees/kairyu-bench-weight-tools/docs/experiments/scripts/fresh-four-parallel-redeploy-20261107.py",
+      "sha256": "19ae025add4f2f08705f33f0146f48cc9fa8e92bdb14a8383f46fb7d531e53bc"
+    },
+    "fresh-av-dev30-20261107.py": {
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/worktrees/kairyu-bench-weight-tools/docs/experiments/scripts/fresh-av-dev30-20261107.py",
+      "sha256": "956af488fe54578c32c9baa856e9c32170dc49c1bbce2b1ba5db9af9ea1dd524"
+    },
+    "fresh-f04-endpoint-closure-20261107.py": {
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/worktrees/kairyu-bench-weight-tools/docs/experiments/scripts/fresh-f04-endpoint-closure-20261107.py",
+      "sha256": "0b383ee6fb26c5cf5fa33c633f85638266a023db39eb0abaaf9422813af6fa8e"
+    },
+    "redeploy-replica.py": {
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/worktrees/kairyu-bench-weight-tools/docs/experiments/scripts/redeploy-replica.py",
+      "sha256": "2e9da820fe30ba9b2436fb600cf14a533b1c496b2fed48ac3649fffb9d2bc9ae"
+    }
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "epoch": 1794055031.6588113,
+  "argv": [
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/infra/weight-tools-ci/bin/python",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f05-native-contract-v1/deployment-dp4-v1/prepare-source.py",
+    "--manifest",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/checkpoints/fresh-native-contract-f05-faststore-v1/manifest.json",
+    "--spec",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f05-native-contract-v1/proposal/fresh-native-contract-f05.json",
+    "--verify",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f05-native-contract-v1/materialization-v1/verify.stdout"
+  ],
+  "source_sha256": "3a898414020dc83a8602255cd2c8573299aa4d5524aa144ddf6477e1da0a6416",
+  "manifest_sha256": "09ea569a08f138efd438055d7149f0697dc1d6edd08332f2b6c7c09b1da7c24c",
+  "spec_sha256": "48e095d3de304767410ac0956e390ad6db4d211457683dabdc779a4f6bb48df3",
+  "verify_sha256": "1e9150f21a53af2e96d82c65297a9ce0dffb71d21ea59ea03d3d02a45ca4c427",
+  "materialization_release_sha256": "85759cf09b2e0fe623d46f817891c0d188ee49bd485373c96fb429da1add3c2f",
+  "apply": false
+}

@@ -1,0 +1,138 @@
+{
+  "status": "prepared_unexecuted_waiting_for_root_full_completion_notice",
+  "recorded_epoch": 1794060699.83395,
+  "base_run": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/results/gemma4-fresh-f04-dev30-dp4-20261107-v1",
+  "candidate_run": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/results/gemma4-fresh-f06-dev30-dp4-20261107-v1",
+  "fresh_output": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f06-dev30-dp4-v1/official-comparison-v1",
+  "base_remeasurement": false,
+  "candidate_scoring_or_partial_ranking_performed": false,
+  "model_calls": 0,
+  "service_gpu_operations": 0,
+  "inputs": [
+    {
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f04-dev30-dp4-v1/official-comparison-v1/candidate-audit/summary.json",
+      "size": 55240,
+      "sha256": "49afd259123718a859143b8ca6ad5de8b5142efa81772a250e8db272c7085077"
+    },
+    {
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f04-dev30-dp4-v1/official-comparison-v1/candidate-audit/all-2338-numeric-items.json",
+      "size": 2016629,
+      "sha256": "79222af8ecf835292335186124b4b5b58ecfb59fba57c52f54c22373227a9fbf"
+    },
+    {
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/results/gemma4-fresh-f04-dev30-dp4-20261107-v1/run.json",
+      "size": 1859,
+      "sha256": "f467d0cdcfdcc7674e62ea38abc2d29124d7740f2e549d4d8fcf135e862cf894"
+    },
+    {
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/results/gemma4-fresh-f04-dev30-dp4-20261107-v1/report.json",
+      "size": 11121,
+      "sha256": "1a062c114b0acae4d27930040c30ccc2e01a20c3e1062490fa1f84656278fd85"
+    },
+    {
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/results/gemma4-fresh-f04-dev30-dp4-20261107-v1/items.jsonl",
+      "size": 32900667,
+      "sha256": "112225547aa681dad402e7a3e62a2cbcafd15301e84987ad4610f2b08fffba65"
+    },
+    {
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f06-dev30-dp4-v1/launch-plan-approved-v2.json",
+      "size": 18718,
+      "sha256": "cb8a8c6642c53d2dcb6b40269ba2910816bf3a09ff308d04124c97e94a5f8f39"
+    },
+    {
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f06-dev30-dp4-v1/owner-start.json",
+      "size": 248,
+      "sha256": "2cc03c0ed73af03bb9c9d03ea9bf3813cc8c6361c13469fcf047da4b2c995617"
+    },
+    {
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f06-dev30-dp4-v1/actual-runner.json",
+      "size": 2301,
+      "sha256": "d51935f679546be0ee03a416b30759ec0bed6b2c058a08828751b9e3fee7a0fd"
+    },
+    {
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f06-dev30-dp4-v1/run-start-verified.json",
+      "size": 2652,
+      "sha256": "3875272d894064e4d51950fb27bfd6a0730aa1cff8f8b25741a8779a11957251"
+    },
+    {
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f06-dev30-dp4-v1/http-trace/capture.json",
+      "size": 4981,
+      "sha256": "55e5d7a33524befb18bee70b088e23ea0624452808288f73460780b60e7461a2"
+    },
+    {
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f06-dev30-dp4-v1/http-trace-identity-check.json",
+      "size": 6385,
+      "sha256": "26551c62f423aff33c18a0b21ea12afa831ba7df1bbdc70180f6af768f7ed3b2"
+    },
+    {
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/worktrees/kairyu-bench-weight-tools/docs/experiments/scripts/fresh-n30-complete-audit.py",
+      "size": 21261,
+      "sha256": "e471c64712fdd70f37439f80bb86137889287c823b99b6ff945ee90eec1e75b1"
+    },
+    {
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/worktrees/kairyu-bench-weight-tools/docs/experiments/scripts/fresh-wsp-large-tier-audit.py",
+      "size": 8125,
+      "sha256": "c08ae268ae2e5ec55f690d7e4f935566995f881a183f86ce3bb38d3230cf1462"
+    },
+    {
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/worktrees/kairyu-bench-weight-tools/src/kairyu_bench/wsp/cli.py",
+      "size": 16960,
+      "sha256": "406b07cb9bed06bd3b814292329cd67d0acf89fcaf5fddca8858cc865bbed090"
+    },
+    {
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/worktrees/kairyu-bench-weight-tools/src/kairyu_bench/wsp/report.py",
+      "size": 19338,
+      "sha256": "f708cab18226874ac26d2b9fce642db811fcdbe985f2420eeda40920e2575784"
+    },
+    {
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/worktrees/kairyu-bench-weight-tools/tests/test_n30_audit_evidence.py",
+      "size": 5015,
+      "sha256": "a0ba28c36fc43bc30bb349b5aa7d958a7f306c36fedc1cfadc3a20e410f200a5"
+    },
+    {
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f06-dev30-dp4-v1/comparison-preparation-v1/collect-completed.py.txt",
+      "size": 6751,
+      "sha256": "97545e1d2f3243295d8962a9bd5febc6b320fc3fb589d40941dd7a4885331cf6"
+    },
+    {
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f06-dev30-dp4-v1/comparison-preparation-v1/extract-completed-extras.py.txt",
+      "size": 4696,
+      "sha256": "deabfed4498e4f88b40b835622e6855e5dbc8db80c5510c66fd54b8174474bac"
+    }
+  ],
+  "gates": [
+    "Root completion notice before execution",
+    "Both run.json and candidate report.run.status completed; owner rc0 and no owner failure",
+    "Fresh output required; never overwrite a failed audit directory",
+    "Candidate audit persists all2338 records/unknown/error before full-completeness checks",
+    "Both audit verified_complete; identical IDs and metadata/source/runtime pins before strict compare",
+    "No --allow-partial or --partial; no full rank if incomplete"
+  ],
+  "commands_after_completion": [
+    [
+      "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/infra/weight-tools-ci/bin/python",
+      "-B",
+      "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f06-dev30-dp4-v1/comparison-preparation-v1/collect-completed.py.txt"
+    ],
+    [
+      "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/infra/weight-tools-ci/bin/python",
+      "-B",
+      "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f06-dev30-dp4-v1/comparison-preparation-v1/extract-completed-extras.py.txt"
+    ]
+  ],
+  "pythonpath": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/worktrees/kairyu-bench-weight-tools/src",
+  "outputs": [
+    "all2338 numeric candidate rows and all2338 paired rows",
+    "all90 code pairs / all39 Sci step pairs",
+    "all32 source means / all14 official area means /96 diagnostics distinct",
+    "all10 TB+SWE task outcomes, per-task episodes/messages/tools/API counts and unknown usage",
+    "all90 saved reasoning/public chars and bytes/finish fields; no reasoning-token inference",
+    "source/runtime/input hashes; stdout/stderr/returncodes/timing and failure receipts"
+  ],
+  "notes": [
+    "No benchmark gold or generated-code execution",
+    "Existing F04 audited facts reused, no new F04 audit or generation",
+    "Original failed approved plan remains unchanged; --launch-plan selects actual v2 and matches owner-start SHA",
+    "Discovery guessed compare.py was absent; actual official compare is in wsp/report.py, pinned"
+  ]
+}

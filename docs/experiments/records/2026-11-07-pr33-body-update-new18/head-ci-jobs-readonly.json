@@ -1,0 +1,34 @@
+{
+  "observed_epoch": 1794041440.3386147,
+  "head": "b928ace83402873b8c3bf823c9753a29d07b4ee8",
+  "status": "completed",
+  "conclusion": "success",
+  "url": "https://github.com/ytworks/kairyu-bench/actions/runs/42356931763",
+  "jobs": [
+    {
+      "name": "terminal-bench-4-runtime",
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/ytworks/kairyu-bench/actions/runs/42356931763/job/128356947934"
+    },
+    {
+      "name": "docker",
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/ytworks/kairyu-bench/actions/runs/42356931763/job/128356947949"
+    },
+    {
+      "name": "deepswe-runtime",
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/ytworks/kairyu-bench/actions/runs/42356931763/job/128356947966"
+    },
+    {
+      "name": "test",
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/ytworks/kairyu-bench/actions/runs/42356931763/job/128356948041"
+    }
+  ],
+  "restarted": false
+}

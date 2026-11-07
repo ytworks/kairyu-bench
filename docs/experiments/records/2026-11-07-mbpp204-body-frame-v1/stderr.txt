@@ -1,0 +1,17 @@
+<unknown>:3: SyntaxWarning: invalid escape sequence '\W'
+<unknown>:4: SyntaxWarning: invalid escape sequence '\A'
+<unknown>:3: SyntaxWarning: invalid escape sequence '\d'
+<unknown>:4: SyntaxWarning: invalid escape sequence '\w'
+<unknown>:3: SyntaxWarning: invalid escape sequence '\d'
+<unknown>:2: SyntaxWarning: invalid escape sequence '\.'
+<unknown>:3: SyntaxWarning: invalid escape sequence '\W'
+<unknown>:2: SyntaxWarning: invalid escape sequence '\.'
+<unknown>:4: SyntaxWarning: invalid escape sequence '\A'
+<unknown>:3: SyntaxWarning: invalid escape sequence '\d'
+<unknown>:4: SyntaxWarning: invalid escape sequence '\w'
+<unknown>:3: SyntaxWarning: invalid escape sequence '\d'
+Traceback (most recent call last):
+  File "/script.py", line 98, in <module>
+    assert not failed and not proof["unsupported_ids"] and not proof["ineligible_ids"]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError

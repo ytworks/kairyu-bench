@@ -1,0 +1,11 @@
+import hashlib,json,subprocess,time
+from pathlib import Path
+r=Path('/mnt/nvme/kairyu/wsp/gemma4-coding-20261104');p=r/'analysis/fresh-purpose-20261107-f05-native-contract-v1';prep=json.loads((p/'opus55-preparation-v1.json').read_text());prompt=p/'anonymous-opus55-prompt-v1.txt';assert hashlib.sha256(prompt.read_bytes()).hexdigest()==prep['prompt_sha256']
+old=json.loads((p/'opus55-review-v1/receipt.json').read_text());assert old['error_class']=='FileNotFoundError' and not old['verified_requested_model']
+cmd=prep['command'].copy();cmd[cmd.index('--output')+1]=str(p/'opus55-review-v2');cmd+=['--claude-binary','/home/y-takagi/.local/bin/claude']
+with (p/'opus55-preview-v2.stdout').open('x') as out,(p/'opus55-preview-v2.stderr').open('x') as err:rc=subprocess.run(cmd,stdout=out,stderr=err).returncode
+assert rc==0
+cmd+=['--send','--approved-prompt-sha256',prep['prompt_sha256']]
+with (p/'opus55-owner-v2.log').open('x') as log:proc=subprocess.Popen(cmd,stdin=subprocess.DEVNULL,stdout=log,stderr=subprocess.STDOUT,start_new_session=True)
+with (p/'opus55-root-launch-v2.json').open('x') as f:json.dump({'pid':proc.pid,'epoch':time.time(),'command':cmd,'prompt_sha256':prep['prompt_sha256'],'attempt':2,'prior_attempt_before_cli_failed':True,'environment_persisted':False},f,indent=2);f.write('\n')
+print(json.dumps({'pid':proc.pid,'model':'claude-opus-5-5','attempt':2,'prior_model_calls':0}))

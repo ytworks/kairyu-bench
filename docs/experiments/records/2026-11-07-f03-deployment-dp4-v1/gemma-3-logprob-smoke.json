@@ -1,0 +1,54 @@
+{
+  "request": {
+    "model": "gemma-4-31b",
+    "prompt": "Ready.",
+    "max_tokens": 1,
+    "prompt_logprobs": 1
+  },
+  "response": {
+    "id": "cmpl-a393619e5c9f4e7d",
+    "object": "text_completion",
+    "created": 1794046888,
+    "model": "gemma-4-31b",
+    "choices": [
+      {
+        "index": 0,
+        "text": " la",
+        "logprobs": null,
+        "finish_reason": "length",
+        "stop_reason": null,
+        "token_ids": null,
+        "prompt_logprobs": [
+          null,
+          {
+            "236761": {
+              "logprob": -18.165578842163086,
+              "rank": 17111,
+              "decoded_token": "."
+            },
+            "236773": {
+              "logprob": -0.3218279480934143,
+              "rank": 1,
+              "decoded_token": "S"
+            }
+          }
+        ],
+        "prompt_token_ids": null,
+        "routed_experts": null,
+        "weight_versions": null
+      }
+    ],
+    "service_tier": null,
+    "system_fingerprint": "vllm-0.33.0-tp2-bcb39497",
+    "usage": {
+      "prompt_tokens": 2,
+      "total_tokens": 3,
+      "completion_tokens": 1,
+      "prompt_tokens_details": null,
+      "completion_tokens_details": null
+    },
+    "kv_transfer_params": null,
+    "ec_transfer_params": null,
+    "metrics": null
+  }
+}

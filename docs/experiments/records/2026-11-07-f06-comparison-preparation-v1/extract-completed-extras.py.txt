@@ -1,0 +1,83 @@
+"""Extract all39 step pairs and exact existing agent usage definitions, after strict full comparison only."""
+import hashlib
+import json
+from pathlib import Path
+R=Path("/mnt/nvme/kairyu/wsp/gemma4-coding-20261104")
+N=R/"analysis/fresh-purpose-20261107-f06-dev30-dp4-v1"
+O=N/"official-comparison-v1"
+D=O
+def read(p):return json.loads(p.read_text())
+def save(p,d):
+ with p.open("x") as f:f.write(json.dumps(d,indent=2,ensure_ascii=False,allow_nan=False)+chr(10))
+s=read(O/"summary.json")
+assert s["status"]=="completed_matched_full_dev30_comparison"
+rows=read(O/"code-90-paired-items.json")
+step_rows=[]
+for row in rows:
+    if row["source"]=="scicode":
+        aa={x["step"]:x for x in row["base_detail"]["samples"][0]["step_diagnostics"]}
+        bb={x["step"]:x for x in row["candidate_detail"]["samples"][0]["step_diagnostics"]}
+        assert aa.keys()==bb.keys()
+        step_rows += [{"step":k,"base":aa[k],"candidate":bb[k],"changed_pass_status":aa[k]["passed"]!=bb[k]["passed"]} for k in aa]
+assert len(step_rows)==39
+save(D/"scicode-all-39-step-pairs.json",step_rows)
+usage={}
+for label in ("base","candidate"):
+    source=s["source_report"][label]
+    agents=[x[label] for x in s["agents"]]
+    tb=[x for x in agents if x["id"].startswith("terminal")]
+    swe=[x for x in agents if x["id"].startswith("swe")]
+    usage[label]={
+        "report_source_prompt_tokens":sum(x["prompt_tokens"] for x in source.values()),
+        "report_source_completion_tokens":sum(x["completion_tokens"] for x in source.values()),
+        "report_source_usage_scope":"Report has zero placeholders for agent/logprob sources; these are not complete total run token counts.",
+        "terminal_reported_episodes":sum(x["episodes"] for x in tb),
+        "terminal_tool_calls":sum(x["tool_calls"] for x in tb),
+        "terminal_input_tokens":sum(x["input_tokens"] for x in tb),
+        "terminal_output_tokens":sum(x["output_tokens"] for x in tb),
+        "swe_assistant_messages":sum(x["assistant_messages"] for x in swe),
+        "swe_announced_tool_calls":sum(x["announced_tool_calls"] for x in swe),
+        "swe_api_calls":sum(x["api_calls"] for x in swe),
+        "swe_persisted_input_tokens":sum(x["input_tokens"] for x in swe),
+        "swe_persisted_output_tokens":sum(x["output_tokens"] for x in swe),
+        "swe_usage_incomplete_cases":[x["id"] for x in swe if not x["usage_complete_relative_api_calls"]],
+        "swe_usage_scope":"Persisted assistant responses only; unrecorded model-stat calls not zero-filled.",
+    }
+save(D/"usage-summary.json",usage)
+
+# Count saved visible strings only. Never relabel completion tokens as reasoning tokens.
+def text_size(value):
+ return {"present_string":isinstance(value,str),
+         "characters":len(value) if isinstance(value,str) else None,
+         "utf8_bytes":len(value.encode()) if isinstance(value,str) else None}
+def per_item(row):
+ samples=(row.get("outcome") or {}).get("samples",[])
+ values=[]
+ for sample_index,sample in enumerate(samples):
+  calls=sample.get("calls") if "calls" in sample else [sample]
+  for call_index,call in enumerate(calls or []):
+   values.append({"sample_index":sample_index,"call_index":call_index,
+                  "reasoning":text_size(call.get("reasoning")),
+                  "public_content":text_size(call.get("content")),
+                  "finish_reason":call.get("finish_reason"),
+                  "completion_tokens":call.get("completion_tokens"),
+                  "prompt_tokens":call.get("prompt_tokens")})
+ return {"id":row["id"],"error":row.get("error"),"calls":values}
+code_ids={x["id"] for x in rows}
+by_arm={}
+evidence={}
+for arm,run_id in [("base",s["base_run"]),("candidate",s["candidate_run"])]:
+ path=R/"results"/run_id/"responses.jsonl"
+ found={}
+ for lineno,raw in enumerate(path.read_bytes().splitlines(keepends=True),1):
+  row=json.loads(raw)
+  if row["id"] in code_ids:
+   assert row["id"] not in found
+   found[row["id"]]={**per_item(row),"line":lineno,"raw_line_sha256":hashlib.sha256(raw).hexdigest()}
+ assert found.keys()==code_ids and len(found)==90
+ by_arm[arm]=found
+ evidence[arm]={"path":str(path),"sha256":hashlib.sha256(path.read_bytes()).hexdigest()}
+save(D/"code-90-visible-text-metrics.json",{
+ "scope":"Saved visible reasoning/public string character and UTF8-byte counts, per call. Missing/null is unknown, empty string is observed zero. Completion tokens remain their own unsplit field. No raw text, no tokenizer call, no new model request.",
+ "inputs":evidence,"rows":[{"id":key,"base":by_arm["base"][key],"candidate":by_arm["candidate"][key]} for key in sorted(code_ids)]})
+print(json.dumps({"scicode_steps":len(step_rows),"code_text_pairs":90,"agent_usage":usage}))

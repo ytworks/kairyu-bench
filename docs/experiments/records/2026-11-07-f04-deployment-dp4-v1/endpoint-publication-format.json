@@ -1,0 +1,14 @@
+{
+  "executed_source_sha256": "0d866a0b277d2054cc7d5513207b812e08edcae037059561e1eb42e70aaa2916",
+  "publication_source_sha256": "0b383ee6fb26c5cf5fa33c633f85638266a023db39eb0abaaf9422813af6fa8e",
+  "ruff_passed": true,
+  "normalized_AST_equal_except_explicit_captured_name_bindings": true,
+  "model_calls": 0,
+  "execution_repeated": false,
+  "changes": [
+    "split imports",
+    "explicit safe/inventory binding from existing globals",
+    "formatting",
+    "document dynamic subprocess dependency"
+  ]
+}

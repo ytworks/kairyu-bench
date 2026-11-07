@@ -1,0 +1,20 @@
+from pathlib import Path
+import json,hashlib,os,fcntl
+r=Path('/mnt/nvme/kairyu/wsp/gemma4-coding-20261104')
+m=r/'analysis/fresh-purpose-20261107-f03-native-v1/materialization'
+i=json.loads((m/'fullcandidateidentity.json').read_text())
+print('verify_all9',json.loads((m/'verify.json').read_text()))
+print('candidate_stable_proof',i['candidate_stat_unchanged_across_verify'])
+with (r/'candidate-evaluation.lock').open('a+b') as lock:
+ fcntl.flock(lock,fcntl.LOCK_EX|fcntl.LOCK_NB)
+ fcntl.flock(lock,fcntl.LOCK_UN)
+print('global_lock_readonly_acquire_release_ok',True)
+try:os.kill(json.loads((m/'lock-acquired.json').read_text())['pid'],0)
+except ProcessLookupError:print('owner_pid_absent',True)
+d=Path('docs/experiments/records/2026-11-07-f03-materialization')
+(d/'launch-command.txt').write_text('PYTHONDONTWRITEBYTECODE=1 /mnt/nvme/kairyu/wsp/gemma4-coding-20261104/infra/weight-tools-ci/bin/python docs/experiments/scripts/fresh-f03-materialize-20261107.py --apply\n')
+(d/'postclosure-readonly-check.json').write_text(json.dumps({'owner_pid_absent':True,'global_lock_acquire_release_ok':True,'extra_payload_hash_pass':False},indent=2)+'\n')
+sha=lambda p:hashlib.sha256(p.read_bytes()).hexdigest()
+(d/'SHA256SUMS').write_text(''.join(sha(p)+'  '+str(p.relative_to(d))+'\n' for p in sorted(d.rglob('*')) if p.is_file() and p.name!='SHA256SUMS'))
+print('docsha',sha(Path('docs/experiments/2026-11-07-f03-materialization.md')))
+print('allfiles',len([p for p in d.rglob('*') if p.is_file()]))

@@ -1,0 +1,41 @@
+{
+  "checks": [
+    {
+      "name": "tests",
+      "command": [
+        "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/infra/weight-tools-ci/bin/python",
+        "-B",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests",
+        "-p",
+        "test_gemma4_native_owner.py",
+        "-v"
+      ],
+      "returncode": 0,
+      "seconds": 0.5854654312133789
+    },
+    {
+      "name": "ruff",
+      "command": [
+        "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/infra/weight-tools-ci/bin/python",
+        "-m",
+        "ruff",
+        "check",
+        "docs/experiments/scripts/fresh-av-native-gpu4-20261107.py",
+        "tests/test_gemma4_native_owner.py"
+      ],
+      "returncode": 0,
+      "seconds": 0.0685584545135498
+    }
+  ],
+  "model_calls": 0,
+  "real_Docker_calls": 0,
+  "source_sha256": {
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/worktrees/kairyu-bench-weight-tools/docs/experiments/scripts/fresh-av-native-gpu4-20261107.py": "3e7e9c58b68a679d87623e1507e6508adcc731c3da36d51dd390f9bffcdb2b07",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/worktrees/kairyu-bench-weight-tools/tests/test_gemma4_native_owner.py": "9dbd86288d5b38ea34da59dc27c931a63ea2492dce5207c79acf3b780ac15e3f"
+  },
+  "source_unchanged": true
+}

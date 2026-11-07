@@ -1,0 +1,1183 @@
+{
+  "status": "completed_independent_audit_with_anomalies",
+  "verified_complete": false,
+  "full_score_ranking_permitted": false,
+  "data_anomalies": {
+    "item_issues": [
+      {
+        "id": "terminal-bench:polyglot-c-py",
+        "issues": [
+          "unknown_or_invalid_score",
+          "item_error_present",
+          "response_error_or_missing_outcome"
+        ]
+      }
+    ],
+    "unexpected_items": [],
+    "unexpected_responses": [],
+    "actual_item_record_count": 2338,
+    "actual_response_record_count": 2338,
+    "run_status": "partial",
+    "run_unscored": [
+      "terminal-bench:polyglot-c-py"
+    ],
+    "report_unscored": [
+      "terminal-bench:polyglot-c-py"
+    ],
+    "missing_areas": [],
+    "strict_complete_audit_error": {
+      "type": "AssertionError",
+      "message": ""
+    },
+    "report_exact_rebuild_equal": true,
+    "verified_complete": false,
+    "full_score_ranking_permitted": false
+  },
+  "created_at": "2026-11-07T11:16:04.749912+00:00",
+  "run": {
+    "run_id": "gemma4-fresh-f03-dev30-dp4-20261107-v1",
+    "tier": 30,
+    "split": "dev",
+    "label": "504d0914e8f7d2a4e51a0888e5692e2d1a158b82d3a77b600810a14bf7e33b63",
+    "status": "partial",
+    "items": 2338,
+    "scored": 2337,
+    "unscored_or_anomalous": [
+      "terminal-bench:polyglot-c-py"
+    ],
+    "code_source_mean": 0.7265873015873016,
+    "overall": 0.7394889334372644,
+    "areas": {
+      "knowledge": 0.8555555555555555,
+      "expert": 0.8958333333333334,
+      "facts": 0.7333333333333333,
+      "math": 0.9217147435897436,
+      "code": 0.7265873015873016,
+      "instructions": 0.8625,
+      "tools": 0.7916666666666666,
+      "agents": 0.3,
+      "long-context": 0.7279802942080164,
+      "reasoning": 0.813768115942029,
+      "commonsense": 0.6166666666666667,
+      "multilingual": 0.7831649831649831,
+      "vision": 0.75,
+      "safety": 0.5740740740740741
+    },
+    "sources": {
+      "aime-2026": {
+        "area": "math",
+        "items": 12,
+        "scored": 12,
+        "score": 0.9791666666666666,
+        "truncated_rate": 0.0,
+        "empty_rate": 0.0,
+        "completion_tokens_mean": 7962.520833333333,
+        "completion_tokens": 382201,
+        "prompt_tokens": 8028
+      },
+      "arc-challenge": {
+        "area": "commonsense",
+        "items": 300,
+        "scored": 300,
+        "score": 0.58,
+        "truncated_rate": null,
+        "empty_rate": null,
+        "completion_tokens_mean": null,
+        "completion_tokens": 0,
+        "prompt_tokens": 0
+      },
+      "bbeh": {
+        "area": "reasoning",
+        "items": 46,
+        "scored": 46,
+        "score": 0.7608695652173914,
+        "truncated_rate": 0.0,
+        "empty_rate": 0.0,
+        "completion_tokens_mean": 9285.521739130434,
+        "completion_tokens": 427134,
+        "prompt_tokens": 56104
+      },
+      "bfcl": {
+        "area": "tools",
+        "items": 120,
+        "scored": 120,
+        "score": 0.7916666666666666,
+        "truncated_rate": 0.0,
+        "empty_rate": 0.0,
+        "completion_tokens_mean": 1206.65,
+        "completion_tokens": 144798,
+        "prompt_tokens": 1480763
+      },
+      "gpqa-diamond": {
+        "area": "expert",
+        "items": 48,
+        "scored": 48,
+        "score": 0.8958333333333334,
+        "truncated_rate": 0.0,
+        "empty_rate": 0.0,
+        "completion_tokens_mean": 5666.645833333333,
+        "completion_tokens": 271999,
+        "prompt_tokens": 11950
+      },
+      "gsm8k-platinum": {
+        "area": "math",
+        "items": 50,
+        "scored": 50,
+        "score": 1.0,
+        "truncated_rate": 0.0,
+        "empty_rate": 0.0,
+        "completion_tokens_mean": 748.06,
+        "completion_tokens": 37403,
+        "prompt_tokens": 5349
+      },
+      "hellaswag": {
+        "area": "commonsense",
+        "items": 300,
+        "scored": 300,
+        "score": 0.6033333333333334,
+        "truncated_rate": null,
+        "empty_rate": null,
+        "completion_tokens_mean": null,
+        "completion_tokens": 0,
+        "prompt_tokens": 0
+      },
+      "hmmt-feb-2026": {
+        "area": "math",
+        "items": 13,
+        "scored": 13,
+        "score": 0.8076923076923077,
+        "truncated_rate": 0.019230769230769232,
+        "empty_rate": 0.0,
+        "completion_tokens_mean": 8944.096153846154,
+        "completion_tokens": 465093,
+        "prompt_tokens": 6092
+      },
+      "humaneval-plus": {
+        "area": "code",
+        "items": 30,
+        "scored": 30,
+        "score": 1.0,
+        "truncated_rate": 0.0,
+        "empty_rate": 0.0,
+        "completion_tokens_mean": 1342.2,
+        "completion_tokens": 40266,
+        "prompt_tokens": 5374
+      },
+      "ifbench": {
+        "area": "instructions",
+        "items": 50,
+        "scored": 50,
+        "score": 0.8,
+        "truncated_rate": 0.0,
+        "empty_rate": 0.0,
+        "completion_tokens_mean": 2844.52,
+        "completion_tokens": 142226,
+        "prompt_tokens": 4058
+      },
+      "ifeval": {
+        "area": "instructions",
+        "items": 120,
+        "scored": 120,
+        "score": 0.925,
+        "truncated_rate": 0.0,
+        "empty_rate": 0.0,
+        "completion_tokens_mean": 1540.6,
+        "completion_tokens": 184872,
+        "prompt_tokens": 7566
+      },
+      "jamc-qa": {
+        "area": "multilingual",
+        "items": 72,
+        "scored": 72,
+        "score": 0.6388888888888888,
+        "truncated_rate": 0.013888888888888888,
+        "empty_rate": 0.0,
+        "completion_tokens_mean": 1524.888888888889,
+        "completion_tokens": 109792,
+        "prompt_tokens": 7605
+      },
+      "livecodebench": {
+        "area": "code",
+        "items": 20,
+        "scored": 20,
+        "score": 0.75,
+        "truncated_rate": 0.0,
+        "empty_rate": 0.0,
+        "completion_tokens_mean": 7000.9,
+        "completion_tokens": 140018,
+        "prompt_tokens": 12686
+      },
+      "longbench-v2": {
+        "area": "long-context",
+        "items": 10,
+        "scored": 10,
+        "score": 0.7,
+        "truncated_rate": 0.0,
+        "empty_rate": 0.0,
+        "completion_tokens_mean": 2948.6,
+        "completion_tokens": 29486,
+        "prompt_tokens": 887398
+      },
+      "math-500": {
+        "area": "math",
+        "items": 60,
+        "scored": 60,
+        "score": 0.9,
+        "truncated_rate": 0.0,
+        "empty_rate": 0.0,
+        "completion_tokens_mean": 2839.2833333333333,
+        "completion_tokens": 170357,
+        "prompt_tokens": 7942
+      },
+      "mbpp-plus": {
+        "area": "code",
+        "items": 30,
+        "scored": 30,
+        "score": 0.7333333333333333,
+        "truncated_rate": 0.0,
+        "empty_rate": 0.0,
+        "completion_tokens_mean": 937.6333333333333,
+        "completion_tokens": 28129,
+        "prompt_tokens": 3236
+      },
+      "mgsm": {
+        "area": "multilingual",
+        "items": 55,
+        "scored": 55,
+        "score": 0.9272727272727272,
+        "truncated_rate": 0.0,
+        "empty_rate": 0.0,
+        "completion_tokens_mean": 1074.3636363636363,
+        "completion_tokens": 59090,
+        "prompt_tokens": 7819
+      },
+      "mmlu-pro": {
+        "area": "knowledge",
+        "items": 180,
+        "scored": 180,
+        "score": 0.8555555555555555,
+        "truncated_rate": 0.0,
+        "empty_rate": 0.0,
+        "completion_tokens_mean": 3330.0555555555557,
+        "completion_tokens": 599410,
+        "prompt_tokens": 44731
+      },
+      "mmlu-prox-ja": {
+        "area": "multilingual",
+        "items": 60,
+        "scored": 60,
+        "score": 0.7833333333333333,
+        "truncated_rate": 0.0,
+        "empty_rate": 0.0,
+        "completion_tokens_mean": 3456.766666666667,
+        "completion_tokens": 207406,
+        "prompt_tokens": 16932
+      },
+      "mmmu-pro": {
+        "area": "vision",
+        "items": 48,
+        "scored": 48,
+        "score": 0.75,
+        "truncated_rate": 0.0,
+        "empty_rate": 0.0,
+        "completion_tokens_mean": 4126.458333333333,
+        "completion_tokens": 198070,
+        "prompt_tokens": 20344
+      },
+      "mrcr-v2": {
+        "area": "long-context",
+        "items": 16,
+        "scored": 16,
+        "score": 0.6089408826240493,
+        "truncated_rate": 0.0,
+        "empty_rate": 0.0,
+        "completion_tokens_mean": 2407.125,
+        "completion_tokens": 38514,
+        "prompt_tokens": 636245
+      },
+      "musr": {
+        "area": "reasoning",
+        "items": 30,
+        "scored": 30,
+        "score": 0.8666666666666667,
+        "truncated_rate": 0.0,
+        "empty_rate": 0.0,
+        "completion_tokens_mean": 2372.4333333333334,
+        "completion_tokens": 71173,
+        "prompt_tokens": 34610
+      },
+      "probe-code": {
+        "area": null,
+        "items": 40,
+        "scored": 40,
+        "score": 3.95492041654715,
+        "truncated_rate": null,
+        "empty_rate": null,
+        "completion_tokens_mean": null,
+        "completion_tokens": 0,
+        "prompt_tokens": 0
+      },
+      "probe-wikipedia-ja": {
+        "area": null,
+        "items": 40,
+        "scored": 40,
+        "score": 6.590620263160377,
+        "truncated_rate": null,
+        "empty_rate": null,
+        "completion_tokens_mean": null,
+        "completion_tokens": 0,
+        "prompt_tokens": 0
+      },
+      "probe-wikitext": {
+        "area": null,
+        "items": 16,
+        "scored": 16,
+        "score": 7.575848689689258,
+        "truncated_rate": null,
+        "empty_rate": null,
+        "completion_tokens_mean": null,
+        "completion_tokens": 0,
+        "prompt_tokens": 0
+      },
+      "ruler": {
+        "area": "long-context",
+        "items": 24,
+        "scored": 24,
+        "score": 0.875,
+        "truncated_rate": 0.08333333333333333,
+        "empty_rate": 0.08333333333333333,
+        "completion_tokens_mean": 4060.75,
+        "completion_tokens": 97458,
+        "prompt_tokens": 1945664
+      },
+      "scicode": {
+        "area": "code",
+        "items": 10,
+        "scored": 10,
+        "score": 0.423015873015873,
+        "truncated_rate": 0.0,
+        "empty_rate": 0.0,
+        "completion_tokens_mean": 13136.3,
+        "completion_tokens": 131363,
+        "prompt_tokens": 72225
+      },
+      "swe-bench-pro": {
+        "area": "agents",
+        "items": 4,
+        "scored": 4,
+        "score": 0.0,
+        "truncated_rate": null,
+        "empty_rate": null,
+        "completion_tokens_mean": null,
+        "completion_tokens": 0,
+        "prompt_tokens": 0
+      },
+      "terminal-bench": {
+        "area": "agents",
+        "items": 6,
+        "scored": 5,
+        "score": 0.6,
+        "truncated_rate": null,
+        "empty_rate": null,
+        "completion_tokens_mean": null,
+        "completion_tokens": 0,
+        "prompt_tokens": 0
+      },
+      "triviaqa": {
+        "area": "facts",
+        "items": 120,
+        "scored": 120,
+        "score": 0.7333333333333333,
+        "truncated_rate": 0.008333333333333333,
+        "empty_rate": 0.008333333333333333,
+        "completion_tokens_mean": 955.975,
+        "completion_tokens": 114717,
+        "prompt_tokens": 7542
+      },
+      "winogrande": {
+        "area": "commonsense",
+        "items": 300,
+        "scored": 300,
+        "score": 0.6666666666666666,
+        "truncated_rate": null,
+        "empty_rate": null,
+        "completion_tokens_mean": null,
+        "completion_tokens": 0,
+        "prompt_tokens": 0
+      },
+      "xstest": {
+        "area": "safety",
+        "items": 108,
+        "scored": 108,
+        "score": 0.5740740740740741,
+        "truncated_rate": 0.0,
+        "empty_rate": 0.0,
+        "completion_tokens_mean": 1140.2685185185185,
+        "completion_tokens": 123149,
+        "prompt_tokens": 2839
+      }
+    },
+    "timing": {
+      "load_seconds": 108.0,
+      "generation_seconds": 2975.2,
+      "wall_seconds": 2975.2,
+      "source_finished_seconds": {
+        "aime-2026": 1207.8,
+        "arc-challenge": 1187.2,
+        "bbeh": 1312.5,
+        "bfcl": 1247.1,
+        "gpqa-diamond": 1231.2,
+        "gsm8k-platinum": 1174.7,
+        "hellaswag": 1205.8,
+        "hmmt-feb-2026": 1364.8,
+        "humaneval-plus": 1143.9,
+        "ifbench": 1212.9,
+        "ifeval": 1206.2,
+        "jamc-qa": 1246.9,
+        "livecodebench": 1153.3,
+        "longbench-v2": 1161.8,
+        "math-500": 1141.4,
+        "mbpp-plus": 1159.2,
+        "mgsm": 1259.4,
+        "mmlu-pro": 1229.0,
+        "mmlu-prox-ja": 1169.8,
+        "mmmu-pro": 1239.0,
+        "mrcr-v2": 1266.6,
+        "musr": 1113.7,
+        "probe-code": 1203.9,
+        "probe-wikipedia-ja": 1206.5,
+        "probe-wikitext": 1207.6,
+        "ruler": 1377.0,
+        "scicode": 1345.7,
+        "swe-bench-pro": 1355.6,
+        "terminal-bench": 2975.2,
+        "triviaqa": 1486.6,
+        "winogrande": 1214.6,
+        "xstest": 1226.4
+      },
+      "target_minutes": 30,
+      "chat_api_calls": 1744,
+      "logprob_api_calls": 9193
+    },
+    "inputs": {
+      "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/results/gemma4-fresh-f03-dev30-dp4-20261107-v1/run.json": "836300a72567fa0c85a02bd433fae5e68923f79d910d530a4d1355b057779f1e",
+      "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/results/gemma4-fresh-f03-dev30-dp4-20261107-v1/report.json": "cc76ce3de5ce7202ca994d087fdaa3f856abb71c87061d4b5a368691edbcf9bc",
+      "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/results/gemma4-fresh-f03-dev30-dp4-20261107-v1/items.jsonl": "55c5439792c7500b957ed783e8046acc5f40c0ec5743ac64eea3cd7a4534bc31"
+    },
+    "score_values_scope": "Official reported aggregates retained as claims; not validated complete scores."
+  },
+  "source_report": {
+    "aime-2026": {
+      "area": "math",
+      "items": 12,
+      "scored": 12,
+      "score": 0.9791666666666666,
+      "truncated_rate": 0.0,
+      "empty_rate": 0.0,
+      "completion_tokens_mean": 7962.520833333333,
+      "completion_tokens": 382201,
+      "prompt_tokens": 8028
+    },
+    "arc-challenge": {
+      "area": "commonsense",
+      "items": 300,
+      "scored": 300,
+      "score": 0.58,
+      "truncated_rate": null,
+      "empty_rate": null,
+      "completion_tokens_mean": null,
+      "completion_tokens": 0,
+      "prompt_tokens": 0
+    },
+    "bbeh": {
+      "area": "reasoning",
+      "items": 46,
+      "scored": 46,
+      "score": 0.7608695652173914,
+      "truncated_rate": 0.0,
+      "empty_rate": 0.0,
+      "completion_tokens_mean": 9285.521739130434,
+      "completion_tokens": 427134,
+      "prompt_tokens": 56104
+    },
+    "bfcl": {
+      "area": "tools",
+      "items": 120,
+      "scored": 120,
+      "score": 0.7916666666666666,
+      "truncated_rate": 0.0,
+      "empty_rate": 0.0,
+      "completion_tokens_mean": 1206.65,
+      "completion_tokens": 144798,
+      "prompt_tokens": 1480763
+    },
+    "gpqa-diamond": {
+      "area": "expert",
+      "items": 48,
+      "scored": 48,
+      "score": 0.8958333333333334,
+      "truncated_rate": 0.0,
+      "empty_rate": 0.0,
+      "completion_tokens_mean": 5666.645833333333,
+      "completion_tokens": 271999,
+      "prompt_tokens": 11950
+    },
+    "gsm8k-platinum": {
+      "area": "math",
+      "items": 50,
+      "scored": 50,
+      "score": 1.0,
+      "truncated_rate": 0.0,
+      "empty_rate": 0.0,
+      "completion_tokens_mean": 748.06,
+      "completion_tokens": 37403,
+      "prompt_tokens": 5349
+    },
+    "hellaswag": {
+      "area": "commonsense",
+      "items": 300,
+      "scored": 300,
+      "score": 0.6033333333333334,
+      "truncated_rate": null,
+      "empty_rate": null,
+      "completion_tokens_mean": null,
+      "completion_tokens": 0,
+      "prompt_tokens": 0
+    },
+    "hmmt-feb-2026": {
+      "area": "math",
+      "items": 13,
+      "scored": 13,
+      "score": 0.8076923076923077,
+      "truncated_rate": 0.019230769230769232,
+      "empty_rate": 0.0,
+      "completion_tokens_mean": 8944.096153846154,
+      "completion_tokens": 465093,
+      "prompt_tokens": 6092
+    },
+    "humaneval-plus": {
+      "area": "code",
+      "items": 30,
+      "scored": 30,
+      "score": 1.0,
+      "truncated_rate": 0.0,
+      "empty_rate": 0.0,
+      "completion_tokens_mean": 1342.2,
+      "completion_tokens": 40266,
+      "prompt_tokens": 5374
+    },
+    "ifbench": {
+      "area": "instructions",
+      "items": 50,
+      "scored": 50,
+      "score": 0.8,
+      "truncated_rate": 0.0,
+      "empty_rate": 0.0,
+      "completion_tokens_mean": 2844.52,
+      "completion_tokens": 142226,
+      "prompt_tokens": 4058
+    },
+    "ifeval": {
+      "area": "instructions",
+      "items": 120,
+      "scored": 120,
+      "score": 0.925,
+      "truncated_rate": 0.0,
+      "empty_rate": 0.0,
+      "completion_tokens_mean": 1540.6,
+      "completion_tokens": 184872,
+      "prompt_tokens": 7566
+    },
+    "jamc-qa": {
+      "area": "multilingual",
+      "items": 72,
+      "scored": 72,
+      "score": 0.6388888888888888,
+      "truncated_rate": 0.013888888888888888,
+      "empty_rate": 0.0,
+      "completion_tokens_mean": 1524.888888888889,
+      "completion_tokens": 109792,
+      "prompt_tokens": 7605
+    },
+    "livecodebench": {
+      "area": "code",
+      "items": 20,
+      "scored": 20,
+      "score": 0.75,
+      "truncated_rate": 0.0,
+      "empty_rate": 0.0,
+      "completion_tokens_mean": 7000.9,
+      "completion_tokens": 140018,
+      "prompt_tokens": 12686
+    },
+    "longbench-v2": {
+      "area": "long-context",
+      "items": 10,
+      "scored": 10,
+      "score": 0.7,
+      "truncated_rate": 0.0,
+      "empty_rate": 0.0,
+      "completion_tokens_mean": 2948.6,
+      "completion_tokens": 29486,
+      "prompt_tokens": 887398
+    },
+    "math-500": {
+      "area": "math",
+      "items": 60,
+      "scored": 60,
+      "score": 0.9,
+      "truncated_rate": 0.0,
+      "empty_rate": 0.0,
+      "completion_tokens_mean": 2839.2833333333333,
+      "completion_tokens": 170357,
+      "prompt_tokens": 7942
+    },
+    "mbpp-plus": {
+      "area": "code",
+      "items": 30,
+      "scored": 30,
+      "score": 0.7333333333333333,
+      "truncated_rate": 0.0,
+      "empty_rate": 0.0,
+      "completion_tokens_mean": 937.6333333333333,
+      "completion_tokens": 28129,
+      "prompt_tokens": 3236
+    },
+    "mgsm": {
+      "area": "multilingual",
+      "items": 55,
+      "scored": 55,
+      "score": 0.9272727272727272,
+      "truncated_rate": 0.0,
+      "empty_rate": 0.0,
+      "completion_tokens_mean": 1074.3636363636363,
+      "completion_tokens": 59090,
+      "prompt_tokens": 7819
+    },
+    "mmlu-pro": {
+      "area": "knowledge",
+      "items": 180,
+      "scored": 180,
+      "score": 0.8555555555555555,
+      "truncated_rate": 0.0,
+      "empty_rate": 0.0,
+      "completion_tokens_mean": 3330.0555555555557,
+      "completion_tokens": 599410,
+      "prompt_tokens": 44731
+    },
+    "mmlu-prox-ja": {
+      "area": "multilingual",
+      "items": 60,
+      "scored": 60,
+      "score": 0.7833333333333333,
+      "truncated_rate": 0.0,
+      "empty_rate": 0.0,
+      "completion_tokens_mean": 3456.766666666667,
+      "completion_tokens": 207406,
+      "prompt_tokens": 16932
+    },
+    "mmmu-pro": {
+      "area": "vision",
+      "items": 48,
+      "scored": 48,
+      "score": 0.75,
+      "truncated_rate": 0.0,
+      "empty_rate": 0.0,
+      "completion_tokens_mean": 4126.458333333333,
+      "completion_tokens": 198070,
+      "prompt_tokens": 20344
+    },
+    "mrcr-v2": {
+      "area": "long-context",
+      "items": 16,
+      "scored": 16,
+      "score": 0.6089408826240493,
+      "truncated_rate": 0.0,
+      "empty_rate": 0.0,
+      "completion_tokens_mean": 2407.125,
+      "completion_tokens": 38514,
+      "prompt_tokens": 636245
+    },
+    "musr": {
+      "area": "reasoning",
+      "items": 30,
+      "scored": 30,
+      "score": 0.8666666666666667,
+      "truncated_rate": 0.0,
+      "empty_rate": 0.0,
+      "completion_tokens_mean": 2372.4333333333334,
+      "completion_tokens": 71173,
+      "prompt_tokens": 34610
+    },
+    "probe-code": {
+      "area": null,
+      "items": 40,
+      "scored": 40,
+      "score": 3.95492041654715,
+      "truncated_rate": null,
+      "empty_rate": null,
+      "completion_tokens_mean": null,
+      "completion_tokens": 0,
+      "prompt_tokens": 0
+    },
+    "probe-wikipedia-ja": {
+      "area": null,
+      "items": 40,
+      "scored": 40,
+      "score": 6.590620263160377,
+      "truncated_rate": null,
+      "empty_rate": null,
+      "completion_tokens_mean": null,
+      "completion_tokens": 0,
+      "prompt_tokens": 0
+    },
+    "probe-wikitext": {
+      "area": null,
+      "items": 16,
+      "scored": 16,
+      "score": 7.575848689689258,
+      "truncated_rate": null,
+      "empty_rate": null,
+      "completion_tokens_mean": null,
+      "completion_tokens": 0,
+      "prompt_tokens": 0
+    },
+    "ruler": {
+      "area": "long-context",
+      "items": 24,
+      "scored": 24,
+      "score": 0.875,
+      "truncated_rate": 0.08333333333333333,
+      "empty_rate": 0.08333333333333333,
+      "completion_tokens_mean": 4060.75,
+      "completion_tokens": 97458,
+      "prompt_tokens": 1945664
+    },
+    "scicode": {
+      "area": "code",
+      "items": 10,
+      "scored": 10,
+      "score": 0.423015873015873,
+      "truncated_rate": 0.0,
+      "empty_rate": 0.0,
+      "completion_tokens_mean": 13136.3,
+      "completion_tokens": 131363,
+      "prompt_tokens": 72225
+    },
+    "swe-bench-pro": {
+      "area": "agents",
+      "items": 4,
+      "scored": 4,
+      "score": 0.0,
+      "truncated_rate": null,
+      "empty_rate": null,
+      "completion_tokens_mean": null,
+      "completion_tokens": 0,
+      "prompt_tokens": 0
+    },
+    "terminal-bench": {
+      "area": "agents",
+      "items": 6,
+      "scored": 5,
+      "score": 0.6,
+      "truncated_rate": null,
+      "empty_rate": null,
+      "completion_tokens_mean": null,
+      "completion_tokens": 0,
+      "prompt_tokens": 0
+    },
+    "triviaqa": {
+      "area": "facts",
+      "items": 120,
+      "scored": 120,
+      "score": 0.7333333333333333,
+      "truncated_rate": 0.008333333333333333,
+      "empty_rate": 0.008333333333333333,
+      "completion_tokens_mean": 955.975,
+      "completion_tokens": 114717,
+      "prompt_tokens": 7542
+    },
+    "winogrande": {
+      "area": "commonsense",
+      "items": 300,
+      "scored": 300,
+      "score": 0.6666666666666666,
+      "truncated_rate": null,
+      "empty_rate": null,
+      "completion_tokens_mean": null,
+      "completion_tokens": 0,
+      "prompt_tokens": 0
+    },
+    "xstest": {
+      "area": "safety",
+      "items": 108,
+      "scored": 108,
+      "score": 0.5740740740740741,
+      "truncated_rate": 0.0,
+      "empty_rate": 0.0,
+      "completion_tokens_mean": 1140.2685185185185,
+      "completion_tokens": 123149,
+      "prompt_tokens": 2839
+    }
+  },
+  "http_trace": {
+    "all_records": 4850,
+    "request_records": 4840,
+    "operations": {
+      "completions": 4840
+    },
+    "errors": 0,
+    "retry_attempts": 0,
+    "same_run_non_request_records": 10,
+    "other_run_records": 0,
+    "scope": "HTTP client traces only; no activation capture or server trace completeness claim"
+  },
+  "agents": [
+    {
+      "id": "terminal-bench:bn-fit-modify",
+      "episodes": 7,
+      "trajectory_steps": 8,
+      "tool_calls": 14,
+      "input_tokens": 56919,
+      "output_tokens": 11342,
+      "exception_type": null,
+      "seconds": 178.667008,
+      "score": 1.0,
+      "outcome_numeric": {},
+      "score_detail": {},
+      "official_samples": [
+        {
+          "reward": 1.0,
+          "seconds": 178.667008,
+          "setup_seconds": 14.935281,
+          "exception": null,
+          "trial": "bn-fit-modify__TSoHtPF"
+        }
+      ]
+    },
+    {
+      "id": "terminal-bench:cobol-modernization",
+      "episodes": 8,
+      "trajectory_steps": 9,
+      "tool_calls": 35,
+      "input_tokens": 57218,
+      "output_tokens": 11743,
+      "exception_type": null,
+      "seconds": 823.25333,
+      "score": 1.0,
+      "outcome_numeric": {},
+      "score_detail": {},
+      "official_samples": [
+        {
+          "reward": 1.0,
+          "seconds": 823.25333,
+          "setup_seconds": 10.848266,
+          "exception": null,
+          "trial": "cobol-modernization__H4Cn6yE"
+        }
+      ]
+    },
+    {
+      "id": "terminal-bench:install-windows-3.11",
+      "episodes": 6,
+      "trajectory_steps": 7,
+      "tool_calls": 17,
+      "input_tokens": 42346,
+      "output_tokens": 6006,
+      "exception_type": null,
+      "seconds": 501.885367,
+      "score": 0.0,
+      "outcome_numeric": {},
+      "score_detail": {},
+      "official_samples": [
+        {
+          "reward": 0.0,
+          "seconds": 501.885367,
+          "setup_seconds": 15.697638,
+          "exception": null,
+          "trial": "install-windows-3.11__jvvQByE"
+        }
+      ]
+    },
+    {
+      "id": "terminal-bench:polyglot-c-py",
+      "episodes": 3,
+      "trajectory_steps": 3,
+      "tool_calls": 9,
+      "input_tokens": 2776,
+      "output_tokens": 8302,
+      "exception_type": "CancelledError",
+      "seconds": 2035.110091,
+      "score": null,
+      "outcome_numeric": {},
+      "score_detail": {},
+      "official_samples": []
+    },
+    {
+      "id": "terminal-bench:portfolio-optimization",
+      "episodes": 5,
+      "trajectory_steps": 6,
+      "tool_calls": 12,
+      "input_tokens": 30197,
+      "output_tokens": 6189,
+      "exception_type": null,
+      "seconds": 258.674197,
+      "score": 1.0,
+      "outcome_numeric": {},
+      "score_detail": {},
+      "official_samples": [
+        {
+          "reward": 1.0,
+          "seconds": 258.674197,
+          "setup_seconds": 10.632367,
+          "exception": null,
+          "trial": "portfolio-optimization__ke8UD4Y"
+        }
+      ]
+    },
+    {
+      "id": "terminal-bench:reshard-c4-data",
+      "episodes": 9,
+      "trajectory_steps": 10,
+      "tool_calls": 21,
+      "input_tokens": 113754,
+      "output_tokens": 12659,
+      "exception_type": null,
+      "seconds": 706.116897,
+      "score": 0.0,
+      "outcome_numeric": {},
+      "score_detail": {},
+      "official_samples": [
+        {
+          "reward": 0.0,
+          "seconds": 706.116897,
+          "setup_seconds": 11.394162999999999,
+          "exception": null,
+          "trial": "reshard-c4-data__m8bcyMh"
+        }
+      ]
+    },
+    {
+      "id": "swe-bench-pro:instance_ansible__ansible-11c1777d56664b1acb56b387a1ad6aeadef1391d-v0f01c69f1e2528b935359cfe578530722bca2c59",
+      "api_calls": 39,
+      "assistant_messages": 39,
+      "tool_messages": 38,
+      "announced_tool_calls": 39,
+      "recorded_actions": 39,
+      "exit_status": "Submitted",
+      "usage_records": 39,
+      "usage_scope": "Persisted assistant responses only; missing model-stat calls are not zero-filled.",
+      "usage_complete_relative_api_calls": true,
+      "input_tokens": 674381,
+      "output_tokens": 14127,
+      "score": 0.0,
+      "outcome_numeric": {},
+      "score_detail": {},
+      "official_samples": [
+        {
+          "reward": 0.0,
+          "seconds": 1148.2083868980408,
+          "setup_seconds": null,
+          "exception": null,
+          "trial": null
+        }
+      ]
+    },
+    {
+      "id": "swe-bench-pro:instance_qutebrowser__qutebrowser-ed19d7f58b2664bb310c7cb6b52c5b9a06ea60b2-v059c6fdc75567943479b23ebca7c07b5e9a7f34c",
+      "api_calls": 56,
+      "assistant_messages": 55,
+      "tool_messages": 54,
+      "announced_tool_calls": 55,
+      "recorded_actions": 55,
+      "exit_status": "Submitted",
+      "usage_records": 55,
+      "usage_scope": "Persisted assistant responses only; missing model-stat calls are not zero-filled.",
+      "usage_complete_relative_api_calls": false,
+      "input_tokens": 718494,
+      "output_tokens": 10065,
+      "score": 0.0,
+      "outcome_numeric": {},
+      "score_detail": {},
+      "official_samples": [
+        {
+          "reward": 0.0,
+          "seconds": 735.9084548950195,
+          "setup_seconds": null,
+          "exception": null,
+          "trial": null
+        }
+      ]
+    },
+    {
+      "id": "swe-bench-pro:instance_NodeBB__NodeBB-da0211b1a001d45d73b4c84c6417a4f1b0312575-vf2cf3cbd463b7ad942381f1c6d077626485a1e9e",
+      "api_calls": 23,
+      "assistant_messages": 23,
+      "tool_messages": 22,
+      "announced_tool_calls": 23,
+      "recorded_actions": 23,
+      "exit_status": "Submitted",
+      "usage_records": 23,
+      "usage_scope": "Persisted assistant responses only; missing model-stat calls are not zero-filled.",
+      "usage_complete_relative_api_calls": true,
+      "input_tokens": 219117,
+      "output_tokens": 10464,
+      "score": 0.0,
+      "outcome_numeric": {},
+      "score_detail": {},
+      "official_samples": [
+        {
+          "reward": 0.0,
+          "seconds": 463.5241656303406,
+          "setup_seconds": null,
+          "exception": null,
+          "trial": null
+        }
+      ]
+    },
+    {
+      "id": "swe-bench-pro:instance_internetarchive__openlibrary-431442c92887a3aece3f8aa771dd029738a80eb1-v76304ecdb3a5954fcf13feb710e8c40fcf24b73c",
+      "api_calls": 23,
+      "assistant_messages": 23,
+      "tool_messages": 22,
+      "announced_tool_calls": 23,
+      "recorded_actions": 23,
+      "exit_status": "Submitted",
+      "usage_records": 23,
+      "usage_scope": "Persisted assistant responses only; missing model-stat calls are not zero-filled.",
+      "usage_complete_relative_api_calls": true,
+      "input_tokens": 288728,
+      "output_tokens": 5831,
+      "score": 0.0,
+      "outcome_numeric": {},
+      "score_detail": {},
+      "official_samples": [
+        {
+          "reward": 0.0,
+          "seconds": 90.48287796974182,
+          "setup_seconds": null,
+          "exception": null,
+          "trial": null
+        }
+      ]
+    }
+  ],
+  "agent_trajectory_issues": {},
+  "all_2338_unique_ids_and_metadata_verified": false,
+  "report_exact_rebuild_equal": true,
+  "code_unknown_or_anomalous": [],
+  "code_failed_or_partial": [
+    "livecodebench:arc191_c",
+    "livecodebench:abc395_f",
+    "livecodebench:arc196_a",
+    "livecodebench:arc190_c",
+    "livecodebench:abc392_d",
+    "mbpp-plus:Mbpp/801",
+    "mbpp-plus:Mbpp/410",
+    "mbpp-plus:Mbpp/576",
+    "mbpp-plus:Mbpp/641",
+    "mbpp-plus:Mbpp/129",
+    "mbpp-plus:Mbpp/103",
+    "mbpp-plus:Mbpp/639",
+    "mbpp-plus:Mbpp/126",
+    "scicode:18",
+    "scicode:45",
+    "scicode:72",
+    "scicode:80",
+    "scicode:9",
+    "scicode:17",
+    "scicode:46",
+    "scicode:35"
+  ],
+  "code_counts_by_source": {
+    "humaneval-plus": {
+      "full": 30,
+      "partial": 0,
+      "unknown": 0,
+      "zero": 0
+    },
+    "livecodebench": {
+      "full": 15,
+      "partial": 0,
+      "unknown": 0,
+      "zero": 5
+    },
+    "mbpp-plus": {
+      "full": 22,
+      "partial": 0,
+      "unknown": 0,
+      "zero": 8
+    },
+    "scicode": {
+      "full": 2,
+      "partial": 4,
+      "unknown": 0,
+      "zero": 4
+    }
+  },
+  "runtime": {
+    "image": "sha256:f91bdcf997af6d7b194bec229812fd018277158f6795de7d91e58448936e7ad8",
+    "checkpoint_tree": "504d0914e8f7d2a4e51a0888e5692e2d1a158b82d3a77b600810a14bf7e33b63",
+    "topology": {
+      "tp": 2,
+      "replicas": 4,
+      "mtp_tokens": 4
+    },
+    "concurrency": {
+      "chat": 256,
+      "logprob": 32,
+      "agent": 4
+    },
+    "actual_runner_cid": "b947da714bf08c131db8971e36e16f5155a5de5303161ad8898bd48cff4eaa01",
+    "http_client_trace_only": true,
+    "comparison_limit": "Single completed dev30 run audit; paired comparison and matching conditions are checked separately."
+  },
+  "timing_note": "wall_seconds and generation_seconds both start before dataset loading; do not call either pure generation time.",
+  "source_sha256": {
+    "wsp/report.py": "f708cab18226874ac26d2b9fce642db811fcdbe985f2420eeda40920e2575784",
+    "wsp/catalog.py": "8f250f3180bc0e16876980d681836cd74f4c275b978fa23721e3ee5b0c50a0a7",
+    "wsp/manifest.py": "d41c24bec59f7e84bd0065fae400d2c1209bdc7384d277ab82eff3c91debbfe3",
+    "wsp/sources/code.py": "523ab727598a80f06f49d7118ad6cfb4206fdae9c1135a63d64b87b3ed5a31c6",
+    "wsp/scorers/scicode_score.py": "623c459292e33fb406cbeef5aae446657644faef9913af4bb149addbacd0641c"
+  },
+  "analysis_seconds": 3.766772405942902,
+  "inputs_sha256": {
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f03-native-v1/deployment-dp4-v1/gemma-0-closure-v1.json": "45bf25d939aecb942f16bd0217e2bc581794a55af02bb6421ec81452ef30381b",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f03-native-v1/deployment-dp4-v1/gemma-1-closure-v1.json": "394078a295ce3c6530d6b4a45be02a88c4d9e504b42b1c5b624ee58b7b3a86b7",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f03-native-v1/deployment-dp4-v1/gemma-2-closure-v1.json": "d70f6cf16bcc5a2e141cc149b659653bc9d6c1b3c44244f17ce8b8a56850da09",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f03-native-v1/deployment-dp4-v1/gemma-3-closure-v1.json": "6433168c3791f77170b383080c91f4afc4a29c16b96f834ebba55ec619b9ebff",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f03-native-v1/deployment-dp4-v1/four-apply-closure.json": "fc5d5a52160572ca4c9673a20898a170852e611205240b3201dcc5fd43ecba96",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/runtime/fresh-purpose-20261107-av-live10-v1/runner-app/src/kairyu_bench/wsp/cli.py": "406b07cb9bed06bd3b814292329cd67d0acf89fcaf5fddca8858cc865bbed090",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/runtime/fresh-purpose-20261107-av-live10-v1/runner-app/src/kairyu_bench/wsp/run.py": "9272730f132a72002cc38f7c3c47690893f8288652364c1b644e0cf27bf04ce2",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/runtime/fresh-purpose-20261107-av-live10-v1/runner-app/src/kairyu_bench/wsp/manifest.py": "d41c24bec59f7e84bd0065fae400d2c1209bdc7384d277ab82eff3c91debbfe3",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/runtime/fresh-purpose-20261107-av-live10-v1/runner-app/src/kairyu_bench/data/wsp/manifest.json": "a3a0b60e0872a38c6b1abf7e97d7fe729fabf9e25cd3f09a3da9544b9ca39b5b",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/runtime/fresh-purpose-20261107-av-live10-v1/runner-app/src/kairyu_bench/wsp/observe/tracing.py": "02b21d991f2d3be7a4f5bd648857e9a887bf1fd7dd7984245b5244ed96ee27b4",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/results/gemma4-fresh-f03-dev30-dp4-20261107-v1/agents/terminal-bench/raw/terminal-bench/jobs/terminal-bench-terminal-bench/bn-fit-modify__TSoHtPF/result.json": "fb95717d195a43fd31df473e7ffbf7fefbbf0e1c178a0f28222babb63c42a487",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/results/gemma4-fresh-f03-dev30-dp4-20261107-v1/agents/terminal-bench/raw/terminal-bench/jobs/terminal-bench-terminal-bench/bn-fit-modify__TSoHtPF/agent/trajectory.json": "c1b2b4b89768b50b1e985c1a1b86deaade75697619720585eff3f4d40d31f554",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/results/gemma4-fresh-f03-dev30-dp4-20261107-v1/agents/terminal-bench/raw/terminal-bench/jobs/terminal-bench-terminal-bench/cobol-modernization__H4Cn6yE/result.json": "524ecd769efef1d5ab2ef1c829e36a1cac8ddffdf601d7998c511d5bc6556695",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/results/gemma4-fresh-f03-dev30-dp4-20261107-v1/agents/terminal-bench/raw/terminal-bench/jobs/terminal-bench-terminal-bench/cobol-modernization__H4Cn6yE/agent/trajectory.json": "aed2b8a5512e15e6c28c4fe1f78a239c242d1d31e22ed543c589c5995157377c",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/results/gemma4-fresh-f03-dev30-dp4-20261107-v1/agents/terminal-bench/raw/terminal-bench/jobs/terminal-bench-terminal-bench/install-windows-3.11__jvvQByE/result.json": "dbbd518a6a6b1c016dbc8720986dc64ddd35f6155c1d71bd5331146b275b8c5c",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/results/gemma4-fresh-f03-dev30-dp4-20261107-v1/agents/terminal-bench/raw/terminal-bench/jobs/terminal-bench-terminal-bench/install-windows-3.11__jvvQByE/agent/trajectory.json": "adf6cdd089e6a6e7be605cd76ab30568e1453b4f43b910e1d8cd52a82fac91d6",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/results/gemma4-fresh-f03-dev30-dp4-20261107-v1/agents/terminal-bench/raw/terminal-bench/jobs/terminal-bench-terminal-bench/polyglot-c-py__eRHYVTe/result.json": "30c77a3f9fb85fdfae60165ea555bac135ef3674cb013372135bb97cf66c87eb",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/results/gemma4-fresh-f03-dev30-dp4-20261107-v1/agents/terminal-bench/raw/terminal-bench/jobs/terminal-bench-terminal-bench/polyglot-c-py__eRHYVTe/agent/trajectory.json": "6f1d2d5f8e26b1b5ab3160e4d83d59e6b80c477eab662d567373ca1f5fd78909",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/results/gemma4-fresh-f03-dev30-dp4-20261107-v1/agents/terminal-bench/raw/terminal-bench/jobs/terminal-bench-terminal-bench/portfolio-optimization__ke8UD4Y/result.json": "c42c1e9d1b414cdeaf9d82f2a964ffb5c744f1a020e9b79ef83a7f11c976afc6",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/results/gemma4-fresh-f03-dev30-dp4-20261107-v1/agents/terminal-bench/raw/terminal-bench/jobs/terminal-bench-terminal-bench/portfolio-optimization__ke8UD4Y/agent/trajectory.json": "68a1099ea1bca71e809fd5a98ccb75e4c3078de4a51e57c55788aa35217e1fae",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/results/gemma4-fresh-f03-dev30-dp4-20261107-v1/agents/terminal-bench/raw/terminal-bench/jobs/terminal-bench-terminal-bench/reshard-c4-data__m8bcyMh/result.json": "0352a0da3a160bf63fed251ba4b1ef72523862852030872bf6e8282a895c5c55",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/results/gemma4-fresh-f03-dev30-dp4-20261107-v1/agents/terminal-bench/raw/terminal-bench/jobs/terminal-bench-terminal-bench/reshard-c4-data__m8bcyMh/agent/trajectory.json": "3f4a0e1c72be4688d4852140295862360f6b75a825d192d1ffcb128365fab85f",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/results/gemma4-fresh-f03-dev30-dp4-20261107-v1/agents/swe-bench-pro/raw/swe-bench-pro/items/0001/generation/instance_ansible__ansible-11c1777d56664b1acb56b387a1ad6aeadef1391d-v0f01c69f1e2528b935359cfe578530722bca2c59/instance_ansible__ansible-11c1777d56664b1acb56b387a1ad6aeadef1391d-v0f01c69f1e2528b935359cfe578530722bca2c59.traj.json": "c05bae49236499627d0d6c1a5e8507ce79773c35890e4fd4ab3095e476421aea",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/results/gemma4-fresh-f03-dev30-dp4-20261107-v1/agents/swe-bench-pro/raw/swe-bench-pro/items/0002/generation/instance_qutebrowser__qutebrowser-ed19d7f58b2664bb310c7cb6b52c5b9a06ea60b2-v059c6fdc75567943479b23ebca7c07b5e9a7f34c/instance_qutebrowser__qutebrowser-ed19d7f58b2664bb310c7cb6b52c5b9a06ea60b2-v059c6fdc75567943479b23ebca7c07b5e9a7f34c.traj.json": "408b1b969b0bbc634b896068d7c00765b2773a5861d74ea2ef21f43b1dd46d02",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/results/gemma4-fresh-f03-dev30-dp4-20261107-v1/agents/swe-bench-pro/raw/swe-bench-pro/items/0003/generation/instance_NodeBB__NodeBB-da0211b1a001d45d73b4c84c6417a4f1b0312575-vf2cf3cbd463b7ad942381f1c6d077626485a1e9e/instance_NodeBB__NodeBB-da0211b1a001d45d73b4c84c6417a4f1b0312575-vf2cf3cbd463b7ad942381f1c6d077626485a1e9e.traj.json": "b05ea8a0a45a3d06ce262f97fbc295b399ee1ea6ea89c4d310b4881358737337",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/results/gemma4-fresh-f03-dev30-dp4-20261107-v1/agents/swe-bench-pro/raw/swe-bench-pro/items/0004/generation/instance_internetarchive__openlibrary-431442c92887a3aece3f8aa771dd029738a80eb1-v76304ecdb3a5954fcf13feb710e8c40fcf24b73c/instance_internetarchive__openlibrary-431442c92887a3aece3f8aa771dd029738a80eb1-v76304ecdb3a5954fcf13feb710e8c40fcf24b73c.traj.json": "7d2f4de9066247ba296c46547fa5bf1c71a451e8c6661dbdab380dbeac9e1bf5",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/results/gemma4-fresh-f03-dev30-dp4-20261107-v1/run.json": "836300a72567fa0c85a02bd433fae5e68923f79d910d530a4d1355b057779f1e",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/results/gemma4-fresh-f03-dev30-dp4-20261107-v1/report.json": "cc76ce3de5ce7202ca994d087fdaa3f856abb71c87061d4b5a368691edbcf9bc",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/results/gemma4-fresh-f03-dev30-dp4-20261107-v1/items.jsonl": "55c5439792c7500b957ed783e8046acc5f40c0ec5743ac64eea3cd7a4534bc31",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/results/gemma4-fresh-f03-dev30-dp4-20261107-v1/responses.jsonl": "f19d889430e6d58631bdd935f784791ad3348fc47441c67e8c9af4064b9f0fee",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f03-dev30-dp4-v1/http-trace/requests-client.jsonl": "9b767f1eab967420f93d2aa6352915125b8320452ab8b910577c8baab089a8fa",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/worktrees/kairyu-bench-weight-tools/docs/experiments/scripts/fresh-n30-complete-audit.py": "51898bdb849a632a1837b6c4b6166ff8456854c11fdce6077c15d6106ffe73b5",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/worktrees/kairyu-bench-weight-tools/docs/experiments/scripts/fresh-wsp-large-tier-audit.py": "c08ae268ae2e5ec55f690d7e4f935566995f881a183f86ce3bb38d3230cf1462",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f03-dev30-dp4-v1/launch-plan-approved.json": "5b36b98234658c63b460cbb6cba821812b177b7e49477cc1a2fcabb1cba6095a",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f03-dev30-dp4-v1/actual-runner.json": "2be05727de40acfada0635966ffe9ce6d9258ac2f45379f3c40432bd33354f9d",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f03-dev30-dp4-v1/launch-preflight.json": "fe7b42826e74afed844e342f79ef2867f50c0ba9edd6425949736c0784eed6bb",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f03-dev30-dp4-v1/run-start-verified.json": "2bdd3452c17f94291b0be09b87a07f43c109b963168b363cd940e39693150ebb"
+  }
+}

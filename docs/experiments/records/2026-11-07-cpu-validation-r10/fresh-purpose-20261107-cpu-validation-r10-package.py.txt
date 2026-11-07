@@ -1,0 +1,28 @@
+import gzip,hashlib,json,pathlib,re,time
+R=pathlib.Path('/mnt/nvme/kairyu/wsp/gemma4-coding-20261104');B=R/'worktrees/kairyu-bench-weight-tools';D=R/'analysis/fresh-purpose-20261107-cpu-validation-r10';E=B/'docs/experiments';O=E/'records/2026-11-07-cpu-validation-r10';O.mkdir()
+def sha(b):return hashlib.sha256(b).hexdigest()
+rows=[]
+for p in [*sorted(x for x in D.iterdir() if x.is_file()),R/'analysis/fresh-purpose-20261107-cpu-validation-r10-run.py.txt',pathlib.Path(__file__)]:
+ data=p.read_bytes();name=p.name
+ if len(data)>65536:name+='.gz';stored=gzip.compress(data,mtime=0);assert gzip.decompress(stored)==data
+ else:stored=data
+ with (O/name).open('xb') as f:f.write(stored)
+ rows.append({'file':name,'raw_sha256':sha(data),'stored_sha256':sha(stored),'raw_bytes':len(data)})
+c=json.loads((D/'completion.json').read_text());shell=json.loads((D/'repository-shell-check.json').read_text())
+log=(D/'unittest.stderr').read_text();m=re.search(r'Ran (\d+) tests in ([0-9.]+)s',log);sk=int(re.search(r'OK \(skipped=(\d+)\)',log)[1]);n=int(m[1])
+assert n==573 and sk==57 and all(x['returncode']==0 for x in c['results'][:4]) and shell['status']=='passed' and c['sources_unchanged']
+summary={'status':'repository_source_checks_passed_with_recorded_runtime_cache_traversal_error','unittest':{'count':n,'passed':n-sk,'skipped':sk,'reported_seconds':float(m[2]),'wall_seconds':c['results'][0]['elapsed_seconds']},'ruff_mypy_data_passed':True,'mypy_files':74,'repository_shell_files':shell['count'],'source_count':c['source_count_after'],'sources_unchanged':True,'original_find_returncode':1,'original_find_failure':'Permission denied entering unrelated runtime cache; no shell syntax error','source_permission_changes':0,'full_suite_runs':1,'model_GPU_service_operations':0,'artifacts':rows}
+(O/'summary.json').write_text(json.dumps(summary,indent=2)+chr(10))
+files=sorted(p for p in O.iterdir() if p.is_file());(O/'SHA256SUMS').write_text(''.join(sha(p.read_bytes())+'  '+p.name+chr(10) for p in files))
+doc=f"""# CPU validation r10
+
+The changed train19 composer, generation/frame preparation and native GPU owner passed the full CPU unittest suite: **{n-sk} PASS +{sk} skipped = {n} tests**, zero failure/error, reported{m[2]}s (wall{c['results'][0]['elapsed_seconds']:.6f}s). Full Ruff, mypy74 files and generated comparison-data check passed. All31 Git-visible repository shell files passed individual sh -n. There was one full suite run and no test rerun.
+
+The exact CI find-based shell step initially returned1 because this long-lived remote worktree contains foreign-owned, gitignored benchmark cache directories that cannot be traversed. No shell syntax error was reported. That original failure is preserved; no permissions or sources were changed. The subsequent explicit check covered every tracked and nonignored untracked repository shell file, matching the source files present in a clean checkout. This is recorded separately and does not rewrite the failed find command as successful.
+
+Execution used the existing CPU virtualenv, its PATH prefix, short owned NVMe TMPDIR, nice15 and one-thread numerical libraries. All311 monitored source/config/shell files matched before/after. No model, GPU, Docker worker or service operation occurred. Optional unavailable-runtime tests remain the57 explicit skips; these CPU tests do not claim a real GPU validation.
+
+[Commands, driver, full logs, before/after identities, cache error and per-shell checks](records/2026-11-07-cpu-validation-r10/) are preserved with raw/stored SHA256; large logs use lossless gzip. Source was not changed in response to this run.
+"""
+(E/'2026-11-07-cpu-validation-r10.md').write_text(doc)
+print(json.dumps({'document_sha256':sha((E/'2026-11-07-cpu-validation-r10.md').read_bytes()),'manifest_sha256':sha((O/'SHA256SUMS').read_bytes()),'records':len(files),'unittest':summary['unittest'],'source_count':summary['source_count']}))

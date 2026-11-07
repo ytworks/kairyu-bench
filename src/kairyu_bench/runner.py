@@ -7,7 +7,7 @@ import subprocess
 from dataclasses import dataclass
 from datetime import datetime, timezone
 from pathlib import Path
-from typing import Any, Protocol
+from typing import Any, Mapping, Protocol
 
 from kairyu_bench.results import BenchmarkResult, ResultValidationError
 from kairyu_bench.reporting import write_score_report
@@ -40,6 +40,7 @@ class RunConfig:
     app_root: Path
     harbor_agent: str = "terminus-2"
     adapter_timeout: float | None = None
+    adapter_env: Mapping[str, str] | None = None
 
 
 @dataclass(frozen=True)
@@ -173,17 +174,19 @@ def _selected_agent(
 
 
 def resolve_conditions(
-    name: str, entry: dict[str, Any], harbor_agent: str
+    name: str, entry: dict[str, Any], harbor_agent: str,
+    environment: Mapping[str, str] | None = None,
 ) -> dict[str, Any]:
     """Benchmark conditions that are fixed before the model is contacted."""
+    environment = os.environ if environment is None else environment
     if name == "deepswe":
         from kairyu_bench.deepswe import resolve_deepswe_conditions
 
-        return resolve_deepswe_conditions(entry, os.environ)
+        return resolve_deepswe_conditions(entry, environment)
     if name == "terminal-bench-4":
         from kairyu_bench.terminal_bench4 import resolve_terminal_bench4_conditions
 
-        return resolve_terminal_bench4_conditions(entry, os.environ, harbor_agent)
+        return resolve_terminal_bench4_conditions(entry, environment, harbor_agent)
     return {}
 
 
@@ -196,8 +199,9 @@ def run_benchmarks(
     if run_dir.exists():
         raise FileExistsError(f"run directory already exists: {config.run_id}")
 
+    adapter_environment = {**os.environ, **(config.adapter_env or {})}
     resolved_conditions = {
-        name: resolve_conditions(name, manifest[name], config.harbor_agent)
+        name: resolve_conditions(name, manifest[name], config.harbor_agent, adapter_environment)
         for name in config.selected
     }
 
@@ -274,7 +278,7 @@ def run_benchmarks(
         elif not os.access(adapter_path, os.X_OK):
             error = f"adapter is not executable: {entry['adapter']}"
         else:
-            env = os.environ.copy()
+            env = adapter_environment.copy()
             api_key = env.get("KAIRYU_API_KEY", "")
             env.pop("KAIRYU_EMBEDDING_MODEL", None)
             env.update(

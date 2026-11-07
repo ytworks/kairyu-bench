@@ -1,0 +1,128 @@
+"""Create F06's non-executable full WSP30 plan from the completed F04 conditions."""
+import copy
+import hashlib
+import json
+from pathlib import Path
+import shutil
+import subprocess
+import sys
+import time
+
+R = Path("/mnt/nvme/kairyu/wsp/gemma4-coding-20261104")
+B = R / "worktrees/kairyu-bench-weight-tools"
+N4 = R / "analysis/fresh-purpose-20261107-f04-dev30-dp4-v1"
+N = R / "analysis/fresh-purpose-20261107-f06-dev30-dp4-v1"
+PR = B / "docs/experiments/records/2026-11-07-f06-dev30-preparation-v1"
+PR.mkdir(parents=True, exist_ok=False)
+RUN = "gemma4-fresh-f06-dev30-dp4-20261107-v1"
+def sha(path):
+    return hashlib.sha256(path.read_bytes()).hexdigest()
+def pin(path):
+    return {"path": str(path), "bytes": path.stat().st_size, "sha256": sha(path)}
+def save(path,value):
+    with path.open("x") as stream:
+        json.dump(value,stream,indent=2);stream.write("\n")
+base_path=N4/"launch-plan-approved.json"
+assert sha(base_path)=="26c44c8b15af2c5c0fefeebb1d0aaa94203c381ada65c69eab16ea127b44ef07"
+base=json.loads(base_path.read_text())
+template=json.loads((N4/"launch-plan-unbound.json").read_text())
+base_run=R/"results/gemma4-fresh-f04-dev30-dp4-20261107-v1"
+report=json.loads((base_run/"report.json").read_text())
+assert sha(base_run/"report.json")=="1a062c114b0acae4d27930040c30ccc2e01a20c3e1062490fa1f84656278fd85"
+assert json.loads((base_run/"run.json").read_text())["status"]=="completed"
+assert not report["unscored"] and not report["missing_areas"]
+plan=copy.deepcopy(template)
+plan.update(status="unbound_F06_not_executable",approved_for_execution=False,created_epoch=time.time(),run_id=RUN,prior_owner_pid=None,closure_bound_epoch=None,model_calls_so_far=0)
+command=list(base["command"])
+command[command.index("--label")+1]="PENDING_VERIFIED_F06_TREE"
+command[command.index("--run-id")+1]=RUN
+command[command.index("--observe-config")+1]=str(N/"http-trace/capture.json")
+plan["command"]=command
+plan["handoff"]={"root_authorized":False,"prior_owner_pid":None,"release_required_before_launch":True,"normal_global_release":None,"endpoint_closure":None,"authorization":"Preparation only. Root must bind successful F06 save/verify, actual Opus receipt/decision, all-four ordinary serving closure, and explicit launch approval. No inherited F05 screen gate."}
+plan["expected_serving"].update(checkpoint=None,tree_sha256=None,service_cids={f"gemma-{i}":None for i in range(4)},closures=[],four_replica_closure=None)
+for key,filename in (("config","http-trace/capture.json"),("identity_check","http-trace-identity-check.json")):
+    plan["http_trace"][key]={"path":str(N/filename),"bytes":None,"sha256":None}
+plan["prelaunch_requirements"]=[
+    "F04 highest complete comparable parent and existing full dev30 baseline; no parent rerun",
+    "F06 successful creation and full verification; failed materialization remains recorded and is not eligible",
+    "actual Claude Opus 5.5 candidate review receipt and root decision bound",
+    "four ordinary candidate replicas exact CIDs/healthy/idle/RO same verified checkpoint/tree, TP2x4 MTP4 native BF16",
+    "normal prior-owner release and nonblocking global lock acquisition",
+    "fresh results and empty candidate HTTP-client trace",
+    "same f91 OCI image, wrapper/critical scorer/manifest source pins and unchanged generation/token conditions",
+    "all saved checkpoint hash/stat continuity and verified parent preservation",
+    "all inherited task-selector overrides absent; no only/excluded IDs",
+    "same dedicated WSP DinD/network/cache/online metadata behavior and source images",
+]
+plan["comparison"]={
+    "baseline_parent":"F04","baseline_plan":pin(base_path),
+    "baseline_run_id":"gemma4-fresh-f04-dev30-dp4-20261107-v1",
+    "baseline_report":pin(base_run/"report.json"),"baseline_run_metadata":pin(base_run/"run.json"),
+    "baseline_code_source_mean_points":report["areas"]["code"]*100,
+    "baseline_overall_points":report["overall"]*100,
+    "baseline_selected_items":2338,"baseline_code_items":90,"baseline_unscored":0,
+    "baseline_reruns":0,"candidate_repetitions":1,
+    "source_identity_host_git_head_is_historical":True,
+    "current_host_git_head":subprocess.check_output(["git","rev-parse","HEAD"],cwd=B,text=True).strip(),
+    "F05_gate_inherited":False,
+}
+merge_plan=R/"analysis/fresh-purpose-20261107-f04-mbpp-lora-training-v1/merge-preparation-v1/prepared-plan.json"
+merge=json.loads(merge_plan.read_text())
+plan["candidate_identity_pending"]={
+    "candidate":"F06","logical_parent":"F04",
+    "logical_parent_checkpoint":merge["parent_path"],"logical_parent_tree_sha256":merge["parent_tree_sha256"],
+    "checkpoint_path":None,"manifest_path":None,"manifest_sha256":None,
+    "verification_receipt_path":None,"verification_receipt_sha256":None,
+    "spec_path":None,"spec_sha256":None,"physical_tree_sha256":None,
+    "hash_contract":"Must bind successful dense-LoRA save and full verify evidence, actual BF16 differences and exact file stat continuity; not yet verified.",
+    "failed_materialization_path_reference":{
+        "checkpoint_path":merge["candidate_path"],"manifest_path":merge["external_manifest_path"],
+        "status":"root-reported failed initial create; reference only, not an eligible serving checkpoint",
+        "plan":pin(merge_plan),
+    },
+    "opus_review":{"receipt_path":None,"receipt_sha256":None,"actual_model":None,"verified":False,"root_decision":None},
+}
+plan["pending_deployment_bindings"]=[
+    "actual successful F06 checkpoint path, manifest and creation receipts",
+    "full verification receipt and BF16 actual changes",
+    "all checkpoint hash rows and exact current file stat",
+    "F06 spec and final adapter/merge provenance",
+    "actual Opus 5.5 review receipt and root decision",
+    "physical tree and command label",
+    "fresh HTTP trace config and identity check",
+    "four exact healthy ordinary candidate CIDs and per-replica/combined closure",
+    "endpoint chat/logprob identity and normal prior-owner lock release",
+    "root launch authorization",
+]
+assert plan["selection"]==base["selection"]
+assert plan["environment_allowlist"]==base["environment_allowlist"]
+assert plan["source_identity"]==base["source_identity"]
+assert plan["limits"]==base["limits"] and plan["cache"]==base["cache"]
+assert plan["selection"]["items"]==2338 and plan["selection"]["named_area_counts"]["code"]==90
+assert len(plan["selection"]["named_area_counts"])==14 and plan["selection"]["probe_count_without_official_area"]==96
+assert plan["selection"]["excluded_ids"]==[] and plan["selection"]["only"]is None and not plan["selection"]["incomplete_manifest"]
+assert not any(x in command for x in ("--only","--exclude"))
+assert not (R/"results"/RUN).exists()
+unbound=N/"launch-plan-unbound.json";save(unbound,plan)
+trace=json.loads((N4/"http-trace-template.json").read_text());trace["output_dir"]=str(N/"http-trace")
+save(N/"http-trace-template.json",trace)
+owner=Path(plan["owner_source"]["path"]);assert sha(owner)==plan["owner_source"]["sha256"]
+preview_command=[sys.executable,str(owner),"--plan",str(unbound)]
+started=time.time();result=subprocess.run(preview_command,cwd=B,text=True,capture_output=True)
+save(N/"owner-preview.json",{"argv":preview_command,"returncode":result.returncode,"stdout":result.stdout,"stderr":result.stderr,"seconds":time.time()-started,"plan":pin(unbound),"owner":pin(owner),"model_calls":0,"GPU_service_operations":0})
+comparison={
+    "selection_exact":True,"environment_exact":True,"source_identity_exact":True,"limits_exact":True,"cache_exact":True,
+    "command_only_changes":["--label candidate tree unbound","--run-id F06 unique ID","--observe-config F06 output path"],
+    "chat_concurrency":256,"logprob_concurrency":32,"agent_concurrency":4,
+    "run_id":RUN,"plan":pin(unbound),"preview":pin(N/"owner-preview.json"),
+    "pending_fields":plan["pending_deployment_bindings"],
+    "approved_for_execution":False,"checkpoint_bound":False,"F05_gate_inherited":False,
+    "source":pin(Path(__file__)),"new_tool_or_product_code_changes":False,
+}
+save(N/"condition-equivalence.json",comparison)
+assert result.returncode==0
+preview=json.loads(result.stdout);assert preview["preview"]and preview["approved"]is False and preview["items"]==2338 and preview["model_calls"]==0
+for path in N.iterdir():
+    if path.is_file():
+        shutil.copyfile(path,PR/path.name)
+print(json.dumps(comparison))

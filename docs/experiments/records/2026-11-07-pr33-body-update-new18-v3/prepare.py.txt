@@ -1,0 +1,77 @@
+"""Prepare PR33 v3 body only; no PATCH, commit, push, model or service action."""
+from pathlib import Path
+import difflib
+import gzip
+import hashlib
+import json
+import re
+import time
+
+R=Path('/mnt/nvme/kairyu/wsp/gemma4-coding-20261104')
+B=R/'worktrees/kairyu-bench-weight-tools'
+O=R/'analysis/fresh-purpose-20261107-pr33-body-update-new18-v3'
+D=B/'docs/experiments/records/2026-11-07-pr33-body-update-new18-v3'
+V2=B/'docs/experiments/records/2026-11-07-pr33-body-update-new18-v2/body.md'
+sha=lambda p:hashlib.sha256(p.read_bytes()).hexdigest()
+assert sha(V2)=='acfea78fba5ba2795c146def16a996a2eefdca04b0a2546b5f1b2421b44882ad'
+assert sha(O/'existing-body.md')=='696f6188ccfe324e6645c521112ea1a0073f616db1c6f82be58ef0a5af1e9d3b'
+sources=['docs/experiments/2026-11-07-f02-payload-release-recipe.md',
+'docs/experiments/2026-11-07-f03-proposal-and-opus-review.md',
+'docs/experiments/2026-11-07-f03-native-spec-audit.md',
+'docs/experiments/2026-11-07-f03-runtime-source-audit.md',
+'docs/experiments/2026-11-07-f03-materialization.md',
+'docs/experiments/2026-11-07-cpu-validation-r8.md',
+'docs/experiments/records/2026-11-07-f03-materialization/summary.json',
+'docs/experiments/records/2026-11-07-f03-proposal-and-review/opus55-review-v1/receipt.json',
+'docs/experiments/records/2026-11-07-cpu-validation-r8/summary.json',
+'docs/experiments/records/2026-11-07-f02-payload-release-recipe/root-apply-v1/closure.json',
+'scripts/experiments/gemma4-purpose/README.md','docs/wsp-tool-inventory.md']
+pins={p:sha(B/p) for p in sources}
+base=V2.read_text(); body=base
+url='https://github.com/ytworks/kairyu-bench/blob/codex/weight-observation-tools/'
+def link(label,path):return '['+label+']('+url+path+')'
+old='F02 now also has a verified lossless dependent archive with all exact edits, metadata, provenance and reconstruction instructions. Its complete payload remains present; no further disk release has occurred.'
+assert body.count(old)==1
+body=body.replace(old,'F02 now has a verified lossless dependent archive with all exact edits, metadata, provenance and reconstruction instructions. '+link('One authorized representation change','docs/experiments/2026-11-07-f02-payload-release-recipe.md')+' released only its two private duplicated payloads (**62,546,338,264 logical bytes; 10.971s**). AV, seven nonweight files, all trial records and all 27 services were preserved. The marker explicitly says it is no longer a loadable checkpoint; the complete content remains reconstructable from the fixed AV dependency and archive. No physical reconstruction or new payload-hash pass is claimed.')
+old_last='Official source-average code results remain **tier 10 87.78; tier 30 72.94** (tier 30 overall 76.72, all 2,338 complete). They use different cohorts and are not combined. AV remains the editing parent; F02 is not adopted, and **90 has not been reached**. Final candidate tier/test confirmation, final edited DeepSWE 32×113, wiki append and conditional Hugging Face publication remain unfinished.'
+assert body.count(old_last)==1
+addition='## F03 saved proposal; behavior remains unmeasured\n\n'
+addition+=link('One fixed CPU proposal','docs/experiments/2026-11-07-f03-proposal-and-opus-review.md')+' from AV changes **60,473 BF16 values in 112 tensors across 59 layers**, L2 **0.00438936817252**, within the declared 180-tensor / 645,180-coordinate eligibility. **22/24 linearized constraints met; two unmet targets remain failures** (F2 correct LL and A1 margin). These predictions are not measured gains; the proposal was neither rescaled nor re-solved.\n\n'
+addition+='Exactly one actual **Claude Opus 5.5** review was verified from response-model receipts (**84.493s, $0.213684, tools 0**). It conditionally supported a diagnostic while judging ordinary-generation/WSP improvement unlikely. The '+link('independent BF16 audit','docs/experiments/2026-11-07-f03-native-spec-audit.md')+' subsequently found **16,754 coordinates exceed the pre-round continuous box**, up to **1.3333×** its bound; those later details are not claimed reviewed by the earlier Opus call. All eight families, 421 native tensors, per-layer denominators and all 24 predictions remain recorded.\n\n'
+addition+='An '+link('audit of the actual serving image','docs/experiments/2026-11-07-f03-runtime-source-audit.md')+' found matching direct-weight meanings and placements for post-attention/post-FFW RMSNorm and layer_scalar. HF and vLLM differ in normalization and casting/rounding order; actual selected-kernel numerical equivalence was not measured. This source check does not establish serving improvement.\n\n'
+addition+=link('One saved checkpoint and complete editor verification','docs/experiments/2026-11-07-f03-materialization.md')+' completed in **205.122s + 165.188s**, with all **9 files verified**, exact saved differences matching the frozen spec, and no failure/retry. The saved identity is derived from those fresh verification hashes and unchanged before/after stats, without an extra full payload hash. **No F03 finite probe, ordinary-thinking generation, transfer generation or official WSP run has occurred.** AV remains served and remains the parent.\n\n'
+addition+='**The next plan was revised by the latest user instruction to avoid redundant baseline measurements.** The former AV→F03→AV forward plan was cancelled before execution. The intended diagnostic is now **one candidate-only pass over all 12 training cases**, reusing existing AV same-frame correct-LL/margin measurements; there will be no additional baseline or restored-base forwards, and unmeasured KL remains **null**, not zero. Subsequent native-generation/WSP comparisons should likewise reuse existing AV results under matching conditions rather than repeat parent measurements. The original Opus review and saved-verification history remain intact; the revised sequence is not represented as having been reviewed in that earlier call.\n\n'
+addition+=link('CPU r8','docs/experiments/2026-11-07-cpu-validation-r8.md')+' passed **564 collected = 507 passed + 57 skips**, failures/errors 0, **48.484s** (48.989 wall). Ruff, mypy (74 files), data consistency and all 31 shell checks passed; 319 source hashes were unchanged. Later release-recipe/spec-audit changes have separate focused tests and Ruff, with their environment/import failures retained; r8 is not retroactively extended to them. CI for the next head is not established in this preparation. '+link('Experiment README','scripts/experiments/gemma4-purpose/README.md')+' and '+link('tool inventory','docs/wsp-tool-inventory.md')+' link the recipes and complete records.\n\n'
+final='Official source-average code results are unchanged: **tier 10 best 87.7778; tier 30 72.9365** (tier 30 overall **76.7201**, all **2,338 complete**, errors/unscored 0). The tiers use different cohorts and are not combined. AV remains the editing parent; F02 is not adopted, F03 has no measured capability gain, and **90 has not been reached**. Final candidate tier/test confirmation, final edited DeepSWE 32×113, wiki append and conditional Hugging Face publication remain unfinished.'
+body=body.replace(old_last,addition+final)
+assert set(re.findall(r'https://[^)\\s]+',base)) <= set(re.findall(r'https://[^)\\s]+',body))
+for needle in ('22/24','two unmet','candidate-only','KL remains **null**','No F03 finite probe','135'):
+ if needle=='135':continue
+ assert needle in body
+for pat in (r'\bgh[pousr]_[A-Za-z0-9]{30,}\b',r'\bhf_[A-Za-z0-9]{28,}\b',r'-----BEGIN .*PRIVATE KEY-----',r'\bsk-ant-[A-Za-z0-9_-]{20,}\b'):
+ assert not re.search(pat,body)
+assert not any(line.rstrip(' \t')!=line for line in body.splitlines())
+for name,value in [('body.md',body),('update.json',json.dumps({'body':body},ensure_ascii=False,indent=2)+chr(10))]:
+ with (O/name).open('x') as f:f.write(value)
+assert json.loads((O/'update.json').read_text())['body']==body
+compression=[]
+for name,left,label in [('diff-from-current-pr.patch',(O/'existing-body.md').read_text(),'current-pr'),('diff-from-v2.patch',base,'prepared-v2')]:
+ raw=''.join(difflib.unified_diff(left.splitlines(keepends=True),body.splitlines(keepends=True),fromfile=label,tofile='prepared-v3')).encode()
+ with (O/name).open('xb') as f:f.write(raw)
+ packed=gzip.compress(raw,compresslevel=9,mtime=0)
+ assert gzip.decompress(packed)==raw
+ with (D/(name+'.gz')).open('xb') as f:f.write(packed)
+ compression.append({'original_path':str(O/name),'original_sha256':hashlib.sha256(raw).hexdigest(),'original_bytes':len(raw),'stored_name':name+'.gz','stored_sha256':hashlib.sha256(packed).hexdigest(),'roundtrip_exact':True})
+for p,digest in pins.items():assert sha(B/p)==digest,'source changed during preparation'
+meta=json.loads((O/'existing-pr.json').read_text())
+prep={'status':'prepared_only_no_patch','created_epoch':time.time(),'current_pr':meta,'v2_body_sha256':sha(V2),'body_sha256':sha(O/'body.md'),'update_sha256':sha(O/'update.json'),'source_pins':pins,'changes':['F02 private payload release closure replaces stale remains-present statement','F03 fixed proposal/actual Opus review/post-rounding and runtime limits/full9 verification','latest user instruction cancels old forward sequence before run; candidate-only12, existing AV reuse, KL unknown','r8 exact coverage plus separate later focused validations; no new-head CI claim','official WSP values and incomplete final goals preserved'],'old_links_preserved':True,'body_update_exact_match':True,'patch_calls':0,'git_commit_or_push':0,'model_service_gpu_calls':0,'limitations':['PR body must be re-fetched and compared against pinned SHA before PATCH','Candidate-only execution plan/tool adaptation is not executed by this body preparation','Earlier Opus review describes its original proposal context, not the later revised execution sequence']}
+for name,data in [('preparation.json',prep),('compression.json',compression)]:
+ with (O/name).open('x') as f:json.dump(data,f,indent=2,ensure_ascii=False);f.write(chr(10))
+for name in ('existing-body.md','existing-pr.json','body.md','update.json','preparation.json','compression.json'):
+ with (D/name).open('xb') as f:f.write((O/name).read_bytes())
+readme='# PR33 new18 v3 body preparation\n\nPrepared only; no PATCH, commit or push. The current PR body was freshly read at SHA '+meta['body_sha256']+' and head '+meta['head_sha']+'. This v3 derives from preserved v2, updates F02 archive completion, adds F03 proposal/audits/materialization and r8, and incorporates the latest user instruction: candidate-only train12 with existing AV comparisons, no redundant baseline/restored forwards, KL unknown. Historical review/results remain intact. Re-fetch before PATCH; concurrent commit/push is not a body-update authorization.\n\nThe body and structured update match byte-for-byte after JSON decoding. source_pins in preparation.json bind all factual inputs. Raw unified diffs remain in the new NVMe analysis directory; the two PR gzip artifacts round-trip exactly, avoiding whitespace-only diff context issues. Earlier v1/v2 are unchanged. This preparation makes no claim about a later head CI or a completed F03 behavior measurement.\n'
+with (D/'README.md').open('x') as f:f.write(readme)
+with (D/'SHA256SUMS').open('x') as f:
+ for p in sorted(D.iterdir()):
+  if p.is_file() and p.name!='SHA256SUMS':f.write(sha(p)+'  '+p.name+chr(10))
+print(json.dumps({'body_sha256':sha(O/'body.md'),'update_sha256':sha(O/'update.json'),'preparation_sha256':sha(O/'preparation.json'),'records_manifest_sha256':sha(D/'SHA256SUMS'),'body_bytes':(O/'body.md').stat().st_size,'source_pins':len(pins),'patch_calls':0}))

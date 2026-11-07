@@ -1,0 +1,312 @@
+{
+  "schema_version": 1,
+  "created_epoch": 1794040787.9945216,
+  "approved_for_execution": true,
+  "authorization": "Root conditional instruction: normal generation closure + fixed pins + fresh plan/preview + daemon/image/protected match permits one fixed train12 CPU scoring.",
+  "split": "train",
+  "cases": {
+    "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-behavior18-inputs-v1/train-cases.json",
+    "sha256": "b42990b0caac24ccc7843e40718c0c5e7ad61dd5baa131ed6852c126bf37f66d",
+    "bytes": 10872
+  },
+  "responses": {
+    "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-av-behavior12-native-v1/generation/train-responses.json",
+    "sha256": "5ea0e169922048a2e5bf649ceb6b1add7bb81db5ee19bcf48c620cb00f3de3db",
+    "bytes": 8525
+  },
+  "runtime": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/runtime/fresh-purpose-20261107-behavior18-validation-v4",
+  "python": "/mnt/nvme/kairyu/dev-logs/wsp/venv-scicode/bin/python",
+  "source_sha256": {
+    "behavior_cases.py": "10ba3e480c8685933904060629b351758cf7b61362756179e55779435d01a310",
+    "behavior_offline.py": "30715a30e02c7fab8ec4e1ffad28e57c4925b16fb45048680d6f5735bd3af9e5",
+    "science_sandbox.py": "4a65378e493fb2f109afdaf0d98b5b93dc067d6d3f48d2a4cf17017f1aadcb78",
+    "science_cases.py": "2c4cc6e75c92c41b98e737ca2c0a653e0f7a7675c6150a6ad33e3f954122a26b"
+  },
+  "protected": [
+    {
+      "cid": "88943a0985ba97dfb17be6b5fb54040eba2570b70ce05126bd410162d3658ffb",
+      "name": "/gemma-4-31b-8gpu-kairyu-1",
+      "image": "sha256:8e6c37a16eea6f7855b2142fb75555250b676cfc3a7c5c2d9a748bfd1175001b",
+      "running": true,
+      "status": "running",
+      "health": "healthy"
+    },
+    {
+      "cid": "3257ee5ee6d0fa212bacd64de8b86152ab0be509e0a7d329838193559039dbda",
+      "name": "/kairyu-wsp-observe-20261106",
+      "image": "sha256:bb4076b5f7468285b297e77867843a190c337009a97d14cefefc0d6a719e68d4",
+      "running": true,
+      "status": "running",
+      "health": "healthy"
+    },
+    {
+      "cid": "dfbaee8005646b8369493c56f5daa89251880694970e135209b3416255e57d57",
+      "name": "/gemma-wsp-deepswe-dind-20261104",
+      "image": "sha256:aa3df78ecf320f5fafdce71c659f1629e96e9de0968305fe1de670e0ca9176ce",
+      "running": true,
+      "status": "running",
+      "health": null
+    },
+    {
+      "cid": "149b564776c7bda50b4039b44b0cf52b1178272a481a4c4dee88de2f283ae334",
+      "name": "/wsp-dind",
+      "image": "sha256:2a232a42256f70d78e3cc5d2b5d6b3276710a0de0596c145f627ecfae90282ac",
+      "running": true,
+      "status": "running",
+      "health": null
+    },
+    {
+      "cid": "5885c75f79f5396867db6b3518637ca5bcde342dd1fd20f88c89bf69ff42cdff",
+      "name": "/gemma4-wsp-cpu-chat-purpose-20261105",
+      "image": "sha256:af9e746b913088cbf6c4464a31d6904a6b7e1d3ba62f0895362ddf13595f7abe",
+      "running": false,
+      "status": "exited",
+      "health": null
+    },
+    {
+      "cid": "ed9842852109333c564c5962ada840ea2794720ad613ebc0c8ef96591c816a33",
+      "name": "/gemma4-wsp-cpu-chat-frame-preflight-failed-20261105",
+      "image": "sha256:af9e746b913088cbf6c4464a31d6904a6b7e1d3ba62f0895362ddf13595f7abe",
+      "running": false,
+      "status": "exited",
+      "health": null
+    },
+    {
+      "cid": "37b84155d0d47c339a8a3f989cf69be74a80a9f7369829db41612a5a77fe481a",
+      "name": "/gemma4-wsp-cpu-algorithm-completion-20261105",
+      "image": "sha256:af9e746b913088cbf6c4464a31d6904a6b7e1d3ba62f0895362ddf13595f7abe",
+      "running": false,
+      "status": "exited",
+      "health": null
+    },
+    {
+      "cid": "dbabe7158257d30d26b6f96d51eb17e4a0b6385fcf5d9d90c2182b22aed3d20b",
+      "name": "/gemma4-wsp-cpu-programming-completion-20261105",
+      "image": "sha256:af9e746b913088cbf6c4464a31d6904a6b7e1d3ba62f0895362ddf13595f7abe",
+      "running": false,
+      "status": "exited",
+      "health": null
+    },
+    {
+      "cid": "3d62fd16cb139033941f36930a226b197b4512f4d319bc0920ecc3ef0b62a87f",
+      "name": "/gemma4-wsp-cpu-joint-sets-20261105",
+      "image": "sha256:af9e746b913088cbf6c4464a31d6904a6b7e1d3ba62f0895362ddf13595f7abe",
+      "running": false,
+      "status": "exited",
+      "health": null
+    },
+    {
+      "cid": "c672bb052ad042282e2e2ec2e8b65edde8b6c50262bd6dab00da57314e4f8b1b",
+      "name": "/gemma4-wsp-cpu-whole-dependencies-20261105",
+      "image": "sha256:af9e746b913088cbf6c4464a31d6904a6b7e1d3ba62f0895362ddf13595f7abe",
+      "running": false,
+      "status": "exited",
+      "health": null
+    },
+    {
+      "cid": "374e969acaf78f336c638b5bff9ffdde04fd44f9075e45d2cfd54881b556b2c1",
+      "name": "/gemma4-wsp-cpu-broad-margins-20261105",
+      "image": "sha256:af9e746b913088cbf6c4464a31d6904a6b7e1d3ba62f0895362ddf13595f7abe",
+      "running": false,
+      "status": "exited",
+      "health": null
+    },
+    {
+      "cid": "61a829c3aaf5c9af66499357d1f55b8f58ad19ef40cb887bbe63a0c4729c10f9",
+      "name": "/gemma4-wsp-cpu-combinations-20261105",
+      "image": "sha256:af9e746b913088cbf6c4464a31d6904a6b7e1d3ba62f0895362ddf13595f7abe",
+      "running": false,
+      "status": "exited",
+      "health": null
+    },
+    {
+      "cid": "fbb725752d9e8990506968903bfcb5a406eb56f0bc6c839eb08199c0d05f54f3",
+      "name": "/gemma4-wsp-cpu-mechanisms-v2-20261105",
+      "image": "sha256:af9e746b913088cbf6c4464a31d6904a6b7e1d3ba62f0895362ddf13595f7abe",
+      "running": false,
+      "status": "exited",
+      "health": null
+    },
+    {
+      "cid": "4ef033809802f99ae4859327cf7350e2dc4c7d657b226a7229914432e0dd0718",
+      "name": "/gemma4-wsp-cpu-mechanisms-20261105",
+      "image": "sha256:af9e746b913088cbf6c4464a31d6904a6b7e1d3ba62f0895362ddf13595f7abe",
+      "running": false,
+      "status": "exited",
+      "health": null
+    },
+    {
+      "cid": "8c1e4b184886cd32d110fab4c4fda7369c445ae910f1e68b8ba4834811921d8d",
+      "name": "/gemma4-wsp-cpu-sparse-check-20261105",
+      "image": "sha256:af9e746b913088cbf6c4464a31d6904a6b7e1d3ba62f0895362ddf13595f7abe",
+      "running": false,
+      "status": "exited",
+      "health": null
+    },
+    {
+      "cid": "c81e36297abd0b0e23fd11ada341ac6845e4446fe34a5f9432de70cbdfa752cc",
+      "name": "/gemma4-wsp-cpu-norm-probe-20261105",
+      "image": "sha256:af9e746b913088cbf6c4464a31d6904a6b7e1d3ba62f0895362ddf13595f7abe",
+      "running": false,
+      "status": "exited",
+      "health": null
+    },
+    {
+      "cid": "0a32557db9cd0bd49fffefea34276c8515021858e3d0115e560ef835f616609a",
+      "name": "/gemma-wsp-deepswe-dind-20261104-pre-nvme-results-20261105",
+      "image": "sha256:aa3df78ecf320f5fafdce71c659f1629e96e9de0968305fe1de670e0ca9176ce",
+      "running": false,
+      "status": "exited",
+      "health": null
+    },
+    {
+      "cid": "ca0ce07ae660af1bb129a129aa538d23206e1d10c4db982ae692618dd852678d",
+      "name": "/wsp-dind-pre-nvme-results-20261105",
+      "image": "sha256:2a232a42256f70d78e3cc5d2b5d6b3276710a0de0596c145f627ecfae90282ac",
+      "running": false,
+      "status": "exited",
+      "health": null
+    },
+    {
+      "cid": "005b20d4f0adacdc438e2e90f44c9d21579f3d089b366bcfe8af8f0785bde8c3",
+      "name": "/gemma-4-31b-8gpu-chat-ui-1",
+      "image": "sha256:ef11a68f38457d831e23168486858c25b9d9c4399094c9e72c0d4d8767ac09de",
+      "running": true,
+      "status": "running",
+      "health": "healthy"
+    },
+    {
+      "cid": "b4302da3c2814fa2458ae7e4652b0041af34bd45d6872b86ecd40cfa06bf9985",
+      "name": "/gemma-4-31b-8gpu-embed-0-1",
+      "image": "sha256:af9e746b913088cbf6c4464a31d6904a6b7e1d3ba62f0895362ddf13595f7abe",
+      "running": true,
+      "status": "running",
+      "health": "healthy"
+    },
+    {
+      "cid": "897103115f63e39d3261f39bf449bfa9258121d270ae700f65c0321837eeec08",
+      "name": "/gemma-4-31b-8gpu-embed-1-1",
+      "image": "sha256:af9e746b913088cbf6c4464a31d6904a6b7e1d3ba62f0895362ddf13595f7abe",
+      "running": true,
+      "status": "running",
+      "health": "healthy"
+    },
+    {
+      "cid": "bcf8a575872a9ff05a85bfd8b46dbeec3cb9d8bef6a94aded4cb5a12c61bc976",
+      "name": "/gemma-4-31b-8gpu-docling-1",
+      "image": "sha256:6eda9c524992147c1b0b06a1a9be4894bd68b1f43c86d92c32f996c4c60d18a3",
+      "running": true,
+      "status": "running",
+      "health": "healthy"
+    },
+    {
+      "cid": "b0d4c3e871a7d2a44249318079920bd01f56cb7978b58a19f4245245f140afd6",
+      "name": "/kairyu-pg-groupc-ci-det",
+      "image": "sha256:f3bd19c606e442c3d7bdfa8002e03fe260a1023351e0ea4598032022b68dd6e3",
+      "running": true,
+      "status": "running",
+      "health": null
+    }
+  ],
+  "daemon_id": "3e518d2b-6972-43f8-b325-f7f33697a2d2",
+  "image_id": "sha256:c4ab50223f03fca17bf871e4d05f77001e76525a1c574b6c6ee7024db06cfdc2",
+  "docker_root_dir": "/mnt/nvme/docker",
+  "generation_evidence": [
+    {
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-av-behavior12-native-v1/owner/generation-complete.json",
+      "sha256": "7ee6c824fa181979b2a1fbb38ab4a79eb1c076819627d5f23aaa1bdc55e9d0b6",
+      "bytes": 3116
+    },
+    {
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-av-behavior12-native-v1/owner/owner-closure.json",
+      "sha256": "1c8fc883699575810907496d1a470f24795fb91c45db4c235c4bb480f4685121",
+      "bytes": 202
+    },
+    {
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-av-behavior12-native-v1/owner/normal-lock-release.json",
+      "sha256": "055434f45c085d06727552938e9e60e5336c7fbc1dad408401b302c8a42fe636",
+      "bytes": 54
+    },
+    {
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-av-behavior12-native-v1/owner/serving-closure.json",
+      "sha256": "877b6fc18b58b7da19e7f18d310e204e8e1737d149f7bcb2a2aa5900d3cd2a70",
+      "bytes": 1055
+    },
+    {
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-av-behavior12-native-v1/root-approved-launch-plan.json",
+      "sha256": "e088cf58f25426395a9754094e66e7b4046c452a78acfa71a1baa7aaefe720f1",
+      "bytes": 26372
+    }
+  ],
+  "argv": [
+    "--mode",
+    "score",
+    "--split",
+    "train",
+    "--cases",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-behavior18-inputs-v1/train-cases.json",
+    "--cases-sha256",
+    "b42990b0caac24ccc7843e40718c0c5e7ad61dd5baa131ed6852c126bf37f66d",
+    "--responses",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-av-behavior12-native-v1/generation/train-responses.json",
+    "--responses-sha256",
+    "5ea0e169922048a2e5bf649ceb6b1add7bb81db5ee19bcf48c620cb00f3de3db",
+    "--docker-socket",
+    "/var/run/docker.sock",
+    "--daemon-id",
+    "3e518d2b-6972-43f8-b325-f7f33697a2d2",
+    "--image",
+    "sha256:c4ab50223f03fca17bf871e4d05f77001e76525a1c574b6c6ee7024db06cfdc2",
+    "--output",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-av-behavior12-score-v2/evaluation",
+    "--run"
+  ],
+  "preview": {
+    "command": [
+      "/mnt/nvme/kairyu/dev-logs/wsp/venv-scicode/bin/python",
+      "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/runtime/fresh-purpose-20261107-behavior18-validation-v4/behavior_offline.py",
+      "--mode",
+      "score",
+      "--split",
+      "train",
+      "--cases",
+      "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-behavior18-inputs-v1/train-cases.json",
+      "--cases-sha256",
+      "b42990b0caac24ccc7843e40718c0c5e7ad61dd5baa131ed6852c126bf37f66d",
+      "--responses",
+      "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-av-behavior12-native-v1/generation/train-responses.json",
+      "--responses-sha256",
+      "5ea0e169922048a2e5bf649ceb6b1add7bb81db5ee19bcf48c620cb00f3de3db",
+      "--docker-socket",
+      "/var/run/docker.sock",
+      "--daemon-id",
+      "3e518d2b-6972-43f8-b325-f7f33697a2d2",
+      "--image",
+      "sha256:c4ab50223f03fca17bf871e4d05f77001e76525a1c574b6c6ee7024db06cfdc2",
+      "--output",
+      "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-av-behavior12-score-v2/preview"
+    ],
+    "returncode": 0,
+    "seconds": 0.2215740110259503,
+    "report": {
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-av-behavior12-score-v2/preview/report.json",
+      "sha256": "47b9dd018a84faa3076bb55d09084036b503e7e80970becfbd88eb7f0a15d6ce",
+      "bytes": 4248
+    }
+  },
+  "raw_worker_capture": "recording Docker subclass delegates unchanged super().run and saves returned protocol; no generated host execution",
+  "limits": {
+    "cases": 12,
+    "trials_per_case": 16,
+    "seconds_per_case": 15,
+    "cpus": 1,
+    "memory_mib": 512,
+    "user": "1003:1003",
+    "network": "none",
+    "gpus": false,
+    "host_mounts": []
+  },
+  "new_model_calls": 0,
+  "retry": 0,
+  "transfer_scoring": false
+}

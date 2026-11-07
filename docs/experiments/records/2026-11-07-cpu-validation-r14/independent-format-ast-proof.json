@@ -1,0 +1,8 @@
+{
+  "before_sha256": "b9a5834457ff1d5475eda4d3a6b2fdde90c5565cdceaa01cdb9e27a03bdef9e1",
+  "after_sha256": "d131c7f4300889ce6136dd1bf40b5843b685686bbb6ed79a57605d380b25fedf",
+  "ast_identical_recomputed": true,
+  "check": "ast.dump(ast.parse(source), include_attributes=False)",
+  "executed_tests_source": "original driver",
+  "no_tests_or_model_runs_during_packaging": true
+}

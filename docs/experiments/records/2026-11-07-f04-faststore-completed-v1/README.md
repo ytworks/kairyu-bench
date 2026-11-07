@@ -1,0 +1,7 @@
+# F04 completed storage and deployment records
+
+This directory retains the exact materialization operation, its superseded complete-only version, root launch, parent decision, every command/stdout/stderr/execution receipt, full store receipt, candidate manifest, and implementation snapshots. The two compressed JSON files are lossless gzip with mtime 0. `retention-index.json` gives original and stored SHA256/byte counts; decompression was verified against every source byte. Nothing here is a new benchmark trial.
+
+Build compared all 1,188 tensors (names, dtype, shape and raw bytes), freshly hashing source and packed files. The final candidate consists of nine standard files and 429 changed BF16 coordinates in 140 tensors. Candidate verification freshly hashes eight private files and validates the shared file using the earlier full build hash and unchanged inode/stat; it does not claim a second full-model hash. The shared file has 17 fixed links and must remain immutable for this store generation.
+
+Build 279.879 s; candidate creation 1.540 s; verify 1.558 s. Four ordinary replicas loaded the actual packed checkpoint in parallel in 127.653 s. Endpoint closure confirmed one gateway chat and four direct logprob requests (5/5), TP2/MTP4/native runtime, all 27 members and 23 protected containers; failures and rollbacks were zero. Deployment source/closures, old and updated served-record bytes, and the normal global-lock release are in the sibling `2026-11-07-f04-deployment-dp4-v1` directory.

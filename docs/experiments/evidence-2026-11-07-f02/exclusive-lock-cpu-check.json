@@ -1,0 +1,26 @@
+{
+  "status": "pass",
+  "method": "real NVMe flock, same-UID process proof, competing independent file descriptor rejected",
+  "proof": {
+    "pid": 77374,
+    "uid": 1003,
+    "lock_identity": "09:02:182097847",
+    "lock_rows": [
+      [
+        "45:",
+        "FLOCK",
+        "ADVISORY",
+        "WRITE",
+        "77374",
+        "09:02:182097847",
+        "0",
+        "EOF"
+      ]
+    ],
+    "observed_epoch": 1794026929.1526053
+  },
+  "competing_lock_rejected": true,
+  "service_operations": 0,
+  "gpu_operations": 0,
+  "source_sha256": "4701314986940aa741b27ee92caef7cade4b862c4fd795a6e6024ae9c1bda9f7"
+}

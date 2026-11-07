@@ -1,0 +1,101 @@
+import gzip,hashlib,json
+from pathlib import Path
+R=Path("/mnt/nvme/kairyu/wsp/gemma4-coding-20261104");B=R/"worktrees/kairyu-bench-weight-tools"
+N=R/"analysis/fresh-purpose-20261107-f03-dev30-dp4-v1";O=N/"official-partial-comparison-v1"
+D=B/"docs/experiments/records/2026-11-07-f03-official-comparison"
+def read(p):return json.loads(p.read_text())
+def sha(data):return hashlib.sha256(data).hexdigest()
+s=read(O/"summary.json")
+files=[(p,p.name) for p in O.iterdir() if p.is_file()]
+files += [(p,"candidate-audit-"+p.name) for p in (O/"candidate-audit").iterdir() if p.is_file()]
+for name in ["actual-runner.json","run-start-verified.json","engine-progress-probe.json","polyglot-timeout-config.json","polyglot-http-log-status.json","terminal-graceful-stop-plan.json","terminal-graceful-stop-before.json","terminal-graceful-stop-signal.json","terminal-graceful-stop-closure.json","owner-complete.json"]:
+ files.append((N/name,name))
+run=R/"results/gemma4-fresh-f03-dev30-dp4-20261107-v1"
+files += [(run/name,"official-"+name) for name in ["run.json","report.json"]]
+records=[]
+for src,name in files:
+ data=src.read_bytes();compressed=len(data)>100000;dest=D/(name+".gz" if compressed else name)
+ with dest.open("xb") as f:f.write(gzip.compress(data,mtime=0) if compressed else data)
+ if compressed:assert gzip.decompress(dest.read_bytes())==data
+ records.append({"source":str(src),"file":dest.name,"source_bytes":len(data),"source_sha256":sha(data),"stored_sha256":sha(dest.read_bytes()),"lossless_gzip":compressed})
+(D/"copy-receipt.json").write_text(json.dumps(records,indent=2)+"\n")
+(D/"packaging-first-command-failure.json").write_text(json.dumps({"stage":"local tool JavaScript parsing before SSH","error":"SyntaxError: Unexpected identifier terminal","remote_execution":False,"remote_mutation":False,"resolution":"Removed Markdown backticks from the JavaScript raw-string transport; no numerical analysis rerun."},indent=2)+"\n")
+code=s["code"];base=s["timing"]["base"];cand=s["timing"]["candidate"]
+text="""# F03: partial canonical dev30 result — 2026-11-07
+
+F03 retained the full **2,338-item selection** and produced 2,338 response records. The official runner saved **2,337 scores and one unknown**, terminal-bench:polyglot-c-py, after an explicitly authorized targeted interruption. This run is **partial**, cannot enter a complete-run ranking, and is not adopted. Existing AV remains the highest complete parent. **No AV benchmark was rerun.**
+
+The code cohort itself is complete: **90/90 scored**, four-source mean **72.6587301587**, versus existing AV **72.9365079365** (delta **−0.2777777778 points**). This is not a complete 14-area evaluation.
+
+## Complete code cohort
+
+| Source | AV | F03 | Delta (points) |
+|---|---:|---:|---:|
+"""
+for name in ["humaneval-plus","livecodebench","mbpp-plus","scicode"]:
+ v=s["sources"][name];text+=f"| {name} | {100*v['base_reported']:.8f} | {100*v['candidate_reported']:.8f} | {100*(v['candidate_reported']-v['base_reported']):+.8f} |\n"
+text+="""
+HumanEval+ is 30/30 (AV 29/30), LiveCodeBench 15/20 in both arms, MBPP+ 22/30 (AV 23/30); SciCode averages ten per-problem partial-credit scores. These are all five changed code items; the other **85 are equal**.
+
+| Item | AV | F03 | Evidence |
+|---|---:|---:|---|
+"""
+evidence={"humaneval-plus:HumanEval/152":"base/plus fail → pass","livecodebench:3777":"verifier fail → pass","livecodebench:abc395_f":"verifier pass → fail","mbpp-plus:Mbpp/801":"base/plus pass → fail","scicode:72":"8/9 → 7/9; step 72.9 newly fails AssertionError; 72.5 remains failed"}
+for x in s["code_changed_items"]:text+=f"| {x['id']} | {x['base_score']:.9f} | {x['candidate_score']:.9f} | {evidence[x['id']]} |\n"
+text+="""
+Full IDs, equal scores, all failures, SciCode step diagnostics and generation-token metadata are retained in the all-90 code artifact. No benchmark reference answers were moved into calibration.
+
+## All areas and sources
+
+Among **2,241 paired capability items**, 44 improve, 54 worsen and 2,143 are equal. One additional capability item is unknown. The 96 diagnostic NLL items are separate. Each area is a source-equal mean. The agents row uses nine paired items with one missing and is **not a complete agent-area result**.
+
+| Area | AV paired | F03 paired | Delta (points) | Unpaired |
+|---|---:|---:|---:|---:|
+"""
+for name,v in s["areas_paired_only"].items():text+=f"| {name} | {100*v['base']:.8f} | {100*v['candidate']:.8f} | {100*v['delta']:+.8f} | {v['unpaired']} |\n"
+text+="""
+Complete-area losses include long-context −12.03949495 points, instructions −3.66666667, vision −4.16666667 and reasoning −2.75362319. Expert improves +6.25, facts +1.66666667 and math +0.91346154. These are descriptive one-pair results, not an isolated causal estimate.
+
+The saved report's overall 73.9488933437 and the existing compare --partial paired-subset overall are **not complete overall scores**. Both remain in JSON but are not used for ranking. Missing polyglot is never assigned zero.
+
+| Source | Selected | F03 scored | AV reported mean | F03 reported mean | Raw + / − / = / unknown |
+|---|---:|---:|---:|---:|---|
+"""
+for name,v in s["sources"].items():text+=f"| {name} | {v['items']} | {v['candidate_scored']} | {v['base_reported']:.9f} | {v['candidate_reported']:.9f} | {v['positive_raw_deltas']} / {v['negative_raw_deltas']} / {v['equal']} / {v['unpaired']} |\n"
+text+="""
+Capability values are 0–1 and higher is better. Probe source means are per-item NLL and **lower is better**; their positive raw deltas are losses. Probe-code mean NLL improves 4.0225001185 → 3.9549204165 while the complete code score decreases. The compare.probes output separately reports shared probe positions (code: 2,171 positions, NLL 3.1890228707 → 3.1440310119); these denominators are not pooled.
+
+## Interruption, time and agent work
+
+Polyglot had two saved assistant actions and nine tools while generation continued. A two-snapshot GET-only check observed +1,305 generation tokens in 10.020 seconds (~130.24 tokens/s), so the engine was progressing. At 11:05:19.210852 UTC the gateway logged “client disconnected; cancelled in-flight work”, about 1,200 seconds after the last saved step; configured LLM-call timeout was 1,200 seconds. Work then moved from gemma1 to gemma3 without a new saved action. This strongly suggests a nested timeout/retry; exact retry count is unknown because request-ID linkage and an attempt counter were unavailable.
+
+The task's original agent timeout is 900 seconds with multiplier 48 (nominal 43,200 seconds). No timeout, token cap, task count or serving condition was changed. Following the user's acceleration instruction, root explicitly authorized ending this attempt as incomplete. At epoch 1794050001.632966 one SIGTERM was sent to exact Harbor host PID 1083709/container PID 602 after checking starttime 69562253, argv hash, parent chain and runner CID. The command ran inside the existing root-owned runner with **no host root/sudo**, no SIGKILL and no repeat signal. Main WSP/scorers and inference services were not signalled.
+
+The adapter recorded CancelledError/null reward for polyglot, preserved five verifier results and allowed WSP to flush its already-computed RAM scores. Earlier progress wording “scoring not started” was inaccurate: scores were **not yet saved/available**, although source scoring had run in RAM. Historical progress records are not rewritten.
+
+"""
+text+=f"F03 wall time is **{cand['wall_seconds']:.1f} s**, including **{cand['load_seconds']:.1f} s** loading; AV was **{base['wall_seconds']:.1f} s**, including **{base['load_seconds']:.1f} s**. Interrupted F03 consumed {cand['wall_seconds']-base['wall_seconds']:.1f} more seconds. The report's generation_seconds also starts before loading. Chat calls {base['chat_api_calls']} → {cand['chat_api_calls']}; logprob calls {base['logprob_api_calls']} → {cand['logprob_api_calls']}. WSP trace error/retry counters do not cover every nested agent retry.\n\n"
+text+="| Agent task | AV score | F03 score | AV / F03 reported steps | AV / F03 tools |\n|---|---:|---:|---:|---:|\n"
+for x in s["agents"]:
+ a,b=x["base"],x["candidate"];bs=a.get("episodes",a.get("assistant_messages"));cs=b.get("episodes",b.get("assistant_messages"));bt=a.get("tool_calls",a.get("announced_tool_calls"));ct=b.get("tool_calls",b.get("announced_tool_calls"))
+ text+=f"| {x['id']} | {a['score']} | {'unknown' if b['score'] is None else b['score']} | {bs} / {cs} | {bt} / {ct} |\n"
+text+="""
+Terminal steps above are reported n_episodes; live monitoring counted persisted assistant trajectory steps. Polyglot has three reported episodes but only two saved assistant actions. SWE steps are saved assistant messages. F03 SWE has 140 saved assistant messages/tools and 141 reported API calls; missing usage is not zero-filled. F03 Terminal-Bench has 38 reported episodes, 37 saved assistant actions and 108 tools including the interrupted attempt.
+
+Owner ended with process returncode 1 for the partial run, elapsed 2,981.634 seconds. Harbor, shell, main WSP and owner PIDs disappeared. All pre-stop running host containers except the owned WSP runner remained running; four inference CIDs and gateway CID were unchanged. No global-lock probe was repeated because the separately authorized F04 CPU build had already acquired it.
+
+## Reproduction and validation
+
+Existing CPU package compare was invoked with explicit --partial, bypassing the wrapper/image build. Existing fresh-n30-complete-audit.py received only an expected-tree argument and opt-in --allow-partial; default completion requirements remain. It retains all 2,338 records before strict checks, preserves the unknown and records full_score_ranking_permitted=false. The unchanged three missing/duplicate/nonfinite tests passed (0.069 seconds); compile/help and diff checks passed. No full-suite rerun was added.
+
+Runtime is matched f91 runner, af9 serving, TP2×4/MTP4, concurrency 256/32/4, all canonical selected IDs/budgets and HTTP-client trace-only mode. Runner identity was captured **mid-run**, 1,783.8 seconds after owner start, as explicitly stated in the receipt. Old AV audit outputs and their run/report/items hashes were reused without new inference.
+
+[All records and exact one-time commands](records/2026-11-07-f03-official-comparison/README.md) include lossless compact numerical outputs and input hashes. The completed-only collector was prepared but **never executed**; the explicit partial collector ran once successfully. One packaging command failed JavaScript parsing before SSH and made no remote change; the corrected packaging retained this failure. Source-discovery misses/permission denials did not alter evaluation. No live progress log, credential, benchmark gold or generated answer is included in this compact PR package.
+
+No candidate adoption, DeepSWE result or Hugging Face publication is claimed.
+"""
+doc=B/"docs/experiments/2026-11-07-f03-partial-official-result.md"
+with doc.open("x") as f:f.write(text)
+(D/"README.md").write_text("# F03 partial official comparison\n\nAll 2,338 selected rows are retained; one unknown is not zero-filled. F03 is not eligible for full-run ranking. No AV inference was repeated.\n\ncopy-receipt.json maps exact source artifacts to byte-identical copies or lossless gzip. All selected numeric rows, all 90 code pairs, source/area/probe aggregates, agent work, runtime identity, targeted SIGTERM and closure are included. SHA256SUMS covers each record. Large JSON files use .gz; actual filenames are listed in the receipt.\n\ncollect-partial.py.txt ran once. collect-completed.py.txt was prepared but never run after interruption. Existing audit/compare implementations are reused. Runtime capture, the bounded metrics probe, one-shot signal and packaging code are retained. No active progress log or raw model text is included.\n")
+(D/"SHA256SUMS").write_text("".join(f"{sha(p.read_bytes())}  {p.name}\n" for p in sorted(D.iterdir()) if p.is_file() and p.name!="SHA256SUMS"))
+print(json.dumps({"document":str(doc),"copied_artifacts":len(records),"record_files":sum(p.is_file() for p in D.iterdir()),"total_bytes":sum(p.stat().st_size for p in D.iterdir() if p.is_file())}))

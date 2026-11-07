@@ -1,0 +1,7 @@
+import importlib.metadata,json,hashlib
+from pathlib import Path
+out={}
+for rel in ['vllm/model_executor/models/gemma4_mm.py', 'vllm/ir/ops/layernorm.py', 'vllm/model_executor/model_loader/default_loader.py', 'vllm/model_executor/model_loader/utils.py', 'vllm/model_executor/models/registry.py']:
+ d=importlib.metadata.distribution('vllm');p=Path(d.locate_file(rel));raw=p.read_bytes()
+ out[rel]=dict(path=str(p),version=d.version,sha256=hashlib.sha256(raw).hexdigest(),size=len(raw),text=raw.decode())
+print(json.dumps(out))

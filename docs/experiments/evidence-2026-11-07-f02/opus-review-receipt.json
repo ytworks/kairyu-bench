@@ -1,0 +1,136 @@
+{
+  "mode": "send",
+  "prompt_sha256": "faf0a2f5d0bb0513236dd4dd89ae1e1ed80e16d8db018d8778ca34bbf99bba66",
+  "prompt_bytes": 15339,
+  "requested_model": "claude-opus-5-5",
+  "labels": "B",
+  "fallback_model": null,
+  "allow_text_review": false,
+  "anonymity": "pattern lint only; caller must review every prompt byte for private identifiers and measurements",
+  "schema_version": 1,
+  "started_at": "2026-11-07T05:00:57.743533+00:00",
+  "scope": "User-reviewed anonymous prompt retained with this receipt; the review is not a model capability measurement",
+  "verified_requested_model": true,
+  "controls": {
+    "safe_mode": true,
+    "restricted": true,
+    "tools": [],
+    "mcp_servers": [],
+    "session_persistence": false,
+    "custom_generic_system_prompt": true
+  },
+  "raw_stream_persisted": false,
+  "thinking_blocks_persisted": false,
+  "environment_persisted": false,
+  "returncode": 0,
+  "stderr_bytes": 0,
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "assistant_models": [
+    "claude-opus-5-5"
+  ],
+  "model_usage": {
+    "claude-opus-5-5": {
+      "inputTokens": 2,
+      "outputTokens": 8015,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 6653,
+      "webSearchRequests": 0,
+      "costUSD": 0.213532,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 128000,
+      "canonicalModel": "claude-opus-5-5"
+    }
+  },
+  "is_error": false,
+  "labels_match": true,
+  "tool_uses": 0,
+  "event_types": {
+    "system": 28,
+    "assistant": 2,
+    "rate_limit_event": 1,
+    "result": 1
+  },
+  "review_format": "json_reviews",
+  "review_usable": true,
+  "review_context_label": null,
+  "public_final_text": null,
+  "response": {
+    "reviews": [
+      {
+        "label": "B",
+        "assessment": "B is a fixed, fully specified, exactly reversible BF16 edit of A. Its own predeclared proxy gate failed. Of 76 numerical design constraints, 64 pass and 12 fail. The gate-relevant failures are: referent fold1 LL -0.005768 and margin -0.029901, which are negative on a target purpose; and workflow fold1 margin -0.035186, which crosses the -0.03 retention allowance. The other design shortfalls are positive target-fold gains below the requested +0.03: implementation LL fold1 and both margin folds, all four algorithm rows, and referent fold0 LL 0.029855 and margin 0.029189. Code folds meet their requested minimums. The surrogate was weak even before measurement. The linear predictions did not satisfy the design constraints for implementation (both folds), algorithm (both folds), referent fold1 or code LL fold1 (0.005836 < 0.01), so the solve as rounded never met its own spec. Linear predictions also miscalibrate the measured finite deltas. Signs flip on several rows, including referent LL fold1 (predicted +0.0269, measured -0.0058) and workflow LL fold1 (predicted +0.0124, measured -0.0277). Magnitudes diverge widely: code margin fold0 was predicted +0.140 and measured +1.018, mostly from one case (+6.029) while three other cases in that fold worsened. The step is not small relative to the sampled coordinates (ratio 0.150), so first-order behavior should not be assumed. Measurement integrity is strong: restoration is exact, A sweeps are reproduced exactly across experiments, and there are no case removals. Against F01, adding referent targets reduced the referent fold1 LL loss (-0.0058 vs -0.0375), but referent margin barely changed (-0.0299 vs -0.0323) and workflow margin fold1 now fails instead. On the proxy, this is a lateral move, not a demonstrated improvement. Nothing here is official evidence. The edited checkpoint has not been materialized. Nothing shows official performance regresses or improves.",
+        "diagnostic_recommendation": "Conditionally defensible as one disclosed, post-data transfer diagnostic, not as confirmation. The user's purpose is official coding points, and the -0.03 threshold has no calibrated mapping to official loss. The proxy's failures are therefore mainly gate-discipline failures, not evidence of official regression. One full canonical dev tier10 run is cheap (about 30 minutes of generation) and is the only way to learn whether proxy deltas transfer. The case for stopping instead is also legitimate. The gate was declared before data. F01 was stopped by the same rule and B is now being let through, which is asymmetric. The expected coding benefit is weak: the three official code failures are specific semantic or exact-output issues (one exact-output construction, int-vs-float minimum, subsequence-vs-sublist). Teacher-forced LL gains on authored, forced-empty-thought cases give little reason to expect them to flip. Code tier10 has only 26 items, so the score moves 3.3 to 5.6 points per item; one flip clears or misses 90 (MBPP 9/10 gives 91.11, LiveCodeBench 6/6 gives 93.33, while one HumanEval+ loss gives 84.44). Without A's run-to-run variability, a single run cannot separate edit effects from generation noise. The recommendation is to proceed only if the amendment is written, timestamped and frozen before B is materialized or run, and limited to exactly this single B run. Each further official dev run on edited candidates must be counted as additional dev reuse. If the team is unwilling to treat the outcome as diagnostic-only when it is noise-limited, stop instead.",
+        "failed_gate_disposition": "Record B's original proxy gate as FAILED permanently: 12/76 design constraints fail, including referent fold1 LL and margin and workflow fold1 margin. That label must not change regardless of the official result. Any official run occurs only under a separately labeled post-data amendment, and any later advancement is attributed to the amended official-evidence rule, never to the original gate. F01 retains its own FAILED-gate status and has no official score. The amendment must explicitly state that F01 is not being officially measured and why. If it may be measured later, that decision must be declared now, before B's result, not chosen after seeing B.",
+        "amendment_requirements": [
+          "Write and timestamp the amendment before materializing B or starting the official run, and freeze it. Include its full text with any result.",
+          "State plainly that it was adopted after proxy data, after B failed its predeclared gate, and that the -0.03 threshold is being set aside as a stopping rule because it has no calibrated mapping to official capability loss.",
+          "Disclose the selection: B was chosen as the latest fixed dependency experiment, not by official score. F01 was stopped by the same gate and is not officially measured. Disclose whether F01, or any other prior candidate, may be officially run later; decide this now.",
+          "Limit the amendment to one full official run of exactly B: no additional tuning, re-solving, amplitude scaling or post-hoc cell selection. Declare that further surrogate-only optimization pauses until B's official result is recorded and analyzed.",
+          "Predeclare what counts as code improvement. For example: official code-source mean strictly greater than A's 87.777778 on the same 26 items and conditions, with ties counted as no improvement. Predeclare that no code improvement means no advancement.",
+          "Predeclare the tradeoff rule. An overall 14-area mean loss above 1 point or any single-area loss above 5 points triggers explicit measured tradeoff analysis and cannot be silently accepted. State now which outcome would reject B even with a code gain (for example, a code gain of one item against a large multi-area loss), so acceptance is not argued after the fact.",
+          "Predeclare how noise is handled. Use existing repeated or failed A trials to report A's item-level run-to-run variability if available. If none exist, state now that a single-item code change is treated as uninterpretable for advancement.",
+          "Keep the original stopping thresholds visible in reporting even though they are not the amended decision rule.",
+          "Preserve all prior trials (F01, B proxy measurements, partial or failed runs) and the exact lossless weight representations.",
+          "Do not add benchmark exclusions, change scorers, relax official standards or copy reference answers into any calibration or authored case."
+        ],
+        "measurement_requirements": [
+          "Materialize B's checkpoint from A plus the exact 203,419 BF16 cell changes. Verify byte-exact against the recorded target values for all 410 matrices, verify zero native scalar/vector changes, record hashes, and confirm all unchanged cells equal A.",
+          "Attest that both the chat and logprob endpoints serve the B weights, as was done for A.",
+          "Use the identical immutable runner image, code, official sources and mounted runtime packages, and A's exact conditions: native thinking, BF16, TP2/one replica, MTP4, chat32/logprob8/agent1, all 778 questions, all 14 domains.",
+          "Match A's observer/activation configuration. If A's scored run had observers attached, attach them identically; if not, score without observers and run activation capture separately. The 4/4 thinking-OFF identity check does not establish observer neutrality under native thinking.",
+          "Report exact paired item-level outcomes against A for every source and domain, including the three known A code failures and any newly failing code items.",
+          "Report unscored counts, API errors, agent steps and tool calls (A: 19 steps / 39 calls, Terminal 1/2), tokens, generation and data-load time.",
+          "Report the official code-source mean and per-source scores (HumanEval+, LiveCodeBench, MBPP+), the overall 14-area mean and per-area deltas.",
+          "Report proxy-to-official transfer descriptively: whether the purposes with proxy losses (workflow, referent fold1, science long-helper fold1) correspond to measured losses in the related official areas. Treat this as one paired observation, not a calibration.",
+          "If the run is partial due to integrity or runtime failure, retain and report it as partial, and do not rank it.",
+          "Keep the 5,760 unjoined activation records under audit. Report activation capture as incomplete unless the cause and scope are resolved, and never impute zeros or mix questions, calls, ranks or token positions."
+        ],
+        "reject_or_stop_conditions": [
+          "Stop before the official run if the amendment cannot be frozen and disclosed before B is materialized, or if checkpoint byte verification or endpoint attestation fails.",
+          "Stop if runner image, code, sources, packages or serving conditions cannot be shown identical to A's run.",
+          "No advancement if B's official code-source mean is not strictly greater than A's 87.777778.",
+          "No silent acceptance of an overall-mean loss above 1 point or any area loss above 5 points; reject unless the predeclared tradeoff analysis supports it.",
+          "No advancement on a partial run, or on a run with unscored items or API errors that are not resolved and disclosed.",
+          "Treat a code change of a single item as uninterpretable for advancement unless A's measured run-to-run variability shows it exceeds noise, as predeclared.",
+          "After B's result, do not launch new surrogate solves selected against this dev result without counting and disclosing the additional dev reuse. Do not iterate official dev runs until one happens to exceed 90."
+        ],
+        "claim_limits": [
+          "Original proxy gate for B: FAILED (12/76 design constraints, including target referent fold1 LL/margin and workflow fold1 margin retention). This is never relabeled.",
+          "Supported narrow claim: on 120 authored teacher-forced cases under serial SDPA with a forced-empty thought prefix, B measurably shifted mean fold LL and margin as tabulated, and the edit is exactly reversible.",
+          "Code-fold gains are mean shifts, not universal. Code margin fold0 is dominated by one case (+6.029), with three other cases in that fold worse, and 49/120 case margins worsened.",
+          "The linear surrogate was miscalibrated at this step size, with sign flips and large magnitude errors. It should not be presented as a reliable predictor of finite or official effects.",
+          "Positive referent/implementation cosine and activation magnitudes are associations. They do not demonstrate that reference tracking causally supports coding or that skills are localized in the edited coordinates.",
+          "Authored cases are not an independent holdout: some science concepts were informed by earlier dev failures, and dev has been reused.",
+          "The delta-norm ratio 0.150 refers only to the 209,920 sampled coordinates. It is neither a whole-model relative bound nor a guarantee of small functional change.",
+          "Any official B result is a single post-data diagnostic on dev tier10, valid for those 778 questions and conditions only, not tier30/60, test, DeepSWE or general coding ability.",
+          "A dev tier10 code mean above 90, if observed, may be reported only as such, labeled amended and post-data, with A's noise context. It is not confirmation of the edit method."
+        ]
+      }
+    ],
+    "sequence": [
+      "1. Freeze and timestamp the post-data amendment: disclosure of B's failed gate, B-vs-F01 selection, single-run limit, predeclared code-improvement, tradeoff and noise rules, and the pause on further surrogate optimization.",
+      "2. Retrieve A's existing repeated or failed-trial records to characterize item-level run-to-run variability. If none exist, record the single-item uninterpretability rule.",
+      "3. Materialize exactly B, verify byte-exact cells and hashes for all 410 matrices with native weights unchanged, and attest that both chat and logprob endpoints serve B.",
+      "4. Verify runner and serving parity with A, including the observer configuration.",
+      "5. Run one full 778-question canonical dev tier10 WSP under A's identical conditions. Retain everything, including partial or failed attempts.",
+      "6. Report paired item, source and domain outcomes, unscored counts, errors, agent steps and tool calls, tokens and time. Apply only the predeclared amended rules.",
+      "7. If B fails the amended rule, A remains parent; record B as an officially measured, non-advanced diagnostic. If B passes, B becomes the highest completed comparable parent under the amended rule only, with no broad claims.",
+      "8. Any further edit solves start from the highest completed comparable official model and count the added dev reuse.",
+      "9. Broader claims require complete separate tier30 (2,338) and tier60 (4,841) evaluations, then final test (disclosed as previously used, not virgin), then edited DeepSWE on all 113 tasks once at 32 concurrency under matched original conditions. Publication of weights only on actual measured DeepSWE improvement, defined in advance."
+    ],
+    "evidence_limits": [
+      "No official score exists for B or F01. All B evidence is teacher-forced proxy measurement on authored cases.",
+      "The proxy uses a forced-empty thought prefix with serial SDPA, while official runs use native thinking with free generation, so transfer is untested.",
+      "The -0.03 retention threshold and the +0.03/+0.01 target thresholds have no calibrated mapping to official points.",
+      "Code tier10 has only 26 items. Single-item flips move the code mean by 3.3 to 5.6 points, and A's run-to-run variance is not stated in the supplied text.",
+      "The three remaining A code failures are specific semantic or exact-output issues. Nothing shows B targets them, and a LiveCodeBench exact-output mismatch may not be addressable by capability edits without overfitting.",
+      "Dev tier10 has been reused across selection history, and some authored cases were informed by earlier dev failures, so selection bias persists even under a fresh audit.",
+      "Linear predictions failed to meet design targets for several rows even before rounding, and diverged in sign and magnitude from finite measurements.",
+      "Activation capture is incomplete (5,760 unjoined records under audit). Observer neutrality is shown only by 4/4 short thinking-OFF requests, and the +7.85% latency is a small diagnostic.",
+      "The edit touches only sampled coordinates. Sample correlations and activation magnitudes do not establish causal localization or bound functional change.",
+      "No results exist yet for tier30/60, test or DeepSWE, and no weight upload has occurred."
+    ]
+  },
+  "finished_at": "2026-11-07T05:02:25.459587+00:00",
+  "duration_seconds": 87.7160990620032
+}

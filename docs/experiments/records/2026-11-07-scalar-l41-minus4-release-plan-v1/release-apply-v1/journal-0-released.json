@@ -1,0 +1,21 @@
+{
+  "free_bytes": 56188121088,
+  "released": [
+    {
+      "bytes": 49784788364,
+      "current_stat": {
+        "ctime_ns": 1793800946809548012,
+        "device": 2306,
+        "gid": 1003,
+        "inode": 181570962,
+        "mode": 33188,
+        "mtime_ns": 1793800946809548012,
+        "nlink": 1,
+        "size": 49784788364,
+        "uid": 1003
+      },
+      "historical_full_sha256": "eeef8791537bc04f110967c513149e037d2a9ae97d49add7291ebfa62806bbfa",
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/checkpoints/scalar-l41-minus4/model-00001-of-00002.safetensors"
+    }
+  ]
+}

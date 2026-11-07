@@ -1,0 +1,47 @@
+{
+  "status": "all_four_previews_passed",
+  "seconds": 3.935685396194458,
+  "previews": {
+    "gemma-0": {
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f05-native-contract-v1/deployment-dp4-v1/gemma-0-preview/receipt.json",
+      "sha256": "d2d413e5dd7e6449e7663ac326367ce4439031003100110534a570fa4d004d3f"
+    },
+    "gemma-1": {
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f05-native-contract-v1/deployment-dp4-v1/gemma-1-preview/receipt.json",
+      "sha256": "b704e6e8cbe8c73d392365a8439209faf12d840370ac3ac51ac838fce1a983bd"
+    },
+    "gemma-2": {
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f05-native-contract-v1/deployment-dp4-v1/gemma-2-preview/receipt.json",
+      "sha256": "8265e3069ce0e26c87dec8266935c80e6e078cc2d9b5a9b09faa9022dfebab8b"
+    },
+    "gemma-3": {
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f05-native-contract-v1/deployment-dp4-v1/gemma-3-preview/receipt.json",
+      "sha256": "40ccc096428750aa3f035c430ac3c6298d24a2e68240ee1e8255e80d3d014c45"
+    }
+  },
+  "plan_sha256": "92fa379989319ea903fa5128fbe49910128d9989a49a9a74215aeb3546fecf7e",
+  "tree": "fcc4681343c1a0c338157bee767df2024f37290469e55dbc417723717f4ac176",
+  "input_pins": {
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/checkpoints/fresh-native-contract-f05-faststore-v1/manifest.json": "09ea569a08f138efd438055d7149f0697dc1d6edd08332f2b6c7c09b1da7c24c",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f05-native-contract-v1/proposal/fresh-native-contract-f05.json": "48e095d3de304767410ac0956e390ad6db4d211457683dabdc779a4f6bb48df3",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f05-native-contract-v1/materialization-v1/verify.stdout": "1e9150f21a53af2e96d82c65297a9ce0dffb71d21ea59ea03d3d02a45ca4c427",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/worktrees/kairyu-bench-weight-tools/docs/experiments/scripts/redeploy-replica.py": "2e9da820fe30ba9b2436fb600cf14a533b1c496b2fed48ac3649fffb9d2bc9ae",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/worktrees/kairyu-bench-weight-tools/docs/experiments/scripts/fresh-four-parallel-redeploy-20261107.py": "19ae025add4f2f08705f33f0146f48cc9fa8e92bdb14a8383f46fb7d531e53bc",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/checkpoints/fresh-native-relative-f04-faststore-v1/manifest.json": "fd189cf276a1219ad627186d2dfb4a895c79768821f247a0b33d9abd8953d8c1",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/worktrees/kairyu-bench-weight-tools/docs/experiments/records/2026-11-07-f04-official-comparison/parent-selection.json": "50a48edce45c69e7f06e35566dcdbbaa93ed18d2c27368d2f14c3c52d759157b",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f04-relative-v1/deployment-dp4-v1/plan-bound-approved.json": "ea8742fea2e187ab29cddc86d1f9dbbec9d0f4003c84c82bcc539d08988b5b60",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-av-dev30-deployment-plan-v1/remove-completed-observer-v2.py": "99a9cc25006a988d1d7cfe11b8f579ea0bbb857c4de34c39f21bf0769b5a12ce",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f05-native-contract-v1/deployment-dp4-v1/prepare-source.py": "3a898414020dc83a8602255cd2c8573299aa4d5524aa144ddf6477e1da0a6416"
+  },
+  "all27_unchanged": true,
+  "protected_count": 23,
+  "all9_stats_unchanged": true,
+  "parent_fullstat_unchanged": true,
+  "shared_stat_unchanged": true,
+  "shared_nlink": 17,
+  "model_calls": 0,
+  "serving_mutations": 0,
+  "payload_rehashed": false,
+  "approved_for_apply": false
+}
+

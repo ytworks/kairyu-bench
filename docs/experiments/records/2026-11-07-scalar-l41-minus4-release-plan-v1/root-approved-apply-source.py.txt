@@ -1,0 +1,27 @@
+from pathlib import Path
+import subprocess,json,hashlib,time,os
+R=Path("/mnt/nvme/kairyu/wsp/gemma4-coding-20261104");B=R/"worktrees/kairyu-bench-weight-tools";D=R/"analysis/fresh-purpose-20261107-scalar-l41-minus4-release-plan-v1"
+wrapper=B/"docs/experiments/scripts/fresh-scalar-l41-minus4-release-20261107.py"
+plan=D/"release-plan-ready-v2.json"
+sha=lambda p:hashlib.sha256(p.read_bytes()).hexdigest()
+assert sha(wrapper)=="171773d155b60ebf9f826e487d56640d5e3dfe168377fdae7b00607d383fbe1d"
+assert sha(plan)=="40699df334e0ca70bc48de2f3c64371d098bdea4f7433ef05263277707711b05"
+approval=dict(epoch=time.time(),authorized_by="root explicit exact-source/plan/archive approval",
+ wrapper_sha256=sha(wrapper),plan_sha256=sha(plan),engine_sha256="435e01109887123db12519c100e304fa7bd4f5a71b772e6c96eedce1b130f894",
+ archive_sha256="d681aff1ee89697c9647ca0063c0be30441e56ce757864a5054aceaa23669d94",
+ target_checkpoint=str(R/"checkpoints/scalar-l41-minus4"),target_count=2,target_bytes=62546338248,
+ unknown_process_visibility_accepted=True,original_unapproved_plan_preserved=True,
+ authorization_scope="lossless reversible representation change only; preserve metadata/results/original/AV/F04/shared faststore and all27 services")
+with(D/"root-release-authorization.json").open("x") as f:json.dump(approval,f,indent=2);f.write("\n");f.flush();os.fsync(f.fileno())
+cmd=json.loads((D/"release-preview-v2-command.json").read_text())["argv"]
+cmd[cmd.index("--output")+1]=str(D/"release-apply-v1")
+cmd += ["--apply","--approved-plan-sha256",sha(plan),"--approved-operation-sha256",approval["engine_sha256"]]
+t=time.time()
+with(D/"release-apply.stdout").open("x") as out,(D/"release-apply.stderr").open("x") as err:
+ result=subprocess.run(cmd,stdout=out,stderr=err,timeout=120)
+receipt=dict(argv=cmd,returncode=result.returncode,seconds=time.time()-t,approval_sha256=sha(D/"root-release-authorization.json"))
+with(D/"release-apply-command.json").open("x") as f:json.dump(receipt,f,indent=2);f.write("\n")
+print(json.dumps(receipt))
+p=D/"release-apply-v1/receipt.json"
+if p.exists():
+ value=json.loads(p.read_text());print(json.dumps({k:value.get(k) for k in ("status","released_logical_bytes","elapsed_seconds","free_bytes_before","free_bytes_after","free_bytes_delta","observed_absent_targets","error_type","error_message","postclosure")}))

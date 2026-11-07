@@ -1,0 +1,35 @@
+{
+  "scope": "independent source/plan review and pure CPU mocked cleanup; no real Docker/GPU/API/service calls",
+  "old_source_sha256": "c70af9c1e59bc41b31644812758dd07f572e6898e1a07aa1eabbe89c7f39550b",
+  "fixed_source_sha256": "9a8d9255312a97ae2762ec97c34c9701ac5d64dcb0dc273e01f8d7f6700b7183",
+  "finding": {
+    "priority": "P1",
+    "old_lines": "finish 175-221",
+    "description": "collector absence/inactivity proof became stale while waiting for docker-run client; late-created collector could coexist with original restart",
+    "status": "closed",
+    "fix": "fresh cidfile/daemon/ownership/inactivity pass after confirmed client exit",
+    "independent_before_after_sha256": "a11c7c3b3fd71e3ed146dc3af06b02d81bb1842556da10deb1f755f2981182cb"
+  },
+  "other_source_blockers_found": [],
+  "validation_receipt": {
+    "path": "docs/experiments/records/2026-11-07-native-gpu4-owner/cpu-validation-v5.json",
+    "sha256": "3ff2ca345fa4dcf1b7a0995da5495cdb741f41b7c8af5bba741fbe1f1fa84b56",
+    "tests": 13,
+    "ruff": "pass"
+  },
+  "plan_states": [
+    {
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-av-behavior12-native-gpu4-v1/plan.json",
+      "sha256": "f47f6a6c23184d06980cb3c5791ac2126e9df3be183cb96c6c8b30dd2d1ee9d3",
+      "approved": false,
+      "owner_pin": "c70af9c1e59bc41b31644812758dd07f572e6898e1a07aa1eabbe89c7f39550b",
+      "native_behavior_result": {
+        "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-av-behavior12-native-gpu4-v1/pending-native-behavior-result.json",
+        "sha256": null
+      }
+    }
+  ],
+  "gpu_validated": false,
+  "real_service_calls": 0,
+  "epoch": 1794041059.8385506
+}

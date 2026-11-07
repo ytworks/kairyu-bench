@@ -1,0 +1,29 @@
+{
+  "evidence": "Successful read-only docker exec metadata/source reads before F05 rollout, preserved in conversation tool outputs; later packaging repeat failed and was not retried",
+  "image": "sha256:af9e746b913088cbf6c4464a31d6904a6b7e1d3ba62f0895362ddf13595f7abe",
+  "container_at_successful_reads": "fc3e14a0b216e622004db9b0cf754c7d33e4410d2ab63a28b762ef32607327ca",
+  "installed": {
+    "torch": "2.14.0+cu130",
+    "transformers": "5.20.2",
+    "accelerate": "1.15.0",
+    "safetensors": "0.8.0"
+  },
+  "not_installed": [
+    "peft",
+    "trl",
+    "bitsandbytes",
+    "deepspeed",
+    "datasets"
+  ],
+  "source_sha256": {
+    "transformers/models/gemma4/modeling_gemma4.py": "d42819dd9a2e5627da35a056e44b3c4c7b778e11c2067dcdd8312ee17ddc52f3",
+    "transformers/modeling_utils.py": "553412f58334f65abba617f3b344828698dbf63615e109159fd03dafd3422d38",
+    "transformers/trainer.py": "33ef308cf53cd54511823f05d8888eb25d6bd567c4ef0c777b51abd65306bbef",
+    "torch/optim/adamw.py": "39c5eaa04f83632285b114fd093eeb0006866e4adf59ad50cc28de12e63a8459",
+    "torch/optim/adam.py": "6f4a96e7bccd5e233a66f846c39f7a9da0157cf657c2275d2a269a78a6b90921",
+    "torch/distributed/fsdp/__init__.py": "3bf55cf91e5c858dc81f97fdf93100e89b067aa428bc2261148c2ff9a6ed8643"
+  },
+  "gemma4_gradient_checkpointing_source_line": 1451,
+  "supports_gradient_checkpointing": true,
+  "model_imports": 0
+}

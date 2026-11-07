@@ -1,0 +1,51 @@
+usage: matrix_full_units.py [-h] --checkpoint CHECKPOINT --cases CASES
+                            --output OUTPUT
+                            [--checkpoint-attestation CHECKPOINT_ATTESTATION]
+                            [--attestation-sha256 ATTESTATION_SHA256]
+                            [--device {cpu,cuda:0}] [--threads THREADS]
+                            [--seed SEED]
+                            [--max-cases-per-microbatch MAX_CASES_PER_MICROBATCH]
+                            [--reference-tolerance REFERENCE_TOLERANCE]
+                            [--run] [--gpu-exclusive-approved]
+                            [--max-frame-tokens {1024,2048}]
+                            [--text-attention-backend {eager,sdpa}]
+                            [--execution-order {original,longest_frame_first}]
+                            [--cuda-memory-cap-gib CUDA_MEMORY_CAP_GIB]
+                            [--mode {raw-next-token,chat-public-answer}]
+                            [--objective {correct-logprob,margin}]
+                            [--answer-batching {serial}] --unit-support
+                            UNIT_SUPPORT --unit-support-sha256
+                            UNIT_SUPPORT_SHA256
+
+Observe fixed complete MLP unit rows/columns with unchanged sampled attention
+cells.
+
+options:
+  -h, --help            show this help message and exit
+  --checkpoint CHECKPOINT
+  --cases CASES
+  --output OUTPUT
+  --checkpoint-attestation CHECKPOINT_ATTESTATION
+  --attestation-sha256 ATTESTATION_SHA256
+  --device {cpu,cuda:0}
+  --threads THREADS
+  --seed SEED
+  --max-cases-per-microbatch MAX_CASES_PER_MICROBATCH
+                        split each existing pack into at most this many
+                        correct/foil pairs
+  --reference-tolerance REFERENCE_TOLERANCE
+  --run                 otherwise validate inputs and print a preview only
+  --gpu-exclusive-approved
+  --max-frame-tokens {1024,2048}
+                        opt-in complete prefix+answer limit; reject oversize,
+                        never truncate
+  --text-attention-backend {eager,sdpa}
+  --execution-order {original,longest_frame_first}
+  --cuda-memory-cap-gib CUDA_MEMORY_CAP_GIB
+                        optional CUDA caching-allocator limit, not total
+                        device memory
+  --mode {raw-next-token,chat-public-answer}
+  --objective {correct-logprob,margin}
+  --answer-batching {serial}
+  --unit-support UNIT_SUPPORT
+  --unit-support-sha256 UNIT_SUPPORT_SHA256

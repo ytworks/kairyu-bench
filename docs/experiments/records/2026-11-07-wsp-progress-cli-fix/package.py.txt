@@ -1,0 +1,52 @@
+from pathlib import Path
+import json,hashlib,shutil,gzip,subprocess
+R=Path("/mnt/nvme/kairyu/wsp/gemma4-coding-20261104");B=R/"worktrees/kairyu-bench-weight-tools";V=R/"analysis/fresh-purpose-20261107-wsp-progress-cli-fix-v1"
+D=B/"docs/experiments/records/2026-11-07-wsp-progress-cli-fix";D.mkdir(exist_ok=False)
+for p in V.iterdir():
+ if p.is_file():shutil.copyfile(p,D/p.name)
+shutil.copyfile(R/"analysis/progress-cli-fix-operation.py.txt",D/"change-operation.py.txt")
+script=B/"docs/experiments/scripts/fresh-av-dev30-progress-20261107.py";test=B/"tests/test_wsp_progress_cli.py"
+shutil.copyfile(script,D/"after.py.txt");shutil.copyfile(test,D/"test.py.txt")
+raw=subprocess.run(["git","diff","--","docs/experiments/scripts/fresh-av-dev30-progress-20261107.py"],cwd=B,capture_output=True,check=True).stdout
+(D/"source.diff.gz").write_bytes(gzip.compress(raw,mtime=0));assert gzip.decompress((D/"source.diff.gz").read_bytes())==raw
+readme=B/"docs/experiments/scripts/README.md"
+readme.write_text(readme.read_text()+"""
+
+## Explicit WSP progress snapshot
+
+The historical filename [fresh-av-dev30-progress-20261107.py](fresh-av-dev30-progress-20261107.py)
+now requires both target directories; there is no default AV run. Use it after
+the existing owner's start receipt and run.json exist:
+
+    python docs/experiments/scripts/fresh-av-dev30-progress-20261107.py --help
+    python docs/experiments/scripts/fresh-av-dev30-progress-20261107.py --analysis-root /data/analysis/current-run --run-root /data/results/current-run
+
+The analysis directory must contain a plan matching owner-start.json's exact
+plan SHA. Its run ID, working/result directory, capture config and the run.json
+observation/label/tier/split must match before the monitor reads trajectories,
+queries GET /metrics, or appends one progress.jsonl line to that analysis directory.
+Help and missing required arguments do none of these operations. The monitor
+does not generate model responses, regrade tasks, or rank incomplete runs.
+Unlike the two separate evidence exporters above, this monitor intentionally
+appends its own progress record; it never edits canonical result files.
+See the [incident and regression evidence](../2026-11-07-wsp-progress-cli-fix.md).
+""")
+inventory=B/"docs/wsp-tool-inventory.md";text=inventory.read_text();tick=chr(96)
+old=tick+"fresh-av-dev30-progress-20261107.py"+tick+" reads response, verifier, trajectory, HTTP and capacity evidence, separating completed responses from scores."
+new=tick+"fresh-av-dev30-progress-20261107.py"+tick+" requires explicit --analysis-root and --run-root, binds them to the started owner plan and run metadata, then reads response, verifier, trajectory, HTTP and capacity evidence, separating completed responses from scores. Its --help has no monitoring or append side effects; [the CLI regression record](experiments/2026-11-07-wsp-progress-cli-fix.md) preserves the prior accidental AV append."
+assert text.count(old)==1;inventory.write_text(text.replace(old,new))
+doc=B/"docs/experiments/2026-11-07-wsp-progress-cli-fix.md"
+doc.write_text("""# Explicit target binding for WSP progress monitoring
+
+An operator invoked the old progress script with --help to inspect its interface. It had no argument parser and ignored argv, so it queried read-only metrics and appended one snapshot to its hardcoded, already-completed AV run. The accidental record is AV progress.jsonl line 29, epoch 1794059547.4666736. The line remains unchanged. This was monitoring of an existing result, not another model generation, scoring run, baseline evaluation, or new trial; the canonical scores were not changed. The exact appended record, original source and [incident receipt](records/2026-11-07-wsp-progress-cli-fix/incident.json) are retained.
+
+The minimal fix requires --analysis-root and --run-root. It matches the owner-start receipt's exact SHA to an existing plan in the specified analysis directory, then verifies the plan's result location/run ID/capture identity against run.json's observation, label, tier and split. A mismatched pair fails before metrics requests or output. No default evaluation directory exists. The original aggregation body was moved unchanged into collect(analysis_root, run_root); an AST comparison proves it is identical. The owner, scoring implementation and runtime conditions were not changed.
+
+Argparse handles help before file reads, metrics or appends. Three focused tests cover help/missing arguments without I/O, valid binding and wrong analysis/run pairs, and tampered metadata/plan. All passed, as did Ruff and whitespace checks. Actual --help completed in 0.071 seconds, and the old AV progress file remained byte-for-byte unchanged throughout validation. No new full test suite, model call, monitor collection, or service operation was run.
+
+Usage is in the [recipe README](scripts/README.md#explicit-wsp-progress-snapshot). The corrected source SHA is b203aada2141a2e2aa9cfd65434715eb0f8e9923c66864ee0708a34110012913. [Records](records/2026-11-07-wsp-progress-cli-fix/SHA256SUMS) preserve original/corrected source, the appended line, tests, command receipts, and the compressed source diff. The F06 monitor can use the same implementation after its owner/run files exist; this fix did not itself monitor or launch F06.
+""")
+(D/"packaging-note.json").write_text(json.dumps({"initial_command_parser_failure":"JS template literal rejected an unescaped Markdown backtick before any SSH execution; no remote mutation, corrected quoting only","model_calls":0},indent=2)+"\n")
+(D/"SHA256SUMS").write_text("".join(hashlib.sha256(p.read_bytes()).hexdigest()+"  "+p.name+"\n" for p in sorted(D.iterdir()) if p.is_file() and p.name!="SHA256SUMS"))
+print({"doc":str(doc),"doc_sha256":hashlib.sha256(doc.read_bytes()).hexdigest(),"records_sha256":hashlib.sha256((D/"SHA256SUMS").read_bytes()).hexdigest(),"source_sha256":hashlib.sha256(script.read_bytes()).hexdigest()})
+

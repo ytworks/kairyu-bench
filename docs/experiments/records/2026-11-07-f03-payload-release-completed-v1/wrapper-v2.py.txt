@@ -1,0 +1,198 @@
+#!/usr/bin/env python3
+"""Fixed F03 archive release wrapper. Reuses the pinned F02 unlink/journal engine."""
+from __future__ import annotations
+
+import argparse
+import hashlib
+import importlib.util
+import json
+import os
+from pathlib import Path
+import re
+import sys
+import urllib.request
+
+ROOT = Path("/mnt/nvme/kairyu/wsp/gemma4-coding-20261104")
+CANDIDATE = ROOT / "checkpoints/fresh-native-contract-f03"
+ARCHIVE = ROOT / "analysis/fresh-purpose-20261107-f03-native-v1/lossless-archive-v1"
+PLAN_ROOT = ROOT / "analysis/fresh-purpose-20261107-f03-native-v1/lossless-release-plan-v1"
+F04 = ROOT / "checkpoints/fresh-native-relative-f04-faststore-v1/checkpoint"
+HELPER = Path(__file__).with_name("fresh-f02-payload-release-20261107.py")
+HELPER_SHA = "435e01109887123db12519c100e304fa7bd4f5a71b772e6c96eedce1b130f894"
+
+
+def require(ok, message):
+    if not ok:
+        raise ValueError(message)
+
+
+def sha(path):
+    return hashlib.sha256(Path(path).read_bytes()).hexdigest()
+
+
+def validate_serving_layout(plan):
+    require(plan.get("status") == "ready_for_exact_preview", "unbound plan is not executable")
+    serving = plan["f04_serving"]
+    cids = serving["service_cids"]
+    require(set(cids) == {f"gemma-{i}" for i in range(4)}
+            and all(isinstance(v, str) and re.fullmatch("[0-9a-f]{64}", v) for v in cids.values())
+            and len(set(cids.values())) == 4, "four exact distinct F04 CIDs required")
+    require(serving["checkpoint"] == str(F04) and serving["tree_sha256"]
+            and len(serving["closures"]) == 4 and len(serving["protected_cids"]) == 23,
+            "complete F04 identity and protection bindings required")
+    require(len(set(serving["protected_cids"]) | set(cids.values())) == 27,
+            "27 distinct bound containers required")
+    return serving
+
+
+def archive_check(module, plan):
+    module.require(sha(ARCHIVE / "SHA256SUMS") == plan["archive_checksum_list_sha256"]
+                   and sha(ARCHIVE / "archive.json") == plan["archive_json_sha256"], "archive pins changed")
+    before = module.inventory(ARCHIVE)
+    rows = []
+    for line in (ARCHIVE / "SHA256SUMS").read_text().splitlines():
+        digest, name = line.split("  ", 1)
+        p = ARCHIVE / name
+        module.require(p.resolve().is_relative_to(ARCHIVE) and not p.is_symlink()
+                       and module.sha(p) == digest, "archive file mismatch or escape")
+        rows.append({"path": name, "sha256": digest})
+    module.require(len(rows) == 132 and len({r["path"] for r in rows}) == 132
+                   and set(before) == {r["path"] for r in rows} | {"SHA256SUMS"}
+                   and module.inventory(ARCHIVE) == before, "archive inventory/stat mismatch")
+    archive = json.loads((ARCHIVE / "archive.json").read_text())
+    validation = json.loads((ARCHIVE / "archive-validation.json").read_text())
+    verify = json.loads((ARCHIVE / "records/materialization/verify.json").read_text())
+    module.require(archive["mandatory_base_path"] == str(module.BASE)
+                   and archive["candidate_path"] == str(CANDIDATE), "archive dependency mismatch")
+    module.require(validation["status"] == "passed" and validation["exact_replanned_spans"] == 112
+                   and validation["payloads_unchanged"] is True and verify["verified"] is True
+                   and verify["legacy_full_hashes_missing"] is False and len(verify["files"]) == 9
+                   and verify["changed_elements"] == 60473 and verify["changed_tensors"] == 112,
+                   "saved complete verification/reconstruction evidence missing")
+    # Only normalize the stat-key spelling in memory; archived bytes stay exact.
+    for row in archive["checkpoint_file_stats"]:
+        for key in ("source_stat_at_archive", "candidate_stat_at_archive"):
+            value = row[key]
+            value["device"] = value.pop("dev")
+    return archive, before, rows
+
+
+def main():
+    parser = argparse.ArgumentParser(description=__doc__, add_help=False)
+    parser.add_argument("--plan", type=Path, required=True)
+    parser.add_argument("--plan-sha256", required=True)
+    parser.add_argument("--expected-wrapper-sha256", required=True)
+    args, remaining = parser.parse_known_args()
+    wrapper_sha = sha(Path(__file__))
+    require(wrapper_sha == args.expected_wrapper_sha256 and sha(HELPER) == HELPER_SHA,
+            "exact wrapper/helper source pins required")
+    require(args.plan.resolve() == args.plan and args.plan.parent == PLAN_ROOT
+            and sha(args.plan) == args.plan_sha256, "fixed plan path/SHA mismatch")
+    plan = json.loads(args.plan.read_text())
+    serving = validate_serving_layout(plan)
+    require(plan["wrapper_sha256"] == wrapper_sha and plan["helper_sha256"] == HELPER_SHA,
+            "plan/source binding mismatch")
+    spec = importlib.util.spec_from_file_location("f03_release_pinned_delegate", HELPER)
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    module.CANDIDATE, module.ARCHIVE = CANDIDATE, ARCHIVE
+    module.PLAN, module.PLAN_SHA = args.plan, args.plan_sha256
+    original_mounts, original_references = module.mounts, module.references
+
+    def guarded_mounts():
+        require(sha(Path(__file__)) == wrapper_sha and sha(HELPER) == HELPER_SHA
+                and sha(args.plan) == args.plan_sha256, "release inputs changed")
+        pins = [*serving["closures"], serving["four_replica_closure"],
+                serving["endpoint_closure"], serving["normal_global_release"],
+                serving["candidate_manifest"], serving["candidate_verify"]]
+        require(all(sha(Path(p["path"])) == p["sha256"] for p in pins), "F04 closure pin changed")
+        manifest = json.loads(Path(serving["candidate_manifest"]["path"]).read_text())
+        verified = json.loads(Path(serving["candidate_verify"]["path"]).read_text())
+        require(verified["verified"] is True and manifest["checkpoint_path"] == str(F04)
+                and manifest["control_tree_sha256"] == serving["tree_sha256"]
+                and module.inventory(F04) == manifest["candidate_inventory_stat"],
+                "F04 verified checkpoint/stat drift")
+        snapshot = original_mounts()  # Rejects all ancestor/direct/descendant F03 mounts.
+        require(len(snapshot) == 27 and {r["cid"] for r in snapshot}
+                == set(serving["protected_cids"]) | set(serving["service_cids"].values()),
+                "27/23 service protection differs")
+        data = json.loads(module.subprocess.check_output(
+            ["docker", "inspect", *serving["service_cids"].values()], text=True))
+        expected = {v: k for k, v in serving["service_cids"].items()}
+        require(len(data) == 4 and {d["Id"] for d in data} == set(expected), "four inspected F04 CIDs required")
+        for d in data:
+            require(d["Id"] in expected and d["State"]["Running"]
+                    and d["State"].get("Health", {}).get("Status") == "healthy"
+                    and d["Config"]["Labels"].get("com.docker.compose.service") == expected[d["Id"]]
+                    and any(m["Source"] == str(F04) and not m["RW"] for m in d["Mounts"]),
+                    "F04 ordinary identity/healthy/read-only mount mismatch")
+            ip = d["NetworkSettings"]["Networks"]["gemma-4-31b-8gpu_default"]["IPAddress"]
+            with urllib.request.urlopen(f"http://{ip}:8000/metrics", timeout=10) as response:
+                metrics = response.read().decode()
+            counts = re.findall(r"^vllm:num_requests_(?:running|waiting)(?:\{[^}]*\})?\s+([0-9.eE+-]+)", metrics, re.M)
+            require(len(counts) >= 2 and all(float(x) == 0 for x in counts), "F04 must remain idle")
+        return snapshot
+
+    def guarded_references(targets):
+        result = original_references(targets)
+        def identity(pid):
+            proc = Path(f"/proc/{pid}")
+            fields = (proc / "stat").read_text().rsplit(")", 1)[1].split()
+            return {"pid": pid, "comm": (proc / "comm").read_text().strip(),
+                    "uid": proc.stat().st_uid, "start_ticks": int(fields[19])}
+
+        scope = plan["allowed_inaccessible_reference_scope"]
+        ancestors = set()
+        pid = os.getpid()
+        while pid > 1:
+            ancestors.add(pid)
+            fields = Path(f"/proc/{pid}/stat").read_text().rsplit(")", 1)[1].split()
+            pid = int(fields[1])
+        allowed, operator_sshd = [], 0
+        for pid in result["inaccessible_or_disappeared"]:
+            try:
+                row = identity(pid)
+            except (FileNotFoundError, ProcessLookupError):
+                continue
+            if row == scope["fixed_processes"].get(str(pid)):
+                allowed.append(row)
+            elif pid in ancestors and row["comm"] == "sshd" and row["uid"] == os.getuid():
+                operator_sshd += 1
+                allowed.append(row)
+            else:
+                require(False, "new inaccessible process identity requires review")
+        require(len(allowed) <= scope["maximum_total"] and operator_sshd <= 1,
+                "inaccessible process scope increased")
+        allowed_pids = {row["pid"] for row in allowed}
+        result["inaccessible_identity_allowlist_matches"] = allowed
+        result["operator_ancestor_sshd_count"] = operator_sshd
+        result["inaccessible_refs_are_unknown_not_zero"] = True
+        inodes = {(v["device"], v["inode"]) for v in targets.values()}
+        for proc in Path("/proc").iterdir():
+            if not proc.name.isdigit():
+                continue
+            try:
+                if proc.stat().st_uid != os.getuid():
+                    continue
+                for line in (proc / "maps").read_text().splitlines():
+                    fields = line.split(maxsplit=5)
+                    major, minor = (int(x, 16) for x in fields[3].split(":"))
+                    if (os.makedev(major, minor), int(fields[4])) in inodes:
+                        result["matches"].append({"pid": int(proc.name), "kind": "mapped_target_inode"})
+            except (FileNotFoundError, ProcessLookupError):
+                pass
+            except PermissionError:
+                require(not proc.exists() or (int(proc.name) in allowed_pids
+                        and identity(int(proc.name)) in allowed),
+                        "new inaccessible same-UID map identity requires review")
+        return result
+
+    module.mounts = guarded_mounts
+    module.references = guarded_references
+    module.archive_check = lambda value: archive_check(module, value)
+    sys.argv = [str(HELPER), *remaining]
+    module.main()
+
+
+if __name__ == "__main__":
+    main()

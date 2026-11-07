@@ -1,0 +1,34 @@
+{
+  "status": "passed",
+  "validated_epoch": 1794035170.559687,
+  "existing_editor_summary": {
+    "changed_elements": 203419,
+    "changed_tensors": 410,
+    "delta_l2": 1.1089462630318312
+  },
+  "exact_replanned_spans": 203419,
+  "exact_replan_fields": [
+    "tensor",
+    "shard",
+    "offset",
+    "size",
+    "dtype",
+    "shape",
+    "before_hex",
+    "after_hex",
+    "selected_indices",
+    "changed_indices",
+    "changed_count"
+  ],
+  "replan_seconds": 5.8094189167022705,
+  "source_files_pinned": 89,
+  "base_current_stat_matches_completed_full_diff": true,
+  "candidate_current_stat_matches_completed_full_diff": true,
+  "gzip_original_bytes_verified": 2,
+  "metadata_file_hashes_verified": 7,
+  "original_full_verify_passed": true,
+  "completed_full_diff_18_hashes_matched": true,
+  "physical_full_reconstruction_performed": false,
+  "checkpoint_payload_fullhash_performed_here": false,
+  "payloads_unchanged": true
+}

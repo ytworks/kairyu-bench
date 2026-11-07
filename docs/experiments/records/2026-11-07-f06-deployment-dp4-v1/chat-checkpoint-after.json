@@ -1,0 +1,53 @@
+{
+  "files": [
+    {
+      "path": "chat_template.jinja",
+      "sha256": "ae53464bf3be25802b3a5b37def7fd89667067d7577049b3b2d74c4d8de4c6d4",
+      "size": 18683
+    },
+    {
+      "path": "config.json",
+      "sha256": "e967dd38bc5cfd38bd09a995a7bf4a754075df2b46aba68f7fbb5a791e6d8dd1",
+      "size": 4621
+    },
+    {
+      "path": "generation_config.json",
+      "sha256": "d4226bbe3117d2d253ba4609720ba82c6c4ce4627a9a6ae05387c78983ac03de",
+      "size": 208
+    },
+    {
+      "path": "model.safetensors.index.json",
+      "sha256": "2eeef6577e663781958c7e17a8809e5f5953ebe1fdb4bf4906cb7f943946bca3",
+      "size": 103577
+    },
+    {
+      "path": "native.safetensors",
+      "sha256": "dde45065af919d9b463529f8f12f249266af2c256ffa9a0ef0b1b8a3ee3c572c",
+      "size": 2714560
+    },
+    {
+      "path": "processor_config.json",
+      "sha256": "32bdf45d2ad4cc29a0822ddd157a182de76644f0419a6228d151495256e9813c",
+      "size": 1689
+    },
+    {
+      "path": "shared.safetensors",
+      "sha256": "fb2aac1ce71c98290e61b517db35cf2c828b205b2282e8e2cb46707f76f9dfe1",
+      "size": 62543620336
+    },
+    {
+      "path": "tokenizer.json",
+      "sha256": "cc8d3a0ce36466ccc1278bf987df5f71db1719b9ca6b4118264f45cb627bfe0f",
+      "size": 32169626
+    },
+    {
+      "path": "tokenizer_config.json",
+      "sha256": "9f4fec4b1dc6ecddf8f4a92e9caea5971c0e67d81309f3f9066a2bee8c362633",
+      "size": 3082
+    }
+  ],
+  "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/checkpoints/fresh-lora-mbpp-f06-v1/checkpoint",
+  "schema_version": 1,
+  "source": "CHAT_CHECKPOINT_DIR",
+  "tree_sha256": "0fc0ef29346c4d8a06bea8570dee96d8e0ba7038fee0d5aded8db57852474ec5"
+}

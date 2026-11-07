@@ -1,0 +1,11 @@
+# 実損失最適化の既存入口：短い読取り調査
+
+**既存道具だけで「現bestから数step学習→保存BF16 merge」まで完結する入口は確認できなかった。** repo scripts/src と作業root runtime/analysis のPythonを調べた範囲では、torch.optim、SFTTrainer、get_peft_model、LoraConfig、optimizer.step の学習ループがない。LoRAという名前の既存道具は、既に学習済みのfactorを読んで合成・検証するもの。過去候補の順位や採用判断は根拠にしていない。今回は実装・学習・モデル呼出し・新候補計算0。
+
+- **保存側は既存で足りる部分が多い。** [dense recipe](../../scripts/experiments/gemma4_lora/README.md#explicit-factor-format-v2-standalone-dense-only)は410 text projections全部のA/B対応を要求し、通常LoRA rank1–256・一様rank/alpha・F32/BF16 factorsを、明示FP32演算からBF16 ties-to-evenで保存/verifyする。任意MLP-only adapterやGemma4 PEFT学習をそのまま受ける汎用入口ではない。独自学習factorのexport/mapping/provenanceを接続する必要がある。
+- **native/MLPの組合せ。** [native collector](../../scripts/experiments/gemma4-purpose/native.py#L89)はscalar/vectorの正答LLまたはmarginをbackwardし、微分を保存するだけで更新しない。任意の新MLP行列を反復学習する機能はない。[joint module recipe](../../scripts/experiments/gemma4_lora/joint_module_recipe.py#L41)は既存rank16 donorの410 projection係数と、非重複nativeの明示BF16 set_valuesを共同保存できる。factor-format v2とnativeの共同学習は未対応。単純dense-native拡張は最終norm scale1.01だけ。
+- **使える入力の境界。** behavior12は全correctが各16fixtureで検証済みの既知train入力で、全12を保持した最小の固定入力にできる。transfer6は未生成・未使用のまま。authored120は全ID/prompt/correct/foilを読めるが、[11件の公開契約反例・dtype/空入力などの疑義](2026-11-07-authored-case-audit.md)があるため全correctを無条件の教師正解と認定できない。残109件の全入力域を保証したわけでもない。既存48＋16のモデル生成採点は教師答案の全域保証ではない。元120を上書きせず、使用するなら契約修正を別versionにして全件来歴を残す。公式ベンチマーク答案は入力へ移さない。
+- **環境と実測だけ。** 実native collectorは固定af9 imageのTorch2.14.0+cu130 / Transformers5.20.2、serial text SDPA、FP32 saved activationsのCPU退避、1GPU/allocator88GiB capで動作済み。behavior12 correct-LLの12forward/backward区間29.387秒、margin24forward47.427秒、2目的owner全体237.897秒、peak62.257GiB。これらはcollector時間でありoptimizerやLoRA学習時間ではない。PEFT/TRLの現image利用可能性はこの調査では未検証。CPU mergeはNumPy/OpenMP C++ kernelが既存。過去のdonor＋norm materialize/verify422.0秒という記録は保存コストの例で、学習時間も現bestでの時間も示さない。
+- **不足の最小候補（未実装・未選択）。** 既存native loader・公開回答frame・正答LL/backwardを再利用し、全12固定入力、明示trainable tensor集合、optimizer/step数/learning-rate/seed/時間上限、各step実LLとBF16保存差分を出す小さい反復更新入口が必要。保存は既存editor/verifyへ接続できる。自由思考の学習文脈まで扱う入口ではなく、現frameはthinking-ON＋明示empty-thoughtである。MLP LoRA学習を選ぶならfactor挿入、optimizerとadapter export/410 mappingが追加で必要となる。所要時間は未測定で見積値を実測扱いしない。
+
+[読取り範囲とsource SHA](records/2026-11-07-loss-optimization-existing-boundary/audit.json)。現在のF04作業を妨げる操作は行わず、この調査で方向や採用を決めていない。

@@ -1,0 +1,258 @@
+"""Tiny real safetensors -> custom loader iterator -> TP selected-word boundary."""
+from __future__ import annotations
+
+import copy
+import importlib.util
+import os
+import sys
+import tempfile
+import unittest
+from pathlib import Path
+from types import SimpleNamespace
+
+PLUGIN = Path(__file__).resolve().parents[1] / "scripts/experiments/vllm_sparse_overlay/src"
+INSTALLED_ROOT = os.environ.get("KAIRYU_OVERLAY_INSTALLED_ROOT")
+if not INSTALLED_ROOT:
+    sys.path.insert(0, str(PLUGIN))
+from kairyu_sparse_overlay.core import (  # noqa: E402
+    FORMAT, VLLM_FILES, canonical, digest, implementation_identity,
+)
+if INSTALLED_ROOT:
+    for module in ("kairyu_sparse_overlay.core", "kairyu_bench.wsp.weights.checkpoint",
+                   "kairyu_bench.wsp.weights.editor"):
+        origin = Path(sys.modules[module].__file__).resolve()
+        if not origin.is_relative_to(Path(INSTALLED_ROOT).resolve()):
+            raise RuntimeError(f"installed-only smoke imported a source fallback: {module}")
+else:
+    sys.path.pop(0)
+
+AVAILABLE = all(importlib.util.find_spec(name) is not None for name in ("torch", "safetensors", "vllm"))
+
+
+@unittest.skipUnless(AVAILABLE, "optional pinned vLLM/Torch CPU runtime")
+class SparseOverlayTests(unittest.TestCase):
+    def test_loader_iterator_two_rank_proof_and_source_preservation(self):
+        import torch
+        import vllm
+        from safetensors.torch import load_file, save_file
+        from vllm.config import LoadConfig
+        from kairyu_bench.wsp.weights.checkpoint import Checkpoint
+        from kairyu_sparse_overlay.loader import SparseOverlayLoader
+
+        prefix = "model.language_model.layers.0."
+        names = {key: prefix + value + ".weight" for key, value in {
+            "gate": "mlp.gate_proj", "up": "mlp.up_proj", "down": "mlp.down_proj",
+            "o": "self_attn.o_proj", "q": "self_attn.q_proj",
+            "k": "self_attn.k_proj", "v": "self_attn.v_proj",
+            "native": "post_attention_layernorm",
+        }.items()}
+        names["full_q"] = "model.language_model.layers.1.self_attn.q_proj.weight"
+        names["full_k"] = "model.language_model.layers.1.self_attn.k_proj.weight"
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp).resolve()
+            base, draft = root / "base", root / "draft"
+            base.mkdir()
+            draft.mkdir()
+            hidden = 514
+            shapes = {key: ((hidden, 4) if key in {"down", "o"} else (4, hidden))
+                      for key in ("gate", "up", "down", "o", "q", "k", "v", "full_q")}
+            shapes["full_k"] = (2, hidden)
+            values = {names[key]: (torch.arange(rows * cols).reshape(rows, cols) / 4).to(torch.bfloat16)
+                      for key, (rows, cols) in shapes.items()}
+            values[names["native"]] = torch.tensor([-0.0, 1.0], dtype=torch.bfloat16)
+            values[names["q"]].view(torch.int16)[0, 0] = -32768
+            save_file(values, str(base / "model.safetensors"))
+            save_file({"draft": torch.tensor([2.0], dtype=torch.bfloat16)}, str(draft / "model.safetensors"))
+
+            def save_json(path, value):
+                path.write_bytes(canonical(value))
+                return {"path": str(path), "sha256": digest(path.read_bytes())}
+
+            def source(path):
+                cp = Checkpoint(path)
+                identity = cp.identity()
+                files = [{key: row[key] for key in ("path", "size", "sha256")} for row in identity["files"]]
+                proof = {
+                    "status": "verified_fixture_full_file_hash", "checkpoint_path": str(path),
+                    "control_tree_sha256": identity["sha256"], "all_checkpoint_files": files,
+                    "candidate_inventory_stat": {
+                        row["path"]: {"size": row["size"], **row["stat"]} for row in identity["files"]},
+                }
+                return {"path": str(path), "tree_sha256": identity["sha256"],
+                        "proof": save_json(root / (path.name + "-proof.json"), proof)}
+
+            save_json(base / "config.json", {"architectures": ["Gemma4ForConditionalGeneration"],
+                "text_config": {"hidden_size": hidden, "num_hidden_layers": 2,
+                    "layer_types": ["sliding_attention", "full_attention"],
+                    "num_attention_heads": 4, "num_key_value_heads": 4,
+                    "num_global_key_value_heads": 2, "head_dim": 1,
+                    "global_head_dim": 1, "attention_k_eq_v": True,
+                    "num_kv_shared_layers": 0}})
+            target, bypass = source(base), source(draft)
+            original = (base / "model.safetensors").read_bytes()
+            source_stamp = (base / "model.safetensors").stat()
+            spec = {"source_checkpoint": str(base), "base_tree_sha256": target["tree_sha256"],
+                    "edits": [{"tensor": names[key], "coordinates": [[0, 0], [values[names[key]].shape[0] - 1, 3]],
+                               "set_values": [-0.5, 4.0]} for key in ("gate", "up", "down", "o", "q", "k", "full_q", "full_k")]}
+            spec_ref = save_json(root / "spec.json", spec)
+            receipts = root / "receipts"
+            receipts.mkdir()
+            source_root = Path(vllm.__file__).parent
+            plan = {
+                "schema_version": 1, "kind": FORMAT, "physical_source": target,
+                "draft_bypass": bypass, "logical_parent": {"path": str(base), "tree_sha256": target["tree_sha256"]},
+                "spec": spec_ref, "implementation_sha256": implementation_identity(),
+                "tensor_parallel_size": 2, "receipt_directory": str(receipts),
+                "vllm_source_sha256": {name: digest((source_root / name).read_bytes()) for name in VLLM_FILES},
+            }
+
+            def new_loader(value, filename):
+                ref = save_json(root / filename, value)
+                config = LoadConfig(load_format=FORMAT, model_loader_extra_config={
+                    "overlay_plan": ref["path"], "overlay_plan_sha256": ref["sha256"]})
+                loader = SparseOverlayLoader(config)
+                self.assertEqual(config.load_format, FORMAT)
+                return loader
+
+            loader = new_loader(plan, "plan.json")
+            loaded = dict(loader.get_all_weights(SimpleNamespace(model=str(base), revision=None), torch.nn.Module()))
+            for key in ("gate", "up", "down", "o", "q", "k", "full_q", "full_k"):
+                self.assertEqual(float(loaded[names[key]][0, 0]), -0.5)
+                self.assertEqual(float(loaded[names[key]][-1, 3]), 4.0)
+            for key in ("v", "native"):
+                self.assertTrue(torch.equal(loaded[names[key]].view(torch.int16), values[names[key]].view(torch.int16)))
+            def tp_models(loaded):
+                models = []
+                for rank in range(2):
+                    model = torch.nn.Module()
+                    weights = {
+                        prefix + "mlp.gate_up_proj.weight": torch.cat(
+                            [loaded[names[key]].chunk(2, dim=0)[rank] for key in ("gate", "up")], dim=0),
+                        names["down"]: loaded[names["down"]].chunk(2, dim=1)[rank].contiguous(),
+                        names["o"]: loaded[names["o"]].chunk(2, dim=1)[rank].contiguous(),
+                        prefix + "self_attn.qkv_proj.weight": torch.cat(
+                            [loaded[names[key]].chunk(2, dim=0)[rank] for key in ("q", "k", "v")], dim=0),
+                        "model.language_model.layers.1.self_attn.qkv_proj.weight": torch.cat(
+                            [loaded[names[key]].chunk(2, dim=0)[rank] for key in ("full_q", "full_k", "full_k")], dim=0),
+                    }
+                    for raw, value in weights.items():
+                        path = raw.replace("model.language_model.", "language_model.model.").split(".")
+                        module = model
+                        for part in path[:-1]:
+                            if part not in module._modules:
+                                module.add_module(part, torch.nn.Module())
+                            module = module._modules[part]
+                        module.register_parameter(path[-1], torch.nn.Parameter(value.clone(), requires_grad=False))
+                    models.append(model)
+                return models
+
+            models = tp_models(loaded)
+            proofs = [loader.overlay.rank_proof(model, rank) for rank, model in enumerate(models)]
+            combined = loader.overlay.aggregate(proofs)
+            self.assertEqual(combined["selected_coordinates"], 16)
+            self.assertEqual(combined["required_parameter_copies"], 18)
+            self.assertTrue(combined["storage_bytes_exact"])
+            self.assertFalse(combined["physical_checkpoint_is_overlay_candidate"])
+            self.assertNotEqual(combined["logical_overlay_sha256"], target["tree_sha256"])
+            with self.assertRaises(ValueError):
+                loader.overlay.aggregate([proofs[0], proofs[0]])
+            # Full-attention K is copied to both fused K and V slots. A missing
+            # second destination or a corrupt V-slot word must fail complete proof.
+            incomplete = copy.deepcopy(proofs)
+            record = next(row for row in incomplete[1]["records"] if row["tensor"] == names["full_k"])
+            record["indices"].pop()
+            record["placement_copies"].pop()
+            record["actual_words_hex"] = record["actual_words_hex"][:-4]
+            with self.assertRaisesRegex(ValueError, "incomplete"):
+                loader.overlay.aggregate(incomplete)
+            tied = dict(models[1].named_parameters())["language_model.model.layers.1.self_attn.qkv_proj.weight"]
+            tied.view(torch.int16)[3, 3] += 1
+            with self.assertRaisesRegex(ValueError, "word mismatch"):
+                loader.overlay.aggregate([proofs[0], loader.overlay.rank_proof(models[1], 1)])
+            tied.view(torch.int16)[3, 3] -= 1
+            parameter = dict(models[1].named_parameters())["language_model.model.layers.0.mlp.gate_up_proj.weight"]
+            parameter.view(torch.int16)[1, 3] += 1
+            damaged = loader.overlay.rank_proof(models[1], 1)
+            with self.assertRaisesRegex(ValueError, "word mismatch"):
+                loader.overlay.aggregate([proofs[0], damaged])
+
+            # The pinned draft bypass preserves the yielded object/storage unchanged.
+            draft_loader = new_loader(plan, "draft-plan.json")
+            draft_tensor = load_file(str(draft / "model.safetensors"))["draft"]
+            result = list(draft_loader.overlay.iterator([("draft", draft_tensor)], str(draft)))
+            self.assertIs(result[0][1], draft_tensor)
+            self.assertFalse(draft_loader.overlay.finished)
+            with self.assertRaisesRegex(ValueError, "unpinned"):
+                draft_loader.overlay.role(str(root))
+            missing = new_loader(plan, "missing-plan.json")
+            with self.assertRaisesRegex(ValueError, "missing"):
+                list(missing.overlay.iterator([], str(base)))
+
+            # Empty overlay is a true pass-through, including signed-zero bits.
+            empty = copy.deepcopy(plan)
+            empty["spec"] = save_json(root / "empty-spec.json", {**spec, "edits": []})
+            no_op = new_loader(empty, "empty-plan.json")
+            items = list(values.items())
+            output = list(no_op.overlay.iterator(items, str(base)))
+            self.assertTrue(all(a is b for (_, a), (_, b) in zip(items, output, strict=True)))
+            self.assertTrue(no_op.overlay.aggregate([no_op.overlay.rank_proof(m, r)
+                                                    for r, m in enumerate(models)])["empty_overlay"])
+            wrong_parent = copy.deepcopy(empty)
+            wrong_parent["logical_parent"]["tree_sha256"] = "0" * 64
+            with self.assertRaisesRegex(ValueError, "logical parent"):
+                new_loader(wrong_parent, "wrong-parent.json")
+            self.assertEqual((base / "model.safetensors").read_bytes(), original)
+            current = (base / "model.safetensors").stat()
+            self.assertEqual((current.st_ino, current.st_mtime_ns, current.st_ctime_ns),
+                             (source_stamp.st_ino, source_stamp.st_mtime_ns, source_stamp.st_ctime_ns))
+            loader.overlay.check()
+
+            # The same formal iterator/readback covers explicit full selected
+            # MLP rows/columns beyond 512 cells and tied K/V destinations together.
+            full_spec = {
+                "source_checkpoint": str(base), "base_tree_sha256": target["tree_sha256"],
+                "matrix_batch": True, "matrix_sample_plan_sha256": "a" * 64,
+                "matrix_full_units": {
+                    "schema_version": 1, "support_plan_sha256": "b" * 64,
+                    "layer_prefix": "model.language_model.layers.",
+                    "units": [{"layer": 0, "indices": [3]}]},
+                "edits": [
+                    {"tensor": names[key],
+                     "coordinates": ([[row, 3] for row in range(hidden)] if key == "down"
+                                     else [[3, col] for col in range(hidden)]),
+                     "set_values": [-0.5] * hidden}
+                    for key in ("gate", "up", "down")]
+                + [copy.deepcopy(spec["edits"][-1])],
+            }
+            full_plan = copy.deepcopy(plan)
+            full_plan["spec"] = save_json(root / "full-unit-spec.json", full_spec)
+            full_loader = new_loader(full_plan, "full-unit-plan.json")
+            full_loaded = dict(full_loader.get_all_weights(
+                SimpleNamespace(model=str(base), revision=None), torch.nn.Module()))
+            for key in ("gate", "up"):
+                self.assertTrue(torch.all(full_loaded[names[key]][3] == -0.5))
+                self.assertTrue(torch.equal(full_loaded[names[key]][:3].view(torch.int16),
+                                            values[names[key]][:3].view(torch.int16)))
+            self.assertTrue(torch.all(full_loaded[names["down"]][:, 3] == -0.5))
+            self.assertTrue(torch.equal(full_loaded[names["down"]][:, :3].view(torch.int16),
+                                        values[names["down"]][:, :3].view(torch.int16)))
+            for key in ("v", "native", "q", "k", "o", "full_q"):
+                self.assertTrue(torch.equal(full_loaded[names[key]].view(torch.int16),
+                                            values[names[key]].view(torch.int16)))
+            full_models = tp_models(full_loaded)
+            full_proofs = [full_loader.overlay.rank_proof(m, r) for r, m in enumerate(full_models)]
+            full_combined = full_loader.overlay.aggregate(full_proofs)
+            self.assertEqual(full_combined["selected_coordinates"], 3 * hidden + 2)
+            self.assertEqual(full_combined["required_parameter_copies"], 3 * hidden + 4)
+            self.assertTrue(full_combined["storage_bytes_exact"])
+            wide = dict(full_models[1].named_parameters())[
+                "language_model.model.layers.0.mlp.gate_up_proj.weight"]
+            wide.view(torch.int16)[1, hidden - 1] += 1
+            with self.assertRaisesRegex(ValueError, "word mismatch"):
+                full_loader.overlay.aggregate([
+                    full_proofs[0], full_loader.overlay.rank_proof(full_models[1], 1)])
+            bypass_loader = new_loader(full_plan, "full-unit-draft-plan.json")
+            output = list(bypass_loader.overlay.iterator([("draft", draft_tensor)], str(draft)))
+            self.assertIs(output[0][1], draft_tensor)
+            self.assertEqual((base / "model.safetensors").read_bytes(), original)
+            full_loader.overlay.check()

@@ -67,8 +67,13 @@ set -- \
     --n-attempts 1
 case "$harbor_agent" in
     terminus-2)
+        observed_agent=terminus-2
+        if [ -n "${KAIRYU_BENCH_WSP_OBSERVE_CONFIG:-}" ]; then
+            observed_agent=kairyu_bench.wsp.sources.terminal_bench_observe:ObservedTerminus2
+            export PYTHONPATH="$ROOT/src${PYTHONPATH:+:$PYTHONPATH}"
+        fi
         set -- "$@" \
-            --agent terminus-2 \
+            --agent "$observed_agent" \
             --model "openai/$KAIRYU_MODEL" \
             --agent-kwarg "api_base=$KAIRYU_ENDPOINT"
         ;;

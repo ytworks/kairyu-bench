@@ -1,0 +1,16 @@
+from pathlib import Path
+import subprocess,json,time,hashlib,os
+R=Path('/mnt/nvme/kairyu/wsp/gemma4-coding-20261104');B=R/'worktrees/kairyu-bench-weight-tools';V=R/'analysis/fresh-purpose-20261107-body-kl-implementation-v1'
+image='sha256:af9e746b913088cbf6c4464a31d6904a6b7e1d3ba62f0895362ddf13595f7abe'
+assert subprocess.check_output(['docker','image','inspect','--format','{{.Id}}',image],text=True).strip()==image
+before=subprocess.check_output(['docker','ps','-aq','--no-trunc'],text=True).split()
+name='fresh-body-kl-cpu-fixture-20261107'
+cmd=['nice','-n','15','docker','run','--rm','--pull=never','--name',name,'--network=none','--user','1003:1003','--cpus','2','--memory','4g','--cap-drop=ALL','--security-opt','no-new-privileges','--read-only','--tmpfs','/tmp:rw,nosuid,nodev,size=512m','-e','PYTHONDONTWRITEBYTECODE=1','-e','PYTHONPATH=/repo/src','-e','OMP_NUM_THREADS=1','-e','OPENBLAS_NUM_THREADS=1','--mount','type=bind,src='+str(B)+',dst=/repo,readonly','--workdir','/repo','--entrypoint','/usr/bin/python3',image,'-m','unittest','discover','-s','tests','-p','test_gemma4_lora_training.py','-v']
+t=time.monotonic();p=subprocess.run(cmd,capture_output=True)
+(V/'torch-cpu.stdout').write_bytes(p.stdout);(V/'torch-cpu.stderr').write_bytes(p.stderr)
+after=subprocess.check_output(['docker','ps','-aq','--no-trunc'],text=True).split()
+owned=subprocess.check_output(['docker','ps','-aq','--filter','name=^/'+name+'$'],text=True).strip()
+receipt={'command':cmd,'returncode':p.returncode,'seconds':time.monotonic()-t,'stdout_sha256':hashlib.sha256(p.stdout).hexdigest(),'stderr_sha256':hashlib.sha256(p.stderr).hexdigest(),'owned_remaining':owned,'all_before_CIDs_retained':set(before)<=set(after),'new_CIDs_other_owners':sorted(set(after)-set(before)),'model_calls':0,'GPU_devices_exposed':False,'service_changes':False}
+(V/'torch-cpu-execution.json').write_text(json.dumps(receipt,indent=2)+'\n');print(receipt);print(p.stderr.decode()[-2500:])
+assert p.returncode==0 and not owned and set(before)<=set(after)
+

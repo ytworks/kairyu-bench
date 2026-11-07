@@ -1,0 +1,191 @@
+"""Read-only F02 dependent archive/storage audit; no unlink, move or apply path."""
+from pathlib import Path
+import gzip
+import hashlib
+import json
+import os
+import shutil
+import stat
+import subprocess
+import time
+
+R = Path("/mnt/nvme/kairyu/wsp/gemma4-coding-20261104")
+A = R / "analysis/fresh-purpose-20261107-f02/lossless-archive-v1"
+AV = R / "checkpoints/code90-current-ad-helper-av-v1"
+F02 = R / "checkpoints/fresh-code-joint-f02"
+O = R / "analysis/fresh-purpose-20261107-f02/lossless-release-plan-v1"
+NAMES = ("model-00001-of-00002.safetensors", "model-00002-of-00002.safetensors")
+SUMS = "dee04b50c984013410ce3aa8fac6891337774f9846c929a0ceadc3d881b626da"
+ARCHIVE = "7f2cb71ac847204bf1d2443f358a5b4fe5453afc519655cb6a77b5461e5b3769"
+
+
+def sha(path):
+    digest = hashlib.sha256()
+    with path.open("rb") as stream:
+        for block in iter(lambda: stream.read(8 * 2**20), b""):
+            digest.update(block)
+    return digest.hexdigest()
+
+
+def stamp(path):
+    s = path.lstat()
+    assert stat.S_ISREG(s.st_mode) and not path.is_symlink()
+    return dict(device=s.st_dev, inode=s.st_ino, size=s.st_size, mtime_ns=s.st_mtime_ns,
+                ctime_ns=s.st_ctime_ns, mode=s.st_mode, uid=s.st_uid, gid=s.st_gid, nlink=s.st_nlink)
+
+
+def inventory(root):
+    assert root.resolve() == root and root.is_dir() and not root.is_symlink()
+    paths = sorted(root.rglob("*"))
+    assert not any(p.is_symlink() for p in paths)
+    return {str(p.relative_to(root)): stamp(p) for p in paths if p.is_file()}
+
+
+def mount_snapshot():
+    ids = subprocess.check_output(["docker", "ps", "-aq", "--no-trunc"], text=True).split()
+    data = json.loads(subprocess.check_output(["docker", "inspect", *ids], text=True))
+    snapshots, conflicts = [], []
+    for d in data:
+        mounts = []
+        for m in d.get("Mounts", []):
+            path = Path(m["Source"]).resolve() if m.get("Source", "").startswith("/") else None
+            related = path is not None and (path == F02 or path.is_relative_to(F02) or F02.is_relative_to(path))
+            # Save only the selected filesystem mount fields, never environment/config.
+            item = {k: m.get(k) for k in ("Type", "Source", "Destination", "RW")}
+            item["candidate_overlap"] = related
+            mounts.append(item)
+            if related:
+                conflicts.append({"cid": d["Id"], "name": d["Name"], "mount": item})
+        snapshots.append({"cid": d["Id"], "name": d["Name"], "image": d["Image"],
+                          "running": d["State"]["Running"], "status": d["State"]["Status"],
+                          "health": d["State"].get("Health", {}).get("Status"), "mounts": mounts})
+    return sorted(snapshots, key=lambda x: x["cid"]), conflicts
+
+
+started = time.monotonic()
+assert os.getuid() == 1003 and not O.exists()
+O.mkdir()
+result = {"status": "audit_started", "checkpoint_mutations": 0, "released_bytes": 0,
+          "service_operations": 0, "model_calls": 0, "lock_operations": 0,
+          "physical_reconstruction_performed": False, "checkpoint_payload_fullhash_performed": False,
+          "audit_source_sha256": sha(Path(__file__))}
+try:
+    assert sha(A / "SHA256SUMS") == SUMS and sha(A / "archive.json") == ARCHIVE
+    archive = json.loads((A / "archive.json").read_text())
+    assert archive["mandatory_base_path"] == str(AV) and archive["candidate_path"] == str(F02)
+    base_before, candidate_before = inventory(AV), inventory(F02)
+    expected_base = {r["path"]: r["source_stat_at_archive"] for r in archive["checkpoint_file_stats"]}
+    expected_candidate = {r["path"]: r["candidate_stat_at_archive"] for r in archive["checkpoint_file_stats"]}
+    assert len(base_before) == len(candidate_before) == 9
+    assert base_before == expected_base and candidate_before == expected_candidate
+    assert not (F02 / "ARCHIVED.json").exists()
+    assert AV.stat().st_uid == F02.stat().st_uid == 1003
+    result.update(base_current_stat=base_before, candidate_current_stat=candidate_before,
+                  base9_stat_continuity=True, candidate9_stat_continuity=True)
+    checks = []
+    for line in (A / "SHA256SUMS").read_text().splitlines():
+        expected, name = line.split("  ", 1)
+        path = A / name
+        assert path.resolve().is_relative_to(A) and not path.is_symlink()
+        before = stamp(path)
+        assert sha(path) == expected and stamp(path) == before
+        checks.append({"path": name, "sha256": expected, "bytes": before["size"], "matches": True})
+    actual = set(inventory(A))
+    assert len(checks) == 135 and actual == {x["path"] for x in checks} | {"SHA256SUMS"}
+    result.update(archive_checksum_list_sha256=SUMS, archive_json_sha256=ARCHIVE,
+                  archive_files_verified=len(checks), archive_sha_checks=checks,
+                  archive_logical_bytes=sum(x["bytes"] for x in checks)+(A/"SHA256SUMS").stat().st_size)
+    gzip_checks = []
+    for item in archive["compressed_originals"]:
+        digest, count = hashlib.sha256(), 0
+        with gzip.open(A / item["path"], "rb") as stream:
+            for block in iter(lambda: stream.read(8 * 2**20), b""):
+                digest.update(block)
+                count += len(block)
+        assert digest.hexdigest() == item["original_sha256"] and count == item["original_bytes"]
+        gzip_checks.append({"path": item["path"], "original_sha256": digest.hexdigest(), "original_bytes": count})
+    result["gzip_original_bytes_verified"] = gzip_checks
+    verify = json.loads((A / "records/materialization/verify.json").read_text())
+    close = json.loads((A / "records/full-diff/full-diff-closure.json").read_text())
+    assert sha(A/"records/materialization/verify.json") == archive["full_saved_verify_sha256"]
+    assert verify["verified"] is True and verify["legacy_full_hashes_missing"] is False
+    assert verify["changed_elements"] == 203419 and verify["changed_tensors"] == 410
+    assert close["status"] == "full_diff_validated" and close["hashed_files_verified"] == 18
+    assert sha(A/"records/full-diff/full-diff-closure.json") == archive["fresh_completed_full_diff_closure_sha256"]
+    assert close["stat_checks"]["base"]["stat"] == base_before
+    assert close["stat_checks"]["candidate"]["stat"] == candidate_before
+    vf = {r["path"]: r for r in verify["files"]}
+    for f in archive["files"]:
+        assert f["source_sha256"] == vf[f["path"]]["source_sha256"]
+        assert f["candidate_sha256"] == vf[f["path"]]["candidate_sha256"]
+    result["proof"] = {"saved_full_verify_sha256": archive["full_saved_verify_sha256"],
+                      "completed_18file_hash_closure_sha256": archive["fresh_completed_full_diff_closure_sha256"],
+                      "changed_elements": 203419, "changed_tensors": 410, "new_replan": False}
+    targets = []
+    for name in NAMES:
+        s = candidate_before[name]; b = base_before[name]
+        assert s["nlink"] == 1 and s["uid"] == 1003 and s["gid"] == 1003
+        assert (s["device"], s["inode"]) != (b["device"], b["inode"])
+        row = next(r for r in archive["files"] if r["path"] == name)
+        targets.append({"path": str(F02 / name), "bytes": s["size"],
+                        "allocated_bytes": (F02/name).stat().st_blocks*512,
+                        "historical_full_sha256": row["candidate_sha256"], "current_stat": s,
+                        "hardlink_private": True})
+    assert sum(r["bytes"] for r in targets) == 62546338264
+    result["targets"] = targets
+    mounts_before, conflicts = mount_snapshot()
+    result.update(containers=mounts_before, mount_conflicts=conflicts,
+                  all_container_mounts_candidate_disjoint=not conflicts, container_count=len(mounts_before))
+    result["filesystem"] = subprocess.check_output(
+        ["findmnt", "-n", "-o", "FSTYPE,SOURCE,TARGET", "--target", str(F02)], text=True).strip()
+    # Same-UID handles/maps are a bounded read-only check, not a claim about inaccessible processes.
+    references, inaccessible = [], []
+    checked = 0
+    for proc in Path("/proc").iterdir():
+        if not proc.name.isdigit():
+            continue
+        try:
+            if proc.stat().st_uid != os.getuid():
+                continue
+            checked += 1
+            for fd in (proc/"fd").iterdir():
+                try:
+                    value = os.readlink(fd)
+                    if any(value == str(F02/name) for name in NAMES):
+                        references.append({"pid": int(proc.name), "kind": "fd", "fd": fd.name, "path": value})
+                except (FileNotFoundError, PermissionError, ProcessLookupError):
+                    pass
+            for line in (proc/"maps").read_text().splitlines():
+                if any(str(F02/name) in line for name in NAMES):
+                    references.append({"pid": int(proc.name), "kind": "map", "path": line.split()[-1]})
+        except (FileNotFoundError, PermissionError, ProcessLookupError):
+            inaccessible.append(int(proc.name))
+    result["same_uid_process_references"] = {"processes_checked": checked, "matches": references,
+        "inaccessible_or_disappeared": inaccessible, "other_uid_processes_not_inspected": True}
+    free = shutil.disk_usage(F02).free
+    release = sum(t["allocated_bytes"] for t in targets)
+    need = sum(r["size"] for r in archive["files"])
+    result["capacity"] = {"free_now_bytes": free, "private_payload_logical_bytes": sum(t["bytes"] for t in targets),
+        "private_payload_allocated_bytes": release, "projected_free_after_release_bytes": free+release,
+        "worst_case_new_checkpoint_bytes": need, "editor_extra_margin_bytes": 64*2**20,
+        "editor_default_reserve_bytes": 0, "explicit_example_reserve_bytes": 50*2**30,
+        "free_after_one_new_checkpoint_without_release_bytes": free-need,
+        "projected_free_after_release_and_one_new_checkpoint_bytes": free+release-need,
+        "projection_not_actual_released_bytes": True}
+    assert inventory(AV) == base_before and inventory(F02) == candidate_before
+    assert sha(A/"SHA256SUMS") == SUMS and sha(A/"archive.json") == ARCHIVE
+    mounts_after, after_conflicts = mount_snapshot()
+    result["containers_unchanged_during_audit"] = mounts_before == mounts_after
+    assert mounts_before == mounts_after and conflicts == after_conflicts
+    result["status"] = "read_only_guards_passed_waiting_parent_decision" if not conflicts and not references else "blocked_mount_or_open_reference"
+    result["future_release_authorized"] = False
+except BaseException as error:
+    result["status"] = "read_only_audit_failed"
+    result["error_type"] = type(error).__name__
+    raise
+finally:
+    result["elapsed_seconds"] = time.monotonic()-started
+    with (O/"audit.json").open("x") as out:
+        json.dump(result,out,indent=2,allow_nan=False)
+        out.write("\n")
+    print(json.dumps({k:result.get(k) for k in ("status","archive_files_verified","container_count","elapsed_seconds","released_bytes")}))

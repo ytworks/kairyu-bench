@@ -1,0 +1,101 @@
+{
+  "schema_version": 1,
+  "status": "preview",
+  "split": "train",
+  "catalog": "advanced-v2",
+  "generation": {
+    "model_id": "gemma-4-31b",
+    "checkpoint_sha256": "5d056eb03f954db80313a85167153c875fe5e436e4f97c281a3f55202d9b3eaf",
+    "frame": "live-native-thinking-on-public-answer",
+    "enable_thinking": true,
+    "reasoning_saved": false,
+    "sampling": "server_official_generation_config",
+    "temperature": null,
+    "max_tokens": 32768,
+    "seed": 0
+  },
+  "inputs": [
+    {
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-authored120-generation-inputs-v1/inputs/advanced-v2-train-cases.json",
+      "sha256": "9d51dfdeaa9e61a4d989b23459c4eff8b3d5b7d7d9291de3258bd3c12921797b",
+      "stat": {
+        "dev": 2306,
+        "ino": 182190619,
+        "size": 21482,
+        "mtime_ns": 1794036576797790232,
+        "ctime_ns": 1794036576797790232
+      }
+    },
+    {
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-av-authored120-native-v1/generations/01-advanced-v2/train-responses.json",
+      "sha256": "215c1a04e55701deae71ae0ab95e8f5d4abf5780b870f838dae143590e018083",
+      "stat": {
+        "dev": 2306,
+        "ino": 182190989,
+        "size": 2160,
+        "mtime_ns": 1794036886113041058,
+        "ctime_ns": 1794036886113041058
+      }
+    },
+    {
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/worktrees/kairyu-bench-weight-tools/scripts/experiments/gemma4-purpose/science_sandbox.py",
+      "sha256": "b49964b08da7bd219ebafa1f136b77c717cc224c2a73304c9b3024eea888b620",
+      "stat": {
+        "dev": 2306,
+        "ino": 181419342,
+        "size": 27235,
+        "mtime_ns": 1794022674391841526,
+        "ctime_ns": 1794022674391841526
+      }
+    },
+    {
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/worktrees/kairyu-bench-weight-tools/scripts/experiments/gemma4-purpose/science_cases.py",
+      "sha256": "2c4cc6e75c92c41b98e737ca2c0a653e0f7a7675c6150a6ad33e3f954122a26b",
+      "stat": {
+        "dev": 2306,
+        "ino": 181419270,
+        "size": 35229,
+        "mtime_ns": 1793939595408268372,
+        "ctime_ns": 1793939595408268372
+      }
+    },
+    {
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/worktrees/kairyu-bench-weight-tools/scripts/experiments/gemma4-purpose/advanced_science_cases.py",
+      "sha256": "544bcf6ef8671c13038420169508419d433199ea8f41dc8abed195d59eaef1d4",
+      "stat": {
+        "dev": 2306,
+        "ino": 181420223,
+        "size": 33584,
+        "mtime_ns": 1793941694558878043,
+        "ctime_ns": 1793941694558878043
+      }
+    }
+  ],
+  "seed": 20261107,
+  "trials": 8,
+  "expected_cases": 16,
+  "responses_received": 16,
+  "sandbox": {
+    "image": "sha256:c4ab50223f03fca17bf871e4d05f77001e76525a1c574b6c6ee7024db06cfdc2",
+    "daemon_id": "3e518d2b-6972-43f8-b325-f7f33697a2d2",
+    "socket": "/var/run/docker.sock",
+    "seconds": 15.0,
+    "memory_mib": 512,
+    "cpus": 1.0,
+    "network": "none",
+    "user": "1003:1003",
+    "read_only": true,
+    "host_mounts": [],
+    "gpus": false,
+    "output_limit_bytes": 1048576
+  },
+  "results": [],
+  "scope": "Authored calibration execution, not WSP score.",
+  "limits": [
+    "Only plain Python or one whole-answer Python fence is accepted; this differs from WSP extraction.",
+    "Finite randomized tests do not prove correctness for all inputs.",
+    "Docker is process isolation, not a formal hostile-code security boundary.",
+    "Input mutation is checked inside the container; hostile protocol forgery is not ruled out.",
+    "Transfer results must not be used as gradient input; repeated selection makes them known."
+  ]
+}

@@ -1,0 +1,82 @@
+from pathlib import Path
+import gzip,hashlib,json,os,re,subprocess,time
+R=Path('/mnt/nvme/kairyu/wsp/gemma4-coding-20261104')
+B=R/'worktrees/kairyu-bench-weight-tools'
+P=R/'analysis/fresh-purpose-20261107-cpu-validation-r7'
+D=B/'docs/experiments/records/2026-11-07-cpu-validation-r7'
+BIN=R/'infra/weight-tools-ci/bin'
+def h(p):return hashlib.sha256(p.read_bytes()).hexdigest()
+def save(p,d):p.write_text(json.dumps(d,ensure_ascii=False,indent=2,allow_nan=False)+'\n')
+def sources():
+ files=subprocess.check_output(['git','ls-files','-co','--exclude-standard','-z'],cwd=B).decode().split('\0')
+ return {f:h(B/f) for f in sorted(set(files)) if f and (B/f).is_file()
+         and (Path(f).suffix in ('.py','.sh','.toml') or f=='.github/workflows/ci.yml')}
+assert not P.exists()
+P.mkdir()
+tmp=R/'tmp-ci-r3'
+tmp.mkdir(exist_ok=True)
+env=os.environ.copy()
+env['PATH']=str(BIN)+os.pathsep+env.get('PATH','')
+env['TMPDIR']=str(tmp)
+env['KAIRYU_BENCH_PYTHON']=str(BIN/'python')
+receipt={'status':'running','started_epoch':time.time(),'operation_sha256':h(Path(__file__)),
+         'environment_overrides':{'PATH_prefix':str(BIN),'TMPDIR':str(tmp),'KAIRYU_BENCH_PYTHON':str(BIN/'python')},
+         'before':sources(),'results':{},'shell':[],'gpu_validation':False,'model_calls':0}
+save(P/'receipt.json',receipt)
+began=time.monotonic()
+for name,command in [
+ ('unittest',[str(BIN/'python'),'-m','unittest','discover','-s','tests','-v']),
+ ('ruff',[str(BIN/'ruff'),'check','.']),
+ ('mypy',[str(BIN/'mypy'),'--ignore-missing-imports','src']),
+ ('data',[str(BIN/'python'),'scripts/update_model_comparison.py','--check']),
+]:
+ t=time.monotonic()
+ with (P/(name+'.log')).open('wb') as f:
+  result=subprocess.run(command,cwd=B,env=env,stdout=f,stderr=subprocess.STDOUT)
+ receipt['results'][name]={'command':command,'returncode':result.returncode,'seconds':time.monotonic()-t,
+                           'log_sha256':h(P/(name+'.log'))}
+ save(P/'receipt.json',receipt)
+ print(json.dumps({'check':name,**receipt['results'][name]}),flush=True)
+shells=[]
+for root,dirs,files in os.walk(B):
+ dirs[:]=[d for d in dirs if d!='.git']
+ for name in files:
+  p=Path(root)/name
+  if p.suffix=='.sh' and p.is_file():shells.append(p)
+with (P/'shell.log').open('w') as f:
+ for p in sorted(shells):
+  result=subprocess.run(['sh','-n',str(p)],cwd=B,env=env,capture_output=True,text=True)
+  row={'file':str(p.relative_to(B)),'command':['sh','-n',str(p)],'returncode':result.returncode,
+       'stdout':result.stdout,'stderr':result.stderr}
+  receipt['shell'].append(row)
+  f.write(json.dumps(row,ensure_ascii=False)+'\n')
+receipt['after']=sources()
+receipt['source_unchanged']=receipt['before']==receipt['after']
+receipt['status']='completed'
+receipt['seconds']=time.monotonic()-began
+save(P/'receipt.json',receipt)
+log=(P/'unittest.log').read_text()
+matches=re.findall(r'^Ran (\d+) tests in ([0-9.]+)s$',log,re.M)
+status=re.findall(r'^(OK|FAILED)(?: \(([^)]*)\))?$',log,re.M)
+summary={'source_unchanged':receipt['source_unchanged'],'checks':receipt['results'],
+         'shell_total':len(receipt['shell']),'shell_failures':[r for r in receipt['shell'] if r['returncode']],
+         'total_seconds':receipt['seconds'],'test_parse_succeeded':bool(matches and status)}
+if matches and status:
+ n,seconds=matches[-1];state,fields=status[-1]
+ counters={k:int(v) for k,v in re.findall(r'(\w+)=(\d+)',fields)}
+ skipped=counters.get('skipped',0);failures=counters.get('failures',0);errors=counters.get('errors',0)
+ summary.update(tests_collected=int(n),unittest_reported_seconds=float(seconds),unittest_status=state,
+                skips=skipped,failures=failures,errors=errors,passed=int(n)-skipped-failures-errors,
+                raw_counters=counters)
+save(P/'summary.json',summary)
+for name in ['receipt.json','summary.json']:(D/name).write_bytes((P/name).read_bytes())
+compression={}
+for src in sorted(P.glob('*.log')):
+ dst=D/(src.name+'.gz')
+ with dst.open('wb') as f:
+  with gzip.GzipFile(filename='',mode='wb',fileobj=f,mtime=0) as z:z.write(src.read_bytes())
+ assert gzip.decompress(dst.read_bytes())==src.read_bytes()
+ compression[src.name]={'raw_bytes':src.stat().st_size,'raw_sha256':h(src),'gzip_bytes':dst.stat().st_size,'gzip_sha256':h(dst),'roundtrip_exact':True}
+save(D/'compression.json',compression)
+D.joinpath('SHA256SUMS').write_text('\n'.join(h(p)+'  '+p.name for p in sorted(D.iterdir()) if p.is_file() and p.name!='SHA256SUMS')+'\n')
+print(json.dumps(summary),flush=True)

@@ -1,0 +1,154 @@
+[
+  {
+    "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f04-dev30-dp4-v1/official-comparison-v1/strict-compare.stdout.txt",
+    "file": "strict-compare.stdout.txt",
+    "source_bytes": 1829,
+    "source_sha256": "7ca422aba164200a9f7e77b947ef7cbca9646ffa656ad0d1403c972469d10252",
+    "stored_sha256": "7ca422aba164200a9f7e77b947ef7cbca9646ffa656ad0d1403c972469d10252",
+    "lossless_gzip": false
+  },
+  {
+    "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f04-dev30-dp4-v1/official-comparison-v1/strict-compare.stderr.txt",
+    "file": "strict-compare.stderr.txt",
+    "source_bytes": 0,
+    "source_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stored_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "lossless_gzip": false
+  },
+  {
+    "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f04-dev30-dp4-v1/official-comparison-v1/candidate-audit-receipt.json",
+    "file": "candidate-audit-receipt.json",
+    "source_bytes": 994,
+    "source_sha256": "eea1abc66ae62cdca02f70455689d8046ac056a72e62da0c3c866ed56f0611f5",
+    "stored_sha256": "eea1abc66ae62cdca02f70455689d8046ac056a72e62da0c3c866ed56f0611f5",
+    "lossless_gzip": false
+  },
+  {
+    "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f04-dev30-dp4-v1/official-comparison-v1/strict-compare-receipt.json",
+    "file": "strict-compare-receipt.json",
+    "source_bytes": 605,
+    "source_sha256": "55c6e123b314f6e03d8811c77d5160cff101182a94c24c2bf6d753bc957c473b",
+    "stored_sha256": "55c6e123b314f6e03d8811c77d5160cff101182a94c24c2bf6d753bc957c473b",
+    "lossless_gzip": false
+  },
+  {
+    "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f04-dev30-dp4-v1/official-comparison-v1/comparison.json",
+    "file": "comparison.json",
+    "source_bytes": 11665,
+    "source_sha256": "6b6e0ece540013cf9fc2a19c5c2b945659937f5f058a7c56a893581119885a4b",
+    "stored_sha256": "6b6e0ece540013cf9fc2a19c5c2b945659937f5f058a7c56a893581119885a4b",
+    "lossless_gzip": false
+  },
+  {
+    "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f04-dev30-dp4-v1/official-comparison-v1/code-90-paired-items.json",
+    "file": "code-90-paired-items.json.gz",
+    "source_bytes": 152746,
+    "source_sha256": "cff162f07bffd11c0e1210cd50ca199fa53c13ad72ad40ee5ccea5ea8c4e1992",
+    "stored_sha256": "9538e36726157d0083bedfb4196b8da496865a3d849eb802d65e80a49b752975",
+    "lossless_gzip": true
+  },
+  {
+    "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f04-dev30-dp4-v1/official-comparison-v1/candidate-audit.stderr.txt",
+    "file": "candidate-audit.stderr.txt",
+    "source_bytes": 0,
+    "source_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stored_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "lossless_gzip": false
+  },
+  {
+    "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f04-dev30-dp4-v1/official-comparison-v1/all-2338-paired-items.json",
+    "file": "all-2338-paired-items.json.gz",
+    "source_bytes": 1151131,
+    "source_sha256": "d1e7887afb550f28ea816e720fd6af825447597690b7644085afc83013e26ce5",
+    "stored_sha256": "97379c65055553b1d418863774e8950c0483ee775ee12953f72fb38f28e7733d",
+    "lossless_gzip": true
+  },
+  {
+    "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f04-dev30-dp4-v1/official-comparison-v1/summary.json",
+    "file": "summary.json",
+    "source_bytes": 64500,
+    "source_sha256": "350e8b1b7993d270b805f51a3fdac4b2b5bef2825a5e916723a8c55bddd2c158",
+    "stored_sha256": "350e8b1b7993d270b805f51a3fdac4b2b5bef2825a5e916723a8c55bddd2c158",
+    "lossless_gzip": false
+  },
+  {
+    "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f04-dev30-dp4-v1/official-comparison-v1/candidate-audit.stdout.txt",
+    "file": "candidate-audit.stdout.txt",
+    "source_bytes": 1932,
+    "source_sha256": "480a5e17572678b5d9d6ac3bd699bad18b1dd094fd4a805659555589557a92ea",
+    "stored_sha256": "480a5e17572678b5d9d6ac3bd699bad18b1dd094fd4a805659555589557a92ea",
+    "lossless_gzip": false
+  },
+  {
+    "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f04-dev30-dp4-v1/official-comparison-v1/candidate-audit/all-2338-numeric-items.json",
+    "file": "candidate-audit-all-2338-numeric-items.json.gz",
+    "source_bytes": 2016629,
+    "source_sha256": "79222af8ecf835292335186124b4b5b58ecfb59fba57c52f54c22373227a9fbf",
+    "stored_sha256": "885a2998a1cc3f6ed06d03b521f4e9c8ee83576bbc36160cc81b7a2c2553f238",
+    "lossless_gzip": true
+  },
+  {
+    "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f04-dev30-dp4-v1/official-comparison-v1/candidate-audit/data-anomalies.json",
+    "file": "candidate-audit-data-anomalies.json",
+    "source_bytes": 401,
+    "source_sha256": "8bb91a7a40dab677ae7d422f12400da7957c5038bb5e8cf75f36ff7b4c0bbe54",
+    "stored_sha256": "8bb91a7a40dab677ae7d422f12400da7957c5038bb5e8cf75f36ff7b4c0bbe54",
+    "lossless_gzip": false
+  },
+  {
+    "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f04-dev30-dp4-v1/official-comparison-v1/candidate-audit/summary.json",
+    "file": "candidate-audit-summary.json",
+    "source_bytes": 55240,
+    "source_sha256": "49afd259123718a859143b8ca6ad5de8b5142efa81772a250e8db272c7085077",
+    "stored_sha256": "49afd259123718a859143b8ca6ad5de8b5142efa81772a250e8db272c7085077",
+    "lossless_gzip": false
+  },
+  {
+    "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f04-dev30-dp4-v1/official-comparison-v1/candidate-audit/code-90-items.json",
+    "file": "candidate-audit-code-90-items.json.gz",
+    "source_bytes": 191740,
+    "source_sha256": "3b383d7e6f2963dec3bb082657fb6993d07e929f8a08bb440bf8bc380960141e",
+    "stored_sha256": "50c34ebd6935d9ac82cadbcf2993880b8e96e5daf99df016779bb84b18f98c06",
+    "lossless_gzip": true
+  },
+  {
+    "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f04-dev30-dp4-v1/actual-runner.json",
+    "file": "actual-runner.json",
+    "source_bytes": 2299,
+    "source_sha256": "845d30e351721b2dace0936c75d01a1c79ceb5028b533b9232c863bf83bfbbc4",
+    "stored_sha256": "845d30e351721b2dace0936c75d01a1c79ceb5028b533b9232c863bf83bfbbc4",
+    "lossless_gzip": false
+  },
+  {
+    "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f04-dev30-dp4-v1/run-start-verified.json",
+    "file": "run-start-verified.json",
+    "source_bytes": 1858,
+    "source_sha256": "6ef0f2a0aee273c4e008083441e178b79766753446c0700d5803e9313f5494d8",
+    "stored_sha256": "6ef0f2a0aee273c4e008083441e178b79766753446c0700d5803e9313f5494d8",
+    "lossless_gzip": false
+  },
+  {
+    "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f04-dev30-dp4-v1/owner-complete.json",
+    "file": "owner-complete.json",
+    "source_bytes": 132,
+    "source_sha256": "9fd9010a8a239ecabd6484b29852396f7cd8290cb299c78e035a69ecb205cfe4",
+    "stored_sha256": "9fd9010a8a239ecabd6484b29852396f7cd8290cb299c78e035a69ecb205cfe4",
+    "lossless_gzip": false
+  },
+  {
+    "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/results/gemma4-fresh-f04-dev30-dp4-20261107-v1/run.json",
+    "file": "official-run.json",
+    "source_bytes": 1859,
+    "source_sha256": "f467d0cdcfdcc7674e62ea38abc2d29124d7740f2e549d4d8fcf135e862cf894",
+    "stored_sha256": "f467d0cdcfdcc7674e62ea38abc2d29124d7740f2e549d4d8fcf135e862cf894",
+    "lossless_gzip": false
+  },
+  {
+    "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/results/gemma4-fresh-f04-dev30-dp4-20261107-v1/report.json",
+    "file": "official-report.json",
+    "source_bytes": 11121,
+    "source_sha256": "1a062c114b0acae4d27930040c30ccc2e01a20c3e1062490fa1f84656278fd85",
+    "stored_sha256": "1a062c114b0acae4d27930040c30ccc2e01a20c3e1062490fa1f84656278fd85",
+    "lossless_gzip": false
+  }
+]

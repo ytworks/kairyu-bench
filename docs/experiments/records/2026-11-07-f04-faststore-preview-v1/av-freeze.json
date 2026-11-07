@@ -1,0 +1,169 @@
+{
+  "schema_version": 1,
+  "checkpoint_path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/checkpoints/code90-current-ad-helper-av-v1",
+  "candidate_inventory_stat": {
+    "chat_template.jinja": {
+      "device": 2306,
+      "inode": 181678464,
+      "size": 18683,
+      "mtime_ns": 1794014158733915132,
+      "ctime_ns": 1794014158733915132,
+      "uid": 1003,
+      "gid": 1003,
+      "mode": 33152,
+      "nlink": 1
+    },
+    "config.json": {
+      "device": 2306,
+      "inode": 181678465,
+      "size": 4621,
+      "mtime_ns": 1794014158734915095,
+      "ctime_ns": 1794014158734915095,
+      "uid": 1003,
+      "gid": 1003,
+      "mode": 33152,
+      "nlink": 1
+    },
+    "generation_config.json": {
+      "device": 2306,
+      "inode": 181678466,
+      "size": 208,
+      "mtime_ns": 1794014158734915095,
+      "ctime_ns": 1794014158734915095,
+      "uid": 1003,
+      "gid": 1003,
+      "mode": 33152,
+      "nlink": 1
+    },
+    "model-00001-of-00002.safetensors": {
+      "device": 2306,
+      "inode": 181678467,
+      "size": 49923154850,
+      "mtime_ns": 1794014260450139654,
+      "ctime_ns": 1794014260450139654,
+      "uid": 1003,
+      "gid": 1003,
+      "mode": 33152,
+      "nlink": 1
+    },
+    "model-00002-of-00002.safetensors": {
+      "device": 2306,
+      "inode": 181678468,
+      "size": 12623183414,
+      "mtime_ns": 1794014261005119199,
+      "ctime_ns": 1794014261005119199,
+      "uid": 1003,
+      "gid": 1003,
+      "mode": 33152,
+      "nlink": 1
+    },
+    "model.safetensors.index.json": {
+      "device": 2306,
+      "inode": 181678469,
+      "size": 120246,
+      "mtime_ns": 1794014259954157935,
+      "ctime_ns": 1794014259954157935,
+      "uid": 1003,
+      "gid": 1003,
+      "mode": 33152,
+      "nlink": 1
+    },
+    "processor_config.json": {
+      "device": 2306,
+      "inode": 181678470,
+      "size": 1689,
+      "mtime_ns": 1794014259954157935,
+      "ctime_ns": 1794014259954157935,
+      "uid": 1003,
+      "gid": 1003,
+      "mode": 33152,
+      "nlink": 1
+    },
+    "tokenizer.json": {
+      "device": 2306,
+      "inode": 181678471,
+      "size": 32169626,
+      "mtime_ns": 1794014259991156571,
+      "ctime_ns": 1794014259991156571,
+      "uid": 1003,
+      "gid": 1003,
+      "mode": 33152,
+      "nlink": 1
+    },
+    "tokenizer_config.json": {
+      "device": 2306,
+      "inode": 181678472,
+      "size": 3082,
+      "mtime_ns": 1794014260013155760,
+      "ctime_ns": 1794014260013155760,
+      "uid": 1003,
+      "gid": 1003,
+      "mode": 33152,
+      "nlink": 1
+    }
+  },
+  "all_checkpoint_files": [
+    {
+      "path": "chat_template.jinja",
+      "size": 18683,
+      "sha256": "ae53464bf3be25802b3a5b37def7fd89667067d7577049b3b2d74c4d8de4c6d4"
+    },
+    {
+      "path": "config.json",
+      "size": 4621,
+      "sha256": "e967dd38bc5cfd38bd09a995a7bf4a754075df2b46aba68f7fbb5a791e6d8dd1"
+    },
+    {
+      "path": "generation_config.json",
+      "size": 208,
+      "sha256": "d4226bbe3117d2d253ba4609720ba82c6c4ce4627a9a6ae05387c78983ac03de"
+    },
+    {
+      "path": "model-00001-of-00002.safetensors",
+      "size": 49923154850,
+      "sha256": "0589dc8a7a3afba79fe2d8444221dae410db57ce1be33eb72d9be637d70fcf10"
+    },
+    {
+      "path": "model-00002-of-00002.safetensors",
+      "size": 12623183414,
+      "sha256": "9be24bc9910dbbe54f3f46154189c729071fd56dc41331f4a97a6ad3e02b3b56"
+    },
+    {
+      "path": "model.safetensors.index.json",
+      "size": 120246,
+      "sha256": "390b7f9a0a502e4526cf20862d22954c911cc318d8aba2cdb745c6fbd98264f6"
+    },
+    {
+      "path": "processor_config.json",
+      "size": 1689,
+      "sha256": "32bdf45d2ad4cc29a0822ddd157a182de76644f0419a6228d151495256e9813c"
+    },
+    {
+      "path": "tokenizer.json",
+      "size": 32169626,
+      "sha256": "cc8d3a0ce36466ccc1278bf987df5f71db1719b9ca6b4118264f45cb627bfe0f"
+    },
+    {
+      "path": "tokenizer_config.json",
+      "size": 3082,
+      "sha256": "9f4fec4b1dc6ecddf8f4a92e9caea5971c0e67d81309f3f9066a2bee8c362633"
+    }
+  ],
+  "control_tree_sha256": "5d056eb03f954db80313a85167153c875fe5e436e4f97c281a3f55202d9b3eaf",
+  "proof": {
+    "kind": "prior_fresh_full9_editor_verify_plus_current_full_stat_continuity",
+    "original_freeze": {
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-av-dev30-deployment-plan-v1/av-freeze.json",
+      "sha256": "0fbf034b37613d20fde3f8a536852246a4207be8c65be0aa46a9f2a1d920f176"
+    },
+    "latest_full_hash_evidence": {
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f03-native-v1/materialization/verify.json",
+      "sha256": "616806dc095ebecb04ac10d4514ec6c73f9bbd53d3f572d1ef704452320062c4"
+    },
+    "full_stat_evidence": {
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f03-native-v1/materialization/fullcandidateidentity.json",
+      "sha256": "b9e5dbd64520196507d1d53fae64b2609d5ea45559c78aee4a60cf701d6876b5"
+    },
+    "payload_rehashed_here": false
+  }
+}

@@ -1,0 +1,36 @@
+from pathlib import Path
+import hashlib,json,subprocess,time
+R=Path("/mnt/nvme/kairyu/wsp/gemma4-coding-20261104")
+B=R/"worktrees/kairyu-bench-weight-tools"
+D=R/"analysis/fresh-purpose-20261107-f06-lora-deployment-plan-v1"
+D.mkdir()
+def sha(p):return hashlib.sha256(Path(p).read_bytes()).hexdigest()
+def save(name,value):(D/name).write_text(json.dumps(value,indent=2)+"\n")
+old=R/"analysis/fresh-purpose-20261107-f04-relative-v1/parallel-deploy-plan-v1/plan-unbound-v2.json"
+plan=json.loads(old.read_text())
+owner=B/"docs/experiments/scripts/fresh-four-parallel-redeploy-20261107.py"
+assert sha(owner)==plan["owner_sha256"]
+assert all(sha(p)==h for p,h in plan["source_pins"].items())
+restore=R/"analysis/fresh-purpose-20261107-f05-rejected-f04-restore-v1/restoration-completion.json"
+status=json.loads(restore.read_text())
+assert status["current_model"]==status["best_parent"]=="F04"
+plan.update(status="unbound_wait_for_total64_exact_restore_saved_F06_verify_Opus_root",
+ candidate=str(R/"checkpoints/fresh-lora-mbpp-f06-v1/checkpoint"),
+ freeze=dict(path=None,sha256=None),verification=dict(path=None,sha256=None),
+ baseline=dict(path=None,sha256=None),protected_before=dict(path=None,sha256=None),
+ target_ids={},protected_ids=[],previews={},output=str(D/"parallel-apply-v1"),
+ parent_gate="F04 is current highest completed parent. No parent re-evaluation. Root approval after all64 training, exact sameCID restoration, saved candidate verification, Opus review, fresh27snapshot and four existing guarded previews.",
+ expected_previous_cids={s:v["cid"] for s,v in status["replicas"].items()},
+ current_parent_restoration_proof=dict(path=str(restore),sha256=sha(restore)),
+ required_fresh_binding=["all64 training summary/export", "current gemma2 StartedAt after training restore",
+ "candidate freeze plus full verification and current stats", "27current members/23protected/4healthy idle",
+ "shared baseline and four existing helper previews", "Opus receipt", "exact root approval"],
+ rollback="Existing parallel owner joins every child and rolls all four back to the single common baseline on any failure; no mixed benchmark",
+ endpoint_checks_and_served_record="After all4 candidate closure: existing minimum chat1/logprob4 and atomic serving record, then unchanged full2338 WSP30 with candidate-specific identity only")
+save("plan-unbound.json",plan)
+cmd=[str(R/"infra/weight-tools-ci/bin/python"),str(owner),"--plan",str(D/"plan-unbound.json")]
+t=time.time();p=subprocess.run(cmd,capture_output=True,text=True)
+(D/"preview.stdout").write_text(p.stdout);(D/"preview.stderr").write_text(p.stderr)
+save("preview-receipt.json",dict(command=cmd,returncode=p.returncode,seconds=time.time()-t,model_calls=0,service_mutations=0,plan_sha256=sha(D/"plan-unbound.json"),source_changed=False))
+assert p.returncode==0,p.stderr
+print(json.dumps(dict(plan=str(D/"plan-unbound.json"),sha256=sha(D/"plan-unbound.json"),preview=p.stdout.strip(),source_sha256=sha(owner))))

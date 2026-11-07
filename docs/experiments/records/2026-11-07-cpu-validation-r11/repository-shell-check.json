@@ -1,0 +1,225 @@
+{
+  "status": "passed",
+  "count": 31,
+  "rows": [
+    {
+      "path": "adapters/charxiv-reasoning/run.sh",
+      "sha256": "873fed324ff699578bcb2f5961f7463ce5df61997ed0320cdbd050d76c7d4abb",
+      "returncode": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "path": "adapters/deepswe/run.sh",
+      "sha256": "673124d7defdf1c97ab7c83b6015b88dace05d85a50714b2bf4894958f1c007f",
+      "returncode": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "path": "adapters/gpqa-diamond/run.sh",
+      "sha256": "756bf6eb0e62ac0d82b310d492592fb30cf091ec7532364a38e0aa9f47e9a497",
+      "returncode": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "path": "adapters/hle/run.sh",
+      "sha256": "23826c0636ad9735fccec5385d40f1b7fbac089393ca4230a6a6defd9d068fd9",
+      "returncode": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "path": "adapters/livecodebench-pro/run.sh",
+      "sha256": "d49446469dbb438e1bc365a87e12eaf15a927ad22bc7fc02873a0f369b101551",
+      "returncode": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "path": "adapters/livecodebench/run.sh",
+      "sha256": "e130c5111ae81b16f0ca39e165b3b26039416cfa59f3fb18bf8560a012a09633",
+      "returncode": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "path": "adapters/long-context-reasoning/run.sh",
+      "sha256": "1c33efdcef41b7c59851586e8233277eb3628dcf2a3d694efca280f237990840",
+      "returncode": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "path": "adapters/mrcr-v2/run.sh",
+      "sha256": "889a24d7dde045bdf80535bfe423afc51e12ca7f8b3b9203a51ce343abddc4b9",
+      "returncode": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "path": "adapters/scicode/run.sh",
+      "sha256": "c475e57e9b7835c644745ae498d015fe26eaa0b83430e2ea4a5004797f969854",
+      "returncode": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "path": "adapters/swe-bench-pro/run.sh",
+      "sha256": "7934147cfde6a2e984e38737a3e943cd41ce1bfa9579a2ea19d5d746177642ac",
+      "returncode": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "path": "adapters/swe-bench-verified/run.sh",
+      "sha256": "57d8ce70f5ac7b37f83036165d77b609357e6a40f6f7b90e146f24b88a9c8eb6",
+      "returncode": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "path": "adapters/tau-bench-banking/run.sh",
+      "sha256": "74ade11e1cb115d826cda74b5162b382882c6474f4646051238c83ff0ec94c46",
+      "returncode": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "path": "adapters/terminal-bench-4/run.sh",
+      "sha256": "ec900e5061bf3fd14747656fcb6fe155595e7bcc0dfe6c9786ae4c532e8480f9",
+      "returncode": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "path": "adapters/terminal-bench/run.sh",
+      "sha256": "ab2575fccac322cf0d3c89952780bb3de29017ae652373be217f34c7a07586fc",
+      "returncode": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "path": "scripts/container-entrypoint.sh",
+      "sha256": "b88a0b1395408895c73248ff66953785710b75330f2b03715d9e49d553c1d2fc",
+      "returncode": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "path": "scripts/experiments/gemma4_lora/build-kernel.sh",
+      "sha256": "a56c1631486468b4908055472d632adb9d0e0e156bc95b27c04827a1f95564ce",
+      "returncode": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "path": "scripts/harnesses/charxiv-reasoning.sh",
+      "sha256": "87da84d031135e93de44d3434e00abb1d421942036c279b58de287456e881564",
+      "returncode": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "path": "scripts/harnesses/deepswe.sh",
+      "sha256": "0e54893d69b2774268f2ae95636b99e6d89121e6a3b171220c0f7b81afa9a18a",
+      "returncode": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "path": "scripts/harnesses/hle.sh",
+      "sha256": "64da9703a739a197a1bb7ec64778a749f96438d26bfe4b5bca97e4540dc735eb",
+      "returncode": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "path": "scripts/harnesses/livecodebench-pro.sh",
+      "sha256": "eabaff4bed34bbb4e26b16d62c081688ab2abe266b9d1a0f9603946c589b4ca8",
+      "returncode": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "path": "scripts/harnesses/livecodebench.sh",
+      "sha256": "fbd4bc28029d25e1afc8059f695cddbdc0e0cddef6413a46e920500e95b31ea2",
+      "returncode": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "path": "scripts/harnesses/scicode.sh",
+      "sha256": "ed187cd7c1d36c54ec34ccc594661d9149a3b2de8e0726881d1c5ae5519831f9",
+      "returncode": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "path": "scripts/harnesses/swebench.sh",
+      "sha256": "4e8f5d885d920101fc46ac91ea7da065300f0cc366e12f77765d54e01d04f341",
+      "returncode": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "path": "scripts/harnesses/tau-bench-banking.sh",
+      "sha256": "fefc5adb53642a8aeb05b1fe28e8da290c58671630c20e82a5ddbc6cc3d39cce",
+      "returncode": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "path": "scripts/harnesses/terminal-bench-4.sh",
+      "sha256": "86ebcdbbb7c567762875bc526f83dbd7477ccf942c299ae14509f653582881c5",
+      "returncode": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "path": "scripts/harnesses/terminal-bench.sh",
+      "sha256": "1fb5732c2a3dbcd1853840e1ad724d63d13b91bd7e17eaf1f06e2bf9491192c9",
+      "returncode": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "path": "scripts/harnesses/wsp.sh",
+      "sha256": "7a5fab174a2ee146b95aaa8388c0dd4cbb156088c00d7038ed554dbdeb25f417",
+      "returncode": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "path": "scripts/lib/official.sh",
+      "sha256": "6fa00239ee525538f0be7952027297eb799ee7bea8733cb4081f0ca5ad37f59a",
+      "returncode": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "path": "scripts/lib/worker-pool.sh",
+      "sha256": "fd0c5978f4c4aab3680f11c11cb09d2d75744b73d737f9d5f7c196ff078bf6c5",
+      "returncode": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "path": "tests/fixtures/terminal-bench-4/gpu-request/solution/solve.sh",
+      "sha256": "602fc9374f97c6c140fc0f2bc071b7e663492787b5570b288892925b138cbb32",
+      "returncode": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "path": "tests/fixtures/terminal-bench-4/gpu-request/tests/test.sh",
+      "sha256": "952202d085cea581737ce61449b3b99405b32f75987b23331f2056585ac148e7",
+      "returncode": 0,
+      "stdout": "",
+      "stderr": ""
+    }
+  ],
+  "elapsed_seconds": 0.07193255424499512,
+  "scope": "All tracked repository shell files; runtime gitignored cache traversal intentionally not part of source syntax check"
+}

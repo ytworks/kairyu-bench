@@ -1,0 +1,7 @@
+export PYTHONPATH="$PWD/src"
+export PYTHONDONTWRITEBYTECODE=1
+export OPENBLAS_NUM_THREADS=4
+/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/infra/weight-tools-ci/bin/python scripts/experiments/gemma4-purpose/native_dependency.py \
+ --collector-root /mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-av-behavior12-native-gpu4-v2 \
+ --closure-sha256 e889b331d80e724c4313cda5f9cec672d3f1752364e268e4c9b415d12eb897c3 \
+ --output /mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-native-dependency-v2

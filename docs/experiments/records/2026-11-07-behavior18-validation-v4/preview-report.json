@@ -1,0 +1,102 @@
+{
+  "schema_version": 1,
+  "status": "preview",
+  "mode": "validate-authored",
+  "split": null,
+  "inputs": [
+    {
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/runtime/fresh-purpose-20261107-behavior18-validation-v4/behavior_offline.py",
+      "sha256": "30715a30e02c7fab8ec4e1ffad28e57c4925b16fb45048680d6f5735bd3af9e5",
+      "stat": {
+        "dev": 2306,
+        "ino": 182191365,
+        "size": 13272,
+        "mtime_ns": 1794040000000399257,
+        "ctime_ns": 1794040000000399257
+      }
+    },
+    {
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/runtime/fresh-purpose-20261107-behavior18-validation-v4/behavior_cases.py",
+      "sha256": "10ba3e480c8685933904060629b351758cf7b61362756179e55779435d01a310",
+      "stat": {
+        "dev": 2306,
+        "ino": 182191364,
+        "size": 22945,
+        "mtime_ns": 1794040000000399257,
+        "ctime_ns": 1794040000000399257
+      }
+    },
+    {
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/runtime/fresh-purpose-20261107-behavior18-validation-v4/science_sandbox.py",
+      "sha256": "4a65378e493fb2f109afdaf0d98b5b93dc067d6d3f48d2a4cf17017f1aadcb78",
+      "stat": {
+        "dev": 2306,
+        "ino": 182191366,
+        "size": 29092,
+        "mtime_ns": 1794040000000399257,
+        "ctime_ns": 1794040000000399257
+      }
+    },
+    {
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/runtime/fresh-purpose-20261107-behavior18-validation-v4/science_cases.py",
+      "sha256": "2c4cc6e75c92c41b98e737ca2c0a653e0f7a7675c6150a6ad33e3f954122a26b",
+      "stat": {
+        "dev": 2306,
+        "ino": 182191367,
+        "size": 35229,
+        "mtime_ns": 1794040000000399257,
+        "ctime_ns": 1794040000000399257
+      }
+    }
+  ],
+  "generation": null,
+  "target_ids": [
+    "behavior-A1",
+    "behavior-A2",
+    "behavior-A3",
+    "behavior-B1",
+    "behavior-B2",
+    "behavior-B3",
+    "behavior-C1",
+    "behavior-C2",
+    "behavior-C3",
+    "behavior-D1",
+    "behavior-D2",
+    "behavior-D3",
+    "behavior-E1",
+    "behavior-E2",
+    "behavior-E3",
+    "behavior-F1",
+    "behavior-F2",
+    "behavior-F3"
+  ],
+  "expected_cases": 18,
+  "responses_received": 0,
+  "results": [],
+  "docker_calls": 0,
+  "model_calls": 0,
+  "trials_per_numeric_execution": 16,
+  "fixed_boundary": 8,
+  "seeded": 8,
+  "train_seed": 202611071,
+  "transfer_seed": 202611072,
+  "sandbox": {
+    "socket": "/var/run/docker.sock",
+    "daemon_id": "3e518d2b-6972-43f8-b325-f7f33697a2d2",
+    "image": "sha256:c4ab50223f03fca17bf871e4d05f77001e76525a1c574b6c6ee7024db06cfdc2",
+    "seconds": 15,
+    "memory_mib": 512,
+    "cpus": 1,
+    "network": "none",
+    "user": "1003:1003",
+    "host_mounts": [],
+    "gpus": false
+  },
+  "scope": "Authored behavior calibration, not WSP. Initial generation train12 only.",
+  "token_count_measured": false,
+  "limits": [
+    "passed is numeric/interface fixture status, not proof of every public contract.",
+    "C entrypoint_contract_passed covers only AST name/count/top-level form.",
+    "B SymPy differentiation/lambdify use is not established by numeric fixtures; manual public-code review remains required."
+  ]
+}

@@ -1,0 +1,28 @@
+{
+  "status": "verified",
+  "epoch": 1794056449.2870848,
+  "complete_original_train_ledger_rows": 374,
+  "unique_train_ids": 204,
+  "unique_holdout_ids": 51,
+  "intersection_ids": [],
+  "every_output_row_equal_to_original": true,
+  "all_original_fields_preserved": true,
+  "all255_exactly_three_tests": true,
+  "all255_challenge_tests_empty": true,
+  "nonempty_setup_rows": 1,
+  "execution_quality_unknown_rows": 255,
+  "model_calls": 0,
+  "training_steps": 0,
+  "code_execution_calls": 0,
+  "source_sha256": "66c81a33c69d80a928f2642fa38f143eff22a4f0ca6d2d77836397730f46ae48",
+  "output_sha256": {
+    "train.jsonl": "d501b58dd3860a5c1b666a9318f3f8f70c405d2369afce3aea13bd0f379223f6",
+    "holdout.jsonl": "2397ed986d06fa36f5a0dbfb80d4f08c8ba771eda0153288f0110bd20c26db2c",
+    "summary.json": "e3022119b905b00bd7f9f8f3574f6d83fcd84e9df6fb5c3afb8e1da01cd2dc11",
+    "all374-ledger.json": "231ad3d4d18a464e6977df7c8c30346b64d18a985ad3eb12d5dee45cad7cd981"
+  },
+  "failures_and_warnings": [
+    "First schema-only inspection used system Python without pyarrow; ModuleNotFoundError before data read, corrected to existing CPU venv.",
+    "Actual filter completed returncode0 with 32 SyntaxWarning lines about invalid escape sequences in parsed existing source literals. stderr retained; no code executed."
+  ]
+}

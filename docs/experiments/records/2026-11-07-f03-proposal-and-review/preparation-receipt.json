@@ -1,0 +1,21 @@
+{
+  "source": {
+    "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/worktrees/kairyu-bench-weight-tools/docs/experiments/scripts/fresh-f03-prepare-20261107.py",
+    "sha256": "36ac2be3c119624b382e0cf37b40127c6a4d5a6a7a3b4b59b3022afb08eb7aad"
+  },
+  "plan": {
+    "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f03-native-v1/proposal-plan.json",
+    "sha256": "56a4b866a41110ea1397305e9c3aa0b2c03f996f53df8b3953b9a237c387e240"
+  },
+  "eligible_tensors": 180,
+  "eligible_coordinates": 645180,
+  "model_calls": 0,
+  "solver_calls": 0,
+  "weight_edits": 0,
+  "limits": [
+    "Euclidean continuous relaxation, not globally optimal discrete BF16",
+    "Continuous clip box only; rounded actual values may exceed1%",
+    "16 is a maximum; early stop allowed",
+    "Each history round records max shortfall; all24 residuals are available for chosen proposal only"
+  ]
+}

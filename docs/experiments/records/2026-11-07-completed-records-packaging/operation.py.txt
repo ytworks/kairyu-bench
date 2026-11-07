@@ -1,0 +1,82 @@
+import gzip,hashlib,json,re,subprocess,time
+from pathlib import Path
+R=Path('/mnt/nvme/kairyu/wsp/gemma4-coding-20261104')
+B=R/'worktrees/kairyu-bench-weight-tools'
+A=R/'analysis/fresh-purpose-20261107-pr33-completed-records-packaging-v1'
+P=B/'docs/experiments/records/2026-11-07-completed-records-packaging'
+started=time.monotonic()
+sha=lambda raw:hashlib.sha256(raw).hexdigest()
+def save(path,obj):
+    with path.open('x') as f:json.dump(obj,f,indent=2,allow_nan=False);f.write('\n')
+def git(*args):return subprocess.check_output(['git',*args],cwd=B,text=True).splitlines()
+initial=sorted(set(git('diff','--name-only')+git('ls-files','--others','--exclude-standard')))
+excluded=[x for x in initial if 'f03' in x.lower()]
+scope=[x for x in initial if x not in excluded]
+initial_bytes={x:(B/x).read_bytes() for x in scope}
+rules={'private_key':r'-----BEGIN (?:RSA |EC |OPENSSH )?PRIVATE KEY-----','github_pat':r'\b(?:gh[pousr]_[A-Za-z0-9]{30,}|github_pat_[A-Za-z0-9_]{40,})\b','hf_token':r'\bhf_[A-Za-z0-9]{28,}\b','anthropic_token':r'\bsk-ant-[A-Za-z0-9_-]{20,}\b','openai_token':r'\bsk-(?:proj-|svcacct-)?[A-Za-z0-9_-]{32,}\b','aws_access':r'\b(?:AKIA|ASIA)[A-Z0-9]{16}\b','credential_url':r'https?://[^/\s:@]+:[^@\s/]+@'}
+matches=[];whitespace=[];checks=[]
+for name,raw in initial_bytes.items():
+    text=gzip.decompress(raw).decode() if name.endswith('.gz') else raw.decode()
+    for rule,pat in rules.items():
+        if re.search(pat,text):matches.append({'path':name,'rule':rule})
+    if not name.endswith('.gz'):
+        lines=[i for i,line in enumerate(text.splitlines(),1) if line.rstrip(' \t')!=line]
+        if lines:whitespace.append({'path':name,'lines':lines})
+    if Path(name).name=='SHA256SUMS':
+        for line in text.splitlines():
+            digest,rel=line.split(None,1);file=B/Path(name).parent/rel.strip()
+            checks.append({'manifest':name,'file':str(file.relative_to(B)),'sha256':digest,'matched':file.is_file() and sha(file.read_bytes())==digest})
+assert not matches, 'secret signature match; no content printed'
+assert all(x['matched'] for x in checks), 'existing checksum mismatch'
+targets={
+'2026-11-07-pr33-body-update-new18':['proposed.diff'],
+'2026-11-07-pr33-body-update-new18-v2':['diff-from-current-pr.patch','diff-from-v1.patch']}
+allowed={str(Path('docs/experiments/records')/d/f) for d,files in targets.items() for f in files}
+assert {x['path'] for x in whitespace}==allowed,'unexpected whitespace outside exact packaging targets'
+A.mkdir(exist_ok=False)
+packs=[]
+for dirname,names in targets.items():
+    directory=B/'docs/experiments/records'/dirname
+    adir=A/dirname;adir.mkdir()
+    old=directory/'SHA256SUMS';old_bytes=old.read_bytes()
+    (adir/'SHA256SUMS').write_bytes(old_bytes)
+    for name in names:
+        file=directory/name;raw=file.read_bytes()
+        retained=adir/name
+        with retained.open('xb') as f:f.write(raw)
+        assert retained.read_bytes()==raw
+        original=R/'analysis'/('fresh-purpose-20261107-pr33-body-update-new18-v1' if dirname.endswith('new18') else 'fresh-purpose-20261107-pr33-body-update-new18-v2')/name
+        assert original.read_bytes()==raw,'earlier raw original does not match'
+        compressed=gzip.compress(raw,compresslevel=9,mtime=0)
+        packed=directory/(name+'.gz')
+        with packed.open('xb') as f:f.write(compressed)
+        assert gzip.decompress(packed.read_bytes())==raw
+        # Only replace this untracked PR representation after two raw copies and gzip roundtrip match.
+        assert str(file.relative_to(B)) not in git('ls-files'), 'raw diff unexpectedly tracked'
+        assert file.read_bytes()==raw
+        file.unlink()
+        packs.append({'record_directory':dirname,'original_name':name,'original_sha256':sha(raw),'original_bytes':len(raw),'earlier_original_retained':str(original),'additional_raw_retained':str(retained),'stored_name':packed.name,'stored_sha256':sha(compressed),'stored_bytes':len(compressed),'roundtrip_exact':True})
+    previous=directory/'SHA256SUMS.before-packaging'
+    assert not previous.exists()
+    old.rename(previous)
+    assert previous.read_bytes()==old_bytes
+    note={'reason':'Unified diff context-only blank lines have literal trailing spaces; preserve bytes through gzip instead of modifying raw patch text','files':[x for x in packs if x['record_directory']==dirname],'previous_manifest_retained':'SHA256SUMS.before-packaging','previous_manifest_sha256':sha(old_bytes),'scientific_results_or_code_changed':False,'body_and_update_bytes_unchanged':True}
+    save(directory/'packaging-note.json',note)
+    with old.open('x') as f:
+        for file in sorted(directory.iterdir()):
+            if file.is_file() and file.name!='SHA256SUMS':f.write(sha(file.read_bytes())+'  '+file.name+'\n')
+for name,raw in initial_bytes.items():
+    if name in allowed or Path(name).name=='SHA256SUMS' and Path(name).parent.name in targets:continue
+    assert (B/name).read_bytes()==raw,'unrelated completed file changed: '+name
+body_checks=[]
+for dirname in targets:
+    directory=B/'docs/experiments/records'/dirname
+    body=directory/'body.md';update=directory/'update.json'
+    assert json.loads(update.read_text())['body']==body.read_text()
+    body_checks.append({'directory':dirname,'body_sha256':sha(body.read_bytes()),'update_sha256':sha(update.read_bytes()),'body_matches_update':True})
+report={'scope':'Packaging completed records only; no F03/model/serving/GPU/benchmark/commit/push/PR PATCH operation','initial_changed_files':scope,'excluded_f03_files':excluded,'initial_checksum_entries':checks,'secret_scan':{'patterns':list(rules),'signature_matches':matches,'limits':'High-confidence signature scan plus review; not a proof against every possible secret encoding; no values or credential stores read'},'initial_trailing_whitespace':whitespace,'packaged_files':packs,'prior_manifests_preserved':True,'all_other_initial_bytes_unchanged':True,'body_checks':body_checks,'initial_hashes':{k:sha(v) for k,v in initial_bytes.items()},'seconds':time.monotonic()-started,'preparation_read_errors':['Two guessed prior packaging record filenames did not exist; actual packaging-note.json was discovered and read; no mutations in those attempts']}
+save(A/'audit.json',report);save(P/'audit.json',report)
+doc=B/'docs/experiments/2026-11-07-completed-records-packaging.md'
+with doc.open('x') as f:
+    f.write('# Completed-record packaging audit (2026-11-07)\n\nCompleted GPU sensitivity, native dependency, finite-owner preparation, F02 release planning and PR-body records were audited without changing source, scientific data, model state or PR text. F03 was excluded. Existing 54 checksum entries matched; the high-confidence token/private-key scan (including decompressed JSON reports) found no matches. Signature scanning is not a universal proof against encoded secrets.\n\nOnly three untracked raw unified-diff representations had whitespace-only context lines: new18/proposed.diff (2), new18-v2/diff-from-current-pr.patch (2) and diff-from-v1.patch (3). They are now deterministic gzip artifacts with exact decompression checks. Original bytes remain in both original NVMe analysis directories and the fresh packaging archive. The old SHA256SUMS files were preserved as SHA256SUMS.before-packaging, and new manifests plus packaging-note.json bind both old and compressed identities. Body/update bytes and all other initial completed files remain exact. No historical result was rewritten or dropped.\n\n[Audit](records/2026-11-07-completed-records-packaging/audit.json) retains the file list, before hashes, checksum results, all three raw/gzip mappings, prior read errors and elapsed time. [One-off source](records/2026-11-07-completed-records-packaging/operation.py.txt) records the entire operation. This is not a new benchmark or CI run. The real GPU owner used frozen 9a8d9255 source; current finite owner 39707865 has CPU fixture coverage only. R7 predates the finite/dependency changes; their focused tests and independent review remain separate. PR body v1 preserves its historical running state, while v2 records completed measurement. A live PR body re-fetch/ancestry check is still required before PATCH. Root owns commit/push/PATCH; none occurred here.\n')
+print(json.dumps({'archive':str(A),'record':str(P),'packaged_count':len(packs),'audit_sha256':sha((P/'audit.json').read_bytes()),'doc_sha256':sha(doc.read_bytes()),'seconds':report['seconds']}))

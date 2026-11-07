@@ -1,0 +1,10 @@
+import importlib.metadata,json,hashlib
+from pathlib import Path
+root=Path(importlib.metadata.distribution('vllm').locate_file('vllm'))
+found={}
+for directory in ['ir','kernels']:
+ for p in (root/directory).rglob('*.py'):
+  text=p.read_text()
+  if any(s in text for s in ['rms_norm.register_impl','ops.rms_norm.register_impl','rms_norm_batch_invariant']):
+   found[str(p.relative_to(root.parent))]=dict(path=str(p),version=importlib.metadata.version('vllm'),sha256=hashlib.sha256(p.read_bytes()).hexdigest(),size=p.stat().st_size,text=text)
+print(json.dumps(found))

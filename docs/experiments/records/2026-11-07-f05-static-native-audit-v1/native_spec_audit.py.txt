@@ -1,0 +1,240 @@
+"""Reconstruct an existing native-only BF16 spec; never optimize, edit or run a model."""
+from __future__ import annotations
+
+import argparse
+from collections import defaultdict
+import hashlib
+import json
+from pathlib import Path
+import re
+import time
+
+import numpy as np
+
+from kairyu_bench.wsp.weights.checkpoint import Checkpoint
+def require(condition, message):
+    if not condition:
+        raise ValueError(message)
+
+
+def sha(path):
+    return hashlib.sha256(path.read_bytes()).hexdigest()
+
+
+def apply_edit(base, edit):
+    require(set(edit) == {"tensor", "indices", "set_values"}, "exact native sparse-set edit required")
+    indices = edit["indices"]
+    require(isinstance(indices, list) and all(type(i) is int for i in indices)
+            and len(set(indices)) == len(indices)
+            and all(0 <= i < len(base) for i in indices), "invalid/duplicate native index")
+    original = np.asarray(edit["set_values"], dtype=np.float64)
+    value = original.astype(np.float32)
+    require(original.ndim == 1 and len(original) == len(indices) and np.isfinite(value).all()
+            and np.array_equal(value.astype(np.float64), original)
+            and not np.any(value.view(np.uint32) & 65535), "set values must be exact finite BF16")
+    result = base.copy()
+    result[indices] = value
+    return result
+
+
+def diff_stats(base, target, relative, absolute):
+    base, target = np.asarray(base, dtype=np.float64), np.asarray(target, dtype=np.float64)
+    delta = target - base
+    radius = np.maximum(np.abs(base) * relative, absolute)
+    excess = np.maximum(np.abs(delta) - radius, 0)
+    source_l2, delta_l2 = float(np.linalg.norm(base)), float(np.linalg.norm(delta))
+    nonzero = base != 0
+    relative_delta = np.abs(delta[nonzero] / base[nonzero])
+    return {
+        "coordinates": len(base), "changed": int(np.count_nonzero(delta)),
+        "positive_delta": int(np.count_nonzero(delta > 0)), "negative_delta": int(np.count_nonzero(delta < 0)),
+        "unchanged": int(np.count_nonzero(delta == 0)), "zero_source_coordinates": int(np.count_nonzero(~nonzero)),
+        "source_l2": source_l2, "actual_delta_l2": delta_l2,
+        "relative_delta_l2": delta_l2 / source_l2 if source_l2 else None,
+        "max_absolute_delta": float(np.max(np.abs(delta))),
+        "max_relative_delta_on_nonzero_source": float(relative_delta.max()) if relative_delta.size else None,
+        "relative_delta_undefined_on_zero_source": int(np.count_nonzero(~nonzero)),
+        "absolute_floor_active_coordinates": int(np.count_nonzero(np.abs(base) * relative < absolute)),
+        "exceeds_relative_only_radius": int(np.count_nonzero(np.abs(delta) > np.abs(base) * relative)),
+        "exceeds_declared_continuous_box": int(np.count_nonzero(excess)),
+        "maximum_box_excess": float(excess.max()),
+        "maximum_actual_to_box_ratio": float(np.max(np.abs(delta) / radius)),
+        "sign_flips": int(np.count_nonzero((base * target) < 0)),
+    }
+
+
+def audit(root, expected_plan_sha):
+    pins = {}
+
+    def pin(path, expected=None):
+        path = Path(path).resolve()
+        digest = sha(path)
+        require(expected is None or digest == expected, f"SHA changed: {path}")
+        require(str(path) not in pins or pins[str(path)] == digest, f"conflicting pin: {path}")
+        pins[str(path)] = digest
+        return path
+
+    def read(path, expected=None):
+        return json.loads(pin(path, expected).read_text())
+
+    plan = read(root / "proposal-plan.json", expected_plan_sha)
+    report = read(root / "proposal/report.json")
+    require(plan["schema_version"] == 1 and plan["kind"] == "native_coupled_objectives_v1"
+            and len(plan["candidates"]) == len(report["methods"]) == 1, "one existing native-only candidate required")
+    method = report["methods"][0]
+    fixed = plan["candidates"][0]
+    spec = read(root / "proposal" / (fixed["id"] + ".json"))
+    require(spec["id"] == method["id"] == fixed["id"]
+            and spec["base_tree_sha256"] == plan["checkpoint"]["tree_sha256"]
+            and spec["source_checkpoint"] == plan["checkpoint"]["path"], "spec parent mismatch")
+    require(fixed["constraints"] == method["constraints"] and fixed["cost_metric"] == method["cost_metric"],
+            "recorded method differs from fixed plan")
+    for path, digest in report["source_sha256"].items():
+        pin(path, digest)
+    parent = read(plan["parent_state"]["path"], plan["parent_state"]["sha256"])
+    dependency = read(parent["dependency"]["path"], parent["dependency"]["sha256"])
+    cases = read(plan["cases"]["path"], plan["cases"]["sha256"])
+    execution = read(root / "solver-execution.json")
+    checkpoint = Checkpoint(plan["checkpoint"]["path"])
+    now = checkpoint.identity(hash_files=False)
+    att = read(plan["checkpoint"]["attestation"]["path"], plan["checkpoint"]["attestation"]["sha256"])
+    old = att.get("checkpoint", att)
+    require(old["hash_files"] is True and old["sha256"] == spec["base_tree_sha256"]
+            and old["path"] == now["path"] and len(old["files"]) == len(now["files"]), "attestation mismatch")
+    require(all(all(a[k] == b[k] for k in ["path", "size", "stat"])
+                for a, b in zip(old["files"], now["files"], strict=True)), "checkpoint stat changed")
+    native = {n: t for n, t in checkpoint.tensors.items()
+              if n.startswith("model.language_model.") and len(t.shape) <= 1 and t.floating}
+    names = sorted(native)
+    eligible = set(plan["native_tensors"])
+    require(len(eligible) == len(plan["native_tensors"]) and eligible <= set(names), "invalid eligible list")
+    source_path = Path(plan["collections"]["correct-logprob"]) / "source-native-values.npz"
+    pin(source_path, report["source_sha256"][str(source_path)])
+    with np.load(source_path, allow_pickle=False) as arrays:
+        require(set(arrays.files) == set(names), "incomplete native source inventory")
+        base = {n: arrays[n].reshape(-1).copy() for n in names}
+    for n in names:
+        actual = checkpoint.read(n).reshape(-1).astype(np.float32)
+        require(np.array_equal(actual.view(np.uint32), base[n].view(np.uint32)), "current native source words differ")
+    targets = {n: v.copy() for n, v in base.items()}
+    seen = set()
+    for edit in spec["edits"]:
+        n = edit["tensor"]
+        require(n in eligible and n not in seen, "ineligible/duplicate tensor edit")
+        seen.add(n)
+        targets[n] = apply_edit(base[n], edit)
+    relative, absolute = (fixed["rounding"][k] for k in ["relative_radius", "absolute_radius"])
+    tensors, family_names, layer_names = {}, defaultdict(list), defaultdict(list)
+    for n in names:
+        match = re.fullmatch(r"model.language_model.layers.(\d+).(.+)", n)
+        layer, family = (match[1], match[2]) if match else ("global", n.removeprefix("model.language_model."))
+        family_names[family].append(n)
+        layer_names[layer].append(n)
+        tensors[n] = {"tensor": n, "eligible": n in eligible, "family": family, "layer": layer,
+                      **diff_stats(base[n], targets[n], relative, absolute), "prediction_contributions": []}
+    active_names = [n for n in names if n in eligible]
+    active_base = np.concatenate([base[n] for n in active_names]).astype(np.float64)
+    active_target = np.concatenate([targets[n] for n in active_names])
+    stats = diff_stats(active_base, active_target, relative, absolute)
+    target_sha = hashlib.sha256(active_target.astype("<f4").tobytes()).hexdigest()
+    require(target_sha == method["rounding"]["stored_f32_sha256"]
+            and stats["changed"] == method["changed_elements"]
+            and sum(t["changed"] > 0 for t in tensors.values()) == method["changed_tensors"]
+            and np.isclose(stats["actual_delta_l2"], method["actual_delta_l2"], rtol=0, atol=1e-12),
+            "stored-word hash or realized diff disagrees with solver")
+    expected_rows = [(o, p, f) for o in ["correct-logprob", "margin"]
+                     for p, folds in cases.items() for f in range(len(folds))]
+    require([(r["objective"], r["purpose"], r["fold"]) for r in fixed["constraints"]] == expected_rows
+            and method["minimum_delta"] == [r["minimum_delta"] for r in fixed["constraints"]]
+            and len(method["prediction"]) == len(expected_rows), "full ordered objective cohort mismatch")
+    rows = []
+    baseline = {c["id"]: c for c in dependency["case_rows"]}
+    for index, constraint in enumerate(fixed["constraints"]):
+        objective, purpose, fold = (constraint[k] for k in ["objective", "purpose", "fold"])
+        case_id = cases[purpose][fold][0]["id"]
+        path = Path(plan["collections"][objective]) / f"gradient-{purpose}-{fold}.npz"
+        pin(path, report["source_sha256"][str(path)])
+        predicted = 0.
+        with np.load(path, allow_pickle=False) as arrays:
+            require(set(arrays.files) == set(names), "gradient native inventory mismatch")
+            for n in names:
+                g = np.asarray(arrays[n], dtype=np.float64).reshape(-1)
+                require(g.shape == base[n].shape and np.isfinite(g).all(), "gradient shape/nonfinite mismatch")
+                value = float(g @ (targets[n].astype(np.float64) - base[n].astype(np.float64)))
+                tensors[n]["prediction_contributions"].append(value)
+                predicted += value
+        field = "correct_logprob" if objective == "correct-logprob" else "margin"
+        before = baseline[case_id][field]
+        bound = constraint["minimum_delta"]
+        rows.append({**constraint, "id": case_id, "baseline": before, "predicted_delta": predicted,
+                     "predicted_after": before + predicted, "required_after": before + bound,
+                     "shortfall": max(bound - predicted, 0), "met": predicted >= bound - 1e-10,
+                     "delta_sign": "positive" if predicted > 0 else "negative" if predicted < 0 else "zero",
+                     "solver_prediction": method["prediction"][index], "finite_response": None})
+    error = max(abs(r["predicted_delta"] - r["solver_prediction"]) for r in rows)
+    require(error < 1e-12, "independent predictions differ")
+    groups = {}
+    for kind, mapping in [("families", family_names), ("layers", layer_names)]:
+        groups[kind] = {}
+        for key, ns in mapping.items():
+            source, target = [np.concatenate([values[n] for n in ns]) for values in [base, targets]]
+            groups[kind][key] = {
+                "tensors": len(ns), "eligible_tensors": sum(n in eligible for n in ns),
+                "changed_tensors": sum(tensors[n]["changed"] > 0 for n in ns),
+                **diff_stats(source, target, relative, absolute),
+                "prediction_contributions": np.sum([tensors[n]["prediction_contributions"] for n in ns], axis=0).tolist()}
+    checkpoint.assert_stable()
+    pin(Path(__file__))
+    for path, digest in pins.items():
+        require(sha(Path(path)) == digest, f"input changed during audit: {path}")
+    return {
+        "status": "existing_native_spec_independently_reconstructed",
+        "inputs_sha256": pins, "checkpoint_tree_sha256": spec["base_tree_sha256"],
+        "all_native_source_words_checked": sum(len(v) for v in base.values()),
+        "checkpoint_full_payload_rehashed": False, "candidate_materialized_by_this_audit": False,
+        "observed_native_tensors": len(names), "eligible_tensors": len(eligible),
+        "eligible_layers": sorted({tensors[n]["layer"] for n in eligible},
+                                  key=lambda layer: (layer == "global", int(layer) if layer != "global" else 0)),
+        "changed_tensors": method["changed_tensors"], "eligible_scope": stats,
+        "eligible_target_stored_f32_sha256": target_sha, "rows": rows,
+        "met_constraints": sum(r["met"] for r in rows),
+        "prediction_max_abs_disagreement": error,
+        "history": method["history"], "history_per_constraint_vectors": None,
+        "history_missing_note": "Only each round's maximum shortfall was recorded; individual 24-row histories cannot be recovered without rerunning, which was not done.",
+        "chosen_round": method["chosen_round"], "solver_rounding_record_unmodified": method["rounding"],
+        "continuous_accumulated_proposal_available": False,
+        "tensor_support": list(tensors.values()), **groups,
+        "solver_execution_record_unmodified": execution, "solver_calls_by_audit": 0,
+        "model_calls": 0, "checkpoint_writes": 0, "service_operations": 0,
+        "limits": [
+            "Actual differences are reconstructed BF16 spec minus parent; no saved candidate/checkpoint or finite measurement is claimed.",
+            "Every native tensor is reported, including excluded and unchanged tensors; matrix payloads were not read or edited.",
+            "The radius applies before rounding. Excess counts are facts, not retuned or silently clamped.",
+            "Per-group relative L2 uses all native source coordinates in that group, not only changed coordinates.",
+            "Continuous proposal and per-round per-constraint vectors were not stored; unknowns remain null.",
+        ],
+    }
+
+
+def main():
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--root", type=Path, required=True)
+    parser.add_argument("--plan-sha256", required=True)
+    parser.add_argument("--output", type=Path, required=True)
+    args = parser.parse_args()
+    args.output.mkdir(parents=True, exist_ok=False)
+    started = time.monotonic()
+    try:
+        result = audit(args.root.resolve(), args.plan_sha256)
+        result["audit_seconds"] = time.monotonic() - started
+        (args.output / "report.json").write_text(json.dumps(result, indent=2, allow_nan=False) + "\n")
+        print(json.dumps({k: result[k] for k in ["status", "changed_tensors", "eligible_scope", "met_constraints",
+                                                "prediction_max_abs_disagreement", "audit_seconds"]}))
+    except Exception as error:
+        (args.output / "failure.json").write_text(json.dumps(
+            {"type": type(error).__name__, "message": str(error)}, indent=2) + "\n")
+        raise
+
+
+if __name__ == "__main__":
+    main()

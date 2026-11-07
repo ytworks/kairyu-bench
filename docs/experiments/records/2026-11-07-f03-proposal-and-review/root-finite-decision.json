@@ -1,0 +1,39 @@
+{
+  "candidate": "fresh-native-contract-f03",
+  "spec_sha256": "e10018748de2795a8af03b98abb6e18362393a152c74f46b7a7892fe4975e878",
+  "proposal_constraints_passed": false,
+  "predicted_constraints_met": 22,
+  "predicted_constraints_total": 24,
+  "action": "Proceed to one saved-value-verified finite diagnostic, not adoption; no further solve/rescale of this spec.",
+  "finite_criteria_frozen_before_measurement": {
+    "all_12_cases": true,
+    "exact_selected_storage_restoration": true,
+    "full_saved_checkpoint_verification": true,
+    "source_and_serving_weight_conventions": "must match or fail before deployment",
+    "a1_margin_absolute_gt": 0,
+    "a1_correct_ll_delta_gte": 0.05777465427632933,
+    "f2_correct_ll_delta_gte": 0.02232936571459021,
+    "other_success_ll_minimum_delta": "A2/F1>=0; B1/B2/C1/C2/D1/D2/E1/E2>=-0.02",
+    "other_margin_minimum_delta": "F2>=-0.10; A2/B1/B2/C1/C2/D1/D2/E1/E2/F1>=-0.05",
+    "comparison_tolerance": 0.0001,
+    "all_original_24_targets_reported": true,
+    "partial_or_failed_measurement_not_ranked": true
+  },
+  "accepted_review": [
+    "Check finite prediction mismatch and exact restore",
+    "Check serving weight-loading convention",
+    "Use ordinary native behavior and untouched transfer before capability inference",
+    "Keep complete official cohorts and non-code outcomes"
+  ],
+  "not_adopted_as_mandatory": [
+    "Saving or replaying private reasoning prefixes: use ordinary-thinking public outputs instead",
+    "Additional token-rank/KL tooling before one bounded replay: defer until a concrete explanatory need",
+    "Universal no-loss adoption across every non-code domain: user permits measured modest tradeoffs for the coding goal"
+  ],
+  "review_sha256": "8fb53a59888143228426b23dedcb6b17f8d7392affaeae90f5bef7a3626aac58",
+  "limits": [
+    "Finite continuation thresholds differ from the original optimization targets; neither is WSP accuracy",
+    "BF16 box-overrun audit was obtained after this one review prompt; not claimed seen by the reviewer",
+    "No saved candidate, finite replay, native generation or WSP exists at this decision"
+  ]
+}

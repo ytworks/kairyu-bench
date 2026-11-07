@@ -1,0 +1,11 @@
+{
+  "epoch": 1794060240.9087687,
+  "stage": "read-only-runtime-evidence",
+  "error": "AssertionError: compared sorted-JSON ID hash to manifest-order newline-terminated ID hash",
+  "actual_scope_changed": false,
+  "original_capture_source_sha256": "cb8f2c8da83106823664c149ad517a12581303728925abe05a581dab3dfa2cdb",
+  "retained_actual_runner": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f06-dev30-dp4-v1/actual-runner.json",
+  "metadata_model_list_reads": 4,
+  "model_generation_calls": 0,
+  "remediation": "Separate v2 reads existing preflight metadata and verifies each digest using its exact original encoding. No benchmark restart."
+}

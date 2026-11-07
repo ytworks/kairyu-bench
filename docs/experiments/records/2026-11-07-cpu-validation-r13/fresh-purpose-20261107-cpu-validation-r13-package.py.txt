@@ -1,0 +1,39 @@
+"""Record the completed single r13 CPU CI pass without repeating a check."""
+from pathlib import Path
+import collections,gzip,hashlib,json,re
+R=Path("/mnt/nvme/kairyu/wsp/gemma4-coding-20261104")
+B=R/"worktrees/kairyu-bench-weight-tools"
+D=R/"analysis/fresh-purpose-20261107-cpu-validation-r13"
+P=B/"docs/experiments/records/2026-11-07-cpu-validation-r13"
+P.mkdir(exist_ok=False)
+def sha(raw):return hashlib.sha256(raw).hexdigest()
+c=json.loads((D/"completion.json").read_text());assert c["success"] and c["sources_unchanged"]
+log=(D/"unittest.stderr").read_text();m=re.search(r"Ran (\d+) tests in ([\d.]+)s",log);assert m
+skip=re.search(r"OK \(skipped=(\d+)\)",log);assert re.search(r"\nOK(?: \(skipped=\d+\))?\s*$",log)
+count=int(m[1]);skipped=int(skip[1]) if skip else 0
+my=re.search(r"Success: no issues found in (\d+) source files",(D/"mypy.stdout").read_text());assert my
+freeze=json.loads((D/"freeze-inputs.json").read_text())
+shell=json.loads((D/"repository-shell-check.json").read_text());assert shell["status"]=="passed" and shell["count"]==31
+summary={"status":"all_requested_CPU_checks_passed","unittest":{"count":count,"passed":count-skipped,"skipped":skipped,"reported_seconds":float(m[2]),"wall_seconds":c["results"][0]["elapsed_seconds"],"skip_reasons":dict(collections.Counter(re.findall(r"\.\.\. skipped (.+)",log)))},"ruff_passed":True,"mypy_passed":True,"mypy_source_files":int(my[1]),"data_check_passed":True,"tracked_shell_files":shell["count"],"tracked_shell_syntax_passed":True,"sources_unchanged":True,"source_count":c["source_count_after"],"immutable_record_sources_pinned":freeze["record_source_count"],"explicit_pins_unchanged":True,"full_suite_repetitions":1,"elapsed_seconds":c["elapsed_seconds"],"model_GPU_service_operations":0,"scope":"Live Python/config/tracked-shell sources plus existing immutable .py/.py.txt records were pinned. Immutable records were not executed or linted as live source; their preservation was verified. Existing Ruff exclusion unchanged."}
+(D/"summary.json").write_text(json.dumps(summary,indent=2)+"\n")
+artifacts=[]
+for p in [*sorted(x for x in D.iterdir() if x.is_file()),R/"analysis/fresh-purpose-20261107-cpu-validation-r13-run.py.txt",Path(__file__)]:
+ raw=p.read_bytes();compressed=len(raw)>65536;name=p.name+(".gz" if compressed else "");stored=gzip.compress(raw,mtime=0) if compressed else raw
+ with (P/name).open("xb") as f:f.write(stored)
+ if compressed:assert gzip.decompress(stored)==raw
+ artifacts.append({"name":name,"raw_sha256":sha(raw),"stored_sha256":sha(stored),"raw_bytes":len(raw),"gzip":compressed})
+(P/"artifact-index.json").write_text(json.dumps(artifacts,indent=2)+"\n")
+(P/"SHA256SUMS").write_text("".join(sha(p.read_bytes())+"  "+p.name+"\n" for p in sorted(P.iterdir()) if p.is_file()))
+doc=f"""# CPU validation r13
+
+One complete pass after the explicit progress-CLI fix passed: **{count-skipped} PASS + {skipped} skipped = {count} unittest tests**, zero failures/errors. Unittest reported {float(m[2]):.3f}s ({c['results'][0]['elapsed_seconds']:.6f}s wall); the whole CPU check pass took {c['elapsed_seconds']:.6f}s. Full Ruff, mypy on {int(my[1])} source files, generated comparison data, and all {shell['count']} tracked repository shell syntax checks passed. No check was repeated.
+
+All {c['source_count_after']} pinned source/config files matched before and after. This includes the live monitor, existing training/merge/owner sources, and {freeze['record_source_count']} immutable record-source snapshots present at start, covering archive and binding one-offs. The immutable snapshots were hashed for preservation, not executed or relinted as live source; the existing records-only Ruff exclusion was not changed. New concurrent Markdown and packaged records were outside the source continuity inventory. Source hashes, all command arguments, and complete stdout/stderr are retained.
+
+The existing CPU venv, nice15, one-thread numerical libraries, and a short NVMe TMPDIR were used. The shell check was the explicitly requested tracked-source scope, not a recursive traversal of ignored runtime caches. Optional unavailable-runtime skips remain counted, with reasons in the summary. This pass does not certify optional GPU/serving/runtime paths. The driver performed no model request, GPU work, Docker worker, or service operation.
+
+[Summary, full raw/losslessly compressed logs, before/after pins, drivers, and SHA256 index](records/2026-11-07-cpu-validation-r13/) preserve the actual result. Prior r12 and focused CLI records remain separate and unchanged.
+"""
+path=B/"docs/experiments/2026-11-07-cpu-validation-r13.md";path.write_text(doc)
+print(json.dumps({"summary":summary,"doc_sha256":sha(path.read_bytes()),"records_sha256":sha((P/"SHA256SUMS").read_bytes()),"records":len(artifacts)}))
+

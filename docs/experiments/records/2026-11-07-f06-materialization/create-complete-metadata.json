@@ -1,0 +1,16 @@
+{
+  "status": "create_complete_verify_running",
+  "manifest_sha256": "22b0603cc2dc9a2060c76f8baf99c28eceac08b56116727173bc61a719b5c0d4",
+  "retention_report_sha256": "1a3ef6c823d2e67d9ac5b0286e60930143820fb1b342f3fdb10592fd22909e20",
+  "saved_complete410_ratio_range": [
+    0.6889501842073321,
+    1.0273005979585996
+  ],
+  "cosine": null,
+  "cosine_additional_diagnostic_executed": false,
+  "new_model_or_baseline_calls": 0,
+  "operational_records": [
+    "An inspection and compact-summary SSH command each emitted the intended Python output then returned127 because an extra heredoc delimiter was treated as a shell command. No merge process was interrupted or repeated, and the written compact JSON remains valid."
+  ],
+  "epoch": 1794059302.3319027
+}

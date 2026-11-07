@@ -1,0 +1,936 @@
+{
+  "epoch": 1794058227.3971417,
+  "scope": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/checkpoints",
+  "free_bytes": 69024456704,
+  "all_containers": 27,
+  "checkpoint_rows": [
+    {
+      "name": "scalar-l23-minus4",
+      "safetensors": 0,
+      "logical": 0,
+      "private_payload_bytes": 0,
+      "private_allocated": 0,
+      "shared_files": 0,
+      "refs": [],
+      "large_private": []
+    },
+    {
+      "name": "code90-heretic-public-base-math-mlp-c1-v1",
+      "safetensors": 0,
+      "logical": 0,
+      "private_payload_bytes": 0,
+      "private_allocated": 0,
+      "shared_files": 0,
+      "refs": [],
+      "large_private": []
+    },
+    {
+      "name": "fresh-lora-mbpp-f06-v1",
+      "safetensors": 0,
+      "logical": 0,
+      "private_payload_bytes": 0,
+      "private_allocated": 0,
+      "shared_files": 0,
+      "refs": [],
+      "large_private": []
+    },
+    {
+      "name": "code90-current-ac-repair-ae-v1",
+      "safetensors": 2,
+      "logical": 62546338264,
+      "private_payload_bytes": 62546338264,
+      "private_allocated": 62546378752,
+      "shared_files": 0,
+      "refs": [],
+      "large_private": [
+        {
+          "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/checkpoints/code90-current-ac-repair-ae-v1/model-00002-of-00002.safetensors",
+          "size": 12623183414,
+          "allocated": 12623196160,
+          "device": 2306,
+          "inode": 181571720,
+          "nlink": 1,
+          "symlink": false
+        },
+        {
+          "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/checkpoints/code90-current-ac-repair-ae-v1/model-00001-of-00002.safetensors",
+          "size": 49923154850,
+          "allocated": 49923182592,
+          "device": 2306,
+          "inode": 181571713,
+          "nlink": 1,
+          "symlink": false
+        }
+      ]
+    },
+    {
+      "name": "scalar-l28-plus4",
+      "safetensors": 2,
+      "logical": 62546338248,
+      "private_payload_bytes": 49784788364,
+      "private_allocated": 49784799232,
+      "shared_files": 1,
+      "refs": [],
+      "large_private": [
+        {
+          "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/checkpoints/scalar-l28-plus4/model-00001-of-00002.safetensors",
+          "size": 49784788364,
+          "allocated": 49784799232,
+          "device": 2306,
+          "inode": 181570926,
+          "nlink": 1,
+          "symlink": false
+        }
+      ]
+    },
+    {
+      "name": "joint-purpose-workflow-language",
+      "safetensors": 0,
+      "logical": 0,
+      "private_payload_bytes": 0,
+      "private_allocated": 0,
+      "shared_files": 0,
+      "refs": [],
+      "large_private": []
+    },
+    {
+      "name": "code90-science-native-contracts-v1",
+      "safetensors": 2,
+      "logical": 62546338248,
+      "private_payload_bytes": 62546338248,
+      "private_allocated": 62546358272,
+      "shared_files": 0,
+      "refs": [],
+      "large_private": [
+        {
+          "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/checkpoints/code90-science-native-contracts-v1/model-00002-of-00002.safetensors",
+          "size": 12761549884,
+          "allocated": 12761554944,
+          "device": 2306,
+          "inode": 181571622,
+          "nlink": 1,
+          "symlink": false
+        },
+        {
+          "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/checkpoints/code90-science-native-contracts-v1/model-00001-of-00002.safetensors",
+          "size": 49784788364,
+          "allocated": 49784803328,
+          "device": 2306,
+          "inode": 181571621,
+          "nlink": 1,
+          "symlink": false
+        }
+      ]
+    },
+    {
+      "name": "joint-purpose-programming-set",
+      "safetensors": 0,
+      "logical": 0,
+      "private_payload_bytes": 0,
+      "private_allocated": 0,
+      "shared_files": 0,
+      "refs": [],
+      "large_private": []
+    },
+    {
+      "name": "joint-purpose-balanced-medium",
+      "safetensors": 0,
+      "logical": 0,
+      "private_payload_bytes": 0,
+      "private_allocated": 0,
+      "shared_files": 0,
+      "refs": [],
+      "large_private": []
+    },
+    {
+      "name": "scalar-l23-plus4",
+      "safetensors": 2,
+      "logical": 62546338248,
+      "private_payload_bytes": 12761549884,
+      "private_allocated": 12761563136,
+      "shared_files": 1,
+      "refs": [],
+      "large_private": [
+        {
+          "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/checkpoints/scalar-l23-plus4/model-00002-of-00002.safetensors",
+          "size": 12761549884,
+          "allocated": 12761563136,
+          "device": 2306,
+          "inode": 181570948,
+          "nlink": 1,
+          "symlink": false
+        }
+      ]
+    },
+    {
+      "name": "donor-text-c1",
+      "safetensors": 0,
+      "logical": 0,
+      "private_payload_bytes": 0,
+      "private_allocated": 0,
+      "shared_files": 0,
+      "refs": [],
+      "large_private": []
+    },
+    {
+      "name": "fresh-native-contract-f05-faststore-v1",
+      "safetensors": 2,
+      "logical": 62546334896,
+      "private_payload_bytes": 2714560,
+      "private_allocated": 2715648,
+      "shared_files": 1,
+      "refs": [],
+      "large_private": []
+    },
+    {
+      "name": "resume20261106-h-grid-0397",
+      "safetensors": 2,
+      "logical": 62546338248,
+      "private_payload_bytes": 62546338248,
+      "private_allocated": 62546354176,
+      "shared_files": 0,
+      "refs": [],
+      "large_private": [
+        {
+          "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/checkpoints/resume20261106-h-grid-0397/model-00002-of-00002.safetensors",
+          "size": 12761549884,
+          "allocated": 12761554944,
+          "device": 2306,
+          "inode": 181571572,
+          "nlink": 1,
+          "symlink": false
+        },
+        {
+          "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/checkpoints/resume20261106-h-grid-0397/model-00001-of-00002.safetensors",
+          "size": 49784788364,
+          "allocated": 49784799232,
+          "device": 2306,
+          "inode": 181571571,
+          "nlink": 1,
+          "symlink": false
+        }
+      ]
+    },
+    {
+      "name": "code90-incumbent-p-science-coupled-s-v1",
+      "safetensors": 2,
+      "logical": 62546338264,
+      "private_payload_bytes": 62546338264,
+      "private_allocated": 62546354176,
+      "shared_files": 0,
+      "refs": [],
+      "large_private": [
+        {
+          "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/checkpoints/code90-incumbent-p-science-coupled-s-v1/model-00002-of-00002.safetensors",
+          "size": 12623183414,
+          "allocated": 12623187968,
+          "device": 2306,
+          "inode": 181571695,
+          "nlink": 1,
+          "symlink": false
+        },
+        {
+          "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/checkpoints/code90-incumbent-p-science-coupled-s-v1/model-00001-of-00002.safetensors",
+          "size": 49923154850,
+          "allocated": 49923166208,
+          "device": 2306,
+          "inode": 181571694,
+          "nlink": 1,
+          "symlink": false
+        }
+      ]
+    },
+    {
+      "name": "resume20261106-hs-grid-0020",
+      "safetensors": 0,
+      "logical": 0,
+      "private_payload_bytes": 0,
+      "private_allocated": 0,
+      "shared_files": 0,
+      "refs": [],
+      "large_private": []
+    },
+    {
+      "name": "fresh-code-joint-f01",
+      "safetensors": 0,
+      "logical": 0,
+      "private_payload_bytes": 0,
+      "private_allocated": 0,
+      "shared_files": 0,
+      "refs": [],
+      "large_private": []
+    },
+    {
+      "name": "composed-h0397-plus-localgc",
+      "safetensors": 0,
+      "logical": 0,
+      "private_payload_bytes": 0,
+      "private_allocated": 0,
+      "shared_files": 0,
+      "refs": [],
+      "large_private": []
+    },
+    {
+      "name": "scalar-l41-minus4",
+      "safetensors": 2,
+      "logical": 62546338248,
+      "private_payload_bytes": 62546338248,
+      "private_allocated": 62546354176,
+      "shared_files": 0,
+      "refs": [],
+      "large_private": [
+        {
+          "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/checkpoints/scalar-l41-minus4/model-00002-of-00002.safetensors",
+          "size": 12761549884,
+          "allocated": 12761554944,
+          "device": 2306,
+          "inode": 181570963,
+          "nlink": 1,
+          "symlink": false
+        },
+        {
+          "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/checkpoints/scalar-l41-minus4/model-00001-of-00002.safetensors",
+          "size": 49784788364,
+          "allocated": 49784799232,
+          "device": 2306,
+          "inode": 181570962,
+          "nlink": 1,
+          "symlink": false
+        }
+      ]
+    },
+    {
+      "name": "native-faststore-av-v1",
+      "safetensors": 16,
+      "logical": 938157019600,
+      "private_payload_bytes": 2714560,
+      "private_allocated": 2715648,
+      "shared_files": 15,
+      "refs": [],
+      "large_private": []
+    },
+    {
+      "name": "sparse-code-margin3",
+      "safetensors": 2,
+      "logical": 62546338248,
+      "private_payload_bytes": 62546338248,
+      "private_allocated": 62546358272,
+      "shared_files": 0,
+      "refs": [],
+      "large_private": [
+        {
+          "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/checkpoints/sparse-code-margin3/model-00002-of-00002.safetensors",
+          "size": 12761549884,
+          "allocated": 12761554944,
+          "device": 2306,
+          "inode": 181571018,
+          "nlink": 1,
+          "symlink": false
+        },
+        {
+          "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/checkpoints/sparse-code-margin3/model-00001-of-00002.safetensors",
+          "size": 49784788364,
+          "allocated": 49784803328,
+          "device": 2306,
+          "inode": 181571017,
+          "nlink": 1,
+          "symlink": false
+        }
+      ]
+    },
+    {
+      "name": "scalar-l41-plus4",
+      "safetensors": 2,
+      "logical": 62546338248,
+      "private_payload_bytes": 62546338248,
+      "private_allocated": 62546354176,
+      "shared_files": 0,
+      "refs": [],
+      "large_private": [
+        {
+          "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/checkpoints/scalar-l41-plus4/model-00002-of-00002.safetensors",
+          "size": 12761549884,
+          "allocated": 12761554944,
+          "device": 2306,
+          "inode": 181570979,
+          "nlink": 1,
+          "symlink": false
+        },
+        {
+          "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/checkpoints/scalar-l41-plus4/model-00001-of-00002.safetensors",
+          "size": 49784788364,
+          "allocated": 49784799232,
+          "device": 2306,
+          "inode": 181570977,
+          "nlink": 1,
+          "symlink": false
+        }
+      ]
+    },
+    {
+      "name": "code90-coherent-donor-c00625-v1",
+      "safetensors": 2,
+      "logical": 62546338248,
+      "private_payload_bytes": 62546338248,
+      "private_allocated": 62546358272,
+      "shared_files": 0,
+      "refs": [],
+      "large_private": [
+        {
+          "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/checkpoints/code90-coherent-donor-c00625-v1/model-00002-of-00002.safetensors",
+          "size": 12761549884,
+          "allocated": 12761554944,
+          "device": 2306,
+          "inode": 181571669,
+          "nlink": 1,
+          "symlink": false
+        },
+        {
+          "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/checkpoints/code90-coherent-donor-c00625-v1/model-00001-of-00002.safetensors",
+          "size": 49784788364,
+          "allocated": 49784803328,
+          "device": 2306,
+          "inode": 181571668,
+          "nlink": 1,
+          "symlink": false
+        }
+      ]
+    },
+    {
+      "name": "finalnorm-plus0p5pct",
+      "safetensors": 1,
+      "logical": 12761549884,
+      "private_payload_bytes": 0,
+      "private_allocated": 0,
+      "shared_files": 1,
+      "refs": [],
+      "large_private": []
+    },
+    {
+      "name": "joint-programming-finalnorm-plus1pct",
+      "safetensors": 2,
+      "logical": 62546338248,
+      "private_payload_bytes": 62546338248,
+      "private_allocated": 62546354176,
+      "shared_files": 0,
+      "refs": [],
+      "large_private": [
+        {
+          "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/checkpoints/joint-programming-finalnorm-plus1pct/model-00002-of-00002.safetensors",
+          "size": 12761549884,
+          "allocated": 12761554944,
+          "device": 2306,
+          "inode": 181571380,
+          "nlink": 1,
+          "symlink": false
+        },
+        {
+          "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/checkpoints/joint-programming-finalnorm-plus1pct/model-00001-of-00002.safetensors",
+          "size": 49784788364,
+          "allocated": 49784799232,
+          "device": 2306,
+          "inode": 181571379,
+          "nlink": 1,
+          "symlink": false
+        }
+      ]
+    },
+    {
+      "name": "scalar-l28-minus4",
+      "safetensors": 2,
+      "logical": 62546338248,
+      "private_payload_bytes": 62546338248,
+      "private_allocated": 62546358272,
+      "shared_files": 0,
+      "refs": [],
+      "large_private": [
+        {
+          "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/checkpoints/scalar-l28-minus4/model-00002-of-00002.safetensors",
+          "size": 12761549884,
+          "allocated": 12761554944,
+          "device": 2306,
+          "inode": 181570911,
+          "nlink": 1,
+          "symlink": false
+        },
+        {
+          "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/checkpoints/scalar-l28-minus4/model-00001-of-00002.safetensors",
+          "size": 49784788364,
+          "allocated": 49784803328,
+          "device": 2306,
+          "inode": 181570910,
+          "nlink": 1,
+          "symlink": false
+        }
+      ]
+    },
+    {
+      "name": "code90-k1-exported-text-c1-v1",
+      "safetensors": 0,
+      "logical": 0,
+      "private_payload_bytes": 0,
+      "private_allocated": 0,
+      "shared_files": 0,
+      "refs": [],
+      "large_private": []
+    },
+    {
+      "name": "code90-current-ad-functional-an-v1",
+      "safetensors": 0,
+      "logical": 0,
+      "private_payload_bytes": 0,
+      "private_allocated": 0,
+      "shared_files": 0,
+      "refs": [],
+      "large_private": []
+    },
+    {
+      "name": "sparse-action-margin3",
+      "safetensors": 2,
+      "logical": 62546338248,
+      "private_payload_bytes": 12761549884,
+      "private_allocated": 12761554944,
+      "shared_files": 1,
+      "refs": [],
+      "large_private": [
+        {
+          "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/checkpoints/sparse-action-margin3/model-00002-of-00002.safetensors",
+          "size": 12761549884,
+          "allocated": 12761554944,
+          "device": 2306,
+          "inode": 181571034,
+          "nlink": 1,
+          "symlink": false
+        }
+      ]
+    },
+    {
+      "name": "code90-heretic-public-base-k1-c00625-v1",
+      "safetensors": 0,
+      "logical": 0,
+      "private_payload_bytes": 0,
+      "private_allocated": 0,
+      "shared_files": 0,
+      "refs": [],
+      "large_private": []
+    },
+    {
+      "name": "fresh-native-relative-f04-faststore-v1",
+      "safetensors": 2,
+      "logical": 62546334896,
+      "private_payload_bytes": 2714560,
+      "private_allocated": 2719744,
+      "shared_files": 1,
+      "refs": [
+        {
+          "id": "41ae0d0831faf5d79939f16ad401da0da8fee0d2d453af12e4e4efd10480f45c",
+          "name": "gemma-4-31b-8gpu-gemma-3-1",
+          "running": true,
+          "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/checkpoints/fresh-native-relative-f04-faststore-v1/checkpoint",
+          "destination": "/checkpoint",
+          "rw": false
+        },
+        {
+          "id": "47207dd45c1819d875951e66728310171dc218dfc55b1221054f704c39eb3009",
+          "name": "gemma-4-31b-8gpu-gemma-0-1",
+          "running": true,
+          "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/checkpoints/fresh-native-relative-f04-faststore-v1/checkpoint",
+          "destination": "/checkpoint",
+          "rw": false
+        },
+        {
+          "id": "d1a79f265949e31778ead91834e6a509d3c66af708dc3d7247eb716caa28cef3",
+          "name": "gemma-4-31b-8gpu-gemma-1-1",
+          "running": true,
+          "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/checkpoints/fresh-native-relative-f04-faststore-v1/checkpoint",
+          "destination": "/checkpoint",
+          "rw": false
+        },
+        {
+          "id": "07e1b17e7c84d8d178703417bb341c3313653eca7122aba1ad7b3d6d893d5abb",
+          "name": "gemma-4-31b-8gpu-gemma-2-1",
+          "running": true,
+          "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/checkpoints/fresh-native-relative-f04-faststore-v1/checkpoint",
+          "destination": "/checkpoint",
+          "rw": false
+        }
+      ],
+      "large_private": []
+    },
+    {
+      "name": "fresh-code-joint-f02",
+      "safetensors": 0,
+      "logical": 0,
+      "private_payload_bytes": 0,
+      "private_allocated": 0,
+      "shared_files": 0,
+      "refs": [],
+      "large_private": []
+    },
+    {
+      "name": "code90-current-ad-finalist-af-v1",
+      "safetensors": 0,
+      "logical": 0,
+      "private_payload_bytes": 0,
+      "private_allocated": 0,
+      "shared_files": 0,
+      "refs": [],
+      "large_private": []
+    },
+    {
+      "name": "code90-current-ad-library-al-v1",
+      "safetensors": 0,
+      "logical": 0,
+      "private_payload_bytes": 0,
+      "private_allocated": 0,
+      "shared_files": 0,
+      "refs": [],
+      "large_private": []
+    },
+    {
+      "name": "finalnorm-plus1pct",
+      "safetensors": 2,
+      "logical": 62546338248,
+      "private_payload_bytes": 49784788364,
+      "private_allocated": 49784799232,
+      "shared_files": 1,
+      "refs": [],
+      "large_private": [
+        {
+          "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/checkpoints/finalnorm-plus1pct/model-00001-of-00002.safetensors",
+          "size": 49784788364,
+          "allocated": 49784799232,
+          "device": 2306,
+          "inode": 181571287,
+          "nlink": 1,
+          "symlink": false
+        }
+      ]
+    },
+    {
+      "name": "resume20261106-h-grid-0485",
+      "safetensors": 0,
+      "logical": 0,
+      "private_payload_bytes": 0,
+      "private_allocated": 0,
+      "shared_files": 0,
+      "refs": [],
+      "large_private": []
+    },
+    {
+      "name": "code90-current-ac-native-ad-v1",
+      "safetensors": 2,
+      "logical": 62546338264,
+      "private_payload_bytes": 62546338264,
+      "private_allocated": 62546378752,
+      "shared_files": 0,
+      "refs": [],
+      "large_private": [
+        {
+          "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/checkpoints/code90-current-ac-native-ad-v1/model-00002-of-00002.safetensors",
+          "size": 12623183414,
+          "allocated": 12623196160,
+          "device": 2306,
+          "inode": 181571721,
+          "nlink": 1,
+          "symlink": false
+        },
+        {
+          "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/checkpoints/code90-current-ac-native-ad-v1/model-00001-of-00002.safetensors",
+          "size": 49923154850,
+          "allocated": 49923182592,
+          "device": 2306,
+          "inode": 181571719,
+          "nlink": 1,
+          "symlink": false
+        }
+      ]
+    },
+    {
+      "name": "localg-relative-floor020",
+      "safetensors": 0,
+      "logical": 0,
+      "private_payload_bytes": 0,
+      "private_allocated": 0,
+      "shared_files": 0,
+      "refs": [],
+      "large_private": []
+    },
+    {
+      "name": "code90-current-ad-finalist-ag-v1",
+      "safetensors": 0,
+      "logical": 0,
+      "private_payload_bytes": 0,
+      "private_allocated": 0,
+      "shared_files": 0,
+      "refs": [],
+      "large_private": []
+    },
+    {
+      "name": "code90-current-s-code-priority-ac-v1",
+      "safetensors": 2,
+      "logical": 62546338264,
+      "private_payload_bytes": 62546338264,
+      "private_allocated": 62546358272,
+      "shared_files": 0,
+      "refs": [],
+      "large_private": [
+        {
+          "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/checkpoints/code90-current-s-code-priority-ac-v1/model-00002-of-00002.safetensors",
+          "size": 12623183414,
+          "allocated": 12623187968,
+          "device": 2306,
+          "inode": 181571705,
+          "nlink": 1,
+          "symlink": false
+        },
+        {
+          "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/checkpoints/code90-current-s-code-priority-ac-v1/model-00001-of-00002.safetensors",
+          "size": 49923154850,
+          "allocated": 49923170304,
+          "device": 2306,
+          "inode": 181571704,
+          "nlink": 1,
+          "symlink": false
+        }
+      ]
+    },
+    {
+      "name": "joint-donor-quarter-finalnorm-plus1pct",
+      "safetensors": 2,
+      "logical": 62546338248,
+      "private_payload_bytes": 62546338248,
+      "private_allocated": 62546358272,
+      "shared_files": 0,
+      "refs": [],
+      "large_private": [
+        {
+          "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/checkpoints/joint-donor-quarter-finalnorm-plus1pct/model-00002-of-00002.safetensors",
+          "size": 12761549884,
+          "allocated": 12761554944,
+          "device": 2306,
+          "inode": 181571511,
+          "nlink": 1,
+          "symlink": false
+        },
+        {
+          "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/checkpoints/joint-donor-quarter-finalnorm-plus1pct/model-00001-of-00002.safetensors",
+          "size": 49784788364,
+          "allocated": 49784803328,
+          "device": 2306,
+          "inode": 181571510,
+          "nlink": 1,
+          "symlink": false
+        }
+      ]
+    },
+    {
+      "name": "code90-current-ad-helper-av-v1",
+      "safetensors": 2,
+      "logical": 62546338264,
+      "private_payload_bytes": 62546338264,
+      "private_allocated": 62546370560,
+      "shared_files": 0,
+      "refs": [],
+      "large_private": [
+        {
+          "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/checkpoints/code90-current-ad-helper-av-v1/model-00002-of-00002.safetensors",
+          "size": 12623183414,
+          "allocated": 12623196160,
+          "device": 2306,
+          "inode": 181678468,
+          "nlink": 1,
+          "symlink": false
+        },
+        {
+          "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/checkpoints/code90-current-ad-helper-av-v1/model-00001-of-00002.safetensors",
+          "size": 49923154850,
+          "allocated": 49923174400,
+          "device": 2306,
+          "inode": 181678467,
+          "nlink": 1,
+          "symlink": false
+        }
+      ]
+    },
+    {
+      "name": "code90-current-ad-functional-ar-v1",
+      "safetensors": 2,
+      "logical": 62546338264,
+      "private_payload_bytes": 62546338264,
+      "private_allocated": 62546399232,
+      "shared_files": 0,
+      "refs": [],
+      "large_private": [
+        {
+          "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/checkpoints/code90-current-ad-functional-ar-v1/model-00002-of-00002.safetensors",
+          "size": 12623183414,
+          "allocated": 12623216640,
+          "device": 2306,
+          "inode": 181678410,
+          "nlink": 1,
+          "symlink": false
+        },
+        {
+          "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/checkpoints/code90-current-ad-functional-ar-v1/model-00001-of-00002.safetensors",
+          "size": 49923154850,
+          "allocated": 49923182592,
+          "device": 2306,
+          "inode": 181678409,
+          "nlink": 1,
+          "symlink": false
+        }
+      ]
+    },
+    {
+      "name": "fresh-native-contract-f03",
+      "safetensors": 0,
+      "logical": 0,
+      "private_payload_bytes": 0,
+      "private_allocated": 0,
+      "shared_files": 0,
+      "refs": [],
+      "large_private": []
+    },
+    {
+      "name": "joint-purpose-algorithm-set",
+      "safetensors": 0,
+      "logical": 0,
+      "private_payload_bytes": 0,
+      "private_allocated": 0,
+      "shared_files": 0,
+      "refs": [],
+      "large_private": []
+    },
+    {
+      "name": "code90-heretic-public-base-k1-c1-v1",
+      "safetensors": 0,
+      "logical": 0,
+      "private_payload_bytes": 0,
+      "private_allocated": 0,
+      "shared_files": 0,
+      "refs": [],
+      "large_private": []
+    },
+    {
+      "name": "code90-heretic-public-base-official-protocol-v1",
+      "safetensors": 2,
+      "logical": 62546338264,
+      "private_payload_bytes": 62546338264,
+      "private_allocated": 62546358272,
+      "shared_files": 0,
+      "refs": [],
+      "large_private": [
+        {
+          "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/checkpoints/code90-heretic-public-base-official-protocol-v1/model-00002-of-00002.safetensors",
+          "size": 12623183414,
+          "allocated": 12623187968,
+          "device": 2306,
+          "inode": 181571451,
+          "nlink": 1,
+          "symlink": false
+        },
+        {
+          "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/checkpoints/code90-heretic-public-base-official-protocol-v1/model-00001-of-00002.safetensors",
+          "size": 49923154850,
+          "allocated": 49923170304,
+          "device": 2306,
+          "inode": 181571050,
+          "nlink": 1,
+          "symlink": false
+        }
+      ]
+    },
+    {
+      "name": "finalnorm-minus1pct",
+      "safetensors": 2,
+      "logical": 62546338248,
+      "private_payload_bytes": 49784788364,
+      "private_allocated": 49784799232,
+      "shared_files": 1,
+      "refs": [],
+      "large_private": [
+        {
+          "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/checkpoints/finalnorm-minus1pct/model-00001-of-00002.safetensors",
+          "size": 49784788364,
+          "allocated": 49784799232,
+          "device": 2306,
+          "inode": 181571271,
+          "nlink": 1,
+          "symlink": false
+        }
+      ]
+    },
+    {
+      "name": "sparse-code-action6",
+      "safetensors": 2,
+      "logical": 62546338248,
+      "private_payload_bytes": 62546338248,
+      "private_allocated": 62546354176,
+      "shared_files": 0,
+      "refs": [],
+      "large_private": [
+        {
+          "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/checkpoints/sparse-code-action6/model-00002-of-00002.safetensors",
+          "size": 12761549884,
+          "allocated": 12761554944,
+          "device": 2306,
+          "inode": 181571190,
+          "nlink": 1,
+          "symlink": false
+        },
+        {
+          "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/checkpoints/sparse-code-action6/model-00001-of-00002.safetensors",
+          "size": 49784788364,
+          "allocated": 49784799232,
+          "device": 2306,
+          "inode": 181571186,
+          "nlink": 1,
+          "symlink": false
+        }
+      ]
+    },
+    {
+      "name": "joint-purpose-balanced-small",
+      "safetensors": 0,
+      "logical": 0,
+      "private_payload_bytes": 0,
+      "private_allocated": 0,
+      "shared_files": 0,
+      "refs": [],
+      "large_private": []
+    },
+    {
+      "name": "joint-purpose-chat-set",
+      "safetensors": 2,
+      "logical": 62546338248,
+      "private_payload_bytes": 62546338248,
+      "private_allocated": 62546354176,
+      "shared_files": 0,
+      "refs": [],
+      "large_private": [
+        {
+          "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/checkpoints/joint-purpose-chat-set/model-00002-of-00002.safetensors",
+          "size": 12761549884,
+          "allocated": 12761554944,
+          "device": 2306,
+          "inode": 181571230,
+          "nlink": 1,
+          "symlink": false
+        },
+        {
+          "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/checkpoints/joint-purpose-chat-set/model-00001-of-00002.safetensors",
+          "size": 49784788364,
+          "allocated": 49784799232,
+          "device": 2306,
+          "inode": 181571229,
+          "nlink": 1,
+          "symlink": false
+        }
+      ]
+    }
+  ],
+  "model_calls": 0,
+  "filesystem_mutations_to_checkpoint": 0,
+  "limitations": "nlink1/stat/mount-only inventory; absence of direct mount is not proof of no logical reconstruction dependency"
+}

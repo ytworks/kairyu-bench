@@ -1,0 +1,25 @@
+{
+  "pid": 1240408,
+  "epoch": 1794050068.1221056,
+  "source_sha256": "b10cac275535a29e6f1bcb2c0b8dbe756f09c01dd8e2196aea2376abb018299c",
+  "commands_sha256": "777e94af7218e6d46c72e62327eed3500c9af71e75633cd96cb8bf3819ee11a4",
+  "parent_decision_sha256": "105ac95ccf7581ab6c36f7f2f0c1c4aaaa228c9c54a7a1349776695fc62d40f4",
+  "parent": "AV",
+  "recorded_results": {
+    "AV": {
+      "status": "completed",
+      "code": 0.7293650793650793,
+      "overall": 0.7672005929150432,
+      "report_sha256": "dc27183c906f4c67d5a5b4c5c54372f992c7bc13f80c03ff0c0b1ce1b5a7b3f4"
+    },
+    "F03": {
+      "status": "partial",
+      "code": 0.7265873015873016,
+      "overall": 0.7394889334372644,
+      "report_sha256": "cc76ce3de5ce7202ca994d087fdaa3f856abb71c87061d4b5a368691edbcf9bc"
+    }
+  },
+  "free_bytes": 69889220608,
+  "reserve_bytes": 5368709120,
+  "model_calls": 0
+}

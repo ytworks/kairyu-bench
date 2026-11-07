@@ -1,0 +1,7 @@
+{
+  "stage": "local tool JavaScript parsing before SSH",
+  "error": "SyntaxError: Unexpected identifier terminal",
+  "remote_execution": false,
+  "remote_mutation": false,
+  "resolution": "Removed Markdown backticks from the JavaScript raw-string transport; no numerical analysis rerun."
+}

@@ -1,0 +1,60 @@
+"""Prepare only an unbound F04 canonical dev30 plan. No model/service/owner run."""
+from pathlib import Path
+import copy,hashlib,json,subprocess,time
+R=Path('/mnt/nvme/kairyu/wsp/gemma4-coding-20261104');B=R/'worktrees/kairyu-bench-weight-tools'
+N3=R/'analysis/fresh-purpose-20261107-f03-dev30-dp4-v1';N4=R/'analysis/fresh-purpose-20261107-f04-dev30-dp4-v1'
+P4=R/'analysis/fresh-purpose-20261107-f04-relative-v1'
+D=B/'docs/experiments/records/2026-11-07-f04-dev30-plan-v1'
+sha=lambda p:hashlib.sha256(p.read_bytes()).hexdigest()
+save=lambda p,x:p.write_text(json.dumps(x,indent=2)+chr(10))
+assert not N4.exists();N4.mkdir()
+source=N3/'launch-plan-approved.json';p=json.loads(source.read_text());base=copy.deepcopy(p)
+assert sha(source)=='5b36b98234658c63b460cbb6cba821812b177b7e49477cc1a2fcabb1cba6095a'
+assert sha(Path(p['owner_source']['path']))==p['owner_source']['sha256']
+assert sha(Path(p['command'][0]))==p['source_identity']['wrapper']['sha256']
+run='gemma4-fresh-f04-dev30-dp4-20261107-v1'
+bundle=R/'checkpoints/fresh-native-relative-f04-faststore-v1';candidate=bundle/'checkpoint'
+p.update(status='unbound_template_not_executable',approved_for_execution=False,created_epoch=time.time(),run_id=run,prior_owner_pid=None,closure_bound_epoch=None)
+for flag,value in [('--label','PENDING_VERIFIED_F04_TREE'),('--run-id',run),('--observe-config',str(N4/'http-trace/capture.json'))]:p['command'][p['command'].index(flag)+1]=value
+p['handoff']={'root_authorized':False,'prior_owner_pid':None,'release_required_before_launch':True,'normal_global_release':None,'endpoint_closure':None,'authorization':'Preparation only. Actual materialization/deployment/bind/preview/launch require root result gate and subsequent explicit instruction.'}
+p['expected_serving'].update(checkpoint=str(candidate),tree_sha256=None,service_cids={f'gemma-{i}':None for i in range(4)},closures=[],four_replica_closure=None)
+p['http_trace']['config']={'path':str(N4/'http-trace/capture.json'),'bytes':None,'sha256':None}
+p['http_trace']['identity_check']={'path':str(N4/'http-trace-identity-check.json'),'bytes':None,'sha256':None}
+p['prelaunch_requirements']=[x.replace('F03 mount','F04 mount').replace('saved full-verify-derived capture identity','native-faststore mixed full-hash/stat capture identity') for x in p['prelaunch_requirements']]
+p['prelaunch_requirements'].insert(0,'completed same-cohort parent gate; do not evaluate AV-derived F04 if parent_changed')
+p['comparison']['current_host_git_head']=subprocess.check_output(['git','rev-parse','HEAD'],cwd=B,text=True).strip()
+p['pending_deployment_bindings']=['candidate manifest/verify successful and SHA pinned','nine hash rows and current full stat continuity, shared-file nlink fixed','physical candidate tree and label','actual HTTP capture and identity-check','four exact healthy ordinary CIDs','four per-replica closures','combined closure','endpoint closure','normal prior-owner global release','root launch authorization']
+p['candidate_identity_pending']={'manifest_path':str(bundle/'manifest.json'),'manifest_sha256':None,'verification_receipt_path':None,'verification_receipt_sha256':None,'checkpoint_path':str(candidate),'spec_path':str(P4/'proposal/fresh-native-relative-f04.json'),'spec_sha256':'52e293bdd36a4c09715c8c211e035562b1eeb26aabb6490e21d4b511f2a0987b','hash_contract':'all_checkpoint_files hashes from successful faststore manifest: freshly verified private files plus shared prior-fullhash and exact inode/full stat continuity; no fresh full model hash claim','extra_payload_hash_pass':False}
+assert sha(Path(p['candidate_identity_pending']['spec_path']))==p['candidate_identity_pending']['spec_sha256']
+diff=[{'index':i,'before':a,'after':b} for i,(a,b) in enumerate(zip(base['command'],p['command'],strict=True)) if a!=b]
+assert len(diff)==3
+assert p['environment_allowlist']==base['environment_allowlist'] and len(p['environment_allowlist'])==8
+assert p['selection']==base['selection'] and p['selection']['items']==2338
+save(N4/'launch-plan-unbound.json',p)
+capture=json.loads((N3/'http-trace/capture.json').read_text())
+capture.update(capture_id=None,created_at=None,output_dir=str(N4/'http-trace'),checkpoint=None)
+save(N4/'http-trace-template.json',capture)
+(N4/'selected-items.json').write_bytes((N3/'selected-items.json').read_bytes())
+evidence={'status':'prepared_unbound_no_preview_no_run','prior_plan_sha256':sha(source),'unbound_plan_sha256':sha(N4/'launch-plan-unbound.json'),'capture_template_sha256':sha(N4/'http-trace-template.json'),'command_value_differences':diff,'environment8_exact':True,'selection2338_exact':True,'selected_items_sha256':sha(N4/'selected-items.json'),'owner_source':p['owner_source'],'new_owner_code':False,'actual_capture_created':False,'candidate_inspected_or_hashed':False,'model_gpu_service_lock_operations':0,'parent_reruns':0,'extra_proxy_finite_transfer_runs':0}
+save(N4/'preparation.json',evidence)
+instructions="""# F04 canonical dev30 binding handoff (not executable yet)
+
+Reuse the unchanged fresh-av-dev30 owner. The unbound plan has no final tree, checkpoint verification, four CIDs, closure pins or capture; no owner preview is attempted until those exist. The checkpoint path is the faststore bundle's checkpoint subdirectory, never the bundle root.
+
+1. Require the completed comparable-parent decision and root authorization. If the parent changes, retain this unexecuted template and record parent_changed.
+2. Read the actual faststore manifest and successful verify receipt, pin their SHA, require the frozen spec SHA and exact logical AV parent. Check all nine files against manifest.candidate_inventory_stat, including shared.safetensors inode/ctime/nlink; use all_checkpoint_files hashes. This is fresh private hashes plus prior full shared hash/stat continuity, not a new full hash.
+3. Construct the checkpoint part using existing Checkpoint(checkpoint).identity(hash_files=False), then join every path/size to the manifest hash rows and derive the canonical sorted path/size/sha256 tree; require equality to manifest.control_tree_sha256. Preserve complete-model scope semantics. Copy the existing capture template, set a fresh capture_id/created_at, output path and this identity. Write actual http-trace/capture.json only now. Separately record all provenance, before/after full stat continuity and no payload rehash in http-trace-identity-check.json.
+4. Bind four exact ordinary healthy CIDs, four per-replica closure path/SHA pairs, combined closure, endpoint closure, prior owner PID and normal global release. The gateway and all direct logprob endpoints must serve F04; preserve TP2/MTP4/image/native flags and 23 unrelated services.
+5. Preserve launch-plan-unbound.json; write launch-plan-approved.json only under root authorization. Replace only final label and candidate-specific evidence in the planned command. Keep all 2,338 items, 14 areas +96 probes, 8 environment values, limits, immutable f91 runner and 256/32/4 concurrency unchanged.
+6. Run the existing owner once without --run for CPU preview, then send the approved plan SHA and preview to root. Root launches once with --run. No baseline rerun, extra finite/proxy/transfer or new owner feature.
+
+Future root command after binding only:
+
+    PYTHON /path/to/docs/experiments/scripts/fresh-av-dev30-20261107.py --plan N4/launch-plan-approved.json --run
+
+All current paths/arguments and source pins are in launch-plan-unbound.json. Model requests, service/lock changes, actual capture creation and owner preview/run in this preparation: zero.
+"""
+(N4/'binding-instructions.md').write_text(instructions)
+for name in ['launch-plan-unbound.json','http-trace-template.json','preparation.json','binding-instructions.md']:(D/name).write_bytes((N4/name).read_bytes())
+(D/'SHA256SUMS').write_text(''.join(sha(x)+'  '+x.name+chr(10) for x in sorted(D.iterdir()) if x.is_file()))
+print(json.dumps({'unbound_plan':str(N4/'launch-plan-unbound.json'),'plan_sha256':sha(N4/'launch-plan-unbound.json'),'preparation_sha256':sha(N4/'preparation.json'),'capture_template_sha256':sha(N4/'http-trace-template.json'),'record_manifest_sha256':sha(D/'SHA256SUMS')},indent=2))

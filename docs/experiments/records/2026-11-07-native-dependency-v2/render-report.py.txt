@@ -1,0 +1,66 @@
+from pathlib import Path
+import hashlib
+import json
+d = Path("docs/experiments/records/2026-11-07-native-dependency-v2")
+r = json.loads((d / "summary.json").read_text())
+text = """# AV behavior12: full-native dependency analysis (2026-11-07)
+
+All **12 training cases × 2 objectives, 421 native tensors and 1,331,516 scalar/vector coordinates** were analyzed after both collectors and exact original-service restoration completed. No candidate, target, radius, support, solver, edit, model call or transfer-case analysis was created.
+
+The measurement owner completed in 237.897 s. Excluding model load, correct LL took 29.387 s / 12 forwards and margin took 47.427 s / 24 forwards. Both summaries are completed, source unchanged, with the same 12 exact frames. The exact original target was healthy with empty queues; 26 protected containers were unchanged, the owner was absent and global lock released. Closure SHA: @B@e889b331d80e724c4313cda5f9cec672d3f1752364e268e4c9b415d12eb897c3@B@.
+
+The [CPU recipe](../../scripts/experiments/gemma4-purpose/native_dependency.py) reuses only @B@joint.read_collection@B@, adding full-native/closure/frame/identity checks. The old F01 analysis mixes sampled-matrix geometry and plan creation and was not used. All 145 input/source SHA pins were rechecked, as were prior full-checkpoint attestation and current stat continuity. Every native source word matched the current AV. The full 31B checkpoint payload was **not** rehashed again. BF16 autograd gradients accumulated in FP32 were analyzed in FP64.
+
+## Baselines versus executed behavior
+
+LL and margin are teacher-forced nat/token diagnostics; margin is mean correct-answer LL minus mean authored-foil LL. Each fold has one case. Numerical behavior is a separate ordinary-thinking generation with 16 isolated CPU fixtures.
+
+| Case | Correct LL | Margin | Native tests | LL gradient L2 | Margin gradient L2 | LL/margin cosine |
+|---|---:|---:|---:|---:|---:|---:|
+"""
+for c in r["case_rows"]:
+ text += f"| {c['id'].removeprefix('behavior-')} | {c['correct_logprob']:.6f} | {c['margin']:.6f} | {c['native_tests_passed']}/{c['native_tests_total']} | {c['correct_gradient_l2']:.4f} | {c['margin_gradient_l2']:.4f} | {c['correct_margin_cosine']:.6f} |\n"
+text += """
+A1 omitted the batched vector-RHS column axis in @B@np.linalg.solve(A_arr, rhs)@B@ (10 runtime errors / 6 wrong shapes). F2 generated @B@arr[0::k]@B@ where kth original events numbered from 1 require @B@arr[k-1::k]@B@. **The fixed F2 foil instead removes zeros; it is not the actual off-by-one failure.** A +0.536499 margin establishes preference over that foil, while the generated implementation still passed only 4/16. A1 is the only negative pair margin; 11/12 positive margins establish neither argmax-token nor free-generation correctness. B1/B2 numerical passes retain their separate method-requirement caveat.
+
+## Shared and conflicting directions
+
+All 66 correct-LL pairs have positive raw-coordinate cosine (0.193444–0.636706). Margin pairs have 37 positive and 29 negative cosines (−0.142578–0.123118). Shared code/language/output format can explain a common LL component; this does not identify a specialized ability tensor.
+
+| Case pair | Correct-LL cosine | Margin cosine |
+|---|---:|---:|
+| A1 / F2 (two native failures) | +0.318507 | −0.019027 |
+| A1 / A2 (RHS/shape contracts) | +0.499058 | −0.142578 |
+| F2 / F1 (original-index contracts) | +0.448718 | +0.034979 |
+
+F2 margin has negative cosine with **all other 11 correct-LL gradients**, −0.143889 to −0.056991; its own LL/margin cosine is only +0.055294. Correct LL and authored-foil margin are consequently not interchangeable measurements.
+
+The successful B1/B2/C1/C2/D1/D2/E1/E2 are retained separately: A1 LL against these LLs spans +0.197346 to +0.471144; F2 LL spans +0.193444 to +0.594294. Their margin alignment with A1/F2 is mixed. All individual values and all 24×24 pairs are in the linked JSON; no success cases were pooled or excluded.
+
+Each family/layer contribution divides its dot product by the **same whole-native gradient norm product**; signed contributions add to the global cosine. Within-group cosines use group norms and are stored separately. A1/F2 LL has 48 positive / 13 negative layer-plus-global contributions, +0.343450 / −0.024943. A1/A2 has 59 / 2 and F2/F1 has 61 / 0. For A1/F2 margin, 29 / 32 contributions sum to +0.012599 / −0.031626. Positive whole-native LL alignment does not imply agreement in every layer. All 60 layers plus the final norm are retained; no layer was selected.
+
+## Weight and BF16 denominators
+
+Full represented **native** source L2 = 70,134.9646, not the whole-model norm. Input/pre-feedforward layernorm weights carry 99.8672% of source squared norm, while the two post-normalization families carry most raw-coordinate gradient squared norm. A small ratio to 70k could conceal a larger relative change in another family; no edit-size or safety conclusion follows.
+
+| Complete native family | Coordinates | Source L2 | Median next-up BF16 gap | A1 LL gradient energy | F2 LL gradient energy |
+|---|---:|---:|---:|---:|---:|
+"""
+for k,v in r["families"].items():
+ text += f"| {k} | {v['source']['coordinates']} | {v['source']['l2']:.6f} | {v['source']['bf16_next_up_gap']['median']:.9g} | {100*v['gradient_energy_fraction'][0]:.4f}% | {100*v['gradient_energy_fraction'][11]:.4f}% |\n"
+text += """
+Full per-family/layer/tensor counts, norms, min/median/max absolute values, next-up/down BF16 gaps and all 24 gradient energies are saved. The gaps preserve signed-zero and exponent-boundary asymmetry; they describe representable weights, **not an allowed radius or finite-response estimate**. Euclidean derivatives depend on parameterization and units; neither weight magnitude nor gradient norm alone assigns an ability or justifies dropping a family.
+
+All 24 @B@unused_tensors@B@ lists are empty. All correct-LL gradients have 0 exact-zero coordinates. Margin exact-zero counts, in A1,A2,…,F2 order, are **3106, 2675, 2901, 6061, 3494, 1967, 4709, 3450, 2342, 4631, 1553, 3499** out of 1,331,516. Subtraction/precision can produce exact zeros; they are separate from unused tensors and do not establish absent ability or no finite effect. Counts are also retained by family/layer/tensor.
+
+## Limits, validation and complete records
+
+The frames use @B@gemma4-public-answer-v2-forced-empty-thought@B@: an ON prefix followed by an explicit empty-thought boundary, scoring only authored public-answer tokens. Ordinary native generation permits thinking. Matching diagnostic frames does **not** establish equality with generation. No finite response, held-out transfer or official ability gain is inferred.
+
+[summary.json](records/2026-11-07-native-dependency-v2/summary.json) retains all case values, all eight-family/61-group norms and focus-pair contributions. The [lossless full report](records/2026-11-07-native-dependency-v2/report.json.gz) retains every tensor and all 24×24 geometry. Uncompressed SHA: @B@271ee1afef4afd855c3aa6d589891bef6ad2b144b9499df9646039894835fad7@B@ (5,227,286 bytes; gzip 1,131,673 bytes). [Receipt](records/2026-11-07-native-dependency-v2/receipt.json) contains all raw NPZ/source/input hashes and commands; raw arrays remain on NVMe.
+
+CPU v1 completed in 5.010 s; v2 added explicit zero/unused fields after parent review and completed in 4.633 s. Both runs, exact source and logs remain in [v1](records/2026-11-07-native-dependency/) / [v2](records/2026-11-07-native-dependency-v2/). Baselines and all global pair values are exactly unchanged. Each revision passed two focused tests (0.031 s) for zero-norm unknowns, opposing group contribution/additivity and BF16 boundaries; Ruff passed. No failed analysis execution or model retry occurred. One local tool-dispatch JavaScript syntax error happened while composing the documentation command; it reached neither SSH nor analysis, and the corrected documentation command is retained. Existing common sandbox/collector/owner code was untouched. Prior full r7 CI predates this recipe and is not claimed to validate it.
+"""
+Path("docs/experiments/2026-11-07-native-dependency-analysis.md").write_text(text.replace("@B@",chr(96)))
+(d / "SHA256SUMS").write_text("".join(hashlib.sha256(p.read_bytes()).hexdigest()+"  "+p.name+"\n"
+                                    for p in sorted(d.iterdir()) if p.is_file() and p.name!="SHA256SUMS"))

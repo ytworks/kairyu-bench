@@ -1,0 +1,228 @@
+{
+  "schema_version": 1,
+  "split": "train",
+  "cases_sha256": "74e1cd2000fda0abdc03f4454b18f4231b9891360af266391744e13976f199f1",
+  "generation": {
+    "model_id": "gemma-4-31b",
+    "checkpoint_sha256": "fcc4681343c1a0c338157bee767df2024f37290469e55dbc417723717f4ac176",
+    "frame": "live-server-default-public-answer",
+    "enable_thinking": null,
+    "thinking_control": "server-default",
+    "reasoning_saved": false,
+    "sampling": "server_official_generation_config",
+    "temperature": null,
+    "max_tokens": 32768,
+    "seed": 0
+  },
+  "responses": [
+    {
+      "id": "behavior-H2",
+      "public_answer": "```python\nimport numpy as np\n\ndef solve(values, spacing):\n    vals = np.asarray(values, dtype=np.float64)\n    return (vals[2:] - vals[:-2]) / (2.0 * spacing)\n```",
+      "request_id": "chatcmpl-034ea52bc6924cb8",
+      "finish_reason": "stop",
+      "usage": {
+        "input_tokens": 120,
+        "output_tokens": 551
+      },
+      "seconds": 4.757096668006852
+    },
+    {
+      "id": "behavior-D2",
+      "public_answer": "```python\nimport numpy as np\n\ndef solve(matrices, offsets, x):\n    state = np.array(x, dtype=np.float64)\n    for t in range(len(matrices)):\n        state = np.array(matrices[t], dtype=np.float64) @ state + np.array(offsets[t], dtype=np.float64)\n    return state\n```",
+      "request_id": "chatcmpl-5ff448562b264b5d",
+      "finish_reason": "stop",
+      "usage": {
+        "input_tokens": 117,
+        "output_tokens": 558
+      },
+      "seconds": 4.961043110000901
+    },
+    {
+      "id": "behavior-D1",
+      "public_answer": "```python\nimport numpy as np\n\ndef solve(maps, start):\n    maps = np.asarray(maps)\n    T, n = maps.shape\n    res = np.zeros(T, dtype=np.float64)\n    state = start\n    for t in range(T):\n        state = maps[t, state]\n        res[t] = state\n    return res\n```",
+      "request_id": "chatcmpl-a03964deb31140ff",
+      "finish_reason": "stop",
+      "usage": {
+        "input_tokens": 109,
+        "output_tokens": 753
+      },
+      "seconds": 6.524135382031091
+    },
+    {
+      "id": "behavior-F2",
+      "public_answer": "```python\nimport numpy as np\n\ndef solve(values, k):\n    values_arr = np.asanyarray(values)\n    if values_arr.size == 0:\n        return np.array([0], dtype=np.float64)\n    \n    result_sum = np.sum(values_arr[::k])\n    return np.array([result_sum], dtype=np.float64)\n```",
+      "request_id": "chatcmpl-0e6453a19003402f",
+      "finish_reason": "stop",
+      "usage": {
+        "input_tokens": 99,
+        "output_tokens": 773
+      },
+      "seconds": 6.814315640949644
+    },
+    {
+      "id": "behavior-E1",
+      "public_answer": "```python\nimport numpy as np\n\ndef solve(grid, start, moves):\n    grid = np.asarray(grid)\n    H, W = grid.shape\n    r, c = start\n    total_sum = grid[r, c]\n    \n    # Directions: 0=N, 1=E, 2=S, 3=W\n    dirs = {0: (-1, 0), 1: (0, 1), 2: (1, 0), 3: (0, -1)}\n    \n    for move in moves:\n        dr, dc = dirs[move]\n        r = (r + dr) % H\n        c = (c + dc) % W\n        total_sum += grid[r, c]\n        \n    return np.array([total_sum], dtype=np.float64)\n```",
+      "request_id": "chatcmpl-90beb760578e47c2",
+      "finish_reason": "stop",
+      "usage": {
+        "input_tokens": 121,
+        "output_tokens": 897
+      },
+      "seconds": 7.548763885046355
+    },
+    {
+      "id": "behavior-H1",
+      "public_answer": "```python\nimport numpy as np\n\ndef solve(times, values):\n    t = np.asarray(times)\n    v = np.asarray(values)\n    return (np.diff(v) / np.diff(t)).astype(np.float64)\n```",
+      "request_id": "chatcmpl-c776c5d5d5704266",
+      "finish_reason": "stop",
+      "usage": {
+        "input_tokens": 118,
+        "output_tokens": 862
+      },
+      "seconds": 7.71443705202546
+    },
+    {
+      "id": "behavior-G1",
+      "public_answer": "```python\nimport numpy as np\n\ndef solve(changes, start, lower, upper):\n    balances = np.cumsum(np.insert(changes, 0, start))\n    result = np.all((balances >= lower) & (balances <= upper))\n    return np.array([1.0 if result else 0.0], dtype=np.float64)\n```",
+      "request_id": "chatcmpl-e84c9a705b854ba8",
+      "finish_reason": "stop",
+      "usage": {
+        "input_tokens": 111,
+        "output_tokens": 993
+      },
+      "seconds": 8.107492497074418
+    },
+    {
+      "id": "behavior-A2",
+      "public_answer": "```python\nimport numpy as np\n\ndef solve(A, b, c):\n    A = np.asarray(A, dtype=np.float64)\n    # Stack b and c to form a right-hand side matrix of shape (B, n, 2)\n    rhs = np.stack([b, c], axis=-1).astype(np.float64)\n    # Solve the batch of systems AX = RHS\n    return np.linalg.solve(A, rhs)\n```",
+      "request_id": "chatcmpl-58515a29bdb348ee",
+      "finish_reason": "stop",
+      "usage": {
+        "input_tokens": 108,
+        "output_tokens": 965
+      },
+      "seconds": 8.973021066980436
+    },
+    {
+      "id": "behavior-G2",
+      "public_answer": "```python\nimport numpy as np\n\ndef solve(bounds, step):\n    bounds = np.asarray(bounds)\n    T = bounds.shape[0]\n    \n    # L and H represent the range of possible values for the current element\n    # in a valid sequence that could have been constructed up to this point.\n    L = bounds[0, 0]\n    H = bounds[0, 1]\n    \n    for i in range(1, T):\n        # The possible values at step i must be within [low_i, high_i]\n        # AND must be reachable from the range [L, H] at step i-1.\n        # Reachability means value v is such that there exists u in [L, H] \n        # with |v - u| <= step, which implies v is in [L - step, H + step].\n        L = max(bounds[i, 0], L - step)\n        H = min(bounds[i, 1], H + step)\n        \n        if L > H:\n            return np.array([0], dtype=np.float64)\n            \n    return np.array([1], dtype=np.float64)\n```",
+      "request_id": "chatcmpl-a998de09d82348a6",
+      "finish_reason": "stop",
+      "usage": {
+        "input_tokens": 125,
+        "output_tokens": 1156
+      },
+      "seconds": 9.66578889102675
+    },
+    {
+      "id": "behavior-A1",
+      "public_answer": "```python\nimport numpy as np\n\ndef solve(A, b, s):\n    A = np.asanyarray(A)\n    b = np.asanyarray(b)\n    s = np.asanyarray(s)\n    \n    # Multiply each vector b[i] by scalar s[i]\n    # s[:, np.newaxis] has shape (B, 1), b has shape (B, n)\n    # rhs shape: (B, n)\n    rhs = s[:, np.newaxis] * b\n    \n    # Solve A[i]x[i] = rhs[i] for all i in batch B\n    # np.linalg.solve handles batched inputs (B, n, n) and (B, n)\n    x = np.linalg.solve(A, rhs)\n    \n    return x.astype(np.float64)\n```",
+      "request_id": "chatcmpl-82952e7be70040ab",
+      "finish_reason": "stop",
+      "usage": {
+        "input_tokens": 114,
+        "output_tokens": 1152
+      },
+      "seconds": 9.999870919971727
+    },
+    {
+      "id": "behavior-C2",
+      "public_answer": "```python\nimport numpy as np\n\ndef rotate_left(xs, k):\n    xs_arr = np.asanyarray(xs)\n    if xs_arr.size == 0:\n        return np.array([], dtype=np.float64)\n    return np.roll(xs_arr, -k).astype(np.float64)\n```",
+      "request_id": "chatcmpl-6bf5b17ef9df4dc5",
+      "finish_reason": "stop",
+      "usage": {
+        "input_tokens": 120,
+        "output_tokens": 1361
+      },
+      "seconds": 11.800214917981066
+    },
+    {
+      "id": "behavior-E2",
+      "public_answer": "```python\nimport numpy as np\n\ndef solve(points, height, width):\n    pts = np.asanyarray(points)\n    if pts.shape[0] == 0:\n        return np.empty((0, 2), dtype=np.float64)\n    \n    # Clockwise 90-degree rotation in a grid:\n    # new_row = old_col\n    # new_col = (old_height - 1) - old_row\n    res = np.empty((pts.shape[0], 2), dtype=np.float64)\n    res[:, 0] = pts[:, 1]\n    res[:, 1] = (height - 1) - pts[:, 0]\n    \n    return res\n```",
+      "request_id": "chatcmpl-0a041f8adb0f4513",
+      "finish_reason": "stop",
+      "usage": {
+        "input_tokens": 107,
+        "output_tokens": 1462
+      },
+      "seconds": 12.146145064965822
+    },
+    {
+      "id": "behavior-F1",
+      "public_answer": "```python\nimport numpy as np\n\ndef solve(xs):\n    xs_arr = np.asanyarray(xs)\n    res = np.sum(xs_arr[::2]) - np.sum(xs_arr[1::2])\n    return np.array([res], dtype=np.float64)\n```",
+      "request_id": "chatcmpl-66154ff6da6c4aff",
+      "finish_reason": "stop",
+      "usage": {
+        "input_tokens": 88,
+        "output_tokens": 1543
+      },
+      "seconds": 13.212371099973097
+    },
+    {
+      "id": "behavior-C1",
+      "public_answer": "```python\nimport numpy as np\n\ndef positive_mass(xs):\n    xs_arr = np.asarray(xs)\n    pos_sum = np.sum(xs_arr[xs_arr > 0], dtype=np.float64)\n    return np.array([pos_sum], dtype=np.float64)\n```",
+      "request_id": "chatcmpl-eb23f0bc93b24f2f",
+      "finish_reason": "stop",
+      "usage": {
+        "input_tokens": 109,
+        "output_tokens": 1659
+      },
+      "seconds": 14.811554699088447
+    },
+    {
+      "id": "behavior-B2",
+      "public_answer": "```python\nimport numpy as np\nimport sympy as sp\n\ndef solve(x, y, a):\n    x_arr = np.asarray(x, dtype=np.float64)\n    y_arr = np.asarray(y, dtype=np.float64)\n    \n    x_s, y_s, a_s = sp.symbols('x y a')\n    f = a_s * x_s * y_s + y_s**2\n    \n    df_dx_expr = sp.diff(f, x_s)\n    df_dy_expr = sp.diff(f, y_s)\n    \n    f_dx = sp.lambdify((a_s, x_s, y_s), df_dx_expr, 'numpy')\n    f_dy = sp.lambdify((a_s, x_s, y_s), df_dy_expr, 'numpy')\n    \n    val_dx = f_dx(a, x_arr, y_arr)\n    val_dy = f_dy(a, x_arr, y_arr)\n    \n    # Ensure outputs are numpy arrays (lambdify may return scalars for empty inputs)\n    val_dx = np.atleast_1d(val_dx).astype(np.float64)\n    val_dy = np.atleast_1d(val_dy).astype(np.float64)\n    \n    if len(x_arr) == 0:\n        return np.empty((0, 2), dtype=np.float64)\n    \n    return np.column_stack((val_dx, val_dy)).astype(np.float64)\n```",
+      "request_id": "chatcmpl-657053ef8f414e4f",
+      "finish_reason": "stop",
+      "usage": {
+        "input_tokens": 117,
+        "output_tokens": 2040
+      },
+      "seconds": 15.919850395061076
+    },
+    {
+      "id": "behavior-I1",
+      "public_answer": "```python\nimport numpy as np\n\ndef solve(labels):\n    labels = np.asanyarray(labels)\n    if labels.size == 0:\n        return np.array([-99.], dtype=np.float64)\n    \n    unique, counts = np.unique(labels, return_counts=True)\n    max_count = np.max(counts)\n    \n    if np.sum(counts == max_count) > 1:\n        return np.array([-99.], dtype=np.float64)\n    \n    best_label = unique[np.argmax(counts)]\n    return np.array([best_label], dtype=np.float64)\n```",
+      "request_id": "chatcmpl-dcd7bf8b142c4925",
+      "finish_reason": "stop",
+      "usage": {
+        "input_tokens": 105,
+        "output_tokens": 1445
+      },
+      "seconds": 11.54584875004366
+    },
+    {
+      "id": "behavior-J1",
+      "public_answer": "```python\nimport numpy as np\n\ndef solve(values, k):\n    arr = np.asarray(values)\n    if arr.size == 0:\n        return np.array([0], dtype=np.float64)\n    \n    result = np.sum(arr[::k])\n    return np.array([result], dtype=np.float64)\n```",
+      "request_id": "chatcmpl-badbc4d93b1d4d36",
+      "finish_reason": "stop",
+      "usage": {
+        "input_tokens": 99,
+        "output_tokens": 1728
+      },
+      "seconds": 13.037238670978695
+    },
+    {
+      "id": "behavior-I2",
+      "public_answer": "```python\nimport numpy as np\n\ndef solve(labels):\n    if len(labels) == 0:\n        return np.array([-88.0], dtype=np.float64)\n    \n    # Get unique labels and their corresponding frequencies\n    u, counts = np.unique(labels, return_counts=True)\n    \n    # Find distinct frequency values (np.unique returns them sorted ascending)\n    distinct_counts = np.unique(counts)\n    \n    # Check if there are at least two distinct frequencies\n    if len(distinct_counts) < 2:\n        return np.array([-88.0], dtype=np.float64)\n    \n    # The second largest distinct frequency is the second to last element in sorted distinct_counts\n    target_freq = distinct_counts[-2]\n    \n    # Identify labels that have this specific frequency\n    labels_with_freq = u[counts == target_freq]\n    \n    # Return the label if exactly one exists with that frequency, otherwise return -88\n    if len(labels_with_freq) != 1:\n        return np.array([-88.0], dtype=np.float64)\n    \n    return np.array([labels_with_freq[0]], dtype=np.float64)\n```",
+      "request_id": "chatcmpl-fcb8f8527b8a40cb",
+      "finish_reason": "stop",
+      "usage": {
+        "input_tokens": 111,
+        "output_tokens": 2340
+      },
+      "seconds": 17.374911843100563
+    },
+    {
+      "id": "behavior-B1",
+      "public_answer": "```python\nimport numpy as np\nimport sympy as sp\n\ndef solve(x, a):\n    t = sp.symbols('t')\n    f = a * t**2 + t\n    df = sp.diff(f, t)\n    func = sp.lambdify(t, df, 'numpy')\n    \n    # Evaluate the derivative. Lambdify may return a scalar if df is constant.\n    result = func(x)\n    \n    # Broadcast result to match the input shape (handles constants) and ensure float64.\n    return np.broadcast_to(result, np.shape(x)).astype(np.float64)\n```",
+      "request_id": "chatcmpl-c01b28d6fd7540b2",
+      "finish_reason": "stop",
+      "usage": {
+        "input_tokens": 106,
+        "output_tokens": 2834
+      },
+      "seconds": 23.44018379796762
+    }
+  ]
+}

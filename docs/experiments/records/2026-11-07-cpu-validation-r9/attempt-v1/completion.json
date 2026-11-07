@@ -1,0 +1,64 @@
+{
+  "started_epoch": 1794052699.698706,
+  "elapsed_seconds": 44.96113109588623,
+  "results": [
+    {
+      "name": "ruff",
+      "command": [
+        "nice",
+        "-n",
+        "15",
+        "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/infra/weight-tools-ci/bin/ruff",
+        "check",
+        "."
+      ],
+      "returncode": 0,
+      "elapsed_seconds": 0.05420231819152832,
+      "stdout_sha256": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "mypy",
+      "command": [
+        "nice",
+        "-n",
+        "15",
+        "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/infra/weight-tools-ci/bin/mypy",
+        "--ignore-missing-imports",
+        "src"
+      ],
+      "returncode": 0,
+      "elapsed_seconds": 0.23833656311035156,
+      "stdout_sha256": "4ef32b02733c640ba275e5de2c0f630d3ea2a6293bb124ad0dc2173d46e40541",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "unittest",
+      "command": [
+        "nice",
+        "-n",
+        "15",
+        "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/infra/weight-tools-ci/bin/python",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests",
+        "-v"
+      ],
+      "returncode": 1,
+      "elapsed_seconds": 44.64294910430908,
+      "stdout_sha256": "3668f670c9036c75e0f3119b76a597f9723d19491ece52d2add6907fa905bf9a",
+      "stderr_sha256": "b1781aee4e7f7c32a9983c4023c6a1a37722701859cf53ef973bd42424401834"
+    }
+  ],
+  "source_count_before": 278,
+  "source_count_after": 278,
+  "sources_unchanged": true,
+  "source_changes": [],
+  "success": false,
+  "GPU_model_service_operations": 0,
+  "full_suite_repetitions": 1,
+  "root_initial_ruff_290_errors_preserved": true,
+  "root_initial_unittest_and_mypy_not_started": true
+}

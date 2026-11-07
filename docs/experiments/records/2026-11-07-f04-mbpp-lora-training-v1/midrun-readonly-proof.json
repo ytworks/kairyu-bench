@@ -1,0 +1,74 @@
+{
+  "epoch": 1794057878.5443027,
+  "owner_pid": 1665207,
+  "owner_alive": true,
+  "global_lock": {
+    "pid": 1665207,
+    "uid": 1003,
+    "lock_identity": "09:02:181180584",
+    "lock_rows": [
+      [
+        "20:",
+        "FLOCK",
+        "ADVISORY",
+        "WRITE",
+        "1665207",
+        "09:02:181180584",
+        "0",
+        "EOF"
+      ]
+    ],
+    "observed_epoch": 1794057878.5606916
+  },
+  "validated_train_ids": 204,
+  "actual_frame_exact": true,
+  "actual_frame_rows": 204,
+  "all_source_pins_current": true,
+  "checkpoint9_stat_matched": true,
+  "protected26_exact": true,
+  "target_id": "07e1b17e7c84d8d178703417bb341c3313653eca7122aba1ad7b3d6d893d5abb",
+  "target_running": false,
+  "training_container": {
+    "id": "986b5d2dcde52a1754e4cddb0833f5f293eda20980c52aa095a7d3317841df39",
+    "image": "sha256:af9e746b913088cbf6c4464a31d6904a6b7e1d3ba62f0895362ddf13595f7abe",
+    "running": true,
+    "user": "1003:1003",
+    "network": "none",
+    "memory": 137438953472,
+    "devices": [
+      {
+        "Driver": "",
+        "Count": 0,
+        "DeviceIDs": [
+          "4"
+        ],
+        "Capabilities": [
+          [
+            "gpu"
+          ]
+        ],
+        "Options": {}
+      }
+    ],
+    "cpuset": "32-39",
+    "mounts": [
+      {
+        "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104",
+        "destination": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104",
+        "rw": false
+      },
+      {
+        "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f04-mbpp-lora-training-v1/work",
+        "destination": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f04-mbpp-lora-training-v1/work",
+        "rw": true
+      },
+      {
+        "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f04-mbpp-lora-training-v1/work/tmp",
+        "destination": "/tmp",
+        "rw": true
+      }
+    ]
+  },
+  "service_mutations_by_this_check": 0,
+  "model_calls_by_this_check": 0
+}

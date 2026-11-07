@@ -1,0 +1,352 @@
+{
+  "checkpoint": {
+    "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/checkpoints/fresh-native-contract-f03",
+    "files": [
+      {
+        "path": "chat_template.jinja",
+        "size": 18683,
+        "sha256": "ae53464bf3be25802b3a5b37def7fd89667067d7577049b3b2d74c4d8de4c6d4",
+        "stat": {
+          "device": 2306,
+          "inode": 182192243,
+          "mtime_ns": 1794044237787554020,
+          "ctime_ns": 1794044237787554020
+        }
+      },
+      {
+        "path": "config.json",
+        "size": 4621,
+        "sha256": "e967dd38bc5cfd38bd09a995a7bf4a754075df2b46aba68f7fbb5a791e6d8dd1",
+        "stat": {
+          "device": 2306,
+          "inode": 182192244,
+          "mtime_ns": 1794044237788553985,
+          "ctime_ns": 1794044237788553985
+        }
+      },
+      {
+        "path": "generation_config.json",
+        "size": 208,
+        "sha256": "d4226bbe3117d2d253ba4609720ba82c6c4ce4627a9a6ae05387c78983ac03de",
+        "stat": {
+          "device": 2306,
+          "inode": 182192245,
+          "mtime_ns": 1794044237788553985,
+          "ctime_ns": 1794044237788553985
+        }
+      },
+      {
+        "path": "model-00001-of-00002.safetensors",
+        "size": 49923154850,
+        "sha256": "48abfc21afab59b95aa9504d8848fd2dd6965ab3a04c9748af4a337bfe70112f",
+        "stat": {
+          "device": 2306,
+          "inode": 182192246,
+          "mtime_ns": 1794044335354204449,
+          "ctime_ns": 1794044335354204449
+        }
+      },
+      {
+        "path": "model-00002-of-00002.safetensors",
+        "size": 12623183414,
+        "sha256": "8110662f1c1c7386a23478e1e1d33259bc4f99b5d6f115780641dea04eb3a700",
+        "stat": {
+          "device": 2306,
+          "inode": 182192247,
+          "mtime_ns": 1794044335356204380,
+          "ctime_ns": 1794044335356204380
+        }
+      },
+      {
+        "path": "model.safetensors.index.json",
+        "size": 120246,
+        "sha256": "390b7f9a0a502e4526cf20862d22954c911cc318d8aba2cdb745c6fbd98264f6",
+        "stat": {
+          "device": 2306,
+          "inode": 182192248,
+          "mtime_ns": 1794044335281206954,
+          "ctime_ns": 1794044335281206954
+        }
+      },
+      {
+        "path": "processor_config.json",
+        "size": 1689,
+        "sha256": "32bdf45d2ad4cc29a0822ddd157a182de76644f0419a6228d151495256e9813c",
+        "stat": {
+          "device": 2306,
+          "inode": 182192249,
+          "mtime_ns": 1794044335282206920,
+          "ctime_ns": 1794044335282206920
+        }
+      },
+      {
+        "path": "tokenizer.json",
+        "size": 32169626,
+        "sha256": "cc8d3a0ce36466ccc1278bf987df5f71db1719b9ca6b4118264f45cb627bfe0f",
+        "stat": {
+          "device": 2306,
+          "inode": 182192250,
+          "mtime_ns": 1794044335328205341,
+          "ctime_ns": 1794044335328205341
+        }
+      },
+      {
+        "path": "tokenizer_config.json",
+        "size": 3082,
+        "sha256": "9f4fec4b1dc6ecddf8f4a92e9caea5971c0e67d81309f3f9066a2bee8c362633",
+        "stat": {
+          "device": 2306,
+          "inode": 182192251,
+          "mtime_ns": 1794044335350204586,
+          "ctime_ns": 1794044335350204586
+        }
+      }
+    ],
+    "sha256": "504d0914e8f7d2a4e51a0888e5692e2d1a158b82d3a77b600810a14bf7e33b63",
+    "hash_files": true,
+    "identity_level": "content_sha256",
+    "input_scope": "indexed_checkpoint",
+    "complete_model_claimed": false,
+    "configuration_names_considered": [
+      "config.json",
+      "generation_config.json",
+      "tokenizer_config.json",
+      "tokenizer.json",
+      "special_tokens_map.json",
+      "chat_template.jinja",
+      "processor_config.json",
+      "preprocessor_config.json",
+      "tokenizer.model",
+      "spiece.model",
+      "vocab.json",
+      "merges.txt",
+      "added_tokens.json"
+    ],
+    "scope": "all referenced shards, index, and recognized configuration/tokenizer files",
+    "source_stable": true
+  },
+  "derivation": "Fresh editor verify candidate SHA bound to identical full Checkpoint.identity(hash_files=False) before/after verify; canonical Checkpoint tree serialization; no duplicate candidate payload hash.",
+  "verify": {
+    "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f03-native-v1/materialization/verify.json",
+    "sha256": "616806dc095ebecb04ac10d4514ec6c73f9bbd53d3f572d1ef704452320062c4"
+  },
+  "manifest": {
+    "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f03-native-v1/materialization/edit-manifest.json",
+    "sha256": "44afb922c0b8df5ca20d8c9bf02f4640868177dc322a9b7b3667c160482e92e6"
+  },
+  "candidate_full_stat": {
+    "chat_template.jinja": {
+      "dev": 2306,
+      "inode": 182192243,
+      "size": 18683,
+      "mtime_ns": 1794044237787554020,
+      "ctime_ns": 1794044237787554020,
+      "mode": 33204,
+      "uid": 1003,
+      "gid": 1003,
+      "nlink": 1
+    },
+    "config.json": {
+      "dev": 2306,
+      "inode": 182192244,
+      "size": 4621,
+      "mtime_ns": 1794044237788553985,
+      "ctime_ns": 1794044237788553985,
+      "mode": 33204,
+      "uid": 1003,
+      "gid": 1003,
+      "nlink": 1
+    },
+    "generation_config.json": {
+      "dev": 2306,
+      "inode": 182192245,
+      "size": 208,
+      "mtime_ns": 1794044237788553985,
+      "ctime_ns": 1794044237788553985,
+      "mode": 33204,
+      "uid": 1003,
+      "gid": 1003,
+      "nlink": 1
+    },
+    "model-00001-of-00002.safetensors": {
+      "dev": 2306,
+      "inode": 182192246,
+      "size": 49923154850,
+      "mtime_ns": 1794044335354204449,
+      "ctime_ns": 1794044335354204449,
+      "mode": 33204,
+      "uid": 1003,
+      "gid": 1003,
+      "nlink": 1
+    },
+    "model-00002-of-00002.safetensors": {
+      "dev": 2306,
+      "inode": 182192247,
+      "size": 12623183414,
+      "mtime_ns": 1794044335356204380,
+      "ctime_ns": 1794044335356204380,
+      "mode": 33204,
+      "uid": 1003,
+      "gid": 1003,
+      "nlink": 1
+    },
+    "model.safetensors.index.json": {
+      "dev": 2306,
+      "inode": 182192248,
+      "size": 120246,
+      "mtime_ns": 1794044335281206954,
+      "ctime_ns": 1794044335281206954,
+      "mode": 33204,
+      "uid": 1003,
+      "gid": 1003,
+      "nlink": 1
+    },
+    "processor_config.json": {
+      "dev": 2306,
+      "inode": 182192249,
+      "size": 1689,
+      "mtime_ns": 1794044335282206920,
+      "ctime_ns": 1794044335282206920,
+      "mode": 33204,
+      "uid": 1003,
+      "gid": 1003,
+      "nlink": 1
+    },
+    "tokenizer.json": {
+      "dev": 2306,
+      "inode": 182192250,
+      "size": 32169626,
+      "mtime_ns": 1794044335328205341,
+      "ctime_ns": 1794044335328205341,
+      "mode": 33204,
+      "uid": 1003,
+      "gid": 1003,
+      "nlink": 1
+    },
+    "tokenizer_config.json": {
+      "dev": 2306,
+      "inode": 182192251,
+      "size": 3082,
+      "mtime_ns": 1794044335350204586,
+      "ctime_ns": 1794044335350204586,
+      "mode": 33204,
+      "uid": 1003,
+      "gid": 1003,
+      "nlink": 1
+    }
+  },
+  "source_full_stat": {
+    "chat_template.jinja": {
+      "dev": 2306,
+      "inode": 181678464,
+      "size": 18683,
+      "mtime_ns": 1794014158733915132,
+      "ctime_ns": 1794014158733915132,
+      "mode": 33152,
+      "uid": 1003,
+      "gid": 1003,
+      "nlink": 1
+    },
+    "config.json": {
+      "dev": 2306,
+      "inode": 181678465,
+      "size": 4621,
+      "mtime_ns": 1794014158734915095,
+      "ctime_ns": 1794014158734915095,
+      "mode": 33152,
+      "uid": 1003,
+      "gid": 1003,
+      "nlink": 1
+    },
+    "generation_config.json": {
+      "dev": 2306,
+      "inode": 181678466,
+      "size": 208,
+      "mtime_ns": 1794014158734915095,
+      "ctime_ns": 1794014158734915095,
+      "mode": 33152,
+      "uid": 1003,
+      "gid": 1003,
+      "nlink": 1
+    },
+    "model-00001-of-00002.safetensors": {
+      "dev": 2306,
+      "inode": 181678467,
+      "size": 49923154850,
+      "mtime_ns": 1794014260450139654,
+      "ctime_ns": 1794014260450139654,
+      "mode": 33152,
+      "uid": 1003,
+      "gid": 1003,
+      "nlink": 1
+    },
+    "model-00002-of-00002.safetensors": {
+      "dev": 2306,
+      "inode": 181678468,
+      "size": 12623183414,
+      "mtime_ns": 1794014261005119199,
+      "ctime_ns": 1794014261005119199,
+      "mode": 33152,
+      "uid": 1003,
+      "gid": 1003,
+      "nlink": 1
+    },
+    "model.safetensors.index.json": {
+      "dev": 2306,
+      "inode": 181678469,
+      "size": 120246,
+      "mtime_ns": 1794014259954157935,
+      "ctime_ns": 1794014259954157935,
+      "mode": 33152,
+      "uid": 1003,
+      "gid": 1003,
+      "nlink": 1
+    },
+    "processor_config.json": {
+      "dev": 2306,
+      "inode": 181678470,
+      "size": 1689,
+      "mtime_ns": 1794014259954157935,
+      "ctime_ns": 1794014259954157935,
+      "mode": 33152,
+      "uid": 1003,
+      "gid": 1003,
+      "nlink": 1
+    },
+    "tokenizer.json": {
+      "dev": 2306,
+      "inode": 181678471,
+      "size": 32169626,
+      "mtime_ns": 1794014259991156571,
+      "ctime_ns": 1794014259991156571,
+      "mode": 33152,
+      "uid": 1003,
+      "gid": 1003,
+      "nlink": 1
+    },
+    "tokenizer_config.json": {
+      "dev": 2306,
+      "inode": 181678472,
+      "size": 3082,
+      "mtime_ns": 1794014260013155760,
+      "ctime_ns": 1794014260013155760,
+      "mode": 33152,
+      "uid": 1003,
+      "gid": 1003,
+      "nlink": 1
+    }
+  },
+  "source_tree_sha256": "5d056eb03f954db80313a85167153c875fe5e436e4f97c281a3f55202d9b3eaf",
+  "candidate_stat_unchanged_across_verify": true,
+  "extra_payload_hash_pass": false,
+  "spec_sha256": "e10018748de2795a8af03b98abb6e18362393a152c74f46b7a7892fe4975e878",
+  "source_sha256": {
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f03-native-v1/materialization/source/src/kairyu_bench/__init__.py": "adb3e3c453270cc36bdfe5b78fb4b3543eeb8b1bc8de356847e8580086be0709",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f03-native-v1/materialization/source/src/kairyu_bench/wsp/__init__.py": "066441d666206cec6fe79218c4b94f84b75481769261f88d8092a28bfc2f1927",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f03-native-v1/materialization/source/src/kairyu_bench/wsp/weights/__init__.py": "84407e8a57e31b915d5ba936a309457422b3b6c347fde2056f1dd492ad511cca",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f03-native-v1/materialization/source/src/kairyu_bench/wsp/weights/checkpoint.py": "898297c05e7179cdc4568d6f290b978073bcebafea804ac043b54030e8205bf9",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f03-native-v1/materialization/source/src/kairyu_bench/wsp/weights/editor.py": "0983580f41989c26e84c16c26924f2850dd4e5d3d12917bb9553d7feb92333d2",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f03-native-v1/materialization/source/fresh-f03-materialize-20261107.py": "0b5ff541dabfbdc5e7fbd591b0f4389eb923cc33ba22b69fb4a33ec5b27e9f69"
+  },
+  "created_epoch": 1794044607.3166435
+}

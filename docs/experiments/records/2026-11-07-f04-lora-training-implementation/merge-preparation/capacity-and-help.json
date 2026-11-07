@@ -1,0 +1,103 @@
+{
+  "epoch": 1794057713.8826947,
+  "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/checkpoints/fresh-native-relative-f04-faststore-v1/checkpoint",
+  "checkpoint_files": [
+    {
+      "path": "chat_template.jinja",
+      "size": 18683,
+      "inode": 182193236,
+      "device": 2306,
+      "nlink": 1,
+      "mtime_ns": 1794050350349847250,
+      "ctime_ns": 1794050350349847250
+    },
+    {
+      "path": "config.json",
+      "size": 4621,
+      "inode": 182193237,
+      "device": 2306,
+      "nlink": 1,
+      "mtime_ns": 1794050350349847250,
+      "ctime_ns": 1794050350349847250
+    },
+    {
+      "path": "generation_config.json",
+      "size": 208,
+      "inode": 182193238,
+      "device": 2306,
+      "nlink": 1,
+      "mtime_ns": 1794050350350847215,
+      "ctime_ns": 1794050350350847215
+    },
+    {
+      "path": "model.safetensors.index.json",
+      "size": 103577,
+      "inode": 182193239,
+      "device": 2306,
+      "nlink": 1,
+      "mtime_ns": 1794050350350847215,
+      "ctime_ns": 1794050350350847215
+    },
+    {
+      "path": "native.safetensors",
+      "size": 2714560,
+      "inode": 182193240,
+      "device": 2306,
+      "nlink": 1,
+      "mtime_ns": 1794050350572839477,
+      "ctime_ns": 1794050350572839477
+    },
+    {
+      "path": "processor_config.json",
+      "size": 1689,
+      "inode": 182193241,
+      "device": 2306,
+      "nlink": 1,
+      "mtime_ns": 1794050350361846832,
+      "ctime_ns": 1794050350361846832
+    },
+    {
+      "path": "shared.safetensors",
+      "size": 62543620336,
+      "inode": 182192842,
+      "device": 2306,
+      "nlink": 17,
+      "mtime_ns": 1794050230365028683,
+      "ctime_ns": 1794050243644565979
+    },
+    {
+      "path": "tokenizer.json",
+      "size": 32169626,
+      "inode": 182193242,
+      "device": 2306,
+      "nlink": 1,
+      "mtime_ns": 1794050350405845298,
+      "ctime_ns": 1794050350405845298
+    },
+    {
+      "path": "tokenizer_config.json",
+      "size": 3082,
+      "inode": 182193243,
+      "device": 2306,
+      "nlink": 1,
+      "mtime_ns": 1794050350569839582,
+      "ctime_ns": 1794050350569839582
+    }
+  ],
+  "private_candidate_copy_bytes": 62578636382,
+  "reserve_bytes": 5368709120,
+  "creator_additional_headroom_bytes": 67108864,
+  "create_minimum_free_bytes": 68014454366,
+  "free_now_bytes": 69282676736,
+  "headroom_before_future_exports_bytes": 1268222370,
+  "future_pilot_plus_final_F32factor_bytes_nominal": 489717760,
+  "source_sha256": {
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/worktrees/kairyu-bench-weight-tools/scripts/experiments/gemma4_lora/dense_lora_recipe.py": "5c06f59a2734f94a2e50310392a7959e9b8f73f012f0cef646df13bf79dae84c",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/worktrees/kairyu-bench-weight-tools/scripts/experiments/gemma4_lora/bf16_lora_ops.py": "bee2cddfd07e2a7a388962349954837437889976f6009b9bf7304c8cf3b61d45",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/worktrees/kairyu-bench-weight-tools/scripts/experiments/gemma4_lora/bf16_lora_kernel.cpp": "84f7bad1c27e4585ec5417535e7e33d50e6d46741981b649c00428e21b406165",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/runtime/bf16_lora_kernel.so": "7796c76da941982bf442de539883e58436d101a64929d2488f2817f0da0af18f"
+  },
+  "actual_merge_or_checkpoint_creation": false,
+  "payload_bytes_hashed": 0,
+  "prior_connection_failure": "First invocation had a mistyped SSH host, failed DNS before any remote command; this is its first actual run."
+}

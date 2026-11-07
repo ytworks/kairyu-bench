@@ -1,0 +1,12 @@
+{
+  "status": "unnecessary_help_build_cancelled",
+  "epoch": 1794046809.4649901,
+  "trigger": "./kairyu-bench wsp compare --help without KAIRYU_BENCH_RUNNER_IMAGE_ID",
+  "processes": [],
+  "action": "already_exited",
+  "remaining_verified_pids": [],
+  "fixed_benchmark_image_unchanged": "sha256:f91bdcf997af6d7b194bec229812fd018277158f6795de7d91e58448936e7ad8",
+  "model_calls": 0,
+  "service_operations": 0,
+  "remediation": "Use existing CPU CLI module or pinned image; never default wrapper for offline help."
+}

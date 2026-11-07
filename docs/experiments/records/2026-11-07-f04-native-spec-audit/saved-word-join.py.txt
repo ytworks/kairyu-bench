@@ -1,0 +1,56 @@
+from pathlib import Path
+import hashlib,importlib.util,json,sys,time
+import numpy as np
+R=Path("/mnt/nvme/kairyu/wsp/gemma4-coding-20261104")
+B=R/"worktrees/kairyu-bench-weight-tools"
+P=R/"analysis/fresh-purpose-20261107-f04-relative-v1"
+O=P/"static-native-audit-v1"
+sys.path.insert(0,str(B/"src"))
+from kairyu_bench.wsp.weights.checkpoint import Checkpoint
+sha=lambda p: hashlib.sha256(Path(p).read_bytes()).hexdigest()
+script=B/"scripts/experiments/gemma4-purpose/native_spec_audit.py"
+module=importlib.util.spec_from_file_location("audit",script)
+a=importlib.util.module_from_spec(module);module.loader.exec_module(a)
+started=time.monotonic()
+plan=json.loads((P/"proposal-plan.json").read_text())
+specpath=P/"proposal/fresh-native-relative-f04.json"
+spec=json.loads(specpath.read_text())
+mp=R/"checkpoints/fresh-native-relative-f04-faststore-v1/manifest.json"
+assert sha(mp)=="fd189cf276a1219ad627186d2dfb4a895c79768821f247a0b33d9abd8953d8c1"
+m=json.loads(mp.read_text())
+vp=P/"faststore-plan-v1/materialization-v1/verify.stdout"
+assert sha(vp)=="a7237a2b82d68e64467c791c3781a86b8b216f584272ef5db77c956383c4b0cd"
+assert json.loads(vp.read_text())["verified"]
+cp=Checkpoint(m["checkpoint_path"])
+def inventory():
+ result={}
+ for p in sorted(cp.path.rglob("*")):
+  if p.is_file():
+   s=p.lstat();result[str(p.relative_to(cp.path))]={"device":s.st_dev,"inode":s.st_ino,"size":s.st_size,"mtime_ns":s.st_mtime_ns,"ctime_ns":s.st_ctime_ns,"uid":s.st_uid,"gid":s.st_gid,"mode":s.st_mode,"nlink":s.st_nlink}
+ return result
+assert inventory()==m["candidate_inventory_stat"]
+source=Path(plan["collections"]["correct-logprob"])/"source-native-values.npz"
+report=json.loads((P/"proposal/report.json").read_text())
+assert sha(source)==report["source_sha256"][str(source)]
+edits={e["tensor"]:e for e in spec["edits"]}
+rows=[];excess=[];payload=0
+with np.load(source,allow_pickle=False)as arrays:
+ for v in m["native_manifest"]["edits"]:
+  n=v["tensor"];base=np.asarray(arrays[n],dtype=np.float32).reshape(-1)
+  target=a.apply_edit(base,edits.pop(n))
+  words=lambda x: (x.view(np.uint32)>>16).astype("<u2").tobytes()
+  before=bytes.fromhex(v["before_hex"]);after=bytes.fromhex(v["after_hex"])
+  assert words(base)==before and words(target)==after
+  saved=cp.read_raw(n);payload+=len(saved);assert saved==after
+  assert cp.tensors[n].dtype=="BF16" and list(cp.tensors[n].shape)==v["shape"]
+  delta=target.astype(np.float64)-base.astype(np.float64)
+  changed=np.flatnonzero(delta).tolist();assert changed==v["changed_indices"] and len(changed)==v["changed_count"]
+  radius=np.maximum(np.abs(base.astype(np.float64))*.01,1e-6)
+  for i in np.flatnonzero(np.abs(delta)>radius):
+   excess.append(dict(tensor=n,index=int(i),before=float(base[i]),after=float(target[i]),delta=float(delta[i]),continuous_radius=float(radius[i]),actual_to_box_ratio=float(abs(delta[i])/radius[i])))
+  rows.append(dict(tensor=n,shape=v["shape"],dtype="BF16",changed_count=len(changed),before_hex_matches_source=True,after_hex_matches_exact_spec=True,saved_native_raw_matches_after_hex=True,source_words_sha256=hashlib.sha256(before).hexdigest(),saved_words_sha256=hashlib.sha256(saved).hexdigest()))
+assert not edits and len(rows)==140 and sum(r["changed_count"]for r in rows)==429 and len(excess)==8
+cp.assert_stable();assert inventory()==m["candidate_inventory_stat"]
+result=dict(status="all140_saved_native_tensors_match_manifest_and_exact_spec",changed_elements=429,changed_tensors=140,payload_bytes_read=payload,payload_scope="Only the 140 edited tensor ranges in private native.safetensors; shared payload bytes read zero",shared_payload_bytes_read=0,full_payload_hash=False,all9stat_continuity=True,manifest_sha256=sha(mp),verify_sha256=sha(vp),spec_sha256=sha(specpath),source_values_sha256=sha(source),audit_source_sha256=sha(script),oneoff_source_sha256=sha(__file__),rows=rows,box_excess_coordinates=excess,seconds=time.monotonic()-started,model_calls=0,gpu_calls=0,checkpoint_writes=0,service_operations=0)
+(O/"saved-word-join.json").write_text(json.dumps(result,indent=2)+"\n")
+print(json.dumps({k:v for k,v in result.items()if k not in {"rows","box_excess_coordinates"}}))

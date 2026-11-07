@@ -1,0 +1,50 @@
+import gzip,hashlib,json,re,subprocess
+from pathlib import Path
+B=Path('/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/worktrees/kairyu-bench-weight-tools')
+P=B/'docs/experiments/records/2026-11-07-completed-records-packaging'
+a=json.loads((P/'audit.json').read_text())
+sha=lambda raw:hashlib.sha256(raw).hexdigest()
+names=set(a['initial_changed_files'])
+for row in a['packaged_files']:
+ d='docs/experiments/records/'+row['record_directory']+'/'
+ names.discard(d+row['original_name'])
+ names.update(d+x for x in (row['stored_name'],'SHA256SUMS.before-packaging','packaging-note.json'))
+names.add('docs/experiments/2026-11-07-completed-records-packaging.md')
+names.update(str(p.relative_to(B)) for p in P.iterdir() if p.is_file())
+checks=[];bad=[];secrets=[];json_count=0;gz_count=0
+rules={'private_key':r'-----BEGIN (?:RSA |EC |OPENSSH )?PRIVATE KEY-----','github_pat':r'\b(?:gh[pousr]_[A-Za-z0-9]{30,}|github_pat_[A-Za-z0-9_]{40,})\b','hf_token':r'\bhf_[A-Za-z0-9]{28,}\b','anthropic_token':r'\bsk-ant-[A-Za-z0-9_-]{20,}\b','openai_token':r'\bsk-(?:proj-|svcacct-)?[A-Za-z0-9_-]{32,}\b','aws_access':r'\b(?:AKIA|ASIA)[A-Z0-9]{16}\b','credential_url':r'https?://[^/\s:@]+:[^@\s/]+@'}
+for name in sorted(names):
+ assert 'f03' not in name.lower()
+ p=B/name;raw=p.read_bytes()
+ text=gzip.decompress(raw).decode() if name.endswith('.gz') else raw.decode()
+ if name.endswith('.gz'):gz_count+=1
+ for rule,pat in rules.items():
+  if re.search(pat,text):secrets.append({'path':name,'rule':rule})
+ if not name.endswith('.gz'):
+  bad.extend({'path':name,'line':i} for i,line in enumerate(text.splitlines(),1) if line.rstrip(' \t')!=line)
+ if name.endswith('.json') or name.endswith('.json.gz'):
+  json.loads(text,parse_constant=lambda value:(_ for _ in ()).throw(ValueError('nonfinite JSON')))
+  json_count+=1
+ if p.name=='SHA256SUMS':
+  for line in text.splitlines():
+   digest,rel=line.split(None,1);f=p.parent/rel.strip()
+   checks.append({'file':str(f.relative_to(B)),'matched':f.is_file() and sha(f.read_bytes())==digest})
+assert not bad and not secrets
+assert all(x['matched'] for x in checks)
+diff=subprocess.run(['git','diff','--check'],cwd=B,capture_output=True,text=True)
+assert diff.returncode==0
+protected=[]
+for name,digest in a['initial_hashes'].items():
+ if name in {str(Path('docs/experiments/records')/x['record_directory']/x['original_name']) for x in a['packaged_files']}:continue
+ if Path(name).name=='SHA256SUMS' and Path(name).parent.name in {x['record_directory'] for x in a['packaged_files']}:continue
+ assert sha((B/name).read_bytes())==digest
+ protected.append(name)
+record={'status':'completed','records_checksum_entries':len(checks),'all_records_checksums_match':True,'checked_files':len(names),'valid_json_files':json_count,'gzip_roundtrips_read':gz_count,'secret_signature_matches':[],'trailing_whitespace':[],'git_diff_check_returncode':diff.returncode,'untouched_original_files':len(protected),'finished_file_list':'commit-candidate-files.txt','checks':checks,'risks':['Signature scan does not prove absence of arbitrary encoded secrets','Finite owner/dependency code has focused CPU evidence; r7 predates these changes','No actual finite candidate/GPU execution claim','PR existing-body SHA is historical; re-fetch before PATCH','F02 payload release remains unperformed','F03 excluded; concurrent work must be committed separately']}
+with (P/'validation.json').open('x') as f:json.dump(record,f,indent=2,allow_nan=False);f.write('\n')
+names.update(str(p.relative_to(B)) for p in P.iterdir() if p.is_file())
+names.update(str((P/x).relative_to(B)) for x in ('commit-candidate-files.txt','SHA256SUMS'))
+with (P/'commit-candidate-files.txt').open('x') as f:f.write('\n'.join(sorted(names))+'\n')
+with (P/'SHA256SUMS').open('x') as f:
+ for p in sorted(P.iterdir()):
+  if p.is_file() and p.name!='SHA256SUMS':f.write(sha(p.read_bytes())+'  '+p.name+'\n')
+print(json.dumps({'files_for_commit':len(names),'checksum_entries':len(checks),'valid_json_files':json_count,'gzip_reads':gz_count,'untouched_original_files':len(protected),'validation_sha256':sha((P/'validation.json').read_bytes()),'file_list_sha256':sha((P/'commit-candidate-files.txt').read_bytes()),'package_manifest_sha256':sha((P/'SHA256SUMS').read_bytes())}))

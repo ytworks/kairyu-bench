@@ -1,0 +1,965 @@
+{
+  "schema_version": 2,
+  "frame_protocol": "gemma4-public-answer-v2-forced-empty-thought",
+  "template_sha256": "ae53464bf3be25802b3a5b37def7fd89667067d7577049b3b2d74c4d8de4c6d4",
+  "enable_thinking": true,
+  "forced_empty_thought": true,
+  "public_boundary": "<|channel>thought\n<channel|>",
+  "scope": "official ON generation prefix plus explicit OFF-template empty-thought boundary; only public answer tokens scored, closing-turn tokens excluded; no thought read, generated, or scored; not free-thinking ON generation",
+  "frames": {
+    "code": [
+      [
+        {
+          "id": "guard_code_0_0",
+          "prefix_sha256": "21eebda893b0f7c547ed097861154840ca0baf505c4058b231eb705666c99cdc",
+          "prefix_tokens": 36,
+          "correct_tokens": 1,
+          "foil_tokens": 1
+        },
+        {
+          "id": "guard_code_0_1",
+          "prefix_sha256": "46e9ef5711de4ece66c5a8b5e46a2504e5a674b36238cf7265a86d60b6fd9c13",
+          "prefix_tokens": 37,
+          "correct_tokens": 1,
+          "foil_tokens": 1
+        },
+        {
+          "id": "guard_code_0_2",
+          "prefix_sha256": "a46507ed313194f2ab092d71cc3e62f9c56f9fce1fc4e9daa458fdf0e2f3b3a1",
+          "prefix_tokens": 34,
+          "correct_tokens": 1,
+          "foil_tokens": 1
+        },
+        {
+          "id": "guard_code_0_3",
+          "prefix_sha256": "1ed5c281297cdbe99a2fb884e0f4cfec8dd37dd8134c3f6953daa95fc0f07a5d",
+          "prefix_tokens": 32,
+          "correct_tokens": 1,
+          "foil_tokens": 1
+        },
+        {
+          "id": "guard_code_0_4",
+          "prefix_sha256": "8ec30e327f7d5c994ee04eade3de0b3c3fec7f631d2a8ad0cbedc77a6f1008b3",
+          "prefix_tokens": 33,
+          "correct_tokens": 1,
+          "foil_tokens": 1
+        }
+      ],
+      [
+        {
+          "id": "guard_code_1_0",
+          "prefix_sha256": "9757410657138c785418907ab5c4d3da2792c5fda25af99a369528636767f821",
+          "prefix_tokens": 30,
+          "correct_tokens": 1,
+          "foil_tokens": 1
+        },
+        {
+          "id": "guard_code_1_1",
+          "prefix_sha256": "6242d3bb483ddaf0e7b8831e9b7bea6f4caf412ef600331eff466813d22b3e69",
+          "prefix_tokens": 37,
+          "correct_tokens": 1,
+          "foil_tokens": 1
+        },
+        {
+          "id": "guard_code_1_2",
+          "prefix_sha256": "90667f17547e6c377396f0f09fb910fb440efd3ee1ca4db08cb3b060d98869fe",
+          "prefix_tokens": 32,
+          "correct_tokens": 1,
+          "foil_tokens": 1
+        },
+        {
+          "id": "guard_code_1_3",
+          "prefix_sha256": "9bce3fa5ebc168bc00a0a74299f1ff8cfd87206ece6fa9731266b95a1bccce5f",
+          "prefix_tokens": 34,
+          "correct_tokens": 1,
+          "foil_tokens": 1
+        },
+        {
+          "id": "guard_code_1_4",
+          "prefix_sha256": "62669e48d2b74b14dc2fb28f743f7e12c83e0d6377f18132ace76f2cdc5e7c57",
+          "prefix_tokens": 32,
+          "correct_tokens": 1,
+          "foil_tokens": 1
+        }
+      ]
+    ],
+    "implementation": [
+      [
+        {
+          "id": "painted_bins",
+          "prefix_sha256": "c0d41de070f14476737d5e510ecc249d3e1ff185a711853a26e74c5ce576081b",
+          "prefix_tokens": 58,
+          "correct_tokens": 30,
+          "foil_tokens": 30
+        },
+        {
+          "id": "advance_ticket",
+          "prefix_sha256": "8ae744034f7f469855e92d6c78ddde5e22cba94d7bc02b3e284279ac928adbd3",
+          "prefix_tokens": 54,
+          "correct_tokens": 67,
+          "foil_tokens": 67
+        },
+        {
+          "id": "whole_units",
+          "prefix_sha256": "5d5c81b14a36b28c1df065960500bffb8d459c00e8535d39241f3fcbeb644bb4",
+          "prefix_tokens": 55,
+          "correct_tokens": 46,
+          "foil_tokens": 45
+        },
+        {
+          "id": "call_and_close",
+          "prefix_sha256": "afeb65da328ee9f3c3940d5343bf45b6897e5e1be8a98dba01ff6652589db111",
+          "prefix_tokens": 48,
+          "correct_tokens": 32,
+          "foil_tokens": 29
+        }
+      ],
+      [
+        {
+          "id": "segment_count",
+          "prefix_sha256": "6f7c9b641d179f95872e65c93c5804c58f5b8993fc2913dc1f1d577022e6b557",
+          "prefix_tokens": 54,
+          "correct_tokens": 38,
+          "foil_tokens": 35
+        },
+        {
+          "id": "fetch_job",
+          "prefix_sha256": "8c3be1e0c8f2908e1cafcaf1fd999ccf3b23640177fbf8d1fa8c0363f6996bfd",
+          "prefix_tokens": 50,
+          "correct_tokens": 30,
+          "foil_tokens": 30
+        },
+        {
+          "id": "read_level",
+          "prefix_sha256": "1cf97f328cad13e76b856a13be0c9b60a13381c9a83e85cb6363d55cf8c04e0e",
+          "prefix_tokens": 56,
+          "correct_tokens": 39,
+          "foil_tokens": 37
+        },
+        {
+          "id": "write_if_acquired",
+          "prefix_sha256": "891438f75333b794ba2e099fcbde3c703217a7fc2039ae3b14d1452fc5828a90",
+          "prefix_tokens": 65,
+          "correct_tokens": 45,
+          "foil_tokens": 45
+        }
+      ]
+    ],
+    "workflow": [
+      [
+        {
+          "id": "commit_only_fix",
+          "prefix_sha256": "92b507ed89a867e2f4fd88061b22c6fbf504819aa2f21ceca89b25e39783a6a0",
+          "prefix_tokens": 64,
+          "correct_tokens": 24,
+          "foil_tokens": 22
+        },
+        {
+          "id": "validate_before_publish",
+          "prefix_sha256": "b4f2cc1a035971ddba3002864d3c60d31502a5d53ba5980e9afd3b1a3875b42b",
+          "prefix_tokens": 60,
+          "correct_tokens": 25,
+          "foil_tokens": 25
+        },
+        {
+          "id": "archive_only_revision",
+          "prefix_sha256": "f5eff41063826838ba19e44a7f7cca51000499ebe50aa2dcee81aba9c4aa403f",
+          "prefix_tokens": 48,
+          "correct_tokens": 19,
+          "foil_tokens": 19
+        }
+      ],
+      [
+        {
+          "id": "record_verified_rename",
+          "prefix_sha256": "1e11076c3c1564cfe3743c7f3dbbf48e45dfb56aa1e04ef5f8d01d5d6d5fed38",
+          "prefix_tokens": 49,
+          "correct_tokens": 25,
+          "foil_tokens": 24
+        },
+        {
+          "id": "discard_only_unstaged",
+          "prefix_sha256": "e1bdfd7cb28da7db837ee51e139903a974a4c26e91b39784a54804356f08ac94",
+          "prefix_tokens": 57,
+          "correct_tokens": 20,
+          "foil_tokens": 20
+        },
+        {
+          "id": "cleanup_and_preserve_status",
+          "prefix_sha256": "63acb821de8144842ee93dc1e0bc722335312dab52b50ed963bd5cb8687a864c",
+          "prefix_tokens": 51,
+          "correct_tokens": 20,
+          "foil_tokens": 16
+        }
+      ]
+    ],
+    "tool_call": [
+      [
+        {
+          "id": "requested_temperature_conversion",
+          "prefix_sha256": "1b3e5dda189394658a4d645d7b2a09e75ad4a49754e386a610d9e39800437827",
+          "prefix_tokens": 72,
+          "correct_tokens": 21,
+          "foil_tokens": 21
+        },
+        {
+          "id": "inventory_lookup_required",
+          "prefix_sha256": "26ec6345aa5644518c506770f73c513106c56eae7fa23df5f31c0888ffb0dd67",
+          "prefix_tokens": 69,
+          "correct_tokens": 23,
+          "foil_tokens": 16
+        }
+      ],
+      [
+        {
+          "id": "inspect_account_quota",
+          "prefix_sha256": "05fd93f82778d14abb4dcaf962b579361f8f7955084f3ba3e5f293b7e76d066c",
+          "prefix_tokens": 60,
+          "correct_tokens": 18,
+          "foil_tokens": 23
+        },
+        {
+          "id": "parcel_tracking_required",
+          "prefix_sha256": "1eb75062ea882f6ee19919b6b88176c3fb7e9b31f3ea59da80691eeb865e4b45",
+          "prefix_tokens": 56,
+          "correct_tokens": 16,
+          "foil_tokens": 14
+        }
+      ]
+    ],
+    "tool_no_call": [
+      [
+        {
+          "id": "missing_timer_duration",
+          "prefix_sha256": "3837d026e8c523e0476f77269cf92a1c81da2c467b128747b19144d565688eab",
+          "prefix_tokens": 68,
+          "correct_tokens": 16,
+          "foil_tokens": 18
+        },
+        {
+          "id": "answer_from_supplied_poster",
+          "prefix_sha256": "8513c55696464fb59c7595efe13a97b74b9c2f8a6542bf1938ab3a7d7788341c",
+          "prefix_tokens": 64,
+          "correct_tokens": 14,
+          "foil_tokens": 17
+        }
+      ],
+      [
+        {
+          "id": "missing_meeting_time",
+          "prefix_sha256": "a78f85e43ed6018688fdb9030db28a0b604a08e6e1100788620189c936ace65a",
+          "prefix_tokens": 68,
+          "correct_tokens": 19,
+          "foil_tokens": 26
+        },
+        {
+          "id": "answer_arithmetic_without_tool",
+          "prefix_sha256": "994a9d37ebce2fde1cb654fc74c159d1cfef609fe77008efbdcbc8c8082e4367",
+          "prefix_tokens": 66,
+          "correct_tokens": 13,
+          "foil_tokens": 21
+        }
+      ]
+    ],
+    "tool_arguments": [
+      [
+        {
+          "id": "preserve_false_smoothing",
+          "prefix_sha256": "2ddad1eb256a830987414d8ec7fff699a21a9ec0ba619507594f0e30c18df0e7",
+          "prefix_tokens": 61,
+          "correct_tokens": 26,
+          "foil_tokens": 22
+        },
+        {
+          "id": "preserve_sample_period",
+          "prefix_sha256": "e0560e618b625fab78a036f42d135deea1598482f06aae7860e5db966367c10e",
+          "prefix_tokens": 67,
+          "correct_tokens": 29,
+          "foil_tokens": 22
+        }
+      ],
+      [
+        {
+          "id": "preserve_label_prefix",
+          "prefix_sha256": "ee55df38044e1486253c2581f10bc9195f674e3024d190f26ffa660994dce327",
+          "prefix_tokens": 62,
+          "correct_tokens": 28,
+          "foil_tokens": 23
+        },
+        {
+          "id": "preserve_reserved_window_filter",
+          "prefix_sha256": "feb96f080acb47e604b9ed7565e80c45035013750e2e847803a64e805bf9eb2f",
+          "prefix_tokens": 67,
+          "correct_tokens": 27,
+          "foil_tokens": 21
+        }
+      ]
+    ],
+    "algorithm": [
+      [
+        {
+          "id": "gate_hops",
+          "prefix_sha256": "15b99f4d4dcb513ecb2f3d8f164147e6e558ea306cde03c29aeb21a1b78e9676",
+          "prefix_tokens": 83,
+          "correct_tokens": 141,
+          "foil_tokens": 133
+        },
+        {
+          "id": "cover_span",
+          "prefix_sha256": "b94bad9aee40e741a43f419ced58f365ff95543aa49d2665a84dc9635cc9b7f9",
+          "prefix_tokens": 67,
+          "correct_tokens": 189,
+          "foil_tokens": 191
+        },
+        {
+          "id": "best_schedule",
+          "prefix_sha256": "a155312f6bb8a57b5954b959c17304867dc17f29446b4b6fea8a610fbb492d7a",
+          "prefix_tokens": 62,
+          "correct_tokens": 115,
+          "foil_tokens": 115
+        },
+        {
+          "id": "best_indices",
+          "prefix_sha256": "f7a8f11c4b8c6fefb52c27aea47a4ddc64532601cce5c58808dbfb9ebc87df8b",
+          "prefix_tokens": 71,
+          "correct_tokens": 102,
+          "foil_tokens": 97
+        }
+      ],
+      [
+        {
+          "id": "min_toll",
+          "prefix_sha256": "3d0c60d574d6d097ce8c5870ddddd7d1b680b782c27b692759cb2dec97a92b39",
+          "prefix_tokens": 58,
+          "correct_tokens": 143,
+          "foil_tokens": 155
+        },
+        {
+          "id": "near_pairs",
+          "prefix_sha256": "b122134c85510c9e9ef04d829aad01be92db5534e7664ba7f72a47ecffa04581",
+          "prefix_tokens": 55,
+          "correct_tokens": 98,
+          "foil_tokens": 95
+        },
+        {
+          "id": "voucher_count",
+          "prefix_sha256": "61f1c70195e70372e0da48534b9445e09c95c90f1338b6f1299bf110d091b687",
+          "prefix_tokens": 58,
+          "correct_tokens": 96,
+          "foil_tokens": 93
+        },
+        {
+          "id": "solve_ledger",
+          "prefix_sha256": "2175f1fa1a0eeb7feba7ce7977a428d961372e1415150f5897216c7809d8ceae",
+          "prefix_tokens": 80,
+          "correct_tokens": 242,
+          "foil_tokens": 240
+        }
+      ]
+    ],
+    "referent": [
+      [
+        {
+          "id": "too_wide_hoop",
+          "prefix_sha256": "3ff7b3ef10fcc2fc5e09e2949d078319378813b2c0fd883bd63f27830550e11a",
+          "prefix_tokens": 56,
+          "correct_tokens": 14,
+          "foil_tokens": 14
+        },
+        {
+          "id": "rollable_cover",
+          "prefix_sha256": "224a8fcf763fde8243b44f056f13bf5f1d4db6d38ac1b67578f5d1af80770e24",
+          "prefix_tokens": 49,
+          "correct_tokens": 17,
+          "foil_tokens": 16
+        },
+        {
+          "id": "heat_protection",
+          "prefix_sha256": "81cfbea464374ee13c46891f6a1c69f06afed00144d26040f34625cadf39189d",
+          "prefix_tokens": 50,
+          "correct_tokens": 19,
+          "foil_tokens": 18
+        }
+      ],
+      [
+        {
+          "id": "too_narrow_passage",
+          "prefix_sha256": "136c01497afb740998a7b0f341fc720adc21b959e44cbf60120c07c9fb79f010",
+          "prefix_tokens": 54,
+          "correct_tokens": 15,
+          "foil_tokens": 15
+        },
+        {
+          "id": "loose_anchor",
+          "prefix_sha256": "23e6da65a548c871a19bf55bea86e9823cab376f8949123ba1620ad4e6f82ab2",
+          "prefix_tokens": 51,
+          "correct_tokens": 20,
+          "foil_tokens": 19
+        },
+        {
+          "id": "brittle_support",
+          "prefix_sha256": "4a056b6d5298bd5bf07e7536668cfab86294446e2c2631da181c59f5ce613993",
+          "prefix_tokens": 48,
+          "correct_tokens": 17,
+          "foil_tokens": 16
+        }
+      ]
+    ],
+    "fact_retention": [
+      [
+        {
+          "id": "spool_checkpoint",
+          "prefix_sha256": "e88a3c9ceb852b29bf51c9068d4ccba4651389ea54b3a8e4673c287c4ff9afda",
+          "prefix_tokens": 117,
+          "correct_tokens": 14,
+          "foil_tokens": 14
+        },
+        {
+          "id": "courier_checkpoint",
+          "prefix_sha256": "3dc011f0bc2db347eff2233182d2963be29c675cfd6cdb546c8675705f914f80",
+          "prefix_tokens": 112,
+          "correct_tokens": 14,
+          "foil_tokens": 13
+        },
+        {
+          "id": "room_checkpoint",
+          "prefix_sha256": "4d63904ef3006902d6ec09b5d42548f400475b7685a2f6c2e98b41bdc3acfccb",
+          "prefix_tokens": 117,
+          "correct_tokens": 14,
+          "foil_tokens": 14
+        }
+      ],
+      [
+        {
+          "id": "tool_checkpoint",
+          "prefix_sha256": "a7b9451422959c74b7965fe2fcf22703d91b1bb640cd0757bcc7c1be4537e510",
+          "prefix_tokens": 116,
+          "correct_tokens": 14,
+          "foil_tokens": 14
+        },
+        {
+          "id": "permit_checkpoint",
+          "prefix_sha256": "b8a1b7b3e8b2f20a8bf73c4c7b97e68e427c5b7d595d156a0e9e95acce8a5451",
+          "prefix_tokens": 115,
+          "correct_tokens": 13,
+          "foil_tokens": 14
+        },
+        {
+          "id": "stage_checkpoint",
+          "prefix_sha256": "25e4acb6bfce7ac3eb68fe86855b389b4b858f462a5024cb2fa10734dca03d1e",
+          "prefix_tokens": 110,
+          "correct_tokens": 13,
+          "foil_tokens": 13
+        }
+      ]
+    ],
+    "science_numerics": [
+      [
+        {
+          "id": "science-weighted-moments",
+          "prefix_sha256": "2488e27f28dfd40a04986886abbb2bb451328dfec2c8db250228238202079f8d",
+          "prefix_tokens": 98,
+          "correct_tokens": 100,
+          "foil_tokens": 97
+        },
+        {
+          "id": "science-periodic-laplacian",
+          "prefix_sha256": "99c0868d37f14f8c76672664ef6ae04718bbe0bfae41a7fe9a8e72b2c854141b",
+          "prefix_tokens": 94,
+          "correct_tokens": 64,
+          "foil_tokens": 60
+        },
+        {
+          "id": "science-ridge-intercept",
+          "prefix_sha256": "09c3e0900d267fca230fefe2ac5463af47d7cb293e821b215c35d69caa84f02e",
+          "prefix_tokens": 115,
+          "correct_tokens": 126,
+          "foil_tokens": 122
+        },
+        {
+          "id": "science-orthogonal-residual",
+          "prefix_sha256": "ed572c2dd61d6496e3072844b9bde7c77c5ca238df8171bf3dd691974e257e7e",
+          "prefix_tokens": 95,
+          "correct_tokens": 62,
+          "foil_tokens": 62
+        },
+        {
+          "id": "science-library-sparse-solve-fixed-boundary",
+          "prefix_sha256": "b463e6d164a268c7ec4b968ec62362c8955bc18fe25858de0637a5032f147f14",
+          "prefix_tokens": 120,
+          "correct_tokens": 143,
+          "foil_tokens": 133
+        },
+        {
+          "id": "science-library-spectral-contract-linear-convolution",
+          "prefix_sha256": "daeaa9ef6c65c1da813f482b5a28c075149ad0dbc59c6ee7c8a6fd69c36f8d92",
+          "prefix_tokens": 94,
+          "correct_tokens": 96,
+          "foil_tokens": 100
+        }
+      ],
+      [
+        {
+          "id": "science-cumulative-trapezoid",
+          "prefix_sha256": "6e8329ed88c1e4818b902cde9ee11b72a518f8b8f702e94fddd10e699d065fd4",
+          "prefix_tokens": 98,
+          "correct_tokens": 91,
+          "foil_tokens": 88
+        },
+        {
+          "id": "science-row-softmax",
+          "prefix_sha256": "ef060c51756ddefa9d6f21453c5a083e825a3ac326c1eeefcd281b5fb6eb73c0",
+          "prefix_tokens": 95,
+          "correct_tokens": 69,
+          "foil_tokens": 69
+        },
+        {
+          "id": "science-markov-row-state",
+          "prefix_sha256": "2b0e59e3fbc7d1b467c77113b6cf8139c82dac81cc0101c75adfa93864583b77",
+          "prefix_tokens": 98,
+          "correct_tokens": 64,
+          "foil_tokens": 64
+        },
+        {
+          "id": "science-weighted-density",
+          "prefix_sha256": "ee3ab690483832eecff9350704427e7e80bc82d230512f02702d753f83c77659",
+          "prefix_tokens": 124,
+          "correct_tokens": 104,
+          "foil_tokens": 98
+        },
+        {
+          "id": "science-library-sparse-solve-banded-factor",
+          "prefix_sha256": "26395b12c492c1c55d2f06c54b955e35745ab0b1227a53456790f00b48431815",
+          "prefix_tokens": 109,
+          "correct_tokens": 106,
+          "foil_tokens": 106
+        },
+        {
+          "id": "science-library-spectral-contract-periodic-correlation",
+          "prefix_sha256": "d941937d26fd9e6e64bac65da65a6e4baa94541bac21a227bc35c83b9c277405",
+          "prefix_tokens": 114,
+          "correct_tokens": 61,
+          "foil_tokens": 57
+        }
+      ]
+    ],
+    "science_contracts": [
+      [
+        {
+          "id": "science-sample-covariance",
+          "prefix_sha256": "37acdb58ae6c81a40c2b239f15b1280960c2bad5abc7b38ace13b4093d04a01f",
+          "prefix_tokens": 97,
+          "correct_tokens": 62,
+          "foil_tokens": 59
+        },
+        {
+          "id": "science-implicit-decay",
+          "prefix_sha256": "f86e7dd6f9b570b22e1e9d8cb6705c147647a57aa5674971e96975265cd8a24b",
+          "prefix_tokens": 101,
+          "correct_tokens": 44,
+          "foil_tokens": 44
+        },
+        {
+          "id": "science-velocity-verlet",
+          "prefix_sha256": "611930ca3d8a761e269ce95f4592d191689c408ee4e624f2d464d135c5cb940c",
+          "prefix_tokens": 128,
+          "correct_tokens": 105,
+          "foil_tokens": 105
+        },
+        {
+          "id": "science-piecewise-linear",
+          "prefix_sha256": "208059206d0d35caa2c38dbd134598b4d854b355202fd2eed3eca274c0e9a913",
+          "prefix_tokens": 101,
+          "correct_tokens": 82,
+          "foil_tokens": 90
+        },
+        {
+          "id": "science-library-symbolic-numeric-variable-order",
+          "prefix_sha256": "46df64424cc10a505d2b3706124b8fbc5e136586cd5c283af3f6a072a780ff37",
+          "prefix_tokens": 119,
+          "correct_tokens": 123,
+          "foil_tokens": 123
+        },
+        {
+          "id": "science-library-optimizer-feasibility-simplex-equality",
+          "prefix_sha256": "2ad140fec80aa539dea2f60dba92653dca618158734decba8994cfdc462f0a91",
+          "prefix_tokens": 101,
+          "correct_tokens": 143,
+          "foil_tokens": 146
+        }
+      ],
+      [
+        {
+          "id": "science-conservative-flux",
+          "prefix_sha256": "4905598897d57910d25051dc3f36b7245844ddea3f999045fbfcff60d3aab802",
+          "prefix_tokens": 124,
+          "correct_tokens": 77,
+          "foil_tokens": 76
+        },
+        {
+          "id": "science-merge-population-moments",
+          "prefix_sha256": "f6ebbf673549b4d950035df8719ed4c94d113c7d251c1e0d0c1b9f6acbae4e85",
+          "prefix_tokens": 110,
+          "correct_tokens": 149,
+          "foil_tokens": 137
+        },
+        {
+          "id": "science-segment-means",
+          "prefix_sha256": "166c6a89627bc777169ad2807b84b53f4abe504d4330b42be9c39ac11f40782e",
+          "prefix_tokens": 106,
+          "correct_tokens": 105,
+          "foil_tokens": 114
+        },
+        {
+          "id": "science-batched-linear-system",
+          "prefix_sha256": "7041ee8c9b12b15daa6dc20e75ff6a51fb9805e82005f26bf3ef24244ed06649",
+          "prefix_tokens": 102,
+          "correct_tokens": 68,
+          "foil_tokens": 79
+        },
+        {
+          "id": "science-library-symbolic-numeric-chain-coordinates",
+          "prefix_sha256": "8b9ce0b28fcc8b2da6b80a420091a699fc60e14bcf59e7415c188cc19d916462",
+          "prefix_tokens": 117,
+          "correct_tokens": 126,
+          "foil_tokens": 122
+        },
+        {
+          "id": "science-library-optimizer-feasibility-weighted-hyperplane",
+          "prefix_sha256": "b75c87146733a5f8301dfa6f08d01e758c91719492709de0fd4d921373d1f6ef",
+          "prefix_tokens": 106,
+          "correct_tokens": 117,
+          "foil_tokens": 123
+        }
+      ]
+    ],
+    "science_advanced_state": [
+      [
+        {
+          "id": "science-advanced-reset-running-stats",
+          "prefix_sha256": "d4b49f19696df6712ec9a3e10b955cad8701c77be107f97e227cd4d5814b2c27",
+          "prefix_tokens": 113,
+          "correct_tokens": 100,
+          "foil_tokens": 100
+        },
+        {
+          "id": "science-advanced-capped-reservoir-chain",
+          "prefix_sha256": "9f332507fcca810acf02011ba10369681dfd327789d55827a02a95a661b59432",
+          "prefix_tokens": 127,
+          "correct_tokens": 119,
+          "foil_tokens": 114
+        },
+        {
+          "id": "science-library-residual-jacobian-decay-fit",
+          "prefix_sha256": "56872931c15745c5075bbff65d9a470b1b47ce96eef288e5ac7c1cc6f5622671",
+          "prefix_tokens": 133,
+          "correct_tokens": 178,
+          "foil_tokens": 178
+        },
+        {
+          "id": "science-library-root-contract-implicit-sensitivity",
+          "prefix_sha256": "2837ebeb507b824fe8e2633bba9ef0521b3f06922db85e27612f6318b7862956",
+          "prefix_tokens": 114,
+          "correct_tokens": 91,
+          "foil_tokens": 89
+        }
+      ],
+      [
+        {
+          "id": "science-advanced-affine-state-history",
+          "prefix_sha256": "bcb732112aba7d675d2001840a528c581a884ab9eaad10ff71cac1f08f1472d7",
+          "prefix_tokens": 114,
+          "correct_tokens": 88,
+          "foil_tokens": 88
+        },
+        {
+          "id": "science-advanced-projected-gradient-chain",
+          "prefix_sha256": "c3bf120153159f08f8b8ddaadea20e9f4a1166cc18df097906d91426c961f2af",
+          "prefix_tokens": 125,
+          "correct_tokens": 102,
+          "foil_tokens": 102
+        },
+        {
+          "id": "science-library-residual-jacobian-weighted-affine",
+          "prefix_sha256": "9680768cb8796bdd36dee4f02a46662d635c87439a8f922dbf054440a6b79c0c",
+          "prefix_tokens": 102,
+          "correct_tokens": 137,
+          "foil_tokens": 132
+        },
+        {
+          "id": "science-library-root-contract-log-coordinate",
+          "prefix_sha256": "5639e7f4de004ed7c9856c909d9723026e3a79127395929437027aeb785fc535",
+          "prefix_tokens": 106,
+          "correct_tokens": 86,
+          "foil_tokens": 82
+        }
+      ]
+    ],
+    "science_advanced_counting": [
+      [
+        {
+          "id": "science-advanced-merge-event-multiplicity",
+          "prefix_sha256": "dda3800550d5234e62729d5aa3350f934e3537161af34c47af7722d4b096bf3b",
+          "prefix_tokens": 115,
+          "correct_tokens": 115,
+          "foil_tokens": 115
+        },
+        {
+          "id": "science-advanced-budget-prefix-cardinality",
+          "prefix_sha256": "21778af6c82a94e49cdd3fd6aa62d590862fad0d91e9cf0582e7d687c502e67a",
+          "prefix_tokens": 123,
+          "correct_tokens": 62,
+          "foil_tokens": 62
+        }
+      ],
+      [
+        {
+          "id": "science-advanced-lexicographic-pair-ranking",
+          "prefix_sha256": "6ebcb6e9c9a32142f5aff1794bc692ee08903d3d0df68ab38f203f0d05bae4fa",
+          "prefix_tokens": 131,
+          "correct_tokens": 118,
+          "foil_tokens": 118
+        },
+        {
+          "id": "science-advanced-weighted-lattice-cardinality",
+          "prefix_sha256": "24e10b8c599d73c719fb75c378e051848ba42653f649deb6dd2d10969a591557",
+          "prefix_tokens": 106,
+          "correct_tokens": 107,
+          "foil_tokens": 107
+        }
+      ]
+    ],
+    "science_advanced_simulation": [
+      [
+        {
+          "id": "science-advanced-gaussian-pair-energy-force",
+          "prefix_sha256": "2bf410f899ef0e0e0c3028a5d6ba81bbf148fd7765970e53a663c93954d8e46c",
+          "prefix_tokens": 131,
+          "correct_tokens": 104,
+          "foil_tokens": 104
+        },
+        {
+          "id": "science-advanced-reflecting-wall-flight",
+          "prefix_sha256": "d3553fad3abf4b9ae6963527009da49ab794e0b21ae328dd0a3c2c404a7e824e",
+          "prefix_tokens": 137,
+          "correct_tokens": 117,
+          "foil_tokens": 115
+        },
+        {
+          "id": "science-library-quadrature-callback-piecewise-moments",
+          "prefix_sha256": "fa7351e793d360dc8fd77152f6d30f84da6a8be30c5e9afcea53fb10b5fe3898",
+          "prefix_tokens": 104,
+          "correct_tokens": 126,
+          "foil_tokens": 124
+        }
+      ],
+      [
+        {
+          "id": "science-advanced-periodic-kick-drift",
+          "prefix_sha256": "8f2916d57b3b7e7c4a639d133ddc797f851132a4f16db03fd0bf00024f9684e8",
+          "prefix_tokens": 135,
+          "correct_tokens": 122,
+          "foil_tokens": 122
+        },
+        {
+          "id": "science-advanced-inelastic-two-body",
+          "prefix_sha256": "8c9ceaa4cb4e4135b44036f9d57e2a174941b6103af21ad900e7a7ec5812ef8e",
+          "prefix_tokens": 129,
+          "correct_tokens": 138,
+          "foil_tokens": 136
+        },
+        {
+          "id": "science-library-quadrature-callback-domain-transform",
+          "prefix_sha256": "b20d4e6516babbaf58b6848f4847fdbf53b01c37d92948d04c3ef9ef2e4ae4a0",
+          "prefix_tokens": 115,
+          "correct_tokens": 114,
+          "foil_tokens": 113
+        }
+      ]
+    ],
+    "science_advanced_probability": [
+      [
+        {
+          "id": "science-advanced-injected-metropolis-chain",
+          "prefix_sha256": "f913e9eb0821b5272616f1755e51cb156d455eef08837d71a963151aa9dc1e98",
+          "prefix_tokens": 139,
+          "correct_tokens": 115,
+          "foil_tokens": 115
+        },
+        {
+          "id": "science-advanced-piecewise-linear-density-cdf",
+          "prefix_sha256": "4932caa830eafc2c5c6bba6281125323f4f78e7039718a498023155dbe70299f",
+          "prefix_tokens": 112,
+          "correct_tokens": 180,
+          "foil_tokens": 178
+        },
+        {
+          "id": "science-library-distribution-interface-batched-logdensity",
+          "prefix_sha256": "d7a780cf5b3910b3aac04ef29f386c7a8c3f9631b343f7a2065b33cc92ff186d",
+          "prefix_tokens": 99,
+          "correct_tokens": 56,
+          "foil_tokens": 58
+        }
+      ],
+      [
+        {
+          "id": "science-advanced-categorical-without-replacement",
+          "prefix_sha256": "1289978765a6940e4b944ab082135fa350894205afe6b28f8e0e4cc5f7832048",
+          "prefix_tokens": 124,
+          "correct_tokens": 105,
+          "foil_tokens": 105
+        },
+        {
+          "id": "science-advanced-log-survival-event-masses",
+          "prefix_sha256": "f66836098f967a8fb052af9ad593678173e23672388b51997e6db2487e58608e",
+          "prefix_tokens": 115,
+          "correct_tokens": 79,
+          "foil_tokens": 80
+        },
+        {
+          "id": "science-library-distribution-interface-lognormal-moments",
+          "prefix_sha256": "77bc88df52034569a655a99ab8b952891eea29ae7667e073cad4f10151d355e9",
+          "prefix_tokens": 102,
+          "correct_tokens": 102,
+          "foil_tokens": 98
+        }
+      ]
+    ],
+    "science_helper_stage": [
+      [
+        {
+          "id": "chain-whitened-fit-1",
+          "prefix_sha256": "02fa0ac5c79cb7d70813edd9e1cf0bb4bcdfac41c301df029f84589b454cda9d",
+          "prefix_tokens": 106,
+          "correct_tokens": 35,
+          "foil_tokens": 31
+        },
+        {
+          "id": "chain-quadrature-mixture-1",
+          "prefix_sha256": "68b0566a71e6fd68c25455b8666cbd52a3083f96d58cc871a39ea2effcba527d",
+          "prefix_tokens": 88,
+          "correct_tokens": 30,
+          "foil_tokens": 31
+        }
+      ],
+      [
+        {
+          "id": "chain-boundary-response-1",
+          "prefix_sha256": "92279987aa1e818a52f6efa354ed8d3622d9d0413d931078f9be1357126bf102",
+          "prefix_tokens": 128,
+          "correct_tokens": 78,
+          "foil_tokens": 66
+        },
+        {
+          "id": "chain-log-mixture-score-1",
+          "prefix_sha256": "91b227794b1933de40dfe930a0335017556dd08704e00bf8a3308247f774289d",
+          "prefix_tokens": 95,
+          "correct_tokens": 51,
+          "foil_tokens": 50
+        }
+      ]
+    ],
+    "science_composition_stage": [
+      [
+        {
+          "id": "chain-whitened-fit-2",
+          "prefix_sha256": "94476eb7f77ad48f8e5e3f2956dfc85888cf718f920e7145ebb2fdaad21dd864",
+          "prefix_tokens": 143,
+          "correct_tokens": 74,
+          "foil_tokens": 73
+        },
+        {
+          "id": "chain-quadrature-mixture-2",
+          "prefix_sha256": "0c64b89ddab37622fbb6dd91cbfee1da306fca091376663131e52cda36f7a62d",
+          "prefix_tokens": 120,
+          "correct_tokens": 59,
+          "foil_tokens": 56
+        }
+      ],
+      [
+        {
+          "id": "chain-boundary-response-2",
+          "prefix_sha256": "8ed67683bd3c44c0bcbb62374305bdeba33560ed0e7bc18984894d42c861f5cd",
+          "prefix_tokens": 183,
+          "correct_tokens": 117,
+          "foil_tokens": 118
+        },
+        {
+          "id": "chain-log-mixture-score-2",
+          "prefix_sha256": "cb9b542ce00f014a2ceb3dcb2352ef61fa224ac4796e98bd3d080521e6619e7e",
+          "prefix_tokens": 150,
+          "correct_tokens": 51,
+          "foil_tokens": 55
+        }
+      ]
+    ],
+    "science_long_helper": [
+      [
+        {
+          "id": "long-weighted-constraint-1",
+          "prefix_sha256": "df6f1020d7717fa96dcf97d5c0c732ba3ed4313af2df841337e83a208eac5ba5",
+          "prefix_tokens": 955,
+          "correct_tokens": 79,
+          "foil_tokens": 88
+        },
+        {
+          "id": "long-affine-state-history-1",
+          "prefix_sha256": "9f6109a1a004df3dc9f1c38b8a603c704065ce026455345ed9e315d44c4193e5",
+          "prefix_tokens": 1051,
+          "correct_tokens": 68,
+          "foil_tokens": 70
+        }
+      ],
+      [
+        {
+          "id": "long-conditional-covariance-1",
+          "prefix_sha256": "8cc4ca551e1990efda3a1c10ef178cb9dc6a576f4c6a2eb84fc35ffff557cc3a",
+          "prefix_tokens": 965,
+          "correct_tokens": 90,
+          "foil_tokens": 90
+        },
+        {
+          "id": "long-affine-mixture-moments-1",
+          "prefix_sha256": "f259aebada3573e7c06ed8d60bc1fa0e75d3c813a52827cea6d48a1edf58d7fb",
+          "prefix_tokens": 989,
+          "correct_tokens": 45,
+          "foil_tokens": 37
+        }
+      ]
+    ],
+    "science_long_composition": [
+      [
+        {
+          "id": "long-weighted-constraint-2",
+          "prefix_sha256": "a4698516acf169799218e69ff0e9a21785ad496f82c2adbb5ed62769e382bec1",
+          "prefix_tokens": 1085,
+          "correct_tokens": 169,
+          "foil_tokens": 162
+        },
+        {
+          "id": "long-affine-state-history-2",
+          "prefix_sha256": "7372e457230a525aca8f9c3fb7969479df72aa275e67608f18dcafff052c692c",
+          "prefix_tokens": 1143,
+          "correct_tokens": 125,
+          "foil_tokens": 125
+        }
+      ],
+      [
+        {
+          "id": "long-conditional-covariance-2",
+          "prefix_sha256": "d1f65b25311afcdf274fd3de84d8c78653ee3081ce49206863d0d89636cb0d80",
+          "prefix_tokens": 1080,
+          "correct_tokens": 88,
+          "foil_tokens": 97
+        },
+        {
+          "id": "long-affine-mixture-moments-2",
+          "prefix_sha256": "ab6856083247504555ba0d88e16000c6eb5b6f3c5807cb01cb37eb6e07a164d2",
+          "prefix_tokens": 1072,
+          "correct_tokens": 160,
+          "foil_tokens": 140
+        }
+      ]
+    ]
+  }
+}

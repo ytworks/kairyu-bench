@@ -1,0 +1,128 @@
+{
+  "mode": "send",
+  "prompt_sha256": "b7d494d6c3eef57a28d15e1997ebe82f046f1fa27d545631b61eb2222f5df79d",
+  "prompt_bytes": 7909,
+  "requested_model": "claude-opus-5-5",
+  "labels": "A",
+  "fallback_model": null,
+  "allow_text_review": true,
+  "anonymity": "pattern lint only; caller must review every prompt byte for private identifiers and measurements",
+  "schema_version": 1,
+  "started_at": "2026-11-07T09:22:50.993921+00:00",
+  "scope": "User-reviewed anonymous prompt retained with this receipt; the review is not a model capability measurement",
+  "verified_requested_model": true,
+  "controls": {
+    "safe_mode": true,
+    "restricted": true,
+    "tools": [],
+    "mcp_servers": [],
+    "session_persistence": false,
+    "custom_generic_system_prompt": true
+  },
+  "raw_stream_persisted": false,
+  "thinking_blocks_persisted": false,
+  "environment_persisted": false,
+  "returncode": 0,
+  "stderr_bytes": 0,
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "assistant_models": [
+    "claude-opus-5-5"
+  ],
+  "model_usage": {
+    "claude-opus-5-5": {
+      "inputTokens": 4,
+      "outputTokens": 7691,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 7481,
+      "webSearchRequests": 0,
+      "costUSD": 0.21368399999999999,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 128000,
+      "canonicalModel": "claude-opus-5-5"
+    }
+  },
+  "is_error": false,
+  "labels_match": true,
+  "tool_uses": 0,
+  "event_types": {
+    "system": 43,
+    "assistant": 3,
+    "rate_limit_event": 1,
+    "user": 1,
+    "result": 1
+  },
+  "review_format": "json_reviews",
+  "review_usable": true,
+  "review_context_label": null,
+  "public_final_text": null,
+  "response": {
+    "reviews": [
+      {
+        "label": "A",
+        "verdict": "Conditional proceed, diagnostic only. Run one bounded finite replay as a pre-registered test of the local linear model. Do not treat it as adoption evidence, and do not move to native generation or transfer unless pre-declared finite criteria pass. The prior probability that A changes native or WSP outcomes is low.",
+        "rationale": [
+          "The replay is informative despite the two shortfalls because it tests separable questions cheaply. First, do finite, BF16-rounded LL and margin deltas track the local predictions? Second, does A1's predicted margin of +0.0076 actually become positive? Third, do the other cases stay within their allowances? Each of these is a falsifiable check of the method itself.",
+          "Candidate A does not meet its own specification (22/24 constraints met). A1's predicted final margin of +0.0076 is well within plausible linearization and rounding error, so even the predicted A1 outcome is a near-tie.",
+          "The edit is very small: BF16 delta L2 of 0.0044 against an eligible-tensor source L2 of 960.7. That is reasonable for preserving other domains but weak for flipping discrete code decisions. The preceding independent candidate tied all 26 WSP10 code outcomes, which shows edits of this kind can fail to move outcomes at all.",
+          "The objectives are computed teacher-forced under a forced empty thought boundary. Ordinary use generates with free thinking, so the gradient frame and the deployment frame differ."
+        ],
+        "risks": [
+          "Mean-token LL dilution. A +0.1 nat/token gain on A1 can come mostly from boilerplate or formatting tokens rather than the few decisive tokens (the singleton column axis for the RHS in A1, the k-1 start offset in F2).",
+          "Proxy mismatch. F2's fixed foil (zero removal) is not the observed off-by-one error, and A1's foil may not be the observed missing-axis error. Margin gains therefore need not suppress the actual failure mode.",
+          "Thinking-mode distribution shift. Edits tuned on empty-thought frames may not move the code the model writes after free reasoning. The reasoning may also re-derive the same wrong pattern.",
+          "Linearization and rounding. Second-order effects across 112 tensors, plus BF16 quantization of 60,473 elements, can make finite deltas differ from predictions. The small predicted positive values, especially A1's margin, are the most fragile.",
+          "Non-local effects. Post-attention and post-FFW norm vectors rescale feature channels for every input, and layer_scalar rescales the whole layer output including the residual. Small changes compounded across 60 layers can shift non-code behavior, calibration, refusal or format adherence, and long-context stability.",
+          "Overfitting. 645,180 free coordinates are fit to 24 scalar constraints from 12 cases, a highly underdetermined problem. Minimum-L2 picks one solution but gives no guarantee about transfer.",
+          "Evaluation noise. With a code mean near the 90 threshold on small per-source counts, one or two item flips can dominate. Run-to-run nondeterminism at 32 workers may be comparable to the expected effect."
+        ],
+        "suggested_checks": [
+          "Integrity: verify saved values against the spec. Expect exactly 60,473 changed elements in 112 tensors, with hashes recorded. Confirm parent->candidate->parent restores bit-exactly and that no tensors outside the 180 eligible ones changed.",
+          "Serving-convention check: confirm the inference server applies these RMSNorm weights and layer_scalar with the same convention (direct multiply, not 1+w) and the same placement as the diagnostic implementation. If not, the saved delta has a different meaning.",
+          "Finite replay of all 12 cases on the exact diagnostic frames. Report realized vs predicted LL and margin per case and the realized/predicted ratio. Report all 24 constraints as met or unmet, using thresholds frozen before the run.",
+          "Critical-token diagnostics, labeled post-hoc. Report per-token log probability and rank at the decisive positions in A1 and F2 references, and against minimal counterfactuals matching the observed native errors. Use these to interpret results only, never as new fitting targets.",
+          "Thinking-frame sensitivity: rescore the same references under a free-thinking prefix (for example, prefixed with the parent's own sampled reasoning) to see whether the gains survive outside the forced empty-thought frame.",
+          "Perturbation-scale checks: compare activations at the parent's traced WSP10 layers and positions (relative norm change per layer). Measure next-token KL on held-out non-code prompts, including long-context ones.",
+          "Native generation on the 12 train cases with ordinary server-default thinking, several samples per case under fixed settings. Report pass counts with intervals, and run the parent under identical settings to estimate the noise floor.",
+          "Only if train-native criteria pass: run the 6 transfer cases once.",
+          "Then run full WSP10 and full WSP30 with all domains, cases and conditions. Report paired per-item parent vs candidate comparisons, errors/unscored, and non-code tradeoffs. Then run the full 113-task software-engineering evaluation at 32 workers under the final-use configuration."
+        ],
+        "stop_conditions": [
+          "Any saved-value mismatch, extra changed tensor, or failure of exact restoration.",
+          "Serving-stack norm convention or placement differs from the diagnostic implementation and cannot be reconciled.",
+          "Finite A1 margin is not greater than 0, or finite A1 LL delta or F2 LL delta falls below a pre-declared fraction of its prediction (for example, under 50%).",
+          "Any of the other 8 successful cases has finite LL delta below -0.02, or any margin falls below its declared allowance beyond tolerance.",
+          "Held-out KL or activation shift exceeds pre-declared bounds.",
+          "Native generation shows no improvement on A1 or F2 beyond the parent noise floor, or any previously passing train case regresses.",
+          "Transfer pass count falls below the parent's.",
+          "Official WSP code mean does not exceed the parent's, any non-code domain regresses beyond its pre-declared tolerance, errors/unscored increase, or the full software-engineering run regresses. All such outcomes are recorded, not discarded."
+        ]
+      }
+    ],
+    "sequence": [
+      "1. Freeze candidate A's spec and hash. Pre-register finite, native, transfer and WSP acceptance thresholds and stop rules.",
+      "2. Materialize the checkpoint. Verify saved values and change counts. Run parent->candidate->parent with exact restoration.",
+      "3. Verify the serving-stack norm and layer_scalar convention matches the diagnostic implementation.",
+      "4. Run the finite replay on all 12 train cases with identical frames. Report realized vs predicted for all 24 constraints.",
+      "5. Run post-hoc critical-token, thinking-frame and held-out KL/activation diagnostics, labeled as non-fitting interpretation.",
+      "6. Run train-native generation (12 cases, multiple samples) for both parent and candidate under identical ordinary settings.",
+      "7. Unseal the 6 transfer cases once for native generation of the frozen candidate and the parent.",
+      "8. Run full official WSP10 and WSP30 with all domains, cases and conditions and paired comparisons. Then run the full 113-task software-engineering evaluation at 32 workers.",
+      "9. Record every outcome, including failures, incomplete runs and stops. Adopt only if all pre-registered criteria pass."
+    ],
+    "evidence_limits": [
+      "All candidate effects so far are local first-order predictions at the parent. No finite, native, transfer or WSP measurement exists yet.",
+      "Two of 24 local constraints are unmet, and A1's predicted margin (+0.0076) is within plausible error.",
+      "Objectives are mean-token teacher-forced LL under a forced empty thought boundary, not free-thinking generation.",
+      "The F2 foil does not represent the observed off-by-one error. Margins are not behavior measures.",
+      "B1/B2 numeric passes do not by themselves establish symbolic-method compliance.",
+      "Gradient-share concentration in the three tensor families depends on parameter units. It is not evidence of a coding-specific mechanism, and the excluded tensors are not shown to be unimportant.",
+      "Parent activation traces are descriptive and not causal. WSP30 has HTTP traces only.",
+      "WSP10 and WSP30 differ in cases and sources, and per-source counts are small near the threshold.",
+      "The solver is a continuous relaxation with per-coordinate clipping and post-hoc BF16 rounding. It is not globally optimal, and earlier rounds' per-constraint predictions were not retained.",
+      "Twelve training cases in six families cannot establish generalization. This review is an opinion, not a result."
+    ],
+    "fresh_reserve": "Keep the 6 transfer cases sealed: no generation, gradients, scoring or inspection until candidate A is frozen and has passed the pre-registered finite and train-native criteria. Record their hash before any use. Evaluate them once, for the frozen candidate and the parent under identical native settings. Do not iterate the edit on their results. After use, mark them as consumed for A-lineage decisions. Any subsequent candidate fitted with knowledge of their outcomes needs a newly authored, independently fixed transfer set."
+  },
+  "finished_at": "2026-11-07T09:24:15.486514+00:00",
+  "duration_seconds": 84.49263084598351
+}

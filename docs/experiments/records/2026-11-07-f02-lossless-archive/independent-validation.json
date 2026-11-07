@@ -1,0 +1,32 @@
+{
+  "status": "independent_archive_checks_passed",
+  "elapsed_seconds": 1.1145567893981934,
+  "archive_files_verified": 135,
+  "checksum_list_sha256": "dee04b50c984013410ce3aa8fac6891337774f9846c929a0ceadc3d881b626da",
+  "archive_json_sha256": "7f2cb71ac847204bf1d2443f358a5b4fe5453afc519655cb6a77b5461e5b3769",
+  "base_exact_stat_files": 9,
+  "candidate_exact_stat_files": 9,
+  "gzip_byte_roundtrip_verified": [
+    {
+      "path": "spec.json.gz",
+      "original_sha256": "27f000e4933bdb63d29217c6312114d2b912d349a67617fe42d17d263994410b",
+      "original_bytes": 15883547
+    },
+    {
+      "path": "edit-manifest.json.gz",
+      "original_sha256": "1cb562c4d9fbd1fe3bc6a2f2c489b5b482406a5d31ff086ca0f2b48a49d47880",
+      "original_bytes": 215740576
+    }
+  ],
+  "reconstruction_shell_syntax_valid": true,
+  "reconstruction_shell_sha256": "5b28f09c3f2a5e88578867c1bfcbb5fe9beee33df728f45b944ed9d153031857",
+  "reconstruction_commands_executed": false,
+  "archived_editor_help_sha256": "9f651909cf5f94c4ee3d2281599962f4ecf6d651e8f0eaeae58a64a092c651f1",
+  "archived_editor_import_entrypoint_checked": true,
+  "checkpoint_payload_rehashed": false,
+  "checkpoint_payloads_changed": false,
+  "model_calls": 0,
+  "service_operations": 0,
+  "lock_operations": 0,
+  "finished_epoch": 1794035289.6337507
+}

@@ -1,0 +1,207 @@
+{
+  "scope": "single additional fixed all16 helper-stage numeric diagnostic; not WSP and not the frozen48 catalog result",
+  "counts": {
+    "cases": 16,
+    "passed": 16,
+    "failed": 0,
+    "unknown": 0,
+    "trials_passed": 128,
+    "trials_total": 128,
+    "not_targeted": 56
+  },
+  "strata": {
+    "known_dtype_contract_issue": {
+      "expected": 3,
+      "passed": 3,
+      "failed": 0,
+      "unknown": 0
+    },
+    "other": {
+      "expected": 13,
+      "passed": 13,
+      "failed": 0,
+      "unknown": 0
+    }
+  },
+  "execution_seconds": 15.449004650115967,
+  "sum_stage_execution_seconds": 14.934796833666041,
+  "plan_sha256": "dfb8263dbf2a1ea501831464b4d16e1deef98134ec58ce9ef90138da9c4d0d61",
+  "report_sha256": "eb1c46234cad2a60258c4d36ed6e2ff48325cb6820d674b5f1d6908a47d46b05",
+  "closure_sha256": "c8b33528741ba54d97c32fc84bd5fbbb431d8ddf6fad44a0bf084bcd403b2d7b",
+  "model_calls": 0,
+  "serving_changes": false,
+  "attempts": 1,
+  "source_input_continuity_pass": true,
+  "no_owned_containers_after": true,
+  "protected27_snapshot_fields_equal": true,
+  "protected_snapshot_fields": [
+    "id",
+    "name",
+    "image",
+    "running",
+    "status",
+    "health"
+  ],
+  "rows": [
+    {
+      "id": "chain-whitened-fit-1",
+      "passed": true,
+      "tests_passed": 8,
+      "tests_total": 8,
+      "contract_issue": true,
+      "seconds": 0.7533990970114246,
+      "public_answer_sha256": "2da7c671b0bdebbe848c48c4e76bbbdd83260ef281a91847f7ef27ce74d594c6",
+      "public_code_sha256": "b060dcf987d733a68deba0bb3e6ba99260e996e64f7da5aea5baaa443be7ad96"
+    },
+    {
+      "id": "chain-whitened-fit-2",
+      "passed": true,
+      "tests_passed": 8,
+      "tests_total": 8,
+      "contract_issue": false,
+      "seconds": 0.7172428870107979,
+      "public_answer_sha256": "5e44395d171970774bd82a0989c32fefdc3077fa42f1613cd2c10b77718df4ec",
+      "public_code_sha256": "8afa3f135a4f8d7612e923c77674a36ccafc28784d36b0a60daa949fcf95dca6"
+    },
+    {
+      "id": "chain-boundary-response-1",
+      "passed": true,
+      "tests_passed": 8,
+      "tests_total": 8,
+      "contract_issue": true,
+      "seconds": 0.7390834289835766,
+      "public_answer_sha256": "56cb71fbf0cd2237052118c5321b1fe82584cb08a0c87a4f67e694d040e7490b",
+      "public_code_sha256": "27844a2ee2529b8881070f21679a6dd236fc359e51667d83c9bcf18858dd991f"
+    },
+    {
+      "id": "chain-boundary-response-2",
+      "passed": true,
+      "tests_passed": 8,
+      "tests_total": 8,
+      "contract_issue": false,
+      "seconds": 0.7040170029504225,
+      "public_answer_sha256": "a9b745b1700839a9e9445fa441397c50fb8e81ad8d41157f57c5c4259c939f98",
+      "public_code_sha256": "c7a09f4a9867d4bf040a16ffa05269477bd494daf5d634af46292529b9f22aa3"
+    },
+    {
+      "id": "chain-quadrature-mixture-1",
+      "passed": true,
+      "tests_passed": 8,
+      "tests_total": 8,
+      "contract_issue": true,
+      "seconds": 0.734786543995142,
+      "public_answer_sha256": "1c2939705a2391f20e2ea25205dfc5e740a9186ea4ea7e9b7828d9683a571385",
+      "public_code_sha256": "89fb998ec9feba928b188abe0324dad4bbd7d6b24d1ecbf4ce75d5da09a6bfd7"
+    },
+    {
+      "id": "chain-quadrature-mixture-2",
+      "passed": true,
+      "tests_passed": 8,
+      "tests_total": 8,
+      "contract_issue": false,
+      "seconds": 0.7538316689897329,
+      "public_answer_sha256": "99d13e8e499c24f49e3c3b428f07448da02de4271778493e201e500f48ecc9ff",
+      "public_code_sha256": "ac0d72a7c92edcbc5bf44e1035d902510eae14e4794eae524d1b15e5e04d94c6"
+    },
+    {
+      "id": "chain-log-mixture-score-1",
+      "passed": true,
+      "tests_passed": 8,
+      "tests_total": 8,
+      "contract_issue": false,
+      "seconds": 0.7352602359605953,
+      "public_answer_sha256": "695ac976bbed3cadcd2a185b0c0f03d2d9206164758f3b8566bebfbd62c021f2",
+      "public_code_sha256": "099f2823607d7e54883997328268e46e760f6ffbf0df5f695bb652dda1b7f4d7"
+    },
+    {
+      "id": "chain-log-mixture-score-2",
+      "passed": true,
+      "tests_passed": 8,
+      "tests_total": 8,
+      "contract_issue": false,
+      "seconds": 1.2033165670000017,
+      "public_answer_sha256": "346bd1012a709f3aecb4ba364109b71f6a97d9c07720b9cfd937f84636cd8a14",
+      "public_code_sha256": "baa1ffe7629333be050f80fbe0d10d4167e826d44e7ceddf8119137e46b2eba6"
+    },
+    {
+      "id": "long-weighted-constraint-1",
+      "passed": true,
+      "tests_passed": 8,
+      "tests_total": 8,
+      "contract_issue": false,
+      "seconds": 1.173009073943831,
+      "public_answer_sha256": "ba2b5cf59f3dd581bc257867a4333bbfec523a5c5d70aa35c98c25fc3eddbe09",
+      "public_code_sha256": "58e605a03dde5b099c20ef11373cf4a30eae9772af78210fbefcf81d4c138539"
+    },
+    {
+      "id": "long-weighted-constraint-2",
+      "passed": true,
+      "tests_passed": 8,
+      "tests_total": 8,
+      "contract_issue": false,
+      "seconds": 1.1727242569904774,
+      "public_answer_sha256": "241d221bc91e027ef2ee6a0a87151c8b3b5930de053d38473d5e240361d7d311",
+      "public_code_sha256": "a76180851ca87a154e02b28adc3835cb768fd452995ec1388557c7bd7b6a9e4d"
+    },
+    {
+      "id": "long-conditional-covariance-1",
+      "passed": true,
+      "tests_passed": 8,
+      "tests_total": 8,
+      "contract_issue": false,
+      "seconds": 1.170809073955752,
+      "public_answer_sha256": "28b1cd1f5765d2d242ecd51ab6b218bbed033039e5ba55c7c079142c668a1c7f",
+      "public_code_sha256": "216a0a2605f37e59b114086edbcaa3aa4b5e54e52a300998294ec7067c78f549"
+    },
+    {
+      "id": "long-conditional-covariance-2",
+      "passed": true,
+      "tests_passed": 8,
+      "tests_total": 8,
+      "contract_issue": false,
+      "seconds": 1.1882003849605098,
+      "public_answer_sha256": "a97cb901b17fa39b8aeaab26ca3a680691938821ac5b81369af62370d6a1dabf",
+      "public_code_sha256": "a96347110a9adcc8d128839d234bcf5d36d1dd3147d6b6bb1ed5f3c3b9d4a74c"
+    },
+    {
+      "id": "long-affine-state-history-1",
+      "passed": true,
+      "tests_passed": 8,
+      "tests_total": 8,
+      "contract_issue": false,
+      "seconds": 0.7362308499868959,
+      "public_answer_sha256": "f0f834f7a3b60e493af4628865de06e3bb07b955e79a3bbfa6e4e0d3f23b5e1b",
+      "public_code_sha256": "874b3ffba0c90e41992ba9559bdc703ef60ebfaacfff595a8bce2f097eb44d9e"
+    },
+    {
+      "id": "long-affine-state-history-2",
+      "passed": true,
+      "tests_passed": 8,
+      "tests_total": 8,
+      "contract_issue": false,
+      "seconds": 0.7302616899833083,
+      "public_answer_sha256": "ab17d15cb947525d57ad6a26cdc382cbe86bf55c58932d655ffbcd8e8b93ca22",
+      "public_code_sha256": "991a0758d9e6baad994f4d0d35e6cd07608e52bc4ebd3955ce619225237278db"
+    },
+    {
+      "id": "long-affine-mixture-moments-1",
+      "passed": true,
+      "tests_passed": 8,
+      "tests_total": 8,
+      "contract_issue": false,
+      "seconds": 1.205512327956967,
+      "public_answer_sha256": "90f9247cb9868aadb7dfb2ea43f550602902ae18f0482ff098d873ba427630aa",
+      "public_code_sha256": "395948706917cc65df3503ffa19dc25258f4fe8a8911528bdca394775ed8e288"
+    },
+    {
+      "id": "long-affine-mixture-moments-2",
+      "passed": true,
+      "tests_passed": 8,
+      "tests_total": 8,
+      "contract_issue": false,
+      "seconds": 1.2171117439866066,
+      "public_answer_sha256": "16ddeb2ff491f459c2a0b408f768bfd3535e08753d4c66c4adb08a8549749059",
+      "public_code_sha256": "4ca42f0445968c0069da16443b98f692f7ea0765601ead584ff9f2b41c2691a5"
+    }
+  ]
+}

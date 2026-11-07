@@ -1,0 +1,48 @@
+{
+  "checkpoint_tree_sha256": "5d056eb03f954db80313a85167153c875fe5e436e4f97c281a3f55202d9b3eaf",
+  "native_measurement_closure": {
+    "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-av-behavior12-native-gpu4-v2/measurement-closure.json",
+    "sha256": "e889b331d80e724c4313cda5f9cec672d3f1752364e268e4c9b415d12eb897c3"
+  },
+  "native_behavior_result": {
+    "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-av-behavior12-native-gpu4-v2/native-behavior-result-identity.json",
+    "sha256": "463e9ff5cf4f8183527bc1080f1fab36a5214a63891345cc07f254d2ee9ff099"
+  },
+  "dependency": {
+    "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-native-dependency-v2/report.json",
+    "sha256": "271ee1afef4afd855c3aa6d589891bef6ad2b144b9499df9646039894835fad7"
+  },
+  "comparison_status": "AV is the highest completed comparable parent by root decision; F03 WSP30 is incomplete and unranked at authorization.",
+  "hypothesis": "Try relative native-vector cost while fixing all60 whole-layer scalars; raw Euclidean postnorm concentration and relative all421 scalar concentration are observed, neither establishes this metric superior.",
+  "restrictions": [
+    "No transfer generation/gradient used",
+    "No benchmark answer used as training target",
+    "One fixed proposal; no post-outcome rescaling",
+    "All24 constraints and existing full WSP cohorts retained",
+    "Local predicted gain is not native generation or WSP gain",
+    "No checkpoint materialization/serving/evaluation authorized; one CPU proposal only."
+  ],
+  "prior_parent_state": {
+    "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f03-native-v1/parent-state.json",
+    "sha256": "59ce4dee21b1d2f3f6e6cbbded3308a3603b779392f982e59be3f55a0a779742"
+  },
+  "source_plan": {
+    "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f03-native-v1/proposal-plan.json",
+    "sha256": "56a4b866a41110ea1397305e9c3aa0b2c03f996f53df8b3953b9a237c387e240"
+  },
+  "relative_geometry": {
+    "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-native-relative-energy-v1/report.json",
+    "sha256": "f9f4b5380abcbc0cfcb3f53e6de9e732e364041b1ee2e4348b0feac3e6497ca0"
+  },
+  "F03_state_at_prepare": {
+    "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/results/gemma4-fresh-f03-dev30-dp4-20261107-v1/run.json",
+    "sha256": "2cbadb6c85c89819ccb2576eb54871258086d8aae4d07e9658df92443fb62d4d",
+    "status": "running"
+  },
+  "parent_gate": {
+    "required_before_materialization_or_evaluation": true,
+    "if_F03_becomes_highest": "Do not materialize or evaluate this AV-based F04; record unscored_reason=parent_changed and redesign from new best parent.",
+    "automatic_rank_or_parent_update": false
+  },
+  "background_load": "CPU proposal runs concurrently with F03 WSP; single-thread nice15/ionice idle; WSP timing is not unloaded latency."
+}

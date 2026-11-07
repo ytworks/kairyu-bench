@@ -1,0 +1,99 @@
+from pathlib import Path
+import ast,difflib,gzip,hashlib,json,re,shutil,time
+R=Path('/mnt/nvme/kairyu/wsp/gemma4-coding-20261104');B=R/'worktrees/kairyu-bench-weight-tools'
+P=R/'analysis/fresh-purpose-20261107-cpu-validation-r14';D=B/'docs/experiments/records/2026-11-07-cpu-validation-r14'
+D.mkdir(exist_ok=False)
+sha=lambda p:hashlib.sha256(Path(p).read_bytes()).hexdigest()
+read=lambda p:json.loads(Path(p).read_text())
+original=read(P/'completion.json');fix=read(P/'ruff-after-format.json')
+assert original['success'] is False and original['full_suite_repetitions']==1
+assert read(P/'sources-before.json')==read(P/'sources-after.json')
+assert len(read(P/'sources-before.json'))==622
+for row in original['results']:
+ for stream in ('stdout','stderr'):
+  k=stream+'_sha256'
+  if k in row: assert sha(P/(row['name']+'.'+stream))==row[k]
+stderr=(P/'unittest.stderr').read_text()
+total,seconds=re.search(r'Ran (\d+) tests in ([\d.]+)s',stderr).groups()
+skipped=int(re.search(r'OK \(skipped=(\d+)\)',stderr).group(1))
+assert (int(total),skipped)==(592,60)
+driver=B/'docs/experiments/scripts/fresh-purpose-cpu-validation-r14-20261107.py'
+before=(P/'executed-driver-source.py.txt').read_bytes();after=driver.read_bytes()
+assert hashlib.sha256(before).hexdigest()==fix['before_sha256']
+assert hashlib.sha256(after).hexdigest()==fix['after_sha256']
+ast_same=ast.dump(ast.parse(before),include_attributes=False)==ast.dump(ast.parse(after),include_attributes=False)
+assert ast_same and fix['returncode']==0 and fix['unittest_repeated'] is False
+archive={}
+for p in sorted(P.iterdir()):
+ if not p.is_file():continue
+ data=p.read_bytes()
+ destination=D/(p.name+'.gz' if len(data)>10000 else p.name)
+ packed=gzip.compress(data,mtime=0) if len(data)>10000 else data
+ destination.write_bytes(packed)
+ assert (gzip.decompress(packed) if len(data)>10000 else packed)==data
+ archive[p.name]=dict(source_sha256=hashlib.sha256(data).hexdigest(),source_bytes=len(data),stored=destination.name,stored_sha256=sha(destination),gzip=len(data)>10000)
+(D/'formatted-driver-source.py.txt').write_bytes(after)
+patch=''.join(difflib.unified_diff(before.decode().splitlines(True),after.decode().splitlines(True),fromfile='executed-driver-source.py.txt',tofile='formatted-driver-source.py.txt')).encode()
+(D/'driver-format-only.diff.gz').write_bytes(gzip.compress(patch,mtime=0))
+proof=dict(before_sha256=fix['before_sha256'],after_sha256=fix['after_sha256'],ast_identical_recomputed=ast_same,
+           check='ast.dump(ast.parse(source), include_attributes=False)',executed_tests_source='original driver',
+           no_tests_or_model_runs_during_packaging=True)
+(D/'independent-format-ast-proof.json').write_text(json.dumps(proof,indent=2)+'\n')
+summary=dict(status='passed_after_format_only_ruff_correction',initial_completion_success=False,
+ initial_completion_sha256=sha(P/'completion.json'),initial_failed_check='ruff',initial_ruff_errors=5,
+ tests=dict(total=int(total),passed=int(total)-skipped,skipped=skipped,failed=0,
+            reported_seconds=float(seconds),wall_seconds=original['results'][0]['elapsed_seconds'],full_suite_repetitions=1),
+ initial_all_checks_seconds=original['elapsed_seconds'],ruff_only_repeat_seconds=fix['seconds'],
+ checks=dict(unittest='passed',ruff='passed_after_driver_format',mypy='passed_74_source_files',data='passed',tracked_shell='passed_31'),
+ source_inventory_count=622,source_inventory_before_after_equal=True,
+ pinned_experiment_sources_unchanged=original['explicit_pins_unchanged'],format_only_driver_changed_after_full_suite=proof,
+ rerun=dict(unittest=0,mypy=0,data=0,shell=0,ruff=1),model_GPU_service_operations=0,
+ archive=archive)
+(D/'corrected-summary.json').write_text(json.dumps(summary,indent=2)+'\n')
+(P/'packaged-corrected-summary.json').write_text(json.dumps(summary,indent=2)+'\n')
+doc=B/'docs/experiments/2026-11-07-cpu-validation-r14.md'
+doc.write_text('''# CPU validation r14
+
+The required CPU checks pass after one format-only Ruff correction. The full unit
+suite ran once: **592 tests = 532 passed + 60 skipped**, no failures; 45.932s
+reported / 46.412s wall. The initial complete check pass took46.85985s.
+
+Initial Ruff returned five E702 errors in the reused validation driver's
+semicolon-separated statements. This is retained as an actual failed check:
+original completion.json still has success=false. Root formatted that driver,
+proved its AST unchanged, and reran **only Ruff**, which passed in0.03450s.
+The independent packaging check recomputed the before/after AST equality.
+corrected-summary.json is a separate aggregate; it does not rewrite the failure.
+
+Mypy passed all74 source files, the model-comparison data check passed, and all31
+tracked shell files passed syntax checks. Unit tests, mypy, data and shell checks
+were not repeated. The622 source identities (including288 immutable record
+sources) matched before/after the initial run, and all explicit experiment source
+pins remained unchanged. Only the CI driver's formatting changed afterward.
+
+The low-priority run used the existing CPU environment and short NVMe temporary
+directory. GPU/model/service operations0. Skips remain skips, not validations of
+real-model training or CUDA behavior.
+
+[All logs, executed/formatted driver sources, before/after source inventories,
+format diff, independent AST proof, original failure and corrected summary](records/2026-11-07-cpu-validation-r14/)
+retain original-byte hashes; larger logs/inventories use lossless gzip.
+The packaging source and SHA256SUMS.json make those representations explicit.
+
+This run includes the [body/KL opt-in and separate parent/serving owner contract](2026-11-07-body-kl-training-implementation.md),
+the [all204 mask proof, including failed v1 and successful v2](2026-11-07-mbpp204-body-frame-proof.md),
+and the [preview-only plan builder](scripts/fresh-body-kl-plan-20261107.py).
+It establishes CPU implementation checks, not a new model result or an
+improvement over the completed official benchmark.
+''')
+(D/'README.md').write_text('''# r14 immutable evidence
+
+Original completion.success=false is retained. corrected-summary.json reports
+the independent aggregate after the sole Ruff-only repeat. Compressed artifacts
+are byte-exact representations, mapped with raw/stored SHA256 in that summary.
+No test, model call or service operation was run by this packaging script.
+''')
+index={str(p.relative_to(D)):sha(p) for p in sorted(D.rglob('*')) if p.is_file()}
+(D/'SHA256SUMS.json').write_text(json.dumps(index,indent=2)+'\n')
+print(json.dumps(dict(doc=str(doc.relative_to(B)),doc_sha256=sha(doc),records=str(D.relative_to(B)),files=len(index),
+                     index_sha256=sha(D/'SHA256SUMS.json'),summary_sha256=sha(D/'corrected-summary.json'))))

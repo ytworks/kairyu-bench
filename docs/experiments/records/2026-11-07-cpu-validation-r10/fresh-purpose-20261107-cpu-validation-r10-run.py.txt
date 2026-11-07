@@ -1,0 +1,28 @@
+"""One CPU-only run of the current CI test job; source continuity recorded."""
+import pathlib,subprocess,json,time,hashlib,os
+R=pathlib.Path('/mnt/nvme/kairyu/wsp/gemma4-coding-20261104');B=R/'worktrees/kairyu-bench-weight-tools';D=R/'analysis/fresh-purpose-20261107-cpu-validation-r10';P=R/'infra/weight-tools-ci/bin'
+D.mkdir()
+tmp=R/'infra/tmp/r10';tmp.mkdir(parents=True,exist_ok=True)
+env={**os.environ,'TMPDIR':str(tmp),'PATH':str(P)+os.pathsep+os.environ['PATH'],'PYTHONDONTWRITEBYTECODE':'1','OMP_NUM_THREADS':'1','OPENBLAS_NUM_THREADS':'1','MKL_NUM_THREADS':'1'}
+def sha(p):return hashlib.sha256(p.read_bytes()).hexdigest()
+def inventory():
+ files=[]
+ for base in ['src','tests','scripts','docs/experiments/scripts']:
+  files.extend(p for p in (B/base).rglob('*.py') if '__pycache__' not in p.parts)
+ files.extend([B/'pyproject.toml',B/'.github/workflows/ci.yml'])
+ files.extend(p for p in B.rglob('*.sh') if '.git' not in p.parts)
+ return {str(p.relative_to(B)):sha(p) for p in sorted(set(files))}
+before=inventory();(D/'sources-before.json').write_text(json.dumps(before,indent=2)+chr(10))
+commands=[('unittest',[str(P/'python'),'-m','unittest','discover','-s','tests','-v']),('ruff',[str(P/'ruff'),'check','.']),('mypy',[str(P/'mypy'),'--ignore-missing-imports','src']),('data',[str(P/'python'),'scripts/update_model_comparison.py','--check']),('shell',['find','.','-type','f','-name','*.sh','-not','-path','./.git/*','-exec','sh','-n','{}','+'])]
+started=time.time();events=[]
+for label,cmd in commands:
+ t=time.time()
+ with (D/(label+'.stdout')).open('x') as out,(D/(label+'.stderr')).open('x') as err:
+  p=subprocess.run(['nice','-n','15',*cmd],cwd=B,env=env,stdout=out,stderr=err)
+ events.append({'name':label,'command':['nice','-n','15',*cmd],'returncode':p.returncode,'elapsed_seconds':time.time()-t,'stdout_sha256':sha(D/(label+'.stdout')),'stderr_sha256':sha(D/(label+'.stderr'))})
+ (D/'progress.json').write_text(json.dumps(events,indent=2)+chr(10));print(json.dumps(events[-1]),flush=True)
+ if p.returncode:break
+after=inventory();(D/'sources-after.json').write_text(json.dumps(after,indent=2)+chr(10))
+receipt={'started_epoch':started,'elapsed_seconds':time.time()-started,'results':events,'source_count_before':len(before),'source_count_after':len(after),'sources_unchanged':before==after,'source_changes':[k for k in before.keys()|after.keys() if before.get(k)!=after.get(k)],'success':len(events)==5 and all(x['returncode']==0 for x in events) and before==after,'full_suite_repetitions':1,'model_GPU_service_operations':0,'TMPDIR':str(tmp),'PATH_prefix':str(P),'active_WSP_owner_sha256':sha(B/'docs/experiments/scripts/fresh-av-dev30-20261107.py')}
+(D/'completion.json').write_text(json.dumps(receipt,indent=2)+chr(10));print(json.dumps(receipt),flush=True)
+raise SystemExit(0 if receipt['success'] else 1)

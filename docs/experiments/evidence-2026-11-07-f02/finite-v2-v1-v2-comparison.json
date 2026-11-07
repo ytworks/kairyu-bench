@@ -1,0 +1,32 @@
+{
+  "scientific_and_runtime_fields_exact": true,
+  "finite_plan_exact": true,
+  "baseline_package_source_exact": true,
+  "protected_changes": {
+    "gemma-4-31b-8gpu-gemma-0-1": {
+      "id": {
+        "before": "21aaf4aed1096bd7205fb5369528d6c84d61672b01fc5ef36bfd57bbbbb690cd",
+        "after": "4e545c35bc0e277344b302058eb9ffa758747f3012bc8e395e417f28d97aa56e"
+      },
+      "started_at": {
+        "before": "2026-11-07T04:15:21.19611959Z",
+        "after": "2026-11-07T04:48:25.292030421Z"
+      },
+      "config_sha256": {
+        "before": "17984451bb2c70732f17c263c2e2922232044e080a40912988388a95b15fb549",
+        "after": "0a912d263b6b372de21586ba3bb28e8bb0e91f03371f3f9c3820d95fe688b469"
+      },
+      "host_config_sha256": {
+        "before": "1dd93df1e766588e27d7e0a0e9634a75088be0006167cbc6cd65a7dc65a8dcba",
+        "after": "44adae78c46f505851a5f382eb4333550c171a623cb10b48731d48f70188d8ec"
+      }
+    }
+  },
+  "owner_wrapper_changed": {
+    "before": "4701314986940aa741b27ee92caef7cade4b862c4fd795a6e6024ae9c1bda9f7",
+    "after": "2326fe223b9b7b49d7876ad11b3c66731d21e97bbb7da4460c43bf6c9774c75e"
+  },
+  "sublease_removed": true,
+  "timing_note": "Global-exclusive candidate evaluation; no overlapping benchmark permitted while global flock is held.",
+  "plan_sha256": "f820d34c3f2fc2b20481044e5b983ab09ffe54ed19ad5e82e5c3c82a53004bc1"
+}

@@ -1,0 +1,24 @@
+{
+  "status": "completed",
+  "exit_code": 0,
+  "seconds": 2.8165132999420166,
+  "executions": 1,
+  "loader_calls": 2,
+  "loader_calls_explanation": "one per objective collection; both existing 12-case collections loaded once",
+  "command": [
+    "env",
+    "OPENBLAS_NUM_THREADS=1",
+    "OMP_NUM_THREADS=1",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/infra/weight-tools-ci/bin/python",
+    "-B",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-native-relative-energy-v1/analyze.py"
+  ],
+  "source_sha256": "30b0eb8092a672351419f0af512cbafe6e95686ee3f9a1bdaf20309f3356cca4",
+  "report_sha256": "f9f4b5380abcbc0cfcb3f53e6de9e732e364041b1ee2e4348b0feac3e6497ca0",
+  "source_and_input_pins": 44,
+  "model_calls": 0,
+  "gpu_calls": 0,
+  "solver_calls": 0,
+  "tests_added_or_run": 0,
+  "candidate_created": false
+}

@@ -1,0 +1,105 @@
+{
+  "mode": "send",
+  "prompt_sha256": "bb1656564e953947520345bd6b308435c82198b0f83acda1b3755f0f9aa1c0d2",
+  "prompt_bytes": 7506,
+  "requested_model": "claude-opus-5-5",
+  "labels": "A",
+  "fallback_model": null,
+  "allow_text_review": false,
+  "anonymity": "pattern lint only; caller must review every prompt byte for private identifiers and measurements",
+  "schema_version": 1,
+  "started_at": "2026-11-07T07:17:36.107691+00:00",
+  "scope": "User-reviewed anonymous prompt retained with this receipt; the review is not a model capability measurement",
+  "verified_requested_model": false,
+  "controls": {
+    "safe_mode": true,
+    "restricted": true,
+    "tools": [],
+    "mcp_servers": [],
+    "session_persistence": false,
+    "custom_generic_system_prompt": true
+  },
+  "raw_stream_persisted": false,
+  "thinking_blocks_persisted": false,
+  "environment_persisted": false,
+  "returncode": 0,
+  "stderr_bytes": 0,
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "assistant_models": [
+    "claude-opus-5-5"
+  ],
+  "model_usage": {
+    "claude-opus-5-5": {
+      "inputTokens": 4,
+      "outputTokens": 4486,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 6485,
+      "webSearchRequests": 0,
+      "costUSD": 0.141616,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 128000,
+      "canonicalModel": "claude-opus-5-5"
+    }
+  },
+  "is_error": false,
+  "labels_match": false,
+  "tool_uses": 0,
+  "event_types": {
+    "system": 18,
+    "assistant": 3,
+    "rate_limit_event": 1,
+    "user": 1,
+    "result": 1
+  },
+  "review_format": "unusable",
+  "review_usable": false,
+  "review_context_label": null,
+  "public_final_text": null,
+  "response": {
+    "reviews": [
+      {
+        "label": "A",
+        "interpretation": "Candidate A is a verified null result for official code. The saved edit is exactly as described, and P/A/P replay restores P exactly. Candidate A failed its predeclared proxy gate, matched P on all 26 official code items, and worsened code diagnostic NLL from 4.087639 to 4.155552. The objective itself is the most likely weak point. One valid one-token Python indexing case supplies nearly all of the signed margin gain: the other 119 cases sum to 0.009479, and the other nine code-purpose cases average -0.059816. Correct-vs-foil rankings never change. The objective was also computed on forced-empty-thought frames, while official scoring uses generated native reasoning, so the targeted quantity is not the evaluated behavior. The +0.657220 overall change mixes gains and losses across areas. Its item-paired interval crosses zero, and it has no run-to-run uncertainty, so it is descriptive only.",
+        "justified_conclusions": [
+          "Do not adopt A. Keep P as the editing parent, as already decided under the predeclared rule.",
+          "On the tier10 official cohort, A produced no measurable change in official code behavior: all 26 code item scores are identical.",
+          "The proxy objective was dominated by one case and barely moved the remaining authored cases.",
+          "A's changes to teacher-forced LL and margin did not change any correct/foil preference, so they gave no evidence of a decision-level change even within the proxy.",
+          "The saved artifact, its restoration, and its zero A/A drift are verified, so artifact errors do not explain the null."
+        ],
+        "unsupported_conclusions": [
+          "That 512-coordinate sparse support is too small. No working objective has been tested at larger or coherent support, so support size and objective failure are confounded.",
+          "That the area-level differences are real effects of A. They come from one paired run without repeat uncertainty and with an interval crossing zero.",
+          "That activation-profile changes identify coding mechanisms or neurons. The early prefill positions are often task-agnostic and the decode prefixes are unmatched.",
+          "That A has no behavioral effect at all. Native-thinking executable behavior on the authored tasks was never measured.",
+          "That the 11 contract-flawed cases caused the failure. They were identified after the result, and the dominant gain came from a valid case.",
+          "That a larger amplitude or a rerun would pass. No amplitude grid was run, and choosing one now would be selection on the outcome."
+        ]
+      },
+      {
+        "label": "A",
+        "next_measurement": "Run paired native-thinking generation with answer execution, P versus the already-saved A, on the executable authored code catalog. Use explicit contracts and freeze the case list, the contract-validity labels, the seeds/sampling settings, the per-case sample count k, and the analysis plan before generating anything. This needs no new edit. The primary metric is the per-case pass rate under executed tests, paired by case and seed. Report three strata, all predeclared: all cases, valid-contract cases, and the 11 flagged cases. Also report the dominant indexing case separately and the result without it. Record P's own pass rate first, as a ceiling check.",
+        "minimum_required_tool_change": "None in the edit machinery. Only a frozen manifest and harness binding are needed: hashed case list, contract and test specifications, validity labels, seeds, k, and the analysis script, committed before the run. Also confirm that the execution sandbox enforces the declared dtypes, input domains, exceptions, and staged files. If the existing authored-catalog generation and execution path already supports this, reuse it and validate it on P with a small smoke check that is excluded from the analysis.",
+        "decision_after_measurement": "Four outcomes, each with a predeclared reading. (1) P is already at or near ceiling on valid cases: the catalog cannot detect improvement. The next step is to author new, harder valid-contract cases from public specifications only, not to edit. (2) P has headroom, and A shows no paired gain or a loss: the LL objective failed to target behavior. Change the objective first, for example per-case objectives framed in generated reasoning context (option iv), before any change to support (option iii). (3) A improves the authored pass rate but not official code: there is a transfer gap or a power limit. Any new candidate must still pass the unchanged full official run with a strictly higher code score. (4) A improves only through the indexing case: treat it as a single-case artifact and as no evidence of general benefit. Under no outcome is A adopted from this measurement alone."
+      }
+    ],
+    "sequence": [
+      "1. Freeze the manifest and the per-case validity labels for the executable authored catalog. Keep the post-hoc audit labels as recorded, and pre-register the strata.",
+      "2. Run the paired native-thinking executable comparison of P vs A from the saved bytes, with fixed seeds and k samples per case.",
+      "3. Apply the predeclared decision branch. Only if P has headroom and A shows no gain, design the next objective: native-reasoning-context frames and per-case correct-LL logging with leave-one-case-out influence caps (options iv plus ii), so that no single case dominates.",
+      "4. Consider coherent unit-block support (option iii) only after an objective shows a behavioral authored gain at the current sparse support and that gain then fails to persist or transfer.",
+      "5. Any resulting candidate still requires the unchanged full official run, a strictly higher equal-source code mean, review of the other areas, and later the final test and DeepSWE evaluation."
+    ],
+    "evidence_limits": [
+      "There is one official tier10 run per model, with no run-to-run variance. The code score rests on 26 items.",
+      "The authored code-purpose set contains only 10 cases, so power is low. A null on the authored catalog is informative only if P has headroom.",
+      "Teacher-forced LL and margins were measured with forced-empty thoughts. They are not free-generation success rates.",
+      "Per-case correct-LL is unavailable, and correct/foil lengths differ in 74 of 120 cases, which complicates per-token comparisons.",
+      "Activation captures sample sparse positions, have unmatched decode prefixes, and lack writer close acknowledgments. They are descriptive only.",
+      "Authored-catalog results are not official ability scores. Adoption requires the unchanged full benchmark."
+    ],
+    "fresh_reserve": "Keep the running tier30/dev P baseline as P's reference only. Do not use it to evaluate or select A or any objective variant, and do not repeatedly rank candidates on it. Keep the final test and the 113-task DeepSWE evaluation untouched until a single candidate has passed the official criterion. Author any new catalog cases from public specifications without reference implementations or official answers, and freeze them before any candidate is scored on them."
+  },
+  "finished_at": "2026-11-07T07:18:27.736650+00:00",
+  "duration_seconds": 51.628986110095866
+}

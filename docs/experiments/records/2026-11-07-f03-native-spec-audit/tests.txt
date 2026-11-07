@@ -1,0 +1,37 @@
+test_realized_box_excess_and_zero_denominator_are_not_hidden (test_gemma4_native_objectives.NativeSpecAuditTests.test_realized_box_excess_and_zero_denominator_are_not_hidden) ... ERROR
+test_sparse_spec_cannot_overwrite_duplicate_or_round_invalid_values (test_gemma4_native_objectives.NativeSpecAuditTests.test_sparse_spec_cannot_overwrite_duplicate_or_round_invalid_values) ... ERROR
+
+======================================================================
+ERROR: test_realized_box_excess_and_zero_denominator_are_not_hidden (test_gemma4_native_objectives.NativeSpecAuditTests.test_realized_box_excess_and_zero_denominator_are_not_hidden)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/worktrees/kairyu-bench-weight-tools/tests/test_gemma4_native_objectives.py", line 562, in test_realized_box_excess_and_zero_denominator_are_not_hidden
+    audit = load("native_spec_audit")
+            ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/worktrees/kairyu-bench-weight-tools/tests/test_gemma4_purpose_recipes.py", line 36, in load
+    spec.loader.exec_module(module)
+  File "<frozen importlib._bootstrap_external>", line 999, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/worktrees/kairyu-bench-weight-tools/scripts/experiments/gemma4-purpose/native_spec_audit.py", line 15, in <module>
+    from native_dependency import require
+ModuleNotFoundError: No module named 'native_dependency'
+
+======================================================================
+ERROR: test_sparse_spec_cannot_overwrite_duplicate_or_round_invalid_values (test_gemma4_native_objectives.NativeSpecAuditTests.test_sparse_spec_cannot_overwrite_duplicate_or_round_invalid_values)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/worktrees/kairyu-bench-weight-tools/tests/test_gemma4_native_objectives.py", line 576, in test_sparse_spec_cannot_overwrite_duplicate_or_round_invalid_values
+    audit = load("native_spec_audit")
+            ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/worktrees/kairyu-bench-weight-tools/tests/test_gemma4_purpose_recipes.py", line 36, in load
+    spec.loader.exec_module(module)
+  File "<frozen importlib._bootstrap_external>", line 999, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/worktrees/kairyu-bench-weight-tools/scripts/experiments/gemma4-purpose/native_spec_audit.py", line 15, in <module>
+    from native_dependency import require
+ModuleNotFoundError: No module named 'native_dependency'
+
+----------------------------------------------------------------------
+Ran 2 tests in 0.012s
+
+FAILED (errors=2)

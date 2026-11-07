@@ -1,0 +1,23 @@
+
+import json,hashlib
+from pathlib import Path
+c=Path("/mnt/nvme/kairyu/bench-cache/wsp")
+result={}
+result["extra_venvs"]=[{"path":str(p),"ready":(p/".kairyu-bench-ready").read_text().splitlines()} for p in (c/"venvs").iterdir() if p.name.startswith(("v2-harbor-","v2-swebench-pro-"))]
+result["hf_hub"]={}
+for name in ("datasets--livecodebench--code_generation_lite","datasets--wikimedia--wikipedia"):
+ p=c/"hf/wsp/hub"/name
+ result["hf_hub"][name]=[str(x.relative_to(p)) for x in p.rglob("*") if x.is_file() and "snapshots/" in str(x)]
+result["dataset_info"]={}
+for name in ("json","wikimedia___wikipedia","ScaleAI___swe-bench_pro"):
+ p=c/"hf/wsp/datasets"/name
+ result["dataset_info"][name]=[{"path":str(x),"data":json.loads(x.read_text())} for x in p.rglob("dataset_info.json")]
+url="https://openaipublic.blob.core.windows.net/encodings/o200k_base.tiktoken"
+key=hashlib.sha1(url.encode()).hexdigest()
+result["tiktoken_expected_key"]=key
+result["tokenizer_hits"]=[]
+for root in (c/"tmp",c/"xdg",Path("/tmp"),Path("/root/.cache")):
+ if root.exists():
+  for p in root.rglob(key):
+   result["tokenizer_hits"].append({"path":str(p),"size":p.stat().st_size,"sha256":hashlib.sha256(p.read_bytes()).hexdigest()})
+print(json.dumps(result))

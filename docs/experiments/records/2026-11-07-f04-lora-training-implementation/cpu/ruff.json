@@ -1,0 +1,12 @@
+{
+  "returncode": 0,
+  "seconds": 0.0426034249830991,
+  "command": [
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/infra/weight-tools-ci/bin/ruff",
+    "check",
+    "scripts/experiments/gemma4-purpose/train_lora.py",
+    "scripts/experiments/gemma4_lora/dense_lora_recipe.py",
+    "tests/test_gemma4_lora_training.py",
+    "tests/test_gemma4_lora_recipes.py"
+  ]
+}

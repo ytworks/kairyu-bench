@@ -1,0 +1,391 @@
+{
+  "schema_version": 1,
+  "status": "root_delegated_approved_for_one_full_dev30",
+  "approved_for_execution": true,
+  "created_epoch": 1794058607.8441756,
+  "run_id": "gemma4-fresh-f06-dev30-dp4-20261107-v1",
+  "cwd": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/results",
+  "command": [
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/worktrees/kairyu-bench-weight-tools/kairyu-bench",
+    "wsp",
+    "run",
+    "http://kairyu:8000/v1",
+    "--tier",
+    "30",
+    "--split",
+    "dev",
+    "--label",
+    "0fc0ef29346c4d8a06bea8570dee96d8e0ba7038fee0d5aded8db57852474ec5",
+    "--run-id",
+    "gemma4-fresh-f06-dev30-dp4-20261107-v1",
+    "--results-dir",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/results",
+    "--chat-concurrency",
+    "256",
+    "--logprob-concurrency",
+    "32",
+    "--agent-concurrency",
+    "4",
+    "--logprob-endpoint",
+    "http://gemma-0:8000/v1",
+    "--logprob-endpoint",
+    "http://gemma-1:8000/v1",
+    "--logprob-endpoint",
+    "http://gemma-2:8000/v1",
+    "--logprob-endpoint",
+    "http://gemma-3:8000/v1",
+    "--observe-config",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f06-dev30-dp4-v1/http-trace/capture.json"
+  ],
+  "environment_allowlist": {
+    "KAIRYU_BENCH_CACHE_DIR": "/mnt/nvme/kairyu/bench-cache/wsp",
+    "KAIRYU_BENCH_DOCKER_SOCKET": "/mnt/nvme/kairyu/docker/wsp/run/docker.sock",
+    "KAIRYU_BENCH_DOCKER_NETWORK": "gemma-4-31b-8gpu_default",
+    "KAIRYU_BENCH_CLEAN_TASK_IMAGES": "0",
+    "KAIRYU_BENCH_RUNNER_IMAGE_ID": "sha256:f91bdcf997af6d7b194bec229812fd018277158f6795de7d91e58448936e7ad8",
+    "KAIRYU_BENCH_TERMINAL_BENCH_WORKERS": "4",
+    "KAIRYU_BENCH_LIVECODEBENCH_PRO_WORKERS": "4",
+    "KAIRYU_BENCH_SWEBENCH_PRO_WORKERS": "4"
+  },
+  "credential_policy": "inherit approved shell credentials silently; never print or persist values",
+  "global_lock": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/candidate-evaluation.lock",
+  "prior_owner_pid": 1772510,
+  "handoff": {
+    "root_authorized": true,
+    "prior_owner_pid": 1772510,
+    "release_required_before_launch": true,
+    "normal_global_release": {
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f06-lora-deployment-plan-v1/global-lock-released.json",
+      "bytes": 280,
+      "sha256": "dfe2fe321a8debc13a4e41614723215ea400c8dd7477199602e89e091cc6ab41"
+    },
+    "endpoint_closure": {
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f06-lora-deployment-plan-v1/endpoint-closure.json",
+      "bytes": 3984,
+      "sha256": "1137d4e6f2ba4de6fa2ec141a06e29c8218d67e827a60d3bbd1685ffb191b2ee"
+    },
+    "authorization": "Root explicitly delegated approval and immediate launch after existing owner preview PASS and exact F04 conditions plus verified F06 save, actual Opus and all4 endpoint identity. One unchanged full2338 run; no baseline rerun."
+  },
+  "expected_serving": {
+    "model": "gemma-4-31b",
+    "checkpoint": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/checkpoints/fresh-lora-mbpp-f06-v1/checkpoint",
+    "tree_sha256": "0fc0ef29346c4d8a06bea8570dee96d8e0ba7038fee0d5aded8db57852474ec5",
+    "replicas": 4,
+    "tp_size": 2,
+    "mtp_tokens": 4,
+    "dtype": "native BF16",
+    "ordinary_only": true,
+    "service_cids": {
+      "gemma-0": "1ffc862fe747b8f4e6134c72fb7bb322cd6acd7e3fdd012cc1d9614d09932273",
+      "gemma-1": "ee04769375d9e78370d8d7372ad3c5de8223e50ce3a4a233ae8adabdc1bff897",
+      "gemma-2": "48551f7b49ceb64b921ffc986de01b04cf1a53386173a1d15ad6af87c50e22ab",
+      "gemma-3": "657399f41b7c641b860a1c406123be1e75960118d6044d2c0aed367859c05461"
+    },
+    "gateway": "gemma-4-31b-8gpu-kairyu-1",
+    "closures": [
+      {
+        "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f06-lora-deployment-plan-v1/gemma-0-closure-v1.json",
+        "bytes": 611,
+        "sha256": "c23fef248eb55ea39d525bb9bb9f9bbd877fe2ace3df82274c16b7574208c553"
+      },
+      {
+        "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f06-lora-deployment-plan-v1/gemma-1-closure-v1.json",
+        "bytes": 611,
+        "sha256": "7f9613b1724cc5eaf46f59e4fa64092ca010ce8b4a90dc1bb2720fade6a42f76"
+      },
+      {
+        "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f06-lora-deployment-plan-v1/gemma-2-closure-v1.json",
+        "bytes": 611,
+        "sha256": "d52cc74f86c68fdfeef1d93fa95b7a89de6bcd26539b6e6d51ea439b5e922405"
+      },
+      {
+        "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f06-lora-deployment-plan-v1/gemma-3-closure-v1.json",
+        "bytes": 611,
+        "sha256": "6dc3c977cbac6e19db597b8e159958d3f3aa136c001cf41a173e30d8a725571e"
+      }
+    ],
+    "four_replica_closure": {
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f06-lora-deployment-plan-v1/four-apply-closure.json",
+      "bytes": 4126,
+      "sha256": "102d743fbc5ff4c190be6db13c89f076d367f832e05a490eeacd1241351e8098"
+    }
+  },
+  "selection": {
+    "tier": 30,
+    "split": "dev",
+    "items": 2338,
+    "source_counts": {
+      "aime-2026": 12,
+      "arc-challenge": 300,
+      "bbeh": 46,
+      "bfcl": 120,
+      "gpqa-diamond": 48,
+      "gsm8k-platinum": 50,
+      "hellaswag": 300,
+      "hmmt-feb-2026": 13,
+      "humaneval-plus": 30,
+      "ifbench": 50,
+      "ifeval": 120,
+      "jamc-qa": 72,
+      "livecodebench": 20,
+      "longbench-v2": 10,
+      "math-500": 60,
+      "mbpp-plus": 30,
+      "mgsm": 55,
+      "mmlu-pro": 180,
+      "mmlu-prox-ja": 60,
+      "mmmu-pro": 48,
+      "mrcr-v2": 16,
+      "musr": 30,
+      "probe-code": 40,
+      "probe-wikipedia-ja": 40,
+      "probe-wikitext": 16,
+      "ruler": 24,
+      "scicode": 10,
+      "swe-bench-pro": 4,
+      "terminal-bench": 6,
+      "triviaqa": 120,
+      "winogrande": 300,
+      "xstest": 108
+    },
+    "named_area_counts": {
+      "agents": 10,
+      "code": 90,
+      "commonsense": 900,
+      "expert": 48,
+      "facts": 120,
+      "instructions": 170,
+      "knowledge": 180,
+      "long-context": 50,
+      "math": 135,
+      "multilingual": 187,
+      "reasoning": 76,
+      "safety": 108,
+      "tools": 120,
+      "vision": 48
+    },
+    "probe_count_without_official_area": 96,
+    "kind_counts": {
+      "chat": 1332,
+      "logprob": 996,
+      "agent": 10
+    },
+    "manifest_sha256": "a3a0b60e0872a38c6b1abf7e97d7fe729fabf9e25cd3f09a3da9544b9ca39b5b",
+    "item_ids_sha256": "a15df4fb42125148b85a9b98d6961a82d2ef626558ba6c87507e79b65f979f6e",
+    "excluded_ids": [],
+    "only": null,
+    "incomplete_manifest": false
+  },
+  "source_identity": {
+    "actual_runner_image_id": "sha256:f91bdcf997af6d7b194bec229812fd018277158f6795de7d91e58448936e7ad8",
+    "archive": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/runtime/fresh-purpose-20261107-av-live10-v1/runner-app",
+    "baseline_runner_source_receipt": {
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-av-live10-v1/runner-image-source.json",
+      "bytes": 28007,
+      "sha256": "e28866ef8a081b578e0be192bdc803ad28cb868797085bbdb5b4b1fa0ab7066d"
+    },
+    "wrapper": {
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/worktrees/kairyu-bench-weight-tools/kairyu-bench",
+      "bytes": 6875,
+      "sha256": "56b53b7d72d75efcb2bef24643322f73625eba5c08a645c2f847768e558b6176"
+    },
+    "critical_archived_files": [
+      {
+        "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/runtime/fresh-purpose-20261107-av-live10-v1/runner-app/src/kairyu_bench/wsp/cli.py",
+        "bytes": 16960,
+        "sha256": "406b07cb9bed06bd3b814292329cd67d0acf89fcaf5fddca8858cc865bbed090"
+      },
+      {
+        "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/runtime/fresh-purpose-20261107-av-live10-v1/runner-app/src/kairyu_bench/wsp/run.py",
+        "bytes": 12314,
+        "sha256": "9272730f132a72002cc38f7c3c47690893f8288652364c1b644e0cf27bf04ce2"
+      },
+      {
+        "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/runtime/fresh-purpose-20261107-av-live10-v1/runner-app/src/kairyu_bench/wsp/manifest.py",
+        "bytes": 5653,
+        "sha256": "d41c24bec59f7e84bd0065fae400d2c1209bdc7384d277ab82eff3c91debbfe3"
+      },
+      {
+        "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/runtime/fresh-purpose-20261107-av-live10-v1/runner-app/src/kairyu_bench/data/wsp/manifest.json",
+        "bytes": 2130847,
+        "sha256": "a3a0b60e0872a38c6b1abf7e97d7fe729fabf9e25cd3f09a3da9544b9ca39b5b"
+      },
+      {
+        "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/runtime/fresh-purpose-20261107-av-live10-v1/runner-app/src/kairyu_bench/wsp/observe/tracing.py",
+        "bytes": 4528,
+        "sha256": "02b21d991f2d3be7a4f5bd648857e9a887bf1fd7dd7984245b5244ed96ee27b4"
+      }
+    ],
+    "host_git_head": "b158209eb496b446a49bd629f64d0d367e4448b5"
+  },
+  "http_trace": {
+    "config": {
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f06-dev30-dp4-v1/http-trace/capture.json",
+      "bytes": 4981,
+      "sha256": "55e5d7a33524befb18bee70b088e23ea0624452808288f73460780b60e7461a2"
+    },
+    "identity_check": {
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f06-dev30-dp4-v1/http-trace-identity-check.json",
+      "bytes": 6385,
+      "sha256": "26551c62f423aff33c18a0b21ea12afa831ba7df1bbdc70180f6af768f7ed3b2"
+    },
+    "scope": "HTTP client traces only; no serving CaptureWorker or CaptureMiddleware; no activation-completeness claim",
+    "workers_expected": 0
+  },
+  "limits": "All frozen item max_tokens/samples and unchanged harness/serving defaults; no new timeout or problem reduction",
+  "cache": {
+    "preflight": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-av-dev30-cache-preflight-v4",
+    "normal_online_metadata_behavior": true,
+    "tiktoken_download_root_filesystem": "NVMe /mnt/nvme/docker",
+    "new_offline_flags": false,
+    "task_image_cleanup": false
+  },
+  "prelaunch_requirements": [
+    "F04 remains selected complete same-cohort parent (coding tie with AV; higher overall). Existing F04 baseline reused, no base rerun.",
+    "F06 successful creation and full verification; failed materialization remains recorded and is not eligible",
+    "actual Claude Opus 5.5 candidate review receipt and root decision bound",
+    "four ordinary candidate replicas exact CIDs/healthy/idle/RO same verified checkpoint/tree, TP2x4 MTP4 native BF16",
+    "normal prior-owner release and nonblocking global lock acquisition",
+    "fresh results and empty candidate HTTP-client trace",
+    "same f91 OCI image, wrapper/critical scorer/manifest source pins and unchanged generation/token conditions",
+    "all saved checkpoint hash/stat continuity and verified parent preservation",
+    "all inherited task-selector overrides absent; no only/excluded IDs",
+    "same dedicated WSP DinD/network/cache/online metadata behavior and source images"
+  ],
+  "monitoring": {
+    "cadence_seconds": 60,
+    "read_only": true,
+    "fields": [
+      "completed response items /2338",
+      "scored/unscored separately; unknown until available",
+      "all code source item IDs and available official outcomes",
+      "agent task IDs/exceptions/steps/tool calls/elapsed (unknown if absent)",
+      "retry attempts and request errors",
+      "API running/waiting state, exact CIDs, GPU use, free NVMe"
+    ],
+    "partial_ranking": false,
+    "healthy_work_stop": false
+  },
+  "failure_policy": "record every setup/run/scoring failure; no silent rerun or automatic model mutation",
+  "model_calls_so_far": 0,
+  "owner_source": {
+    "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/worktrees/kairyu-bench-weight-tools/docs/experiments/scripts/fresh-av-dev30-20261107.py",
+    "sha256": "956af488fe54578c32c9baa856e9c32170dc49c1bbce2b1ba5db9af9ea1dd524"
+  },
+  "closure_bound_epoch": 1794059916.1188347,
+  "launch_process": {
+    "detached": true,
+    "start_new_session": true,
+    "stdin": "DEVNULL",
+    "credential_initialization": "standard approved shell startup, stdout/stderr suppressed before exec of Python owner",
+    "owner_interactive": false,
+    "credentials_serialized": false,
+    "automatic_retry": false
+  },
+  "comparison": {
+    "baseline_parent": "F04",
+    "baseline_plan": {
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f04-dev30-dp4-v1/launch-plan-approved.json",
+      "bytes": 14188,
+      "sha256": "26c44c8b15af2c5c0fefeebb1d0aaa94203c381ada65c69eab16ea127b44ef07"
+    },
+    "baseline_run_id": "gemma4-fresh-f04-dev30-dp4-20261107-v1",
+    "baseline_report": {
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/results/gemma4-fresh-f04-dev30-dp4-20261107-v1/report.json",
+      "bytes": 11121,
+      "sha256": "1a062c114b0acae4d27930040c30ccc2e01a20c3e1062490fa1f84656278fd85"
+    },
+    "baseline_run_metadata": {
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/results/gemma4-fresh-f04-dev30-dp4-20261107-v1/run.json",
+      "bytes": 1859,
+      "sha256": "f467d0cdcfdcc7674e62ea38abc2d29124d7740f2e549d4d8fcf135e862cf894"
+    },
+    "baseline_code_source_mean_points": 72.93650793650794,
+    "baseline_overall_points": 76.9910864327912,
+    "baseline_selected_items": 2338,
+    "baseline_code_items": 90,
+    "baseline_unscored": 0,
+    "baseline_reruns": 0,
+    "candidate_repetitions": 1,
+    "source_identity_host_git_head_is_historical": true,
+    "current_host_git_head": "4927eac7cf75da218219cc51baa0e926237d0d14",
+    "F05_gate_inherited": false
+  },
+  "pending_deployment_bindings": [],
+  "candidate_identity": {
+    "candidate": "F06",
+    "logical_parent": "F04",
+    "logical_parent_checkpoint": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/checkpoints/fresh-native-relative-f04-faststore-v1/checkpoint",
+    "logical_parent_tree_sha256": "7b9e9488e3cd4e0b6c5f61ae341e5eeccdf5bd31c46d1c8354950dbc29d0f924",
+    "checkpoint_path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/checkpoints/fresh-lora-mbpp-f06-v1/checkpoint",
+    "manifest_path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/checkpoints/fresh-lora-mbpp-f06-v1/manifest.json",
+    "manifest_sha256": "22b0603cc2dc9a2060c76f8baf99c28eceac08b56116727173bc61a719b5c0d4",
+    "verification_receipt_path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f04-mbpp-lora-training-v1/materialization-f06-v2/verify.stdout",
+    "verification_receipt_sha256": "42140a38d3f2412887952c0dfe836433f0fabb6a8aa68196978eb8e5e479788d",
+    "spec_path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f04-mbpp-lora-training-v1/work/train-lora/final/merge-spec.json",
+    "spec_sha256": "44e1928332dc347bfe19048b93ddb837e79f79797d2db807e6230bb52ce78d8d",
+    "physical_tree_sha256": "0fc0ef29346c4d8a06bea8570dee96d8e0ba7038fee0d5aded8db57852474ec5",
+    "hash_contract": "Existing completed full dense recipe verify and exact current stat continuity; no additional payload hash.",
+    "failed_materialization_path_reference": {
+      "checkpoint_path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/checkpoints/fresh-lora-mbpp-f06-v1/checkpoint",
+      "manifest_path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/checkpoints/fresh-lora-mbpp-f06-v1/manifest.json",
+      "status": "Historical failed initial create retained separately. Same destination was subsequently completed and fully verified by materialization-f06-v2; current eligibility derives solely from bound successful receipts.",
+      "plan": {
+        "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f04-mbpp-lora-training-v1/merge-preparation-v1/prepared-plan.json",
+        "bytes": 4959,
+        "sha256": "54d7696929c5157bfb8798cda40891b6089f58c99d4071428593b6bd66ea04b0"
+      }
+    },
+    "opus_review": {
+      "receipt_path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f06-lora-review-v1/actual-opus55-v1/receipt.json",
+      "receipt_sha256": "a6bc33aa9f33648cd42104ef19b11bf8eda9ef21bf0f5b3284b894c7b1b9dbba",
+      "actual_model": "claude-opus-5-5",
+      "verified": true,
+      "root_decision": {
+        "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f06-lora-review-v1/root-review-decision.json",
+        "sha256": "0bb1c680e96f368306c91a371ec5a51b5819966cddc77f438ed5e3b946063e82"
+      }
+    },
+    "compact_full_identity": {
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f04-mbpp-lora-training-v1/materialization-f06-v2/fullcandidateidentity.json",
+      "bytes": 10225,
+      "sha256": "50aa8056b9e48257b48c8621396030b4796c2e72d1c94fd8f64ad84a6867bdf7"
+    },
+    "materialization": {
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f04-mbpp-lora-training-v1/materialization-f06-v2/completion.json",
+      "sha256": "08f248e42f865ef744670dea710d84b60ccd5e6a09698d5ac30926196343cc39"
+    },
+    "freeze": {
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f06-lora-deployment-plan-v1/bound-preview-v1/f06-freeze.json",
+      "sha256": "cee54e1c7f79cf2116ea7b6036c9d2d3c0709f83117cb95c270542b616b84221"
+    },
+    "actual_saved_changes": {
+      "elements": 8193921391,
+      "tensors": 410,
+      "delta_l2": 3.708003317513851
+    }
+  },
+  "deployment_plan": {
+    "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f06-lora-deployment-plan-v1/plan-root-approved-v1.json",
+    "bytes": 8793,
+    "sha256": "a1ca6fe0e8756b64e8957e7d14361eef50aef2169f6e0ec2c81600d724fca39f"
+  },
+  "deployment_parallel_closure": {
+    "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f06-lora-deployment-plan-v1/parallel-apply-v1/four-apply-closure.json",
+    "bytes": 7878,
+    "sha256": "560d923e6c640eadfe3a118aeb7a629a632bc78af446d34f2b12c1ebb9940ab2"
+  },
+  "binding_source": {
+    "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/worktrees/kairyu-bench-weight-tools/docs/experiments/scripts/fresh-f06-wsp30-bind-20261107.py",
+    "bytes": 11116,
+    "sha256": "6153973ccec11e5c15b45c5b17417a772910866431dc4d34613a8ae7320bcb23"
+  },
+  "launch_authorization": {
+    "recorded_epoch": 1794060014.7541654,
+    "scope": "one candidate-only canonical full dev30",
+    "delegating_agent": "/root",
+    "executing_agent": "/root/audit_results",
+    "source_sha256": "42b233a013230ce779e7fc94bed9fc75217947f6421b30247ae9b5db4d1cca9c",
+    "bound_plan_sha256": "5d598bd7261719674ad85d89ddb30e50aff90f52b28eee740b0880acef01c8f9"
+  }
+}\n

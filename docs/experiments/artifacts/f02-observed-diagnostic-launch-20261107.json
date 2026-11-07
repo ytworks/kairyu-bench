@@ -1,0 +1,240 @@
+{
+  "launch-receipt": {
+    "pid": 211879,
+    "launched_epoch": 1794030031.376365,
+    "plan_sha256": "8ff5619bd55b93b9f967ae06cb8188ab6a015f690f9c1791f557bdea0a84e925",
+    "owner_sha256": "ed51d091c05924a09ae3a3fa27c549d50286f0d9ed9fbc3912d1b31c0ac0a3a9",
+    "authorization": "root approved one F02 canonical full778 diagnostic; final_eval keeper released normally",
+    "credentials_displayed_or_recorded": false,
+    "restore_target_cid": "e275b7bcc331d6bcdd82a1729c0ec0cc7a80e581a008bd273d0b1aa953e82c02"
+  },
+  "authorized-preview": {
+    "mode": "preview",
+    "status": "approved_for_execution",
+    "run_id": "gemma4-fresh-f02-observed-dev10-20261107-v1",
+    "checkpoint_planned": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/checkpoints/fresh-code-joint-f02",
+    "runner_image_id": "sha256:f91bdcf997af6d7b194bec229812fd018277158f6795de7d91e58448936e7ad8",
+    "observer_files_verified": 89,
+    "checkpoint_payload_hashed": false,
+    "serving_mutated": false,
+    "benchmark_started": false
+  },
+  "matched-observer-config-parity": {
+    "equal_capture_keys": [
+      "data_kind",
+      "decode_offsets",
+      "limits",
+      "observation_mode",
+      "runtime",
+      "sampling",
+      "schema_version"
+    ],
+    "different_capture_keys": [
+      "capture_id",
+      "checkpoint",
+      "created_at",
+      "output_dir",
+      "runtime_cache_dir",
+      "runtime_source_dir"
+    ],
+    "observer_source_map_equal": true,
+    "runtime_equal": true,
+    "limits_equal": true,
+    "sampling_equal": true,
+    "decode_offsets_equal": true,
+    "baseline_capture_sha256": "163c6da4d9cf63c8ef42181eb1e70936ba05779b8839aa12b8998ba384745f3f",
+    "candidate_capture_sha256": "a4dc6e984f7aa0a00c87799ebc40e42298c2d9d9e5ad4fd44d5203ca6b813395",
+    "candidate_tree": "46680f4066f57c1596a1f4c66b67d23929c96b325943d981c6d74260cdbb3f5c"
+  },
+  "actual-runner": {
+    "runner": {
+      "cid": "e6dcc4eb030c8d3c788ffd459fae0aca35fe09788cac748157a681abd20bd827",
+      "name": "/hungry_allen",
+      "image": "sha256:f91bdcf997af6d7b194bec229812fd018277158f6795de7d91e58448936e7ad8",
+      "command": [
+        "wsp",
+        "run",
+        "http://gemma-0:8000/v1",
+        "--results-dir",
+        "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/results",
+        "--tier",
+        "10",
+        "--split",
+        "dev",
+        "--label",
+        "46680f4066f57c1596a1f4c66b67d23929c96b325943d981c6d74260cdbb3f5c",
+        "--run-id",
+        "gemma4-fresh-f02-observed-dev10-20261107-v1",
+        "--chat-concurrency",
+        "32",
+        "--logprob-concurrency",
+        "8",
+        "--agent-concurrency",
+        "1",
+        "--logprob-endpoint",
+        "http://gemma-0:8000/v1",
+        "--observe-config",
+        "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f02-live10-v1/capture/capture.json"
+      ],
+      "created": "2026-11-07T05:44:21.47521178Z"
+    },
+    "same_immutable_image_as_baseline": true,
+    "source_and_dependencies_reference": "baseline runner-image-source.json and candidate cache-parity.json"
+  },
+  "overhead-off": {
+    "label": "off",
+    "kind": "synthetic_overhead_not_WSP",
+    "samples": [
+      {
+        "index": 0,
+        "seconds": 0.07561913598328829,
+        "public_sha256": "44cb730c420480a0477b505ae68af508fb90f96cf0ec54c6ad16949dd427f13a",
+        "public_characters": 2,
+        "finish_reason": "stop",
+        "usage": {
+          "prompt_tokens": 26,
+          "total_tokens": 29,
+          "completion_tokens": 3,
+          "prompt_tokens_details": null,
+          "completion_tokens_details": {
+            "reasoning_tokens": 0
+          }
+        },
+        "request_id": "chatcmpl-adf5c5c501f4dbdb"
+      },
+      {
+        "index": 1,
+        "seconds": 0.07113897195085883,
+        "public_sha256": "ad949e73b84421cf6d97ed160590cd379f63e2543f78e3604e4f9d30e8d8b272",
+        "public_characters": 4,
+        "finish_reason": "stop",
+        "usage": {
+          "prompt_tokens": 23,
+          "total_tokens": 27,
+          "completion_tokens": 4,
+          "prompt_tokens_details": null,
+          "completion_tokens_details": {
+            "reasoning_tokens": 0
+          }
+        },
+        "request_id": "chatcmpl-9e9dcbf21fa150d6"
+      },
+      {
+        "index": 2,
+        "seconds": 0.09679470001719892,
+        "public_sha256": "00b6521e8bff0ac0820c516df2d7b49afbeaac3d4f55cc988bbd13c0d6c3b53f",
+        "public_characters": 7,
+        "finish_reason": "stop",
+        "usage": {
+          "prompt_tokens": 28,
+          "total_tokens": 36,
+          "completion_tokens": 8,
+          "prompt_tokens_details": null,
+          "completion_tokens_details": {
+            "reasoning_tokens": 0
+          }
+        },
+        "request_id": "chatcmpl-82e29e6fa93c9b6d"
+      },
+      {
+        "index": 3,
+        "seconds": 0.06922948290593922,
+        "public_sha256": "e7f6c011776e8db7cd330b54174fd76f7d0216b612387a5ffcfb81e6f0919683",
+        "public_characters": 1,
+        "finish_reason": "stop",
+        "usage": {
+          "prompt_tokens": 23,
+          "total_tokens": 25,
+          "completion_tokens": 2,
+          "prompt_tokens_details": null,
+          "completion_tokens_details": {
+            "reasoning_tokens": 0
+          }
+        },
+        "request_id": "chatcmpl-9be21b5db3a3f2df"
+      }
+    ],
+    "thinking": false,
+    "temperature": 0,
+    "top_p": 1,
+    "max_tokens": 64
+  },
+  "overhead-on": {
+    "label": "on",
+    "kind": "synthetic_overhead_not_WSP",
+    "samples": [
+      {
+        "index": 0,
+        "seconds": 0.09295434597879648,
+        "public_sha256": "44cb730c420480a0477b505ae68af508fb90f96cf0ec54c6ad16949dd427f13a",
+        "public_characters": 2,
+        "finish_reason": "stop",
+        "usage": {
+          "prompt_tokens": 26,
+          "total_tokens": 29,
+          "completion_tokens": 3,
+          "prompt_tokens_details": null,
+          "completion_tokens_details": {
+            "reasoning_tokens": 0
+          }
+        },
+        "request_id": "chatcmpl-observe-6123159ef91e4afebca1f2452190839e-8d3ed225b884410ba59d6c6dc9d96e9e"
+      },
+      {
+        "index": 1,
+        "seconds": 0.07404739200137556,
+        "public_sha256": "ad949e73b84421cf6d97ed160590cd379f63e2543f78e3604e4f9d30e8d8b272",
+        "public_characters": 4,
+        "finish_reason": "stop",
+        "usage": {
+          "prompt_tokens": 23,
+          "total_tokens": 27,
+          "completion_tokens": 4,
+          "prompt_tokens_details": null,
+          "completion_tokens_details": {
+            "reasoning_tokens": 0
+          }
+        },
+        "request_id": "chatcmpl-observe-c0cc537359184b98b889e19210c4992b-82e21f4edd2241a8959c711e978abf00"
+      },
+      {
+        "index": 2,
+        "seconds": 0.10466535191517323,
+        "public_sha256": "00b6521e8bff0ac0820c516df2d7b49afbeaac3d4f55cc988bbd13c0d6c3b53f",
+        "public_characters": 7,
+        "finish_reason": "stop",
+        "usage": {
+          "prompt_tokens": 28,
+          "total_tokens": 36,
+          "completion_tokens": 8,
+          "prompt_tokens_details": null,
+          "completion_tokens_details": {
+            "reasoning_tokens": 0
+          }
+        },
+        "request_id": "chatcmpl-observe-1d1b11b5d05f482fb3081d0d27ac310c-176f087efc654a06a66292b61f2d62f4"
+      },
+      {
+        "index": 3,
+        "seconds": 0.07278106303419918,
+        "public_sha256": "e7f6c011776e8db7cd330b54174fd76f7d0216b612387a5ffcfb81e6f0919683",
+        "public_characters": 1,
+        "finish_reason": "stop",
+        "usage": {
+          "prompt_tokens": 23,
+          "total_tokens": 25,
+          "completion_tokens": 2,
+          "prompt_tokens_details": null,
+          "completion_tokens_details": {
+            "reasoning_tokens": 0
+          }
+        },
+        "request_id": "chatcmpl-observe-c66abe0c4904475381bb2f74bb7630c1-eae76f8f5da94eb2baeb0720c0731290"
+      }
+    ],
+    "thinking": false,
+    "temperature": 0,
+    "top_p": 1,
+    "max_tokens": 64
+  }
+}

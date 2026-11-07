@@ -1,0 +1,49 @@
+{
+  "epoch": 1794034212.011164,
+  "path": "/mnt/nvme/kairyu/model-volumes/gemma-4-31b-8gpu/chat-checkpoint.json",
+  "schema_source": "existing control.py chat_checkpoint_record",
+  "before_sha256": "afb253fbd4134fefee2ae0a23b593134617023801154fcf8f2a5eb34df9825c9",
+  "after_sha256": "8cd66daf213fe900c9dcd418e374f10111361a7d31ecb36f677e4ef1cb4bcf81",
+  "old_tree": "ba5e6ab526c8c08182a030f459f4acb532d5f50ebc1d35e4745b09fe59a8768d",
+  "new_tree": "5d056eb03f954db80313a85167153c875fe5e436e4f97c281a3f55202d9b3eaf",
+  "services": [
+    {
+      "service": "gemma-0",
+      "cid": "baf23e529c4e217801633d0c62b04801e3991b24f6267274104f9d3e355e62c3",
+      "tree_label_keys": [
+        "kairyu.chat-checkpoint-tree"
+      ],
+      "healthy": true
+    },
+    {
+      "service": "gemma-1",
+      "cid": "ce1a67f4ec204a90e486092534e3f700f3abf2fbc9f1e68f87668009104ee00d",
+      "tree_label_keys": [
+        "kairyu.chat-checkpoint-tree"
+      ],
+      "healthy": true
+    },
+    {
+      "service": "gemma-2",
+      "cid": "fd4ec2eb9d7deba2ce3e790add6b50c0ee79a6390495320d8697873b32957bcf",
+      "tree_label_keys": [
+        "kairyu.chat-checkpoint-tree"
+      ],
+      "healthy": true
+    },
+    {
+      "service": "gemma-3",
+      "cid": "e8ec9f3bbfca4baa44b16590ee771a96bba1e1328a60ff0c904995f2675a31b5",
+      "tree_label_keys": [
+        "kairyu.chat-checkpoint-tree"
+      ],
+      "healthy": true
+    }
+  ],
+  "payload_hashes_reused_from_fresh_init": true,
+  "all_nine_stats_unchanged": true,
+  "weight_writes": 0,
+  "container_changes": 0,
+  "benchmark_config_changes": 0,
+  "atomic_replace": true
+}

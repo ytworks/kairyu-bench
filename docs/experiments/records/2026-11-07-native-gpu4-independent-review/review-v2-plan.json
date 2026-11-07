@@ -1,0 +1,47 @@
+{
+  "epoch": 1794041102.375284,
+  "plan_path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-av-behavior12-native-gpu4-v2/plan.json",
+  "plan_sha256": "8edba22f5aa38ec5eebf443a3b4b2eab2794b23c9968fcd0c09d13d003f20316",
+  "owner_sha256": "9a8d9255312a97ae2762ec97c34c9701ac5d64dcb0dc273e01f8d7f6700b7183",
+  "validation": "PASS",
+  "case_ids": [
+    "behavior-A1",
+    "behavior-A2",
+    "behavior-B1",
+    "behavior-B2",
+    "behavior-C1",
+    "behavior-C2",
+    "behavior-D1",
+    "behavior-D2",
+    "behavior-E1",
+    "behavior-E2",
+    "behavior-F1",
+    "behavior-F2"
+  ],
+  "source_pin_count": 79,
+  "native_behavior_result": {
+    "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-av-behavior12-native-gpu4-v2/native-behavior-result-identity.json",
+    "sha256": "463e9ff5cf4f8183527bc1080f1fab36a5214a63891345cc07f254d2ee9ff099"
+  },
+  "approved_for_execution": false,
+  "work_directory_absent": true,
+  "docker_calls": 0,
+  "gpu_calls": 0,
+  "model_calls": 0,
+  "service_changes": 0,
+  "source_changes": 0,
+  "identity_keys": [
+    "schema_version",
+    "status",
+    "cases",
+    "checkpoint_tree_sha256",
+    "artifacts",
+    "case_ids",
+    "rows",
+    "generation",
+    "execution",
+    "limits",
+    "transfer_cases_measured",
+    "interpretation"
+  ]
+}

@@ -1,0 +1,1917 @@
+{
+  "status": "all140_saved_native_tensors_match_manifest_and_exact_spec",
+  "changed_elements": 429,
+  "changed_tensors": 140,
+  "payload_bytes_read": 825856,
+  "payload_scope": "Only the 140 edited tensor ranges in private native.safetensors; shared payload bytes read zero",
+  "shared_payload_bytes_read": 0,
+  "full_payload_hash": false,
+  "all9stat_continuity": true,
+  "manifest_sha256": "fd189cf276a1219ad627186d2dfb4a895c79768821f247a0b33d9abd8953d8c1",
+  "verify_sha256": "a7237a2b82d68e64467c791c3781a86b8b216f584272ef5db77c956383c4b0cd",
+  "spec_sha256": "52e293bdd36a4c09715c8c211e035562b1eeb26aabb6490e21d4b511f2a0987b",
+  "source_values_sha256": "81a10d044bd0776e5a7997e68b7cae65b2f7b2af000873ac0be2fa2385763bac",
+  "audit_source_sha256": "38237dcf8706a64493c8bd041df614e0273ce9b550f151ce8650018b8e98dcbc",
+  "oneoff_source_sha256": "0acc18cccc2de7c3e4ab1badb08badaf7e26e1115239842ce25dcc6d268ef6a5",
+  "rows": [
+    {
+      "tensor": "model.language_model.layers.0.post_attention_layernorm.weight",
+      "shape": [
+        5376
+      ],
+      "dtype": "BF16",
+      "changed_count": 2,
+      "before_hex_matches_source": true,
+      "after_hex_matches_exact_spec": true,
+      "saved_native_raw_matches_after_hex": true,
+      "source_words_sha256": "5d872b2806bd87f2a922348afd28a46bb2567fb424c3feae9427ab87b365abba",
+      "saved_words_sha256": "1f6868b6d4e6cdfea3a1ecbcb4db2caf10bc43c6bb9d43bf8d98bfa17cc1adf2"
+    },
+    {
+      "tensor": "model.language_model.layers.0.self_attn.k_norm.weight",
+      "shape": [
+        256
+      ],
+      "dtype": "BF16",
+      "changed_count": 1,
+      "before_hex_matches_source": true,
+      "after_hex_matches_exact_spec": true,
+      "saved_native_raw_matches_after_hex": true,
+      "source_words_sha256": "82dbd230fa6158cdafdf769a7ed09db864b9b957b379d356408db8c75496b1b4",
+      "saved_words_sha256": "736b8c924847a12466651320f90bd7d94383b88f7d8fe78ff0b414e10865b390"
+    },
+    {
+      "tensor": "model.language_model.layers.1.input_layernorm.weight",
+      "shape": [
+        5376
+      ],
+      "dtype": "BF16",
+      "changed_count": 1,
+      "before_hex_matches_source": true,
+      "after_hex_matches_exact_spec": true,
+      "saved_native_raw_matches_after_hex": true,
+      "source_words_sha256": "6d7174d8ea66b1ccaa88f324957abec0f8669f22272e850fbba4434812efedf1",
+      "saved_words_sha256": "bdd945f14e15a6f896cfc3b45776256cf63feb888e73e97d65348cd97e5fc11d"
+    },
+    {
+      "tensor": "model.language_model.layers.1.post_feedforward_layernorm.weight",
+      "shape": [
+        5376
+      ],
+      "dtype": "BF16",
+      "changed_count": 15,
+      "before_hex_matches_source": true,
+      "after_hex_matches_exact_spec": true,
+      "saved_native_raw_matches_after_hex": true,
+      "source_words_sha256": "dafb5cf9a37fe11951f983a4591d9cb1ccfb6efc2c3dbaa815092389feb88820",
+      "saved_words_sha256": "0fedfd03a17882788af07777d765d710e01d78c6b39593bd286c260e60bea740"
+    },
+    {
+      "tensor": "model.language_model.layers.1.pre_feedforward_layernorm.weight",
+      "shape": [
+        5376
+      ],
+      "dtype": "BF16",
+      "changed_count": 1,
+      "before_hex_matches_source": true,
+      "after_hex_matches_exact_spec": true,
+      "saved_native_raw_matches_after_hex": true,
+      "source_words_sha256": "27f673f095a62faeb62a4db7e1a281e18506b883d234ce128da5ce20dfcbaac1",
+      "saved_words_sha256": "cff10e141638b0d5f214a502a80e99b0c915d374ce326ef13ba6d9490b0fd4f4"
+    },
+    {
+      "tensor": "model.language_model.layers.1.self_attn.k_norm.weight",
+      "shape": [
+        256
+      ],
+      "dtype": "BF16",
+      "changed_count": 1,
+      "before_hex_matches_source": true,
+      "after_hex_matches_exact_spec": true,
+      "saved_native_raw_matches_after_hex": true,
+      "source_words_sha256": "35b3949bebc1bfcb41439ea7ba74114bfbe4969560caa5f6b40fc8d73609cca4",
+      "saved_words_sha256": "4486a8420a98cfcacad1a906ab32644375f0de8cc483c5df02abc4779d150d12"
+    },
+    {
+      "tensor": "model.language_model.layers.1.self_attn.q_norm.weight",
+      "shape": [
+        256
+      ],
+      "dtype": "BF16",
+      "changed_count": 4,
+      "before_hex_matches_source": true,
+      "after_hex_matches_exact_spec": true,
+      "saved_native_raw_matches_after_hex": true,
+      "source_words_sha256": "9dc9c7717885e86c7781020435cc97cacb6ecc5f067592b67ae752cd100ae5bc",
+      "saved_words_sha256": "623f160ac334894306942382387c9edaa87c4697567bc5815a9b9b84cfa6e35b"
+    },
+    {
+      "tensor": "model.language_model.layers.10.post_attention_layernorm.weight",
+      "shape": [
+        5376
+      ],
+      "dtype": "BF16",
+      "changed_count": 1,
+      "before_hex_matches_source": true,
+      "after_hex_matches_exact_spec": true,
+      "saved_native_raw_matches_after_hex": true,
+      "source_words_sha256": "0207cfc8e37507a9a40441cbc6b264cc2b40cdc3d9646e2e6b996f6725322359",
+      "saved_words_sha256": "e43eb3548f2164cb1900b1c59dd487dd2787fd292c841e957627cb8144d44d26"
+    },
+    {
+      "tensor": "model.language_model.layers.11.post_attention_layernorm.weight",
+      "shape": [
+        5376
+      ],
+      "dtype": "BF16",
+      "changed_count": 2,
+      "before_hex_matches_source": true,
+      "after_hex_matches_exact_spec": true,
+      "saved_native_raw_matches_after_hex": true,
+      "source_words_sha256": "dc38c636c3944a480504449e056dd609ae9a0b0039b9f7b4844a6c2e9adfe4ee",
+      "saved_words_sha256": "ecf978cbac39744cd094377b83228d352ec35d33ab61f1d312cfa558d56b5acc"
+    },
+    {
+      "tensor": "model.language_model.layers.11.pre_feedforward_layernorm.weight",
+      "shape": [
+        5376
+      ],
+      "dtype": "BF16",
+      "changed_count": 1,
+      "before_hex_matches_source": true,
+      "after_hex_matches_exact_spec": true,
+      "saved_native_raw_matches_after_hex": true,
+      "source_words_sha256": "7e2cd06ee5ac8c2999f8e9c7347516448ad50cf762c968a85310ca5701032cbf",
+      "saved_words_sha256": "c4f90568505956be0bc1949573487edee139078b2338d7618817d42bd4f250a7"
+    },
+    {
+      "tensor": "model.language_model.layers.11.self_attn.k_norm.weight",
+      "shape": [
+        512
+      ],
+      "dtype": "BF16",
+      "changed_count": 5,
+      "before_hex_matches_source": true,
+      "after_hex_matches_exact_spec": true,
+      "saved_native_raw_matches_after_hex": true,
+      "source_words_sha256": "e804a5f0eb119c319d8303e4dcf51b1a40d09817007ea587cac57f858788d22f",
+      "saved_words_sha256": "091361e023e165870861a811b1cf8aab94b3540ed746bb7fe8ad00fbd2dc499a"
+    },
+    {
+      "tensor": "model.language_model.layers.12.input_layernorm.weight",
+      "shape": [
+        5376
+      ],
+      "dtype": "BF16",
+      "changed_count": 5,
+      "before_hex_matches_source": true,
+      "after_hex_matches_exact_spec": true,
+      "saved_native_raw_matches_after_hex": true,
+      "source_words_sha256": "bf7f769592021386e4ef9143558c190d4c734d38e75a209cf4ce993548b26f3a",
+      "saved_words_sha256": "342bd8d6c0cc9efa7e7931f7812fa33edd7519377e2370db90ba800b05544bed"
+    },
+    {
+      "tensor": "model.language_model.layers.12.post_attention_layernorm.weight",
+      "shape": [
+        5376
+      ],
+      "dtype": "BF16",
+      "changed_count": 5,
+      "before_hex_matches_source": true,
+      "after_hex_matches_exact_spec": true,
+      "saved_native_raw_matches_after_hex": true,
+      "source_words_sha256": "390ed27ad663b203223245dd9dc60e0fd2122dc2882205f9da29805fc2a437c6",
+      "saved_words_sha256": "49f0568092f4457304d878f301a9c4f3bee703243217966dcc314cbbae4befe7"
+    },
+    {
+      "tensor": "model.language_model.layers.12.post_feedforward_layernorm.weight",
+      "shape": [
+        5376
+      ],
+      "dtype": "BF16",
+      "changed_count": 1,
+      "before_hex_matches_source": true,
+      "after_hex_matches_exact_spec": true,
+      "saved_native_raw_matches_after_hex": true,
+      "source_words_sha256": "8a2af82a9dabf3c0b2f62db69028013cc279985ff60ad0211d37e91c3ea1ec7d",
+      "saved_words_sha256": "e62bc4ff32c6367705fa3150dcdef5609cc5388bce6f72a1f499e534218b3d63"
+    },
+    {
+      "tensor": "model.language_model.layers.12.self_attn.q_norm.weight",
+      "shape": [
+        256
+      ],
+      "dtype": "BF16",
+      "changed_count": 1,
+      "before_hex_matches_source": true,
+      "after_hex_matches_exact_spec": true,
+      "saved_native_raw_matches_after_hex": true,
+      "source_words_sha256": "db41a27d5d73006dbeb517ee64d3d2887a33ff7d8dab4ec6e552ef6b191ba91b",
+      "saved_words_sha256": "b13acee20908ea3058e1d2ac01172bf546168d5dbb7f3588a8110dc5b2c71580"
+    },
+    {
+      "tensor": "model.language_model.layers.13.self_attn.k_norm.weight",
+      "shape": [
+        256
+      ],
+      "dtype": "BF16",
+      "changed_count": 6,
+      "before_hex_matches_source": true,
+      "after_hex_matches_exact_spec": true,
+      "saved_native_raw_matches_after_hex": true,
+      "source_words_sha256": "c386e6ad5c507390ea6678d668513a0ff63c237dd3af6c58ef4816a99be9090a",
+      "saved_words_sha256": "83dc7e9ead2e410c1e55b746e76c28799f0dfd245ca422ebc57d5638f8c04fee"
+    },
+    {
+      "tensor": "model.language_model.layers.13.self_attn.q_norm.weight",
+      "shape": [
+        256
+      ],
+      "dtype": "BF16",
+      "changed_count": 1,
+      "before_hex_matches_source": true,
+      "after_hex_matches_exact_spec": true,
+      "saved_native_raw_matches_after_hex": true,
+      "source_words_sha256": "49fa60bb76920a08e5ca642e802db23c7195761fdf98f9837cd4686e287a0cf1",
+      "saved_words_sha256": "9fdbf6e9ac0174a3cd22ab831ad219e21f80d8589523160a69b3339f2a17335e"
+    },
+    {
+      "tensor": "model.language_model.layers.14.post_attention_layernorm.weight",
+      "shape": [
+        5376
+      ],
+      "dtype": "BF16",
+      "changed_count": 1,
+      "before_hex_matches_source": true,
+      "after_hex_matches_exact_spec": true,
+      "saved_native_raw_matches_after_hex": true,
+      "source_words_sha256": "c9fe5f5513c58df5ac727c2b18c831f212d3a8b93dfb9d337ec048d9f4d5d8b0",
+      "saved_words_sha256": "4b95151354cc3710ec5e2bafbbe45d50907a5b62b0efa4f865caaad4703440f0"
+    },
+    {
+      "tensor": "model.language_model.layers.14.pre_feedforward_layernorm.weight",
+      "shape": [
+        5376
+      ],
+      "dtype": "BF16",
+      "changed_count": 2,
+      "before_hex_matches_source": true,
+      "after_hex_matches_exact_spec": true,
+      "saved_native_raw_matches_after_hex": true,
+      "source_words_sha256": "a4e7a62252a77e9dfedca2110ff7e062305e223ef8c8456a03ef7c81a22d35d5",
+      "saved_words_sha256": "556fdf9bc14a6c757ee13f34542a76e08fd95821b04852920ac5f9b2faf9d7ff"
+    },
+    {
+      "tensor": "model.language_model.layers.14.self_attn.k_norm.weight",
+      "shape": [
+        256
+      ],
+      "dtype": "BF16",
+      "changed_count": 3,
+      "before_hex_matches_source": true,
+      "after_hex_matches_exact_spec": true,
+      "saved_native_raw_matches_after_hex": true,
+      "source_words_sha256": "298f3b07f74545bfb02300056f5c313f5e3b1e364cfbf898b8ebab77789d5ba5",
+      "saved_words_sha256": "6fee41b41c75d7ecc43a8a5fb01b54fc4d3c80dc210ab5b8e33ecf5b668ee7c6"
+    },
+    {
+      "tensor": "model.language_model.layers.14.self_attn.q_norm.weight",
+      "shape": [
+        256
+      ],
+      "dtype": "BF16",
+      "changed_count": 1,
+      "before_hex_matches_source": true,
+      "after_hex_matches_exact_spec": true,
+      "saved_native_raw_matches_after_hex": true,
+      "source_words_sha256": "bff0ae52f0be5ef83018b960a06cfa82e17b00de36d85e0f9fa24419bcc67bd0",
+      "saved_words_sha256": "64b2da10580e6feac816a94c8516f5e5bad003e4a5283c2e2af3c7fef8db0d70"
+    },
+    {
+      "tensor": "model.language_model.layers.15.input_layernorm.weight",
+      "shape": [
+        5376
+      ],
+      "dtype": "BF16",
+      "changed_count": 10,
+      "before_hex_matches_source": true,
+      "after_hex_matches_exact_spec": true,
+      "saved_native_raw_matches_after_hex": true,
+      "source_words_sha256": "71d203f58937f19d12c10b32323bf1644464d30337648ab6a7a895aba66ab4a1",
+      "saved_words_sha256": "e12142cf8b2c94c48546a2395618aa558bfac106dc6b9a919c9195003e82962b"
+    },
+    {
+      "tensor": "model.language_model.layers.15.post_attention_layernorm.weight",
+      "shape": [
+        5376
+      ],
+      "dtype": "BF16",
+      "changed_count": 6,
+      "before_hex_matches_source": true,
+      "after_hex_matches_exact_spec": true,
+      "saved_native_raw_matches_after_hex": true,
+      "source_words_sha256": "ae71629fce0518edf5bedd64f2dfb751ca11b907c416706c07d2debb7602b8a5",
+      "saved_words_sha256": "3b54f58e7fa9ef2134fbbbd3c70cb91ebc0b7708cd0438ffc0f2773bfcee4b61"
+    },
+    {
+      "tensor": "model.language_model.layers.15.post_feedforward_layernorm.weight",
+      "shape": [
+        5376
+      ],
+      "dtype": "BF16",
+      "changed_count": 2,
+      "before_hex_matches_source": true,
+      "after_hex_matches_exact_spec": true,
+      "saved_native_raw_matches_after_hex": true,
+      "source_words_sha256": "40014af076fc7e950d9b110949f3f27a26324fae04ed63d0260fe929a0903d4e",
+      "saved_words_sha256": "e5baba24705434951f67000dcaca7b91e6dfebc8fa2a00f78aa14f5658f4bbd3"
+    },
+    {
+      "tensor": "model.language_model.layers.15.pre_feedforward_layernorm.weight",
+      "shape": [
+        5376
+      ],
+      "dtype": "BF16",
+      "changed_count": 4,
+      "before_hex_matches_source": true,
+      "after_hex_matches_exact_spec": true,
+      "saved_native_raw_matches_after_hex": true,
+      "source_words_sha256": "35a7cbb87474fa9e649c887e92a9c3c060c9da9ddcdaf5a295f234393e2178e0",
+      "saved_words_sha256": "1b098e28894d133553f1fc19df40ae4cd5b2760f19853d73257b3eed1c11b2cb"
+    },
+    {
+      "tensor": "model.language_model.layers.15.self_attn.k_norm.weight",
+      "shape": [
+        256
+      ],
+      "dtype": "BF16",
+      "changed_count": 8,
+      "before_hex_matches_source": true,
+      "after_hex_matches_exact_spec": true,
+      "saved_native_raw_matches_after_hex": true,
+      "source_words_sha256": "81f8e588cdfde71de122b84d3a5a681f893276d4ade3a187a1f9eca7360133bb",
+      "saved_words_sha256": "b2c199e4b5d5c023f13914bc95df789d1108e0174cbd8506a3f9e1c75c47a76f"
+    },
+    {
+      "tensor": "model.language_model.layers.15.self_attn.q_norm.weight",
+      "shape": [
+        256
+      ],
+      "dtype": "BF16",
+      "changed_count": 4,
+      "before_hex_matches_source": true,
+      "after_hex_matches_exact_spec": true,
+      "saved_native_raw_matches_after_hex": true,
+      "source_words_sha256": "1ff06441dd7f5be2ffc5fb0bf8ebbd14029a5960e2153302c9686dc2ce7e265e",
+      "saved_words_sha256": "dcac06b7c9a53560d44b363de32fe2bdf00a58822cbaf7f2145a1cdb3022e019"
+    },
+    {
+      "tensor": "model.language_model.layers.16.input_layernorm.weight",
+      "shape": [
+        5376
+      ],
+      "dtype": "BF16",
+      "changed_count": 7,
+      "before_hex_matches_source": true,
+      "after_hex_matches_exact_spec": true,
+      "saved_native_raw_matches_after_hex": true,
+      "source_words_sha256": "1946f8e2ae4bee910d82d824c0bcfb2cc1691a401cf82802ba628063ca9b6644",
+      "saved_words_sha256": "f3c9be0bed90c37650d9c424d046b27261fb0f2e40fa486aaf21018a38d22c72"
+    },
+    {
+      "tensor": "model.language_model.layers.16.post_attention_layernorm.weight",
+      "shape": [
+        5376
+      ],
+      "dtype": "BF16",
+      "changed_count": 1,
+      "before_hex_matches_source": true,
+      "after_hex_matches_exact_spec": true,
+      "saved_native_raw_matches_after_hex": true,
+      "source_words_sha256": "7e027b9bb89b59575a2e53c7207485bf03cc240b74983bf8900f480d526f7240",
+      "saved_words_sha256": "15fc5a68644d47ec5e1884257d82c8ca7858a71d82684d68437f2f51cb49aea1"
+    },
+    {
+      "tensor": "model.language_model.layers.16.post_feedforward_layernorm.weight",
+      "shape": [
+        5376
+      ],
+      "dtype": "BF16",
+      "changed_count": 1,
+      "before_hex_matches_source": true,
+      "after_hex_matches_exact_spec": true,
+      "saved_native_raw_matches_after_hex": true,
+      "source_words_sha256": "648dafcd5ba5086bb8a442d5b05884734aeecac56c57c483d769730a6bc94c73",
+      "saved_words_sha256": "73e2cdef8dcc68cf4a8dc7a94f65330eace157bd87bc82ee279cb44f0eb4ac04"
+    },
+    {
+      "tensor": "model.language_model.layers.16.pre_feedforward_layernorm.weight",
+      "shape": [
+        5376
+      ],
+      "dtype": "BF16",
+      "changed_count": 1,
+      "before_hex_matches_source": true,
+      "after_hex_matches_exact_spec": true,
+      "saved_native_raw_matches_after_hex": true,
+      "source_words_sha256": "cfe8845e78bc876a759c00e179f8a90aa97ebc32e12605658f7512b0a7a200e8",
+      "saved_words_sha256": "eb54cb421b3cdac6f669b0d1fb1ad5a52452826e06d1043da26feff3c31102e3"
+    },
+    {
+      "tensor": "model.language_model.layers.16.self_attn.k_norm.weight",
+      "shape": [
+        256
+      ],
+      "dtype": "BF16",
+      "changed_count": 31,
+      "before_hex_matches_source": true,
+      "after_hex_matches_exact_spec": true,
+      "saved_native_raw_matches_after_hex": true,
+      "source_words_sha256": "e0ca8c1c9bda86c97e31240cd8f49351f55b640a8225755549a943953b30f08d",
+      "saved_words_sha256": "1d1924ac32d55f5d8a2ae166374763154a79361b4859be7121c91fa26fcd75dc"
+    },
+    {
+      "tensor": "model.language_model.layers.16.self_attn.q_norm.weight",
+      "shape": [
+        256
+      ],
+      "dtype": "BF16",
+      "changed_count": 8,
+      "before_hex_matches_source": true,
+      "after_hex_matches_exact_spec": true,
+      "saved_native_raw_matches_after_hex": true,
+      "source_words_sha256": "49fa60bb76920a08e5ca642e802db23c7195761fdf98f9837cd4686e287a0cf1",
+      "saved_words_sha256": "ca2feead0074447dd458e0d9f315f0385b81f7149d915a7caf7dd0a5afe658c5"
+    },
+    {
+      "tensor": "model.language_model.layers.17.input_layernorm.weight",
+      "shape": [
+        5376
+      ],
+      "dtype": "BF16",
+      "changed_count": 4,
+      "before_hex_matches_source": true,
+      "after_hex_matches_exact_spec": true,
+      "saved_native_raw_matches_after_hex": true,
+      "source_words_sha256": "cded5ea0f53af8980008fc6dcb014de31fe2fde36459005908d67e9e4d223e9c",
+      "saved_words_sha256": "d02f63c45c8df7924ccc8438231fc6e14164d8cf3a5437148f01278618652eb5"
+    },
+    {
+      "tensor": "model.language_model.layers.17.post_attention_layernorm.weight",
+      "shape": [
+        5376
+      ],
+      "dtype": "BF16",
+      "changed_count": 3,
+      "before_hex_matches_source": true,
+      "after_hex_matches_exact_spec": true,
+      "saved_native_raw_matches_after_hex": true,
+      "source_words_sha256": "e19a9a8625248656e3f2d318379801fc4c215abcf8b4b2989cb8ea408d87371a",
+      "saved_words_sha256": "8dea16d3a92ccc1f3b29debd41ad78d270e9a4db0646aa5018c077e6b8aac27b"
+    },
+    {
+      "tensor": "model.language_model.layers.17.self_attn.k_norm.weight",
+      "shape": [
+        512
+      ],
+      "dtype": "BF16",
+      "changed_count": 8,
+      "before_hex_matches_source": true,
+      "after_hex_matches_exact_spec": true,
+      "saved_native_raw_matches_after_hex": true,
+      "source_words_sha256": "b2e7025758fc17b0af5437dea5fa65a0684f4534d75693cca5c93ce217383798",
+      "saved_words_sha256": "5d50bf096857c57ee5c8293a3fcc44f6166437977417e8c93bb8717246c690c4"
+    },
+    {
+      "tensor": "model.language_model.layers.17.self_attn.q_norm.weight",
+      "shape": [
+        512
+      ],
+      "dtype": "BF16",
+      "changed_count": 7,
+      "before_hex_matches_source": true,
+      "after_hex_matches_exact_spec": true,
+      "saved_native_raw_matches_after_hex": true,
+      "source_words_sha256": "b5ba0b161bd0f96415b5d17fd875db6720d9c099647d25cc43f85f5dd592f097",
+      "saved_words_sha256": "12c3ba87343817b802844159a2b9366335212ba3f3d2db04290b462731cabc9c"
+    },
+    {
+      "tensor": "model.language_model.layers.18.input_layernorm.weight",
+      "shape": [
+        5376
+      ],
+      "dtype": "BF16",
+      "changed_count": 4,
+      "before_hex_matches_source": true,
+      "after_hex_matches_exact_spec": true,
+      "saved_native_raw_matches_after_hex": true,
+      "source_words_sha256": "07b14b81fd2b0fd9363646895848fd3503efd1fdbf716550e22d4900a55961ee",
+      "saved_words_sha256": "44ad812b1fc4a3731e0094030265a5ebf3f421f1e4c12149a4ddc6b326074ab8"
+    },
+    {
+      "tensor": "model.language_model.layers.18.pre_feedforward_layernorm.weight",
+      "shape": [
+        5376
+      ],
+      "dtype": "BF16",
+      "changed_count": 1,
+      "before_hex_matches_source": true,
+      "after_hex_matches_exact_spec": true,
+      "saved_native_raw_matches_after_hex": true,
+      "source_words_sha256": "43b1cbb33354de998dcbd3e4e5ae010c2dac3942419f0709f7cd4ab2cd6904bd",
+      "saved_words_sha256": "0bda7bfc4d4af55967a4c9e190734e8f03a4cadb7c854e969ea580c32535a781"
+    },
+    {
+      "tensor": "model.language_model.layers.18.self_attn.k_norm.weight",
+      "shape": [
+        256
+      ],
+      "dtype": "BF16",
+      "changed_count": 17,
+      "before_hex_matches_source": true,
+      "after_hex_matches_exact_spec": true,
+      "saved_native_raw_matches_after_hex": true,
+      "source_words_sha256": "a31958ab68a509ae86033fa8c07df6cb4dd562a368a17c5493d11a5b52798ea8",
+      "saved_words_sha256": "6b5817471b218e9649281a2b2b74c111818d2a587096d3eca1983f8e27a00da5"
+    },
+    {
+      "tensor": "model.language_model.layers.18.self_attn.q_norm.weight",
+      "shape": [
+        256
+      ],
+      "dtype": "BF16",
+      "changed_count": 5,
+      "before_hex_matches_source": true,
+      "after_hex_matches_exact_spec": true,
+      "saved_native_raw_matches_after_hex": true,
+      "source_words_sha256": "6763363a1991d017b0e0975fcb2e0f0f2f9db046784e0ffda68b7f738b7b3e7f",
+      "saved_words_sha256": "9070c0bc7679c3dea8f7125d5bdae2d4a0ea924d8277fe621826478d20447246"
+    },
+    {
+      "tensor": "model.language_model.layers.19.input_layernorm.weight",
+      "shape": [
+        5376
+      ],
+      "dtype": "BF16",
+      "changed_count": 3,
+      "before_hex_matches_source": true,
+      "after_hex_matches_exact_spec": true,
+      "saved_native_raw_matches_after_hex": true,
+      "source_words_sha256": "8a237382d576108416edae3f5a53d5661df431561e84d360eba801bc99841b7c",
+      "saved_words_sha256": "7bd1fb31878d898551e2ba48b087e6ac74bd5ea24da4541594cd87cc7e2a20fb"
+    },
+    {
+      "tensor": "model.language_model.layers.19.post_attention_layernorm.weight",
+      "shape": [
+        5376
+      ],
+      "dtype": "BF16",
+      "changed_count": 4,
+      "before_hex_matches_source": true,
+      "after_hex_matches_exact_spec": true,
+      "saved_native_raw_matches_after_hex": true,
+      "source_words_sha256": "d1f51e1697bc806733b625f455319d6992f47b464b2b63d5a094e9b484b3fa45",
+      "saved_words_sha256": "19d53620d6cc6d6bafc0b13e8744b8394a2d39006b3b83646825164512c50e2e"
+    },
+    {
+      "tensor": "model.language_model.layers.19.pre_feedforward_layernorm.weight",
+      "shape": [
+        5376
+      ],
+      "dtype": "BF16",
+      "changed_count": 1,
+      "before_hex_matches_source": true,
+      "after_hex_matches_exact_spec": true,
+      "saved_native_raw_matches_after_hex": true,
+      "source_words_sha256": "184353e01c427e1cbe3ea6bfcda235f18a26845c50712fd519556c5b86de94ee",
+      "saved_words_sha256": "7be80559b7802a273e568295a03bdb2e02b3b04400fdcc5ebeed0af122c71682"
+    },
+    {
+      "tensor": "model.language_model.layers.19.self_attn.k_norm.weight",
+      "shape": [
+        256
+      ],
+      "dtype": "BF16",
+      "changed_count": 10,
+      "before_hex_matches_source": true,
+      "after_hex_matches_exact_spec": true,
+      "saved_native_raw_matches_after_hex": true,
+      "source_words_sha256": "cb26e7835b0c2237d8e7671440fdbe65085283a6be33c738c6865e8e0767496d",
+      "saved_words_sha256": "dcde54fa4ea5b08cabbe2da608f16246c2e82255472cca959b4ec02f1a7274e1"
+    },
+    {
+      "tensor": "model.language_model.layers.19.self_attn.q_norm.weight",
+      "shape": [
+        256
+      ],
+      "dtype": "BF16",
+      "changed_count": 13,
+      "before_hex_matches_source": true,
+      "after_hex_matches_exact_spec": true,
+      "saved_native_raw_matches_after_hex": true,
+      "source_words_sha256": "1e7a5ddb3a69b1d38dc286f493bd950fe6243a5c8942bea25643e45cd2c1081d",
+      "saved_words_sha256": "6e8d6e86ea1220bdff7b89454809fe4e689c262cdbec306a37a5533e85e0df51"
+    },
+    {
+      "tensor": "model.language_model.layers.2.input_layernorm.weight",
+      "shape": [
+        5376
+      ],
+      "dtype": "BF16",
+      "changed_count": 1,
+      "before_hex_matches_source": true,
+      "after_hex_matches_exact_spec": true,
+      "saved_native_raw_matches_after_hex": true,
+      "source_words_sha256": "416314fbb69ecd68ba56de7aa3b5054a475d6b52c1a3dff98fe921f876158d69",
+      "saved_words_sha256": "4de0b6fc636ffda2ab55911af215c2b02b7bfe1d29ff2998f410605eb3ebd889"
+    },
+    {
+      "tensor": "model.language_model.layers.2.post_attention_layernorm.weight",
+      "shape": [
+        5376
+      ],
+      "dtype": "BF16",
+      "changed_count": 1,
+      "before_hex_matches_source": true,
+      "after_hex_matches_exact_spec": true,
+      "saved_native_raw_matches_after_hex": true,
+      "source_words_sha256": "cdcff13bc216a9f29d90c79aed0e72e4fed73ad1f59eb2b47f89416dfec0719a",
+      "saved_words_sha256": "a3a3338d4ca4f44aa49c7abf4bf804ec214ad99a6b40dcc1625fb3c09eeecdbe"
+    },
+    {
+      "tensor": "model.language_model.layers.2.self_attn.k_norm.weight",
+      "shape": [
+        256
+      ],
+      "dtype": "BF16",
+      "changed_count": 4,
+      "before_hex_matches_source": true,
+      "after_hex_matches_exact_spec": true,
+      "saved_native_raw_matches_after_hex": true,
+      "source_words_sha256": "34c7baed86c3eb8db4aeac0d032c238fa0bf049c15182c22a7f1bd6400b9657a",
+      "saved_words_sha256": "63c3670f014344a87d3f468f804ca1a7a9438eaf5dae504df131cd8198d8f013"
+    },
+    {
+      "tensor": "model.language_model.layers.2.self_attn.q_norm.weight",
+      "shape": [
+        256
+      ],
+      "dtype": "BF16",
+      "changed_count": 6,
+      "before_hex_matches_source": true,
+      "after_hex_matches_exact_spec": true,
+      "saved_native_raw_matches_after_hex": true,
+      "source_words_sha256": "34601cbfdf8e0a5471f67d4eb3218c16d9c48edc88a4358de8f22f3dc74027e7",
+      "saved_words_sha256": "bb6db5bcb3e2447ec1addeda76c1354554af5963dc89d99c06025e51749068a2"
+    },
+    {
+      "tensor": "model.language_model.layers.20.input_layernorm.weight",
+      "shape": [
+        5376
+      ],
+      "dtype": "BF16",
+      "changed_count": 6,
+      "before_hex_matches_source": true,
+      "after_hex_matches_exact_spec": true,
+      "saved_native_raw_matches_after_hex": true,
+      "source_words_sha256": "cdfb1e8e2b08a6ad55b1fc95bc2ca7797f56fecefb8fc27065939fe7c6913ab6",
+      "saved_words_sha256": "48c4aa0370ec28cad5668a77b948e3551482c4d5439828d306e2046dbaa7ca64"
+    },
+    {
+      "tensor": "model.language_model.layers.20.self_attn.q_norm.weight",
+      "shape": [
+        256
+      ],
+      "dtype": "BF16",
+      "changed_count": 1,
+      "before_hex_matches_source": true,
+      "after_hex_matches_exact_spec": true,
+      "saved_native_raw_matches_after_hex": true,
+      "source_words_sha256": "f012aed18cc58234cbfd2a41b0268419a6252d6bb7d6a03ea3597b93fc0c39bd",
+      "saved_words_sha256": "d9d93c693fdcabb53e17f7d2af8a30e2bea49153dddd3e5bb0b81e33b511c0f5"
+    },
+    {
+      "tensor": "model.language_model.layers.21.self_attn.q_norm.weight",
+      "shape": [
+        256
+      ],
+      "dtype": "BF16",
+      "changed_count": 2,
+      "before_hex_matches_source": true,
+      "after_hex_matches_exact_spec": true,
+      "saved_native_raw_matches_after_hex": true,
+      "source_words_sha256": "8e659708aff8d11f3014303f078da5c30235d602328b7479db9f772f1a8488cc",
+      "saved_words_sha256": "7f47ec4f1cbf909a12113ecb34feb9f3601a2e3d9d37ac58f41c9baa4dd4ac57"
+    },
+    {
+      "tensor": "model.language_model.layers.22.self_attn.q_norm.weight",
+      "shape": [
+        256
+      ],
+      "dtype": "BF16",
+      "changed_count": 2,
+      "before_hex_matches_source": true,
+      "after_hex_matches_exact_spec": true,
+      "saved_native_raw_matches_after_hex": true,
+      "source_words_sha256": "5b543a9fa526e5ffbd20de386c3562a8c8c2006215a28d6a2e10e422247b0aae",
+      "saved_words_sha256": "ee728bec9663c25cef2baae53bad1710d65f49c5d4b5770acb21abfbe947ff6b"
+    },
+    {
+      "tensor": "model.language_model.layers.23.input_layernorm.weight",
+      "shape": [
+        5376
+      ],
+      "dtype": "BF16",
+      "changed_count": 1,
+      "before_hex_matches_source": true,
+      "after_hex_matches_exact_spec": true,
+      "saved_native_raw_matches_after_hex": true,
+      "source_words_sha256": "0f6fac373f62b95d83e95176305c762de26355e41b8518758501764da5d0ae17",
+      "saved_words_sha256": "88093aaa42b5e3b9a6eb3a94b344096582b8a7c273567afce3a0e16d66d4ebae"
+    },
+    {
+      "tensor": "model.language_model.layers.23.post_attention_layernorm.weight",
+      "shape": [
+        5376
+      ],
+      "dtype": "BF16",
+      "changed_count": 1,
+      "before_hex_matches_source": true,
+      "after_hex_matches_exact_spec": true,
+      "saved_native_raw_matches_after_hex": true,
+      "source_words_sha256": "9e6aa23e41474c7937d13d51f0cad63e2ec7ecfc201c84fec976ed794ce3db18",
+      "saved_words_sha256": "b6fe056ee4653c130602019775bde01863d4800f366bcd26035c45f8fe3161f6"
+    },
+    {
+      "tensor": "model.language_model.layers.23.self_attn.k_norm.weight",
+      "shape": [
+        512
+      ],
+      "dtype": "BF16",
+      "changed_count": 2,
+      "before_hex_matches_source": true,
+      "after_hex_matches_exact_spec": true,
+      "saved_native_raw_matches_after_hex": true,
+      "source_words_sha256": "5a375e6386827c69b520d4c1a191805ccd9b086ac065340919041f2aa87ca790",
+      "saved_words_sha256": "1751403d9256534759e84ffff6ca8646f4205472b09c2d103635fcda7693e976"
+    },
+    {
+      "tensor": "model.language_model.layers.23.self_attn.q_norm.weight",
+      "shape": [
+        512
+      ],
+      "dtype": "BF16",
+      "changed_count": 4,
+      "before_hex_matches_source": true,
+      "after_hex_matches_exact_spec": true,
+      "saved_native_raw_matches_after_hex": true,
+      "source_words_sha256": "b36f935dca41795e6d1e05e031709a8132ba17cf231b7ab7e290ef0740531446",
+      "saved_words_sha256": "2226fc9c348a44311dc693ed89c8de68f52047992309f939500e3efc73fe308b"
+    },
+    {
+      "tensor": "model.language_model.layers.24.self_attn.k_norm.weight",
+      "shape": [
+        256
+      ],
+      "dtype": "BF16",
+      "changed_count": 2,
+      "before_hex_matches_source": true,
+      "after_hex_matches_exact_spec": true,
+      "saved_native_raw_matches_after_hex": true,
+      "source_words_sha256": "353c42d23effc15ae7eb0e178a851d6a194c09d140c790335f9d87b40d10ffb6",
+      "saved_words_sha256": "d621ffc17c9901626023297c24631513af87e84c40e0456a2ab4d7e0f620a346"
+    },
+    {
+      "tensor": "model.language_model.layers.25.self_attn.k_norm.weight",
+      "shape": [
+        256
+      ],
+      "dtype": "BF16",
+      "changed_count": 1,
+      "before_hex_matches_source": true,
+      "after_hex_matches_exact_spec": true,
+      "saved_native_raw_matches_after_hex": true,
+      "source_words_sha256": "7dc2f4606c352ee7b4572fdecdb2805a9a406f2e966a327de5fdf1a77b230191",
+      "saved_words_sha256": "0babca88dd697dca14d1c56c66d4879298251ccc639bb42f898a548842601a7d"
+    },
+    {
+      "tensor": "model.language_model.layers.26.post_feedforward_layernorm.weight",
+      "shape": [
+        5376
+      ],
+      "dtype": "BF16",
+      "changed_count": 1,
+      "before_hex_matches_source": true,
+      "after_hex_matches_exact_spec": true,
+      "saved_native_raw_matches_after_hex": true,
+      "source_words_sha256": "c1853441056cc1028e46c2779bc901d70e08d0feb68a5f840710e50ef0e4cc1e",
+      "saved_words_sha256": "2eef74aefcaac4707800f7958fb66789ca51195be1b0dcab909ee7b27f62dfab"
+    },
+    {
+      "tensor": "model.language_model.layers.26.pre_feedforward_layernorm.weight",
+      "shape": [
+        5376
+      ],
+      "dtype": "BF16",
+      "changed_count": 2,
+      "before_hex_matches_source": true,
+      "after_hex_matches_exact_spec": true,
+      "saved_native_raw_matches_after_hex": true,
+      "source_words_sha256": "d6645ba19e81d12593b95f696320907010031cc270a38e1f83c2c19cacf65b60",
+      "saved_words_sha256": "0d43f622cc634906dd4a15df5d8ce26093e739264aa4eb3ec4f7bc80aca61ec0"
+    },
+    {
+      "tensor": "model.language_model.layers.26.self_attn.k_norm.weight",
+      "shape": [
+        256
+      ],
+      "dtype": "BF16",
+      "changed_count": 4,
+      "before_hex_matches_source": true,
+      "after_hex_matches_exact_spec": true,
+      "saved_native_raw_matches_after_hex": true,
+      "source_words_sha256": "4390f935c93df0ba86461d5625442407f5a49e7c3941fa56894f6318508740d6",
+      "saved_words_sha256": "874c6ba2a6aa3f9b8faddd5ae472f04190e219249fb83e4f7f4d5f9eeac06952"
+    },
+    {
+      "tensor": "model.language_model.layers.26.self_attn.q_norm.weight",
+      "shape": [
+        256
+      ],
+      "dtype": "BF16",
+      "changed_count": 2,
+      "before_hex_matches_source": true,
+      "after_hex_matches_exact_spec": true,
+      "saved_native_raw_matches_after_hex": true,
+      "source_words_sha256": "a831fa33ce75fee7d664f557269da0047c90120ac17d80dee400c24d112addac",
+      "saved_words_sha256": "d3974bf56b48f8113aaad93f5b742bd1ce94bd3ba7f11e9c669949f6c13d2570"
+    },
+    {
+      "tensor": "model.language_model.layers.27.input_layernorm.weight",
+      "shape": [
+        5376
+      ],
+      "dtype": "BF16",
+      "changed_count": 1,
+      "before_hex_matches_source": true,
+      "after_hex_matches_exact_spec": true,
+      "saved_native_raw_matches_after_hex": true,
+      "source_words_sha256": "538f7455ca867afdc97bf4919afe50491addfefd267527fb891e1f47b26af500",
+      "saved_words_sha256": "e941323dce94c6002a16f5ca4982b7815d39b6dac03f18afe8b74bec383dd7ab"
+    },
+    {
+      "tensor": "model.language_model.layers.27.post_attention_layernorm.weight",
+      "shape": [
+        5376
+      ],
+      "dtype": "BF16",
+      "changed_count": 1,
+      "before_hex_matches_source": true,
+      "after_hex_matches_exact_spec": true,
+      "saved_native_raw_matches_after_hex": true,
+      "source_words_sha256": "91586bb58af401c179ccf5ffcc4fcac70aa8586d5a761f92f31f5f79bfaca50e",
+      "saved_words_sha256": "e3bc789d0f61069f5f0c4663c17dbb4ed4baa179ce7d3ec1f7b79ddec200db9a"
+    },
+    {
+      "tensor": "model.language_model.layers.27.self_attn.q_norm.weight",
+      "shape": [
+        256
+      ],
+      "dtype": "BF16",
+      "changed_count": 2,
+      "before_hex_matches_source": true,
+      "after_hex_matches_exact_spec": true,
+      "saved_native_raw_matches_after_hex": true,
+      "source_words_sha256": "cbcc67e98814c7d72e9fc32c34c6188d60bbab9c35b734551cff3370091b0270",
+      "saved_words_sha256": "47bc9c15703bf73adae59480f851479082b9244317acf20aa4ed848734010f5a"
+    },
+    {
+      "tensor": "model.language_model.layers.28.post_feedforward_layernorm.weight",
+      "shape": [
+        5376
+      ],
+      "dtype": "BF16",
+      "changed_count": 1,
+      "before_hex_matches_source": true,
+      "after_hex_matches_exact_spec": true,
+      "saved_native_raw_matches_after_hex": true,
+      "source_words_sha256": "fbc82393cbf065f60ce7f3be15cbd34863aa105456984403e6cdceef18fc16c5",
+      "saved_words_sha256": "c420b734c0f536da0c523dc46653ffde9299630d0bea8a099103efbd2895bce6"
+    },
+    {
+      "tensor": "model.language_model.layers.29.input_layernorm.weight",
+      "shape": [
+        5376
+      ],
+      "dtype": "BF16",
+      "changed_count": 1,
+      "before_hex_matches_source": true,
+      "after_hex_matches_exact_spec": true,
+      "saved_native_raw_matches_after_hex": true,
+      "source_words_sha256": "ebc986a66037679a329308209345a089365e26b8b0180366c8e525d37755c8e3",
+      "saved_words_sha256": "5478f73dd4cc2174c70416027560a0af217c796537d640dbfcdbd05de59f4f93"
+    },
+    {
+      "tensor": "model.language_model.layers.29.post_attention_layernorm.weight",
+      "shape": [
+        5376
+      ],
+      "dtype": "BF16",
+      "changed_count": 1,
+      "before_hex_matches_source": true,
+      "after_hex_matches_exact_spec": true,
+      "saved_native_raw_matches_after_hex": true,
+      "source_words_sha256": "28f688eebb6a9d41352c46da0ba7976ea2918b2dc8f4b0b14830a23b8453f2db",
+      "saved_words_sha256": "3b71b395f47ef7fd960c882dd6f4cc458180a113fe2055315dae8d39802851b9"
+    },
+    {
+      "tensor": "model.language_model.layers.3.input_layernorm.weight",
+      "shape": [
+        5376
+      ],
+      "dtype": "BF16",
+      "changed_count": 3,
+      "before_hex_matches_source": true,
+      "after_hex_matches_exact_spec": true,
+      "saved_native_raw_matches_after_hex": true,
+      "source_words_sha256": "f254390adda7ff13b484e4e1ab7208c36f30b7586184b5f7e4fd6a9ec21ff003",
+      "saved_words_sha256": "779a1b8a52cfa88cbe6f1155f8d3fb00ec173932a293d0e9518a20e81cc13747"
+    },
+    {
+      "tensor": "model.language_model.layers.3.post_attention_layernorm.weight",
+      "shape": [
+        5376
+      ],
+      "dtype": "BF16",
+      "changed_count": 5,
+      "before_hex_matches_source": true,
+      "after_hex_matches_exact_spec": true,
+      "saved_native_raw_matches_after_hex": true,
+      "source_words_sha256": "ad6368f1aa03ea43795e959fdbfa339a0958aa28fe80258b95e768e561fe25bd",
+      "saved_words_sha256": "150be70eff6c0852feea102ad4f42d11f331ec394b57f113be77afed96739688"
+    },
+    {
+      "tensor": "model.language_model.layers.3.self_attn.k_norm.weight",
+      "shape": [
+        256
+      ],
+      "dtype": "BF16",
+      "changed_count": 6,
+      "before_hex_matches_source": true,
+      "after_hex_matches_exact_spec": true,
+      "saved_native_raw_matches_after_hex": true,
+      "source_words_sha256": "28a23401670eaa5b3eaf3df9850711f4eb13789c0a914f7c23e10d974f74d654",
+      "saved_words_sha256": "df7f2c31aaf50a6ce2949a5d1202c1f8d3d180dc619a28c7ca3a3f57b183fda7"
+    },
+    {
+      "tensor": "model.language_model.layers.3.self_attn.q_norm.weight",
+      "shape": [
+        256
+      ],
+      "dtype": "BF16",
+      "changed_count": 1,
+      "before_hex_matches_source": true,
+      "after_hex_matches_exact_spec": true,
+      "saved_native_raw_matches_after_hex": true,
+      "source_words_sha256": "a8e8f66906d0197a1999b417eaf31ecd0a95670c9fe595b4aeb8e3980d0d982b",
+      "saved_words_sha256": "706ebe842391b2d512e607a1933186dbdd24c1699c7970e7fe3532d65c4edb2c"
+    },
+    {
+      "tensor": "model.language_model.layers.31.input_layernorm.weight",
+      "shape": [
+        5376
+      ],
+      "dtype": "BF16",
+      "changed_count": 1,
+      "before_hex_matches_source": true,
+      "after_hex_matches_exact_spec": true,
+      "saved_native_raw_matches_after_hex": true,
+      "source_words_sha256": "5cef6416a7a25ba522ca4894c2a65a805aa72d6ee5b1cde47e571d72cec51606",
+      "saved_words_sha256": "109946521f4584d17a33cf11ff35d5cf212957871f456fe007b4270c2ff6dc95"
+    },
+    {
+      "tensor": "model.language_model.layers.31.self_attn.k_norm.weight",
+      "shape": [
+        256
+      ],
+      "dtype": "BF16",
+      "changed_count": 3,
+      "before_hex_matches_source": true,
+      "after_hex_matches_exact_spec": true,
+      "saved_native_raw_matches_after_hex": true,
+      "source_words_sha256": "f31635273c30caa76c6dd3e5be36cefdffe2ccc2177c74c292cb6ad4d3cea100",
+      "saved_words_sha256": "2f2e8e4b831b36967e2c182ecb097cf4da4066cd630e0d59d28463132e2bb04f"
+    },
+    {
+      "tensor": "model.language_model.layers.33.post_attention_layernorm.weight",
+      "shape": [
+        5376
+      ],
+      "dtype": "BF16",
+      "changed_count": 1,
+      "before_hex_matches_source": true,
+      "after_hex_matches_exact_spec": true,
+      "saved_native_raw_matches_after_hex": true,
+      "source_words_sha256": "811c5fb4259a3b63696a154bdbc07213a4769b7b1e1a944f522b64ca810e4875",
+      "saved_words_sha256": "183d19ef8ea4c67fccaa6a6b87cacaf8d04388ddaa3594b8c5043578b1ae92e5"
+    },
+    {
+      "tensor": "model.language_model.layers.33.post_feedforward_layernorm.weight",
+      "shape": [
+        5376
+      ],
+      "dtype": "BF16",
+      "changed_count": 1,
+      "before_hex_matches_source": true,
+      "after_hex_matches_exact_spec": true,
+      "saved_native_raw_matches_after_hex": true,
+      "source_words_sha256": "59bfcc5c98545e9b5a95d7d3b3057f0b46a49e3c7759d15f6826b476e643749c",
+      "saved_words_sha256": "c3014f370df27b7f7a4a55f9a6d5753793a7cef114c1eb0fdf17af67705236f0"
+    },
+    {
+      "tensor": "model.language_model.layers.33.self_attn.k_norm.weight",
+      "shape": [
+        256
+      ],
+      "dtype": "BF16",
+      "changed_count": 1,
+      "before_hex_matches_source": true,
+      "after_hex_matches_exact_spec": true,
+      "saved_native_raw_matches_after_hex": true,
+      "source_words_sha256": "a87aecc8d0071536226532bb76f970cbf62b601d760754cd3ccccfcce8601f6c",
+      "saved_words_sha256": "4d28694d6f22940e7146e66009832d545a2644de65d99e980b143da4f95a0390"
+    },
+    {
+      "tensor": "model.language_model.layers.34.post_feedforward_layernorm.weight",
+      "shape": [
+        5376
+      ],
+      "dtype": "BF16",
+      "changed_count": 1,
+      "before_hex_matches_source": true,
+      "after_hex_matches_exact_spec": true,
+      "saved_native_raw_matches_after_hex": true,
+      "source_words_sha256": "642f98b11a1a1ed26412f4466d7e93239c9d40ad358207e4ecdadc0ad7b1a806",
+      "saved_words_sha256": "abd7a7219d2b14271741a0e4957099a7114f3c1ebc9242c4ce1b2af02db7e31d"
+    },
+    {
+      "tensor": "model.language_model.layers.34.pre_feedforward_layernorm.weight",
+      "shape": [
+        5376
+      ],
+      "dtype": "BF16",
+      "changed_count": 1,
+      "before_hex_matches_source": true,
+      "after_hex_matches_exact_spec": true,
+      "saved_native_raw_matches_after_hex": true,
+      "source_words_sha256": "9a5cac9580d407dfa237f0622b52eb1b8b41e5479b9b1a51ba390c2f1e78f727",
+      "saved_words_sha256": "78dc2c726463a6f07f7efdaf4d3ded316ffb3a58055c5979842ecbeaf600af08"
+    },
+    {
+      "tensor": "model.language_model.layers.34.self_attn.k_norm.weight",
+      "shape": [
+        256
+      ],
+      "dtype": "BF16",
+      "changed_count": 3,
+      "before_hex_matches_source": true,
+      "after_hex_matches_exact_spec": true,
+      "saved_native_raw_matches_after_hex": true,
+      "source_words_sha256": "92c6a2ce81bd441488ec805e4bc441fcfe68adcd96f90a74ae1934775422b13a",
+      "saved_words_sha256": "8ff724f5ad9fdd93ccebb92259ee3eda3bd776650dbb158ac13b4d4b43ab464e"
+    },
+    {
+      "tensor": "model.language_model.layers.34.self_attn.q_norm.weight",
+      "shape": [
+        256
+      ],
+      "dtype": "BF16",
+      "changed_count": 2,
+      "before_hex_matches_source": true,
+      "after_hex_matches_exact_spec": true,
+      "saved_native_raw_matches_after_hex": true,
+      "source_words_sha256": "e6d44d7cc20309b726f8c9c4512267615a0a1856069fbd54f03a23668f60ffbf",
+      "saved_words_sha256": "fbf20398ec613fb529476a5e20db22f6f4ff637370d95cdfcd92b388dde82f7f"
+    },
+    {
+      "tensor": "model.language_model.layers.35.post_attention_layernorm.weight",
+      "shape": [
+        5376
+      ],
+      "dtype": "BF16",
+      "changed_count": 1,
+      "before_hex_matches_source": true,
+      "after_hex_matches_exact_spec": true,
+      "saved_native_raw_matches_after_hex": true,
+      "source_words_sha256": "64e2cd966968bd1092fb76eb1f342026a234c0407ce7d5f42e94f5e4df59ae40",
+      "saved_words_sha256": "206331c2ea7a8498f525e1b9b9106200b4d434723ab2cef705154e9fd2a3606f"
+    },
+    {
+      "tensor": "model.language_model.layers.35.self_attn.k_norm.weight",
+      "shape": [
+        512
+      ],
+      "dtype": "BF16",
+      "changed_count": 1,
+      "before_hex_matches_source": true,
+      "after_hex_matches_exact_spec": true,
+      "saved_native_raw_matches_after_hex": true,
+      "source_words_sha256": "adf52873f7cfd9627f9dc6a4a2f7ec1b03316f8550cb52140694d1589c1554ab",
+      "saved_words_sha256": "ad0db5602c25aa93a988fa65f86562b1ad4b5b14762de8ed1dac718f7ee30c9b"
+    },
+    {
+      "tensor": "model.language_model.layers.35.self_attn.q_norm.weight",
+      "shape": [
+        512
+      ],
+      "dtype": "BF16",
+      "changed_count": 2,
+      "before_hex_matches_source": true,
+      "after_hex_matches_exact_spec": true,
+      "saved_native_raw_matches_after_hex": true,
+      "source_words_sha256": "a4b3dd84455f87e15bf9eecea0166923391a960faaac5358fc89a8d11c6680e2",
+      "saved_words_sha256": "ae511101eb513452a10e4f648f7a52dd71258dfdbcb88fb0df28c92a75705b81"
+    },
+    {
+      "tensor": "model.language_model.layers.36.self_attn.q_norm.weight",
+      "shape": [
+        256
+      ],
+      "dtype": "BF16",
+      "changed_count": 4,
+      "before_hex_matches_source": true,
+      "after_hex_matches_exact_spec": true,
+      "saved_native_raw_matches_after_hex": true,
+      "source_words_sha256": "ef0ec91a2eb1e8a799ad774479c209894f8b48baf24fedbc3b40cbb6db4bf5ea",
+      "saved_words_sha256": "16e133a28c1fdfadd2e5388970f4619ed6d73aebf8d021520ed4e728b9eade15"
+    },
+    {
+      "tensor": "model.language_model.layers.37.self_attn.q_norm.weight",
+      "shape": [
+        256
+      ],
+      "dtype": "BF16",
+      "changed_count": 2,
+      "before_hex_matches_source": true,
+      "after_hex_matches_exact_spec": true,
+      "saved_native_raw_matches_after_hex": true,
+      "source_words_sha256": "9f70d2f2bb932785cf5e684dd6f7e2c042e43d8f9b98059218ddd8f309d4d5de",
+      "saved_words_sha256": "b74952adf44ef4abec8dd17c8cf637913bfdb0b3e339a4125b7484aaa0726adb"
+    },
+    {
+      "tensor": "model.language_model.layers.38.input_layernorm.weight",
+      "shape": [
+        5376
+      ],
+      "dtype": "BF16",
+      "changed_count": 1,
+      "before_hex_matches_source": true,
+      "after_hex_matches_exact_spec": true,
+      "saved_native_raw_matches_after_hex": true,
+      "source_words_sha256": "a9f75079d8b458459bc10a011c9257375ad518cb8ba491b71ebd189af00d53dd",
+      "saved_words_sha256": "73e8a3c14da3a524d470e0593f455f4fd86222aeee1f23894316994394ab708a"
+    },
+    {
+      "tensor": "model.language_model.layers.38.self_attn.k_norm.weight",
+      "shape": [
+        256
+      ],
+      "dtype": "BF16",
+      "changed_count": 1,
+      "before_hex_matches_source": true,
+      "after_hex_matches_exact_spec": true,
+      "saved_native_raw_matches_after_hex": true,
+      "source_words_sha256": "bcbdb710ba12cc7057068a5d6d9c1681b29c58753af8180524aed4e58c21df7e",
+      "saved_words_sha256": "970a4bc7b4c7aab55c9e8e48e80c5a8ad7032cf7abc46fb89a469e5ac1f97ee2"
+    },
+    {
+      "tensor": "model.language_model.layers.39.self_attn.k_norm.weight",
+      "shape": [
+        256
+      ],
+      "dtype": "BF16",
+      "changed_count": 4,
+      "before_hex_matches_source": true,
+      "after_hex_matches_exact_spec": true,
+      "saved_native_raw_matches_after_hex": true,
+      "source_words_sha256": "10dd45ff0aad1dccb31082142a29aac8938e1781bfccb4254f0539ef198a7875",
+      "saved_words_sha256": "d45d28603f57c78a1b8d1290a208903ebb6d7c308d23adfebb27722a5c618223"
+    },
+    {
+      "tensor": "model.language_model.layers.4.input_layernorm.weight",
+      "shape": [
+        5376
+      ],
+      "dtype": "BF16",
+      "changed_count": 1,
+      "before_hex_matches_source": true,
+      "after_hex_matches_exact_spec": true,
+      "saved_native_raw_matches_after_hex": true,
+      "source_words_sha256": "dc3248eca1d5edf3e7c86eb25f9ae4c89ad4919e9191c24218fa92eb040afc8d",
+      "saved_words_sha256": "43319eec7f7d1e36ff36202ca04d144bb0c7d45aa2c021d312e800ac13abf155"
+    },
+    {
+      "tensor": "model.language_model.layers.40.post_feedforward_layernorm.weight",
+      "shape": [
+        5376
+      ],
+      "dtype": "BF16",
+      "changed_count": 1,
+      "before_hex_matches_source": true,
+      "after_hex_matches_exact_spec": true,
+      "saved_native_raw_matches_after_hex": true,
+      "source_words_sha256": "e62f20c1ea09b42ce1a62d8bef5cf8809f114550bcaa01ad43d4c5f24cb8c543",
+      "saved_words_sha256": "99c5cffdf4cb827e2cd4cb21ea71e5ca4449f2ac21749059da591bb4b29a6110"
+    },
+    {
+      "tensor": "model.language_model.layers.40.pre_feedforward_layernorm.weight",
+      "shape": [
+        5376
+      ],
+      "dtype": "BF16",
+      "changed_count": 1,
+      "before_hex_matches_source": true,
+      "after_hex_matches_exact_spec": true,
+      "saved_native_raw_matches_after_hex": true,
+      "source_words_sha256": "d80e7f349f109660d2c71cf1f008716a099954a9a8fc73017fc9c5edb9d4c7e9",
+      "saved_words_sha256": "21b1237b056cdd723ace7a96d285965e69cc6067298dd86369b7d5528803ea9c"
+    },
+    {
+      "tensor": "model.language_model.layers.40.self_attn.k_norm.weight",
+      "shape": [
+        256
+      ],
+      "dtype": "BF16",
+      "changed_count": 1,
+      "before_hex_matches_source": true,
+      "after_hex_matches_exact_spec": true,
+      "saved_native_raw_matches_after_hex": true,
+      "source_words_sha256": "bf794e64af1b61ab19ec3c8704f85852ca6fa31607065cf42f6abb9a4c1ff17c",
+      "saved_words_sha256": "1b1e0b2f9f5f38e9ba501a598fa46e7838a05e89918bab907a31d8e2608d4f3a"
+    },
+    {
+      "tensor": "model.language_model.layers.40.self_attn.q_norm.weight",
+      "shape": [
+        256
+      ],
+      "dtype": "BF16",
+      "changed_count": 3,
+      "before_hex_matches_source": true,
+      "after_hex_matches_exact_spec": true,
+      "saved_native_raw_matches_after_hex": true,
+      "source_words_sha256": "65b74b908d714afce47762809f221d1a9129a8b68ff416843e3bc181edfa3704",
+      "saved_words_sha256": "b665eb06a6619880110d63db7e430bf787403823f5f50483794cccebd24547da"
+    },
+    {
+      "tensor": "model.language_model.layers.41.post_attention_layernorm.weight",
+      "shape": [
+        5376
+      ],
+      "dtype": "BF16",
+      "changed_count": 1,
+      "before_hex_matches_source": true,
+      "after_hex_matches_exact_spec": true,
+      "saved_native_raw_matches_after_hex": true,
+      "source_words_sha256": "237d628a2f046e829611ee1634fa1bb0e83f8701018ce26040873917cf3d7fe6",
+      "saved_words_sha256": "55d33b0d0b74601498241f564fac0ab19ba6973e117e2d76d5a7cabeceeb81b2"
+    },
+    {
+      "tensor": "model.language_model.layers.41.post_feedforward_layernorm.weight",
+      "shape": [
+        5376
+      ],
+      "dtype": "BF16",
+      "changed_count": 2,
+      "before_hex_matches_source": true,
+      "after_hex_matches_exact_spec": true,
+      "saved_native_raw_matches_after_hex": true,
+      "source_words_sha256": "c02e07b98737397064f33404f1578ee38910e7a5596217b90e1c26bed78b00da",
+      "saved_words_sha256": "a1c74bc6b534ff87999c37c5a436a7794fe6691463818a33d4924c5b032491fb"
+    },
+    {
+      "tensor": "model.language_model.layers.41.pre_feedforward_layernorm.weight",
+      "shape": [
+        5376
+      ],
+      "dtype": "BF16",
+      "changed_count": 1,
+      "before_hex_matches_source": true,
+      "after_hex_matches_exact_spec": true,
+      "saved_native_raw_matches_after_hex": true,
+      "source_words_sha256": "3519a5b95fd2c8dd284bfb20cd2e6e7f8139d93765db38142c66f9c63e151443",
+      "saved_words_sha256": "febc06eed38b1ab782b0341d365aa5fe15fec492a1d8b33f6ea72612a3758a3c"
+    },
+    {
+      "tensor": "model.language_model.layers.41.self_attn.q_norm.weight",
+      "shape": [
+        512
+      ],
+      "dtype": "BF16",
+      "changed_count": 3,
+      "before_hex_matches_source": true,
+      "after_hex_matches_exact_spec": true,
+      "saved_native_raw_matches_after_hex": true,
+      "source_words_sha256": "31473f1f099f3cbadea47e52810ab80e8794399273e26454f3f3d765fc04c129",
+      "saved_words_sha256": "edf775ebdf1e70c9a941e970e46365a42773cdd2046d363c2f0e4b9532b5ac66"
+    },
+    {
+      "tensor": "model.language_model.layers.42.input_layernorm.weight",
+      "shape": [
+        5376
+      ],
+      "dtype": "BF16",
+      "changed_count": 1,
+      "before_hex_matches_source": true,
+      "after_hex_matches_exact_spec": true,
+      "saved_native_raw_matches_after_hex": true,
+      "source_words_sha256": "c1eee514a466d7dec00a00b7e3490a308ce88534b63d774a4a7a67d768a98cea",
+      "saved_words_sha256": "8bf02fc739111f208ae73ef4ba5d65ae2dfee6b6bd67c3c3abd61ffdb0b2c2ca"
+    },
+    {
+      "tensor": "model.language_model.layers.42.self_attn.k_norm.weight",
+      "shape": [
+        256
+      ],
+      "dtype": "BF16",
+      "changed_count": 1,
+      "before_hex_matches_source": true,
+      "after_hex_matches_exact_spec": true,
+      "saved_native_raw_matches_after_hex": true,
+      "source_words_sha256": "289cb003d9f3f50523e1a9a9a2c702f3e08436972c4ddce9203c0be9131eb222",
+      "saved_words_sha256": "d57ec8fabfc1f91ccf341e69632626fd228be73fcd17c5972a78c379161b41c0"
+    },
+    {
+      "tensor": "model.language_model.layers.42.self_attn.q_norm.weight",
+      "shape": [
+        256
+      ],
+      "dtype": "BF16",
+      "changed_count": 1,
+      "before_hex_matches_source": true,
+      "after_hex_matches_exact_spec": true,
+      "saved_native_raw_matches_after_hex": true,
+      "source_words_sha256": "31f2839c58c88c03bc9be9bb3a3fae01168e0254d84b48bec2e49268dde4b029",
+      "saved_words_sha256": "507581d043827e1f97f4f89c8c492778f7148604ca13731c1f572ab80bd3fb48"
+    },
+    {
+      "tensor": "model.language_model.layers.43.self_attn.q_norm.weight",
+      "shape": [
+        256
+      ],
+      "dtype": "BF16",
+      "changed_count": 2,
+      "before_hex_matches_source": true,
+      "after_hex_matches_exact_spec": true,
+      "saved_native_raw_matches_after_hex": true,
+      "source_words_sha256": "5e40183b22f2ec5df942e3c7884ef7d27e57d2507f6867b631549c0c4774895f",
+      "saved_words_sha256": "b4f78f8533de00d5fe425903b950e2164b08ff2de80565cd4f8344414998b2d4"
+    },
+    {
+      "tensor": "model.language_model.layers.44.self_attn.q_norm.weight",
+      "shape": [
+        256
+      ],
+      "dtype": "BF16",
+      "changed_count": 3,
+      "before_hex_matches_source": true,
+      "after_hex_matches_exact_spec": true,
+      "saved_native_raw_matches_after_hex": true,
+      "source_words_sha256": "72d05217116a257c27ed41e8e56bb406248aabb4a95ecb13b6a056d394a41d2a",
+      "saved_words_sha256": "bf9595e3eee1e85ca9b028fbe7d302bbe08a01f3ce9eb577f547e604541651f8"
+    },
+    {
+      "tensor": "model.language_model.layers.45.pre_feedforward_layernorm.weight",
+      "shape": [
+        5376
+      ],
+      "dtype": "BF16",
+      "changed_count": 1,
+      "before_hex_matches_source": true,
+      "after_hex_matches_exact_spec": true,
+      "saved_native_raw_matches_after_hex": true,
+      "source_words_sha256": "889644fbb08a105a4024fd74aa3d93c5430ecb276a8c935c1e6558bb22470332",
+      "saved_words_sha256": "918254877695df41e65cb7412f04a6ff7722bb8fc6a64a485c453d1a1d9078e4"
+    },
+    {
+      "tensor": "model.language_model.layers.45.self_attn.k_norm.weight",
+      "shape": [
+        256
+      ],
+      "dtype": "BF16",
+      "changed_count": 1,
+      "before_hex_matches_source": true,
+      "after_hex_matches_exact_spec": true,
+      "saved_native_raw_matches_after_hex": true,
+      "source_words_sha256": "ee751e217962bb457fced86bec61abb5ffe72ad10ee9959ed150d8f1e7f5743d",
+      "saved_words_sha256": "4b368ea2d53daf6094b7f0a80523a2d4d256ea4e7a871e2210a4ac371ef2623c"
+    },
+    {
+      "tensor": "model.language_model.layers.46.self_attn.k_norm.weight",
+      "shape": [
+        256
+      ],
+      "dtype": "BF16",
+      "changed_count": 2,
+      "before_hex_matches_source": true,
+      "after_hex_matches_exact_spec": true,
+      "saved_native_raw_matches_after_hex": true,
+      "source_words_sha256": "411ef34a54bd76d20c17c87e6764d19ea28a9b323adce3585ad6a8a24e4f0bef",
+      "saved_words_sha256": "bb87cad8660662568439401c1b542d7253189d92e0695095131e9416d2f28883"
+    },
+    {
+      "tensor": "model.language_model.layers.46.self_attn.q_norm.weight",
+      "shape": [
+        256
+      ],
+      "dtype": "BF16",
+      "changed_count": 1,
+      "before_hex_matches_source": true,
+      "after_hex_matches_exact_spec": true,
+      "saved_native_raw_matches_after_hex": true,
+      "source_words_sha256": "54f1ce6878d69441e0120b420978387992b99f1319e4a473a1661555d5580289",
+      "saved_words_sha256": "cfdb9177493cdd20c91337958361da90cc6fe9275b9008508a95ab8bf8c4b863"
+    },
+    {
+      "tensor": "model.language_model.layers.47.self_attn.k_norm.weight",
+      "shape": [
+        512
+      ],
+      "dtype": "BF16",
+      "changed_count": 1,
+      "before_hex_matches_source": true,
+      "after_hex_matches_exact_spec": true,
+      "saved_native_raw_matches_after_hex": true,
+      "source_words_sha256": "d0ef9e4d2aa7caf63e99ff1c00114fb924a77273f42e1a1a82b0a71bd47d1e76",
+      "saved_words_sha256": "a2e2388704cb434156745f9d0b8976f1219cfc0f713c6f8ed3f7d55693e94698"
+    },
+    {
+      "tensor": "model.language_model.layers.47.self_attn.q_norm.weight",
+      "shape": [
+        512
+      ],
+      "dtype": "BF16",
+      "changed_count": 1,
+      "before_hex_matches_source": true,
+      "after_hex_matches_exact_spec": true,
+      "saved_native_raw_matches_after_hex": true,
+      "source_words_sha256": "4e44fee5f92d1c2fb87de7c693dbfa836e32a198f3cbb0f00221987ad0987dfc",
+      "saved_words_sha256": "6c65854589bf0a9558afad34c5effa5b73565f9116783a9e01c2823df04b6ebd"
+    },
+    {
+      "tensor": "model.language_model.layers.48.self_attn.k_norm.weight",
+      "shape": [
+        256
+      ],
+      "dtype": "BF16",
+      "changed_count": 1,
+      "before_hex_matches_source": true,
+      "after_hex_matches_exact_spec": true,
+      "saved_native_raw_matches_after_hex": true,
+      "source_words_sha256": "2ae91f8fd3f54a77afde0625c11965346a0b314bad59c74693666e1870a27ed7",
+      "saved_words_sha256": "40ad6a68bbcb3df5a891bdb4bf4b878836e316a5f2665b86da05c1c5585798b2"
+    },
+    {
+      "tensor": "model.language_model.layers.5.input_layernorm.weight",
+      "shape": [
+        5376
+      ],
+      "dtype": "BF16",
+      "changed_count": 3,
+      "before_hex_matches_source": true,
+      "after_hex_matches_exact_spec": true,
+      "saved_native_raw_matches_after_hex": true,
+      "source_words_sha256": "66a6a31e299e9963fedb00ce4c6446461ebf7f26542b27d061fdc53d9725b8ad",
+      "saved_words_sha256": "4cef0e8cc7bb0bd83771443979c0f015bc07b264a8d9225d80beb3896eba9ca7"
+    },
+    {
+      "tensor": "model.language_model.layers.5.post_attention_layernorm.weight",
+      "shape": [
+        5376
+      ],
+      "dtype": "BF16",
+      "changed_count": 3,
+      "before_hex_matches_source": true,
+      "after_hex_matches_exact_spec": true,
+      "saved_native_raw_matches_after_hex": true,
+      "source_words_sha256": "cbb0630cde11e00bf84a1684f197b1ca5204ee46bb344c5fccab455a5dc83fed",
+      "saved_words_sha256": "9dd4560fe342bc5aac8fcaf3d210b44d40bf968e0cdcc8206b134ea58d95a0ea"
+    },
+    {
+      "tensor": "model.language_model.layers.5.self_attn.k_norm.weight",
+      "shape": [
+        512
+      ],
+      "dtype": "BF16",
+      "changed_count": 7,
+      "before_hex_matches_source": true,
+      "after_hex_matches_exact_spec": true,
+      "saved_native_raw_matches_after_hex": true,
+      "source_words_sha256": "6f4fe1277551d71b7aeaaca8c1cd4f9b3cf1312ea5dca30cf17c5ec3ee82b85c",
+      "saved_words_sha256": "be4fc0e3c1ef446b6556ed74fcece0a850934f4813d89b84bbf6fd525607dff8"
+    },
+    {
+      "tensor": "model.language_model.layers.5.self_attn.q_norm.weight",
+      "shape": [
+        512
+      ],
+      "dtype": "BF16",
+      "changed_count": 3,
+      "before_hex_matches_source": true,
+      "after_hex_matches_exact_spec": true,
+      "saved_native_raw_matches_after_hex": true,
+      "source_words_sha256": "f95343f3c3baf8e1b5809b5fe27b0793ebb5f408c1f903118a5be4f848e007b3",
+      "saved_words_sha256": "a25b386aa77fab4531e15218c76e8cb735e4a85b37ae6811c65bad5c91c3d7c9"
+    },
+    {
+      "tensor": "model.language_model.layers.53.input_layernorm.weight",
+      "shape": [
+        5376
+      ],
+      "dtype": "BF16",
+      "changed_count": 1,
+      "before_hex_matches_source": true,
+      "after_hex_matches_exact_spec": true,
+      "saved_native_raw_matches_after_hex": true,
+      "source_words_sha256": "0e5eba57a1be73dad7b7bd11510af5a72b38ea3ca425fe4feed838319046d9ab",
+      "saved_words_sha256": "b00800c99facc767d2ac974af45f7d8a72dee5ffa214d798105cb22145b60020"
+    },
+    {
+      "tensor": "model.language_model.layers.57.post_feedforward_layernorm.weight",
+      "shape": [
+        5376
+      ],
+      "dtype": "BF16",
+      "changed_count": 1,
+      "before_hex_matches_source": true,
+      "after_hex_matches_exact_spec": true,
+      "saved_native_raw_matches_after_hex": true,
+      "source_words_sha256": "24f4b153522a33ec075d47180f0a76ffc4b152a0961c41edeab74ad048c2dd6a",
+      "saved_words_sha256": "62899c8f7e27857e6c97d6c0ef0e848f13e46c392e07c47aa6ada4fdc943a785"
+    },
+    {
+      "tensor": "model.language_model.layers.58.input_layernorm.weight",
+      "shape": [
+        5376
+      ],
+      "dtype": "BF16",
+      "changed_count": 2,
+      "before_hex_matches_source": true,
+      "after_hex_matches_exact_spec": true,
+      "saved_native_raw_matches_after_hex": true,
+      "source_words_sha256": "b888f2142d4d083a2d056e9f20595bd57d4e41f747d829de20ca1eb3322d150e",
+      "saved_words_sha256": "1b51c476ee9566b10d6c75dc750a04617a96328559527dbc9eaa30617c29bf8d"
+    },
+    {
+      "tensor": "model.language_model.layers.58.self_attn.k_norm.weight",
+      "shape": [
+        256
+      ],
+      "dtype": "BF16",
+      "changed_count": 2,
+      "before_hex_matches_source": true,
+      "after_hex_matches_exact_spec": true,
+      "saved_native_raw_matches_after_hex": true,
+      "source_words_sha256": "43ebbf11d5b9ac570fbdd7dbfcc1b57280e46fa359945a32f988baa1d54ccc36",
+      "saved_words_sha256": "1e428b8242ac6bf20aab287d1a17f69bde4c430ded886b2288863064a7716336"
+    },
+    {
+      "tensor": "model.language_model.layers.59.post_feedforward_layernorm.weight",
+      "shape": [
+        5376
+      ],
+      "dtype": "BF16",
+      "changed_count": 6,
+      "before_hex_matches_source": true,
+      "after_hex_matches_exact_spec": true,
+      "saved_native_raw_matches_after_hex": true,
+      "source_words_sha256": "46c37ff9dc2747496fcff3a835776bedc3a613921b2e50d1358fa6084034b162",
+      "saved_words_sha256": "36833132383e2d003e54c21d40accb48d0d4a7b25321fa07323444971dd6a1af"
+    },
+    {
+      "tensor": "model.language_model.layers.59.self_attn.k_norm.weight",
+      "shape": [
+        512
+      ],
+      "dtype": "BF16",
+      "changed_count": 1,
+      "before_hex_matches_source": true,
+      "after_hex_matches_exact_spec": true,
+      "saved_native_raw_matches_after_hex": true,
+      "source_words_sha256": "31091da3816a6844ababd19687b593d8171a3a58746099de2fb2b8339b33ef7f",
+      "saved_words_sha256": "39b9ba3af5509dead5d2aa26b778e9577420ce21fa094fdcd1a020047734abc7"
+    },
+    {
+      "tensor": "model.language_model.layers.6.input_layernorm.weight",
+      "shape": [
+        5376
+      ],
+      "dtype": "BF16",
+      "changed_count": 1,
+      "before_hex_matches_source": true,
+      "after_hex_matches_exact_spec": true,
+      "saved_native_raw_matches_after_hex": true,
+      "source_words_sha256": "c72fcf9e5b3ab0eade8521fe364259507be1faaba1ef530581b02380768285d5",
+      "saved_words_sha256": "38a975c99aef922b9e03e24be95edc513bfe17a4dfb8fefdda0d9b67695338fb"
+    },
+    {
+      "tensor": "model.language_model.layers.6.post_attention_layernorm.weight",
+      "shape": [
+        5376
+      ],
+      "dtype": "BF16",
+      "changed_count": 5,
+      "before_hex_matches_source": true,
+      "after_hex_matches_exact_spec": true,
+      "saved_native_raw_matches_after_hex": true,
+      "source_words_sha256": "6be2988a665f531f56ddb41eac9cb11f9028cc5d97490e48253f83883bb766b6",
+      "saved_words_sha256": "73020542de3d1627c574cafc9a30ae579a9f56037459785fdf31dee55d2e87a1"
+    },
+    {
+      "tensor": "model.language_model.layers.6.self_attn.k_norm.weight",
+      "shape": [
+        256
+      ],
+      "dtype": "BF16",
+      "changed_count": 1,
+      "before_hex_matches_source": true,
+      "after_hex_matches_exact_spec": true,
+      "saved_native_raw_matches_after_hex": true,
+      "source_words_sha256": "626d2837d8926e88ac61d1d53ea00a998ed1384aea5bf039c04f190274703768",
+      "saved_words_sha256": "49e1d876a0d7512f7e613129a85808883370a286119a9908d11dd4e7e91388f3"
+    },
+    {
+      "tensor": "model.language_model.layers.6.self_attn.q_norm.weight",
+      "shape": [
+        256
+      ],
+      "dtype": "BF16",
+      "changed_count": 4,
+      "before_hex_matches_source": true,
+      "after_hex_matches_exact_spec": true,
+      "saved_native_raw_matches_after_hex": true,
+      "source_words_sha256": "a8df4e9ced7d0dacba747fa81e47edf0de2c85cc78adf73602e1dfe7fc6c1e6d",
+      "saved_words_sha256": "f7cb3f675f852d55bc58a38c6a84f8841639d404f087a1c987cff676aed972a1"
+    },
+    {
+      "tensor": "model.language_model.layers.7.input_layernorm.weight",
+      "shape": [
+        5376
+      ],
+      "dtype": "BF16",
+      "changed_count": 6,
+      "before_hex_matches_source": true,
+      "after_hex_matches_exact_spec": true,
+      "saved_native_raw_matches_after_hex": true,
+      "source_words_sha256": "6929795b4ca194d8951d3a7d6a7bf5641d94ecb6a6f0958956cd94b970938a1a",
+      "saved_words_sha256": "666bffc15646fe32be853b1262ce6a6a77320640701edf470360ae3f3de8ed9a"
+    },
+    {
+      "tensor": "model.language_model.layers.7.post_attention_layernorm.weight",
+      "shape": [
+        5376
+      ],
+      "dtype": "BF16",
+      "changed_count": 3,
+      "before_hex_matches_source": true,
+      "after_hex_matches_exact_spec": true,
+      "saved_native_raw_matches_after_hex": true,
+      "source_words_sha256": "e168e0cd35b605ec21dbce78a809fc477dde4c66d38e9ec6eaa9cde36a818eb6",
+      "saved_words_sha256": "2f04732ed8841de96d40eab61d6885de259d498ec7738209001f5a04a04eb666"
+    },
+    {
+      "tensor": "model.language_model.layers.7.pre_feedforward_layernorm.weight",
+      "shape": [
+        5376
+      ],
+      "dtype": "BF16",
+      "changed_count": 1,
+      "before_hex_matches_source": true,
+      "after_hex_matches_exact_spec": true,
+      "saved_native_raw_matches_after_hex": true,
+      "source_words_sha256": "4148ae25af13f9e579cae07d9bde05259e9bf1f8499dc699d8cbb9ed26b0eb66",
+      "saved_words_sha256": "205baba67c710b82d5d9973953477671560d7632df6a5ae3d71c3924e58dfd45"
+    },
+    {
+      "tensor": "model.language_model.layers.7.self_attn.k_norm.weight",
+      "shape": [
+        256
+      ],
+      "dtype": "BF16",
+      "changed_count": 7,
+      "before_hex_matches_source": true,
+      "after_hex_matches_exact_spec": true,
+      "saved_native_raw_matches_after_hex": true,
+      "source_words_sha256": "5a3d1d55d60578549df0f754c6d3f276fbb03352606ab4d67bdf248f88a71b02",
+      "saved_words_sha256": "7ed8a7f90082e32ee8b96c8d3f3612a4fa74ae2a624a8ce53346ce72fda48b11"
+    },
+    {
+      "tensor": "model.language_model.layers.7.self_attn.q_norm.weight",
+      "shape": [
+        256
+      ],
+      "dtype": "BF16",
+      "changed_count": 5,
+      "before_hex_matches_source": true,
+      "after_hex_matches_exact_spec": true,
+      "saved_native_raw_matches_after_hex": true,
+      "source_words_sha256": "9f7159c42482bd69c656591c47de52e900a4a4ed038a00e984ed877278e1a0f1",
+      "saved_words_sha256": "0536c203b697f3e115648d703857671ea24deedbcce0e0e0168c660239646ff9"
+    },
+    {
+      "tensor": "model.language_model.layers.8.input_layernorm.weight",
+      "shape": [
+        5376
+      ],
+      "dtype": "BF16",
+      "changed_count": 2,
+      "before_hex_matches_source": true,
+      "after_hex_matches_exact_spec": true,
+      "saved_native_raw_matches_after_hex": true,
+      "source_words_sha256": "1764603395743694738c85699e69d50ac7ac3985d9a4f8d1a4f6eb09b63bbf02",
+      "saved_words_sha256": "2ec51e4e00b247adf1f063b3b26bb657a7e464429d02fed9ac839f9b7d754f76"
+    },
+    {
+      "tensor": "model.language_model.layers.8.post_attention_layernorm.weight",
+      "shape": [
+        5376
+      ],
+      "dtype": "BF16",
+      "changed_count": 2,
+      "before_hex_matches_source": true,
+      "after_hex_matches_exact_spec": true,
+      "saved_native_raw_matches_after_hex": true,
+      "source_words_sha256": "3872764aa853f672abd15fc42d83e695594bdb19cbdd6ea48358f9b6d18de273",
+      "saved_words_sha256": "122c5522217b4c2875cb7eb357ed1663b6b7aa0f1df0bf533013484fedc8f809"
+    },
+    {
+      "tensor": "model.language_model.layers.8.post_feedforward_layernorm.weight",
+      "shape": [
+        5376
+      ],
+      "dtype": "BF16",
+      "changed_count": 1,
+      "before_hex_matches_source": true,
+      "after_hex_matches_exact_spec": true,
+      "saved_native_raw_matches_after_hex": true,
+      "source_words_sha256": "7858fa54c31114363adf448594b94734d7bfd4560f685e84b3da7308f0f1d1ef",
+      "saved_words_sha256": "d4ba5b6a1f5e20f3da6c92c03e9b22e769c71e6459d034bd3806a19a87196ae8"
+    },
+    {
+      "tensor": "model.language_model.layers.8.self_attn.k_norm.weight",
+      "shape": [
+        256
+      ],
+      "dtype": "BF16",
+      "changed_count": 1,
+      "before_hex_matches_source": true,
+      "after_hex_matches_exact_spec": true,
+      "saved_native_raw_matches_after_hex": true,
+      "source_words_sha256": "d90bc9658ef72a0c03e091c9d709d5d28fd455b2c364275ab15b29993efe363d",
+      "saved_words_sha256": "0f81cce50eb212f7648473922b8618e8ccca9ad5ec7df42d9da974ce2a6a03eb"
+    },
+    {
+      "tensor": "model.language_model.layers.8.self_attn.q_norm.weight",
+      "shape": [
+        256
+      ],
+      "dtype": "BF16",
+      "changed_count": 6,
+      "before_hex_matches_source": true,
+      "after_hex_matches_exact_spec": true,
+      "saved_native_raw_matches_after_hex": true,
+      "source_words_sha256": "8743989ce8369fd6846a5af7649bb73b53df33c840250d990379aad7e1895959",
+      "saved_words_sha256": "19f2b2cef7bb8fc349dd83b5b875371a20b36a5e9bb399743f5d5525c7f86038"
+    },
+    {
+      "tensor": "model.language_model.layers.9.input_layernorm.weight",
+      "shape": [
+        5376
+      ],
+      "dtype": "BF16",
+      "changed_count": 1,
+      "before_hex_matches_source": true,
+      "after_hex_matches_exact_spec": true,
+      "saved_native_raw_matches_after_hex": true,
+      "source_words_sha256": "2b66bfb9b96fd4c3f15f0499462e529e4765405da600aca444445637af5250d2",
+      "saved_words_sha256": "6439bd6f448b8d706373ef1bdd0e1d4d14b2e86e3f7ae1612fa5a0a446caf9e9"
+    },
+    {
+      "tensor": "model.language_model.layers.9.post_attention_layernorm.weight",
+      "shape": [
+        5376
+      ],
+      "dtype": "BF16",
+      "changed_count": 2,
+      "before_hex_matches_source": true,
+      "after_hex_matches_exact_spec": true,
+      "saved_native_raw_matches_after_hex": true,
+      "source_words_sha256": "05907820865435e7087c7a23ef9529c1a13094df361de385c49a80f97ac4d8e9",
+      "saved_words_sha256": "a7608cd142bec7a062a167d4cc879541fd458abdfa5c61073599a49f260623d9"
+    },
+    {
+      "tensor": "model.language_model.layers.9.self_attn.k_norm.weight",
+      "shape": [
+        256
+      ],
+      "dtype": "BF16",
+      "changed_count": 1,
+      "before_hex_matches_source": true,
+      "after_hex_matches_exact_spec": true,
+      "saved_native_raw_matches_after_hex": true,
+      "source_words_sha256": "7932a0faaa21a8132d71a03b68e3e98e305517ea9c9a13afb5dff970ea6bafe5",
+      "saved_words_sha256": "7fe1f8eab361a30040838199ef5dd4f37240945f39bd5fcdca1bd065d957f4fd"
+    },
+    {
+      "tensor": "model.language_model.norm.weight",
+      "shape": [
+        5376
+      ],
+      "dtype": "BF16",
+      "changed_count": 3,
+      "before_hex_matches_source": true,
+      "after_hex_matches_exact_spec": true,
+      "saved_native_raw_matches_after_hex": true,
+      "source_words_sha256": "4501075faa2b4f4ff574524433cef2272a6b90506ab5f63fd1fd7b346f3db0cf",
+      "saved_words_sha256": "21e710b5753ffd4d34dc5eb6098a2ccc62b70fe3f8e42d47f5553818f9e256d2"
+    }
+  ],
+  "box_excess_coordinates": [
+    {
+      "tensor": "model.language_model.layers.0.post_attention_layernorm.weight",
+      "index": 1233,
+      "before": 21.75,
+      "after": 21.5,
+      "delta": -0.25,
+      "continuous_radius": 0.2175,
+      "actual_to_box_ratio": 1.1494252873563218
+    },
+    {
+      "tensor": "model.language_model.layers.0.post_attention_layernorm.weight",
+      "index": 2742,
+      "before": 21.625,
+      "after": 21.375,
+      "delta": -0.25,
+      "continuous_radius": 0.21625,
+      "actual_to_box_ratio": 1.1560693641618498
+    },
+    {
+      "tensor": "model.language_model.layers.11.post_attention_layernorm.weight",
+      "index": 2041,
+      "before": 1.4375,
+      "after": 1.453125,
+      "delta": 0.015625,
+      "continuous_radius": 0.014375,
+      "actual_to_box_ratio": 1.0869565217391304
+    },
+    {
+      "tensor": "model.language_model.layers.19.self_attn.k_norm.weight",
+      "index": 0,
+      "before": 0.1259765625,
+      "after": 0.12451171875,
+      "delta": -0.00146484375,
+      "continuous_radius": 0.001259765625,
+      "actual_to_box_ratio": 1.1627906976744187
+    },
+    {
+      "tensor": "model.language_model.layers.19.self_attn.k_norm.weight",
+      "index": 105,
+      "before": 0.12451171875,
+      "after": 0.1259765625,
+      "delta": 0.00146484375,
+      "continuous_radius": 0.0012451171875000001,
+      "actual_to_box_ratio": 1.176470588235294
+    },
+    {
+      "tensor": "model.language_model.layers.19.self_attn.q_norm.weight",
+      "index": 105,
+      "before": 0.99609375,
+      "after": 1.0078125,
+      "delta": 0.01171875,
+      "continuous_radius": 0.009960937500000001,
+      "actual_to_box_ratio": 1.176470588235294
+    },
+    {
+      "tensor": "model.language_model.layers.19.self_attn.q_norm.weight",
+      "index": 128,
+      "before": 1.0078125,
+      "after": 0.99609375,
+      "delta": -0.01171875,
+      "continuous_radius": 0.010078125,
+      "actual_to_box_ratio": 1.1627906976744187
+    },
+    {
+      "tensor": "model.language_model.layers.59.post_feedforward_layernorm.weight",
+      "index": 3296,
+      "before": 6.21875,
+      "after": 6.28125,
+      "delta": 0.0625,
+      "continuous_radius": 0.0621875,
+      "actual_to_box_ratio": 1.0050251256281406
+    }
+  ],
+  "seconds": 0.21499190898612142,
+  "model_calls": 0,
+  "gpu_calls": 0,
+  "checkpoint_writes": 0,
+  "service_operations": 0
+}

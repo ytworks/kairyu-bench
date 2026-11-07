@@ -1,0 +1,542 @@
+{
+  "status": "completed_saved_verified_deployed_endpoint_checked",
+  "created_epoch": 1794050907.5249386,
+  "logical_parent": "AV highest completed model; F03 partial is not ranked",
+  "candidate_path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/checkpoints/fresh-native-relative-f04-faststore-v1/checkpoint",
+  "physical_tree_sha256": "7b9e9488e3cd4e0b6c5f61ae341e5eeccdf5bd31c46d1c8354950dbc29d0f924",
+  "changed_elements": 429,
+  "changed_tensors": 140,
+  "delta_l2": 2.035779114517941,
+  "all_checkpoint_files": [
+    {
+      "path": "chat_template.jinja",
+      "size": 18683,
+      "sha256": "ae53464bf3be25802b3a5b37def7fd89667067d7577049b3b2d74c4d8de4c6d4"
+    },
+    {
+      "path": "config.json",
+      "size": 4621,
+      "sha256": "e967dd38bc5cfd38bd09a995a7bf4a754075df2b46aba68f7fbb5a791e6d8dd1"
+    },
+    {
+      "path": "generation_config.json",
+      "size": 208,
+      "sha256": "d4226bbe3117d2d253ba4609720ba82c6c4ce4627a9a6ae05387c78983ac03de"
+    },
+    {
+      "path": "model.safetensors.index.json",
+      "size": 103577,
+      "sha256": "2eeef6577e663781958c7e17a8809e5f5953ebe1fdb4bf4906cb7f943946bca3"
+    },
+    {
+      "path": "native.safetensors",
+      "size": 2714560,
+      "sha256": "dde45065af919d9b463529f8f12f249266af2c256ffa9a0ef0b1b8a3ee3c572c"
+    },
+    {
+      "path": "processor_config.json",
+      "size": 1689,
+      "sha256": "32bdf45d2ad4cc29a0822ddd157a182de76644f0419a6228d151495256e9813c"
+    },
+    {
+      "path": "shared.safetensors",
+      "size": 62543620336,
+      "sha256": "d4690e5b5c1eea2099685025676b80409c9ba0636c869c523b8e9b88a4066432"
+    },
+    {
+      "path": "tokenizer.json",
+      "size": 32169626,
+      "sha256": "cc8d3a0ce36466ccc1278bf987df5f71db1719b9ca6b4118264f45cb627bfe0f"
+    },
+    {
+      "path": "tokenizer_config.json",
+      "size": 3082,
+      "sha256": "9f4fec4b1dc6ecddf8f4a92e9caea5971c0e67d81309f3f9066a2bee8c362633"
+    }
+  ],
+  "candidate_inventory_stat": {
+    "chat_template.jinja": {
+      "device": 2306,
+      "inode": 182193236,
+      "size": 18683,
+      "mtime_ns": 1794050350349847250,
+      "ctime_ns": 1794050350349847250,
+      "nlink": 1,
+      "uid": 1003,
+      "gid": 1003,
+      "mode": 33152
+    },
+    "config.json": {
+      "device": 2306,
+      "inode": 182193237,
+      "size": 4621,
+      "mtime_ns": 1794050350349847250,
+      "ctime_ns": 1794050350349847250,
+      "nlink": 1,
+      "uid": 1003,
+      "gid": 1003,
+      "mode": 33152
+    },
+    "generation_config.json": {
+      "device": 2306,
+      "inode": 182193238,
+      "size": 208,
+      "mtime_ns": 1794050350350847215,
+      "ctime_ns": 1794050350350847215,
+      "nlink": 1,
+      "uid": 1003,
+      "gid": 1003,
+      "mode": 33152
+    },
+    "model.safetensors.index.json": {
+      "device": 2306,
+      "inode": 182193239,
+      "size": 103577,
+      "mtime_ns": 1794050350350847215,
+      "ctime_ns": 1794050350350847215,
+      "nlink": 1,
+      "uid": 1003,
+      "gid": 1003,
+      "mode": 33152
+    },
+    "native.safetensors": {
+      "device": 2306,
+      "inode": 182193240,
+      "size": 2714560,
+      "mtime_ns": 1794050350572839477,
+      "ctime_ns": 1794050350572839477,
+      "nlink": 1,
+      "uid": 1003,
+      "gid": 1003,
+      "mode": 33152
+    },
+    "processor_config.json": {
+      "device": 2306,
+      "inode": 182193241,
+      "size": 1689,
+      "mtime_ns": 1794050350361846832,
+      "ctime_ns": 1794050350361846832,
+      "nlink": 1,
+      "uid": 1003,
+      "gid": 1003,
+      "mode": 33152
+    },
+    "shared.safetensors": {
+      "device": 2306,
+      "inode": 182192842,
+      "size": 62543620336,
+      "mtime_ns": 1794050230365028683,
+      "ctime_ns": 1794050243644565979,
+      "nlink": 17,
+      "uid": 1003,
+      "gid": 1003,
+      "mode": 33060
+    },
+    "tokenizer.json": {
+      "device": 2306,
+      "inode": 182193242,
+      "size": 32169626,
+      "mtime_ns": 1794050350405845298,
+      "ctime_ns": 1794050350405845298,
+      "nlink": 1,
+      "uid": 1003,
+      "gid": 1003,
+      "mode": 33152
+    },
+    "tokenizer_config.json": {
+      "device": 2306,
+      "inode": 182193243,
+      "size": 3082,
+      "mtime_ns": 1794050350569839582,
+      "ctime_ns": 1794050350569839582,
+      "nlink": 1,
+      "uid": 1003,
+      "gid": 1003,
+      "mode": 33152
+    }
+  },
+  "build_equivalence": {
+    "all_tensor_names_dtype_shape_raw_bytes_equal": true,
+    "tensor_count": 1188,
+    "source_full_hashes_recomputed": true,
+    "packed_full_hashes_recomputed": true,
+    "logical_parent_unchanged": true,
+    "physical_file_tree_changed": true
+  },
+  "candidate_verification": {
+    "verified": true,
+    "fresh_full_model_hash": false,
+    "fresh_private_files_sha256": [
+      "chat_template.jinja",
+      "config.json",
+      "generation_config.json",
+      "model.safetensors.index.json",
+      "native.safetensors",
+      "processor_config.json",
+      "tokenizer.json",
+      "tokenizer_config.json"
+    ],
+    "shared_files_prior_full_hash_exact_inode_stat": [
+      "shared.safetensors"
+    ],
+    "private_original_byte_restoration": true,
+    "shared_payload_bytes_read": 0,
+    "no_shared_link_mutation": true
+  },
+  "source_pins": {
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/worktrees/kairyu-bench-weight-tools/src/kairyu_bench/wsp/weights/native_faststore.py": "445cc73783bd6bd61890b107bb76ddca1e388a9bf84b630125a01486389578cd",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/worktrees/kairyu-bench-weight-tools/src/kairyu_bench/wsp/weights/checkpoint.py": "898297c05e7179cdc4568d6f290b978073bcebafea804ac043b54030e8205bf9",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/worktrees/kairyu-bench-weight-tools/src/kairyu_bench/wsp/weights/editor.py": "0983580f41989c26e84c16c26924f2850dd4e5d3d12917bb9553d7feb92333d2"
+  },
+  "timings_seconds": {
+    "build_apply": 279.8792107105255,
+    "create_preview": 1.3134574890136719,
+    "create_apply": 1.5397112369537354,
+    "verify": 1.5582411289215088
+  },
+  "deployment_seconds": 127.65325117111206,
+  "endpoint_seconds": 5.01345419883728,
+  "smoke_successes": 5,
+  "smoke_requests": 5,
+  "materialization_model_calls": 0,
+  "deployment_official_evaluation_calls": 0,
+  "failures": 0,
+  "rollbacks": 0,
+  "whole_model_hash_semantics": "Build freshly hashed source and packed files and compared all 1188 tensors. Candidate verify freshly hashes eight private files; shared hash is the prior full build hash with exact inode/stat continuity. No subsequent whole-model rehash.",
+  "shared_nlink": 17,
+  "inventory": [
+    {
+      "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f04-relative-v1/faststore-plan-v1/av-freeze.json",
+      "record": "av-freeze.json",
+      "original_bytes": 5008,
+      "original_sha256": "4204ef65bab9ee765a1085870d6a7fa8d88b124a0941de6f4a71e5afc7d9c548",
+      "stored_bytes": 5008,
+      "stored_sha256": "4204ef65bab9ee765a1085870d6a7fa8d88b124a0941de6f4a71e5afc7d9c548",
+      "compression": null
+    },
+    {
+      "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f04-relative-v1/faststore-plan-v1/commands.json",
+      "record": "commands.json",
+      "original_bytes": 4660,
+      "original_sha256": "777e94af7218e6d46c72e62327eed3500c9af71e75633cd96cb8bf3819ee11a4",
+      "stored_bytes": 4660,
+      "stored_sha256": "777e94af7218e6d46c72e62327eed3500c9af71e75633cd96cb8bf3819ee11a4",
+      "compression": null
+    },
+    {
+      "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f04-relative-v1/faststore-plan-v1/materialization-v1/build_apply-command.json",
+      "record": "materialization-v1/build_apply-command.json",
+      "original_bytes": 902,
+      "original_sha256": "0b8c8d6a064668b50a012b92e3713d93477a9886f8d5e29ce1eeedfa38e14c98",
+      "stored_bytes": 902,
+      "stored_sha256": "0b8c8d6a064668b50a012b92e3713d93477a9886f8d5e29ce1eeedfa38e14c98",
+      "compression": null
+    },
+    {
+      "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f04-relative-v1/faststore-plan-v1/materialization-v1/build_apply-execution.json",
+      "record": "materialization-v1/build_apply-execution.json",
+      "original_bytes": 108,
+      "original_sha256": "d3f8e457fb1b91bebcc411775c82d140bf23398e9a3a1aca9f71df1c98d65f54",
+      "stored_bytes": 108,
+      "stored_sha256": "d3f8e457fb1b91bebcc411775c82d140bf23398e9a3a1aca9f71df1c98d65f54",
+      "compression": null
+    },
+    {
+      "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f04-relative-v1/faststore-plan-v1/materialization-v1/build_apply.stderr",
+      "record": "materialization-v1/build_apply.stderr",
+      "original_bytes": 0,
+      "original_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stored_bytes": 0,
+      "stored_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "compression": null
+    },
+    {
+      "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f04-relative-v1/faststore-plan-v1/materialization-v1/build_apply.stdout",
+      "record": "materialization-v1/build_apply.stdout",
+      "original_bytes": 385,
+      "original_sha256": "bedaa792b804af5b2ba30d55402aabd3c3315911549d05eac1b230c1d5888464",
+      "stored_bytes": 385,
+      "stored_sha256": "bedaa792b804af5b2ba30d55402aabd3c3315911549d05eac1b230c1d5888464",
+      "compression": null
+    },
+    {
+      "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f04-relative-v1/faststore-plan-v1/materialization-v1/complete.json",
+      "record": "materialization-v1/complete.json",
+      "original_bytes": 601,
+      "original_sha256": "d2933023af323c4402269284c1dfe258ee20c254c8f9c9b612dffb391010ccdd",
+      "stored_bytes": 601,
+      "stored_sha256": "d2933023af323c4402269284c1dfe258ee20c254c8f9c9b612dffb391010ccdd",
+      "compression": null
+    },
+    {
+      "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f04-relative-v1/faststore-plan-v1/materialization-v1/create_apply-command.json",
+      "record": "materialization-v1/create_apply-command.json",
+      "original_bytes": 1104,
+      "original_sha256": "9fd4787b7053a0d27d491ac0302ab07fd29c5c7de60023ebb6df9cd88f3f859d",
+      "stored_bytes": 1104,
+      "stored_sha256": "9fd4787b7053a0d27d491ac0302ab07fd29c5c7de60023ebb6df9cd88f3f859d",
+      "compression": null
+    },
+    {
+      "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f04-relative-v1/faststore-plan-v1/materialization-v1/create_apply-execution.json",
+      "record": "materialization-v1/create_apply-execution.json",
+      "original_bytes": 110,
+      "original_sha256": "086c5fdb70879884ddc3987815c35453148cb7b222bd9d8126e79865b00bfcbf",
+      "stored_bytes": 110,
+      "stored_sha256": "086c5fdb70879884ddc3987815c35453148cb7b222bd9d8126e79865b00bfcbf",
+      "compression": null
+    },
+    {
+      "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f04-relative-v1/faststore-plan-v1/materialization-v1/create_apply.stderr",
+      "record": "materialization-v1/create_apply.stderr",
+      "original_bytes": 0,
+      "original_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stored_bytes": 0,
+      "stored_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "compression": null
+    },
+    {
+      "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f04-relative-v1/faststore-plan-v1/materialization-v1/create_apply.stdout",
+      "record": "materialization-v1/create_apply.stdout",
+      "original_bytes": 485,
+      "original_sha256": "18a45aa6d770628b2f88d41d9788a2eb03edd03785235eaa6deca294a75bf241",
+      "stored_bytes": 485,
+      "stored_sha256": "18a45aa6d770628b2f88d41d9788a2eb03edd03785235eaa6deca294a75bf241",
+      "compression": null
+    },
+    {
+      "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f04-relative-v1/faststore-plan-v1/materialization-v1/create_preview-command.json",
+      "record": "materialization-v1/create_preview-command.json",
+      "original_bytes": 1089,
+      "original_sha256": "e4c061d68df716c3a9640fe82d6b564371f5d8cd28e6f312c8ddcb15210becef",
+      "stored_bytes": 1089,
+      "stored_sha256": "e4c061d68df716c3a9640fe82d6b564371f5d8cd28e6f312c8ddcb15210becef",
+      "compression": null
+    },
+    {
+      "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f04-relative-v1/faststore-plan-v1/materialization-v1/create_preview-execution.json",
+      "record": "materialization-v1/create_preview-execution.json",
+      "original_bytes": 112,
+      "original_sha256": "9c999e2a922932e065da048a24cf19c9cfca1c147d07b570e34bb32b7728d53d",
+      "stored_bytes": 112,
+      "stored_sha256": "9c999e2a922932e065da048a24cf19c9cfca1c147d07b570e34bb32b7728d53d",
+      "compression": null
+    },
+    {
+      "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f04-relative-v1/faststore-plan-v1/materialization-v1/create_preview.stderr",
+      "record": "materialization-v1/create_preview.stderr",
+      "original_bytes": 0,
+      "original_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stored_bytes": 0,
+      "stored_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "compression": null
+    },
+    {
+      "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f04-relative-v1/faststore-plan-v1/materialization-v1/create_preview.stdout",
+      "record": "materialization-v1/create_preview.stdout",
+      "original_bytes": 151,
+      "original_sha256": "bd13978dbca5aefbae7dd6fbd861b6d5df61e851e281eec16751e07d4fe9d148",
+      "stored_bytes": 151,
+      "stored_sha256": "bd13978dbca5aefbae7dd6fbd861b6d5df61e851e281eec16751e07d4fe9d148",
+      "compression": null
+    },
+    {
+      "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f04-relative-v1/faststore-plan-v1/materialization-v1/start.json",
+      "record": "materialization-v1/start.json",
+      "original_bytes": 867,
+      "original_sha256": "59bac3cd58daccee525a517733bc03c099a8f1658476afee109bf309a526fca0",
+      "stored_bytes": 867,
+      "stored_sha256": "59bac3cd58daccee525a517733bc03c099a8f1658476afee109bf309a526fca0",
+      "compression": null
+    },
+    {
+      "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f04-relative-v1/faststore-plan-v1/materialization-v1/verify-command.json",
+      "record": "materialization-v1/verify-command.json",
+      "original_bytes": 429,
+      "original_sha256": "2dfd05c739a37ffb334c05a9a4cac60ac472b129b3bd7ead8b65d4f261b9cf4a",
+      "stored_bytes": 429,
+      "stored_sha256": "2dfd05c739a37ffb334c05a9a4cac60ac472b129b3bd7ead8b65d4f261b9cf4a",
+      "compression": null
+    },
+    {
+      "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f04-relative-v1/faststore-plan-v1/materialization-v1/verify-execution.json",
+      "record": "materialization-v1/verify-execution.json",
+      "original_bytes": 104,
+      "original_sha256": "a84ee9c744af8100d040ed4adfc89717d2a8a18b062b7b6e576da4c4b8e23eb9",
+      "stored_bytes": 104,
+      "stored_sha256": "a84ee9c744af8100d040ed4adfc89717d2a8a18b062b7b6e576da4c4b8e23eb9",
+      "compression": null
+    },
+    {
+      "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f04-relative-v1/faststore-plan-v1/materialization-v1/verify.stderr",
+      "record": "materialization-v1/verify.stderr",
+      "original_bytes": 0,
+      "original_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stored_bytes": 0,
+      "stored_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "compression": null
+    },
+    {
+      "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f04-relative-v1/faststore-plan-v1/materialization-v1/verify.stdout",
+      "record": "materialization-v1/verify.stdout",
+      "original_bytes": 613,
+      "original_sha256": "a7237a2b82d68e64467c791c3781a86b8b216f584272ef5db77c956383c4b0cd",
+      "stored_bytes": 613,
+      "stored_sha256": "a7237a2b82d68e64467c791c3781a86b8b216f584272ef5db77c956383c4b0cd",
+      "compression": null
+    },
+    {
+      "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f04-relative-v1/faststore-plan-v1/materialize-after-result.complete-only-v1.py.txt",
+      "record": "materialize-after-result.complete-only-v1.py.txt",
+      "original_bytes": 4052,
+      "original_sha256": "5cb019b276f7d15aa6a7e192f5b6ee625765761ad80d3fcca2d8bd7ea3fa7c5f",
+      "stored_bytes": 4052,
+      "stored_sha256": "5cb019b276f7d15aa6a7e192f5b6ee625765761ad80d3fcca2d8bd7ea3fa7c5f",
+      "compression": null
+    },
+    {
+      "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f04-relative-v1/faststore-plan-v1/materialize-after-result.py",
+      "record": "materialize-after-result.py.txt",
+      "original_bytes": 4611,
+      "original_sha256": "b10cac275535a29e6f1bcb2c0b8dbe756f09c01dd8e2196aea2376abb018299c",
+      "stored_bytes": 4611,
+      "stored_sha256": "b10cac275535a29e6f1bcb2c0b8dbe756f09c01dd8e2196aea2376abb018299c",
+      "compression": null
+    },
+    {
+      "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f04-relative-v1/faststore-plan-v1/materialize-owner.stderr",
+      "record": "materialize-owner.stderr",
+      "original_bytes": 0,
+      "original_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stored_bytes": 0,
+      "stored_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "compression": null
+    },
+    {
+      "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f04-relative-v1/faststore-plan-v1/materialize-owner.stdout",
+      "record": "materialize-owner.stdout",
+      "original_bytes": 641,
+      "original_sha256": "2ca5f4217600252b998f01704daf155fb0e546f9b08d6fde2022e2fc4b81fdc0",
+      "stored_bytes": 641,
+      "stored_sha256": "2ca5f4217600252b998f01704daf155fb0e546f9b08d6fde2022e2fc4b81fdc0",
+      "compression": null
+    },
+    {
+      "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f04-relative-v1/faststore-plan-v1/parent-and-execution-gate.json",
+      "record": "parent-and-execution-gate.json",
+      "original_bytes": 1038,
+      "original_sha256": "4ac63559cc806fc25d7086d3ff73faba2de3942e726c4c57811da4058c1da659",
+      "stored_bytes": 1038,
+      "stored_sha256": "4ac63559cc806fc25d7086d3ff73faba2de3942e726c4c57811da4058c1da659",
+      "compression": null
+    },
+    {
+      "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f04-relative-v1/faststore-plan-v1/parent-decision.json",
+      "record": "parent-decision.json",
+      "original_bytes": 1813,
+      "original_sha256": "105ac95ccf7581ab6c36f7f2f0c1c4aaaa228c9c54a7a1349776695fc62d40f4",
+      "stored_bytes": 1813,
+      "stored_sha256": "105ac95ccf7581ab6c36f7f2f0c1c4aaaa228c9c54a7a1349776695fc62d40f4",
+      "compression": null
+    },
+    {
+      "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f04-relative-v1/faststore-plan-v1/prepare-preview.py",
+      "record": "prepare-preview.py.txt",
+      "original_bytes": 5900,
+      "original_sha256": "6385016c7869ac795c41cb786b9b39976468225cf29165a73b749ac99732398c",
+      "stored_bytes": 5900,
+      "stored_sha256": "6385016c7869ac795c41cb786b9b39976468225cf29165a73b749ac99732398c",
+      "compression": null
+    },
+    {
+      "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f04-relative-v1/faststore-plan-v1/preview-execution.json",
+      "record": "preview-execution.json",
+      "original_bytes": 422,
+      "original_sha256": "15a0c444a7cbd2b918ce8fe3334c4157285bba32d1b7c9e77c4db109f545f470",
+      "stored_bytes": 422,
+      "stored_sha256": "15a0c444a7cbd2b918ce8fe3334c4157285bba32d1b7c9e77c4db109f545f470",
+      "compression": null
+    },
+    {
+      "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f04-relative-v1/faststore-plan-v1/preview.stderr",
+      "record": "preview.stderr",
+      "original_bytes": 0,
+      "original_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stored_bytes": 0,
+      "stored_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "compression": null
+    },
+    {
+      "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f04-relative-v1/faststore-plan-v1/preview.stdout",
+      "record": "preview.stdout",
+      "original_bytes": 188,
+      "original_sha256": "2e6023fdbdeb592743b3ec9c162917f32dbcf90e5b1a44b9018f18531623f9df",
+      "stored_bytes": 188,
+      "stored_sha256": "2e6023fdbdeb592743b3ec9c162917f32dbcf90e5b1a44b9018f18531623f9df",
+      "compression": null
+    },
+    {
+      "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f04-relative-v1/faststore-plan-v1/root-launch.json",
+      "record": "root-launch.json",
+      "original_bytes": 235,
+      "original_sha256": "d7a60fdc90941120b2953e30ba12eef587ae389db6926533d30d3fe1dda3e3c6",
+      "stored_bytes": 235,
+      "stored_sha256": "d7a60fdc90941120b2953e30ba12eef587ae389db6926533d30d3fe1dda3e3c6",
+      "compression": null
+    },
+    {
+      "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f04-relative-v1/faststore-plan-v1/selected-native421.json",
+      "record": "selected-native421.json",
+      "original_bytes": 26071,
+      "original_sha256": "5e1886630204df2ead98e27547235629713369bc103ec498b6a46633dbab6616",
+      "stored_bytes": 26071,
+      "stored_sha256": "5e1886630204df2ead98e27547235629713369bc103ec498b6a46633dbab6616",
+      "compression": null
+    },
+    {
+      "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/checkpoints/native-faststore-av-v1/receipt.json",
+      "record": "store-receipt.json.gz",
+      "original_bytes": 193508,
+      "original_sha256": "dbcc501f1f42ca32d9c05fbced2b40d0e0dd49a9446df2fbd0bdd3abd23606f9",
+      "stored_bytes": 54784,
+      "stored_sha256": "be90aa216caf8c947082534e5c7a452939d8bfc45b1466f9b590f26a9ac35603",
+      "compression": "gzip-mtime0"
+    },
+    {
+      "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/checkpoints/fresh-native-relative-f04-faststore-v1/manifest.json",
+      "record": "candidate-manifest.json.gz",
+      "original_bytes": 3488563,
+      "original_sha256": "fd189cf276a1219ad627186d2dfb4a895c79768821f247a0b33d9abd8953d8c1",
+      "stored_bytes": 692202,
+      "stored_sha256": "fa80c9aefd88378ea36dc21feaa8f80e15e7a0504075765bf533b77071ac9f7e",
+      "compression": "gzip-mtime0"
+    },
+    {
+      "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/worktrees/kairyu-bench-weight-tools/src/kairyu_bench/wsp/weights/native_faststore.py",
+      "record": "source/native_faststore.py.txt",
+      "original_bytes": 27786,
+      "original_sha256": "445cc73783bd6bd61890b107bb76ddca1e388a9bf84b630125a01486389578cd",
+      "stored_bytes": 27786,
+      "stored_sha256": "445cc73783bd6bd61890b107bb76ddca1e388a9bf84b630125a01486389578cd",
+      "compression": null
+    },
+    {
+      "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/worktrees/kairyu-bench-weight-tools/src/kairyu_bench/wsp/weights/checkpoint.py",
+      "record": "source/checkpoint.py.txt",
+      "original_bytes": 18153,
+      "original_sha256": "898297c05e7179cdc4568d6f290b978073bcebafea804ac043b54030e8205bf9",
+      "stored_bytes": 18153,
+      "stored_sha256": "898297c05e7179cdc4568d6f290b978073bcebafea804ac043b54030e8205bf9",
+      "compression": null
+    },
+    {
+      "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/worktrees/kairyu-bench-weight-tools/src/kairyu_bench/wsp/weights/editor.py",
+      "record": "source/editor.py.txt",
+      "original_bytes": 40324,
+      "original_sha256": "0983580f41989c26e84c16c26924f2850dd4e5d3d12917bb9553d7feb92333d2",
+      "stored_bytes": 40324,
+      "stored_sha256": "0983580f41989c26e84c16c26924f2850dd4e5d3d12917bb9553d7feb92333d2",
+      "compression": null
+    }
+  ]
+}

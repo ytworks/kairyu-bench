@@ -1,0 +1,39 @@
+{
+  "commit": "0eebfd403ba438bfd14cb70b9b24a7745c997083",
+  "downloads": [
+    {
+      "url": "https://api.github.com/repos/google-research/google-research/commits/master",
+      "final_url": "https://api.github.com/repos/google-research/google-research/commits/master",
+      "status": 200,
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-mbpp-train-preparation-v1/upstream-commit.json",
+      "sha256": "591445a700712f1cbd4681819d415aa7582c729b19c63a8ebba325918badeeb7",
+      "bytes": 334277,
+      "seconds": 0.38213253021240234,
+      "authorization": "public unauthenticated GET",
+      "payload_limit": 2000000
+    },
+    {
+      "url": "https://raw.githubusercontent.com/google-research/google-research/0eebfd403ba438bfd14cb70b9b24a7745c997083/mbpp/README.md",
+      "final_url": "https://raw.githubusercontent.com/google-research/google-research/0eebfd403ba438bfd14cb70b9b24a7745c997083/mbpp/README.md",
+      "status": 200,
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-mbpp-train-preparation-v1/upstream-README.md",
+      "sha256": "02d63a4ffdad806c3c87b5ea2aa91e946f6eec0c2869643b09831650883f41be",
+      "bytes": 1422,
+      "seconds": 0.21138739585876465,
+      "authorization": "public unauthenticated GET",
+      "payload_limit": 2000000
+    },
+    {
+      "url": "https://raw.githubusercontent.com/google-research/google-research/0eebfd403ba438bfd14cb70b9b24a7745c997083/LICENSE",
+      "final_url": "https://raw.githubusercontent.com/google-research/google-research/0eebfd403ba438bfd14cb70b9b24a7745c997083/LICENSE",
+      "status": 200,
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-mbpp-train-preparation-v1/upstream-root-LICENSE",
+      "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
+      "bytes": 11358,
+      "seconds": 0.18800997734069824,
+      "authorization": "public unauthenticated GET",
+      "payload_limit": 2000000
+    }
+  ],
+  "dataset_payload_downloaded": false
+}

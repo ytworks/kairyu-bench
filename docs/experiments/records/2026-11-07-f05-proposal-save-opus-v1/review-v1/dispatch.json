@@ -1,0 +1,10 @@
+{
+  "mode": "send",
+  "prompt_sha256": "57c6e4de0b23e1dc69aa01398a4ab16feed4d13f70acb46ec272059a3d61dcfc",
+  "prompt_bytes": 7236,
+  "requested_model": "claude-opus-5-5",
+  "labels": "A",
+  "fallback_model": null,
+  "allow_text_review": false,
+  "anonymity": "pattern lint only; caller must review every prompt byte for private identifiers and measurements"
+}
