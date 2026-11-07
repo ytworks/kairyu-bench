@@ -84,7 +84,7 @@ def matrix_arrays(checkpoint, plan, collections, labels, pins):
         with np.load(collection["path"] / "sample-plan.npz", allow_pickle=False) as data:
             if set(data.files) != {"coordinates", "source_values"}:
                 raise ValueError("unexpected sample arrays")
-        expected = adapter.matrix_recipe.mlp_triplet_samples(checkpoint.tensors, collection["provenance"]["seed"])
+        expected = adapter.expected_mlp_samples(checkpoint, collection)
         cursor = 0
         for entry in layout:
             count = entry["count"]
@@ -94,6 +94,10 @@ def matrix_arrays(checkpoint, plan, collections, labels, pins):
             if name in expected and not np.array_equal(coordinates[cursor:cursor+count], expected[name][0]):
                 raise ValueError("coherent MLP coordinates differ")
             cursor += count
+        if collection["coverage"].get("sampling_mode") == "mlp-full-units":
+            adapter.full_matrix_recipe.verify_attention(
+                [coordinates[e["start"]:e["start"]+e["count"]] for e in collection["coverage"]["entries"]],
+                collection["coverage"]["entries"], collection["coverage"]["unit_support"])
         active, selected = adapter.matrix_column_indices(plan, layout)
         selected = [dict(entry, family=adapter.matrix_recipe.PATTERN.fullmatch(entry["tensor"])[3])
                     for entry in selected]

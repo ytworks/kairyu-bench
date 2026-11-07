@@ -15,6 +15,7 @@ import numpy as np
 
 import joint
 import matrix as matrix_recipe
+import matrix_full_units as full_matrix_recipe
 from kairyu_bench.wsp.weights.checkpoint import Checkpoint
 
 OBJECTIVES = ("correct-logprob", "margin")
@@ -143,6 +144,21 @@ def observed_blocks(plan):
     return blocks
 
 
+def expected_mlp_samples(checkpoint, collection):
+    if collection["coverage"].get("sampling_mode") == "mlp-full-units":
+        return full_matrix_recipe.full_unit_samples(checkpoint.tensors, collection["coverage"]["unit_support"])
+    return matrix_recipe.mlp_triplet_samples(checkpoint.tensors, collection["provenance"]["seed"])
+
+
+def full_unit_declaration(collections):
+    collection = collections.get("matrix:" + OBJECTIVES[0])
+    if collection is None or collection["coverage"].get("sampling_mode") != "mlp-full-units":
+        return None
+    coverage = collection["coverage"]
+    return dict(schema_version=1, support_plan_sha256=coverage["unit_support_sha256"],
+                layer_prefix="model.language_model.layers.", units=coverage["unit_support"]["units"])
+
+
 def prepare(path):
     """Validate the whole checkpoint, cohorts and columns before reading gradients."""
     pins = {}
@@ -231,17 +247,35 @@ def prepare(path):
                     raise ValueError("complete native tensor columns differ")
             else:
                 entries = coverage["entries"]
+                sampling = coverage.get("sampling_mode")
+                expected_names, full_samples = set(matrices), {}
+                if sampling == "mlp-full-units":
+                    if families != ["matrix"] or "v" in matrix_families(plan):
+                        raise ValueError("full-unit mode requires observed matrix only and explicit V frozen")
+                    unit_ref = provenance["unit_support"]
+                    support = document(Path(unit_ref["path"]), pins, unit_ref["sha256"])
+                    if (coverage.get("unit_support") != support
+                            or coverage.get("unit_support_sha256") != unit_ref["sha256"]
+                            or support["source_checkpoint"] != current
+                            or support["attestation_receipt_sha256"] != ref["sha256"]):
+                        raise ValueError("full-unit support/source binding differs")
+                    full_samples = full_matrix_recipe.full_unit_samples(checkpoint.tensors, support)
+                    expected_names = {n for n in matrices if matrix_recipe.PATTERN.fullmatch(n)[2] == "self_attn"} | set(full_samples)
+                    for evidence in support["reference_attention"].values():
+                        capture(Path(evidence["path"]), pins, evidence["sha256"])
                 if (not matrices or any(t.dtype != "BF16" or len(t.shape) != 2 for t in matrices.values())
-                        or len(entries) != len(matrices) or {e["tensor"] for e in entries} != set(matrices)
+                        or len(entries) != len(expected_names) or {e["tensor"] for e in entries} != expected_names
                         or coverage.get("sampled_matrices") != len(entries)
                         or coverage.get("sampled_coordinates") != sum(e["count"] for e in entries)
-                        or coverage.get("sampling_mode") != "mlp-triplets"
-                        or provenance.get("sampling_mode") != "mlp-triplets"):
-                    raise ValueError("complete coherent sampled matrix columns required")
+                        or sampling not in {"mlp-triplets", "mlp-full-units"}
+                        or provenance.get("sampling_mode") != sampling):
+                    raise ValueError("complete declared coherent matrix columns required")
                 for entry in entries:
                     match = matrix_recipe.PATTERN.fullmatch(entry["tensor"])
                     if (entry["shape"] != list(matrices[entry["tensor"]].shape)
-                            or type(entry["count"]) is not int or not 1 <= entry["count"] <= 512
+                            or type(entry["count"]) is not int or entry["count"] < 1
+                            or (entry["tensor"] in full_samples and entry["count"] != len(full_samples[entry["tensor"]][0]))
+                            or (entry["tensor"] not in full_samples and entry["count"] > 512)
                             or entry["family"] != match[3] or entry["layer"] != int(match[1])):
                         raise ValueError("matrix header/column layout differs")
                 if summary["runtime"].get("gradient_checkpointing") is not False:
@@ -346,6 +380,8 @@ def prepare(path):
         capture(source_file, pins)
     if mixed:
         capture(Path(matrix_recipe.__file__), pins)
+        if full_unit_declaration(collections) is not None:
+            capture(Path(full_matrix_recipe.__file__), pins)
     stable(checkpoint, pins)
     return checkpoint, plan, collections, labels, pins
 
@@ -396,13 +432,17 @@ def solve(path, output, *, write_spec=False, maximum_seconds=120):
                 with np.load(collection["path"] / "sample-plan.npz", allow_pickle=False) as arrays:
                     if set(arrays.files) != {"coordinates", "source_values"}:
                         raise ValueError("unexpected matrix sample-plan arrays")
-                expected = matrix_recipe.mlp_triplet_samples(checkpoint.tensors, collection["provenance"]["seed"])
+                expected = expected_mlp_samples(checkpoint, collection)
                 cursor = 0
                 for entry in layout:
                     count = entry["count"]
                     if entry["tensor"] in expected and not np.array_equal(coords[cursor:cursor + count], expected[entry["tensor"]][0]):
                         raise ValueError("MLP coordinates do not share the declared hidden-unit sample")
                     cursor += count
+                if collection["coverage"].get("sampling_mode") == "mlp-full-units":
+                    full_matrix_recipe.verify_attention(
+                        [coords[e["start"]:e["start"]+e["count"]] for e in collection["coverage"]["entries"]],
+                        collection["coverage"]["entries"], collection["coverage"]["unit_support"])
             loaded[key] = (base, g, layout, coords)
         for family in observed_blocks(plan):
             first, second = (loaded[o if family == "native" else "matrix:" + o] for o in OBJECTIVES)
@@ -507,7 +547,9 @@ def solve(path, output, *, write_spec=False, maximum_seconds=120):
                         edit["tensor"] not in selected_matrix_names))
                        for edit in edits):
                     raise ValueError("ineligible native/matrix family escaped selected columns")
-                compatibility = joint.editor_compatibility(edits, allow_batched_matrix=True)
+                declaration = full_unit_declaration(collections)
+                compatibility = joint.editor_compatibility(edits, allow_batched_matrix=True,
+                    **({"matrix_full_units": declaration} if declaration is not None else {}))
                 if not compatibility["spec_emission_allowed"]:
                     raise ValueError("matrix proposal exceeds existing editor bounds")
                 delta = values.astype(np.float64) - base
@@ -530,6 +572,9 @@ def solve(path, output, *, write_spec=False, maximum_seconds=120):
             sample_sha = pins[str((collections["matrix:" + OBJECTIVES[0]]["path"] / "sample-plan.npz").resolve())][0]
             for spec in specs:
                 spec.update(matrix_batch=True, matrix_sample_plan_sha256=sample_sha)
+                declaration = full_unit_declaration(collections)
+                if declaration is not None:
+                    spec["matrix_full_units"] = declaration
         stable(checkpoint, pins)
         result = {"schema_version": plan["schema_version"], "status": "local_proposals", "methods": methods,
                   "source_checkpoint": plan["checkpoint"], "parent_state": plan.get("parent_state"),

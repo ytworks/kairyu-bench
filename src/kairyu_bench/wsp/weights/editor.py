@@ -11,6 +11,7 @@ import hashlib
 import json
 import math
 import os
+import re
 from pathlib import Path
 import shutil
 import struct
@@ -22,6 +23,7 @@ from .checkpoint import Checkpoint, FLOAT_DTYPES
 SIZES = {"BF16": 2, "F16": 2, "F32": 4, "F64": 8}
 CHUNK = 8 * 1024 * 1024
 MAX_JSON = 256 * 1024 * 1024
+MAX_FULL_UNIT_JSON = 2 * 1024 * 1024 * 1024
 
 
 def sha(data: bytes) -> str:
@@ -39,12 +41,17 @@ def _pairs(items: list[tuple[str, Any]]) -> dict[str, Any]:
 
 def read_json(path: Path) -> dict[str, Any]:
     with path.open("rb") as stream:
-        raw = stream.read(MAX_JSON + 1)
-    if len(raw) > MAX_JSON:
-        raise ValueError("edit metadata exceeds 256 MiB")
+        raw = stream.read(MAX_FULL_UNIT_JSON + 1)
+    if len(raw) > MAX_FULL_UNIT_JSON:
+        raise ValueError("edit metadata exceeds the 2 GiB full-unit ceiling")
     result = json.loads(raw, object_pairs_hook=_pairs)
     if not isinstance(result, dict):
         raise ValueError("edit metadata must be an object")
+    if len(raw) > MAX_JSON:
+        specification = result.get("spec", result)
+        if not isinstance(specification, dict) or full_unit_support(specification) is None:
+            raise ValueError("metadata over 256 MiB requires explicit full-unit mode")
+        matrix_coordinate_limits(specification)
     return result
 
 
@@ -93,7 +100,90 @@ def read_at(path: Path, offset: int, size: int) -> bytes:
         raise ValueError("short read")
     return data
 
+
+def full_unit_support(spec: dict[str, Any]) -> dict[str, Any] | None:
+    """Validate the explicit bounded MLP-unit declaration, without model I/O."""
+    if "matrix_full_units" not in spec:
+        return None
+    declaration = spec["matrix_full_units"]
+    if (spec.get("matrix_batch") is not True or not isinstance(declaration, dict)
+            or set(declaration) != {"schema_version", "support_plan_sha256", "layer_prefix", "units"}
+            or type(declaration.get("schema_version")) is not int or declaration["schema_version"] != 1):
+        raise ValueError("full units require matrix_batch and an explicit schema-1 support declaration")
+    digest = declaration["support_plan_sha256"]
+    prefix = declaration["layer_prefix"]
+    rows = declaration["units"]
+    if (not isinstance(digest, str) or not re.fullmatch(r"[0-9a-f]{64}", digest)
+            or not isinstance(prefix, str) or not re.fullmatch(r"[A-Za-z_][A-Za-z_0-9]*(?:\.[A-Za-z_][A-Za-z_0-9]*)*\.layers\.", prefix)
+            or not isinstance(rows, list) or not rows):
+        raise ValueError("invalid full-unit digest, layer prefix or units")
+    units: dict[int, tuple[int, ...]] = {}
+    previous = -1
+    for row in rows:
+        if not isinstance(row, dict) or set(row) != {"layer", "indices"}:
+            raise ValueError("full-unit rows require layer and indices")
+        layer, indices = row["layer"], row["indices"]
+        if (type(layer) is not int or layer <= previous
+                or not isinstance(indices, list) or not 1 <= len(indices) <= 2
+                or any(type(i) is not int or i < 0 for i in indices)
+                or sorted(set(indices)) != indices):
+            raise ValueError("sorted unique nonnegative units, at most two per layer, required")
+        units[layer] = tuple(indices)
+        previous = layer
+    if sum(map(len, units.values())) > 32:
+        raise ValueError("full-unit support exceeds 32 units")
+    return {"layer_prefix": prefix, "units": units}
+
+
+def matrix_edit_limit(spec: dict[str, Any], edit: dict[str, Any], shape: list[int] | None = None) -> int:
+    """Check a changed subset against declared unit rows/columns or Q/K/O sampling."""
+    support = full_unit_support(spec)
+    if support is None:
+        return matrix_coordinate_limits(spec)[0]
+    tensor, coordinates = edit.get("tensor"), edit.get("coordinates")
+    prefix = support["layer_prefix"]
+    if not isinstance(tensor, str) or not tensor.startswith(prefix):
+        raise ValueError("full-unit tensor is outside its declared layer namespace")
+    match = re.fullmatch(r"(0|[1-9][0-9]*)\.(mlp|self_attn)\.([a-z]+)_proj\.weight", tensor[len(prefix):])
+    if match is None or not isinstance(coordinates, list) or not coordinates:
+        raise ValueError("full-unit edits require explicit projection coordinates; native edits are frozen")
+    layer, family, projection = int(match[1]), match[2], match[3]
+    if family == "self_attn":
+        if projection not in {"q", "k", "o"}:
+            raise ValueError("full-unit mode permits sampled Q/K/O only; explicit V is frozen")
+        allowed, axis, limit = None, 0, 512
+    else:
+        if projection not in {"gate", "up", "down"} or layer not in support["units"]:
+            raise ValueError("MLP projection is outside declared unit support")
+        allowed = support["units"][layer]
+        axis = 1 if projection == "down" else 0
+        if shape is not None and (len(shape) != 2 or any(i >= shape[axis] for i in allowed)):
+            raise ValueError("declared unit exceeds projection dimensions")
+        limit = len(allowed) * shape[1 - axis] if shape is not None else 1_000_000
+    if len(coordinates) > limit:
+        raise ValueError("projection exceeds its declared coordinate support")
+    for cell in coordinates:
+        if (not isinstance(cell, list) or len(cell) != 2 or any(type(i) is not int or i < 0 for i in cell)
+                or (allowed is not None and cell[axis] not in allowed)):
+            raise ValueError("coordinate is outside declared MLP unit rows/columns")
+    return limit
+
+
+def _check_full_unit_source(checkpoint: Checkpoint, spec: dict[str, Any]) -> None:
+    support = full_unit_support(spec)
+    if support is None:
+        return
+    for layer, units in support["units"].items():
+        names = [f"{support['layer_prefix']}{layer}.mlp.{kind}_proj.weight" for kind in ("gate", "up", "down")]
+        if any(name not in checkpoint.tensors for name in names):
+            raise ValueError("declared MLP unit requires gate/up/down projections")
+        shapes = [_location(checkpoint, name, sparse_matrix=True)[4] for name in names]
+        if shapes[0] != shapes[1] or shapes[2] != [shapes[0][1], shapes[0][0]] or max(units) >= shapes[0][0]:
+            raise ValueError("declared MLP gate/up/down unit dimensions differ")
+
+
 def matrix_coordinate_limits(spec: dict[str, Any]) -> tuple[int, int]:
+    support = full_unit_support(spec)
     mode = spec.get("matrix_batch", False)
     if mode is False:
         return 64, 64
@@ -101,7 +191,7 @@ def matrix_coordinate_limits(spec: dict[str, Any]) -> tuple[int, int]:
     if (mode is not True or not isinstance(digest, str) or len(digest) != 64
             or any(c not in "0123456789abcdef" for c in digest)):
         raise ValueError("matrix_batch=true requires a lowercase SHA-256 for the sampled coordinate plan")
-    return 512, 262144
+    return (1_000_000, 1_000_000) if support is not None else (512, 262144)
 
 def sparse_matrix_patches(base: Path, edit: dict[str, Any], shard: str, tensor_offset: int, shape: list[int], *, max_coordinates: int = 64) -> list[dict[str, Any]]:
     coordinates = edit["coordinates"]
@@ -161,21 +251,26 @@ def plan_edits(base: Path, spec: dict[str, Any]) -> list[dict[str, Any]]:
     if not isinstance(spec.get("edits"), list) or any(not isinstance(e, dict) for e in spec["edits"]):
         raise ValueError("edits must be a list of objects")
     checkpoint = Checkpoint(base)
+    _check_full_unit_source(checkpoint, spec)
     edits = spec["edits"]
     if not edits:
         raise ValueError("empty candidate: use official checkpoint for baseline")
     seen, patches, touched = set(), [], set()
     matrix_cells = 0
-    per_tensor_limit, total_matrix_limit = matrix_coordinate_limits(spec)
+    _, total_matrix_limit = matrix_coordinate_limits(spec)
+    full_units = full_unit_support(spec) is not None
     for edit in edits:
         tensor = edit["tensor"]
         if tensor in seen:
             raise ValueError("combine all changes to one tensor in one edit")
         seen.add(tensor)
         sparse = "coordinates" in edit
+        if full_units and not sparse:
+            raise ValueError("native parameters are frozen in full-unit mode")
         name, offset, size, dtype, shape = _location(checkpoint, tensor, sparse_matrix=sparse)
         if sparse:
-            cells = sparse_matrix_patches(base, edit, name, offset, shape, max_coordinates=per_tensor_limit)
+            limit = matrix_edit_limit(spec, edit, shape)
+            cells = sparse_matrix_patches(base, edit, name, offset, shape, max_coordinates=limit)
             matrix_cells += len(cells)
             if matrix_cells > total_matrix_limit:
                 raise ValueError("candidate exceeds its sparse matrix coordinate limit")
@@ -243,7 +338,9 @@ def _validate_spec_record(spec: dict[str, Any], patches: list[dict[str, Any]]) -
         by_name[edit["tensor"]] = edit
     seen: set[tuple[str, int]] = set()
     observed: dict[str, list[tuple[int, ...]]] = {}
-    per_tensor, total_matrix = matrix_coordinate_limits(spec)
+    _, total_matrix = matrix_coordinate_limits(spec)
+    full_units = full_unit_support(spec) is not None
+    coordinate_cache: dict[str, tuple[str, list[int], dict[tuple[int, int], int]]] = {}
     for patch in patches:
         tensor = patch["tensor"]
         if tensor not in by_name:
@@ -273,24 +370,38 @@ def _validate_spec_record(spec: dict[str, Any], patches: list[dict[str, Any]]) -
         matrix = "coordinates" in edit
         if matrix:
             coords = edit["coordinates"]
-            if (dtype != "BF16" or len(shape) != 2 or min(shape) <= 0 or
-                    not isinstance(coords, list) or not 1 <= len(coords) <= per_tensor or
-                    len(before) != 2):
+            if dtype != "BF16" or len(shape) != 2 or min(shape) <= 0 or len(before) != 2:
                 raise ValueError("invalid sparse matrix manifest")
-            for cell in coords:
-                if (not isinstance(cell, list) or len(cell) != 2 or
-                        any(type(i) is not int for i in cell) or
-                        not 0 <= cell[0] < shape[0] or not 0 <= cell[1] < shape[1]):
-                    raise ValueError("invalid matrix coordinate")
+            cached = coordinate_cache.get(tensor)
+            if cached is None:
+                limit = matrix_edit_limit(spec, edit, shape)
+                if not isinstance(coords, list) or not 1 <= len(coords) <= limit:
+                    raise ValueError("invalid sparse matrix manifest")
+                positions: dict[tuple[int, int], int] = {}
+                for index, cell in enumerate(coords):
+                    if (not isinstance(cell, list) or len(cell) != 2 or
+                            any(type(i) is not int for i in cell) or
+                            not 0 <= cell[0] < shape[0] or not 0 <= cell[1] < shape[1]
+                            or tuple(cell) in positions):
+                        raise ValueError("invalid or duplicate matrix coordinate")
+                    positions[tuple(cell)] = index
+                coordinate_cache[tensor] = (dtype, list(shape), positions)
+            else:
+                if cached[0] != dtype or cached[1] != shape:
+                    raise ValueError("matrix manifest dtype/shape changed within a tensor")
+                positions = cached[2]
             cell = patch.get("matrix_coordinate")
-            if not isinstance(cell, list) or cell not in coords:
+            if (not isinstance(cell, list) or len(cell) != 2
+                    or any(type(i) is not int for i in cell) or tuple(cell) not in positions):
                 raise ValueError("undeclared matrix coordinate")
-            position = coords.index(cell)
+            position = positions[tuple(cell)]
             selected = [cell[0] * shape[1] + cell[1]]
             observed.setdefault(tensor, []).append(tuple(cell))
             local = [0]
             values = [edit[operation][position]] if operation == "set_values" else [edit[operation]]
         else:
+            if full_units:
+                raise ValueError("native parameters are frozen in full-unit mode")
             if len(shape) > 1 or math.prod(shape) > 1_000_000 or math.prod(shape) * SIZES[dtype] != len(before):
                 raise ValueError("invalid native scalar/vector byte span")
             selected = edit.get("indices", list(range(len(old))))

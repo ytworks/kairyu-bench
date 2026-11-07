@@ -17,6 +17,7 @@ from typing import Any, Callable
 import numpy as np
 
 from kairyu_bench.wsp.weights import checkpoint as checkpoint_reader
+from kairyu_bench.wsp.weights import editor
 from kairyu_bench.wsp.weights.checkpoint import Checkpoint
 
 
@@ -205,11 +206,18 @@ def load_plan(path: Path, checkpoint: Checkpoint) -> tuple[dict[str, Any], list[
         edits = spec.get("edits")
         if not isinstance(edits, list) or not edits:
             raise ValueError("nonempty edits required")
+        full_units = editor.full_unit_support(spec) is not None
+        matrix_total_limit = 262144
+        if full_units:
+            _, matrix_total_limit = editor.matrix_coordinate_limits(spec)
+            editor._check_full_unit_source(checkpoint, spec)
         seen, count, square = set(), 0, 0.0
         for edit in edits:
             name = edit.get("tensor")
             tensor = checkpoint.tensors.get(name) if isinstance(name, str) else None
             matrix = "coordinates" in edit
+            if full_units and not matrix:
+                raise ValueError("native parameters are frozen in full-unit replay")
             if (tensor is None or not isinstance(name, str) or not name.startswith("model.language_model.")
                     or name in seen or tensor.dtype != "BF16"):
                 raise ValueError("unique existing text BF16 tensors required")
@@ -219,7 +227,8 @@ def load_plan(path: Path, checkpoint: Checkpoint) -> tuple[dict[str, Any], list[
                 if set(edit) != {"tensor", "coordinates", "set_values"}:
                     raise ValueError("matrix replay accepts exact coordinate set_values only")
                 coordinates = edit["coordinates"]
-                if (not isinstance(coordinates, list) or not coordinates or len(coordinates) > 512
+                coordinate_limit = editor.matrix_edit_limit(spec, edit, list(tensor.shape)) if full_units else 512
+                if (not isinstance(coordinates, list) or not coordinates or len(coordinates) > coordinate_limit
                         or any(not isinstance(cell, list) or len(cell) != 2
                                or any(type(x) is not int for x in cell)
                                or not 0 <= cell[0] < tensor.shape[0]
@@ -252,8 +261,8 @@ def load_plan(path: Path, checkpoint: Checkpoint) -> tuple[dict[str, Any], list[
             count += len(indices)
             if count > 1000000:
                 raise ValueError("total edit count exceeds one million")
-            if matrix and sum(len(e.get("coordinates", [])) for e in edits) > 262144:
-                raise ValueError("matrix edit count exceeds 262,144")
+            if matrix and sum(len(e.get("coordinates", [])) for e in edits) > matrix_total_limit:
+                raise ValueError("matrix edit count exceeds its declared bounded mode")
             square += float(difference @ difference)
             edit["_flat_indices"] = indices
         spec["_verified_metrics"] = {"changed_elements": count, "changed_tensors": len(edits),

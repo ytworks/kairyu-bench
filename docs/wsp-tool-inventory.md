@@ -126,10 +126,12 @@ Combined validation: 520 collected tests (464 passed,56 optional skips), whole-t
 
 The [helper-capped functional batch](experiments/2026-11-07-helper-capped-functional-targets.md) retains112-case fit and160-case diagnostic identities, an explicit LL cap, and versioned Q/K compatibility without rewriting historical runtime paths. Q/K load-time overlay support separately proves every fused destination, including tied K-to-V copies; direct V/native edits remain excluded. CPU image proof is distinct from an actual engine rollout.
 
-[Opt-in long-context authored observations](wsp-long-context-observation.md) retain legacy frame/backend defaults while adding complete 1024/2048-token validation, text-only SDPA dispatch and an optional CUDA allocator cap. Shared policy identity rejects incompatible collector/composer mixtures. CPU contracts are validated; real 31B long-context capacity and fused-kernel savings remain untested.
+[Opt-in long-context authored observations](wsp-long-context-observation.md) retain legacy frame/backend defaults while adding complete 1024/2048-token validation, text-only SDPA dispatch and an optional CUDA allocator cap. Shared policy identity rejects incompatible collector/composer mixtures. CPU contracts and a complete 120-case matrix-only 31B observation are recorded; native 88/92 GiB attempts failed, and fused-kernel savings remain untested.
 
 - [Saved AV ordinary all14 confirmation](wsp-av-full14-confirmation.md): fixed778 AD/AV TP2 comparison after explicit exploratory selection and saved-word/full-file verification; no intervening dev90 claim or automatic adoption.
 
 [Dependency-rich longer helper chains](wsp-long-helper-chains.md) add four authored training families (eight stages) and two disjoint transfer chains using the existing public-code evaluator and isolated executor. Complete interfaces and semantic foils are CPU-verified; the selected112 case objects remain unchanged in the120-row bundle. Longer input frames are not evidence of greater model capability.
 
 The [matrix-only observation contract](wsp-matrix-only-observation.md) supports explicitly frozen, unobserved native parameters with complete matrix LL/margin provenance; it does not fabricate missing native gradients.
+
+[UP-output unit sensitivities](wsp-up-unit-gains.md) select bounded coherent support through the [full-MLP-unit method](wsp-coherent-full-mlp-units.md). The [explicit full-unit editor mode](wsp-full-unit-edits.md) permits selected gate/up rows and down columns with an unchanged one-million-coordinate ceiling, preserves native/V and unselected bytes, and retains legacy sampled-coordinate bounds. Unit salience is a support choice, not circuit attribution or a measured candidate improvement.

@@ -309,6 +309,11 @@ def main():
                 results.append(row)
                 continue
             spec = json.loads(sp.read_text())
+            if cov.get("sampling_mode") == "mlp-full-units":
+                expected_declaration = dict(schema_version=1, support_plan_sha256=cov["unit_support_sha256"],
+                    layer_prefix="model.language_model.layers.", units=cov["unit_support"]["units"])
+                if spec.get("matrix_full_units") != expected_declaration or plan.get("observed_blocks") != ["matrix"]:
+                    raise ValueError("full-unit specification/support binding differs")
             metric = method["cost_metric"]
             scales = metric.get("block_scales", {"native": 1.0, "matrix": 1.0})
             counts = {"native": 0, "matrix": 0}

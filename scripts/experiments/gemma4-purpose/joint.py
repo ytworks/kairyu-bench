@@ -10,7 +10,7 @@ import re
 import numpy as np
 
 import recipe_common as common
-from kairyu_bench.wsp.weights import finite_response
+from kairyu_bench.wsp.weights import editor, finite_response
 from kairyu_bench.wsp.weights.finite_response import bf16_realization
 
 
@@ -167,15 +167,24 @@ def read_collection(directory, plan):
 
 
 
-def editor_compatibility(edits, *, allow_batched_matrix=False):
+def editor_compatibility(edits, *, allow_batched_matrix=False, matrix_full_units=None):
     counts = {e["tensor"]: len(e["coordinates"]) for e in edits if "coordinates" in e}
     total = sum(counts.values())
     requires_batch = total > 64 or max(counts.values(), default=0) > 64
     within_limit = total <= 262144 and max(counts.values(), default=0) <= 512
+    if matrix_full_units is not None:
+        support_spec = {"matrix_batch": True, "matrix_sample_plan_sha256": "0" * 64,
+                        "matrix_full_units": matrix_full_units}
+        editor.full_unit_support(support_spec)
+        requires_batch = True
+        within_limit = total <= 1_000_000 and len(counts) == len(edits)
+        for edit in edits:
+            editor.matrix_edit_limit(support_spec, edit)
     allowed = within_limit and (not requires_batch or allow_batched_matrix)
     return {"matrix_coordinates_per_tensor": counts, "total_matrix_coordinates": total,
             "requires_matrix_batch": requires_batch, "within_batched_editor_limit": within_limit,
-            "batch_opt_in": allow_batched_matrix, "spec_emission_allowed": allowed}
+            "batch_opt_in": allow_batched_matrix, "spec_emission_allowed": allowed,
+            "full_unit_opt_in": matrix_full_units is not None}
 
 def main(argv=None):
     parser = argparse.ArgumentParser(description=__doc__)
@@ -220,7 +229,8 @@ def main(argv=None):
                 indices.tolist() if coordinates is None else coordinates[cursor + indices].tolist())
             edits.append(edit)
         cursor += count
-    compatibility = editor_compatibility(edits, allow_batched_matrix=args.allow_batched_matrix)
+    compatibility = editor_compatibility(edits, allow_batched_matrix=args.allow_batched_matrix,
+                                       matrix_full_units=plan.get("matrix_full_units"))
     report["editor_compatibility"] = compatibility
     report["spec_emitted"] = bool(args.write_spec and edits and compatibility["spec_emission_allowed"])
     report.update(schema_version=1, id=identifier, mode=mode, constraints=labels, cost_metric=metric,
@@ -246,6 +256,8 @@ def main(argv=None):
         if report["spec_emitted"]:
             metadata = ({"matrix_batch": True, "matrix_sample_plan_sha256": hashes[str((args.collection / "sample-plan.npz").resolve())]}
                         if compatibility["requires_matrix_batch"] else {})
+            if plan.get("matrix_full_units") is not None:
+                metadata["matrix_full_units"] = plan["matrix_full_units"]
             common.save(args.output / (identifier + ".json"), {
                 "id": identifier, "hypothesis": "Explicit local-purpose-gradient joint BF16 proposal; finite response unmeasured.",
                 "edits": edits, **metadata})

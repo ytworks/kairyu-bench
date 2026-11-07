@@ -258,6 +258,152 @@ class DerivedMatrixRadiusTests(unittest.TestCase):
                          "--output", str(scoped.root / "rejected-mask"), "--run"])
         self.assertFalse((scoped.root / "rejected-mask").exists())
 
+        # Complete-unit collection → quota-selected support → analytic proposal
+        # → saved BF16 bytes. Large gradients outside the declared MLP support
+        # cannot affect the solve, and rounded-zero support members may stay fixed.
+        full = fixtures.NativeCoupledTests()
+        full.setUp()
+        self.addCleanup(full.doCleanups)
+        full.mixed_fixture()
+        with patch.dict(sys.modules, {"propose_native_objectives": fixtures.COUPLED}):
+            units_module = load("matrix_full_units")
+            selector = load("select_mlp_unit_support")
+        names = {name: (tensor.dtype, tensor.shape, full.checkpoint.read_raw(name))
+                 for name, tensor in full.checkpoint.tensors.items()}
+        for family, shape in (("gate", (16, 32)), ("up", (16, 32)), ("down", (32, 16))):
+            names[f"model.language_model.layers.1.mlp.{family}_proj.weight"] = (
+                "BF16", shape, bytes.fromhex("803f") * int(np.prod(shape)))
+        vname = "model.language_model.layers.0.self_attn.v_proj.weight"
+        names[vname] = ("BF16", (32, 32), bytes.fromhex("803f") * 1024)
+        fixtures.weights(full.checkpoint.path / "model.safetensors", names)
+        full.checkpoint = Checkpoint(full.checkpoint.path)
+        identity = full.checkpoint.identity()
+        attestation = full.root / "attestation.json"
+        attestation.write_text(json.dumps({"checkpoint": identity}))
+        chosen = selector.select(
+            {"science": np.array([3., 2., 1.]), "repair": np.array([4., 3., 2.])},
+            [(0, 3), (0, 4), (1, 5)],
+            [{"name": "science", "quota": 1}, {"name": "repair", "quota": 1}], 1)
+        self.assertEqual([(row["layer"], row["unit"], row["quota_group"]) for row in chosen],
+                         [(0, 3, "science"), (1, 5, "repair")])
+        attention = full.root / "attention-reference"
+        attention.mkdir()
+        attn_entries = []
+        for name, tensor in sorted(full.checkpoint.tensors.items()):
+            match = units_module.PATTERN.fullmatch(name)
+            if match and match[2] == "self_attn":
+                attn_entries.append({"tensor": name, "shape": list(tensor.shape),
+                                     "start": len(attn_entries), "count": 1,
+                                     "family": match[3], "layer": int(match[1]), "strata": {}})
+        (attention / "coverage.json").write_text(json.dumps({"entries": attn_entries}))
+        np.savez(attention / "sample-plan.npz",
+                 coordinates=np.zeros((len(attn_entries), 2), dtype=np.int64),
+                 source_values=np.ones(len(attn_entries), dtype=np.float32))
+        def pin(path):
+            return {"path": str(path), "sha256": full.sha(path)}
+        support = {
+            "schema_version": 1, "kind": "mlp_full_unit_support_v1",
+            "source_checkpoint": full.checkpoint.identity(False),
+            "attestation_receipt_sha256": full.sha(attestation),
+            "layer_prefix": "model.language_model.layers.",
+            "units": [{"layer": row["layer"], "indices": [row["unit"]]} for row in chosen],
+            "reference_attention": {
+                "coverage": pin(attention / "coverage.json"),
+                "sample_plan": pin(attention / "sample-plan.npz")},
+        }
+        support_path = full.root / "unit-support.json"
+        support_path.write_text(json.dumps(support))
+        complete = units_module.full_unit_samples(full.checkpoint.tensors, support)
+        entries, cells = [], []
+        for name, tensor in sorted(full.checkpoint.tensors.items()):
+            match = units_module.PATTERN.fullmatch(name)
+            if not match or (match[2] == "mlp" and name not in complete):
+                continue
+            coordinates, strata = complete.get(name, (np.array([[0, 0]], dtype=np.int64), {}))
+            entries.append({"tensor": name, "shape": list(tensor.shape), "start": len(cells),
+                            "count": len(coordinates), "family": match[3],
+                            "layer": int(match[1]), "strata": strata})
+            cells.extend(coordinates.tolist())
+        coverage = {
+            "entries": entries, "sampled_matrices": len(entries),
+            "sampled_coordinates": len(cells), "sampling_mode": "mlp-full-units",
+            "unit_support": support, "unit_support_sha256": full.sha(support_path)}
+        p = full.plan
+        p["checkpoint"].update(tree_sha256=identity["sha256"], attestation=pin(attestation))
+        for directory in p["collections"].pop("native").values():
+            shutil.rmtree(directory)
+        p["observed_blocks"] = p["eligible_blocks"] = ["matrix"]
+        p["matrix_families"] = ["gate", "up", "down"]
+        p["matrix_tensors"] = sorted(complete)
+        p["candidates"][0]["id"] = "full-unit-derived"
+        p["candidates"][0]["cost_metric"] = {
+            "type": "euclidean", "block_scales": {"native": 1., "matrix": 1.}}
+        selected_cells = {}
+        for objective, directory in p["collections"]["matrix"].items():
+            folder = Path(directory)
+            provenance = json.loads((folder / "provenance.json").read_text())
+            provenance.update(checkpoint=full.checkpoint.identity(False),
+                              attestation_receipt_sha256=full.sha(attestation),
+                              sampling_mode="mlp-full-units", unit_support=pin(support_path))
+            provenance["input_sha256"][str(support_path)] = full.sha(support_path)
+            (folder / "provenance.json").write_text(json.dumps(provenance))
+            (folder / "coverage.json").write_text(json.dumps(coverage))
+            np.savez(folder / "sample-plan.npz", coordinates=np.asarray(cells, dtype=np.int64),
+                     source_values=np.ones(len(cells), dtype=np.float32))
+            gradient = np.zeros(len(cells))
+            for entry in entries:
+                if entry["family"] in {"q", "v"}:
+                    gradient[entry["start"]] = 1e6
+                elif ((objective == "correct-logprob" and entry["layer"] == 0 and entry["family"] == "gate")
+                      or (objective == "margin" and entry["layer"] == 1 and entry["family"] == "up")):
+                    gradient[entry["start"]] = 1.
+                    selected_cells[entry["tensor"]] = tuple(cells[entry["start"]])
+            np.save(folder / "gradient.npy", gradient)
+        reference = full.root / "reference.json"
+        reference.write_text(json.dumps(p))
+        p["reference_plan"] = pin(reference)
+        p["analytic_calibration"] = dict(plan["analytic_calibration"], metric="euclidean")
+        p["completed_collection_sha256"], p["completed_collection_stat"] = {}, {}
+        for directory in p["collections"]["matrix"].values():
+            for path in Path(directory).iterdir():
+                p["completed_collection_sha256"][str(path)] = full.sha(path)
+                p["completed_collection_stat"][str(path)] = dict(zip(
+                    ("device", "inode", "size", "mtime_ns", "ctime_ns"),
+                    RADIUS.adapter.stamp(path), strict=True))
+        full.plan_path.write_text(json.dumps(p))
+        original = {path: full.sha(path) for path in full.checkpoint.files}
+        out = full.root / "calibration"
+        with contextlib.redirect_stdout(io.StringIO()):
+            RADIUS.main(["--plan", str(full.plan_path), "--plan-sha256", full.sha(full.plan_path),
+                         "--output", str(out), "--run"])
+        analytic = json.loads((out / "report.json").read_text())
+        self.assertAlmostEqual(analytic["continuous_delta_l2"], np.sqrt(2) / 128)
+        derived = out / "candidate-plan.json"
+        result_dir = full.root / "candidate"
+        with contextlib.redirect_stdout(io.StringIO()):
+            RADIUS.main(["--plan", str(derived), "--plan-sha256", full.sha(derived),
+                         "--output", str(result_dir), "--phase", "candidate", "--run"])
+        spec_path = result_dir / "proposals/full-unit-derived.json"
+        spec = json.loads(spec_path.read_text())
+        self.assertEqual(spec["matrix_full_units"]["support_plan_sha256"], full.sha(support_path))
+        self.assertEqual(spec["matrix_full_units"]["units"], support["units"])
+        self.assertEqual({row["tensor"]: tuple(row["coordinates"][0]) for row in spec["edits"]},
+                         selected_cells)
+        saved_path, manifest = full.root / "saved", full.root / "saved.json"
+        editor.create(full.checkpoint.path, saved_path, spec_path, manifest, apply=True, reserve_bytes=0)
+        self.assertEqual(editor.verify(manifest)["changed_elements"], 2)
+        saved = Checkpoint(saved_path)
+        for name, tensor in full.checkpoint.tensors.items():
+            before, after = full.checkpoint.read_raw(name), saved.read_raw(name)
+            if name not in selected_cells:
+                self.assertEqual(after, before)
+                continue
+            row, column = selected_cells[name]
+            offset = 2 * (row * tensor.shape[1] + column)
+            self.assertEqual(after[:offset] + after[offset + 2:], before[:offset] + before[offset + 2:])
+            self.assertNotEqual(after[offset:offset + 2], before[offset:offset + 2])
+        self.assertEqual({path: full.sha(path) for path in full.checkpoint.files}, original)
+
 
 if __name__ == "__main__":
     unittest.main()

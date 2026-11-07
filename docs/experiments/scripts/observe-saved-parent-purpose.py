@@ -128,7 +128,7 @@ def validate(serving=True):
     )
     observed_blocks = plan.get("observed_blocks", ["native", "matrix"])
     require(
-        observed_blocks in (["native", "matrix"], ["matrix"]),
+        observed_blocks in (["native", "matrix"], ["matrix"], ["up_units"]),
         "explicit observed blocks",
     )
     require(
@@ -143,7 +143,7 @@ def validate(serving=True):
     for job in plan["jobs"]:
         expected_gpu = (
             (4 if job["objective"] == "correct-logprob" else 5)
-            if observed_blocks == ["matrix"]
+            if observed_blocks in (["matrix"], ["up_units"])
             else (4 if job["collector_kind"] == "native" else 5)
         )
         argv = job["run_argv"]
@@ -153,7 +153,7 @@ def validate(serving=True):
             and argv[argv.index("--gpus") + 1] == "device=" + str(expected_gpu),
             "collector physical GPU mapping differs",
         )
-    if observed_blocks == ["matrix"]:
+    if observed_blocks in (["matrix"], ["up_units"]):
         require(
             plan.get("native_parameters") == "frozen_not_observed",
             "native omission must be explicit",
@@ -291,6 +291,69 @@ def validate(serving=True):
             and guard.digest(c["HostConfig"]) == row["host_config_sha256"],
             "embedding changed",
         )
+
+
+def validate_up_output(out, summary):
+    """Check declared full-unit sensitivities without pretending matrix/native G."""
+    import numpy as np
+
+    coverage = summary["coverage"]
+    expected = plan["up_units"]
+    require(
+        coverage["units_method"] == "up_output_gain"
+        and coverage["entries"] == expected["entries"]
+        and coverage["observed_units"] == expected["observed_units"]
+        and coverage["observed_up_matrices"] == len(expected["entries"])
+        and coverage["native_parameters"] == "frozen_not_observed"
+        and coverage["full_native_gradient_arrays"] is False
+        and summary["full_native_gradient_arrays"] is False
+        and summary["parameter_versions_unchanged"] is True,
+        "UP unit coverage/source contract differs",
+    )
+    names = {entry["tensor"]: entry["count"] for entry in expected["entries"]}
+    require(read(out / "coverage.json") == coverage, "UP coverage files differ")
+    provenance = read(out / "provenance.json")
+    require(
+        provenance["units_method"] == "up_output_gain"
+        and provenance["virtual_unit_gains"] is True
+        and provenance["native_parameters"] == "frozen_not_observed",
+        "raw UP gain provenance differs",
+    )
+    with np.load(out / "source-up-row-norms.npz", allow_pickle=False) as data:
+        require(set(data.files) == set(names), "UP cost tensor names differ")
+        for name, count in names.items():
+            value = data[name]
+            require(
+                value.dtype == np.float64
+                and value.shape == (count,)
+                and np.isfinite(value).all()
+                and (value >= 0).all(),
+                "UP source row cost invalid",
+            )
+    for row in summary["folds"]:
+        expected_file = f"gradient-{row['purpose']}-{row['fold']}.npz"
+        require(row["file"] == expected_file, "UP fold file differs")
+        with np.load(out / expected_file, allow_pickle=False) as data:
+            require(set(data.files) == set(names), "UP derivative tensor names differ")
+            for name, count in names.items():
+                value = data[name]
+                require(
+                    value.dtype == np.float32
+                    and value.shape == (count,)
+                    and np.isfinite(value).all(),
+                    "UP derivative invalid",
+                )
+    checks = summary["zero_additive_checks"]
+    first, last = expected["entries"][0], expected["entries"][-1]
+    require(
+        set(checks) == {first["tensor"], last["tensor"]}
+        and all(
+            row["units"] == min(4, names[name])
+            and np.isfinite(row["max_abs_difference"])
+            for name, row in checks.items()
+        ),
+        "UP zero-additive proof missing",
+    )
 
 
 def stop_signal(sig, frame):
@@ -441,7 +504,7 @@ def run():
         )
     state["status"] = (
         "collecting_parallel_jobs"
-        if plan.get("observed_blocks") == ["matrix"]
+        if plan.get("observed_blocks") in (["matrix"], ["up_units"])
         else "collecting_parallel_families"
     )
     publish()
@@ -565,7 +628,9 @@ def run():
                 observed_groups == expected_groups,
                 "collected purpose/fold case groups differ",
             )
-            if job["collector_kind"] == "native":
+            if job["collector_kind"] == "up_units":
+                validate_up_output(out, summary)
+            elif job["collector_kind"] == "native":
                 require(
                     summary["coverage"]["native_tensors"] == 421
                     and summary["coverage"]["native_coordinates"] == 1331516,
@@ -599,6 +664,23 @@ def run():
                 launch(kind)
         if active:
             time.sleep(2)
+    if plan.get("observed_blocks") == ["up_units"]:
+        import numpy as np
+
+        left, right = [
+            Path(job["output"]) / "source-up-row-norms.npz" for job in plan["jobs"]
+        ]
+        with (
+            np.load(left, allow_pickle=False) as a,
+            np.load(right, allow_pickle=False) as b,
+        ):
+            require(
+                set(a.files) == set(b.files)
+                and all(np.array_equal(a[name], b[name]) for name in a.files),
+                "UP source row costs differ across objectives",
+            )
+        state["cross_objective_up_row_costs_exact"] = True
+        state["native_gradient_parity"] = "not_measured"
     state["collections_completed"] = True
 
 

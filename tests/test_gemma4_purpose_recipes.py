@@ -28,6 +28,8 @@ def load(name):
         modules["objective_variants"] = OBJECTIVES
     if "MATRIX" in globals():
         modules["matrix"] = MATRIX
+    if "FULL_UNITS" in globals():
+        modules["matrix_full_units"] = FULL_UNITS
     if "JOINT" in globals():
         modules["joint"] = JOINT
     with patch.dict(sys.modules, modules):
@@ -40,6 +42,8 @@ OBJECTIVES = load("objective_variants")
 MATRIX = load("matrix")
 NATIVE = load("native")
 JOINT = load("joint")
+UP = load("up_unit_gains")
+FULL_UNITS = load("matrix_full_units")
 
 
 class PurposeRecipeTests(unittest.TestCase):
@@ -341,6 +345,160 @@ class PurposeTorchFixtures(unittest.TestCase):
         torch.testing.assert_close(self.factor.float(), dweight[rows, columns], rtol=1e-6, atol=1e-6)
         torch.testing.assert_close(self.factor.float(), dprobe, rtol=1e-6, atol=1e-6)
         self.assertIsNone(weight.grad)
+
+
+        # Whole-UP gains: an independent parameter-row oracle in FP32, followed
+        # by actual BF16 collection and NPZ persistence through a gated MLP.
+        unit_gain = torch.zeros(weight.shape[0], requires_grad=True)
+        raw = inputs @ weight.T
+        weighted = raw * (1 + unit_gain)
+        loss = torch.sin(weighted).sum()
+        full_dw, full_dg = torch.autograd.grad(loss, (weight, unit_gain))
+        torch.testing.assert_close(full_dg, (full_dw * weight).sum(1), rtol=2e-5, atol=1e-6)
+        torch.testing.assert_close(
+            UP.gain_factor(torch, raw.detach(), torch.cos(raw.detach())), full_dg,
+            rtol=2e-5, atol=1e-6)
+
+        class MLP(torch.nn.Module):
+            def __init__(self):
+                super().__init__()
+                self.gate_proj = torch.nn.Linear(3, 4, bias=False, dtype=torch.bfloat16)
+                self.up_proj = torch.nn.Linear(3, 4, bias=False, dtype=torch.bfloat16)
+                self.down_proj = torch.nn.Linear(4, 3, bias=False, dtype=torch.bfloat16)
+                self.gain = None
+
+            def forward(self, x):
+                up = self.up_proj(x)
+                if self.gain is not None:
+                    up = up + (up.float() * self.gain).to(up.dtype)
+                return self.down_proj(torch.nn.functional.silu(self.gate_proj(x)) * up)
+
+        class Net(torch.nn.Module):
+            def __init__(self):
+                super().__init__()
+                self.embed_tokens = torch.nn.Embedding(7, 3, dtype=torch.bfloat16)
+                self.layers = torch.nn.ModuleList([torch.nn.Module()])
+                self.layers[0].mlp = MLP()
+                self.config = SimpleNamespace(final_logit_softcapping=3.)
+
+            def forward(self, input_ids, **kwargs):
+                return SimpleNamespace(last_hidden_state=self.layers[0].mlp(self.embed_tokens(input_ids)))
+
+        class Model(torch.nn.Module):
+            def __init__(self):
+                super().__init__()
+                self.model = torch.nn.Module()
+                self.model.language_model = Net()
+                self.head = torch.nn.Linear(3, 7, bias=False, dtype=torch.bfloat16)
+
+            def get_output_embeddings(self):
+                return self.head
+
+        model = Model().requires_grad_(False)
+        net, head = model.model.language_model, model.head
+        tokenizer = SimpleNamespace(pad_token_id=0)
+        name = "model.language_model.layers.0.mlp.up_proj.weight"
+        original = {key: value.detach().view(torch.int16).clone()
+                    for key, value in model.named_parameters()}
+        checkpoint = SimpleNamespace(tensors={name: SimpleNamespace(dtype="BF16", shape=(4, 3))})
+        rows = [("short", [1, 2], [2, 3, 2], [2, 4]),
+                ("long", [1, 2, 1, 2], [3, 4], [3, 1, 2])]
+        prepared = {"science": [rows]}
+        for kind in ("correct-logprob", "margin"):
+            expected = torch.zeros(4, dtype=torch.float64)
+            values = {}
+            for row in rows:
+                values[row[0]] = 0.
+                for answer, sign in ((("correct", 1.),) if kind == "correct-logprob"
+                                     else (("correct", 1.), ("foil", -1.))):
+                    gain = torch.zeros(4, dtype=torch.float32, requires_grad=True)
+                    net.layers[0].mlp.gain = gain
+                    result = OBJECTIVES.single_answer_logprob_objective(
+                        torch, net, head, tokenizer, row, answer, "chat-public-answer", "cpu",
+                        len(row[1]) + max(len(row[2]), len(row[3])))
+                    expected += torch.autograd.grad(result.sum() * sign / len(rows), gain)[0].double()
+                    values[row[0]] += sign * float(result.detach()[0])
+                    net.layers[0].mlp.gain = None
+            key = "expected_correct_logprob" if kind == "correct-logprob" else "expected_margin"
+            cases = {"science": [[{"id": row[0], key: values[row[0]]} for row in rows]]}
+            for fail in (False, True):
+                with tempfile.TemporaryDirectory() as temporary:
+                    args = SimpleNamespace(output=Path(temporary), mode="chat-public-answer",
+                                           device="cpu", max_cases_per_microbatch=1, objective=kind,
+                                           answer_batching="serial", reference_tolerance=0.,
+                                           execution_order="longest_frame_first")
+                    supplied = copy.deepcopy(cases)
+                    if fail:
+                        supplied["science"][0][0][key] += 1.
+                    with patch.object(COMMON, "load_model", return_value=(torch, tokenizer, model)), \
+                         patch.object(COMMON, "prepare", return_value=(prepared, {})), \
+                         patch.object(COMMON, "assert_inputs"), \
+                         patch.object(COMMON, "transformers_version", return_value="fixture"):
+                        if fail:
+                            with self.assertRaisesRegex(ValueError, "reference"):
+                                UP.collect(args, checkpoint, supplied, {})
+                        else:
+                            report = UP.collect(args, checkpoint, supplied, {})
+                            self.assertEqual(report["coverage"]["observed_units"], 4)
+                            self.assertEqual(report["zero_additive_checks"][name]["units"], 4)
+                            with np.load(Path(temporary) / "source-up-row-norms.npz") as data:
+                                np.testing.assert_array_equal(
+                                    data[name], net.layers[0].mlp.up_proj.weight.double().norm(dim=1).numpy())
+                            with np.load(Path(temporary) / "gradient-science-0.npz") as data:
+                                np.testing.assert_allclose(data[name], expected.float().numpy(), rtol=2e-5, atol=1e-7)
+                            field = "correct_logprobs" if kind == "correct-logprob" else "margins"
+                            self.assertEqual([item["id"] for item in report["folds"][0][field]],
+                                             ["short", "long"])
+                    self.assertTrue(all(not module._forward_hooks for module in model.modules()))
+                    for key_, parameter in model.named_parameters():
+                        self.assertFalse(parameter.requires_grad)
+                        self.assertIsNone(parameter.grad)
+                        self.assertTrue(torch.equal(parameter.detach().view(torch.int16), original[key_]))
+
+
+        # Selected complete gate/up rows and down columns, including both
+        # contraction branches and multiple 64-token tiles, match ordinary
+        # autograd on the actual gated network.
+        oracle = copy.deepcopy(model).float()
+        reference_net, reference_head = oracle.model.language_model, oracle.head
+        prefix = "model.language_model.layers.0.mlp."
+        tensors = {prefix + kind + "_proj.weight": SimpleNamespace(
+            shape=tuple(getattr(reference_net.layers[0].mlp, kind + "_proj").weight.shape))
+            for kind in ("gate", "up", "down")}
+        layout = FULL_UNITS.full_unit_samples(
+            tensors, {"schema_version": 1, "kind": "mlp_full_unit_support_v1",
+                      "units": [{"layer": 0, "indices": [1, 3]}]})
+        full_plans = {key: tuple(torch.as_tensor(rc[:, axis].copy()) for axis in (0, 1))
+                      for key, (rc, _) in layout.items()}
+        target_net = copy.deepcopy(reference_net).requires_grad_(False)
+        target_modules = {key: target_net.get_submodule(
+            key.removeprefix("model.language_model.").removesuffix(".weight"))
+            for key in full_plans}
+        parameters = [reference_net.get_submodule(
+            key.removeprefix("model.language_model.").removesuffix(".weight")).weight
+            for key in full_plans]
+        for parameter in parameters:
+            parameter.requires_grad_(True)
+        full_rows = [rows[0], ("long", [1, 2] * 70, rows[1][2], rows[1][3])]
+        for kind in ("correct-logprob", "margin"):
+            fn = OBJECTIVES.correct_logprob_objective if kind == "correct-logprob" else COMMON.objective
+            baseline = fn(torch, reference_net, reference_head, tokenizer,
+                          full_rows, "chat-public-answer", "cpu")
+            ordinary = torch.autograd.grad(baseline.mean(), parameters)
+            actual_values, factors, checks, forwards = FULL_UNITS.objective_derivatives(
+                torch, target_net, reference_head, tokenizer, full_rows, "chat-public-answer",
+                "cpu", full_plans, target_modules, len(full_rows), set(full_plans),
+                objective_kind=kind, answer_batching="serial")
+            torch.testing.assert_close(actual_values, baseline.detach(), rtol=1e-6, atol=3e-7)
+            self.assertEqual(forwards, len(full_rows) * (2 if kind == "margin" else 1))
+            for (key, (r, c)), ordinary_gradient in zip(full_plans.items(), ordinary, strict=True):
+                self.assertGreater(len(r), 4)
+                self.assertEqual(checks[key]["cells"], 4)
+                torch.testing.assert_close(factors[key].float(), ordinary_gradient[r, c],
+                                           rtol=2e-5, atol=1e-7)
+            self.assertTrue(all(not module._forward_hooks for module in target_net.modules()))
+            self.assertTrue(all(not parameter.requires_grad and parameter.grad is None
+                                for parameter in target_net.parameters()))
 
     def test_chat_matrix_microbatches_match_full_loss_true_gradient_and_finite_difference(self):
         torch.manual_seed(71)

@@ -181,6 +181,94 @@ class NativeEditorTest(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "in-limit"):
             editor.plan_edits(base, recipe)
 
+
+        # Explicit full-unit support admits a complete row/column beyond the
+        # sampled 512-cell limit while keeping all unrelated saved bytes exact.
+        full_base = self.root / "full-unit-base"
+        full_base.mkdir()
+        prefix = "model.language_model.layers.0.mlp."
+        gate, up, down = [prefix + name + "_proj.weight" for name in ("gate", "up", "down")]
+        native = "model.language_model.norm.weight"
+        value = "model.language_model.layers.0.self_attn.v_proj.weight"
+        tensors = {
+            gate: ([3, 513], [1.] * (3 * 513)),
+            up: ([3, 513], [1.] * (3 * 513)),
+            down: ([513, 3], [1.] * (513 * 3)),
+            native: ([2], [-0., 2.]),
+            value: ([2, 2], [1., 2., 3., 4.]),
+        }
+        safetensor(full_base / "all.safetensors", tensors)
+        full_index = full_base / "model.safetensors.index.json"
+        full_index.write_text(json.dumps({"weight_map": {name: "all.safetensors" for name in tensors}}))
+        full_recipe = {
+            "id": "full-unit",
+            "matrix_batch": True,
+            "matrix_sample_plan_sha256": "a" * 64,
+            "matrix_full_units": {
+                "schema_version": 1,
+                "support_plan_sha256": "b" * 64,
+                "layer_prefix": "model.language_model.layers.",
+                "units": [{"layer": 0, "indices": [1]}],
+            },
+            "edits": [
+                {"tensor": gate, "coordinates": [[1, column] for column in range(513)],
+                 "set_values": [1.0078125] * 513},
+                {"tensor": up, "coordinates": [[1, 0]], "set_values": [1.0078125]},
+                {"tensor": down, "coordinates": [[row, 1] for row in range(513)],
+                 "set_values": [1.0078125] * 513},
+            ],
+        }
+        full_spec = self.root / "full-unit-spec.json"
+        full_spec.write_text(json.dumps(full_recipe))
+        full_dest, full_manifest = self.root / "full-unit-copy", self.root / "full-unit-manifest.json"
+        source_bytes = (full_base / "all.safetensors").read_bytes()
+        editor.create(full_base, full_dest, full_spec, full_manifest, apply=True)
+        full_verified = editor.verify(full_manifest)
+        self.assertEqual(full_verified["changed_elements"], 1027)
+        source, saved = Checkpoint(full_base), Checkpoint(full_dest)
+        full_attestation = self.root / "full-unit-attestation.json"
+        full_attestation.write_text(json.dumps(source.identity()))
+        full_replay_plan = {
+            **plan, "checkpoint_index_sha256": reference(full_index)["sha256"],
+            "checkpoint_attestation": reference(full_attestation),
+            "candidates": [{"id": "full-unit", "spec": str(full_spec),
+                            "sha256": reference(full_spec)["sha256"]}]}
+        full_plan_path = self.root / "full-unit-replay.json"
+        full_plan_path.write_text(json.dumps(full_replay_plan))
+        _, ram_candidates, _ = load_plan(full_plan_path, source)
+        self.assertEqual(ram_candidates[0]["_verified_metrics"]["changed_elements"], 1027)
+        self.assertAlmostEqual(ram_candidates[0]["_verified_metrics"]["delta_l2"], full_verified["delta_l2"])
+        self.assertEqual((full_base / "all.safetensors").read_bytes(), source_bytes)
+        for name in (native, value):
+            self.assertEqual(saved.read_raw(name), source.read_raw(name))
+        changed = {
+            gate: {513 + column for column in range(513)},
+            up: {513},
+            down: {row * 3 + 1 for row in range(513)},
+        }
+        for name, indices in changed.items():
+            before, after = source.read_raw(name), saved.read_raw(name)
+            actual = {i for i in range(len(before) // 2) if before[2*i:2*i+2] != after[2*i:2*i+2]}
+            self.assertEqual(actual, indices)
+        # Exercise the nested-manifest large-metadata dispatch with a small
+        # temporary legacy threshold, without allocating a giant test file.
+        with patch.object(editor, "MAX_JSON", 1024):
+            self.assertEqual(editor.read_json(full_spec), full_recipe)
+            full_record = editor.read_json(full_manifest)
+            self.assertEqual(full_record["changed_elements"], 1027)
+            with self.assertRaisesRegex(ValueError, "requires explicit full-unit"):
+                editor.read_json(manifest)
+        tampered = copy.deepcopy(full_record)
+        tampered["spec"]["matrix_full_units"]["units"][0]["indices"] = [0]
+        full_manifest.write_text(json.dumps(tampered))
+        with self.assertRaises(ValueError):
+            editor.verify(full_manifest)
+        full_manifest.write_text(json.dumps(full_record))
+        legacy = copy.deepcopy(full_recipe)
+        legacy.pop("matrix_full_units")
+        with self.assertRaisesRegex(ValueError, "in-limit"):
+            editor.plan_edits(full_base, legacy)
+
     def test_existing_paths_overlap_symlinks_and_hardlinks(self) -> None:
         self.dest.mkdir()
         with self.assertRaises(ValueError):
