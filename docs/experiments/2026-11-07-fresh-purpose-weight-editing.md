@@ -246,3 +246,29 @@ was incorporated. A full CPU suite and Ruff/mypy/data checks passed again after
 this real failure; logs are retained under validation/r4*. This fixes deployment
 scope, not the candidate or official scoring. The first failed apply/rollback and
 manual recovery are retained; the official F02 trial count was still zero.
+
+
+### Independent audit of the authored proxy cases
+
+While the fixed F02 official diagnostic was running, a fresh [semantic and
+concentration audit](2026-11-07-authored-case-audit.md) inspected all 120 authored
+inputs without changing them. Eleven bounded CPU counterexamples expose three
+explicit output-dtype violations and eight missing input/index/exception
+assumptions. These post-data findings do not relabel F01/F02's failed gates or
+remove cases from their recorded objectives.
+
+F02's largest margin gain is a valid one-token list-indexing primitive,
++6.028740 nat/token, representing 74.38% of the sum of positive case deltas.
+All other 119 deltas sum to +0.009479. This descriptive decomposition is neither
+the 76-constraint objective nor a WSP score. Both candidates preserve all 120
+correct/foil pair-ranking signs: 110 correct-preferred, 10 foil-preferred.
+That result says nothing by itself about free-generation accuracy or vocabulary
+argmax changes. The forced-empty-thought, answer-token teacher-forcing frame
+is distinct from the official native-thinking generation.
+
+Consequently, a future direction must be justified by complete official
+problem/source/area outcomes and these measurement limits, not by treating the
+proxy mean as broad coding improvement. The fixed F02 run and predeclared
+official decision rules continue unchanged; no new candidate or optimization
+was performed in this audit. The audit recipe, CPU counterexamples, first
+fixture failure and both completed revisions are retained in the PR.

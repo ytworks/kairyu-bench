@@ -168,3 +168,5 @@ including stopped retired observers, before preview/apply and guarded rollback.
 The [saved-finalist guide](wsp-saved-finalist-confirmation.md#compose-membership-before-replacement)
 records the real duplicate-label failure and exact-AV recovery. The CLI regression
 fixture proves rejection before mutation and refusal of ambiguous rollback.
+
+- [著者120ケースの事後監査](experiments/2026-11-07-authored-case-audit.md): `scripts/experiments/gemma4-purpose/authored_case_audit.py` は固定入力と保存有限値を CPU 再集計し、限定 fixture で契約反例を記録する。新候補・モデル評価・公式 benchmark 採点を行わない。
