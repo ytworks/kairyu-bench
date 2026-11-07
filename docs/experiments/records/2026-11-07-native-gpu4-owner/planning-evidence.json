@@ -1,0 +1,560 @@
+{
+  "created_epoch": 1794040233.9691072,
+  "schema_version": 1,
+  "status": "read_only_planning_not_authorized",
+  "target": {
+    "id": "fd4ec2eb9d7deba2ce3e790add6b50c0ee79a6390495320d8697873b32957bcf",
+    "image": "sha256:af9e746b913088cbf6c4464a31d6904a6b7e1d3ba62f0895362ddf13595f7abe",
+    "running": true,
+    "health": "healthy",
+    "started_at": "2026-11-07T06:36:23.731869677Z",
+    "config_sha256": "043cb35e4ea941d42fdc75c8b554ae99e6e2ea01cb928370141da9c80baa530e",
+    "host_config_sha256": "5f5204418ae902e55578755b194b085cee6a0ee9b6c6859d45d483752c9e4a53",
+    "cpuset": "32-47,96-111",
+    "devices": [
+      {
+        "Driver": "nvidia",
+        "Count": 0,
+        "DeviceIDs": [
+          "4",
+          "5"
+        ],
+        "Capabilities": [
+          [
+            "gpu"
+          ]
+        ],
+        "Options": null
+      }
+    ]
+  },
+  "protected": {
+    "gemma-4-31b-8gpu-gemma-3-1": {
+      "id": "e8ec9f3bbfca4baa44b16590ee771a96bba1e1328a60ff0c904995f2675a31b5",
+      "image": "sha256:af9e746b913088cbf6c4464a31d6904a6b7e1d3ba62f0895362ddf13595f7abe",
+      "running": true,
+      "health": "healthy",
+      "started_at": "2026-11-07T06:38:20.955413709Z",
+      "config_sha256": "0af0495d027772ab9b20498413053016f2c2b653c846c9959122dc49a0699665",
+      "host_config_sha256": "5c02e2f2961cf958e29474e0a3f5d5e1e133eb5d75efc7f48298e2c40fc15ccf",
+      "cpuset": "48-63,112-127",
+      "devices": [
+        {
+          "Driver": "nvidia",
+          "Count": 0,
+          "DeviceIDs": [
+            "6",
+            "7"
+          ],
+          "Capabilities": [
+            [
+              "gpu"
+            ]
+          ],
+          "Options": null
+        }
+      ]
+    },
+    "gemma-4-31b-8gpu-gemma-1-1": {
+      "id": "ce1a67f4ec204a90e486092534e3f700f3abf2fbc9f1e68f87668009104ee00d",
+      "image": "sha256:af9e746b913088cbf6c4464a31d6904a6b7e1d3ba62f0895362ddf13595f7abe",
+      "running": true,
+      "health": "healthy",
+      "started_at": "2026-11-07T06:34:30.95588842Z",
+      "config_sha256": "baa51ef57deefee69f50cc348fd03c80dd01081e342afe81593785be6e260ffb",
+      "host_config_sha256": "4584f7c458a1e8c987487ea54746ec805201222c780f5224eca738cec3775e45",
+      "cpuset": "16-31,80-95",
+      "devices": [
+        {
+          "Driver": "nvidia",
+          "Count": 0,
+          "DeviceIDs": [
+            "2",
+            "3"
+          ],
+          "Capabilities": [
+            [
+              "gpu"
+            ]
+          ],
+          "Options": null
+        }
+      ]
+    },
+    "gemma-4-31b-8gpu-gemma-0-1": {
+      "id": "baf23e529c4e217801633d0c62b04801e3991b24f6267274104f9d3e355e62c3",
+      "image": "sha256:af9e746b913088cbf6c4464a31d6904a6b7e1d3ba62f0895362ddf13595f7abe",
+      "running": true,
+      "health": "healthy",
+      "started_at": "2026-11-07T06:32:38.497179693Z",
+      "config_sha256": "b4862614a85028c458b79938241c754ea33de1a7ef1d84f464080f266346f568",
+      "host_config_sha256": "8e6da5f7bd96e779838685a55567e05b28c4294c3574aebf15fb011a8f01ea73",
+      "cpuset": "0-15,64-79",
+      "devices": [
+        {
+          "Driver": "nvidia",
+          "Count": 0,
+          "DeviceIDs": [
+            "0",
+            "1"
+          ],
+          "Capabilities": [
+            [
+              "gpu"
+            ]
+          ],
+          "Options": null
+        }
+      ]
+    },
+    "gemma-4-31b-8gpu-kairyu-1": {
+      "id": "88943a0985ba97dfb17be6b5fb54040eba2570b70ce05126bd410162d3658ffb",
+      "image": "sha256:8e6c37a16eea6f7855b2142fb75555250b676cfc3a7c5c2d9a748bfd1175001b",
+      "running": true,
+      "health": "healthy",
+      "started_at": "2026-11-05T20:07:43.224868471Z",
+      "config_sha256": "7fb40a1ab9477ab237b290be0341c75d6bb06f4b050124c175f4a0edb5af9d64",
+      "host_config_sha256": "a348f6084a5b2df6962be5d6a9693e129b9ba0ac9f4aeca1b80cba6ce41e312f",
+      "cpuset": "",
+      "devices": null
+    },
+    "kairyu-wsp-observe-20261106": {
+      "id": "3257ee5ee6d0fa212bacd64de8b86152ab0be509e0a7d329838193559039dbda",
+      "image": "sha256:bb4076b5f7468285b297e77867843a190c337009a97d14cefefc0d6a719e68d4",
+      "running": true,
+      "health": "healthy",
+      "started_at": "2026-11-05T15:47:52.494093056Z",
+      "config_sha256": "7e252475bec5ddabe9cb52c1009266699445cd123093bf95d39158d654e3ea7d",
+      "host_config_sha256": "d78512396caf0671605b6c0d0a6ca0768ce0e4276e303d948241f84bb01f4a57",
+      "cpuset": "",
+      "devices": null
+    },
+    "gemma-wsp-deepswe-dind-20261104": {
+      "id": "dfbaee8005646b8369493c56f5daa89251880694970e135209b3416255e57d57",
+      "image": "sha256:aa3df78ecf320f5fafdce71c659f1629e96e9de0968305fe1de670e0ca9176ce",
+      "running": true,
+      "health": null,
+      "started_at": "2026-11-05T10:10:33.118418845Z",
+      "config_sha256": "d2430dd1f8800e1dfc9f3d4b2087bc9e34c48889f622d744d261508632b81649",
+      "host_config_sha256": "ba874b72dced3734039e053f844da62d23bc348844e89bea625fdc194adc11d1",
+      "cpuset": "",
+      "devices": null
+    },
+    "wsp-dind": {
+      "id": "149b564776c7bda50b4039b44b0cf52b1178272a481a4c4dee88de2f283ae334",
+      "image": "sha256:2a232a42256f70d78e3cc5d2b5d6b3276710a0de0596c145f627ecfae90282ac",
+      "running": true,
+      "health": null,
+      "started_at": "2026-11-05T10:10:05.855435269Z",
+      "config_sha256": "2b8cd4bae6e47443c406e808bb746df3c2d9946cb31a4027de0a4ae444106d92",
+      "host_config_sha256": "2fcf104574f03daa39174b84473eba3191b044b08d64e5676632bc934450369f",
+      "cpuset": "",
+      "devices": null
+    },
+    "gemma4-wsp-cpu-chat-purpose-20261105": {
+      "id": "5885c75f79f5396867db6b3518637ca5bcde342dd1fd20f88c89bf69ff42cdff",
+      "image": "sha256:af9e746b913088cbf6c4464a31d6904a6b7e1d3ba62f0895362ddf13595f7abe",
+      "running": false,
+      "health": null,
+      "started_at": "2026-11-05T04:02:12.939224455Z",
+      "config_sha256": "d0be38d51d242b49907d648413900a31805cea4caee17c7c5c6415705de5239e",
+      "host_config_sha256": "98bb0240a4540d20ea10e9150d1fdd590010679fc5838bff1bec2226a3a0d32b",
+      "cpuset": "",
+      "devices": null
+    },
+    "gemma4-wsp-cpu-chat-frame-preflight-failed-20261105": {
+      "id": "ed9842852109333c564c5962ada840ea2794720ad613ebc0c8ef96591c816a33",
+      "image": "sha256:af9e746b913088cbf6c4464a31d6904a6b7e1d3ba62f0895362ddf13595f7abe",
+      "running": false,
+      "health": null,
+      "started_at": "2026-11-05T04:00:05.200182725Z",
+      "config_sha256": "748868d4d21bc7a1937ca5b0989413705d60c5a178b321b283859179e9425632",
+      "host_config_sha256": "98bb0240a4540d20ea10e9150d1fdd590010679fc5838bff1bec2226a3a0d32b",
+      "cpuset": "",
+      "devices": null
+    },
+    "gemma4-wsp-cpu-algorithm-completion-20261105": {
+      "id": "37b84155d0d47c339a8a3f989cf69be74a80a9f7369829db41612a5a77fe481a",
+      "image": "sha256:af9e746b913088cbf6c4464a31d6904a6b7e1d3ba62f0895362ddf13595f7abe",
+      "running": false,
+      "health": null,
+      "started_at": "2026-11-05T03:32:52.37831908Z",
+      "config_sha256": "1be9d22355bd0dca4ef8c3c5e12e6414806fb1bb5a2e1f5323c2d68595b8fd8f",
+      "host_config_sha256": "47ea370b279f7d2af317127b11b76e9e59ecc531f45baf8a8434dc66bba22a41",
+      "cpuset": "",
+      "devices": null
+    },
+    "gemma4-wsp-cpu-programming-completion-20261105": {
+      "id": "dbabe7158257d30d26b6f96d51eb17e4a0b6385fcf5d9d90c2182b22aed3d20b",
+      "image": "sha256:af9e746b913088cbf6c4464a31d6904a6b7e1d3ba62f0895362ddf13595f7abe",
+      "running": false,
+      "health": null,
+      "started_at": "2026-11-05T03:02:35.40303063Z",
+      "config_sha256": "17735595f16e92b1bb8b36fc32e84460571e62fd40e6342779f01e2a7dd9855a",
+      "host_config_sha256": "165a35aa5ee867624eeb0f5a8d59179ac11abd7ec9bedc207c573da74ba0b63e",
+      "cpuset": "",
+      "devices": null
+    },
+    "gemma4-wsp-cpu-joint-sets-20261105": {
+      "id": "3d62fd16cb139033941f36930a226b197b4512f4d319bc0920ecc3ef0b62a87f",
+      "image": "sha256:af9e746b913088cbf6c4464a31d6904a6b7e1d3ba62f0895362ddf13595f7abe",
+      "running": false,
+      "health": null,
+      "started_at": "2026-11-05T02:49:52.406805149Z",
+      "config_sha256": "d7cd460534ad42069e9ae496d5547cac99fcf0ae587b6caa7da4e453f668bd01",
+      "host_config_sha256": "25e994178ddc18606777f84a8e1b4fa60f24446d6f2a30b8aeef2a7a546adadd",
+      "cpuset": "",
+      "devices": null
+    },
+    "gemma4-wsp-cpu-whole-dependencies-20261105": {
+      "id": "c672bb052ad042282e2e2ec2e8b65edde8b6c50262bd6dab00da57314e4f8b1b",
+      "image": "sha256:af9e746b913088cbf6c4464a31d6904a6b7e1d3ba62f0895362ddf13595f7abe",
+      "running": false,
+      "health": null,
+      "started_at": "2026-11-05T02:44:03.330717057Z",
+      "config_sha256": "1b3ade0c4da2cc4f886a19ea3b074bb8ebd0ca6aa68867fa38d32de8af1ffa76",
+      "host_config_sha256": "fd0d9543a3a3f2c34ae90851e896312a4af6e3bec74eab08547a65f30555305b",
+      "cpuset": "",
+      "devices": null
+    },
+    "gemma4-wsp-cpu-broad-margins-20261105": {
+      "id": "374e969acaf78f336c638b5bff9ffdde04fd44f9075e45d2cfd54881b556b2c1",
+      "image": "sha256:af9e746b913088cbf6c4464a31d6904a6b7e1d3ba62f0895362ddf13595f7abe",
+      "running": false,
+      "health": null,
+      "started_at": "2026-11-05T02:38:27.11916247Z",
+      "config_sha256": "01f7194ce0f6c54a4d5dbedbb7a2f3acdd2f335ad7170a8ebf8e9514d97647d2",
+      "host_config_sha256": "4ee9b5568f6a392a8901d84f5769a2f0d2391ddc6731aa1cba254e9aad2ffd23",
+      "cpuset": "",
+      "devices": null
+    },
+    "gemma4-wsp-cpu-combinations-20261105": {
+      "id": "61a829c3aaf5c9af66499357d1f55b8f58ad19ef40cb887bbe63a0c4729c10f9",
+      "image": "sha256:af9e746b913088cbf6c4464a31d6904a6b7e1d3ba62f0895362ddf13595f7abe",
+      "running": false,
+      "health": null,
+      "started_at": "2026-11-05T02:37:13.392608729Z",
+      "config_sha256": "78f02f1386a24c11c62e00a00996aefc4d37f19f3ce18f70f75f3f6a4748fedb",
+      "host_config_sha256": "ac03958b641ebd97fa3e05184682ead5cf30aaec3c5038fed8e7b42346f07dee",
+      "cpuset": "",
+      "devices": null
+    },
+    "gemma4-wsp-cpu-mechanisms-v2-20261105": {
+      "id": "fbb725752d9e8990506968903bfcb5a406eb56f0bc6c839eb08199c0d05f54f3",
+      "image": "sha256:af9e746b913088cbf6c4464a31d6904a6b7e1d3ba62f0895362ddf13595f7abe",
+      "running": false,
+      "health": null,
+      "started_at": "2026-11-05T02:30:31.302727283Z",
+      "config_sha256": "3d6944a40581132245bebe2342d50acf84f2ad3665549d480f1bd8d11ff8df94",
+      "host_config_sha256": "657ed86fa8e88c1f222bbf69ba70f32a6cd040ca6f181564974615e2a1d3f78f",
+      "cpuset": "",
+      "devices": null
+    },
+    "gemma4-wsp-cpu-mechanisms-20261105": {
+      "id": "4ef033809802f99ae4859327cf7350e2dc4c7d657b226a7229914432e0dd0718",
+      "image": "sha256:af9e746b913088cbf6c4464a31d6904a6b7e1d3ba62f0895362ddf13595f7abe",
+      "running": false,
+      "health": null,
+      "started_at": "2026-11-05T02:29:44.470012962Z",
+      "config_sha256": "5e2afe1c2a91f265c169eb4911faa2c82b1d3e4d338ec1c02049ca99195f2eee",
+      "host_config_sha256": "657ed86fa8e88c1f222bbf69ba70f32a6cd040ca6f181564974615e2a1d3f78f",
+      "cpuset": "",
+      "devices": null
+    },
+    "gemma4-wsp-cpu-sparse-check-20261105": {
+      "id": "8c1e4b184886cd32d110fab4c4fda7369c445ae910f1e68b8ba4834811921d8d",
+      "image": "sha256:af9e746b913088cbf6c4464a31d6904a6b7e1d3ba62f0895362ddf13595f7abe",
+      "running": false,
+      "health": null,
+      "started_at": "2026-11-05T02:23:32.450094051Z",
+      "config_sha256": "efcbf1ce410fe5436ea2687a5502b2c474502c208c35a8d74868e0e80ea6a2c6",
+      "host_config_sha256": "78f918be89f8cc463ad218732af44ed9f74c300c31ea2fd5199823c188e2e5f3",
+      "cpuset": "",
+      "devices": null
+    },
+    "gemma4-wsp-cpu-norm-probe-20261105": {
+      "id": "c81e36297abd0b0e23fd11ada341ac6845e4446fe34a5f9432de70cbdfa752cc",
+      "image": "sha256:af9e746b913088cbf6c4464a31d6904a6b7e1d3ba62f0895362ddf13595f7abe",
+      "running": false,
+      "health": null,
+      "started_at": "2026-11-05T02:16:45.617898707Z",
+      "config_sha256": "3309491fa001cdd7ecd5bc610298d33afcfeca4332eb65dcd86bc0956edf83d1",
+      "host_config_sha256": "98382ab38095c17570d3ee04d3979bb382217dc63f68e904ce660a89c41a03fd",
+      "cpuset": "",
+      "devices": null
+    },
+    "gemma-wsp-deepswe-dind-20261104-pre-nvme-results-20261105": {
+      "id": "0a32557db9cd0bd49fffefea34276c8515021858e3d0115e560ef835f616609a",
+      "image": "sha256:aa3df78ecf320f5fafdce71c659f1629e96e9de0968305fe1de670e0ca9176ce",
+      "running": false,
+      "health": null,
+      "started_at": "2026-11-04T12:52:32.349444072Z",
+      "config_sha256": "d2430dd1f8800e1dfc9f3d4b2087bc9e34c48889f622d744d261508632b81649",
+      "host_config_sha256": "71f18825610046dd0a7a880f4cc7630908891263fb3dcd00308f398e7f00d55c",
+      "cpuset": "",
+      "devices": null
+    },
+    "wsp-dind-pre-nvme-results-20261105": {
+      "id": "ca0ce07ae660af1bb129a129aa538d23206e1d10c4db982ae692618dd852678d",
+      "image": "sha256:2a232a42256f70d78e3cc5d2b5d6b3276710a0de0596c145f627ecfae90282ac",
+      "running": false,
+      "health": null,
+      "started_at": "2026-11-04T02:28:56.269812859Z",
+      "config_sha256": "2b8cd4bae6e47443c406e808bb746df3c2d9946cb31a4027de0a4ae444106d92",
+      "host_config_sha256": "1af15dddf69dc6a0012f9c63add57d8fcd612b12bf04066d64365ffcf1765da4",
+      "cpuset": "",
+      "devices": null
+    },
+    "gemma-4-31b-8gpu-chat-ui-1": {
+      "id": "005b20d4f0adacdc438e2e90f44c9d21579f3d089b366bcfe8af8f0785bde8c3",
+      "image": "sha256:ef11a68f38457d831e23168486858c25b9d9c4399094c9e72c0d4d8767ac09de",
+      "running": true,
+      "health": "healthy",
+      "started_at": "2026-11-03T23:00:44.605013437Z",
+      "config_sha256": "3981beaa4b8714eaf791a9f108748ae132a0cf65f192bd091fa647a3df71a8a4",
+      "host_config_sha256": "f44847d7c1a1d7a64b9524c212d8fb46244cd12cf488a979c3b42d3f98c412e2",
+      "cpuset": "",
+      "devices": null
+    },
+    "gemma-4-31b-8gpu-embed-0-1": {
+      "id": "b4302da3c2814fa2458ae7e4652b0041af34bd45d6872b86ecd40cfa06bf9985",
+      "image": "sha256:af9e746b913088cbf6c4464a31d6904a6b7e1d3ba62f0895362ddf13595f7abe",
+      "running": true,
+      "health": "healthy",
+      "started_at": "2026-11-03T22:58:39.917321358Z",
+      "config_sha256": "f4535b4de6114f5db3049d4eda5f211907324d3cf5a8bc2f9c17e7b8f1f78dc4",
+      "host_config_sha256": "c76de161932061f0f19efdc92340a723b31283ee58176f9b520ab3ddb6f64790",
+      "cpuset": "0-15,64-79",
+      "devices": [
+        {
+          "Driver": "nvidia",
+          "Count": 0,
+          "DeviceIDs": [
+            "1"
+          ],
+          "Capabilities": [
+            [
+              "gpu"
+            ]
+          ],
+          "Options": null
+        }
+      ]
+    },
+    "gemma-4-31b-8gpu-embed-1-1": {
+      "id": "897103115f63e39d3261f39bf449bfa9258121d270ae700f65c0321837eeec08",
+      "image": "sha256:af9e746b913088cbf6c4464a31d6904a6b7e1d3ba62f0895362ddf13595f7abe",
+      "running": true,
+      "health": "healthy",
+      "started_at": "2026-11-03T22:58:39.916999785Z",
+      "config_sha256": "9ac074311550ac5edad3cf600b746cb2ce5307c638f23500bed71b09c1462c29",
+      "host_config_sha256": "52e979a281df89425cc2c3a81308d13f523876bb6ad57cae4929bbd4a98e3db2",
+      "cpuset": "48-63,112-127",
+      "devices": [
+        {
+          "Driver": "nvidia",
+          "Count": 0,
+          "DeviceIDs": [
+            "7"
+          ],
+          "Capabilities": [
+            [
+              "gpu"
+            ]
+          ],
+          "Options": null
+        }
+      ]
+    },
+    "gemma-4-31b-8gpu-docling-1": {
+      "id": "bcf8a575872a9ff05a85bfd8b46dbeec3cb9d8bef6a94aded4cb5a12c61bc976",
+      "image": "sha256:6eda9c524992147c1b0b06a1a9be4894bd68b1f43c86d92c32f996c4c60d18a3",
+      "running": true,
+      "health": "healthy",
+      "started_at": "2026-11-03T22:58:39.916549752Z",
+      "config_sha256": "75fae43c5d9afddd066e62ee02b4037921c80f5c92c99c52a7363161ed0771e7",
+      "host_config_sha256": "10ec79efe3280681316ef446a96a6f91df93bf289d3edc244f69b0573b47078c",
+      "cpuset": "",
+      "devices": null
+    },
+    "kairyu-pg-groupc-ci-det": {
+      "id": "b0d4c3e871a7d2a44249318079920bd01f56cb7978b58a19f4245245f140afd6",
+      "image": "sha256:f3bd19c606e442c3d7bdfa8002e03fe260a1023351e0ea4598032022b68dd6e3",
+      "running": true,
+      "health": null,
+      "started_at": "2026-11-03T13:58:12.711823908Z",
+      "config_sha256": "0a7b54150adde5126b6a2a144d940226f65844b6cf035357aa796f1a1c2524aa",
+      "host_config_sha256": "eb607b80adc166062ff6efb6f1b871c00e42970ef6b54c42bf4a6382d7ca9266",
+      "cpuset": "",
+      "devices": null
+    }
+  },
+  "target_mounts": [
+    {
+      "Type": "bind",
+      "Source": "/mnt/nvme/kairyu/model-volumes/gemma-4-31b-8gpu/models",
+      "Destination": "/models",
+      "Mode": "ro",
+      "RW": false,
+      "Propagation": "rprivate"
+    },
+    {
+      "Type": "bind",
+      "Source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/checkpoints/code90-current-ad-helper-av-v1",
+      "Destination": "/checkpoint",
+      "Mode": "ro",
+      "RW": false,
+      "Propagation": "rprivate"
+    },
+    {
+      "Type": "bind",
+      "Source": "/mnt/nvme/kairyu/model-volumes/gemma-4-31b-8gpu/compile-cache",
+      "Destination": "/root/.cache",
+      "Mode": "rw",
+      "RW": true,
+      "Propagation": "rprivate"
+    }
+  ],
+  "target_cmd": [
+    "/checkpoint",
+    "--served-model-name",
+    "gemma-4-31b",
+    "--max-model-len",
+    "262144",
+    "--dtype",
+    "bfloat16",
+    "--tensor-parallel-size",
+    "2",
+    "--disable-custom-all-reduce",
+    "--gpu-memory-utilization",
+    "0.86",
+    "--enable-prefix-caching",
+    "--max-num-seqs",
+    "64",
+    "--max-num-batched-tokens",
+    "8192",
+    "--async-scheduling",
+    "--speculative-config",
+    "{\"model\":\"/models/gemma-4-31b-it-assistant\",\"num_speculative_tokens\":4}",
+    "--enable-auto-tool-choice",
+    "--tool-call-parser",
+    "gemma4",
+    "--reasoning-parser",
+    "gemma4",
+    "--default-chat-template-kwargs",
+    "{\"enable_thinking\":true}",
+    "--limit-mm-per-prompt",
+    "{\"image\":8,\"audio\":0,\"video\":0}",
+    "--disable-uvicorn-access-log"
+  ],
+  "attestation": {
+    "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-av-dev30-dp4-v1/http-trace/capture.json",
+    "sha256": "8e4b57eacaeca88260281c4d39a0f347b55ed0a7f1cabcac3ff0507d1e6d9e74",
+    "tree_sha256": "5d056eb03f954db80313a85167153c875fe5e436e4f97c281a3f55202d9b3eaf",
+    "fresh_full_hash": false,
+    "fresh_stat": [
+      {
+        "path": "chat_template.jinja",
+        "size_equal": true,
+        "stat_equal": true
+      },
+      {
+        "path": "config.json",
+        "size_equal": true,
+        "stat_equal": true
+      },
+      {
+        "path": "generation_config.json",
+        "size_equal": true,
+        "stat_equal": true
+      },
+      {
+        "path": "model-00001-of-00002.safetensors",
+        "size_equal": true,
+        "stat_equal": true
+      },
+      {
+        "path": "model-00002-of-00002.safetensors",
+        "size_equal": true,
+        "stat_equal": true
+      },
+      {
+        "path": "model.safetensors.index.json",
+        "size_equal": true,
+        "stat_equal": true
+      },
+      {
+        "path": "processor_config.json",
+        "size_equal": true,
+        "stat_equal": true
+      },
+      {
+        "path": "tokenizer.json",
+        "size_equal": true,
+        "stat_equal": true
+      },
+      {
+        "path": "tokenizer_config.json",
+        "size_equal": true,
+        "stat_equal": true
+      }
+    ]
+  },
+  "metrics": {
+    "sha256": "e24b6444672332d85fdd185efe70d8bb5de67b0000f90da67c7c3f1b310430f3",
+    "queue_rows": [
+      "vllm:num_requests_running{engine=\"0\",model_name=\"gemma-4-31b\"} 0.0",
+      "vllm:num_requests_waiting{engine=\"0\",model_name=\"gemma-4-31b\"} 0.0"
+    ]
+  },
+  "global_lock": {
+    "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/candidate-evaluation.lock",
+    "identity": "09:02:181180584",
+    "rows": []
+  },
+  "gpu_snapshot": [
+    "0, GPU-c2dec644-056f-5a18-64af-0dcb2d4b5aa1, 97887 MiB, 86265 MiB, 10988 MiB, 0 %",
+    "1, GPU-7ca344d0-c282-61d7-446b-dcdf5c2dee16, 97887 MiB, 87854 MiB, 9399 MiB, 0 %",
+    "2, GPU-8accd8d3-6791-1e54-af77-b229a199b1f1, 97887 MiB, 86085 MiB, 11168 MiB, 0 %",
+    "3, GPU-7a56fbb4-fd9d-1f93-7bd6-f7e55579a964, 97887 MiB, 86085 MiB, 11168 MiB, 0 %",
+    "4, GPU-d8ef7924-e297-e1ef-e51e-82c77b41715a, 97887 MiB, 86265 MiB, 10988 MiB, 0 %",
+    "5, GPU-4884d626-ecaa-7fc1-49d2-158f6d118801, 97887 MiB, 86265 MiB, 10988 MiB, 0 %",
+    "6, GPU-f212d821-c550-947e-904c-1ee6be110c96, 97887 MiB, 86263 MiB, 10990 MiB, 0 %",
+    "7, GPU-9813a152-84b7-57ef-3109-76b4a1d47673, 97887 MiB, 87852 MiB, 9401 MiB, 0 %"
+  ],
+  "host_memory": [
+    "MemTotal:       1056459360 kB",
+    "MemAvailable:   950108816 kB",
+    "SwapTotal:       8388604 kB",
+    "SwapFree:        5726948 kB"
+  ],
+  "nvme_free_bytes": 71134732288,
+  "source_sha256": {
+    "docs/experiments/scripts/fresh-av-native-gpu4-20261107.py": "81c85f8a125325620a4c7b078e23014d0a7edd34bd51da751ef2e30e9142fe0e",
+    "docs/experiments/scripts/fresh-f01-finite.py": "2326fe223b9b7b49d7876ad11b3c66731d21e97bbb7da4460c43bf6c9774c75e",
+    "scripts/experiments/gemma4-purpose/native.py": "c9b294242d6e1c8c2786b1f4264dfcaf6d1c8927d576e815c53c96fca51ec108",
+    "scripts/experiments/gemma4-purpose/recipe_common.py": "fddbca286f3423e5e4a0bb046663600967f2060d0e055558d1c8659fcd89f35e",
+    "scripts/experiments/gemma4-purpose/objective_variants.py": "f1faa1993b0e138de1599e3057db7eb35fcdd375a43d4a8c85db526eaf6462a6",
+    "src/kairyu_bench/wsp/weights/finite_replay.py": "71c424bffac775ba112e709632df0a37351a79c3121827be7c9844f321c7c4d3"
+  },
+  "dependency_metadata": {
+    "image": "sha256:af9e746b913088cbf6c4464a31d6904a6b7e1d3ba62f0895362ddf13595f7abe",
+    "python": "3.12.3",
+    "torch": "2.14.0+cu130",
+    "transformers": "5.20.2",
+    "numpy": "2.2.6",
+    "safetensors": "0.8.0",
+    "accelerate": "1.15.0",
+    "method": "docker exec /usr/bin/python3 importlib.metadata only; no torch import/model load"
+  },
+  "failed_read_attempts": [
+    {
+      "kind": "Python SyntaxError before any statement executed",
+      "model_calls": 0,
+      "service_changes": 0
+    }
+  ],
+  "model_calls": 0,
+  "service_changes": 0,
+  "lock_acquired": false
+}

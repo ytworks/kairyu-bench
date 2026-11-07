@@ -1,0 +1,97 @@
+{
+  "schema_version": 1,
+  "status": "preview",
+  "mode": "validate-authored",
+  "split": null,
+  "inputs": [
+    {
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/runtime/fresh-purpose-20261107-behavior18-validation-v3/behavior_offline.py",
+      "sha256": "ec651d46bfd7ddefaf8f523153c64b5302f0d2c1babeddf2aac4de515f9caf23",
+      "stat": {
+        "dev": 2306,
+        "ino": 182191350,
+        "size": 12691,
+        "mtime_ns": 1794039910809438212,
+        "ctime_ns": 1794039910809438212
+      }
+    },
+    {
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/runtime/fresh-purpose-20261107-behavior18-validation-v3/behavior_cases.py",
+      "sha256": "10ba3e480c8685933904060629b351758cf7b61362756179e55779435d01a310",
+      "stat": {
+        "dev": 2306,
+        "ino": 182191349,
+        "size": 22945,
+        "mtime_ns": 1794039910809438212,
+        "ctime_ns": 1794039910809438212
+      }
+    },
+    {
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/runtime/fresh-purpose-20261107-behavior18-validation-v3/science_sandbox.py",
+      "sha256": "c5ba0c84d2b4b795a5c31d9ece89c1aaf2e742d413e5bbc02938e720ae890e99",
+      "stat": {
+        "dev": 2306,
+        "ino": 182191351,
+        "size": 29432,
+        "mtime_ns": 1794039910809438212,
+        "ctime_ns": 1794039910809438212
+      }
+    },
+    {
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/runtime/fresh-purpose-20261107-behavior18-validation-v3/science_cases.py",
+      "sha256": "2c4cc6e75c92c41b98e737ca2c0a653e0f7a7675c6150a6ad33e3f954122a26b",
+      "stat": {
+        "dev": 2306,
+        "ino": 182191352,
+        "size": 35229,
+        "mtime_ns": 1794039910809438212,
+        "ctime_ns": 1794039910809438212
+      }
+    }
+  ],
+  "generation": null,
+  "target_ids": [
+    "behavior-A1",
+    "behavior-A2",
+    "behavior-A3",
+    "behavior-B1",
+    "behavior-B2",
+    "behavior-B3",
+    "behavior-C1",
+    "behavior-C2",
+    "behavior-C3",
+    "behavior-D1",
+    "behavior-D2",
+    "behavior-D3",
+    "behavior-E1",
+    "behavior-E2",
+    "behavior-E3",
+    "behavior-F1",
+    "behavior-F2",
+    "behavior-F3"
+  ],
+  "expected_cases": 18,
+  "responses_received": 0,
+  "results": [],
+  "docker_calls": 0,
+  "model_calls": 0,
+  "trials_per_numeric_execution": 16,
+  "fixed_boundary": 8,
+  "seeded": 8,
+  "train_seed": 202611071,
+  "transfer_seed": 202611072,
+  "sandbox": {
+    "socket": "/var/run/docker.sock",
+    "daemon_id": "3e518d2b-6972-43f8-b325-f7f33697a2d2",
+    "image": "sha256:c4ab50223f03fca17bf871e4d05f77001e76525a1c574b6c6ee7024db06cfdc2",
+    "seconds": 15,
+    "memory_mib": 512,
+    "cpus": 1,
+    "network": "none",
+    "user": "1003:1003",
+    "host_mounts": [],
+    "gpus": false
+  },
+  "scope": "Authored behavior calibration, not WSP. Initial generation train12 only.",
+  "token_count_measured": false
+}

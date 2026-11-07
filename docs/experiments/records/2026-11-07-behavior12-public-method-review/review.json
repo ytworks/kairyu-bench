@@ -1,0 +1,15 @@
+{
+  "scope": "Public-code inspection only; no generated code executed and no runtime call trace collected.",
+  "response_sha256": "5ea0e169922048a2e5bf649ceb6b1add7bb81db5ee19bcf48c620cb00f3de3db",
+  "B1": {
+    "public_answer_sha256": "051f10bf5e7b3d4c22f2f6f19089b78dea478d2b059658d394f9e34eea18f105",
+    "finding": "Imports sympy as sp; solve constructs f, invokes sp.diff and sp.lambdify, calls the returned function on x_arr and broadcasts its result to x_arr.shape before float64 return. Both symbolic operations lie on the direct public return path."
+  },
+  "B2": {
+    "public_answer_sha256": "e1a1ab510b6bee251ba31c0dda335dc3a251f145d0869408b5e8a7ab13cc8a49",
+    "finding": "Imports sympy as sp; solves with symbolic sa retained through sp.diff/sp.lambdify, then passes numerical a with x_arr/y_arr to both numerical functions. Both derivative values feed the returned columns. Empty input returns an explicit (0,2) ndarray after those calls. Retaining sa can avoid pre-evaluation constant folding; numeric fixture results remain separate."
+  },
+  "numeric_results_changed": false,
+  "full_contract_proven": false,
+  "model_calls": 0
+}

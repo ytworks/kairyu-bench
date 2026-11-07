@@ -1,0 +1,51 @@
+from pathlib import Path
+import hashlib,json,subprocess,time
+R=Path('/mnt/nvme/kairyu/wsp/gemma4-coding-20261104')
+B=R/'worktrees/kairyu-bench-weight-tools'
+def h(p):return hashlib.sha256(p.read_bytes()).hexdigest()
+def save(p,d):p.write_text(json.dumps(d,indent=2,ensure_ascii=False)+'\n')
+attempts=[]
+for v in range(1,5):
+ P=R/f'analysis/fresh-purpose-20261107-behavior18-validation-v{v}'
+ D=B/f'docs/experiments/records/2026-11-07-behavior18-validation-v{v}'
+ receipt=json.loads((P/'receipt.json').read_text())
+ report=json.loads((P/'execute/report.json').read_text())
+ for source in receipt['source'].values():
+  src=Path(source['runtime_path']);dest=D/(src.name+'.txt')
+  assert h(src)==source['sha256']
+  dest.write_bytes(src.read_bytes())
+ for src,dst in [(P/'receipt.json',D/'receipt.json'),(P/'execute/report.json',D/'report.json'),
+                 (P/'preview/report.json',D/'preview-report.json'),(P/'preview.log',D/'preview.log'),
+                 (P/'execute.log',D/'execute.log')]:
+  dst.write_bytes(src.read_bytes())
+ attempts.append({'version':v,'seconds':receipt['seconds'],'validation_passed':report['validation_passed'],
+                  'docker_calls':report['docker_calls'],'raw_worker_outputs':len(report.get('raw_worker_outputs',[])),
+                  'report_sha256':h(P/'execute/report.json'),
+                  'failed_case_ids':[r['id'] for r in report['results'] if not r['validation_passed']]})
+ D.joinpath('SHA256SUMS').write_text('\n'.join(h(p)+'  '+p.name for p in sorted(D.iterdir()) if p.is_file() and p.name!='SHA256SUMS')+'\n')
+I=R/'analysis/fresh-purpose-20261107-behavior18-inputs-v1'
+D=B/'docs/experiments/records/2026-11-07-behavior18-inputs-v1'
+D.mkdir()
+for p in I.glob('*.json'):(D/p.name).write_bytes(p.read_bytes())
+report=json.loads((R/'analysis/fresh-purpose-20261107-behavior18-validation-v4/execute/report.json').read_text())
+summary={'schema_version':1,'attempts':attempts,'case_rows':[],
+         'correct_trials_passed':sum(r['correct']['tests_passed'] for r in report['results']),
+         'correct_trials_total':sum(r['correct']['tests_total'] for r in report['results']),
+         'foil_numeric_trials':sum(r['foil'].get('tests_total',0) for r in report['results']),
+         'foil_contract_rejections':sum(r['foil'].get('entrypoint_contract_passed') is False for r in report['results']),
+         'model_calls':0,'scope':'Authored source-owned pre-model validation; transfer not generated.',
+         'known_prevalidation_failure':'First Ruff check found37 E701/E702 formatting diagnostics; formatter fixed syntax layout without a model/container call.'}
+for row in report['results']:
+ c,f=row['correct'],row['foil']
+ summary['case_rows'].append({'id':row['id'],'split':row['split'],'correct_passed':c['passed'],
+  'correct_trials_passed':c['tests_passed'],'foil_passed':f['passed'],
+  'foil_tests_passed':f.get('tests_passed'),'foil_tests_total':f.get('tests_total'),
+  'foil_entrypoint_contract_passed':f.get('entrypoint_contract_passed'),
+  'foil_failed_fixed_trials':[t['trial'] for t in f.get('trial_results',[])[:8] if not t['passed']],
+  'method_requirement_checked':c.get('method_requirement_checked'),
+  'fixture_sha256':c['fixture_sha256']})
+save(D/'validation-summary.json',summary)
+remaining=subprocess.check_output(['docker','--host','unix:///var/run/docker.sock','ps','--all','--no-trunc','--filter','label=kairyu.science-sandbox','--format','{{.ID}}'],text=True).splitlines()
+save(D/'closure.json',{'epoch':time.time(),'remaining_science_sandbox_containers':remaining,'service_operations':0,'new_model_calls':0})
+D.joinpath('SHA256SUMS').write_text('\n'.join(h(p)+'  '+p.name for p in sorted(D.iterdir()) if p.is_file() and p.name!='SHA256SUMS')+'\n')
+print(json.dumps({'summary':str(D/'validation-summary.json'),'sha256':h(D/'validation-summary.json'),'attempts':attempts,'rows':summary['case_rows'],'remaining':remaining}))

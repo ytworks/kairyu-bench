@@ -1,0 +1,271 @@
+{
+  "schema_version": 1,
+  "status": "pending_case_source_and_explicit_authorization",
+  "approved_for_execution": false,
+  "authorization": null,
+  "generation_requests_issued": 0,
+  "owner_implementation": "short dedicated single-batch recipe; existing 120-case owner remains unchanged",
+  "python": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/infra/weight-tools-ci/bin/python",
+  "cwd": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/worktrees/kairyu-bench-weight-tools",
+  "global_lock": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/candidate-evaluation.lock",
+  "network": "gemma-4-31b-8gpu_default",
+  "gateway": {
+    "cid": "88943a0985ba97dfb17be6b5fb54040eba2570b70ce05126bd410162d3658ffb",
+    "endpoint": "http://172.26.0.9:8000/v1",
+    "model_ids": [
+      "gemma-4-31b",
+      "embeddinggemma-2"
+    ],
+    "image_id": "sha256:8e6c37a16eea6f7855b2142fb75555250b676cfc3a7c5c2d9a748bfd1175001b",
+    "healthy": true,
+    "unchanged_protected_service": true
+  },
+  "serving": {
+    "model": "gemma-4-31b",
+    "checkpoint": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/checkpoints/code90-current-ad-helper-av-v1",
+    "tree_sha256": "5d056eb03f954db80313a85167153c875fe5e436e4f97c281a3f55202d9b3eaf",
+    "replicas": 4,
+    "tp_size": 2,
+    "mtp_tokens": 4,
+    "dtype": "native BF16",
+    "ordinary_only": true,
+    "service_cids": {
+      "gemma-0": "baf23e529c4e217801633d0c62b04801e3991b24f6267274104f9d3e355e62c3",
+      "gemma-1": "ce1a67f4ec204a90e486092534e3f700f3abf2fbc9f1e68f87668009104ee00d",
+      "gemma-2": "fd4ec2eb9d7deba2ce3e790add6b50c0ee79a6390495320d8697873b32957bcf",
+      "gemma-3": "e8ec9f3bbfca4baa44b16590ee771a96bba1e1328a60ff0c904995f2675a31b5"
+    },
+    "gateway": "gemma-4-31b-8gpu-kairyu-1",
+    "closures": [
+      {
+        "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-av-dev30-deployment-plan-v1/gemma-0-closure-v1.json",
+        "sha256": "cfc339e7beceb357c07a125df0a043560a20cef2294cfdd876a1cffd7172bcd7"
+      },
+      {
+        "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-av-dev30-deployment-plan-v1/gemma-1-closure-v1.json",
+        "sha256": "e9dfc418cc404194730db14eec021f3a61b22c06f4f0416e268c36267424f7aa"
+      },
+      {
+        "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-av-dev30-deployment-plan-v1/gemma-2-closure-v1.json",
+        "sha256": "b8842587448a8c692f80f422c48135795579829c62062980fda730f0b62f1f1d"
+      },
+      {
+        "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-av-dev30-deployment-plan-v1/gemma-3-closure-v1.json",
+        "sha256": "14dcfc57f6041cd3649991e32ab83f1a039d9465fb401cc49d5a889e1db5665d"
+      }
+    ],
+    "four_replica_closure": {
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-av-dev30-deployment-plan-v1/four-apply-closure.json",
+      "sha256": "671fc7f0b4f7853631e7dff05e5cb9d76c4d9b95b66927d32fa0393ed2ed82ee"
+    }
+  },
+  "runtime_image": "sha256:af9e746b913088cbf6c4464a31d6904a6b7e1d3ba62f0895362ddf13595f7abe",
+  "checkpoint_files": [
+    {
+      "path": "chat_template.jinja",
+      "size": 18683,
+      "sha256": "ae53464bf3be25802b3a5b37def7fd89667067d7577049b3b2d74c4d8de4c6d4",
+      "stat": {
+        "device": 2306,
+        "inode": 181678464,
+        "mtime_ns": 1794014158733915132,
+        "ctime_ns": 1794014158733915132
+      }
+    },
+    {
+      "path": "config.json",
+      "size": 4621,
+      "sha256": "e967dd38bc5cfd38bd09a995a7bf4a754075df2b46aba68f7fbb5a791e6d8dd1",
+      "stat": {
+        "device": 2306,
+        "inode": 181678465,
+        "mtime_ns": 1794014158734915095,
+        "ctime_ns": 1794014158734915095
+      }
+    },
+    {
+      "path": "generation_config.json",
+      "size": 208,
+      "sha256": "d4226bbe3117d2d253ba4609720ba82c6c4ce4627a9a6ae05387c78983ac03de",
+      "stat": {
+        "device": 2306,
+        "inode": 181678466,
+        "mtime_ns": 1794014158734915095,
+        "ctime_ns": 1794014158734915095
+      }
+    },
+    {
+      "path": "model-00001-of-00002.safetensors",
+      "size": 49923154850,
+      "sha256": "0589dc8a7a3afba79fe2d8444221dae410db57ce1be33eb72d9be637d70fcf10",
+      "stat": {
+        "device": 2306,
+        "inode": 181678467,
+        "mtime_ns": 1794014260450139654,
+        "ctime_ns": 1794014260450139654
+      }
+    },
+    {
+      "path": "model-00002-of-00002.safetensors",
+      "size": 12623183414,
+      "sha256": "9be24bc9910dbbe54f3f46154189c729071fd56dc41331f4a97a6ad3e02b3b56",
+      "stat": {
+        "device": 2306,
+        "inode": 181678468,
+        "mtime_ns": 1794014261005119199,
+        "ctime_ns": 1794014261005119199
+      }
+    },
+    {
+      "path": "model.safetensors.index.json",
+      "size": 120246,
+      "sha256": "390b7f9a0a502e4526cf20862d22954c911cc318d8aba2cdb745c6fbd98264f6",
+      "stat": {
+        "device": 2306,
+        "inode": 181678469,
+        "mtime_ns": 1794014259954157935,
+        "ctime_ns": 1794014259954157935
+      }
+    },
+    {
+      "path": "processor_config.json",
+      "size": 1689,
+      "sha256": "32bdf45d2ad4cc29a0822ddd157a182de76644f0419a6228d151495256e9813c",
+      "stat": {
+        "device": 2306,
+        "inode": 181678470,
+        "mtime_ns": 1794014259954157935,
+        "ctime_ns": 1794014259954157935
+      }
+    },
+    {
+      "path": "tokenizer.json",
+      "size": 32169626,
+      "sha256": "cc8d3a0ce36466ccc1278bf987df5f71db1719b9ca6b4118264f45cb627bfe0f",
+      "stat": {
+        "device": 2306,
+        "inode": 181678471,
+        "mtime_ns": 1794014259991156571,
+        "ctime_ns": 1794014259991156571
+      }
+    },
+    {
+      "path": "tokenizer_config.json",
+      "size": 3082,
+      "sha256": "9f4fec4b1dc6ecddf8f4a92e9caea5971c0e67d81309f3f9066a2bee8c362633",
+      "stat": {
+        "device": 2306,
+        "inode": 181678472,
+        "mtime_ns": 1794014260013155760,
+        "ctime_ns": 1794014260013155760
+      }
+    }
+  ],
+  "source_pins": [
+    {
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/worktrees/kairyu-bench-weight-tools/scripts/experiments/gemma4-purpose/science_generate.py",
+      "sha256": "df88767ebcd5a3138747a36fe7e0976dbb0c2ceb5b0f1eece74740818f0b7f89"
+    },
+    {
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/worktrees/kairyu-bench-weight-tools/docs/experiments/scripts/fresh-av-authored120-20261107.py",
+      "sha256": "051d39833131c513b44813025ad081f81f6e83c1fdc55bcacd72f282ae242384"
+    },
+    {
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/worktrees/kairyu-bench-weight-tools/src/kairyu_bench/wsp/weights/__init__.py",
+      "sha256": "84407e8a57e31b915d5ba936a309457422b3b6c347fde2056f1dd492ad511cca"
+    },
+    {
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/worktrees/kairyu-bench-weight-tools/src/kairyu_bench/wsp/weights/checkpoint.py",
+      "sha256": "898297c05e7179cdc4568d6f290b978073bcebafea804ac043b54030e8205bf9"
+    },
+    {
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/worktrees/kairyu-bench-weight-tools/src/kairyu_bench/wsp/weights/cli.py",
+      "sha256": "4193ee3863ac8d96ead9ba167ac572619d280ed9277f5729df970361cb882b26"
+    },
+    {
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/worktrees/kairyu-bench-weight-tools/src/kairyu_bench/wsp/weights/composition.py",
+      "sha256": "7ce2bc057ad3974d8c4d8509be0c193dbb7fd6b42cd523e1c9df5619bf7f84b7"
+    },
+    {
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/worktrees/kairyu-bench-weight-tools/src/kairyu_bench/wsp/weights/editor.py",
+      "sha256": "0983580f41989c26e84c16c26924f2850dd4e5d3d12917bb9553d7feb92333d2"
+    },
+    {
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/worktrees/kairyu-bench-weight-tools/src/kairyu_bench/wsp/weights/finite_replay.py",
+      "sha256": "71c424bffac775ba112e709632df0a37351a79c3121827be7c9844f321c7c4d3"
+    },
+    {
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/worktrees/kairyu-bench-weight-tools/src/kairyu_bench/wsp/weights/finite_response.py",
+      "sha256": "2f4b474089290d66a291d61eea176743d2502303943c6fded5b4331ebbff77af"
+    },
+    {
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/worktrees/kairyu-bench-weight-tools/src/kairyu_bench/wsp/weights/matrix.py",
+      "sha256": "002761474fd4bba4bce089b23eb6fcf701ab7c40b39b819a272a39dfdbac97e9"
+    },
+    {
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/worktrees/kairyu-bench-weight-tools/src/kairyu_bench/wsp/weights/native_faststore.py",
+      "sha256": "445cc73783bd6bd61890b107bb76ddca1e388a9bf84b630125a01486389578cd"
+    },
+    {
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/worktrees/kairyu-bench-weight-tools/src/kairyu_bench/wsp/weights/receipts.py",
+      "sha256": "b7299c8c89ad07e2f7df6cacfac39adabb4c98e6407da2585d6649dc26b37f27"
+    },
+    {
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/worktrees/kairyu-bench-weight-tools/src/kairyu_bench/wsp/weights/shard_pool.py",
+      "sha256": "f45d073c9950579753c74143dbc9cdc89abfdc6b0d2e4c694c91807d9b4cbc2f"
+    },
+    {
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/worktrees/kairyu-bench-weight-tools/src/kairyu_bench/wsp/weights/statistics.py",
+      "sha256": "7c021ac29e0e6bdbcb5a0bc150a598eeef7c9d1a39baf3931525d849ca0370f0"
+    }
+  ],
+  "preparation_evidence": {
+    "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-new18-train12-preparation-v1/preparation-evidence.json",
+    "sha256": "9c4108c83ae10a582cb7345bd8dd71a7b10d4aff066ee8d0a9c73bc70ed0e66d"
+  },
+  "inputs": {
+    "train": {
+      "cases_path": null,
+      "sha256": null,
+      "expected_count": 12,
+      "ids": null
+    },
+    "transfer": {
+      "cases_path": null,
+      "sha256": null,
+      "expected_count": 6,
+      "ids": null,
+      "initial_generation_allowed": false
+    }
+  },
+  "sampling": {
+    "concurrency": 16,
+    "max_tokens": 32768,
+    "timeout_seconds": 1200,
+    "seed": 0,
+    "thinking_control": "server-default",
+    "default_enable_thinking_attested": true,
+    "temperature_override": null,
+    "top_p_override": null,
+    "retries": 0,
+    "attempts_per_case": 1
+  },
+  "tokenizer_audit": {
+    "cases": 18,
+    "image": "sha256:af9e746b913088cbf6c4464a31d6904a6b7e1d3ba62f0895362ddf13595f7abe",
+    "cpu_only": true,
+    "network": "none",
+    "load_model": false,
+    "protocol": "gemma4-public-answer-v2-forced-empty-thought",
+    "max_complete_frame_tokens": 1024,
+    "truncate": false,
+    "drop_cases": false,
+    "status": "not_run_inputs_pending"
+  },
+  "unresolved": [
+    "New case source, both exact case envelopes, all 18 IDs and hashes",
+    "CPU tokenizer/all 18 full-frame length validation",
+    "Dedicated one-batch owner source/review/preview and exact approved plan SHA",
+    "Fresh preflight with global lock before model requests"
+  ]
+}

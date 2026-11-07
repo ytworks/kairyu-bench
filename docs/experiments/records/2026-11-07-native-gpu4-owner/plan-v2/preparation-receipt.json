@@ -1,0 +1,22 @@
+{
+  "plan": {
+    "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-av-behavior12-native-gpu4-v2/plan.json",
+    "sha256": "8edba22f5aa38ec5eebf443a3b4b2eab2794b23c9968fcd0c09d13d003f20316"
+  },
+  "owner": {
+    "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/worktrees/kairyu-bench-weight-tools/docs/experiments/scripts/fresh-av-native-gpu4-20261107.py",
+    "sha256": "9a8d9255312a97ae2762ec97c34c9701ac5d64dcb0dc273e01f8d7f6700b7183"
+  },
+  "operation": {
+    "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/worktrees/kairyu-bench-weight-tools/docs/experiments/records/2026-11-07-native-gpu4-owner/prepare-v2.py",
+    "sha256": "3ecfbc1caca2c4b3d8b1b80b9874a0891a7a59f38e359a2b88df2e9424c06627"
+  },
+  "identity": {
+    "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-av-behavior12-native-gpu4-v2/native-behavior-result-identity.json",
+    "sha256": "463e9ff5cf4f8183527bc1080f1fab36a5214a63891345cc07f254d2ee9ff099"
+  },
+  "model_calls": 0,
+  "service_changes": 0,
+  "global_lock_acquired": false,
+  "approved_for_execution": false
+}

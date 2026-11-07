@@ -1,0 +1,40 @@
+from pathlib import Path
+from collections import Counter
+import hashlib,json
+R=Path('/mnt/nvme/kairyu/wsp/gemma4-coding-20261104')
+B=R/'worktrees/kairyu-bench-weight-tools'
+P=R/'analysis/fresh-purpose-20261107-av-behavior12-score-v2'
+D=B/'docs/experiments/records/2026-11-07-av-behavior12-score-v2'
+def h(p):return hashlib.sha256(p.read_bytes()).hexdigest()
+def save(p,d):p.write_text(json.dumps(d,ensure_ascii=False,indent=2,allow_nan=False)+'\n')
+report=json.loads((P/'evaluation/report.json').read_text())
+receipt=json.loads((P/'execution-receipt.json').read_text())
+assert report['status']=='completed' and receipt['protected_unchanged']
+assert len(report['results'])==12
+rows=report['results']
+summary={'schema_version':1,'status':'completed','scope':'AV native-thinking train12 known calibration, not official WSP',
+ 'report':{'path':str(P/'evaluation/report.json'),'sha256':h(P/'evaluation/report.json')},
+ 'execution_receipt':{'path':str(P/'execution-receipt.json'),'sha256':h(P/'execution-receipt.json')},
+ 'plan_sha256':h(P/'plan.json'),'generation_responses_sha256':'5ea0e169922048a2e5bf649ceb6b1add7bb81db5ee19bcf48c620cb00f3de3db',
+ 'cases':12,'passed':report['passed'],'failed':report['failed'],'unknown':report['unknown'],
+ 'tests_passed':sum(r.get('tests_passed',0) for r in rows),'tests_total':sum(r.get('tests_total',0) for r in rows),
+ 'numeric_failed_trials':sum(len(r.get('failures',[])) for r in rows),
+ 'failure_kinds':dict(Counter(f['kind'] for r in rows for f in r.get('failures',[]))),
+ 'execution_seconds':receipt['seconds'],'docker_calls':report['docker_calls'],
+ 'raw_worker_outputs':receipt['raw_worker_outputs'],'protected_unchanged':receipt['protected_unchanged'],
+ 'new_model_calls':0,'transfer_scored':0,'retries':0,'all12':rows,
+ 'interpretation':['A1 directly passes a2D batched RHS to numpy.linalg.solve; ten ValueError and six output-shape failures.',
+ 'F2 selects arr[0::k] instead of k-1::k. This differs from the predeclared zero-deletion foil; no post-data foil change.',
+ 'B method_requirement_checked=false remains; numeric pass is not proof of SymPy use or all method constraints.']}
+save(P/'summary.json',summary)
+for src,name in [
+ (P/'plan.json','plan.json'),(P/'preparation.json','preparation.json'),
+ (P/'preview/report.json','preview-report.json'),(P/'preview.log','preview.log'),
+ (P/'evaluation/report.json','report.json'),(P/'execution-receipt.json','execution-receipt.json'),
+ (P/'raw-worker-outputs.json','raw-worker-outputs.json'),(P/'before.json','before.json'),
+ (P/'after.json','after.json'),(P/'summary.json','summary.json')]:
+ (D/name).write_bytes(src.read_bytes())
+D.joinpath('SHA256SUMS').write_text('\n'.join(h(p)+'  '+p.name for p in sorted(D.iterdir()) if p.is_file() and p.name!='SHA256SUMS')+'\n')
+print(json.dumps({'summary_path':str(P/'summary.json'),'summary_sha256':h(P/'summary.json'),
+ 'counts':{k:summary[k] for k in ['passed','failed','unknown','tests_passed','tests_total','failure_kinds']},
+ 'rows':[{'id':r['id'],'passed':r['passed'],'trials':r.get('tests_passed'),'method_checked':r.get('method_requirement_checked')} for r in rows]}))

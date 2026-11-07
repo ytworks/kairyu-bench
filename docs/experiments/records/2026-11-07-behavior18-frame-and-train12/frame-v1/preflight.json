@@ -1,0 +1,416 @@
+{
+  "epoch": 1794040270.0414608,
+  "source_input_sha256": {
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/worktrees/kairyu-bench-weight-tools/docs/experiments/scripts/fresh-behavior18-frames-20261107.py": "c221cefec8d64adbde818832a835f81240f2306debfe7f76dab7f9d79d5e2485",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-av-dev30-deployment-plan-v1/av-freeze.json": "0fbf034b37613d20fde3f8a536852246a4207be8c65be0aa46a9f2a1d920f176",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-behavior18-inputs-v1/train-cases.json": "b42990b0caac24ccc7843e40718c0c5e7ad61dd5baa131ed6852c126bf37f66d",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-behavior18-inputs-v1/transfer-cases.json": "4951c70a686ebcd7135919c48d4038c6aa6d359abc018730aee73c1afe9f4b55",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-behavior18-inputs-v1/metadata.json": "2ea45ecfc61a065cef45d9a9e012870838d3484129a161cdee95d11c0d8e40e1",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-behavior18-inputs-v1/freeze.json": "afed08cceb939b9a75c68037b33eed1c983bee9266d284dc158a8f3dbe08d657",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/worktrees/kairyu-bench-weight-tools/src/kairyu_bench/wsp/weights/__init__.py": "84407e8a57e31b915d5ba936a309457422b3b6c347fde2056f1dd492ad511cca",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/worktrees/kairyu-bench-weight-tools/src/kairyu_bench/wsp/weights/checkpoint.py": "898297c05e7179cdc4568d6f290b978073bcebafea804ac043b54030e8205bf9",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/worktrees/kairyu-bench-weight-tools/src/kairyu_bench/wsp/weights/statistics.py": "7c021ac29e0e6bdbcb5a0bc150a598eeef7c9d1a39baf3931525d849ca0370f0",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/worktrees/kairyu-bench-weight-tools/src/kairyu_bench/wsp/weights/shard_pool.py": "f45d073c9950579753c74143dbc9cdc89abfdc6b0d2e4c694c91807d9b4cbc2f",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/worktrees/kairyu-bench-weight-tools/src/kairyu_bench/wsp/weights/receipts.py": "b7299c8c89ad07e2f7df6cacfac39adabb4c98e6407da2585d6649dc26b37f27",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/worktrees/kairyu-bench-weight-tools/src/kairyu_bench/wsp/weights/cli.py": "4193ee3863ac8d96ead9ba167ac572619d280ed9277f5729df970361cb882b26",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/worktrees/kairyu-bench-weight-tools/src/kairyu_bench/wsp/weights/finite_replay.py": "71c424bffac775ba112e709632df0a37351a79c3121827be7c9844f321c7c4d3",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/worktrees/kairyu-bench-weight-tools/src/kairyu_bench/wsp/weights/matrix.py": "002761474fd4bba4bce089b23eb6fcf701ab7c40b39b819a272a39dfdbac97e9",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/worktrees/kairyu-bench-weight-tools/src/kairyu_bench/wsp/weights/editor.py": "0983580f41989c26e84c16c26924f2850dd4e5d3d12917bb9553d7feb92333d2",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/worktrees/kairyu-bench-weight-tools/src/kairyu_bench/wsp/weights/native_faststore.py": "445cc73783bd6bd61890b107bb76ddca1e388a9bf84b630125a01486389578cd",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/worktrees/kairyu-bench-weight-tools/src/kairyu_bench/wsp/weights/finite_response.py": "2f4b474089290d66a291d61eea176743d2502303943c6fded5b4331ebbff77af",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/worktrees/kairyu-bench-weight-tools/src/kairyu_bench/wsp/weights/composition.py": "7ce2bc057ad3974d8c4d8509be0c193dbb7fd6b42cd523e1c9df5619bf7f84b7",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/checkpoints/code90-current-ad-helper-av-v1/processor_config.json": "32bdf45d2ad4cc29a0822ddd157a182de76644f0419a6228d151495256e9813c",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/checkpoints/code90-current-ad-helper-av-v1/chat_template.jinja": "ae53464bf3be25802b3a5b37def7fd89667067d7577049b3b2d74c4d8de4c6d4",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/checkpoints/code90-current-ad-helper-av-v1/model.safetensors.index.json": "390b7f9a0a502e4526cf20862d22954c911cc318d8aba2cdb745c6fbd98264f6",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/checkpoints/code90-current-ad-helper-av-v1/generation_config.json": "d4226bbe3117d2d253ba4609720ba82c6c4ce4627a9a6ae05387c78983ac03de",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/checkpoints/code90-current-ad-helper-av-v1/tokenizer_config.json": "9f4fec4b1dc6ecddf8f4a92e9caea5971c0e67d81309f3f9066a2bee8c362633",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/checkpoints/code90-current-ad-helper-av-v1/config.json": "e967dd38bc5cfd38bd09a995a7bf4a754075df2b46aba68f7fbb5a791e6d8dd1",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/checkpoints/code90-current-ad-helper-av-v1/tokenizer.json": "cc8d3a0ce36466ccc1278bf987df5f71db1719b9ca6b4118264f45cb627bfe0f"
+  },
+  "av_stats": {
+    "chat_template.jinja": {
+      "device": 2306,
+      "inode": 181678464,
+      "size": 18683,
+      "mtime_ns": 1794014158733915132,
+      "ctime_ns": 1794014158733915132,
+      "uid": 1003,
+      "gid": 1003,
+      "mode": 33152,
+      "nlink": 1
+    },
+    "config.json": {
+      "device": 2306,
+      "inode": 181678465,
+      "size": 4621,
+      "mtime_ns": 1794014158734915095,
+      "ctime_ns": 1794014158734915095,
+      "uid": 1003,
+      "gid": 1003,
+      "mode": 33152,
+      "nlink": 1
+    },
+    "generation_config.json": {
+      "device": 2306,
+      "inode": 181678466,
+      "size": 208,
+      "mtime_ns": 1794014158734915095,
+      "ctime_ns": 1794014158734915095,
+      "uid": 1003,
+      "gid": 1003,
+      "mode": 33152,
+      "nlink": 1
+    },
+    "model-00001-of-00002.safetensors": {
+      "device": 2306,
+      "inode": 181678467,
+      "size": 49923154850,
+      "mtime_ns": 1794014260450139654,
+      "ctime_ns": 1794014260450139654,
+      "uid": 1003,
+      "gid": 1003,
+      "mode": 33152,
+      "nlink": 1
+    },
+    "model-00002-of-00002.safetensors": {
+      "device": 2306,
+      "inode": 181678468,
+      "size": 12623183414,
+      "mtime_ns": 1794014261005119199,
+      "ctime_ns": 1794014261005119199,
+      "uid": 1003,
+      "gid": 1003,
+      "mode": 33152,
+      "nlink": 1
+    },
+    "model.safetensors.index.json": {
+      "device": 2306,
+      "inode": 181678469,
+      "size": 120246,
+      "mtime_ns": 1794014259954157935,
+      "ctime_ns": 1794014259954157935,
+      "uid": 1003,
+      "gid": 1003,
+      "mode": 33152,
+      "nlink": 1
+    },
+    "processor_config.json": {
+      "device": 2306,
+      "inode": 181678470,
+      "size": 1689,
+      "mtime_ns": 1794014259954157935,
+      "ctime_ns": 1794014259954157935,
+      "uid": 1003,
+      "gid": 1003,
+      "mode": 33152,
+      "nlink": 1
+    },
+    "tokenizer.json": {
+      "device": 2306,
+      "inode": 181678471,
+      "size": 32169626,
+      "mtime_ns": 1794014259991156571,
+      "ctime_ns": 1794014259991156571,
+      "uid": 1003,
+      "gid": 1003,
+      "mode": 33152,
+      "nlink": 1
+    },
+    "tokenizer_config.json": {
+      "device": 2306,
+      "inode": 181678472,
+      "size": 3082,
+      "mtime_ns": 1794014260013155760,
+      "ctime_ns": 1794014260013155760,
+      "uid": 1003,
+      "gid": 1003,
+      "mode": 33152,
+      "nlink": 1
+    }
+  },
+  "av_payload_freshhash": false,
+  "containers": [
+    {
+      "cid": "005b20d4f0adacdc438e2e90f44c9d21579f3d089b366bcfe8af8f0785bde8c3",
+      "image": "sha256:ef11a68f38457d831e23168486858c25b9d9c4399094c9e72c0d4d8767ac09de",
+      "name": "/gemma-4-31b-8gpu-chat-ui-1",
+      "running": true,
+      "status": "running",
+      "health": "healthy"
+    },
+    {
+      "cid": "0a32557db9cd0bd49fffefea34276c8515021858e3d0115e560ef835f616609a",
+      "image": "sha256:aa3df78ecf320f5fafdce71c659f1629e96e9de0968305fe1de670e0ca9176ce",
+      "name": "/gemma-wsp-deepswe-dind-20261104-pre-nvme-results-20261105",
+      "running": false,
+      "status": "exited",
+      "health": null
+    },
+    {
+      "cid": "149b564776c7bda50b4039b44b0cf52b1178272a481a4c4dee88de2f283ae334",
+      "image": "sha256:2a232a42256f70d78e3cc5d2b5d6b3276710a0de0596c145f627ecfae90282ac",
+      "name": "/wsp-dind",
+      "running": true,
+      "status": "running",
+      "health": null
+    },
+    {
+      "cid": "3257ee5ee6d0fa212bacd64de8b86152ab0be509e0a7d329838193559039dbda",
+      "image": "sha256:bb4076b5f7468285b297e77867843a190c337009a97d14cefefc0d6a719e68d4",
+      "name": "/kairyu-wsp-observe-20261106",
+      "running": true,
+      "status": "running",
+      "health": "healthy"
+    },
+    {
+      "cid": "374e969acaf78f336c638b5bff9ffdde04fd44f9075e45d2cfd54881b556b2c1",
+      "image": "sha256:af9e746b913088cbf6c4464a31d6904a6b7e1d3ba62f0895362ddf13595f7abe",
+      "name": "/gemma4-wsp-cpu-broad-margins-20261105",
+      "running": false,
+      "status": "exited",
+      "health": null
+    },
+    {
+      "cid": "37b84155d0d47c339a8a3f989cf69be74a80a9f7369829db41612a5a77fe481a",
+      "image": "sha256:af9e746b913088cbf6c4464a31d6904a6b7e1d3ba62f0895362ddf13595f7abe",
+      "name": "/gemma4-wsp-cpu-algorithm-completion-20261105",
+      "running": false,
+      "status": "exited",
+      "health": null
+    },
+    {
+      "cid": "3d62fd16cb139033941f36930a226b197b4512f4d319bc0920ecc3ef0b62a87f",
+      "image": "sha256:af9e746b913088cbf6c4464a31d6904a6b7e1d3ba62f0895362ddf13595f7abe",
+      "name": "/gemma4-wsp-cpu-joint-sets-20261105",
+      "running": false,
+      "status": "exited",
+      "health": null
+    },
+    {
+      "cid": "4ef033809802f99ae4859327cf7350e2dc4c7d657b226a7229914432e0dd0718",
+      "image": "sha256:af9e746b913088cbf6c4464a31d6904a6b7e1d3ba62f0895362ddf13595f7abe",
+      "name": "/gemma4-wsp-cpu-mechanisms-20261105",
+      "running": false,
+      "status": "exited",
+      "health": null
+    },
+    {
+      "cid": "5885c75f79f5396867db6b3518637ca5bcde342dd1fd20f88c89bf69ff42cdff",
+      "image": "sha256:af9e746b913088cbf6c4464a31d6904a6b7e1d3ba62f0895362ddf13595f7abe",
+      "name": "/gemma4-wsp-cpu-chat-purpose-20261105",
+      "running": false,
+      "status": "exited",
+      "health": null
+    },
+    {
+      "cid": "61a829c3aaf5c9af66499357d1f55b8f58ad19ef40cb887bbe63a0c4729c10f9",
+      "image": "sha256:af9e746b913088cbf6c4464a31d6904a6b7e1d3ba62f0895362ddf13595f7abe",
+      "name": "/gemma4-wsp-cpu-combinations-20261105",
+      "running": false,
+      "status": "exited",
+      "health": null
+    },
+    {
+      "cid": "88943a0985ba97dfb17be6b5fb54040eba2570b70ce05126bd410162d3658ffb",
+      "image": "sha256:8e6c37a16eea6f7855b2142fb75555250b676cfc3a7c5c2d9a748bfd1175001b",
+      "name": "/gemma-4-31b-8gpu-kairyu-1",
+      "running": true,
+      "status": "running",
+      "health": "healthy"
+    },
+    {
+      "cid": "897103115f63e39d3261f39bf449bfa9258121d270ae700f65c0321837eeec08",
+      "image": "sha256:af9e746b913088cbf6c4464a31d6904a6b7e1d3ba62f0895362ddf13595f7abe",
+      "name": "/gemma-4-31b-8gpu-embed-1-1",
+      "running": true,
+      "status": "running",
+      "health": "healthy"
+    },
+    {
+      "cid": "8c1e4b184886cd32d110fab4c4fda7369c445ae910f1e68b8ba4834811921d8d",
+      "image": "sha256:af9e746b913088cbf6c4464a31d6904a6b7e1d3ba62f0895362ddf13595f7abe",
+      "name": "/gemma4-wsp-cpu-sparse-check-20261105",
+      "running": false,
+      "status": "exited",
+      "health": null
+    },
+    {
+      "cid": "b0d4c3e871a7d2a44249318079920bd01f56cb7978b58a19f4245245f140afd6",
+      "image": "sha256:f3bd19c606e442c3d7bdfa8002e03fe260a1023351e0ea4598032022b68dd6e3",
+      "name": "/kairyu-pg-groupc-ci-det",
+      "running": true,
+      "status": "running",
+      "health": null
+    },
+    {
+      "cid": "b4302da3c2814fa2458ae7e4652b0041af34bd45d6872b86ecd40cfa06bf9985",
+      "image": "sha256:af9e746b913088cbf6c4464a31d6904a6b7e1d3ba62f0895362ddf13595f7abe",
+      "name": "/gemma-4-31b-8gpu-embed-0-1",
+      "running": true,
+      "status": "running",
+      "health": "healthy"
+    },
+    {
+      "cid": "baf23e529c4e217801633d0c62b04801e3991b24f6267274104f9d3e355e62c3",
+      "image": "sha256:af9e746b913088cbf6c4464a31d6904a6b7e1d3ba62f0895362ddf13595f7abe",
+      "name": "/gemma-4-31b-8gpu-gemma-0-1",
+      "running": true,
+      "status": "running",
+      "health": "healthy"
+    },
+    {
+      "cid": "bcf8a575872a9ff05a85bfd8b46dbeec3cb9d8bef6a94aded4cb5a12c61bc976",
+      "image": "sha256:6eda9c524992147c1b0b06a1a9be4894bd68b1f43c86d92c32f996c4c60d18a3",
+      "name": "/gemma-4-31b-8gpu-docling-1",
+      "running": true,
+      "status": "running",
+      "health": "healthy"
+    },
+    {
+      "cid": "c672bb052ad042282e2e2ec2e8b65edde8b6c50262bd6dab00da57314e4f8b1b",
+      "image": "sha256:af9e746b913088cbf6c4464a31d6904a6b7e1d3ba62f0895362ddf13595f7abe",
+      "name": "/gemma4-wsp-cpu-whole-dependencies-20261105",
+      "running": false,
+      "status": "exited",
+      "health": null
+    },
+    {
+      "cid": "c81e36297abd0b0e23fd11ada341ac6845e4446fe34a5f9432de70cbdfa752cc",
+      "image": "sha256:af9e746b913088cbf6c4464a31d6904a6b7e1d3ba62f0895362ddf13595f7abe",
+      "name": "/gemma4-wsp-cpu-norm-probe-20261105",
+      "running": false,
+      "status": "exited",
+      "health": null
+    },
+    {
+      "cid": "ca0ce07ae660af1bb129a129aa538d23206e1d10c4db982ae692618dd852678d",
+      "image": "sha256:2a232a42256f70d78e3cc5d2b5d6b3276710a0de0596c145f627ecfae90282ac",
+      "name": "/wsp-dind-pre-nvme-results-20261105",
+      "running": false,
+      "status": "exited",
+      "health": null
+    },
+    {
+      "cid": "ce1a67f4ec204a90e486092534e3f700f3abf2fbc9f1e68f87668009104ee00d",
+      "image": "sha256:af9e746b913088cbf6c4464a31d6904a6b7e1d3ba62f0895362ddf13595f7abe",
+      "name": "/gemma-4-31b-8gpu-gemma-1-1",
+      "running": true,
+      "status": "running",
+      "health": "healthy"
+    },
+    {
+      "cid": "dbabe7158257d30d26b6f96d51eb17e4a0b6385fcf5d9d90c2182b22aed3d20b",
+      "image": "sha256:af9e746b913088cbf6c4464a31d6904a6b7e1d3ba62f0895362ddf13595f7abe",
+      "name": "/gemma4-wsp-cpu-programming-completion-20261105",
+      "running": false,
+      "status": "exited",
+      "health": null
+    },
+    {
+      "cid": "dfbaee8005646b8369493c56f5daa89251880694970e135209b3416255e57d57",
+      "image": "sha256:aa3df78ecf320f5fafdce71c659f1629e96e9de0968305fe1de670e0ca9176ce",
+      "name": "/gemma-wsp-deepswe-dind-20261104",
+      "running": true,
+      "status": "running",
+      "health": null
+    },
+    {
+      "cid": "e8ec9f3bbfca4baa44b16590ee771a96bba1e1328a60ff0c904995f2675a31b5",
+      "image": "sha256:af9e746b913088cbf6c4464a31d6904a6b7e1d3ba62f0895362ddf13595f7abe",
+      "name": "/gemma-4-31b-8gpu-gemma-3-1",
+      "running": true,
+      "status": "running",
+      "health": "healthy"
+    },
+    {
+      "cid": "ed9842852109333c564c5962ada840ea2794720ad613ebc0c8ef96591c816a33",
+      "image": "sha256:af9e746b913088cbf6c4464a31d6904a6b7e1d3ba62f0895362ddf13595f7abe",
+      "name": "/gemma4-wsp-cpu-chat-frame-preflight-failed-20261105",
+      "running": false,
+      "status": "exited",
+      "health": null
+    },
+    {
+      "cid": "fbb725752d9e8990506968903bfcb5a406eb56f0bc6c839eb08199c0d05f54f3",
+      "image": "sha256:af9e746b913088cbf6c4464a31d6904a6b7e1d3ba62f0895362ddf13595f7abe",
+      "name": "/gemma4-wsp-cpu-mechanisms-v2-20261105",
+      "running": false,
+      "status": "exited",
+      "health": null
+    },
+    {
+      "cid": "fd4ec2eb9d7deba2ce3e790add6b50c0ee79a6390495320d8697873b32957bcf",
+      "image": "sha256:af9e746b913088cbf6c4464a31d6904a6b7e1d3ba62f0895362ddf13595f7abe",
+      "name": "/gemma-4-31b-8gpu-gemma-2-1",
+      "running": true,
+      "status": "running",
+      "health": "healthy"
+    }
+  ],
+  "command": [
+    "docker",
+    "create",
+    "--name",
+    "fresh-behavior18-frames-20261107-v1",
+    "--pull=never",
+    "--runtime=runc",
+    "--network=none",
+    "--user",
+    "1003:1003",
+    "--read-only",
+    "--cap-drop=ALL",
+    "--security-opt=no-new-privileges",
+    "--pids-limit",
+    "128",
+    "--memory",
+    "4g",
+    "--cpus",
+    "2",
+    "--cpu-shares",
+    "128",
+    "--workdir",
+    "/out",
+    "--entrypoint",
+    "python",
+    "--env",
+    "PYTHONDONTWRITEBYTECODE=1",
+    "--env",
+    "CUDA_VISIBLE_DEVICES=",
+    "--env",
+    "NVIDIA_VISIBLE_DEVICES=void",
+    "--env",
+    "HF_HUB_OFFLINE=1",
+    "--env",
+    "TRANSFORMERS_OFFLINE=1",
+    "--env",
+    "TOKENIZERS_PARALLELISM=false",
+    "--env",
+    "OMP_NUM_THREADS=1",
+    "--env",
+    "OPENBLAS_NUM_THREADS=1",
+    "--env",
+    "MKL_NUM_THREADS=1",
+    "--env",
+    "TMPDIR=/out/tmp",
+    "--env",
+    "HF_HOME=/out/cache",
+    "--env",
+    "XDG_CACHE_HOME=/out/cache",
+    "--env",
+    "PYTHONPATH=/source",
+    "--mount",
+    "type=bind,src=/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/worktrees/kairyu-bench-weight-tools/src,dst=/source,readonly",
+    "--mount",
+    "type=bind,src=/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/checkpoints/code90-current-ad-helper-av-v1,dst=/checkpoint,readonly",
+    "--mount",
+    "type=bind,src=/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-behavior18-inputs-v1,dst=/inputs,readonly",
+    "--mount",
+    "type=bind,src=/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/worktrees/kairyu-bench-weight-tools/docs/experiments/scripts/fresh-behavior18-frames-20261107.py,dst=/audit.py,readonly",
+    "--mount",
+    "type=bind,src=/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-behavior18-frame-v1,dst=/out",
+    "sha256:af9e746b913088cbf6c4464a31d6904a6b7e1d3ba62f0895362ddf13595f7abe",
+    "/audit.py"
+  ],
+  "model_calls": 0,
+  "gpu_calls": 0
+}

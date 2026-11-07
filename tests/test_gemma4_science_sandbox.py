@@ -227,6 +227,24 @@ class ScienceSandboxTest(unittest.TestCase):
             with self.assertRaisesRegex(ValueError, "HTTP failure status"):
                 SANDBOX.read_inputs(cases, responses)
 
+    def test_empty_ndarray_wire_shape_is_preserved_without_filling_unknown(self):
+        import numpy as np
+
+        expected = [np.empty((0, 2), dtype=np.float64)]
+        row = {"shape": [0, 2], "dtype": "float64", "data": [], "unchanged": True}
+        self.assertTrue(SANDBOX.compare({"trials": [row]}, expected)["passed"])
+        self.assertEqual(row["data"], [])
+        for invalid in (
+            dict(row, shape=[0, 1]),
+            dict(row, data=[[], []]),
+            dict(row, dtype="float32"),
+            dict(row, unchanged=False),
+            {"error": "ValueError"},
+        ):
+            self.assertFalse(SANDBOX.compare({"trials": [invalid]}, expected)["passed"])
+        with self.assertRaises(ValueError):
+            SANDBOX.compare({"trials": []}, expected)
+
     def test_daemon_guard_and_bounded_own_container_cleanup(self):
         with tempfile.TemporaryDirectory() as directory:
             path = Path(directory) / "docker.sock"

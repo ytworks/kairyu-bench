@@ -1,0 +1,1563 @@
+{
+  "schema_version": 1,
+  "status": "completed",
+  "mode": "score",
+  "split": "train",
+  "inputs": [
+    {
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-behavior18-inputs-v1/train-cases.json",
+      "sha256": "b42990b0caac24ccc7843e40718c0c5e7ad61dd5baa131ed6852c126bf37f66d",
+      "stat": {
+        "dev": 2306,
+        "ino": 182191377,
+        "size": 10872,
+        "mtime_ns": 1794040053511576605,
+        "ctime_ns": 1794040053511576605
+      }
+    },
+    {
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-av-behavior12-native-v1/generation/train-responses.json",
+      "sha256": "5ea0e169922048a2e5bf649ceb6b1add7bb81db5ee19bcf48c620cb00f3de3db",
+      "stat": {
+        "dev": 2306,
+        "ino": 182191629,
+        "size": 8525,
+        "mtime_ns": 1794040549669677726,
+        "ctime_ns": 1794040549669677726
+      }
+    },
+    {
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/runtime/fresh-purpose-20261107-behavior18-validation-v4/behavior_offline.py",
+      "sha256": "30715a30e02c7fab8ec4e1ffad28e57c4925b16fb45048680d6f5735bd3af9e5",
+      "stat": {
+        "dev": 2306,
+        "ino": 182191365,
+        "size": 13272,
+        "mtime_ns": 1794040000000399257,
+        "ctime_ns": 1794040000000399257
+      }
+    },
+    {
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/runtime/fresh-purpose-20261107-behavior18-validation-v4/behavior_cases.py",
+      "sha256": "10ba3e480c8685933904060629b351758cf7b61362756179e55779435d01a310",
+      "stat": {
+        "dev": 2306,
+        "ino": 182191364,
+        "size": 22945,
+        "mtime_ns": 1794040000000399257,
+        "ctime_ns": 1794040000000399257
+      }
+    },
+    {
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/runtime/fresh-purpose-20261107-behavior18-validation-v4/science_sandbox.py",
+      "sha256": "4a65378e493fb2f109afdaf0d98b5b93dc067d6d3f48d2a4cf17017f1aadcb78",
+      "stat": {
+        "dev": 2306,
+        "ino": 182191366,
+        "size": 29092,
+        "mtime_ns": 1794040000000399257,
+        "ctime_ns": 1794040000000399257
+      }
+    },
+    {
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/runtime/fresh-purpose-20261107-behavior18-validation-v4/science_cases.py",
+      "sha256": "2c4cc6e75c92c41b98e737ca2c0a653e0f7a7675c6150a6ad33e3f954122a26b",
+      "stat": {
+        "dev": 2306,
+        "ino": 182191367,
+        "size": 35229,
+        "mtime_ns": 1794040000000399257,
+        "ctime_ns": 1794040000000399257
+      }
+    }
+  ],
+  "generation": {
+    "model_id": "gemma-4-31b",
+    "checkpoint_sha256": "5d056eb03f954db80313a85167153c875fe5e436e4f97c281a3f55202d9b3eaf",
+    "frame": "live-server-default-public-answer",
+    "enable_thinking": null,
+    "thinking_control": "server-default",
+    "reasoning_saved": false,
+    "sampling": "server_official_generation_config",
+    "temperature": null,
+    "max_tokens": 32768,
+    "seed": 0
+  },
+  "target_ids": [
+    "behavior-A1",
+    "behavior-A2",
+    "behavior-B1",
+    "behavior-B2",
+    "behavior-C1",
+    "behavior-C2",
+    "behavior-D1",
+    "behavior-D2",
+    "behavior-E1",
+    "behavior-E2",
+    "behavior-F1",
+    "behavior-F2"
+  ],
+  "expected_cases": 12,
+  "responses_received": 12,
+  "results": [
+    {
+      "request_id": "chatcmpl-20304846662a4b4d",
+      "finish_reason": "stop",
+      "usage": {
+        "input_tokens": 114,
+        "output_tokens": 1424
+      },
+      "seconds": 12.641205227002501,
+      "id": "behavior-A1",
+      "split": "train",
+      "seed": 202611071,
+      "fixture_cases_planned": 16,
+      "status": "evaluated",
+      "passed": false,
+      "entrypoint_contract_passed": null,
+      "method_requirement_checked": null,
+      "public_answer_sha256": "bebad0785515646fe8602b24abd8b316e05608fc6ee1c5a05070f8077ffa2a48",
+      "format_passed": true,
+      "executable_sha256": "67044490c8576ca98768bc2cc1a702356f705b902c99f736a8fe8e4fefec6241",
+      "fixture_sha256": "901b0fb880b012133d754679e128b1808c28dc924ee5bdd08d01d8e9bc2a19cd",
+      "tests_passed": 0,
+      "tests_total": 16,
+      "failures": [
+        {
+          "trial": 0,
+          "kind": "runtime",
+          "phase": "execution",
+          "exception_category": "ValueError"
+        },
+        {
+          "trial": 1,
+          "kind": "output_shape"
+        },
+        {
+          "trial": 2,
+          "kind": "output_shape"
+        },
+        {
+          "trial": 3,
+          "kind": "runtime",
+          "phase": "execution",
+          "exception_category": "ValueError"
+        },
+        {
+          "trial": 4,
+          "kind": "runtime",
+          "phase": "execution",
+          "exception_category": "ValueError"
+        },
+        {
+          "trial": 5,
+          "kind": "runtime",
+          "phase": "execution",
+          "exception_category": "ValueError"
+        },
+        {
+          "trial": 6,
+          "kind": "runtime",
+          "phase": "execution",
+          "exception_category": "ValueError"
+        },
+        {
+          "trial": 7,
+          "kind": "output_shape"
+        },
+        {
+          "trial": 8,
+          "kind": "runtime",
+          "phase": "execution",
+          "exception_category": "ValueError"
+        },
+        {
+          "trial": 9,
+          "kind": "output_shape"
+        },
+        {
+          "trial": 10,
+          "kind": "output_shape"
+        },
+        {
+          "trial": 11,
+          "kind": "runtime",
+          "phase": "execution",
+          "exception_category": "ValueError"
+        },
+        {
+          "trial": 12,
+          "kind": "runtime",
+          "phase": "execution",
+          "exception_category": "ValueError"
+        },
+        {
+          "trial": 13,
+          "kind": "runtime",
+          "phase": "execution",
+          "exception_category": "ValueError"
+        },
+        {
+          "trial": 14,
+          "kind": "runtime",
+          "phase": "execution",
+          "exception_category": "ValueError"
+        },
+        {
+          "trial": 15,
+          "kind": "output_shape"
+        }
+      ],
+      "numeric_execution": true,
+      "trial_results": [
+        {
+          "trial": 0,
+          "suite": "fixed_boundary",
+          "passed": false
+        },
+        {
+          "trial": 1,
+          "suite": "fixed_boundary",
+          "passed": false
+        },
+        {
+          "trial": 2,
+          "suite": "fixed_boundary",
+          "passed": false
+        },
+        {
+          "trial": 3,
+          "suite": "fixed_boundary",
+          "passed": false
+        },
+        {
+          "trial": 4,
+          "suite": "fixed_boundary",
+          "passed": false
+        },
+        {
+          "trial": 5,
+          "suite": "fixed_boundary",
+          "passed": false
+        },
+        {
+          "trial": 6,
+          "suite": "fixed_boundary",
+          "passed": false
+        },
+        {
+          "trial": 7,
+          "suite": "fixed_boundary",
+          "passed": false
+        },
+        {
+          "trial": 8,
+          "suite": "seeded",
+          "passed": false
+        },
+        {
+          "trial": 9,
+          "suite": "seeded",
+          "passed": false
+        },
+        {
+          "trial": 10,
+          "suite": "seeded",
+          "passed": false
+        },
+        {
+          "trial": 11,
+          "suite": "seeded",
+          "passed": false
+        },
+        {
+          "trial": 12,
+          "suite": "seeded",
+          "passed": false
+        },
+        {
+          "trial": 13,
+          "suite": "seeded",
+          "passed": false
+        },
+        {
+          "trial": 14,
+          "suite": "seeded",
+          "passed": false
+        },
+        {
+          "trial": 15,
+          "suite": "seeded",
+          "passed": false
+        }
+      ],
+      "execution_seconds": 0.7362146090017632
+    },
+    {
+      "request_id": "chatcmpl-a503f5f1b9b84a17",
+      "finish_reason": "stop",
+      "usage": {
+        "input_tokens": 108,
+        "output_tokens": 1119
+      },
+      "seconds": 9.86415343300905,
+      "id": "behavior-A2",
+      "split": "train",
+      "seed": 202611071,
+      "fixture_cases_planned": 16,
+      "status": "evaluated",
+      "passed": true,
+      "entrypoint_contract_passed": null,
+      "method_requirement_checked": null,
+      "public_answer_sha256": "3d689505ac7fc613e7ee790e1aea80bfc26cb21853538349e70bfdf5dcf3ac05",
+      "format_passed": true,
+      "executable_sha256": "d51d8de8cc14878899409d30b5a45df5b7fc4c248112d63a8abff47b007b6f44",
+      "fixture_sha256": "f6fe983b5a57d5594adf105eb442732e86dcf2c4f6ec0283612fdf7492bd5f6d",
+      "tests_passed": 16,
+      "tests_total": 16,
+      "failures": [],
+      "numeric_execution": true,
+      "trial_results": [
+        {
+          "trial": 0,
+          "suite": "fixed_boundary",
+          "passed": true
+        },
+        {
+          "trial": 1,
+          "suite": "fixed_boundary",
+          "passed": true
+        },
+        {
+          "trial": 2,
+          "suite": "fixed_boundary",
+          "passed": true
+        },
+        {
+          "trial": 3,
+          "suite": "fixed_boundary",
+          "passed": true
+        },
+        {
+          "trial": 4,
+          "suite": "fixed_boundary",
+          "passed": true
+        },
+        {
+          "trial": 5,
+          "suite": "fixed_boundary",
+          "passed": true
+        },
+        {
+          "trial": 6,
+          "suite": "fixed_boundary",
+          "passed": true
+        },
+        {
+          "trial": 7,
+          "suite": "fixed_boundary",
+          "passed": true
+        },
+        {
+          "trial": 8,
+          "suite": "seeded",
+          "passed": true
+        },
+        {
+          "trial": 9,
+          "suite": "seeded",
+          "passed": true
+        },
+        {
+          "trial": 10,
+          "suite": "seeded",
+          "passed": true
+        },
+        {
+          "trial": 11,
+          "suite": "seeded",
+          "passed": true
+        },
+        {
+          "trial": 12,
+          "suite": "seeded",
+          "passed": true
+        },
+        {
+          "trial": 13,
+          "suite": "seeded",
+          "passed": true
+        },
+        {
+          "trial": 14,
+          "suite": "seeded",
+          "passed": true
+        },
+        {
+          "trial": 15,
+          "suite": "seeded",
+          "passed": true
+        }
+      ],
+      "execution_seconds": 0.7367034109774977
+    },
+    {
+      "request_id": "chatcmpl-6e28c654c0eb487e",
+      "finish_reason": "stop",
+      "usage": {
+        "input_tokens": 106,
+        "output_tokens": 1769
+      },
+      "seconds": 15.351406575995497,
+      "id": "behavior-B1",
+      "split": "train",
+      "seed": 202611071,
+      "fixture_cases_planned": 16,
+      "status": "evaluated",
+      "passed": true,
+      "entrypoint_contract_passed": null,
+      "method_requirement_checked": false,
+      "public_answer_sha256": "051f10bf5e7b3d4c22f2f6f19089b78dea478d2b059658d394f9e34eea18f105",
+      "format_passed": true,
+      "executable_sha256": "8121107cfc56f6f9aa6c11a7d400bf639fb55233a1b155f472b1c1dc2893714d",
+      "fixture_sha256": "3d59ae84e03cbbe609ea10f40302090e1bb145e84c2ec205f8e2989db3f8a029",
+      "tests_passed": 16,
+      "tests_total": 16,
+      "failures": [],
+      "numeric_execution": true,
+      "trial_results": [
+        {
+          "trial": 0,
+          "suite": "fixed_boundary",
+          "passed": true
+        },
+        {
+          "trial": 1,
+          "suite": "fixed_boundary",
+          "passed": true
+        },
+        {
+          "trial": 2,
+          "suite": "fixed_boundary",
+          "passed": true
+        },
+        {
+          "trial": 3,
+          "suite": "fixed_boundary",
+          "passed": true
+        },
+        {
+          "trial": 4,
+          "suite": "fixed_boundary",
+          "passed": true
+        },
+        {
+          "trial": 5,
+          "suite": "fixed_boundary",
+          "passed": true
+        },
+        {
+          "trial": 6,
+          "suite": "fixed_boundary",
+          "passed": true
+        },
+        {
+          "trial": 7,
+          "suite": "fixed_boundary",
+          "passed": true
+        },
+        {
+          "trial": 8,
+          "suite": "seeded",
+          "passed": true
+        },
+        {
+          "trial": 9,
+          "suite": "seeded",
+          "passed": true
+        },
+        {
+          "trial": 10,
+          "suite": "seeded",
+          "passed": true
+        },
+        {
+          "trial": 11,
+          "suite": "seeded",
+          "passed": true
+        },
+        {
+          "trial": 12,
+          "suite": "seeded",
+          "passed": true
+        },
+        {
+          "trial": 13,
+          "suite": "seeded",
+          "passed": true
+        },
+        {
+          "trial": 14,
+          "suite": "seeded",
+          "passed": true
+        },
+        {
+          "trial": 15,
+          "suite": "seeded",
+          "passed": true
+        }
+      ],
+      "execution_seconds": 1.3722240770002827
+    },
+    {
+      "request_id": "chatcmpl-958eb635e7254874",
+      "finish_reason": "stop",
+      "usage": {
+        "input_tokens": 117,
+        "output_tokens": 1996
+      },
+      "seconds": 16.19538350997027,
+      "id": "behavior-B2",
+      "split": "train",
+      "seed": 202611071,
+      "fixture_cases_planned": 16,
+      "status": "evaluated",
+      "passed": true,
+      "entrypoint_contract_passed": null,
+      "method_requirement_checked": false,
+      "public_answer_sha256": "e1a1ab510b6bee251ba31c0dda335dc3a251f145d0869408b5e8a7ab13cc8a49",
+      "format_passed": true,
+      "executable_sha256": "4e3d5d8fee0eae1d7718df4498ea269f70315cf2ec0976657adcb758608b6e0b",
+      "fixture_sha256": "8c4c276e9012bdc9896867722349aa15b5787c4b2e8167e7372ad5611718fc2e",
+      "tests_passed": 16,
+      "tests_total": 16,
+      "failures": [],
+      "numeric_execution": true,
+      "trial_results": [
+        {
+          "trial": 0,
+          "suite": "fixed_boundary",
+          "passed": true
+        },
+        {
+          "trial": 1,
+          "suite": "fixed_boundary",
+          "passed": true
+        },
+        {
+          "trial": 2,
+          "suite": "fixed_boundary",
+          "passed": true
+        },
+        {
+          "trial": 3,
+          "suite": "fixed_boundary",
+          "passed": true
+        },
+        {
+          "trial": 4,
+          "suite": "fixed_boundary",
+          "passed": true
+        },
+        {
+          "trial": 5,
+          "suite": "fixed_boundary",
+          "passed": true
+        },
+        {
+          "trial": 6,
+          "suite": "fixed_boundary",
+          "passed": true
+        },
+        {
+          "trial": 7,
+          "suite": "fixed_boundary",
+          "passed": true
+        },
+        {
+          "trial": 8,
+          "suite": "seeded",
+          "passed": true
+        },
+        {
+          "trial": 9,
+          "suite": "seeded",
+          "passed": true
+        },
+        {
+          "trial": 10,
+          "suite": "seeded",
+          "passed": true
+        },
+        {
+          "trial": 11,
+          "suite": "seeded",
+          "passed": true
+        },
+        {
+          "trial": 12,
+          "suite": "seeded",
+          "passed": true
+        },
+        {
+          "trial": 13,
+          "suite": "seeded",
+          "passed": true
+        },
+        {
+          "trial": 14,
+          "suite": "seeded",
+          "passed": true
+        },
+        {
+          "trial": 15,
+          "suite": "seeded",
+          "passed": true
+        }
+      ],
+      "execution_seconds": 1.325182204018347
+    },
+    {
+      "request_id": "chatcmpl-5ae09fd2048b4c09",
+      "finish_reason": "stop",
+      "usage": {
+        "input_tokens": 109,
+        "output_tokens": 1256
+      },
+      "seconds": 10.81804951094091,
+      "id": "behavior-C1",
+      "split": "train",
+      "seed": 202611071,
+      "fixture_cases_planned": 16,
+      "status": "evaluated",
+      "passed": true,
+      "entrypoint_contract_passed": true,
+      "method_requirement_checked": null,
+      "public_answer_sha256": "510bcb910f1adf192b5bfb18f2ebeabf197ee5091e0d0f330b5652e5c02bad91",
+      "format_passed": true,
+      "executable_sha256": "dcf68509ea924f8f92e3ef5422ec4eaf9c642fa2eec25a5278f4da9f5ffa2aef",
+      "fixture_sha256": "f6aa801b31d06758f5e76ad4a3977b1d5f4056e21d8e7f5b94d35ac11f41ab4f",
+      "tests_passed": 16,
+      "tests_total": 16,
+      "failures": [],
+      "numeric_execution": true,
+      "trial_results": [
+        {
+          "trial": 0,
+          "suite": "fixed_boundary",
+          "passed": true
+        },
+        {
+          "trial": 1,
+          "suite": "fixed_boundary",
+          "passed": true
+        },
+        {
+          "trial": 2,
+          "suite": "fixed_boundary",
+          "passed": true
+        },
+        {
+          "trial": 3,
+          "suite": "fixed_boundary",
+          "passed": true
+        },
+        {
+          "trial": 4,
+          "suite": "fixed_boundary",
+          "passed": true
+        },
+        {
+          "trial": 5,
+          "suite": "fixed_boundary",
+          "passed": true
+        },
+        {
+          "trial": 6,
+          "suite": "fixed_boundary",
+          "passed": true
+        },
+        {
+          "trial": 7,
+          "suite": "fixed_boundary",
+          "passed": true
+        },
+        {
+          "trial": 8,
+          "suite": "seeded",
+          "passed": true
+        },
+        {
+          "trial": 9,
+          "suite": "seeded",
+          "passed": true
+        },
+        {
+          "trial": 10,
+          "suite": "seeded",
+          "passed": true
+        },
+        {
+          "trial": 11,
+          "suite": "seeded",
+          "passed": true
+        },
+        {
+          "trial": 12,
+          "suite": "seeded",
+          "passed": true
+        },
+        {
+          "trial": 13,
+          "suite": "seeded",
+          "passed": true
+        },
+        {
+          "trial": 14,
+          "suite": "seeded",
+          "passed": true
+        },
+        {
+          "trial": 15,
+          "suite": "seeded",
+          "passed": true
+        }
+      ],
+      "execution_seconds": 0.734339865972288
+    },
+    {
+      "request_id": "chatcmpl-4ceeac5dfba040c9",
+      "finish_reason": "stop",
+      "usage": {
+        "input_tokens": 120,
+        "output_tokens": 1122
+      },
+      "seconds": 9.092020276933908,
+      "id": "behavior-C2",
+      "split": "train",
+      "seed": 202611071,
+      "fixture_cases_planned": 16,
+      "status": "evaluated",
+      "passed": true,
+      "entrypoint_contract_passed": true,
+      "method_requirement_checked": null,
+      "public_answer_sha256": "8052f4eb3b60f4cc911d11ebe3314a7025b193121a7755148fa78cf8599265ae",
+      "format_passed": true,
+      "executable_sha256": "dbe7fa0670510cf7a27b9af7f7df39aa0a0b521f7f2fcb7b2dabec3cc9b34b08",
+      "fixture_sha256": "50ca80ccaf61d4223b85388d8628cce38b8fe2cdf6a26ec553ec062c8559a4ce",
+      "tests_passed": 16,
+      "tests_total": 16,
+      "failures": [],
+      "numeric_execution": true,
+      "trial_results": [
+        {
+          "trial": 0,
+          "suite": "fixed_boundary",
+          "passed": true
+        },
+        {
+          "trial": 1,
+          "suite": "fixed_boundary",
+          "passed": true
+        },
+        {
+          "trial": 2,
+          "suite": "fixed_boundary",
+          "passed": true
+        },
+        {
+          "trial": 3,
+          "suite": "fixed_boundary",
+          "passed": true
+        },
+        {
+          "trial": 4,
+          "suite": "fixed_boundary",
+          "passed": true
+        },
+        {
+          "trial": 5,
+          "suite": "fixed_boundary",
+          "passed": true
+        },
+        {
+          "trial": 6,
+          "suite": "fixed_boundary",
+          "passed": true
+        },
+        {
+          "trial": 7,
+          "suite": "fixed_boundary",
+          "passed": true
+        },
+        {
+          "trial": 8,
+          "suite": "seeded",
+          "passed": true
+        },
+        {
+          "trial": 9,
+          "suite": "seeded",
+          "passed": true
+        },
+        {
+          "trial": 10,
+          "suite": "seeded",
+          "passed": true
+        },
+        {
+          "trial": 11,
+          "suite": "seeded",
+          "passed": true
+        },
+        {
+          "trial": 12,
+          "suite": "seeded",
+          "passed": true
+        },
+        {
+          "trial": 13,
+          "suite": "seeded",
+          "passed": true
+        },
+        {
+          "trial": 14,
+          "suite": "seeded",
+          "passed": true
+        },
+        {
+          "trial": 15,
+          "suite": "seeded",
+          "passed": true
+        }
+      ],
+      "execution_seconds": 0.759144872892648
+    },
+    {
+      "request_id": "chatcmpl-af0bab6e98d54311",
+      "finish_reason": "stop",
+      "usage": {
+        "input_tokens": 109,
+        "output_tokens": 699
+      },
+      "seconds": 5.91647987102624,
+      "id": "behavior-D1",
+      "split": "train",
+      "seed": 202611071,
+      "fixture_cases_planned": 16,
+      "status": "evaluated",
+      "passed": true,
+      "entrypoint_contract_passed": null,
+      "method_requirement_checked": null,
+      "public_answer_sha256": "cb0ba5ec321627a9ce8da28bd205efd691aefcba56dfecb6506ed3cfdfc60eda",
+      "format_passed": true,
+      "executable_sha256": "8543291b39c33288960a64e089d9689247f8089d0f7f2c9ce529213cbec60cc2",
+      "fixture_sha256": "0350a02a9d05aac5fc09b39545d9eea52df524d13a170d0bdd76370316d3b94f",
+      "tests_passed": 16,
+      "tests_total": 16,
+      "failures": [],
+      "numeric_execution": true,
+      "trial_results": [
+        {
+          "trial": 0,
+          "suite": "fixed_boundary",
+          "passed": true
+        },
+        {
+          "trial": 1,
+          "suite": "fixed_boundary",
+          "passed": true
+        },
+        {
+          "trial": 2,
+          "suite": "fixed_boundary",
+          "passed": true
+        },
+        {
+          "trial": 3,
+          "suite": "fixed_boundary",
+          "passed": true
+        },
+        {
+          "trial": 4,
+          "suite": "fixed_boundary",
+          "passed": true
+        },
+        {
+          "trial": 5,
+          "suite": "fixed_boundary",
+          "passed": true
+        },
+        {
+          "trial": 6,
+          "suite": "fixed_boundary",
+          "passed": true
+        },
+        {
+          "trial": 7,
+          "suite": "fixed_boundary",
+          "passed": true
+        },
+        {
+          "trial": 8,
+          "suite": "seeded",
+          "passed": true
+        },
+        {
+          "trial": 9,
+          "suite": "seeded",
+          "passed": true
+        },
+        {
+          "trial": 10,
+          "suite": "seeded",
+          "passed": true
+        },
+        {
+          "trial": 11,
+          "suite": "seeded",
+          "passed": true
+        },
+        {
+          "trial": 12,
+          "suite": "seeded",
+          "passed": true
+        },
+        {
+          "trial": 13,
+          "suite": "seeded",
+          "passed": true
+        },
+        {
+          "trial": 14,
+          "suite": "seeded",
+          "passed": true
+        },
+        {
+          "trial": 15,
+          "suite": "seeded",
+          "passed": true
+        }
+      ],
+      "execution_seconds": 0.7101484599988908
+    },
+    {
+      "request_id": "chatcmpl-134e2a6b105e4bc4",
+      "finish_reason": "stop",
+      "usage": {
+        "input_tokens": 117,
+        "output_tokens": 631
+      },
+      "seconds": 5.4753332160180435,
+      "id": "behavior-D2",
+      "split": "train",
+      "seed": 202611071,
+      "fixture_cases_planned": 16,
+      "status": "evaluated",
+      "passed": true,
+      "entrypoint_contract_passed": null,
+      "method_requirement_checked": null,
+      "public_answer_sha256": "5781c29e6b18cf7b65d207ecf3a5b665881774341f4e5c3f984030373fc46ac5",
+      "format_passed": true,
+      "executable_sha256": "8e872f87174960426dbc6e1517845bb23d9f9ece1b31f4139f5665a009f03d42",
+      "fixture_sha256": "172cfe8de5bd45d24073a3e4d7fa792cd9b6e5aaaed4d4c015cdebd9902d9709",
+      "tests_passed": 16,
+      "tests_total": 16,
+      "failures": [],
+      "numeric_execution": true,
+      "trial_results": [
+        {
+          "trial": 0,
+          "suite": "fixed_boundary",
+          "passed": true
+        },
+        {
+          "trial": 1,
+          "suite": "fixed_boundary",
+          "passed": true
+        },
+        {
+          "trial": 2,
+          "suite": "fixed_boundary",
+          "passed": true
+        },
+        {
+          "trial": 3,
+          "suite": "fixed_boundary",
+          "passed": true
+        },
+        {
+          "trial": 4,
+          "suite": "fixed_boundary",
+          "passed": true
+        },
+        {
+          "trial": 5,
+          "suite": "fixed_boundary",
+          "passed": true
+        },
+        {
+          "trial": 6,
+          "suite": "fixed_boundary",
+          "passed": true
+        },
+        {
+          "trial": 7,
+          "suite": "fixed_boundary",
+          "passed": true
+        },
+        {
+          "trial": 8,
+          "suite": "seeded",
+          "passed": true
+        },
+        {
+          "trial": 9,
+          "suite": "seeded",
+          "passed": true
+        },
+        {
+          "trial": 10,
+          "suite": "seeded",
+          "passed": true
+        },
+        {
+          "trial": 11,
+          "suite": "seeded",
+          "passed": true
+        },
+        {
+          "trial": 12,
+          "suite": "seeded",
+          "passed": true
+        },
+        {
+          "trial": 13,
+          "suite": "seeded",
+          "passed": true
+        },
+        {
+          "trial": 14,
+          "suite": "seeded",
+          "passed": true
+        },
+        {
+          "trial": 15,
+          "suite": "seeded",
+          "passed": true
+        }
+      ],
+      "execution_seconds": 0.7564080340089276
+    },
+    {
+      "request_id": "chatcmpl-f276c8434cc64520",
+      "finish_reason": "stop",
+      "usage": {
+        "input_tokens": 121,
+        "output_tokens": 989
+      },
+      "seconds": 8.047748113051057,
+      "id": "behavior-E1",
+      "split": "train",
+      "seed": 202611071,
+      "fixture_cases_planned": 16,
+      "status": "evaluated",
+      "passed": true,
+      "entrypoint_contract_passed": null,
+      "method_requirement_checked": null,
+      "public_answer_sha256": "e7592a970472c7e06b12953fba528748b9171ea340e09a5d019e0c19286d8202",
+      "format_passed": true,
+      "executable_sha256": "23a818f432ef826135a65baab12709c9a7c545eda0f163f010e70291c98ee53f",
+      "fixture_sha256": "ee9a3097f2c3190e1e1d3a17d06a5ad76e38348ed784dbf9786345a87216cee4",
+      "tests_passed": 16,
+      "tests_total": 16,
+      "failures": [],
+      "numeric_execution": true,
+      "trial_results": [
+        {
+          "trial": 0,
+          "suite": "fixed_boundary",
+          "passed": true
+        },
+        {
+          "trial": 1,
+          "suite": "fixed_boundary",
+          "passed": true
+        },
+        {
+          "trial": 2,
+          "suite": "fixed_boundary",
+          "passed": true
+        },
+        {
+          "trial": 3,
+          "suite": "fixed_boundary",
+          "passed": true
+        },
+        {
+          "trial": 4,
+          "suite": "fixed_boundary",
+          "passed": true
+        },
+        {
+          "trial": 5,
+          "suite": "fixed_boundary",
+          "passed": true
+        },
+        {
+          "trial": 6,
+          "suite": "fixed_boundary",
+          "passed": true
+        },
+        {
+          "trial": 7,
+          "suite": "fixed_boundary",
+          "passed": true
+        },
+        {
+          "trial": 8,
+          "suite": "seeded",
+          "passed": true
+        },
+        {
+          "trial": 9,
+          "suite": "seeded",
+          "passed": true
+        },
+        {
+          "trial": 10,
+          "suite": "seeded",
+          "passed": true
+        },
+        {
+          "trial": 11,
+          "suite": "seeded",
+          "passed": true
+        },
+        {
+          "trial": 12,
+          "suite": "seeded",
+          "passed": true
+        },
+        {
+          "trial": 13,
+          "suite": "seeded",
+          "passed": true
+        },
+        {
+          "trial": 14,
+          "suite": "seeded",
+          "passed": true
+        },
+        {
+          "trial": 15,
+          "suite": "seeded",
+          "passed": true
+        }
+      ],
+      "execution_seconds": 0.7234528040280566
+    },
+    {
+      "request_id": "chatcmpl-745c8707dfe1417e",
+      "finish_reason": "stop",
+      "usage": {
+        "input_tokens": 107,
+        "output_tokens": 1311
+      },
+      "seconds": 10.08235736307688,
+      "id": "behavior-E2",
+      "split": "train",
+      "seed": 202611071,
+      "fixture_cases_planned": 16,
+      "status": "evaluated",
+      "passed": true,
+      "entrypoint_contract_passed": null,
+      "method_requirement_checked": null,
+      "public_answer_sha256": "390ae7f76209cf37817f4bae43b74e39c3159d5e451a8fe638def652a7f67a09",
+      "format_passed": true,
+      "executable_sha256": "7ee938cff6351b8e8a08d0a8ef09370a93b35d71b7c2349adc680cb378e89c16",
+      "fixture_sha256": "22f68ce545edc107a58ce64975a79bd897a51f8b4d66f10e1004009c72117af4",
+      "tests_passed": 16,
+      "tests_total": 16,
+      "failures": [],
+      "numeric_execution": true,
+      "trial_results": [
+        {
+          "trial": 0,
+          "suite": "fixed_boundary",
+          "passed": true
+        },
+        {
+          "trial": 1,
+          "suite": "fixed_boundary",
+          "passed": true
+        },
+        {
+          "trial": 2,
+          "suite": "fixed_boundary",
+          "passed": true
+        },
+        {
+          "trial": 3,
+          "suite": "fixed_boundary",
+          "passed": true
+        },
+        {
+          "trial": 4,
+          "suite": "fixed_boundary",
+          "passed": true
+        },
+        {
+          "trial": 5,
+          "suite": "fixed_boundary",
+          "passed": true
+        },
+        {
+          "trial": 6,
+          "suite": "fixed_boundary",
+          "passed": true
+        },
+        {
+          "trial": 7,
+          "suite": "fixed_boundary",
+          "passed": true
+        },
+        {
+          "trial": 8,
+          "suite": "seeded",
+          "passed": true
+        },
+        {
+          "trial": 9,
+          "suite": "seeded",
+          "passed": true
+        },
+        {
+          "trial": 10,
+          "suite": "seeded",
+          "passed": true
+        },
+        {
+          "trial": 11,
+          "suite": "seeded",
+          "passed": true
+        },
+        {
+          "trial": 12,
+          "suite": "seeded",
+          "passed": true
+        },
+        {
+          "trial": 13,
+          "suite": "seeded",
+          "passed": true
+        },
+        {
+          "trial": 14,
+          "suite": "seeded",
+          "passed": true
+        },
+        {
+          "trial": 15,
+          "suite": "seeded",
+          "passed": true
+        }
+      ],
+      "execution_seconds": 0.7462959990371019
+    },
+    {
+      "request_id": "chatcmpl-fd989bee85504062",
+      "finish_reason": "stop",
+      "usage": {
+        "input_tokens": 88,
+        "output_tokens": 1661
+      },
+      "seconds": 13.936542310984805,
+      "id": "behavior-F1",
+      "split": "train",
+      "seed": 202611071,
+      "fixture_cases_planned": 16,
+      "status": "evaluated",
+      "passed": true,
+      "entrypoint_contract_passed": null,
+      "method_requirement_checked": null,
+      "public_answer_sha256": "059013382bd7288e45a4e91816dd03d064319b57d06a00a3b92b2e890087df95",
+      "format_passed": true,
+      "executable_sha256": "be10269a135fafe55bb7ef6e340a7de1bf2c168c067c1661a0878b7280de963f",
+      "fixture_sha256": "75873177553dac51b61e438d23bf187a5e9ea71c7cc9e3df30bc2b30378bb646",
+      "tests_passed": 16,
+      "tests_total": 16,
+      "failures": [],
+      "numeric_execution": true,
+      "trial_results": [
+        {
+          "trial": 0,
+          "suite": "fixed_boundary",
+          "passed": true
+        },
+        {
+          "trial": 1,
+          "suite": "fixed_boundary",
+          "passed": true
+        },
+        {
+          "trial": 2,
+          "suite": "fixed_boundary",
+          "passed": true
+        },
+        {
+          "trial": 3,
+          "suite": "fixed_boundary",
+          "passed": true
+        },
+        {
+          "trial": 4,
+          "suite": "fixed_boundary",
+          "passed": true
+        },
+        {
+          "trial": 5,
+          "suite": "fixed_boundary",
+          "passed": true
+        },
+        {
+          "trial": 6,
+          "suite": "fixed_boundary",
+          "passed": true
+        },
+        {
+          "trial": 7,
+          "suite": "fixed_boundary",
+          "passed": true
+        },
+        {
+          "trial": 8,
+          "suite": "seeded",
+          "passed": true
+        },
+        {
+          "trial": 9,
+          "suite": "seeded",
+          "passed": true
+        },
+        {
+          "trial": 10,
+          "suite": "seeded",
+          "passed": true
+        },
+        {
+          "trial": 11,
+          "suite": "seeded",
+          "passed": true
+        },
+        {
+          "trial": 12,
+          "suite": "seeded",
+          "passed": true
+        },
+        {
+          "trial": 13,
+          "suite": "seeded",
+          "passed": true
+        },
+        {
+          "trial": 14,
+          "suite": "seeded",
+          "passed": true
+        },
+        {
+          "trial": 15,
+          "suite": "seeded",
+          "passed": true
+        }
+      ],
+      "execution_seconds": 0.723938541021198
+    },
+    {
+      "request_id": "chatcmpl-b37b294c0cec48b1",
+      "finish_reason": "stop",
+      "usage": {
+        "input_tokens": 99,
+        "output_tokens": 1209
+      },
+      "seconds": 10.256028582924046,
+      "id": "behavior-F2",
+      "split": "train",
+      "seed": 202611071,
+      "fixture_cases_planned": 16,
+      "status": "evaluated",
+      "passed": false,
+      "entrypoint_contract_passed": null,
+      "method_requirement_checked": null,
+      "public_answer_sha256": "1f132690bd7dd79934c90c765d5100e0fc3a3ad5fd9ed537fd82529a6ad42ad2",
+      "format_passed": true,
+      "executable_sha256": "a43253ea022e818061bd6647f23f212e606547943941240d6c5f9cecd6dcbaf1",
+      "fixture_sha256": "0f8a646d4cc97ece3da5a038a19db1d66fd5bceccbcceb552855e41c947f8224",
+      "tests_passed": 4,
+      "tests_total": 16,
+      "failures": [
+        {
+          "trial": 0,
+          "kind": "numeric"
+        },
+        {
+          "trial": 2,
+          "kind": "numeric"
+        },
+        {
+          "trial": 3,
+          "kind": "numeric"
+        },
+        {
+          "trial": 4,
+          "kind": "numeric"
+        },
+        {
+          "trial": 6,
+          "kind": "numeric"
+        },
+        {
+          "trial": 7,
+          "kind": "numeric"
+        },
+        {
+          "trial": 8,
+          "kind": "numeric"
+        },
+        {
+          "trial": 10,
+          "kind": "numeric"
+        },
+        {
+          "trial": 11,
+          "kind": "numeric"
+        },
+        {
+          "trial": 12,
+          "kind": "numeric"
+        },
+        {
+          "trial": 14,
+          "kind": "numeric"
+        },
+        {
+          "trial": 15,
+          "kind": "numeric"
+        }
+      ],
+      "numeric_execution": true,
+      "trial_results": [
+        {
+          "trial": 0,
+          "suite": "fixed_boundary",
+          "passed": false
+        },
+        {
+          "trial": 1,
+          "suite": "fixed_boundary",
+          "passed": true
+        },
+        {
+          "trial": 2,
+          "suite": "fixed_boundary",
+          "passed": false
+        },
+        {
+          "trial": 3,
+          "suite": "fixed_boundary",
+          "passed": false
+        },
+        {
+          "trial": 4,
+          "suite": "fixed_boundary",
+          "passed": false
+        },
+        {
+          "trial": 5,
+          "suite": "fixed_boundary",
+          "passed": true
+        },
+        {
+          "trial": 6,
+          "suite": "fixed_boundary",
+          "passed": false
+        },
+        {
+          "trial": 7,
+          "suite": "fixed_boundary",
+          "passed": false
+        },
+        {
+          "trial": 8,
+          "suite": "seeded",
+          "passed": false
+        },
+        {
+          "trial": 9,
+          "suite": "seeded",
+          "passed": true
+        },
+        {
+          "trial": 10,
+          "suite": "seeded",
+          "passed": false
+        },
+        {
+          "trial": 11,
+          "suite": "seeded",
+          "passed": false
+        },
+        {
+          "trial": 12,
+          "suite": "seeded",
+          "passed": false
+        },
+        {
+          "trial": 13,
+          "suite": "seeded",
+          "passed": true
+        },
+        {
+          "trial": 14,
+          "suite": "seeded",
+          "passed": false
+        },
+        {
+          "trial": 15,
+          "suite": "seeded",
+          "passed": false
+        }
+      ],
+      "execution_seconds": 0.7240141289075837
+    }
+  ],
+  "docker_calls": 12,
+  "model_calls": 0,
+  "trials_per_numeric_execution": 16,
+  "fixed_boundary": 8,
+  "seeded": 8,
+  "train_seed": 202611071,
+  "transfer_seed": 202611072,
+  "sandbox": {
+    "socket": "/var/run/docker.sock",
+    "daemon_id": "3e518d2b-6972-43f8-b325-f7f33697a2d2",
+    "image": "sha256:c4ab50223f03fca17bf871e4d05f77001e76525a1c574b6c6ee7024db06cfdc2",
+    "seconds": 15,
+    "memory_mib": 512,
+    "cpus": 1,
+    "network": "none",
+    "user": "1003:1003",
+    "host_mounts": [],
+    "gpus": false
+  },
+  "scope": "Authored behavior calibration, not WSP. Initial generation train12 only.",
+  "token_count_measured": false,
+  "limits": [
+    "passed is numeric/interface fixture status, not proof of every public contract.",
+    "C entrypoint_contract_passed covers only AST name/count/top-level form.",
+    "B SymPy differentiation/lambdify use is not established by numeric fixtures; manual public-code review remains required."
+  ],
+  "passed": 10,
+  "failed": 2,
+  "unknown": 0
+}

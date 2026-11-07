@@ -218,6 +218,17 @@ def compare(result: dict, expected: list) -> dict:
             else:
                 try:
                     value = np.asarray(row["data"], dtype=np.float64)
+                    # JSON [] cannot encode inner dimensions of an empty
+                    # ndarray. The worker already declares shape explicitly.
+                    # Restore only matching, zero-element output; never fill
+                    # missing data or reinterpret a mismatched shape.
+                    if (
+                        reference.size == 0
+                        and row.get("shape") == list(reference.shape)
+                        and type(row.get("data")) is list
+                        and row["data"] == []
+                    ):
+                        value = value.reshape(reference.shape)
                     if value.shape != reference.shape:
                         kind = "output_shape"
                     elif not np.isfinite(value).all():

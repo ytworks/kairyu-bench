@@ -581,3 +581,12 @@ parent's entire native block fixed. Native columns are absent from optimization
 and output, while both objective row sets and the same four-collection identity
 checks remain. Defaults are unchanged; no large-cost masking or forced edits
 are used. Saved-output regression checks cover native/QKV bytes and BF16 sets.
+
+## Behavior18: 固定行動契約の追加校正
+
+behavior_cases.py と behavior_offline.py は12 train / 6 transferの小さな独立校正です。
+初回生成はtrain12のみ。全18の著者correct/foilを先に固定16fixtureで隔離CPU検証し、
+transferは候補spec/幅凍結後にAV/候補で各1回だけ測り、gradientへ渡しません。
+既存Docker.run/WORKERを使用し、Cの要求関数名はAST適合後だけsolveへaliasします。
+BのSymPy実使用などの方法要件は数値合格から推定しません。
+[操作・全検証・既知の限界](../../../docs/experiments/2026-11-07-behavior18-implementation.md)を参照。

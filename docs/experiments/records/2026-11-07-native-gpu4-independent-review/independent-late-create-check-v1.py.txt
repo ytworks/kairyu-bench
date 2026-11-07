@@ -1,0 +1,69 @@
+"""Pure CPU before/after counterexample; all Docker calls are mock methods."""
+from pathlib import Path
+import hashlib
+import importlib.machinery
+import importlib.util
+import json
+import subprocess
+import tempfile
+from types import SimpleNamespace
+
+D = Path(__file__).resolve().parent
+outcomes = []
+for filename, expected in [
+    ("owner-before.py.txt", "c70af9c1e59bc41b31644812758dd07f572e6898e1a07aa1eabbe89c7f39550b"),
+    ("owner-after.py.txt", "9a8d9255312a97ae2762ec97c34c9701ac5d64dcb0dc273e01f8d7f6700b7183"),
+]:
+    path = D / filename
+    assert hashlib.sha256(path.read_bytes()).hexdigest() == expected
+    loader = importlib.machinery.SourceFileLoader(filename, str(path))
+    spec = importlib.util.spec_from_loader(loader.name, loader)
+    owner = importlib.util.module_from_spec(spec)
+    loader.exec_module(owner)
+    with tempfile.TemporaryDirectory(dir=D) as temp:
+        work = Path(temp) / "work"
+        work.mkdir()
+        plan = {"container_prefix": "late-collector-fixture", "output_root": temp,
+                "protected": {}, "target": {"id": owner.CID, "image": owner.IMAGE,
+                                           "running": True, "health": "healthy"}}
+        state = {"created": False, "active": False, "client_done": False}
+        calls = []
+        name = "late-collector-fixture-correct-logprob"
+        def inspect(value):
+            calls.append(["inspect", value, state.copy()])
+            if state["created"] and value in (name, "late-owned-cid"):
+                return {"Id": "late-owned-cid", "Image": owner.IMAGE, "Name": "/" + name,
+                        "State": {"Running": state["active"]}, "Config": {"Labels": {
+                            "kairyu.native.owner-plan-sha256": "a" * 64,
+                            "kairyu.native.owner-root": temp}}}
+            raise subprocess.CalledProcessError(1, ["mock-inspect"])
+        def docker(*args):
+            calls.append([*args, state.copy()])
+            if args[0] == "kill":
+                state["active"] = False
+            if args[0] == "ps":
+                return "late-owned-cid\n" if state["created"] else ""
+            return ""
+        class Client:
+            def poll(self):
+                return 1 if state["client_done"] else None
+            def wait(self, timeout):
+                state.update(created=True, active=True, client_done=True)
+                (work / "correct-logprob.cid").write_text("late-owned-cid")
+                calls.append(["client_exit_and_late_create"])
+                return 1
+        guard = SimpleNamespace(inspect=inspect, docker=docker, snapshot=lambda name: plan["target"],
+                                target_metrics=lambda cid: {"queues": {"running": [0], "waiting": [0]}})
+        status = {"restored": False, "protected_exact": False}
+        owner.finish(plan, guard, Client(), True, status, "a" * 64)
+        starts = [r for r in calls if r[0] == "start"]
+        outcomes.append({"source": filename, "source_sha256": expected, "trace": calls,
+                         "start_with_active_collector": any(r[-1]["active"] for r in starts),
+                         "restored": status["restored"], "status": status})
+assert outcomes[0]["start_with_active_collector"] is True
+assert outcomes[1]["start_with_active_collector"] is False
+assert outcomes[1]["restored"] is True
+result = {"scope": "pure CPU mock, no Docker/GPU/API/service calls", "outcomes": outcomes,
+          "finding_closed": True, "real_service_calls": 0}
+(D / "independent-before-after.json").write_text(json.dumps(result, indent=2) + "\n")
+print(json.dumps({"finding_closed": True, "real_service_calls": 0}))
