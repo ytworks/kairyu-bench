@@ -1,7 +1,7 @@
 # Gemma4公式スコア全実行台帳（2026-11-06）
 
-snapshot: 2026-11-07T01:16:12.826409+00:00。WSP **145 runs**（completed140、partial4、running1＝旧保存記録のみ、現在の稼働を意味しない）。
-今回のexploratory AD空overlay/AX/AV/AW完了4件を追記。旧141 row objectsの全fieldは完全一致。logical identityを保存checkpoint treeと混同しない。AVのみfresh対照比+0.357143ppで保存/full14確認対象、まだ不採用。working AD7d65と積み上げP→S→AC→ADを維持。ADは全分野改善とは呼ばない。
+snapshot: 2026-11-07T01:58:34.467623+00:00。WSP **147 runs**（completed142、partial4、running1＝旧保存記録のみ、現在の稼働を意味しない）。
+今回のfresh ordinary AD/AV full14完了2件を追記。旧145 row objectsの全fieldは完全一致。778は能力746＋尤度probe32であり、code26はdev90のcode90と別集合。最新の採用判断とは分離して全結果を保存する。
 新規採点・モデル実行なし。指定したNVMe resultsとlegacy resultsの直下run.json/report.jsonだけを採録した。
 5つのDeepSWE runはWSP台帳から分離し、完了・取消結果を代表表へ併記する。元R1/R2はincompleteで、この台帳から完成した点を捏造しない。
 公式reportから値を転記し、欠測は「—」。表は小数6桁表示、sourceの未丸め値はcatalog JSONに残す。
@@ -5213,3 +5213,29 @@ AVはSciCode80の2/7→3/7が総差を生み、HE/MBPPは各1gain/1lossの入替
 | export-reproduction.py | 515142feb24ee4f2e0bdcee0a67d7076ed82ebb58c6ab965d60c9cb93de8f6c3 |
 
 最終numeric summary65860b00…、postchecks65172ef2…、closurebb4bfb69…。[候補の全経過](2026-11-07-helper-capped-functional-targets.md)にsource得失、partial scores、使用token、actual load/restore proofを保存。
+
+## v14: fresh ordinary AD versus saved AV full14
+
+同時ordinary TP2、同じ778項目・source5e3・native ON・c32/logprob8/agent1。元の全145行を保持し、次の2行だけを追加。
+
+| Run ID | 状態 | 項目/採点 | Code26 % | 総合 % |
+|---|---|---:|---:|---:|
+| gemma4-ad-av-ad-c32-dev10-full14-20261107-v1 | completed | 778/778 | 87.777778 | 77.209316 |
+| gemma4-ad-av-av-c32-dev10-full14-20261107-v1 | completed | 778/778 | 87.777778 | 77.154948 |
+
+AV−AD総合 −0.054368pp、paired95%CI[−2.277409,+2.008838]pp。code26の全項目は同点。16件の数値gain/12loss、unknown0。ADはRULER2＋Trivia1の打ち切り/empty3、AVはRULER1＋日本語MMLU1の2。正式chat呼出566/563、logprobカウンター3062ずつ、prompt-free完了HTTPattempt1597/1594は別会計。agent steps不明を0に置換しない。
+
+- v14 catalog.json: c9dd5c3b7b2249dbd45456cc16fbdf3a31e8503cae3eef458d5d377fe22b1c05
+- v14 preservation.json: 097c77b90e496b54a56ee1b4a9f6e1fe4da9fe1307817dea2b477f5f2f0c5851
+- v14 export-reproduction.py: fa4dc7d7aee973fa467e98f1175f13245a4dbf95b9e657948422f223e4fc5b46
+
+最終numeric summary98647371b7fa726e7ced266052e72602efb9526db1fad3eaeea2219d94dd5344、source/serving/counter closure b1fb80f6c127f72da397dc65fbd212e2d1ebe0a9c9bb54571d8412649a6fb4c7。[全14分野の内訳](../wsp-av-full14-confirmation.md)。
+
+
+## Accepted-parent decision after measurement
+
+At 01:59:49 UTC on 2026-11-07, root adopted saved AV as the working parent, preserving AD's historical state. The accepted ancestry is P → S → AC → AD → AV. The decision accepts the exploratory code90 +0.357143 pp together with the verified overlay-to-saved BF16 bridge and fresh ordinary full14 −0.054368 pp as a modest tradeoff. It does not establish persistent coding improvement, an all-area gain, or code>90; final code confirmation, known64 and DeepSWE remain pending. Future proposals must anchor to AV, with native parameters frozen, rather than reuse AD derivatives.
+
+Decision: current-av-adoption-v1/working-decision.json SHA 4f3af16544d3244ff27470cbe169669873675f5503893dc12e5ebcbe344923c5; current-state SHA f5096f2331243628c49fcfa7a6440b10e7967145a5a9b4942dd96647d4004519. Earlier statements in this record describe the parent at that stage and are retained as history.
+
+The v14 catalog remains the immutable pre-adoption snapshot: all 145 prior row objects are unchanged and exactly two completed ordinary reports are appended (147 total). This postscript records the later decision without rewriting that snapshot.

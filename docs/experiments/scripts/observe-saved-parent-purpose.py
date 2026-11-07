@@ -69,7 +69,7 @@ state = {
     "started_epoch": time.time(),
     "plan_sha256": PLAN_SHA,
     "jobs": [],
-    "model_calls_scope": "Plan-pinned authored train cases on explicit saved observed parent; four teacher-forced derivative collectors only",
+    "model_calls_scope": "Plan-pinned authored train cases on explicit saved observed parent; plan-declared teacher-forced derivative collectors only",
     "benchmark_calls": 0,
     "checkpoint_writes": 0,
 }
@@ -126,16 +126,38 @@ def validate(serving=True):
         and len(plan["source_sha256"]) == 6,
         "source pins not bound",
     )
+    observed_blocks = plan.get("observed_blocks", ["native", "matrix"])
+    require(
+        observed_blocks in (["native", "matrix"], ["matrix"]),
+        "explicit observed blocks",
+    )
     require(
         [(j["collector_kind"], j["objective"]) for j in plan["jobs"]]
         == [
-            ("native", "correct-logprob"),
-            ("native", "margin"),
-            ("matrix", "correct-logprob"),
-            ("matrix", "margin"),
+            (kind, objective)
+            for kind in observed_blocks
+            for objective in ["correct-logprob", "margin"]
         ],
-        "four-stage contract",
+        "complete declared objective stages required",
     )
+    for job in plan["jobs"]:
+        expected_gpu = (
+            (4 if job["objective"] == "correct-logprob" else 5)
+            if observed_blocks == ["matrix"]
+            else (4 if job["collector_kind"] == "native" else 5)
+        )
+        argv = job["run_argv"]
+        require(
+            job["physical_gpu"] == expected_gpu
+            and argv.count("--gpus") == 1
+            and argv[argv.index("--gpus") + 1] == "device=" + str(expected_gpu),
+            "collector physical GPU mapping differs",
+        )
+    if observed_blocks == ["matrix"]:
+        require(
+            plan.get("native_parameters") == "frozen_not_observed",
+            "native omission must be explicit",
+        )
     require(
         sha(plan["frame"]["historical_evidence_path"])
         == plan["frame"]["historical_evidence_sha256"],
@@ -286,6 +308,10 @@ def run():
     if "observation_policy" in plan:
         state["observation_policy"] = plan["observation_policy"]
         state["resource_budget"] = plan["resource_budget"]
+    state["observed_blocks"] = plan.get("observed_blocks", ["native", "matrix"])
+    state["native_parameters"] = plan.get(
+        "native_parameters", "observed_native_gradients"
+    )
     state["observation_is_adoption"] = False
     state["new_edit_eligibility"] = (
         "Use only if this exact observed path/tree is the accepted parent when creating a future edit; rebind current incumbent then."
@@ -413,12 +439,16 @@ def run():
             int(row[3]) >= minimum_free * 1024,
             "collector declared free-memory requirement",
         )
-    state["status"] = "collecting_parallel_families"
+    state["status"] = (
+        "collecting_parallel_jobs"
+        if plan.get("observed_blocks") == ["matrix"]
+        else "collecting_parallel_families"
+    )
     publish()
     collection_deadline = time.monotonic() + 1800
     queues = {
-        kind: [j for j in plan["jobs"] if j["collector_kind"] == kind]
-        for kind in ["native", "matrix"]
+        gpu: [j for j in plan["jobs"] if j["physical_gpu"] == gpu]
+        for gpu in plan["physical_gpus"]
     }
 
     def launch(kind):
@@ -427,7 +457,7 @@ def run():
         job = queues[kind].pop(0)
         rec = {
             "label": job["label"],
-            "collector_kind": kind,
+            "collector_kind": job["collector_kind"],
             "physical_gpu": job["physical_gpu"],
             "status": "running",
             "started_at": stamp(),
@@ -453,7 +483,7 @@ def run():
             job["run_argv"], stdout=log, stderr=subprocess.STDOUT
         )
 
-    for kind in ["native", "matrix"]:
+    for kind in queues:
         launch(kind)
     while active:
         for kind in list(active):
@@ -535,7 +565,7 @@ def run():
                 observed_groups == expected_groups,
                 "collected purpose/fold case groups differ",
             )
-            if kind == "native":
+            if job["collector_kind"] == "native":
                 require(
                     summary["coverage"]["native_tensors"] == 421
                     and summary["coverage"]["native_coordinates"] == 1331516,
@@ -591,7 +621,7 @@ if __name__ == "__main__":
                     "status": "preview_no_operations",
                     "plan_sha256": PLAN_SHA,
                     "runtime_sha256": sha(__file__),
-                    "jobs": 4,
+                    "jobs": len(read(P / "plan.json")["jobs"]),
                     "service_changes": 0,
                     "model_calls": 0,
                 }

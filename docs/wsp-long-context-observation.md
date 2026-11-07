@@ -95,3 +95,51 @@ The observation owner can bind an explicit free-memory budget separately from
 the Torch allocator cap. The prospective AV run uses 88 GiB for the allocator
 plus 2 GiB outside it, requiring at least 90 GiB free after releasing O2.
 This is a resource limit, not evidence of fused SDPA or reduced memory use.
+
+Actual provisional AV observations used all 120 authored training cases
+(19 purposes, 38 folds), with complete frames up to 1,268 tokens. The declared
+2,048-token limit is a rejection boundary; this run does not establish that
+every 2,048-token workload fits. The accepted checkpoint remained separately
+bound to an immutable AD-state snapshot while AV was observed provisionally.
+
+| Attempt | Collected blocks | Allocator cap | Observed result |
+| --- | --- | ---: | --- |
+| v1 | native + matrix | 88 GiB | Native OOM before a completed fold; matrix LL 31/38 partial folds |
+| v2, explicitly authorized resource trial | native + matrix | 92 GiB | Native OOM before a completed fold; matrix LL 27/38 partial folds |
+| v3, explicitly authorized matrix-only collection | matrix | 88 GiB | Both LL and margin completed all 38 folds / 120 cases |
+
+The two native failures requested another 80 MiB and 40 MiB respectively.
+At failure, PyTorch had 86.88/90.76 GiB allocated and 1.09/1.22 GiB reserved
+but unallocated. The failed native case index inside the first longest-first
+fold was not emitted. Partial matrix peaks were not recorded; no partial
+arrays were resumed or combined. Each attempt restored the same O2 container
+healthy and preserved AD1, AV0, AR3 and the embedding services.
+
+The successful matrix-only run recorded peaks of 85.5930 GiB (correct LL)
+and 85.6586 GiB (margin), with 88.0 GiB reserved. Collection took 39.687 and
+69.745 seconds after model setup. Both objectives ran in parallel on O2's
+two GPUs; concurrent ordinary full14 evaluation means these are not
+uncontended timing measurements. Requested and resolved text dispatch was
+SDPA, root/vision remained eager, and the absent audio config was recorded
+as null. This does not identify which PyTorch SDPA kernel executed.
+
+The observer's opt-in `observed_blocks: ["matrix"]` with
+`native_parameters: "frozen_not_observed"` requires exactly two matrix
+objectives, one on each declared GPU. Native gradients and cross-family
+baseline parity are explicitly unmeasured. Full checkpoint identity still
+binds every unchanged native parameter; no fake native arrays or historical
+eager arrays are supplied. Legacy four-collector execution remains the default.
+
+The source offers a plausible memory explanation, not an allocation-level
+causal proof: native collection enables gradients on every native norm/scalar
+parameter, requiring parameter-derivative saved activations; matrix collection
+keeps parameters frozen, differentiates from a detached embedding leaf and
+contracts sampled matrix factors in output hooks. Matrix collection still
+retains an input-VJP graph.
+
+Evidence is retained under `A/provisional-av-long-purpose-observation-v{1,2,3}`.
+The v3 completion is `fda99e5539c586a06fbb37e338760faf124d7b770ae5eb574486e92697be2847`;
+postchecks `76477b618dfdd49b67cb41ec68eba75ff96c7cac88b97768517b6b7dc5bcdcfa`
+and the 88-file output inventory `dadcaa5e0cb51b482bd0193b00eb02c63dbae0616cfbbae39407732b38621729`
+cover both complete matrix collections. This observation makes no candidate
+edit, capability, adoption, eager-parity, or native-gradient claim.

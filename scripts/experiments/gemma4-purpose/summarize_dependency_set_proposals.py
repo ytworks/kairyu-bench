@@ -14,6 +14,21 @@ def sha(p):
     return hashlib.sha256(Path(p).read_bytes()).hexdigest()
 
 
+def observation_sources(plan, obs):
+    matrix_only = plan.get("observed_blocks") == ["matrix"]
+    if "observed_blocks" in plan and (plan.get("schema_version") != 2
+            or plan["observed_blocks"] not in (["native", "matrix"], ["matrix"])):
+        raise ValueError("unsupported observed blocks")
+    if matrix_only and (plan.get("eligible_blocks") != ["matrix"]
+            or "native_tensors" in plan or set(plan["collections"]) != {"matrix"}):
+        raise ValueError("matrix-only observations require frozen native")
+    paths = [obs / "matrix-correct-logprob/coverage.json",
+             obs / "matrix-correct-logprob/sample-plan.npz"]
+    if not matrix_only:
+        paths.insert(0, obs / "native-correct-logprob/source-native-values.npz")
+    return paths
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--roster", required=True, type=Path)
@@ -31,13 +46,13 @@ def main():
     roster = json.loads(args.roster.read_text())
     inputs = {
         args.roster.resolve(),
-        obs / "native-correct-logprob/source-native-values.npz",
         obs / "matrix-correct-logprob/coverage.json",
         obs / "matrix-correct-logprob/sample-plan.npz",
     }
     for item in roster["rows"]:
         inputs.add(Path(item["plan"]).resolve())
         planned_input = json.loads(Path(item["plan"]).read_text())
+        inputs.update(observation_sources(planned_input, obs))
         for key in ("analytic_report", "reference_plan"):
             if key in planned_input:
                 ref = planned_input[key]
@@ -70,10 +85,11 @@ def main():
     ):
         raise ValueError("output overlaps input")
 
-    with np.load(
-        obs / "native-correct-logprob/source-native-values.npz", allow_pickle=False
-    ) as f:
-        native = {n: np.asarray(f[n], dtype=np.float64).reshape(-1) for n in f.files}
+    native = {}
+    native_source = obs / "native-correct-logprob/source-native-values.npz"
+    if native_source in inputs:
+        with np.load(native_source, allow_pickle=False) as f:
+            native = {n: np.asarray(f[n], dtype=np.float64).reshape(-1) for n in f.files}
     cov = json.loads((obs / "matrix-correct-logprob/coverage.json").read_text())
     matrix = {}
     with np.load(
@@ -135,7 +151,8 @@ def main():
                             raise ValueError("analytic reference plan changed")
                         reference = json.loads(original_path.read_text())
                         for key in ("checkpoint", "parent_state", "cases", "collections",
-                                    "matrix_families", "matrix_tensors", "prospective_method"):
+                                    "matrix_families", "matrix_tensors", "prospective_method",
+                                    "observed_blocks", "eligible_blocks"):
                             if reference.get(key) != plan.get(key):
                                 raise ValueError("analytic reference scope differs")
                         original_method = reference["candidates"][0]
@@ -217,13 +234,16 @@ def main():
             continue
         report = json.loads(rp.read_text())
         source_hashes = report["source_sha256"]
+        if plan.get("observed_blocks") == ["matrix"] and (
+                report.get("observed_blocks") != ["matrix"]
+                or report.get("native_parameters") != "frozen_not_observed"
+                or any(m["native_scope"]["observed_columns"] != 0
+                       or m["column_scope"].get("cross_family_baseline_parity") != "not_measured"
+                       for m in report["methods"])):
+            raise ValueError("matrix-only report claims native observation or parity")
         if source_hashes[str(plan_path)] != item["plan_sha256"]:
             raise ValueError("report plan SHA mismatch")
-        for source_path in (
-            obs / "native-correct-logprob/source-native-values.npz",
-            obs / "matrix-correct-logprob/coverage.json",
-            obs / "matrix-correct-logprob/sample-plan.npz",
-        ):
+        for source_path in observation_sources(plan, obs):
             expected = source_hashes.get(str(source_path))
             required = (
                 plan["schema_version"] == 2

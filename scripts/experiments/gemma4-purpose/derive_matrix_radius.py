@@ -42,9 +42,11 @@ def check_plan(path, expected):
     if not isinstance(reference, dict):
         raise ValueError("pinned reference plan required")
     prior = adapter.document(Path(reference["path"]), pins, reference["sha256"])
-    for key in ("checkpoint", "cases", "parent_state", "collections", "baseline_tolerance"):
+    for key in ("checkpoint", "cases", "parent_state", "collections", "baseline_tolerance", "observed_blocks"):
         if plan.get(key) != prior.get(key):
             raise ValueError("reference observation contract differs: " + key)
+    if "observed_blocks" in plan and plan.get("eligible_blocks") != prior.get("eligible_blocks"):
+        raise ValueError("reference eligible blocks differ")
     method = plan["candidates"][0]
     for key in ("constraints", "cost_metric"):
         if method[key] != prior["candidates"][0][key]:
@@ -161,6 +163,8 @@ def calibration(checkpoint, plan, collections, labels, pins, destination):
               "rounded_box_maximum_necessary_shortfall": float(np.maximum(lower-upper, 0).max()),
               "row_bounds_are_necessary_not_joint_sufficient": True,
               "native_edit_columns": 0,
+              "observed_blocks": adapter.observed_blocks(plan),
+              "baseline_source": "matrix:correct-logprob",
               "qkv_edit_columns": sum(entry["count"] for entry in layout
                                       if entry["family"] in {"q", "k", "v"}),
               "matrix_columns": len(base),

@@ -130,6 +130,19 @@ def select_native_columns(plan, base, gradient, layout):
     return base[indices], gradient[:, indices], selected
 
 
+def observed_blocks(plan):
+    """An omitted field preserves the historical complete observation contract."""
+    mixed = plan.get("schema_version") == 2
+    default = ["native", "matrix"] if mixed else ["native"]
+    blocks = plan.get("observed_blocks", default)
+    if "observed_blocks" in plan and (not mixed or blocks not in (["native", "matrix"], ["matrix"])):
+        raise ValueError("observed_blocks requires explicit v2 native+matrix or matrix only")
+    if blocks == ["matrix"] and (plan.get("eligible_blocks") != ["matrix"]
+            or "native_tensors" in plan or set(plan["collections"]) != {"matrix"}):
+        raise ValueError("matrix-only observations require frozen native and only matrix collections")
+    return blocks
+
+
 def prepare(path):
     """Validate the whole checkpoint, cohorts and columns before reading gradients."""
     pins = {}
@@ -145,6 +158,7 @@ def prepare(path):
         raise ValueError("explicit block eligibility requires the v2 plan")
     if mixed and plan.get("eligible_blocks", ["native", "matrix"]) not in (["native", "matrix"], ["matrix"]):
         raise ValueError("eligible_blocks must be native+matrix or matrix only")
+    families = observed_blocks(plan)
     source = plan["checkpoint"]
     checkpoint = Checkpoint(source["path"])
     current = checkpoint.identity(hash_files=False)
@@ -179,7 +193,6 @@ def prepare(path):
     if mixed:
         matrix_names(plan, matrices)
     collections = {}
-    families = ("native", "matrix") if mixed else ("native",)
     for family in families:
         for objective in OBJECTIVES:
             key = objective if family == "native" else "matrix:" + objective
@@ -259,7 +272,7 @@ def prepare(path):
                     "gradient_accumulation", "gradient_checkpointing", "max_cases_per_microbatch", "observation_policy"):
             if left["summary"]["runtime"].get(key) != right["summary"]["runtime"].get(key):
                 raise ValueError("objective numerical runtime differs: " + key)
-    if mixed:
+    if mixed and "native" in families:
         tolerance = plan.get("baseline_tolerance")
         if type(tolerance) not in (int, float) or not np.isfinite(tolerance) or tolerance < 0:
             raise ValueError("explicit finite nonnegative cross-collector baseline tolerance required")
@@ -287,6 +300,13 @@ def prepare(path):
             m["baseline_max_abs_difference"] = max(errors, default=0.)
             if m["baseline_max_abs_difference"] > tolerance:
                 raise ValueError("native/matrix baseline objective differs")
+    if families == ["matrix"]:
+        # No cross-family parity was measured. Bind the actual matrix collector
+        # inputs directly; native remains protected by the full checkpoint identity.
+        for collection in collections.values():
+            for filename, expected_sha in collection["provenance"]["input_sha256"].items():
+                capture(Path(filename), pins, expected_sha)
+            collection["baseline_max_abs_difference"] = None
     methods = plan["candidates"]
     if not isinstance(methods, list) or not 1 <= len(methods) <= 2:
         raise ValueError("one or two fixed purpose sets required")
@@ -384,16 +404,21 @@ def solve(path, output, *, write_spec=False, maximum_seconds=120):
                         raise ValueError("MLP coordinates do not share the declared hidden-unit sample")
                     cursor += count
             loaded[key] = (base, g, layout, coords)
-        for family in (("native", "matrix") if mixed else ("native",)):
+        for family in observed_blocks(plan):
             first, second = (loaded[o if family == "native" else "matrix:" + o] for o in OBJECTIVES)
             if (first[2] != second[2] or not np.array_equal(first[3], second[3])
                     or not np.array_equal(first[0].astype(np.float32).view(np.uint32),
                                           second[0].astype(np.float32).view(np.uint32))):
                 raise ValueError("objective source bytes/columns differ")
-        base, _, layout, _ = loaded[OBJECTIVES[0]]
-        observed_native_count = len(base)
-        gradient = np.vstack([loaded[o][1] for o in OBJECTIVES])
-        base, gradient, layout = select_native_columns(plan, base, gradient, layout)
+        if "native" in observed_blocks(plan):
+            base, _, layout, _ = loaded[OBJECTIVES[0]]
+            observed_native_count = len(base)
+            gradient = np.vstack([loaded[o][1] for o in OBJECTIVES])
+            base, gradient, layout = select_native_columns(plan, base, gradient, layout)
+        else:
+            observed_native_count = 0
+            base, layout = np.empty(0, dtype=np.float64), []
+            gradient = np.empty((len(labels) * len(OBJECTIVES), 0), dtype=np.float64)
         selected_native_names = {entry["tensor"] for entry in layout}
         layout = [dict(e, coordinates=None, block="native") for e in layout]
         native_count = len(base)
@@ -422,7 +447,9 @@ def solve(path, output, *, write_spec=False, maximum_seconds=120):
                      "active_matrix_families": allowed_families,
                      "eligible_matrix_tensors": sorted(selected_matrix_names),
                      "baseline_max_abs_difference": {o: collections["matrix:" + o]["baseline_max_abs_difference"] for o in OBJECTIVES},
-                     "gradient_methods": {"native": collections[OBJECTIVES[0]]["summary"]["runtime"].get("gradients"),
+                     "cross_family_baseline_parity": "measured" if "native" in observed_blocks(plan) else "not_measured",
+                     "gradient_methods": {"native": (collections[OBJECTIVES[0]]["summary"]["runtime"].get("gradients")
+                                                      if "native" in observed_blocks(plan) else None),
                                           "matrix": collections["matrix:" + OBJECTIVES[0]]["summary"]["runtime"].get("gradient_accumulation")}}
         eligible_blocks = plan.get("eligible_blocks", ["native", "matrix"]) if mixed else ["native"]
         if mixed and eligible_blocks == ["matrix"]:
@@ -506,6 +533,8 @@ def solve(path, output, *, write_spec=False, maximum_seconds=120):
         stable(checkpoint, pins)
         result = {"schema_version": plan["schema_version"], "status": "local_proposals", "methods": methods,
                   "source_checkpoint": plan["checkpoint"], "parent_state": plan.get("parent_state"),
+                  "observed_blocks": observed_blocks(plan),
+                  "native_parameters": "frozen_not_observed" if observed_blocks(plan) == ["matrix"] else "observed",
                   "source_sha256": {p: digest for p, (digest, _) in pins.items()},
                   "source_stat": {p: state for p, (_, state) in pins.items()},
                   "labels": [(o, p, f) for o in OBJECTIVES for p, f in labels],

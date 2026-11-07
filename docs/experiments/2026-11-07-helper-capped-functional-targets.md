@@ -84,3 +84,14 @@ Actual c1b5 overlay loading verified all selected post-TP BF16 words. AV require
 Root selected AV alone for a saved checkpoint, one create/verify/deploy, then a fresh ordinary AD/AV all14 comparison. The same spec/finite/overlay selected-word identity must connect to saved full-file verification. No extra ordinary dev90 precedes this full14 run; final code confirmation remains later. This is a change in measurement order, not adoption. AD remains accepted until actual purpose tradeoffs are reviewed.
 
 Private evidence: final numeric65860b00b3091dd28f34f7d41c1b6bc24666251b2e304a1adf35eeea2fbde7fc; postchecks65172ef2cb32c08770f3c111ab68ad47dbaabfa5111159f58acaa1bbfa43fddf; owner completionbb4bfb69a9545fe5692bba5c489898af6d407cecb58559ee5e758c29ecb8d07b. All original reports and numeric comparisons are retained, with no raw benchmark-body reading or rescoring.
+
+## Fresh saved AV all14 measurement
+
+After the+.357143pp exploratory code90 result, saved AV was fully verified and compared directly with fresh ordinary AD on778 all14 items. OverallAD77.209316% versusAV77.154948% (−.054368pp, paired95%CI[−2.277409,+2.008838]); code26 tied87.777778%, with all26 item scores identical. This small slice excludes SciCode and is not code90 confirmation. Knowledge/facts/reasoning/commonsense/safety gains coexist with instructions−3.333333pp, tools−5pp and long-context−2.107418pp. MRCR1748 declined1→.33140655 while RULER improved6/8→7/8. All746 capabilityitems+32 probes scored; unknown0, AD3/AV2 truncated/empty records. [Complete area table and execution limits](../wsp-av-full14-confirmation.md). Numeric closure98647371…/b1fb80f6…; no adoption by the measurement owner.
+
+
+## Accepted-parent decision after measurement
+
+At 01:59:49 UTC on 2026-11-07, root adopted saved AV as the working parent, preserving AD's historical state. The accepted ancestry is P → S → AC → AD → AV. The decision accepts the exploratory code90 +0.357143 pp together with the verified overlay-to-saved BF16 bridge and fresh ordinary full14 −0.054368 pp as a modest tradeoff. It does not establish persistent coding improvement, an all-area gain, or code>90; final code confirmation, known64 and DeepSWE remain pending. Future proposals must anchor to AV, with native parameters frozen, rather than reuse AD derivatives.
+
+Decision: current-av-adoption-v1/working-decision.json SHA 4f3af16544d3244ff27470cbe169669873675f5503893dc12e5ebcbe344923c5; current-state SHA f5096f2331243628c49fcfa7a6440b10e7967145a5a9b4942dd96647d4004519. Earlier statements in this record describe the parent at that stage and are retained as history.

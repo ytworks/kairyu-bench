@@ -88,7 +88,7 @@ def agreement(plan, base, gradients, layout, labels, method):
 def build(args):
     checkpoint, template, collections, labels, pins = adapter.prepare(args.template)
     if template["schema_version"] != 2:
-        raise ValueError("complete v2 native/matrix template required")
+        raise ValueError("complete v2 observed-block template required")
     policy = adapter.document(args.policy, pins, args.policy_sha)
     parent = template.get("parent_state")
     if not parent or policy["parent_state"] != parent:
@@ -215,7 +215,8 @@ def build(args):
         reports.append(dict(id=method["id"], status="prepared_no_solve",
                             selected_tensors=[entry["tensor"] for entry in selected],
                             selected_coordinates=len(active), groups=selection, targets=target_report,
-                            native_coordinates=0, method=method))
+                            native_coordinates=0, observed_blocks=adapter.observed_blocks(plan),
+                            baseline_source="matrix:correct-logprob", method=method))
     adapter.stable(checkpoint, pins)
     output.mkdir()
     roster = []

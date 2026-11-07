@@ -3,6 +3,7 @@ from __future__ import annotations
 import contextlib
 import io
 import json
+import shutil
 from pathlib import Path
 import sys
 import unittest
@@ -35,7 +36,11 @@ class DerivedMatrixRadiusTests(unittest.TestCase):
         values[up["start"]] = 1.
         np.save(margin, values)
         reference = fixture.root / "reference.json"
-        reference.write_text(json.dumps(plan))
+        # Historical AB reference predates explicit matrix-only eligibility;
+        # its broader native+matrix reference remains valid for this legacy route.
+        legacy_reference = dict(plan)
+        legacy_reference.pop("eligible_blocks")
+        reference.write_text(json.dumps(legacy_reference))
         plan["reference_plan"] = {"path": str(reference), "sha256": fixture.sha(reference)}
         plan["analytic_calibration"] = {
             "calibration_seconds": 120, "candidate_seconds": 180,
@@ -138,6 +143,11 @@ class DerivedMatrixRadiusTests(unittest.TestCase):
         p["checkpoint"].update(tree_sha256=identity["sha256"],
                                attestation={"path": str(attestation), "sha256": scoped.sha(attestation)})
         p["eligible_blocks"] = ["matrix"]
+        p["observed_blocks"] = ["matrix"]
+        # No native observation exists: calibration, candidate and postcheck must
+        # use matrix source words, while saved native checkpoint bytes stay fixed.
+        for directory in p["collections"].pop("native").values():
+            shutil.rmtree(directory)
         p["matrix_tensors"] = [selected]
         p["matrix_families"] = ["q", "k", "o", "gate", "up", "down"]
         p["candidates"][0]["id"] = "euclidean-selected"
@@ -196,6 +206,8 @@ class DerivedMatrixRadiusTests(unittest.TestCase):
         analytic = json.loads((out / "report.json").read_text())
         self.assertEqual(analytic["eligible_matrix_tensors"], [selected])
         self.assertEqual(analytic["matrix_columns"], 1)
+        self.assertEqual(analytic["observed_blocks"], ["matrix"])
+        self.assertEqual(analytic["baseline_source"], "matrix:correct-logprob")
         self.assertEqual(analytic["qkv_edit_columns"], 1)
         self.assertAlmostEqual(analytic["continuous_delta_l2"], 1 / 128)
         self.assertAlmostEqual(analytic["continuous_weighted_delta_l2"], 1 / 128)
@@ -205,6 +217,11 @@ class DerivedMatrixRadiusTests(unittest.TestCase):
         with contextlib.redirect_stdout(io.StringIO()):
             RADIUS.main(["--plan", str(derived), "--plan-sha256", scoped.sha(derived),
                          "--output", str(result_dir), "--phase", "candidate", "--run"])
+        proposal = json.loads((result_dir / "proposals/report.json").read_text())
+        self.assertEqual(proposal["methods"][0]["native_scope"]["observed_columns"], 0)
+        scope = proposal["methods"][0]["column_scope"]
+        self.assertEqual(scope["cross_family_baseline_parity"], "not_measured")
+        self.assertTrue(all(value is None for value in scope["baseline_max_abs_difference"].values()))
         spec_path = result_dir / "proposals/euclidean-selected.json"
         spec = json.loads(spec_path.read_text())
         self.assertEqual([edit["tensor"] for edit in spec["edits"]], [selected])

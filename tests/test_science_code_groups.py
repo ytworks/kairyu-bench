@@ -5,6 +5,7 @@ import copy
 import contextlib
 import io
 import json
+import shutil
 from pathlib import Path
 import unittest
 from unittest import mock
@@ -36,6 +37,11 @@ class ScienceCodeGroupTest(unittest.TestCase):
             new_path = f.root / ("native-" + objective)
             old_path.rename(new_path)
             f.plan["collections"]["native"][objective] = str(new_path)
+        if functional:
+            f.plan["observed_blocks"] = ["matrix"]
+            f.plan["eligible_blocks"] = ["matrix"]
+            for directory in f.plan["collections"].pop("native").values():
+                shutil.rmtree(directory)
         output_entries = sorted(
             (e for e in entries if e["family"] == "o"), key=lambda e: e["layer"]
         )
@@ -151,6 +157,9 @@ class ScienceCodeGroupTest(unittest.TestCase):
                     if e["layer"] == 0 and e["family"] in method["matrix_families"]}
         self.assertEqual(set(plan["matrix_tensors"]), expected)
         self.assertEqual(plan["eligible_blocks"], ["matrix"])
+        if functional:
+            self.assertEqual(plan["observed_blocks"], ["matrix"])
+            self.assertEqual(report["baseline_source"], "matrix:correct-logprob")
         self.assertEqual([g["selected"] for g in report["groups"]], [True, False])
         for row in report["targets"]:
             self.assertEqual(row["dual_norm"], 2. if functional else 1.)

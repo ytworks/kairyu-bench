@@ -131,3 +131,5 @@ The [helper-capped functional batch](experiments/2026-11-07-helper-capped-functi
 - [Saved AV ordinary all14 confirmation](wsp-av-full14-confirmation.md): fixed778 AD/AV TP2 comparison after explicit exploratory selection and saved-word/full-file verification; no intervening dev90 claim or automatic adoption.
 
 [Dependency-rich longer helper chains](wsp-long-helper-chains.md) add four authored training families (eight stages) and two disjoint transfer chains using the existing public-code evaluator and isolated executor. Complete interfaces and semantic foils are CPU-verified; the selected112 case objects remain unchanged in the120-row bundle. Longer input frames are not evidence of greater model capability.
+
+The [matrix-only observation contract](wsp-matrix-only-observation.md) supports explicitly frozen, unobserved native parameters with complete matrix LL/margin provenance; it does not fabricate missing native gradients.
