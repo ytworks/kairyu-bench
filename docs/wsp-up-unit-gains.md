@@ -30,6 +30,14 @@ Correct-logprob and margin use separate outputs. The explicit policy dispatches 
 
 ## Validation status
 
-The existing CPU derivative fixture checks the full-row gain identity against an independent FP32 weight gradient, then runs both objectives through a BF16 gated MLP, saves actual gradient/cost NPZ files, verifies canonical order and rejects a wrong reference without changing weights or leaving hooks. It passed in the installed serving image on CPU. Real 31B GPU collection, memory fit and subsequent unit selection have not yet been validated. This check makes no free-generation or benchmark improvement claim.
+The existing CPU derivative fixture checks the full-row gain identity against an independent FP32 weight gradient, then runs both objectives through a BF16 gated MLP, saves actual gradient/cost NPZ files, verifies canonical order and rejects a wrong reference without changing weights or leaving hooks. It passed in the installed serving image on CPU. This CPU check makes no free-generation or benchmark improvement claim.
 
 See [long-context observations](wsp-long-context-observation.md) for frame and allocator policy limits, and [matrix-only observations](wsp-matrix-only-observation.md) for the accepted native-frozen provenance route.
+
+## First real collection
+
+On the accepted saved AV checkpoint, both objectives completed all 120 cases and 38 folds, covering 60 UP matrices and 1,290,240 unit gains. Correct-logprob took 65.419 seconds and margin 126.954 seconds inside the collectors. Each measured peak allocation was 84.68965 GiB under the declared 88 GiB allocator cap; peak reservation was 87.97266 and 87.91211 GiB. The longest actual complete frame was 1,268 tokens. The configured 2,048-token limit does not establish that every frame of that length fits.
+
+The first/last observed projection zero-additive checks differed by at most 8.73e-11 and 9.09e-13. Source row costs were exactly equal across the two objectives. Against the previous complete matrix observations of the same AV checkpoint and frames, per-case correct-logprob difference was zero and maximum margin difference was 8.94e-7. This is baseline consistency, not a claim that either derivative family measures generation quality.
+
+The same O2 container was restored healthy at 2026-11-07 02:30:34.499906 UTC; AV, AD, AR and embedding services were protected. Evidence is under `analysis/code90-resume-20261106/current-av-up-unit-gains-observation-v1`: completion `bc75e6b7334f5e94b74d8a9f36d955e16d3a22613048b22622ff25ed07c28c3d`, collector output hashes `b07f4cfe3d0cb8fbf9bcd957d6b8c0976c7ff13295bbb16ef97d4638a06667e8`, and postchecks `51143b9d89337305283c877b19b810d6c2280450949f51462219df6260bcc257`. The exercised collector source was `67d4e19d41b88a3d6dd96970d0f123a3cf6dfa8545b1d4ad3a8cc9cc64eca57b`. No checkpoint weights were edited by this collection.

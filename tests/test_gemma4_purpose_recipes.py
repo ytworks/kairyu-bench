@@ -500,6 +500,25 @@ class PurposeTorchFixtures(unittest.TestCase):
             self.assertTrue(all(not parameter.requires_grad and parameter.grad is None
                                 for parameter in target_net.parameters()))
 
+
+        # A backward failure must release module hooks so a fresh observation
+        # can run; the caller must not reuse the incomplete derivative result.
+        with patch.object(FULL_UNITS, "cartesian_derivative",
+                          side_effect=ValueError("full-unit contraction failed")):
+            with self.assertRaisesRegex(ValueError, "full-unit contraction failed"):
+                FULL_UNITS.objective_derivatives(
+                    torch, target_net, reference_head, tokenizer, full_rows,
+                    "chat-public-answer", "cpu", full_plans, target_modules, len(full_rows),
+                    set(full_plans), objective_kind="margin", answer_batching="serial")
+        self.assertTrue(all(not module._forward_hooks for module in target_net.modules()))
+        recovered, _, _, _ = FULL_UNITS.objective_derivatives(
+            torch, target_net, reference_head, tokenizer, full_rows, "chat-public-answer",
+            "cpu", full_plans, target_modules, len(full_rows), set(full_plans),
+            objective_kind="margin", answer_batching="serial")
+        torch.testing.assert_close(recovered, baseline.detach(), rtol=1e-6, atol=3e-7)
+        self.assertTrue(all(parameter.grad is None and not parameter.requires_grad
+                            for parameter in target_net.parameters()))
+
     def test_chat_matrix_microbatches_match_full_loss_true_gradient_and_finite_difference(self):
         torch.manual_seed(71)
         class Net(torch.nn.Module):

@@ -110,3 +110,38 @@ arms alone are insufficient. The source change is for future execution; it
 is not represented as the bytes used by the active batch.
 
 The Q/K-capable revision accepts explicit Q/K/O/MLP specs only with the separately reviewed loader mapping and all selected post-TP destination proofs. Full-attention tied K/V loading proves both copies; no direct V or native edits are added. The former AN–AS runtime and its output evidence remain frozen. A new plugin requires a new pinned image and fresh overlay plans.
+
+## Prospective AV comparison with an empty-control repeat
+
+The prepared AZ/BA comparison uses one four-arm round in this fixed order:
+the primary empty AV control, AZ on AV, BA on AV, and a second empty AV control.
+Both empty arms must share the exact saved parent, empty spec and logical weight
+identity. Their processes, run IDs, load receipts and numeric observers are
+distinct; the source, sampler, seed, caps and serving configuration are the same.
+
+AZ and BA are compared only with the primary control fixed before execution.
+The repeat-minus-primary difference is descriptive evidence of this round.
+Neither the better nor the worse empty result is selected afterward, and the
+two controls are not averaged into a replacement baseline. The official
+four-source equal-mean formula remains unchanged. One repeat is not an
+independent variance estimate or an added significance gate.
+
+The inert template binds accepted AV state f5096f23 and saved tree
+5d056eb0, with source 5e3f2df and its 82 installed-source pins. It leaves
+BA, finite response, the new full-unit overlay image, fresh serving snapshots
+and execution authorization unbound. The owner now accepts the explicit repeated-empty-arm policy and pins the
+installed-CPU-validated full-unit image. The installed-image receipt is bound. The plan still requires the candidate,
+finite and live identity bindings; its default preview alone is
+not readiness to launch. No model or service action was performed during this preparation.
+
+The per-arm report retains all four source scores/counts, scored/unscored and
+truncation/empty counts, formal calls and tokens. Prompt-free observer attempts,
+retries and errors remain separate from startup requests and are not called
+agent steps. All four original container identities must be restored under the
+existing bounded cleanup contract.
+
+The new image ends in 1e2a7153 and preserves the af9 base layers. Its installed-only
+CPU fixture passed with 1,544 selected coordinates and 1,546 post-TP destinations,
+including full MLP rows/columns wider than 512 and both tied K/V copies. Native,
+direct V and unselected bytes remain unchanged. This proves the synthetic loader
+contract; real full-unit model startup and generation remain unmeasured.

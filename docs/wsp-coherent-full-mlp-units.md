@@ -33,7 +33,11 @@ gate/up rows and corresponding down columns for the fixed support. Q/K/V/O
 diagnostic sample coordinates are checked against the unchanged reference
 attention sample. Candidate eligibility keeps V frozen. Serial complete answers
 use an input-embedding VJP and frozen weights; products accumulate in FP64 from
-FP32 products in bounded 64-token tiles. No dense parameter gradient is saved.
+FP32 products in bounded 64-token tiles. Full gate/up input captures move to
+CPU without changing their dtype and return once for their projection VJP; each
+capture is released immediately afterward. Attention/down captures remain
+device-local. Storage and release behavior are recorded in provenance/runtime.
+No dense parameter gradient is saved.
 
 The schema-2 adapter accepts `sampling_mode: mlp-full-units` only with explicit
 matrix-only observations. It regenerates the full MLP coordinate layout from

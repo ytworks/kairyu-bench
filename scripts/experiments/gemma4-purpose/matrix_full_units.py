@@ -14,6 +14,8 @@ import recipe_common as common
 import objective_variants as variants
 
 PATTERN = sampled.PATTERN
+INPUT_CAPTURE_STORAGE = ("Full gate/up inputs copied to CPU in source dtype (BF16 in production), "
+                         "restored once per projection VJP; attention/down captures stay device-local")
 
 
 def verify_attention(coordinates, entries, support):
@@ -93,7 +95,9 @@ def batch_derivatives(torch, net, head, tokenizer, rows, mode, device, plans, mo
         return value
     def factory(name):
         sampled_rows, columns = plans[name]
-        full = PATTERN.fullmatch(name)[2] == "mlp"
+        match = PATTERN.fullmatch(name)
+        full = match[2] == "mlp"
+        host_capture = full and match[3] in {"gate", "up"}
         r = torch.unique(sampled_rows, sorted=True) if full else sampled_rows
         c = torch.unique(columns, sorted=True) if full else columns
         def hook(module, inputs, output):
@@ -101,9 +105,11 @@ def batch_derivatives(torch, net, head, tokenizer, rows, mode, device, plans, mo
             if calls[name] != 1 or not output.requires_grad:
                 raise ValueError("one differentiable projection invocation required; no recomputation")
             source = inputs[0].detach()
-            # Full input axes alias the already existing BF16 tensor, rather
-            # than duplicating it once for every selected output coordinate.
+            # Full axes have one source-dtype host copy rather than a GPU
+            # reference retained across the complete forward/backward graph.
             selected = source if full and len(c) == source.shape[-1] else source.index_select(-1, c)
+            if host_capture:
+                selected = selected.to(device="cpu")
             if name in verify_names:
                 count = min(4, len(sampled_rows))
                 probe = torch.zeros(count, dtype=torch.float32, device=device, requires_grad=True)
@@ -113,9 +119,21 @@ def batch_derivatives(torch, net, head, tokenizer, rows, mode, device, plans, mo
                 update.index_add_(-1, sampled_rows[:count], (probe_inputs * probe).to(output.dtype))
                 output = output + update
             def backward(upstream):
-                derivative = (cartesian_derivative(upstream, selected, r, c) if full
-                              else sampled.factor_derivative(upstream, selected, sampled_rows))
-                captured[name] = derivative
+                nonlocal selected
+                if selected is None:
+                    raise ValueError("one projection VJP required; capture already released")
+                local = selected
+                selected = None
+                try:
+                    # Restore once, keeping the existing 64-token contraction
+                    # order and avoiding a PCIe copy for every token tile.
+                    if local.device != upstream.device:
+                        local = local.to(device=upstream.device)
+                    derivative = (cartesian_derivative(upstream, local, r, c) if full
+                                  else sampled.factor_derivative(upstream, local, sampled_rows))
+                    captured[name] = derivative
+                finally:
+                    del local
             output.register_hook(backward)
             return output
         return hook
@@ -160,6 +178,7 @@ def objective_derivatives(torch, net, head, tokenizer, rows, mode, device, plans
                 accumulated[name] = accumulated.get(name,0)+value
             checks.update(verified)
             forwards += 1
+            del values, gradients, verified, value
         measured.append(total)
     return torch.tensor(measured,dtype=torch.float32,device=device),accumulated,checks,forwards
 
@@ -272,6 +291,8 @@ def collect(args, checkpoint, cases, provenance):
                           "weight_dtype": "BF16", **common.observation_runtime(args, provenance), "gradient_checkpointing": False,
                            "max_cases_per_microbatch": args.max_cases_per_microbatch,
                           "gradient_accumulation": "FP32 factors, FP64 sum, each batch divided by original fold example count",
+                          "full_unit_input_storage": INPUT_CAPTURE_STORAGE,
+                          "capture_release": "after one projection VJP; prior-answer temporary arrays released",
                           "gpu_peak_allocated_GiB": torch.cuda.max_memory_allocated() / 2**30 if args.device != "cpu" else None,
                           "gpu_peak_reserved_GiB": torch.cuda.max_memory_reserved() / 2**30 if args.device != "cpu" else None},
               "candidate_selection": False, "source_values_unchanged": True,
@@ -316,6 +337,8 @@ def main(argv=None):
     variants.pin_objective(provenance,args.mode,args.objective)
     variants.attach_correct_references(args.cases,cases,provenance,args.objective)
     provenance.update(answer_batching='serial',sampling_mode='mlp-full-units',
+        full_unit_input_storage=INPUT_CAPTURE_STORAGE,
+        capture_release='after one projection VJP; prior-answer temporary arrays released',
         unit_support=dict(path=str(args.unit_support.resolve()),sha256=args.unit_support_sha256),
         objective_forward_layout='one case/answer per forward; immediate VJP; FP32 products/FP64 token sums')
     common.assert_inputs(checkpoint,provenance)

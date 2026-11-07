@@ -166,9 +166,22 @@ def overlay_metadata(arm):
         total += len(edit["coordinates"])
     need(
         total == arm["selected_coordinates"]
-        and ((total == 0) == (arm["label"] == "control")),
+        and (
+            (total == 0)
+            == (
+                arm["label"] == "control"
+                or arm["label"]
+                == plan.get("comparison_policy", {}).get("descriptive_repeat_label")
+            )
+        ),
         "selected count/control differs",
     )
+    if spec.get("matrix_full_units") is not None:
+        need(
+            plan["image_id"]
+            == "sha256:1e2a715346386abb480a54d61aca622db422d6886510a955432d82a37568a2ef",
+            "full-unit edits require the installed-CPU-validated full-unit image",
+        )
     logical = hashlib.sha256(
         json.dumps(
             {
@@ -210,7 +223,10 @@ def validate(serving):
     )
     need(
         plan["image_id"]
-        == "sha256:c1b5c0a94b7e77e0672346d7c191fb143c3dbf88e6b28c673f4d2b754d288ba8",
+        in {
+            "sha256:c1b5c0a94b7e77e0672346d7c191fb143c3dbf88e6b28c673f4d2b754d288ba8",
+            "sha256:1e2a715346386abb480a54d61aca622db422d6886510a955432d82a37568a2ef",
+        },
         "validated overlay image required",
     )
     need(
@@ -256,6 +272,33 @@ def validate(serving):
         and len({a["label"] for a in arms}) == len(arms),
         "unique arm labels required",
     )
+    policy = plan.get("comparison_policy")
+    if policy is not None:
+        need(
+            policy["primary_control_label"] == "control"
+            and policy["candidate_labels"] == [a["label"] for a in arms[1:3]]
+            and policy["descriptive_repeat_label"] == arms[-1]["label"]
+            and [a["role"] for a in arms]
+            == [
+                "primary_control",
+                "candidate",
+                "candidate",
+                "descriptive_control_repeat",
+            ]
+            and policy["candidate_baseline"] == "control"
+            and policy["select_control_by_result"] is False
+            and policy["average_controls_for_candidate_score"] is False
+            and policy["same_empty_spec_and_logical_weight_identity"] is True
+            and policy["distinct_process_run_observer_identity"] is True
+            and policy["rounds"] == plan["maximum_rounds"] == 1,
+            "one-round fixed-primary repeated-control policy differs",
+        )
+        need(
+            arms[0]["logical_overlay_sha256"] == arms[-1]["logical_overlay_sha256"]
+            and pinned(arms[0]["overlay_plan"])["spec"]
+            == pinned(arms[-1]["overlay_plan"])["spec"],
+            "empty repeat must use exactly the primary empty spec and logical identity",
+        )
     for arm in arms:
         need(
             re.fullmatch("[a-z][a-z0-9-]{0,63}", arm["label"])
@@ -1037,6 +1080,9 @@ def official_round(number, arms, current, deadline):
         argv = official_command(record["endpoint"], arm, run_id, observer)
         row = {
             "label": arm["label"],
+            "role": arm.get(
+                "role", "primary_control" if arm["label"] == "control" else "candidate"
+            ),
             "container_id": record["container_id"],
             "endpoint": record["endpoint"],
             "logical_overlay_sha256": arm["logical_overlay_sha256"],
@@ -1151,6 +1197,12 @@ def official_round(number, arms, current, deadline):
         )
         e = read(output)
         row["comparison"] = {
+            "primary_control_label": round_record["arms"][0]["label"],
+            "interpretation": (
+                "descriptive_repeat_only"
+                if row["role"] == "descriptive_control_repeat"
+                else "candidate_versus_fixed_primary"
+            ),
             "path": str(output),
             "sha256": sha(output),
             "official": e["official_comparison"],
@@ -1161,6 +1213,7 @@ def official_round(number, arms, current, deadline):
         finished_at=now(),
         control_process_reused=number > 1,
         control_official_run_is_fresh=True,
+        comparison_policy=plan.get("comparison_policy"),
         comparison_scope="exploratory logical overlays; not physical candidate checkpoints; physical finalist and fresh ordinary pair required before adoption",
     )
     publish()
@@ -1272,8 +1325,18 @@ if not args.apply:
                 "status": "prepared_no_operations",
                 "binding_complete": plan.get("binding_complete", False),
                 "candidate_capacity": 6,
-                "planned_candidates": len(plan.get("candidates", [])),
-                "maximum_rounds": 2,
+                "planned_candidates": len(
+                    [
+                        arm
+                        for arm in plan.get("candidates", [])
+                        if arm.get("role") != "descriptive_control_repeat"
+                    ]
+                ),
+                "planned_descriptive_repeats": sum(
+                    arm.get("role") == "descriptive_control_repeat"
+                    for arm in plan.get("candidates", [])
+                ),
+                "maximum_rounds": plan.get("maximum_rounds", 2),
                 "planned_rounds": (len(plan.get("candidates", [])) + 2) // 3,
                 "runtime_sha256": sha(__file__),
                 "service_changes": 0,

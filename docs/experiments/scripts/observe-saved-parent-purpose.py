@@ -123,7 +123,8 @@ def validate(serving=True):
     require(
         plan["status"] == "planned_not_executed_requires_root_authorization"
         and plan["source_freeze_required"] is False
-        and len(plan["source_sha256"]) == 6,
+        and len(plan["source_sha256"]) >= 6
+        and set(plan["source_sha256"]) == set(plan["expected_source_paths"]),
         "source pins not bound",
     )
     observed_blocks = plan.get("observed_blocks", ["native", "matrix"])
@@ -239,6 +240,23 @@ def validate(serving=True):
             "--answer-batching": policy["answer_batching"],
             "--max-cases-per-microbatch": str(policy["max_cases_per_microbatch"]),
         }
+    if "matrix_full_units" in plan:
+        support = plan["matrix_full_units"]
+        require(sha(support["path"]) == support["sha256"], "unit support changed")
+        declaration = read(support["path"])
+        require(
+            declaration["parent_state"]["sha256"] == plan["parent"]["sha256"]
+            and declaration["source_checkpoint"]["path"] == observed["checkpoint_path"],
+            "unit support parent differs",
+        )
+        for pin in declaration["reference_attention"].values():
+            require(sha(pin["path"]) == pin["sha256"], "reference attention changed")
+        policy_flags.update(
+            {
+                "--unit-support": support["path"],
+                "--unit-support-sha256": support["sha256"],
+            }
+        )
     for job in plan["jobs"]:
         for argv in [job["preview_argv"], job["run_argv"]]:
             for flag, value in {
@@ -354,6 +372,80 @@ def validate_up_output(out, summary):
         ),
         "UP zero-additive proof missing",
     )
+
+
+def validate_full_unit_output(out, summary):
+    """Verify complete declared MLP axes and unchanged sampled attention support."""
+    import numpy as np
+
+    coverage = summary["coverage"]
+    expected = plan["matrix_inventory"]
+    support = read(plan["matrix_full_units"]["path"])
+    entries = coverage["entries"]
+    fields = ("tensor", "layer", "family", "shape", "start", "count")
+    require(
+        coverage["sampling_mode"] == "mlp-full-units"
+        and coverage["sampled_matrices"] == expected["sampled_matrices"]
+        and coverage["sampled_coordinates"] == expected["sampled_coordinates"]
+        and coverage["unit_support_sha256"] == plan["matrix_full_units"]["sha256"]
+        and coverage["unit_support"] == support
+        and [{key: entry[key] for key in fields} for entry in entries]
+        == expected["entries"]
+        and coverage["families"] == expected["families"],
+        "full-unit coverage differs",
+    )
+    require(read(out / "coverage.json") == coverage, "full-unit coverage files differ")
+    units = {row["layer"]: row["indices"] for row in support["units"]}
+    reference = read(support["reference_attention"]["coverage"]["path"])["entries"]
+    with np.load(
+        support["reference_attention"]["sample_plan"]["path"], allow_pickle=False
+    ) as ref:
+        old_coordinates = ref["coordinates"].copy()
+    attention = {
+        entry["tensor"]: old_coordinates[
+            entry["start"] : entry["start"] + entry["count"]
+        ]
+        for entry in reference
+        if entry["family"] in {"q", "k", "v", "o"}
+    }
+    with np.load(out / "sample-plan.npz", allow_pickle=False) as sample:
+        coordinates, values = sample["coordinates"], sample["source_values"]
+        require(
+            coordinates.dtype == np.int64
+            and coordinates.shape == (expected["sampled_coordinates"], 2)
+            and values.dtype == np.float32
+            and values.shape == (len(coordinates),)
+            and np.isfinite(values).all(),
+            "full-unit sample array invalid",
+        )
+        for entry in entries:
+            name, family = entry["tensor"], entry["family"]
+            actual = coordinates[entry["start"] : entry["start"] + entry["count"]]
+            if family in {"q", "k", "v", "o"}:
+                desired = attention[name]
+            else:
+                chosen = units[entry["layer"]]
+                height, width = entry["shape"]
+                desired = np.asarray(
+                    [(row, unit) for row in range(height) for unit in chosen]
+                    if family == "down"
+                    else [(unit, column) for unit in chosen for column in range(width)],
+                    dtype=np.int64,
+                )
+            require(
+                np.array_equal(actual, desired),
+                "full-unit/attention coordinates differ",
+            )
+    for row in summary["folds"]:
+        expected_file = f"gradient-{row['purpose']}-{row['fold']}.npy"
+        require(row["file"] == expected_file, "full-unit gradient file differs")
+        gradient = np.load(out / expected_file, allow_pickle=False)
+        require(
+            gradient.dtype == np.float32
+            and gradient.shape == (expected["sampled_coordinates"],)
+            and np.isfinite(gradient).all(),
+            "full-unit gradient invalid",
+        )
 
 
 def stop_signal(sig, frame):
@@ -630,6 +722,8 @@ def run():
             )
             if job["collector_kind"] == "up_units":
                 validate_up_output(out, summary)
+            elif "matrix_full_units" in plan:
+                validate_full_unit_output(out, summary)
             elif job["collector_kind"] == "native":
                 require(
                     summary["coverage"]["native_tensors"] == 421
@@ -681,6 +775,24 @@ def run():
             )
         state["cross_objective_up_row_costs_exact"] = True
         state["native_gradient_parity"] = "not_measured"
+    if "matrix_full_units" in plan:
+        import numpy as np
+
+        left, right = [Path(job["output"]) / "sample-plan.npz" for job in plan["jobs"]]
+        with (
+            np.load(left, allow_pickle=False) as a,
+            np.load(right, allow_pickle=False) as b,
+        ):
+            require(
+                set(a.files) == set(b.files)
+                and all(np.array_equal(a[name], b[name]) for name in a.files),
+                "full-unit source/sample arrays differ across objectives",
+            )
+        state["cross_objective_full_unit_source_arrays_exact"] = True
+        state["native_gradient_parity"] = "not_measured"
+        state["V_observation"] = (
+            "sampled_diagnostic_only; future spec prohibits V tensor writes"
+        )
     state["collections_completed"] = True
 
 
