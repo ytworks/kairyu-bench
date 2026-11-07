@@ -1,0 +1,270 @@
+{
+  "status": "full_diff_validated",
+  "created_epoch": 1794034177.8145719,
+  "plan_sha256": "a377adb73772b60f7ad02feb6a1083855f0d6c9c38efc771b4bb560d60f3e6f7",
+  "report_sha256": "cdc3ea38826640a25c680f05aa4df0f5e1e128e6e2c8c0ec39e1838607007ec1",
+  "summary_sha256": "fd5d258b9ff3abc74ab10d4564e62f9937dc82ca74d0b00799775870c69448c9",
+  "execution_sha256": "e9bafbd071192f9b95388648d7d9717b3cc7dd5e29b2a20e8ae5a126750e1883",
+  "initial_projection": "Approximately40minutes numeric plus finalhash; later read-rate projection48.5minutes numeric; estimates only.",
+  "actual_outer_elapsed_seconds": 3045.5071094036102,
+  "actual_diff_elapsed_seconds": 3045.0354573280783,
+  "complete_numeric_passes": 2,
+  "complete_identity_hash_passes": 2,
+  "hashed_files_verified": 18,
+  "stored_tensors_compared": 1188,
+  "stored_elements_compared": 31273088876,
+  "stored_changed_elements": 203419,
+  "changed_matrices": 410,
+  "all_checkpoint_stats_unchanged": true,
+  "stat_checks": {
+    "base": {
+      "files": 9,
+      "all_stat_fields_equal": true,
+      "stat": {
+        "chat_template.jinja": {
+          "device": 2306,
+          "inode": 181678464,
+          "size": 18683,
+          "mtime_ns": 1794014158733915132,
+          "ctime_ns": 1794014158733915132,
+          "mode": 33152,
+          "uid": 1003,
+          "gid": 1003,
+          "nlink": 1
+        },
+        "config.json": {
+          "device": 2306,
+          "inode": 181678465,
+          "size": 4621,
+          "mtime_ns": 1794014158734915095,
+          "ctime_ns": 1794014158734915095,
+          "mode": 33152,
+          "uid": 1003,
+          "gid": 1003,
+          "nlink": 1
+        },
+        "generation_config.json": {
+          "device": 2306,
+          "inode": 181678466,
+          "size": 208,
+          "mtime_ns": 1794014158734915095,
+          "ctime_ns": 1794014158734915095,
+          "mode": 33152,
+          "uid": 1003,
+          "gid": 1003,
+          "nlink": 1
+        },
+        "model-00001-of-00002.safetensors": {
+          "device": 2306,
+          "inode": 181678467,
+          "size": 49923154850,
+          "mtime_ns": 1794014260450139654,
+          "ctime_ns": 1794014260450139654,
+          "mode": 33152,
+          "uid": 1003,
+          "gid": 1003,
+          "nlink": 1
+        },
+        "model-00002-of-00002.safetensors": {
+          "device": 2306,
+          "inode": 181678468,
+          "size": 12623183414,
+          "mtime_ns": 1794014261005119199,
+          "ctime_ns": 1794014261005119199,
+          "mode": 33152,
+          "uid": 1003,
+          "gid": 1003,
+          "nlink": 1
+        },
+        "model.safetensors.index.json": {
+          "device": 2306,
+          "inode": 181678469,
+          "size": 120246,
+          "mtime_ns": 1794014259954157935,
+          "ctime_ns": 1794014259954157935,
+          "mode": 33152,
+          "uid": 1003,
+          "gid": 1003,
+          "nlink": 1
+        },
+        "processor_config.json": {
+          "device": 2306,
+          "inode": 181678470,
+          "size": 1689,
+          "mtime_ns": 1794014259954157935,
+          "ctime_ns": 1794014259954157935,
+          "mode": 33152,
+          "uid": 1003,
+          "gid": 1003,
+          "nlink": 1
+        },
+        "tokenizer.json": {
+          "device": 2306,
+          "inode": 181678471,
+          "size": 32169626,
+          "mtime_ns": 1794014259991156571,
+          "ctime_ns": 1794014259991156571,
+          "mode": 33152,
+          "uid": 1003,
+          "gid": 1003,
+          "nlink": 1
+        },
+        "tokenizer_config.json": {
+          "device": 2306,
+          "inode": 181678472,
+          "size": 3082,
+          "mtime_ns": 1794014260013155760,
+          "ctime_ns": 1794014260013155760,
+          "mode": 33152,
+          "uid": 1003,
+          "gid": 1003,
+          "nlink": 1
+        }
+      }
+    },
+    "candidate": {
+      "files": 9,
+      "all_stat_fields_equal": true,
+      "stat": {
+        "chat_template.jinja": {
+          "device": 2306,
+          "inode": 182098075,
+          "size": 18683,
+          "mtime_ns": 1794028072644794301,
+          "ctime_ns": 1794028072644794301,
+          "mode": 33204,
+          "uid": 1003,
+          "gid": 1003,
+          "nlink": 1
+        },
+        "config.json": {
+          "device": 2306,
+          "inode": 182098076,
+          "size": 4621,
+          "mtime_ns": 1794028072645794268,
+          "ctime_ns": 1794028072645794268,
+          "mode": 33204,
+          "uid": 1003,
+          "gid": 1003,
+          "nlink": 1
+        },
+        "generation_config.json": {
+          "device": 2306,
+          "inode": 182098077,
+          "size": 208,
+          "mtime_ns": 1794028072645794268,
+          "ctime_ns": 1794028072645794268,
+          "mode": 33204,
+          "uid": 1003,
+          "gid": 1003,
+          "nlink": 1
+        },
+        "model-00001-of-00002.safetensors": {
+          "device": 2306,
+          "inode": 182098078,
+          "size": 49923154850,
+          "mtime_ns": 1794028171554622206,
+          "ctime_ns": 1794028171554622206,
+          "mode": 33204,
+          "uid": 1003,
+          "gid": 1003,
+          "nlink": 1
+        },
+        "model-00002-of-00002.safetensors": {
+          "device": 2306,
+          "inode": 182098081,
+          "size": 12623183414,
+          "mtime_ns": 1794028170772647248,
+          "ctime_ns": 1794028170772647248,
+          "mode": 33204,
+          "uid": 1003,
+          "gid": 1003,
+          "nlink": 1
+        },
+        "model.safetensors.index.json": {
+          "device": 2306,
+          "inode": 182098083,
+          "size": 120246,
+          "mtime_ns": 1794028170521655286,
+          "ctime_ns": 1794028170521655286,
+          "mode": 33204,
+          "uid": 1003,
+          "gid": 1003,
+          "nlink": 1
+        },
+        "processor_config.json": {
+          "device": 2306,
+          "inode": 182098084,
+          "size": 1689,
+          "mtime_ns": 1794028170521655286,
+          "ctime_ns": 1794028170521655286,
+          "mode": 33204,
+          "uid": 1003,
+          "gid": 1003,
+          "nlink": 1
+        },
+        "tokenizer.json": {
+          "device": 2306,
+          "inode": 182098085,
+          "size": 32169626,
+          "mtime_ns": 1794028170560654037,
+          "ctime_ns": 1794028170560654037,
+          "mode": 33204,
+          "uid": 1003,
+          "gid": 1003,
+          "nlink": 1
+        },
+        "tokenizer_config.json": {
+          "device": 2306,
+          "inode": 182098086,
+          "size": 3082,
+          "mtime_ns": 1794028170582653333,
+          "ctime_ns": 1794028170582653333,
+          "mode": 33204,
+          "uid": 1003,
+          "gid": 1003,
+          "nlink": 1
+        }
+      }
+    }
+  },
+  "all_source_pins_unchanged": true,
+  "all_configuration_files_equal": true,
+  "io": {
+    "base": {
+      "estimated_bytes": {
+        "metadata_bytes": 280758,
+        "tensor_payload_bytes": 62546177752,
+        "identity_hash_bytes": 62578656419,
+        "total_bytes": 125125114929
+      },
+      "actual_bytes": {
+        "metadata": 280758,
+        "tensor_payload": 62546177752,
+        "identity_hash": 62578656419,
+        "total": 125125114929
+      }
+    },
+    "candidate": {
+      "estimated_bytes": {
+        "metadata_bytes": 280758,
+        "tensor_payload_bytes": 62546177752,
+        "identity_hash_bytes": 62578656419,
+        "total_bytes": 125125114929
+      },
+      "actual_bytes": {
+        "metadata": 280758,
+        "tensor_payload": 62546177752,
+        "identity_hash": 62578656419,
+        "total": 125125114929
+      }
+    }
+  },
+  "logical_bytes_read": 250250229858,
+  "manifest_delta_exactly_equal": true,
+  "fresh_checkpoint_payload_rehash_in_this_completed_diff": true,
+  "additional_checkpoint_scan_by_summary": false,
+  "model_calls": 0,
+  "gpu_contexts": 0,
+  "service_mutations": 0
+}

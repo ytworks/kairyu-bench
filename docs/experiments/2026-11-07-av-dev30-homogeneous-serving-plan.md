@@ -717,3 +717,24 @@ receipts are copied into records/2026-11-07-av-dev30-deployment/. Raw Docker
 logs remain in the restricted host escrow, with hashes referenced rather than
 their contents copied into the public PR. Full environment values were never
 written into these records.
+
+
+## Normal handoff to the canonical AV dev30 owner
+
+The root approved launch plan
+bdd8d4ab62d7a2b31aa697e8cf0554858fb931a216a6612a971f824e1532a5e7
+and owner source
+956af488fe54578c32c9baa856e9c32170dc49c1bbce2b1ba5db9af9ea1dd524.
+On the root's explicit handoff instruction, one newline was sent to keeper
+session 47281. It printed global_lock_released_on_stdin for PID319432 and
+exited 0. The old process and its flock were confirmed absent. The approved
+plan's actual file SHA was verified. This normal release is recorded in
+handoff-release.json, SHA
+32947ddf9763e60208acc78ab2ef355af9a33a748ce634e69aa89cc6db14213c.
+
+The benchmark owner subsequently reported acquisition by PID397808, actual
+immutable f91 runner, run=running, model=gemma-4-31b and all 2,338 selected
+items. This is launch evidence, not a completed score. Runtime ownership now
+belongs to that owner. The deployment agent performed no service operation
+after releasing the keeper; its remaining work was CPU saved-weight validation
+and documentation.

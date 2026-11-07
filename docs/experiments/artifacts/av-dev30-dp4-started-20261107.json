@@ -1,0 +1,267 @@
+{
+  "scope": "one complete canonical dev30 run; in progress, no partial ranking",
+  "receipts": {
+    "detached-launch.json": {
+      "pid": 397808,
+      "epoch": 1794034064.0298097,
+      "command": [
+        "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/infra/weight-tools-ci/bin/python",
+        "-B",
+        "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/worktrees/kairyu-bench-weight-tools/docs/experiments/scripts/fresh-av-dev30-20261107.py",
+        "--plan",
+        "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-av-dev30-dp4-v1/launch-plan-approved.json",
+        "--run"
+      ],
+      "launch_shell": "/bin/bash -ic (startup output suppressed), immediately exec Python owner",
+      "stdin": "DEVNULL",
+      "start_new_session": true,
+      "owner_log": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-av-dev30-dp4-v1/owner.log",
+      "plan_sha256": "bdd8d4ab62d7a2b31aa697e8cf0554858fb931a216a6612a971f824e1532a5e7",
+      "owner_sha256": "956af488fe54578c32c9baa856e9c32170dc49c1bbce2b1ba5db9af9ea1dd524",
+      "prior_keeper_release_confirmed": true,
+      "automatic_retry": false
+    },
+    "prelaunch-resource-state.json": {
+      "epoch": 1794034063.6534648,
+      "old_keeper_proc_exists": false,
+      "global_lock_unheld": true,
+      "gpu": [
+        "0, NVIDIA RTX PRO 6000 Blackwell Server Edition, 84039 MiB, 97887 MiB, 0 %",
+        "1, NVIDIA RTX PRO 6000 Blackwell Server Edition, 85628 MiB, 97887 MiB, 0 %",
+        "2, NVIDIA RTX PRO 6000 Blackwell Server Edition, 84039 MiB, 97887 MiB, 0 %",
+        "3, NVIDIA RTX PRO 6000 Blackwell Server Edition, 84039 MiB, 97887 MiB, 0 %",
+        "4, NVIDIA RTX PRO 6000 Blackwell Server Edition, 84039 MiB, 97887 MiB, 0 %",
+        "5, NVIDIA RTX PRO 6000 Blackwell Server Edition, 84039 MiB, 97887 MiB, 0 %",
+        "6, NVIDIA RTX PRO 6000 Blackwell Server Edition, 84039 MiB, 97887 MiB, 0 %",
+        "7, NVIDIA RTX PRO 6000 Blackwell Server Edition, 85628 MiB, 97887 MiB, 0 %"
+      ],
+      "gpu_processes": [
+        "GPU-c2dec644-056f-5a18-64af-0dcb2d4b5aa1, 358256, VLLM::Worker_TP0, 84030 MiB",
+        "GPU-7ca344d0-c282-61d7-446b-dcdf5c2dee16, 2783211, VLLM::EngineCore, 1584 MiB",
+        "GPU-7ca344d0-c282-61d7-446b-dcdf5c2dee16, 358257, VLLM::Worker_TP1, 84030 MiB",
+        "GPU-8accd8d3-6791-1e54-af77-b229a199b1f1, 364894, VLLM::Worker_TP0, 84030 MiB",
+        "GPU-7a56fbb4-fd9d-1f93-7bd6-f7e55579a964, 364895, VLLM::Worker_TP1, 84030 MiB",
+        "GPU-d8ef7924-e297-e1ef-e51e-82c77b41715a, 371308, VLLM::Worker_TP0, 84030 MiB",
+        "GPU-4884d626-ecaa-7fc1-49d2-158f6d118801, 371309, VLLM::Worker_TP1, 84030 MiB",
+        "GPU-f212d821-c550-947e-904c-1ee6be110c96, 377783, VLLM::Worker_TP0, 84030 MiB",
+        "GPU-9813a152-84b7-57ef-3109-76b4a1d47673, 2783204, VLLM::EngineCore, 1584 MiB",
+        "GPU-9813a152-84b7-57ef-3109-76b4a1d47673, 377784, VLLM::Worker_TP1, 84030 MiB"
+      ],
+      "nvme_free_bytes": 71315394560,
+      "host_git_head": "b158209eb496b446a49bd629f64d0d367e4448b5"
+    },
+    "owner-start.json": {
+      "pid": 397808,
+      "epoch": 1794034064.255678,
+      "plan_sha256": "bdd8d4ab62d7a2b31aa697e8cf0554858fb931a216a6612a971f824e1532a5e7",
+      "owner_sha256": "956af488fe54578c32c9baa856e9c32170dc49c1bbce2b1ba5db9af9ea1dd524",
+      "lock_acquired": true
+    },
+    "launch-preflight.json": {
+      "epoch": 1794034064.5502555,
+      "services": [
+        {
+          "service": "gemma-0",
+          "cid": "baf23e529c4e217801633d0c62b04801e3991b24f6267274104f9d3e355e62c3",
+          "ip": "172.26.0.4",
+          "healthy": true,
+          "idle_counts": [
+            0.0,
+            0.0
+          ],
+          "model_ids": [
+            "gemma-4-31b"
+          ]
+        },
+        {
+          "service": "gemma-1",
+          "cid": "ce1a67f4ec204a90e486092534e3f700f3abf2fbc9f1e68f87668009104ee00d",
+          "ip": "172.26.0.5",
+          "healthy": true,
+          "idle_counts": [
+            0.0,
+            0.0
+          ],
+          "model_ids": [
+            "gemma-4-31b"
+          ]
+        },
+        {
+          "service": "gemma-2",
+          "cid": "fd4ec2eb9d7deba2ce3e790add6b50c0ee79a6390495320d8697873b32957bcf",
+          "ip": "172.26.0.6",
+          "healthy": true,
+          "idle_counts": [
+            0.0,
+            0.0
+          ],
+          "model_ids": [
+            "gemma-4-31b"
+          ]
+        },
+        {
+          "service": "gemma-3",
+          "cid": "e8ec9f3bbfca4baa44b16590ee771a96bba1e1328a60ff0c904995f2675a31b5",
+          "ip": "172.26.0.8",
+          "healthy": true,
+          "idle_counts": [
+            0.0,
+            0.0
+          ],
+          "model_ids": [
+            "gemma-4-31b"
+          ]
+        }
+      ],
+      "checkpoint_stats_equal": true,
+      "model_generation_calls": 0
+    },
+    "wrapper-start.json": {
+      "pid": 398052,
+      "epoch": 1794034064.5514283,
+      "command": [
+        "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/worktrees/kairyu-bench-weight-tools/kairyu-bench",
+        "wsp",
+        "run",
+        "http://kairyu:8000/v1",
+        "--tier",
+        "30",
+        "--split",
+        "dev",
+        "--label",
+        "5d056eb03f954db80313a85167153c875fe5e436e4f97c281a3f55202d9b3eaf",
+        "--run-id",
+        "gemma4-fresh-av-dev30-dp4-20261107-v1",
+        "--results-dir",
+        "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/results",
+        "--chat-concurrency",
+        "256",
+        "--logprob-concurrency",
+        "32",
+        "--agent-concurrency",
+        "4",
+        "--logprob-endpoint",
+        "http://gemma-0:8000/v1",
+        "--logprob-endpoint",
+        "http://gemma-1:8000/v1",
+        "--logprob-endpoint",
+        "http://gemma-2:8000/v1",
+        "--logprob-endpoint",
+        "http://gemma-3:8000/v1",
+        "--observe-config",
+        "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-av-dev30-dp4-v1/http-trace/capture.json"
+      ],
+      "environment_allowlist": {
+        "KAIRYU_BENCH_CACHE_DIR": "/mnt/nvme/kairyu/bench-cache/wsp",
+        "KAIRYU_BENCH_DOCKER_SOCKET": "/mnt/nvme/kairyu/docker/wsp/run/docker.sock",
+        "KAIRYU_BENCH_DOCKER_NETWORK": "gemma-4-31b-8gpu_default",
+        "KAIRYU_BENCH_CLEAN_TASK_IMAGES": "0",
+        "KAIRYU_BENCH_RUNNER_IMAGE_ID": "sha256:f91bdcf997af6d7b194bec229812fd018277158f6795de7d91e58448936e7ad8",
+        "KAIRYU_BENCH_TERMINAL_BENCH_WORKERS": "4",
+        "KAIRYU_BENCH_LIVECODEBENCH_PRO_WORKERS": "4",
+        "KAIRYU_BENCH_SWEBENCH_PRO_WORKERS": "4"
+      }
+    },
+    "actual-runner.json": {
+      "epoch": 1794034097.746636,
+      "runner": {
+        "cid": "d62b640afc61b49683868590d09a6f0cc45b1d48e2f18c6947478d0224410ff6",
+        "image_id": "sha256:f91bdcf997af6d7b194bec229812fd018277158f6795de7d91e58448936e7ad8",
+        "configured_image": "sha256:f91bdcf997af6d7b194bec229812fd018277158f6795de7d91e58448936e7ad8",
+        "command": [
+          "wsp",
+          "run",
+          "http://kairyu:8000/v1",
+          "--tier",
+          "30",
+          "--split",
+          "dev",
+          "--label",
+          "5d056eb03f954db80313a85167153c875fe5e436e4f97c281a3f55202d9b3eaf",
+          "--run-id",
+          "gemma4-fresh-av-dev30-dp4-20261107-v1",
+          "--results-dir",
+          "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/results",
+          "--chat-concurrency",
+          "256",
+          "--logprob-concurrency",
+          "32",
+          "--agent-concurrency",
+          "4",
+          "--logprob-endpoint",
+          "http://gemma-0:8000/v1",
+          "--logprob-endpoint",
+          "http://gemma-1:8000/v1",
+          "--logprob-endpoint",
+          "http://gemma-2:8000/v1",
+          "--logprob-endpoint",
+          "http://gemma-3:8000/v1",
+          "--observe-config",
+          "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-av-dev30-dp4-v1/http-trace/capture.json"
+        ],
+        "working_dir": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/results",
+        "state": {
+          "Status": "running",
+          "Running": true,
+          "Pid": 398213,
+          "StartedAt": "2026-11-07T06:47:44.745640622Z"
+        },
+        "mounts": [
+          {
+            "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/results",
+            "destination": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/results",
+            "rw": true
+          },
+          {
+            "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-av-dev30-dp4-v1/http-trace",
+            "destination": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-av-dev30-dp4-v1/http-trace",
+            "rw": true
+          },
+          {
+            "source": "/mnt/nvme/kairyu/bench-cache/wsp",
+            "destination": "/mnt/nvme/kairyu/bench-cache/wsp",
+            "rw": true
+          },
+          {
+            "source": "/mnt/nvme/kairyu/docker/wsp/run/docker.sock",
+            "destination": "/var/run/docker.sock",
+            "rw": true
+          }
+        ],
+        "networks": [
+          "gemma-4-31b-8gpu_default"
+        ]
+      },
+      "credential_environment_omitted": true
+    },
+    "run-start-verified.json": {
+      "epoch": 1794034097.7473853,
+      "run": {
+        "schema_version": 1,
+        "kind": "wsp",
+        "status": "running",
+        "tier": 30,
+        "split": "dev",
+        "label": "5d056eb03f954db80313a85167153c875fe5e436e4f97c281a3f55202d9b3eaf",
+        "model_id": "gemma-4-31b",
+        "endpoint": {
+          "fingerprint": "sha256:6342f06c730514dc"
+        },
+        "manifest_sha256": "a3a0b60e0872a38c6b1abf7e97d7fe729fabf9e25cd3f09a3da9544b9ca39b5b",
+        "items": 2338,
+        "started_at": "2026-11-07T06:47:46.734698Z"
+      },
+      "actual_runner_sha256": "5c7b43ee3ad4f1528dd74160f706014d5f90355b79f2e96792902d02dcc5a403",
+      "actual_runner_cid": "d62b640afc61b49683868590d09a6f0cc45b1d48e2f18c6947478d0224410ff6"
+    }
+  },
+  "input_sha256": {
+    "detached-launch.json": "924bbefe7e1838340e00fbef9ffc160e7f440ff6288932d49f4cb695a2c2edb9",
+    "prelaunch-resource-state.json": "bd37e43356c49ee9c4b47dbdba35566e789bf64bec565dddbea7c8b9f331ca24",
+    "owner-start.json": "58cc7177adc60628640b3eb6926f44a573c245e69b634bb323375cd9a2f53c0e",
+    "launch-preflight.json": "8e13f08d94f21319f7183b536cbdc966148b77f6ee0c38fbb1b1c58f38646ab0",
+    "wrapper-start.json": "0fa092b01a08929f40597c470c081f46e5db5423fda6075fc178798195790093",
+    "actual-runner.json": "5c7b43ee3ad4f1528dd74160f706014d5f90355b79f2e96792902d02dcc5a403",
+    "run-start-verified.json": "eed53e85ec8f3e1e929a45cbab389a03c3d13a68e8cfa1432e7788386e17e9db"
+  }
+}
