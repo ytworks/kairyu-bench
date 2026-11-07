@@ -272,3 +272,41 @@ proxy mean as broad coding improvement. The fixed F02 run and predeclared
 official decision rules continue unchanged; no new candidate or optimization
 was performed in this audit. The audit recipe, CPU counterexamples, first
 fixture failure and both completed revisions are retained in the PR.
+
+
+### F02 complete official diagnostic: no code gain
+
+The [independent complete comparison](2026-11-07-f02-official-results.md)
+verified all 778 canonical items, zero unscored/error outcomes and the recorded
+matched runtime. F02 code is 87.7777777778, tied with AV; every one of the 26 code
+item scores is identical. HumanEval+ remains10/10, LiveCodeBench5/6, MBPP+8/10.
+The same three failures remain. Under the frozen rule there is no advancement,
+AV stays the editing parent, and the conditional confirmation pair is not run.
+The original failed proxy gate remains failed. No score above90 is achieved.
+
+Overall increases by0.6572205 points, but gains and losses coexist: instructions
++10, long-context+6.25, vision-6.25, tools-5, math-3.125 and reasoning-2.173913.
+All 14 areas, all sources and every item are retained. Official probe-code NLL
+worsens by0.067913 nat/token while the authored margin proxy improved; the
+proxy and code ability must remain distinct. Terminal rewards remain0/1, with
+14 episodes and36 tool calls versus AV's19/39. The smaller runtime is not
+attributed causally to weights: background host work and generated lengths differ.
+
+The ordinary F02 service was restored with its exact original container ID.
+The capture's two writer closed acknowledgments remain false after engine
+abort/force-kill shutdown, although gzip EOF checks and parsed record totals
+match the last saved writer counts, drops/errors are zero and all778 official
+items have observations. Missing close acknowledgments and the two unmatched
+pre-run requests remain explicit capture limitations. They do not change the
+complete official scores or justify imputing unobserved activations.
+
+Before any further optimization, measure cumulative AV on complete canonical
+dev30: all2338 items, all14 areas and all96 diagnostic probes, including the
+10 SciCode problems absent from dev10. Use homogeneous ordinary TP2x4/MTP4
+serving, chat256/logprob32/agent4, the same immutable f91 runner and client
+HTTP tracing. This is a new condition/tier cohort, not a repeat of the observed
+DP1 dev10 run and not an activation capture. Existing tools will switch only
+the four owned chat services; all unrelated services remain protected.
+Future candidate comparisons in this cohort must match its complete manifest,
+weights routing, sampler, environment and limits. The broad measurement
+will guide the next decision; no F02 rescue/adoption or new solve is implied.
