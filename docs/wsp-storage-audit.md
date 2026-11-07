@@ -33,3 +33,9 @@ Before creation, verify complete accounting, writer/evaluator state, peak
 temporary capacity, the 150 GiB weight and 100 GiB cache limits, and at least
 200 GiB free NVMe throughout the operation. Keep unique evidence until its
 preservation is verified. No cleanup operation is provided by this script.
+
+Each scan invalidates any earlier operator-issued `storage_release` and
+`allocation_receipts` fields. A fresh allocation receipt and a bounded creation
+or evaluation reservation are required; old receipts are never silently reused
+as current admission evidence. Docker logical usage remains distinct from actual
+allocation even when a conservative overhead reserve is sufficient for planning.

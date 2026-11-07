@@ -122,6 +122,9 @@ def main():
         parser.error("This small task-owned audit supports only its documented work root")
     ledger_path = root / "storage-state.json"
     old = json.loads(ledger_path.read_text()) if ledger_path.exists() else {}
+    # A new scan invalidates a previous operator-issued capacity reservation.
+    old.pop("storage_release", None)
+    old.pop("allocation_receipts", None)
     host_containers = []
     discovery_errors = []
     try:
