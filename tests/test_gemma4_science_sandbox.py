@@ -155,6 +155,78 @@ class ScienceSandboxTest(unittest.TestCase):
             with self.assertRaisesRegex(ValueError, "no reasoning"):
                 SANDBOX.read_inputs(cases, responses)
 
+    def test_http_failure_stays_unknown_without_generated_code_execution(self):
+        with tempfile.TemporaryDirectory() as directory:
+            cases, responses = self.inputs(directory)
+            data = json.loads(responses.read_text())
+            data["generation"].update(
+                thinking_control="server-default", enable_thinking=None
+            )
+            data["responses"] = [{
+                "id": "science-weighted-moments",
+                "error_type": "HTTPError",
+                "http_status": 400,
+            }]
+            responses.write_text(json.dumps(data))
+            calls = []
+
+            class NoExecution:
+                def __init__(self, *_args, **_kwargs):
+                    pass
+
+                def check_image(self):
+                    calls.append("check-image")
+
+                def run(self, _payload):
+                    raise AssertionError("HTTP failure must not execute an answer")
+
+            report = SANDBOX.main([
+                "--cases", str(cases), "--responses", str(responses),
+                "--output", str(Path(directory) / "http-failure"),
+                "--docker-socket", "/nonexistent/docker.sock",
+                "--daemon-id", "fixture", "--image", "sha256:" + "a" * 64, "--run",
+            ], docker_factory=NoExecution)
+            row = next(r for r in report["results"]
+                       if r["id"] == "science-weighted-moments")
+            self.assertEqual(calls, ["check-image"])
+            self.assertEqual(row["status"], "generation_error")
+            self.assertEqual(row["http_status"], 400)
+            self.assertEqual(row["error_type"], "HTTPError")
+            self.assertIsNone(row["passed"])
+            self.assertEqual((report["passed"], report["failed"]), (0, 0))
+            self.assertEqual(report["unknown"], report["expected_cases"])
+
+    def test_http_status_and_thinking_provenance_reject_inconsistent_values(self):
+        with tempfile.TemporaryDirectory() as directory:
+            cases, responses = self.inputs(directory)
+            data = json.loads(responses.read_text())
+            data["responses"] = [{
+                "id": "science-weighted-moments", "error_type": "HTTPError",
+            }]
+            for status in (True, "400", 400.0, 200, 600, None):
+                with self.subTest(status=status):
+                    data["responses"][0]["http_status"] = status
+                    responses.write_text(json.dumps(data))
+                    with self.assertRaisesRegex(ValueError, "HTTP failure status"):
+                        SANDBOX.read_inputs(cases, responses)
+            data["responses"][0]["http_status"] = 400
+            for control, enabled in (("server-default", True), ("request", None),
+                                     ("unknown", None)):
+                with self.subTest(control=control, enabled=enabled):
+                    data["generation"].update(
+                        thinking_control=control, enable_thinking=enabled
+                    )
+                    responses.write_text(json.dumps(data))
+                    with self.assertRaisesRegex(ValueError, "thinking-control"):
+                        SANDBOX.read_inputs(cases, responses)
+            data["generation"].update(
+                thinking_control="server-default", enable_thinking=None
+            )
+            data["responses"][0]["public_answer"] = "a contradictory answer"
+            responses.write_text(json.dumps(data))
+            with self.assertRaisesRegex(ValueError, "HTTP failure status"):
+                SANDBOX.read_inputs(cases, responses)
+
     def test_daemon_guard_and_bounded_own_container_cleanup(self):
         with tempfile.TemporaryDirectory() as directory:
             path = Path(directory) / "docker.sock"

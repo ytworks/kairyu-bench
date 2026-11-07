@@ -6,6 +6,7 @@ import json
 from pathlib import Path
 import tempfile
 import unittest
+import urllib.error
 
 DIRECTORY = Path(__file__).resolve().parents[1] / "scripts/experiments/gemma4-purpose"
 spec = importlib.util.spec_from_file_location(
@@ -99,11 +100,13 @@ class ScienceGenerationTest(unittest.TestCase):
                 self.arguments(cases, output) + ["--run"], opener=opener
             )
             self.assertEqual((receipt["received"], receipt["errors"]), (1, 0))
-            self.assertNotIn("temperature", requests[0])
-            self.assertNotIn("top_p", requests[0])
-            self.assertEqual(
-                requests[0]["chat_template_kwargs"], {"enable_thinking": True}
-            )
+            self.assertEqual(requests[0], {
+                "model": "fixture-model",
+                "messages": [{"role": "user", "content": "Write solve(x)."}],
+                "max_tokens": 8192,
+                "seed": 0,
+                "chat_template_kwargs": {"enable_thinking": True},
+            })
             self.assertNotIn("reference-not-sent", json.dumps(requests))
             self.assertNotIn("foil-not-sent", json.dumps(requests))
             text = (output / "train-responses.json").read_text()
@@ -112,6 +115,62 @@ class ScienceGenerationTest(unittest.TestCase):
                 json.loads(text)["responses"][0]["usage"]["output_tokens"], 12
             )
             self.assertEqual(cases.read_bytes(), before)
+
+    def test_server_default_omits_only_override_and_records_unknown_thinking(self):
+        with tempfile.TemporaryDirectory() as directory:
+            cases = self.fixture(directory)
+            output = Path(directory) / "server-default"
+            requests = []
+
+            def opener(request, timeout):
+                requests.append(json.loads(request.data))
+                return io.BytesIO(json.dumps({
+                    "choices": [{"message": {"content": "7"}, "finish_reason": "stop"}]
+                }).encode())
+
+            result = GENERATOR.main(
+                self.arguments(cases, output)
+                + ["--thinking-control", "server-default", "--run"],
+                opener=opener,
+            )
+            self.assertEqual(requests, [{
+                "model": "fixture-model",
+                "messages": [{"role": "user", "content": "Write solve(x)."}],
+                "max_tokens": 8192,
+                "seed": 0,
+            }])
+            generation = json.loads(
+                (output / "train-responses.json").read_text()
+            )["generation"]
+            self.assertEqual(generation["thinking_control"], "server-default")
+            self.assertEqual(generation["frame"], "live-server-default-public-answer")
+            self.assertIsNone(generation["enable_thinking"])
+            self.assertEqual(result["thinking_control"], "server-default")
+            self.assertEqual((result["received"], result["errors"]), (1, 0))
+
+    def test_http_400_is_retained_without_body_answer_or_retry(self):
+        with tempfile.TemporaryDirectory() as directory:
+            cases = self.fixture(directory)
+            output = Path(directory) / "http-error"
+            calls = []
+
+            def opener(*_args, **_kwargs):
+                calls.append(1)
+                raise urllib.error.HTTPError(
+                    "http://private-url-sentinel", 400, "private-message-sentinel",
+                    {"private-header-sentinel": "private-value-sentinel"},
+                    io.BytesIO(b"private-body-sentinel"),
+                )
+
+            result = GENERATOR.main(
+                self.arguments(cases, output) + ["--run"], opener=opener
+            )
+            text = (output / "train-responses.json").read_text()
+            self.assertNotIn("sentinel", text)
+            self.assertEqual(json.loads(text)["responses"], [{
+                "id": "fixture", "error_type": "HTTPError", "http_status": 400,
+            }])
+            self.assertEqual((len(calls), result["received"], result["errors"]), (1, 1, 1))
 
     def test_error_body_never_persisted_and_no_retry(self):
         with tempfile.TemporaryDirectory() as directory:

@@ -1,0 +1,72 @@
+{
+  "schema_version": 1,
+  "recorded_at": "2026-11-07T07:44:36.885197+00:00",
+  "scope": "CPU fixture validation only; zero model calls and no serving or failed-trial mutation",
+  "files": [
+    {
+      "path": "scripts/experiments/gemma4-purpose/science_generate.py",
+      "bytes": 10011,
+      "sha256": "df88767ebcd5a3138747a36fe7e0976dbb0c2ceb5b0f1eece74740818f0b7f89"
+    },
+    {
+      "path": "scripts/experiments/gemma4-purpose/science_sandbox.py",
+      "bytes": 28206,
+      "sha256": "cf26e77e90d5789422ad2ebd3ac43599ee0a2ebc781b7a1c0c8ae834953a817e"
+    },
+    {
+      "path": "tests/test_gemma4_science_generate.py",
+      "bytes": 7811,
+      "sha256": "b9d11de5931cd35ba5fd281c5b812c028e7535ca913e7c804325e79c2906d226"
+    },
+    {
+      "path": "tests/test_gemma4_science_sandbox.py",
+      "bytes": 13638,
+      "sha256": "b9dbabbc97a4a66a7a24748dc111e66b992228113c7af0123e5aed783169af4e"
+    }
+  ],
+  "checks": [
+    {
+      "command": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/infra/weight-tools-ci/bin/python -m unittest discover -s tests -p test_gemma4_science_generate.py -v",
+      "tests": 5,
+      "seconds": 0.017,
+      "exit_code": 0
+    },
+    {
+      "command": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/infra/weight-tools-ci/bin/python -m unittest discover -s tests -p test_gemma4_science_sandbox.py -v",
+      "tests": 7,
+      "seconds": 0.583,
+      "exit_code": 0
+    },
+    {
+      "command": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/infra/weight-tools-ci/bin/ruff check scripts/experiments/gemma4-purpose/science_generate.py scripts/experiments/gemma4-purpose/science_sandbox.py tests/test_gemma4_science_generate.py tests/test_gemma4_science_sandbox.py",
+      "exit_code": 0
+    },
+    {
+      "command": "git diff --check",
+      "exit_code": 0
+    }
+  ],
+  "live_evidence": [
+    {
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-av-authored120-native-v1/gateway-access-status-audit.json",
+      "bytes": 19562,
+      "sha256": "835a3092eff98fa8d36702f579d7301745e6282827554b0c8220f4ed69c31491"
+    },
+    {
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-av-authored120-native-v1/gateway-entrypoint-source-hits.json",
+      "bytes": 10236,
+      "sha256": "652c1bea52962b88519d80c19f3b835a70698139c5ad1468afb7c7146c85a2f7"
+    },
+    {
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-av-authored120-native-v1/replica-thinking-command-evidence.json",
+      "bytes": 1543,
+      "sha256": "f40f87e1783d15cccbe4d4bd216308bfad6dcf7902141e0c60fa22c42cb25215"
+    }
+  ],
+  "limits": [
+    "No gateway request sent to validate the fix.",
+    "External serving attestation is required to establish actual thinking state.",
+    "Generation errors do not establish correctness.",
+    "Existing sandbox supports fixed catalogs, not arbitrary authored 120-case execution."
+  ]
+}

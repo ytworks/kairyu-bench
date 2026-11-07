@@ -1,0 +1,58 @@
+"""One explicitly approved transport probe; no service mutation or retry."""
+import fcntl
+import hashlib
+import importlib.util
+import json
+import os
+from pathlib import Path
+import signal
+import subprocess
+import sys
+import time
+
+plan_path = Path(sys.argv[1])
+plan = json.loads(plan_path.read_text())
+assert plan["approved_for_execution"] is True and plan["authorization"]
+assert hashlib.sha256(Path(__file__).read_bytes()).hexdigest() == plan["operation_sha256"]
+owner = plan["owner_preflight_module"]
+assert hashlib.sha256(Path(owner["path"]).read_bytes()).hexdigest() == owner["sha256"]
+spec = importlib.util.spec_from_file_location("frozen_authored_owner", owner["path"])
+module = importlib.util.module_from_spec(spec)
+spec.loader.exec_module(module)
+module.check_pins(plan)
+assert plan["generation_attempts"] == 1 and plan["retries"] == 0
+command = plan["command"]
+for flag, expected in [("--max-tokens", "256"), ("--seed", "0"), ("--concurrency", "1"), ("--thinking-control", "server-default")]:
+    assert command[command.index(flag) + 1] == expected
+assert not Path(plan["output"]).exists()
+out = plan_path.parent / "smoke-owner"
+out.mkdir()
+started = time.time()
+def terminate(_signum, _frame):
+    raise KeyboardInterrupt("termination requested")
+previous = signal.signal(signal.SIGTERM, terminate)
+try:
+    with Path(plan["global_lock"]).open("a+") as lock:
+        fcntl.flock(lock.fileno(), fcntl.LOCK_EX | fcntl.LOCK_NB)
+        module.save(out / "start.json", {"pid": os.getpid(), "epoch": started, "plan_sha256": module.sha(plan_path), "lock_acquired": True})
+        module.save(out / "preflight-before.json", {**module.preflight(plan), "all_nine_checkpoint_stats_equal": True})
+        with (out / "generation.log").open("x") as log:
+            process = subprocess.Popen(command + ["--run"], cwd=plan["cwd"], stdin=subprocess.DEVNULL, stdout=log, stderr=subprocess.STDOUT)
+            module.save(out / "generator-start.json", {"pid": process.pid, "command": command + ["--run"], "epoch": time.time()})
+            try:
+                code = process.wait()
+            finally:
+                if process.poll() is None:
+                    process.wait()
+        module.check_pins(plan)
+        module.save(out / "preflight-after.json", {**module.preflight(plan), "all_nine_checkpoint_stats_equal": True})
+        receipt = json.loads((Path(plan["output"]) / "receipt.json").read_text())
+        result = json.loads((Path(plan["output"]) / "train-responses.json").read_text())
+        rows = result["responses"]
+        success = code == 0 and receipt["status"] == "completed" and len(rows) == 1 and not rows[0].get("error_type") and rows[0].get("public_answer", "").strip() == "ready" and rows[0].get("finish_reason") == "stop"
+        module.save(out / "complete.json", {"epoch": time.time(), "elapsed_seconds": time.time() - started, "returncode": code, "success": success, "receipt": receipt, "public_responses": rows, "generation_metadata": result["generation"], "services_changed": False, "automatic_retry": False})
+except BaseException as error:
+    module.save(out / "failure.json", {"epoch": time.time(), "error_type": type(error).__name__, "no_automatic_retry": True})
+    raise
+finally:
+    signal.signal(signal.SIGTERM, previous)

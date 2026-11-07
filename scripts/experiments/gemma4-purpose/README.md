@@ -329,7 +329,12 @@ responses JSONはschema_version=1、split=train|transfer、cases_sha256、
 generation、responsesを持ちます。trainは既存purpose→fold mapping、
 transferは既存cases配列envelopeをそのまま指定できます。
 generationはcheckpoint_sha256/model_id/frame/enable_thinking/reasoning_saved=falseと
-sampling条件を保存します。例えばsampling=server_official_generation_config、
+sampling条件を保存します。生成器はthinking_control=request|server-defaultも保存し、
+server-default時のenable_thinkingはnullです（サーバー設定は別証拠で確認）。
+HTTP失敗はerror_type=HTTPErrorと整数http_status（400–599）を記録でき、
+public_answerとの同居や文字列/真偽値のstatusを拒否します。
+sandboxは生成失敗をgeneration_error、passed=nullとして保持します。
+例えばsampling=server_official_generation_config、
 temperature=null、max_tokens=8192、seed=0です。
 各responseはid、public_answer、request_id、finish_reason、seconds、
 数値だけのusageを持ちます。隠れたreasoning本文は受け付けず保存しません。
@@ -353,8 +358,15 @@ cases内容はこのレシピの信頼済みcatalogと完全一致させ、SHA�
 science_generate.pyは、今回のone-off生成launcherから固定パスとDocker探索を除いた
 再利用CLIです。API endpoint/model/checkpoint SHAを明示し、plain train mappingと
 transfer cases配列envelopeの双方を受けます。元のcorrect/foilはAPIへ送信せず、
-promptだけをnative thinking ONで送ります。temperature/top_pを省略してserverの
-公式generation_configを使い、seed0/max_tokens8192が既定です。
+promptだけを送ります。既定の--thinking-control requestは従来どおり
+chat_template_kwargs={"enable_thinking":true}を明示します。
+--thinking-control server-defaultを明示した場合だけ、そのfieldを省略します。
+このmodeはgateway等がそのoverrideを受け付けない場合のためで、
+enable_thinking=null、frame=live-server-default-public-answerとして記録し、
+生成器自身はthinkingの実状態を推定しません。実配信replicaの起動引数・
+template/default設定と重みの同一性を別途固定してから使ってください。
+temperature/top_pを省略してserverの公式generation_configを使い、
+seed0/max_tokens8192が既定です。
 checkpoint SHAは呼出側の申告であり、このCLIだけで配信中の重みを認証しません。
 別途同じserving identity/readonly mount証拠を確保してください。
 
@@ -370,7 +382,9 @@ python scripts/experiments/gemma4-purpose/science_generate.py \
 urllibのtimeoutは各socket操作への制限で、request全体の厳密なwall deadlineではありません。
 public content、request ID、finish_reason、数値token usage、経過秒だけを保存し、
 reasoning本文・raw response・HTTP error本文は保存しません。usage欠測はnullです。
-失敗はexception classだけをerror_typeへ保存します。SIGINT等で中断した場合は
+失敗はexception classをerror_typeへ保存し、HTTPErrorの場合は整数statusも
+http_statusへ保存します。本文・header・URL・例外messageは保存しません。
+失敗行は公開回答でも誤答でもなく未測定です。SIGINT等で中断した場合は
 未着手futureを取り消しますが、実行中HTTPは個別timeoutまで待つ場合があります。
 このutilityはAPI呼出しだけで、code実行・重み変更・WSP採点をしません。
 生成結果はscience_sandbox.pyへ別途渡します。

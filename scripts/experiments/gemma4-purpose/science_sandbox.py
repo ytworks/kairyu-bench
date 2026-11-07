@@ -491,6 +491,7 @@ def read_inputs(
         "checkpoint_sha256",
         "frame",
         "enable_thinking",
+        "thinking_control",
         "reasoning_saved",
         "sampling",
         "temperature",
@@ -500,6 +501,14 @@ def read_inputs(
     }
     if set(generation) - allowed_generation:
         raise ValueError("unsupported generation provenance fields")
+    if "thinking_control" in generation:
+        control = generation["thinking_control"]
+        if control not in ("request", "server-default") or (
+            control == "request" and generation.get("enable_thinking") is not True
+        ) or (
+            control == "server-default" and generation.get("enable_thinking") is not None
+        ):
+            raise ValueError("inconsistent thinking-control provenance")
     answers = {}
     for row in responses.get("responses", []):
         if set(row) - {
@@ -511,6 +520,7 @@ def read_inputs(
             "seconds",
             "error",
             "error_type",
+            "http_status",
         }:
             raise ValueError(
                 "unsupported response fields; no reasoning content accepted"
@@ -518,6 +528,13 @@ def read_inputs(
         if row.get("id") not in catalog or row["id"] in answers:
             raise ValueError("unknown or duplicate response ID")
         answer = row.get("public_answer")
+        if "http_status" in row and (
+            type(row["http_status"]) is not int
+            or not 400 <= row["http_status"] <= 599
+            or row.get("error_type") != "HTTPError"
+            or answer is not None
+        ):
+            raise ValueError("invalid HTTP failure status")
         if answer is not None and (
             not isinstance(answer, str) or len(answer.encode()) > 262144
         ):
@@ -682,10 +699,15 @@ def main(argv=None, docker_factory=Docker):
             row = answers.get(case_id, {})
             item = {
                 key: row[key]
-                for key in ("request_id", "finish_reason", "usage", "seconds")
+                for key in (
+                    "request_id", "finish_reason", "usage", "seconds",
+                    "error_type", "http_status",
+                )
                 if key in row
             }
             item.update({"id": case_id, "status": "missing_response", "passed": None})
+            if row.get("error") or row.get("error_type"):
+                item["status"] = "generation_error"
             answer = row.get("public_answer")
             if (
                 answer is not None

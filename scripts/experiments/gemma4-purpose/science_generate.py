@@ -13,6 +13,7 @@ from pathlib import Path
 import re
 import time
 from urllib.parse import urlsplit
+import urllib.error
 import urllib.request
 
 
@@ -66,8 +67,9 @@ def generate(row: dict, args, opener=urllib.request.urlopen) -> dict:
         "messages": [{"role": "user", "content": row["prompt"]}],
         "max_tokens": args.max_tokens,
         "seed": args.seed,
-        "chat_template_kwargs": {"enable_thinking": True},
     }
+    if args.thinking_control == "request":
+        body["chat_template_kwargs"] = {"enable_thinking": True}
     # Temperature/top_p deliberately omitted: match the server generation config.
     request = urllib.request.Request(
         args.endpoint.rstrip("/") + "/chat/completions",
@@ -127,6 +129,13 @@ def main(argv=None, opener=urllib.request.urlopen):
     parser.add_argument("--max-tokens", type=int, default=8192)
     parser.add_argument("--timeout", type=float, default=240)
     parser.add_argument("--seed", type=int, default=0)
+    parser.add_argument(
+        "--thinking-control",
+        choices=("request", "server-default"),
+        default="request",
+        help="request explicitly enables thinking; server-default omits the override "
+        "and requires separate serving attestation",
+    )
     parser.add_argument("--run", action="store_true")
     args = parser.parse_args(argv)
     url = urlsplit(args.endpoint)
@@ -167,8 +176,13 @@ def main(argv=None, opener=urllib.request.urlopen):
         "generation": {
             "model_id": args.model,
             "checkpoint_sha256": args.checkpoint_sha256,
-            "frame": "live-native-thinking-on-public-answer",
-            "enable_thinking": True,
+            "frame": (
+                "live-native-thinking-on-public-answer"
+                if args.thinking_control == "request"
+                else "live-server-default-public-answer"
+            ),
+            "enable_thinking": True if args.thinking_control == "request" else None,
+            "thinking_control": args.thinking_control,
             "reasoning_saved": False,
             "sampling": "server_official_generation_config",
             "temperature": None,
@@ -188,6 +202,7 @@ def main(argv=None, opener=urllib.request.urlopen):
         "source_stat": source_state,
         "checkpoint_identity": "caller-supplied; establish serving identity separately",
         "concurrency": args.concurrency,
+        "thinking_control": args.thinking_control,
         "timeout_seconds": args.timeout,
         "retries": 0,
         "hidden_reasoning_saved": False,
@@ -214,6 +229,12 @@ def main(argv=None, opener=urllib.request.urlopen):
                             "id": futures[future],
                             "error_type": type(error).__name__,
                         }
+                        if (
+                            isinstance(error, urllib.error.HTTPError)
+                            and type(error.code) is int
+                            and 400 <= error.code <= 599
+                        ):
+                            row["http_status"] = error.code
                     result["responses"].append(row)
                     save(output, result)
             except BaseException:
