@@ -461,7 +461,7 @@ def main():
         "parent": roster["parent"],
         "model_calls": 0,
         "adopted": False,
-        "scope": "Independent exact selected-source BF16 counts/norms. 84 predictions are retained from the pinned existing solver; no new solve or model.",
+        "scope": "Independent exact selected-source BF16 counts/norms. Recorded predictions are retained from the pinned existing solver; no new solve or model.",
         "limitations": [
             "A block-scaled metric cap is not comparable to unscaled relative cap.",
             "Family masks and eligible-dependent targets do not imply dominance or functional independence.",

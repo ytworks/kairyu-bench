@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Prepare/default-preview or execute root-pinned authored-only AD six-alternative finite replay."""
+"""Prepare/default-preview or execute root-pinned authored finite replay on a declared scratch slot."""
 
 import argparse
 import datetime
@@ -68,7 +68,7 @@ state = {
     "started_epoch": time.time(),
     "plan_sha256": PLAN_SHA,
     "jobs": [],
-    "model_calls_scope": "Plan-bound authored train cases, immutable accepted AD -> each selected alternative from AD -> restored AD finite diagnostics only",
+    "model_calls_scope": "Plan-bound authored train cases, accepted saved parent -> each selected alternative from that parent -> restored parent finite diagnostics only",
     "benchmark_calls": 0,
     "checkpoint_writes": 0,
 }
@@ -110,12 +110,22 @@ def validate(serving=True):
         and auth["runtime_sha256"] == sha(__file__),
         "authorization contract",
     )
+    scratch_gpus = {"gemma-0": 0, "gemma-2": 4}
+    service = plan["stop_service"]
     require(
-        plan["stop_service"] == "gemma-0"
-        and plan["physical_gpus"] == [0]
-        and plan["protected_services"] == ["gemma-1", "gemma-2", "gemma-3"],
-        "fixed AD finite lifecycle scope",
+        service in scratch_gpus
+        and plan["physical_gpus"] == [scratch_gpus[service]]
+        and plan["protected_services"]
+        == [f"gemma-{i}" for i in range(4) if f"gemma-{i}" != service],
+        "declared finite scratch lifecycle scope",
     )
+    for job in plan["jobs"]:
+        argv = job["run_argv"]
+        require(
+            argv.count("--gpus") == 1
+            and argv[argv.index("--gpus") + 1] == f"device={scratch_gpus[service]}",
+            "finite collector GPU differs from owned scratch slot",
+        )
     require(
         plan["status"] == "planned_not_executed_requires_root_authorization"
         and plan["source_freeze_required"] is False
@@ -177,13 +187,13 @@ def validate(serving=True):
                     "ctime_ns": s.st_ctime_ns,
                 }.items()
             ),
-            "AD file stamp changed",
+            "accepted-parent file stamp changed",
         )
     if serving:
         for svc, want in plan["serving_baseline"].items():
             require(same_service(svc, want), "serving snapshot changed " + svc)
     else:
-        for svc in ["gemma-1", "gemma-2", "gemma-3"]:
+        for svc in plan["protected_services"]:
             require(
                 same_service(svc, plan["serving_baseline"][svc]),
                 "preserved service changed " + svc,
@@ -257,13 +267,13 @@ def run():
         )
         publish()
     validate()
-    c = guard.inspect(plan["serving_baseline"]["gemma-0"]["id"])
+    c = guard.inspect(plan["serving_baseline"][plan["stop_service"]]["id"])
     ips = [
         n["IPAddress"]
         for n in c["NetworkSettings"]["Networks"].values()
         if n.get("IPAddress")
     ]
-    require(len(ips) == 1, "gemma0 network mapping")
+    require(len(ips) == 1, "scratch service network mapping")
     counter = (
         R
         / "worktrees/kairyu-bench-weight-tools/scripts/experiments/serving-counters.py"
@@ -287,16 +297,16 @@ def run():
             "--attestation-sha256",
             PLAN_SHA,
             "--output",
-            str(P / "gemma0-before-stop-counters.json"),
+            str(P / f"{plan['stop_service']}-before-stop-counters.json"),
             "--capture",
         ],
         capture_output=True,
     )
     require(q.returncode == 0, "idle metadata snapshot failed")
-    metrics = read(P / "gemma0-before-stop-counters.json")
+    metrics = read(P / f"{plan['stop_service']}-before-stop-counters.json")
     for metric in ["vllm:num_requests_running", "vllm:num_requests_waiting"]:
         vals = [float(v["value"]) for v in metrics["series"] if v["metric"] == metric]
-        require(vals and all(v == 0 for v in vals), "gemma0 not idle")
+        require(vals and all(v == 0 for v in vals), "scratch service not idle")
     require(
         all(
             not Path(j["output"]).exists() and not Path(j["temp_dir"]).exists()
@@ -313,13 +323,15 @@ def run():
     Path(plan["jobs"][0]["output"]).mkdir()
     for j in plan["jobs"]:
         Path(j["temp_dir"]).mkdir()
-    state["status"] = "stopping_exact_idle_gemma0"
+    state["status"] = "stopping_exact_idle_" + plan["stop_service"]
     state["stop_requested_at"] = stamp()
     publish()
     stopped = True
     q = subprocess.run(["docker", "stop", "--time", "90", c["Id"]], capture_output=True)
-    require(q.returncode == 0, "gemma0 stop failed")
-    require(not guard.inspect(c["Id"])["State"]["Running"], "gemma0 still running")
+    require(q.returncode == 0, "scratch service stop failed")
+    require(
+        not guard.inspect(c["Id"])["State"]["Running"], "scratch service still running"
+    )
     q = subprocess.run(
         [
             "nvidia-smi",
@@ -331,14 +343,22 @@ def run():
         check=True,
     )
     rows = [x.strip().split(", ") for x in q.stdout.splitlines()]
-    row = next(x for x in rows if x[0] == "0")
-    state["gpu0_after_stop"] = {
-        "index": 0,
+    gpu = plan["physical_gpus"][0]
+    row = next(x for x in rows if x[0] == str(gpu))
+    state[f"gpu{gpu}_after_stop"] = {
+        "index": gpu,
         "uuid": row[1],
         "total_MiB": int(row[2]),
         "free_MiB": int(row[3]),
     }
-    require(int(row[3]) >= 70 * 1024, "collector existing70GiB free requirement")
+    minimum_free_gib = plan.get("resource_budget", {}).get("minimum_free_gib", 70)
+    require(
+        isinstance(minimum_free_gib, (int, float))
+        and not isinstance(minimum_free_gib, bool)
+        and minimum_free_gib >= 70
+        and int(row[3]) >= minimum_free_gib * 1024,
+        "collector declared minimum free memory requirement",
+    )
     state["status"] = "collecting"
     publish()
     collection_deadline = time.monotonic() + 900
@@ -524,7 +544,7 @@ if __name__ == "__main__":
             error = error or type(exc).__name__
         finally:
             if stopped:
-                state["status"] = "restoring_same_gemma0"
+                state["status"] = "restoring_same_" + plan["stop_service"]
                 state["restore_started_at"] = stamp()
                 try:
                     publish()
@@ -532,18 +552,18 @@ if __name__ == "__main__":
                     state["restore_status_write_error_type"] = type(exc).__name__
                     error = error or type(exc).__name__
                 try:
-                    cid = plan["serving_baseline"]["gemma-0"]["id"]
+                    cid = plan["serving_baseline"][plan["stop_service"]]["id"]
                     q = subprocess.run(["docker", "start", cid], capture_output=True)
                     require(q.returncode == 0, "same CID restart failed")
                     deadline = time.monotonic() + 600
                     while time.monotonic() < deadline:
-                        snap = snapshot("gemma-0")
+                        snap = snapshot(plan["stop_service"])
                         if snap["running"] and snap["health"] == "healthy":
                             break
                         time.sleep(2)
                     require(
                         canonical(snap)
-                        == canonical(plan["serving_baseline"]["gemma-0"]),
+                        == canonical(plan["serving_baseline"][plan["stop_service"]]),
                         "same CID restore not healthy/exact",
                     )
                     validate(True)

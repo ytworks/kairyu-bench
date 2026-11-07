@@ -166,7 +166,7 @@ def review(args: argparse.Namespace) -> dict[str, Any]:
     started = time.monotonic()
     receipt: dict[str, Any] = {
         **preview, "schema_version": 1, "started_at": timestamp(),
-        "scope": "anonymous public-method design only; not an actual-candidate measurement review",
+        "scope": "User-reviewed anonymous prompt retained with this receipt; the review is not a model capability measurement",
         "verified_requested_model": False,
         "controls": {"safe_mode": True, "restricted": True, "tools": [], "mcp_servers": [],
                      "session_persistence": False, "custom_generic_system_prompt": True},

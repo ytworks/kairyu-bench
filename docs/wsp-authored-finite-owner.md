@@ -163,3 +163,21 @@ Evidence under `A/current-ad-helper-six-finite-v1`:
 | `selected-byte-expectations.json` | `9ff04076149370194f435fe915215b63866521ff433555702105c7575a39333b` |
 | `replay/selected-byte-proofs.json` | `808af06c7b20517f7f51bf2bcc332d10d75db66ee6bff177c33b4406e6f329a4` |
 | `independent-proof-tail-review.json` | `19dabb3a5b87d96e2a74c839f6ce67d6979b17eeb3fd0ad4a90b6d36eaf1c9b7` |
+
+
+## Declared scratch slot and long-frame reuse
+
+The recipe now permits the original gemma-0/GPU0 pair or the explicitly bound
+gemma-2/GPU4 pair. The other three original services must be the exact protected
+complement, and the collector GPU argument must match the owned slot. Idle
+checks, stopping and same-CID restoration all use that declared service. A
+plan may raise the minimum free-memory requirement above the legacy 70 GiB;
+the prospective AV120 replay declares 88 GiB allocator plus 2 GiB reserve.
+
+The prospective AZ/BA plan uses the accepted AV checkpoint, all 120 complete
+authored frames, SDPA with a 2048-token cap, serial answers and longest-frame-first
+execution. Each candidate restores the AV selected-word union before its own
+application; AZ and BA are alternatives, not cumulative edits. This owner-only
+change passed Ruff, syntax, metadata lifecycle rejection checks and an inert CLI
+preview in `A/current-av-az-ba-finite-v1/owner-focused.json`. It does not claim
+an executed finite batch or a new model result.
