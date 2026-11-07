@@ -1,0 +1,37 @@
+usage: finite_replay.py [-h] --checkpoint CHECKPOINT --plan PLAN --output
+                        OUTPUT [--device {cuda:0}]
+                        [--maximum-seconds MAXIMUM_SECONDS]
+                        [--answer-batching {paired,serial}]
+                        [--threads THREADS] [--seed SEED]
+                        [--gpu-exclusive-approved]
+                        [--max-frame-tokens {1024,2048}]
+                        [--text-attention-backend {eager,sdpa}]
+                        [--execution-order {original,longest_frame_first}]
+                        [--cuda-memory-cap-gib CUDA_MEMORY_CAP_GIB]
+
+Finite-only Gemma 4 native/sparse-matrix edit replay: original, <=8 sets,
+original. Optional torch/transformers dependencies are imported only when
+explicitly run. No checkpoint writes, gradients, free generation, solver, or
+WSP acceptance gate.
+
+options:
+  -h, --help            show this help message and exit
+  --checkpoint CHECKPOINT
+  --plan PLAN
+  --output OUTPUT
+  --device {cuda:0}
+  --maximum-seconds MAXIMUM_SECONDS
+  --answer-batching {paired,serial}
+                        serial keeps one case's good/foil padded width and
+                        forwards each answer separately
+  --threads THREADS
+  --seed SEED
+  --gpu-exclusive-approved
+  --max-frame-tokens {1024,2048}
+                        opt-in complete prefix+answer limit; reject oversize,
+                        never truncate
+  --text-attention-backend {eager,sdpa}
+  --execution-order {original,longest_frame_first}
+  --cuda-memory-cap-gib CUDA_MEMORY_CAP_GIB
+                        optional CUDA caching-allocator limit, not total
+                        device memory

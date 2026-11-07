@@ -1,0 +1,33 @@
+{
+  "scope": "repeat static input validators in the actual existing science Python; no generation or fixture execution",
+  "executable": "/mnt/nvme/kairyu/dev-logs/wsp/venv-scicode/bin/python",
+  "partition_validation_sha256": "4adfa914b72b98b2c52a8788b597d8a30c5b20c1b43b05b8b5a39180b3d09a12",
+  "checks": [
+    {
+      "partition": "basic",
+      "sha256": "ed17e06c04c8d6416168e67501b4a07e9490fa4a76d5355a746370447ba99ae4",
+      "public_cases": 16,
+      "complete_catalog": 16
+    },
+    {
+      "partition": "advanced-v2",
+      "sha256": "9d51dfdeaa9e61a4d989b23459c4eff8b3d5b7d7d9291de3258bd3c12921797b",
+      "public_cases": 16,
+      "complete_catalog": 16
+    },
+    {
+      "partition": "library-train-v1",
+      "sha256": "d3059d4d1c073ba372d103ace9760398341a1add1133e70e306cfefab94db6fc",
+      "public_cases": 16,
+      "complete_catalog": 16
+    },
+    {
+      "partition": "uncataloged72",
+      "sha256": "30606fd3b14b4c7809a488fda2bc7bdf318fead9543228b50e7617b0754ca7be",
+      "public_cases": 72
+    }
+  ],
+  "model_calls": 0,
+  "oracle_or_generated_code_executions": 0,
+  "elapsed_seconds": 0.1334240729920566
+}

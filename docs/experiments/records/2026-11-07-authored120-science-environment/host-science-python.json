@@ -1,0 +1,64 @@
+{
+  "schema_version": 1,
+  "created_utc": "2026-11-07T07:31:55.511415+00:00",
+  "scope": "CPU package imports only; no sample/oracle/model/Docker/service/lock execution",
+  "executable": "/mnt/nvme/kairyu/dev-logs/wsp/venv-scicode/bin/python",
+  "prefix": "/mnt/nvme/kairyu/dev-logs/wsp/venv-scicode",
+  "python_version": "3.12.3 (main, Aug 31 2026, 10:18:26) [GCC 13.3.0]",
+  "historical_source_receipt": {
+    "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/code90-resume-20261106/science-library-executor-v1/context/stage-receipt.json",
+    "sha256": "b17c98650f7198f5d3c5d7b4a9cc91cff57294dbde82c05bd0aa43e86e7b8a51",
+    "source_python": "/mnt/nvme/kairyu/dev-logs/wsp/venv-scicode/bin/python",
+    "matches_current_executable": true
+  },
+  "packages": {
+    "numpy": {
+      "version": "2.2.6",
+      "init_path": "/mnt/nvme/kairyu/dev-logs/wsp/venv-scicode/lib/python3.12/site-packages/numpy/__init__.py",
+      "init_sha256": "6ae17b070c0f70a8e3cad89a510a256942e5a1f37ea5feb120cec167ed2a6236"
+    },
+    "scipy": {
+      "version": "1.13.1",
+      "init_path": "/mnt/nvme/kairyu/dev-logs/wsp/venv-scicode/lib/python3.12/site-packages/scipy/__init__.py",
+      "init_sha256": "f09d8a342acb52bb982073fbeb2594d9363ff55433d3dd710066142db7c0bee9"
+    },
+    "sympy": {
+      "version": "1.14.0",
+      "init_path": "/mnt/nvme/kairyu/dev-logs/wsp/venv-scicode/lib/python3.12/site-packages/sympy/__init__.py",
+      "init_sha256": "4e9476348ba105feab28d82f5bcf6cdba2e3e84de6e059bbfe7a13728c0a4ab0"
+    }
+  },
+  "imported_scipy_submodules": [
+    "scipy.integrate",
+    "scipy.linalg",
+    "scipy.optimize",
+    "scipy.special",
+    "scipy.stats"
+  ],
+  "package_imports_passed": true,
+  "new_install": false,
+  "full_package_binary_identity_claimed": false,
+  "prior_discovery_attempts": [
+    "Two bounded documentation glob searches included nonexistent paths and returned exit 2; no environment operation ran.",
+    "A discovery probe resolved venv python symlinks before invocation, bypassing the venv and reporting base-interpreter modules absent. Repeated with the exact lexical venv/bin/python path; this receipt uses that correct path.",
+    "Bounded maxdepth7 pyvenv.cfg inventory returned exit 1 for inaccessible non-task paths; no inaccessible data was read or permission changed."
+  ],
+  "other_existing_venv_metadata": {
+    "weight-tools-ci": {
+      "numpy": "2.5.4",
+      "scipy": null,
+      "sympy": null
+    },
+    "weight-tools-venv": {
+      "numpy": "2.5.4",
+      "scipy": null,
+      "sympy": null
+    },
+    "h-solver-venv": {
+      "numpy": "2.2.6",
+      "scipy": "1.14.1",
+      "sympy": null
+    }
+  },
+  "elapsed_seconds": 1.0520294780144468
+}

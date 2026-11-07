@@ -1,0 +1,258 @@
+{
+  "results": {
+    "unittest": {
+      "command": [
+        "python",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests",
+        "-v"
+      ],
+      "returncode": 0,
+      "seconds": 46.855092798010446
+    },
+    "mypy": {
+      "command": [
+        "mypy",
+        "--ignore-missing-imports",
+        "src"
+      ],
+      "returncode": 0,
+      "seconds": 0.274163632071577
+    },
+    "data": {
+      "command": [
+        "python",
+        "scripts/update_model_comparison.py",
+        "--check"
+      ],
+      "returncode": 0,
+      "seconds": 0.05866857897490263
+    }
+  },
+  "before": {
+    "docs/experiments/scripts/fresh-n30-complete-audit.py": "7d2552640aef8a40474dfaaac41aeecce6dcce34238cef9a1314b25c1ae7b961",
+    "tests/test_n30_audit_evidence.py": "849e238ed2c45cbef7845110565f5d25c39176c9add34c6f6ee988a322ecd721"
+  },
+  "after": {
+    "docs/experiments/scripts/fresh-n30-complete-audit.py": "7d2552640aef8a40474dfaaac41aeecce6dcce34238cef9a1314b25c1ae7b961",
+    "tests/test_n30_audit_evidence.py": "849e238ed2c45cbef7845110565f5d25c39176c9add34c6f6ee988a322ecd721"
+  },
+  "source_unchanged": true,
+  "gpu_validation": false,
+  "unittest": {
+    "collected": 525,
+    "passed": 469,
+    "skipped_optional_dependencies": 56,
+    "failed": 0,
+    "reported_suite_seconds": 46.347,
+    "previous_collected": 522,
+    "added_tests": 3,
+    "removed_tests": 0
+  },
+  "shell": {
+    "files": 31,
+    "results": [
+      {
+        "file": "adapters/long-context-reasoning/run.sh",
+        "returncode": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      {
+        "file": "adapters/deepswe/run.sh",
+        "returncode": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      {
+        "file": "adapters/mrcr-v2/run.sh",
+        "returncode": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      {
+        "file": "adapters/tau-bench-banking/run.sh",
+        "returncode": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      {
+        "file": "adapters/swe-bench-verified/run.sh",
+        "returncode": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      {
+        "file": "adapters/scicode/run.sh",
+        "returncode": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      {
+        "file": "adapters/hle/run.sh",
+        "returncode": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      {
+        "file": "adapters/livecodebench/run.sh",
+        "returncode": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      {
+        "file": "adapters/terminal-bench-4/run.sh",
+        "returncode": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      {
+        "file": "adapters/terminal-bench/run.sh",
+        "returncode": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      {
+        "file": "adapters/gpqa-diamond/run.sh",
+        "returncode": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      {
+        "file": "adapters/livecodebench-pro/run.sh",
+        "returncode": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      {
+        "file": "adapters/swe-bench-pro/run.sh",
+        "returncode": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      {
+        "file": "adapters/charxiv-reasoning/run.sh",
+        "returncode": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      {
+        "file": "tests/fixtures/terminal-bench-4/gpu-request/solution/solve.sh",
+        "returncode": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      {
+        "file": "tests/fixtures/terminal-bench-4/gpu-request/tests/test.sh",
+        "returncode": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      {
+        "file": "scripts/container-entrypoint.sh",
+        "returncode": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      {
+        "file": "scripts/lib/worker-pool.sh",
+        "returncode": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      {
+        "file": "scripts/lib/official.sh",
+        "returncode": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      {
+        "file": "scripts/harnesses/scicode.sh",
+        "returncode": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      {
+        "file": "scripts/harnesses/deepswe.sh",
+        "returncode": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      {
+        "file": "scripts/harnesses/livecodebench.sh",
+        "returncode": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      {
+        "file": "scripts/harnesses/hle.sh",
+        "returncode": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      {
+        "file": "scripts/harnesses/charxiv-reasoning.sh",
+        "returncode": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      {
+        "file": "scripts/harnesses/tau-bench-banking.sh",
+        "returncode": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      {
+        "file": "scripts/harnesses/wsp.sh",
+        "returncode": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      {
+        "file": "scripts/harnesses/terminal-bench.sh",
+        "returncode": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      {
+        "file": "scripts/harnesses/swebench.sh",
+        "returncode": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      {
+        "file": "scripts/harnesses/terminal-bench-4.sh",
+        "returncode": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      {
+        "file": "scripts/harnesses/livecodebench-pro.sh",
+        "returncode": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      {
+        "file": "scripts/experiments/gemma4_lora/build-kernel.sh",
+        "returncode": 0,
+        "stdout": "",
+        "stderr": ""
+      }
+    ],
+    "seconds": 0.04385968891438097
+  },
+  "ruff": {
+    "returncode": 0,
+    "output": "All checks passed!\n"
+  },
+  "mypy_output": "Success: no issues found in 74 source files\n",
+  "log_sha256": {
+    "unittest.log": "bdb9c880a861755dfb6cf103f1a0ebeb4f4562451f96f17ecb3810ad2277379b",
+    "ruff.log": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18",
+    "mypy.log": "4ef32b02733c640ba275e5de2c0f630d3ea2a6293bb124ad0dc2173d46e40541",
+    "data.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  }
+}

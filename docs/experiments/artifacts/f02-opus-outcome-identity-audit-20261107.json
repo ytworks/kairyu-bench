@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "original_receipt_sha256": "e7df0f19293817b54cdf0bddf1f0910e5404ce6d387a3bfa1663189df2651393",
+  "assistant_usage_canonical_identity_matches_requested": true,
+  "requested_model": "claude-opus-5-5",
+  "original_combined_verified_flag": false,
+  "original_review_usable": false,
+  "format_deviation": "two reviews entries both label A; required one entry with label A",
+  "original_receipt_unchanged": true,
+  "external_dispatches": 1,
+  "new_dispatches_in_this_audit": 0,
+  "interpretation": "Identity evidence confirms actual requested model; strict review format remains failed. Root may consider the preserved final structured response as nonconforming advice, not a passed review receipt or adoption decision."
+}

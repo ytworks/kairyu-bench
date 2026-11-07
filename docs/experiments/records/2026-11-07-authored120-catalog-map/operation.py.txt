@@ -1,0 +1,151 @@
+from pathlib import Path
+import collections, copy, datetime, difflib, hashlib, json, shutil, sys, time
+B = Path('/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/worktrees/kairyu-bench-weight-tools')
+R = B.parent.parent
+O = R / 'analysis/fresh-purpose-20261107-authored120-generation-inputs-v1'
+P = B / 'docs/experiments/records/2026-11-07-authored120-catalog-map'
+assert O.is_dir() and not (O / 'inputs').exists() and not P.exists()
+I = O / 'inputs'
+I.mkdir()
+start = time.monotonic()
+sha = lambda p: hashlib.sha256(p.read_bytes()).hexdigest()
+digest = lambda x: hashlib.sha256(x.encode()).hexdigest()
+canonical = lambda x: json.dumps(x, ensure_ascii=False, sort_keys=True, separators=(',', ':'))
+save = lambda p, x: p.write_text(json.dumps(x, ensure_ascii=False, indent=2, allow_nan=False) + '\n')
+source = R / 'analysis/code90-resume-20261106/long-helper-chain-curriculum-v1/train-cases.json'
+expected_sha = 'bd6fcba70e93b1870ee882f6e92893b93490ad4099af7a9a290ba3d324d68951'
+assert sha(source) == expected_sha
+source_stat = lambda: {k: getattr(source.stat(), 'st_' + k) for k in ('dev','ino','size','mtime_ns','ctime_ns')}
+before = source_stat()
+groups = json.loads(source.read_text())
+rows = [(purpose, f, index, row) for purpose, folds in groups.items() for f, fold in enumerate(folds) for index, row in enumerate(fold)]
+assert len(rows) == len({r['id'] for _, _, _, r in rows}) == 120
+source_names = ['science_cases.py','advanced_science_cases.py','library_train_cases.py','library_transfer_cases.py','science_generate.py','science_sandbox.py','helper_chain_cases.py','long_helper_chain_cases.py']
+D = B / 'scripts/experiments/gemma4-purpose'
+pins = {str((D / n).relative_to(B)): sha(D / n) for n in source_names}
+sys.path.insert(0, str(D))
+import science_cases, advanced_science_cases, library_train_cases, library_transfer_cases, science_generate, science_sandbox
+modules = {'basic': (science_cases, 1), 'advanced': (advanced_science_cases, 1), 'advanced-v2': (advanced_science_cases, 2), 'library-train-v1': (library_train_cases, 1), 'library-transfer-v1': (library_transfer_cases, 1)}
+catalogs = {}
+for name, (module, revision) in modules.items():
+    cases = module.catalog() if name == 'basic' else module.catalog(revision=revision)
+    public = [case.public() for case in cases]
+    assert len(public) == len({row['id'] for row in public})
+    catalogs[name] = {row['id']: row for row in public}
+facts_path = B / 'docs/experiments/evidence-2026-11-07-f02/authored-case-audit-v3-facts.json'
+facts = json.loads(facts_path.read_text())
+issues = {
+ 'call_and_close': 'exception priority unspecified when action and close both fail',
+ 'commit_only_fix': 'pre-staged unrelated Git index entry can be committed',
+ 'record_verified_rename': 'pre-staged unrelated Git index entry can be committed',
+ 'segment_count': 'capacity is positive but not explicitly integer',
+ 'best_schedule': 'zero-length half-open jobs domain unspecified',
+ 'science-cumulative-trapezoid': 'empty inputs yield wrong output shape',
+ 'science-advanced-reset-running-stats': 'empty inputs yield wrong output shape',
+ 'science-advanced-capped-reservoir-chain': 'empty inputs yield wrong output shape',
+ 'chain-whitened-fit-1': 'allowed float32 inputs violate explicit float64 output contract',
+ 'chain-quadrature-mixture-1': 'allowed float32 inputs violate explicit float64 output contract',
+ 'chain-boundary-response-1': 'allowed integer inputs violate explicit float64 output contract',
+}
+assert set(issues) == set(facts['bounded_cpu_demonstrations'])
+selected = ['basic', 'advanced-v2', 'library-train-v1']
+partition_names = selected + ['uncataloged72']
+parts = {name: {} for name in partition_names}
+mapping = []
+changes = []
+for purpose, fold, index, row in rows:
+    matches = []
+    for name, catalog in catalogs.items():
+        if row['id'] not in catalog:
+            continue
+        other = catalog[row['id']]
+        differing = sorted(k for k in set(row) | set(other) if row.get(k) != other.get(k))
+        item = {'catalog': name, 'split': other['split'], 'id_match': True, 'prompt_exact': row['prompt'] == other['prompt'], 'full_row_exact': row == other, 'differing_fields': differing, 'catalog_prompt_sha256': digest(other['prompt'])}
+        if row['prompt'] != other['prompt']:
+            item['prompt_unified_diff_source_to_catalog'] = ''.join(difflib.unified_diff(row['prompt'].splitlines(True), other['prompt'].splitlines(True), fromfile='authored120', tofile=name))
+        matches.append(item)
+    eligible = [m['catalog'] for m in matches if m['catalog'] in selected and m['full_row_exact'] and m['split'] == 'train']
+    assert len(eligible) <= 1
+    partition = eligible[0] if eligible else 'uncataloged72'
+    derived = copy.deepcopy(row)
+    if 'split' not in derived:
+        derived['split'] = 'train'
+        changes.append({'id': row['id'], 'operation': 'add_missing_split_train', 'source_purpose': purpose, 'source_fold': fold, 'source_index': index})
+    assert derived['split'] == 'train'
+    assert {k: derived[k] for k in row} == row
+    if set(derived) - set(row):
+        assert set(derived) - set(row) == {'split'}
+    parts[partition].setdefault(purpose, [[] for _ in groups[purpose]])[fold].append(derived)
+    mapping.append({'id': row['id'], 'purpose': purpose, 'fold': fold, 'source_index': index, 'original_split': row.get('split'), 'prompt': row['prompt'], 'prompt_sha256': digest(row['prompt']), 'correct_sha256': digest(row['correct']), 'foil_sha256': digest(row['foil']), 'original_row_canonical_sha256': digest(canonical(row)), 'partition': partition, 'catalog_matches': matches, 'existing_5catalog_executor_eligible': bool(eligible), 'known_calibration': True, 'audit_counterexample': issues.get(row['id']), 'generation_status': 'not_run', 'execution_status': 'not_run' if eligible else 'unscored_outside_5catalogs'})
+assert len(changes) == 56
+filenames = {'basic': 'basic-train-cases.json', 'advanced-v2': 'advanced-v2-train-cases.json', 'library-train-v1': 'library-train-v1-cases.json', 'uncataloged72': 'uncataloged72-train-cases.json'}
+envelopes = []
+fixtures = O / 'validator-fixtures'
+fixtures.mkdir()
+checks = []
+for name in partition_names:
+    document = {'schema_version': 1, 'split': 'train', 'scope': 'known authored calibration; transport partition only; not WSP or unseen evaluation', 'source_cases_sha256': expected_sha, 'partition': name, 'source_purpose_fold_layout_preserved': True, 'cases': parts[name]}
+    path = I / filenames[name]
+    save(path, document)
+    public = science_generate.public_cases(document, 'train')
+    expected_count = 72 if name == 'uncataloged72' else 16
+    assert len(public) == expected_count
+    assert all(next(r['prompt'] for _, _, _, r in rows if r['id'] == q['id']) == q['prompt'] for q in public)
+    receipt = {'partition': name, 'file': 'inputs/' + filenames[name], 'sha256': sha(path), 'count': len(public), 'split': 'train', 'ids': [q['id'] for q in public], 'public_cases_validator': 'pass', 'purpose_fold_counts': {k: [len(f) for f in fs] for k, fs in parts[name].items()}}
+    if name != 'uncataloged72':
+        response_path = fixtures / (name + '-empty-validator-responses.json')
+        save(response_path, {'schema_version': 1, 'split': 'train', 'cases_sha256': sha(path), 'generation': {'reasoning_saved': False}, 'responses': [], 'fixture_only_not_generated': True})
+        module, revision = modules[name]
+        catalog, answers, _, _ = science_sandbox.read_inputs(path, response_path, case_module=module, catalog_revision=revision)
+        assert len(catalog) == 16 and len(answers) == 0
+        receipt['sandbox_read_inputs_validator'] = 'pass_complete_train_catalog_16'
+        checks.append({'name': name, 'fixture': str(response_path.relative_to(O)), 'fixture_sha256': sha(response_path), 'accepted_catalog_cases': len(catalog), 'responses_generated': 0})
+    else:
+        receipt['sandbox_read_inputs_validator'] = 'not_applicable_no_selected_catalog'
+    envelopes.append(receipt)
+ids = [identifier for envelope in envelopes for identifier in envelope['ids']]
+assert len(ids) == len(set(ids)) == 120 and set(ids) == {r['id'] for _, _, _, r in rows}
+expected_rejections = []
+try:
+    science_generate.public_cases(groups, 'train')
+except ValueError as error:
+    expected_rejections.append({'test': 'original120_missing_row_split', 'exception': str(error)})
+else:
+    raise AssertionError('original 120 unexpectedly accepted with missing splits')
+try:
+    science_sandbox.read_inputs(I / filenames['advanced-v2'], fixtures / 'advanced-v2-empty-validator-responses.json', case_module=advanced_science_cases, catalog_revision=1)
+except ValueError as error:
+    expected_rejections.append({'test': 'old_advanced_revision_rejects_v2_prompt', 'exception': str(error)})
+else:
+    raise AssertionError('old advanced revision unexpectedly accepted')
+assert len(expected_rejections) == 2
+catalog_counts = {}
+for name, catalog in catalogs.items():
+    same = [r for _, _, _, r in rows if r['id'] in catalog]
+    catalog_counts[name] = {'split_counts': dict(collections.Counter(r['split'] for r in catalog.values())), 'id_matches': len(same), 'prompt_exact_matches': sum(r['prompt'] == catalog[r['id']]['prompt'] for r in same), 'full_row_exact_matches': sum(r == catalog[r['id']] for r in same)}
+assert sum(row['existing_5catalog_executor_eligible'] for row in mapping) == 48
+assert sum(bool(row['audit_counterexample']) for row in mapping) == 11
+assert sum(bool(row['audit_counterexample']) and row['existing_5catalog_executor_eligible'] for row in mapping) == 3
+assert sha(source) == expected_sha and source_stat() == before
+assert pins == {name: sha(B / name) for name in pins}
+save(O / 'case-map.json', {'schema_version': 1, 'original_cases_sha256': expected_sha, 'count': len(mapping), 'cases': mapping})
+summary = {'schema_version': 1, 'created_utc': datetime.datetime.now(datetime.timezone.utc).isoformat(), 'source': {'path': str(source), 'sha256': expected_sha, 'stat_before_after_equal': True, 'stat': before}, 'source_sha256': pins, 'source_files_stable': True, 'audit_facts_sha256': sha(facts_path), 'operation_sha256': sha(O / 'operation.py.txt'), 'known_calibration_not_unseen': True, 'catalog_counts': catalog_counts, 'partitions': envelopes, 'bijection': {'original_cases': 120, 'derived_cases': 120, 'unique_ids': 120, 'missing_ids': [], 'extra_ids': [], 'duplicate_ids': [], 'all_original_fields_unchanged': True, 'purpose_fold_positions_preserved': True, 'added_missing_split_train': changes}, 'denominators': {'planned_generation': 120, 'planned_5catalog_raw_fixture_grading': 48, 'not_supported_by_5catalogs': 72, 'graded_stratum_with_known_contract_counterexamples': 3, 'graded_stratum_without_those_counterexamples': 45, 'ungraded_with_known_contract_counterexamples': 8}, 'validator_checks': checks, 'expected_rejections': expected_rejections, 'model_calls': 0, 'oracle_or_generated_code_executions': 0, 'service_or_lock_operations': 0, 'failures': [], 'elapsed_seconds': time.monotonic() - start, 'notes': ['No sample(), prepare(), compare(), Docker or generation function was called.', 'Existing helper/long-chain score/evaluate functions are outside these five CLI catalogs; the 16 such rows remain generation-only in this partition plan.', 'Fixture success is finite randomized coverage, not proof over the entire prompt domain. Three empty-input counterexamples are not covered by current basic n>=5 and advanced n>=4 samplers.']}
+save(O / 'validation.json', summary)
+lines = ['# 全120件と既存5 catalogの対応', '', 'prompt全文・元row hash・catalog差分は case-map.json。全件未生成・未採点。', '', '| ID | purpose/fold | 生成入力・既存採点 | 既存11反例 |', '|---|---|---|---|']
+for row in mapping:
+    target = row['partition'] + (' / raw fixture 対応' if row['existing_5catalog_executor_eligible'] else ' / 未採点')
+    note = row['audit_counterexample'] or '今回の11件に該当なし（全域保証なし）'
+    lines.append('| ' + row['id'] + ' | ' + row['purpose'] + '/' + str(row['fold']) + ' | ' + target + ' | ' + note + ' |')
+(O / 'all-120-map.md').write_text('\n'.join(lines) + '\n')
+P.mkdir()
+for path in O.rglob('*'):
+    if path.is_file():
+        relative = path.relative_to(O)
+        target = P / relative
+        target.parent.mkdir(parents=True, exist_ok=True)
+        shutil.copy2(path, target)
+for base in [O, P]:
+    files = sorted(p for p in base.rglob('*') if p.is_file() and p.name != 'SHA256SUMS')
+    (base / 'SHA256SUMS').write_text(''.join(f'{sha(p)}  {p.relative_to(base)}\n' for p in files))
+assert (O / 'SHA256SUMS').read_bytes() == (P / 'SHA256SUMS').read_bytes()
+print(json.dumps({'output': str(O), 'repo_evidence': str(P.relative_to(B)), 'validation_sha256': sha(O / 'validation.json'), 'all120_map_sha256': sha(O / 'case-map.json'), 'envelopes': [{'partition': x['partition'], 'count': x['count'], 'sha256': x['sha256'], 'file': x['file']} for x in envelopes], 'elapsed_seconds': summary['elapsed_seconds'], 'checks': len(checks), 'added_split_rows': len(changes)}))
