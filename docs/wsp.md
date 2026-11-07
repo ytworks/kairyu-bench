@@ -172,3 +172,20 @@ Gemma 4 31B・8GPU（`gemma-4-31b-8gpu`）で、確定版の問題リストを�
 `scripts/locks/README.md` を参照してください。
 
 Reusable weight editing, observation, finite replay and evidence tools are indexed in the [WSP tool inventory](wsp-tool-inventory.md).
+
+
+## Measured runner image reuse
+
+The host wrapper normally builds the current checkout. For a paired experiment,
+`KAIRYU_BENCH_RUNNER_IMAGE_ID=sha256:<64 lowercase hex digits>` explicitly reuses
+that exact locally available Docker image without building or pulling. The
+wrapper rejects mutable tags, shortened IDs, missing images and identity
+mismatches before starting the runner. All normal arguments, result/capture/cache
+mounts and Docker options remain in force; `KAIRYU_BENCH_IMAGE` is the default
+build tag only when immutable reuse is absent.
+
+Record the actual container image ID (not a BuildKit config/progress digest),
+its source inventory, installed runtimes and canonical WSP configuration before
+reuse. The image ID does not freeze mounted cache environments, official source
+checkouts, serving weights or serving configuration; attest these separately.
+Keep every run in a new result directory and retain condition differences.

@@ -85,12 +85,37 @@ fi
     exit 2
 }
 
-docker build -t "$IMAGE" "$ROOT"
+# Explicit immutable reuse keeps a measured runner unchanged while experiment
+# recipes evolve. Default invocations still build the current checkout.
+PINNED_PULL_OPTION=
+if [ -n "${KAIRYU_BENCH_RUNNER_IMAGE_ID:-}" ]; then
+    pinned_image=$KAIRYU_BENCH_RUNNER_IMAGE_ID
+    case "$pinned_image" in
+        sha256:*) pinned_hex=${pinned_image#sha256:} ;;
+        *) echo "kairyu-bench: runner image must be a full sha256 image ID" >&2; exit 2 ;;
+    esac
+    case "$pinned_hex" in
+        *[!0-9a-f]*|"") echo "kairyu-bench: invalid runner image ID" >&2; exit 2 ;;
+    esac
+    [ "${#pinned_hex}" = 64 ] || {
+        echo "kairyu-bench: runner image ID needs 64 hexadecimal digits" >&2; exit 2
+    }
+    resolved_image=$(docker image inspect --format '{{.Id}}' "$pinned_image") || {
+        echo "kairyu-bench: pinned runner image is not available locally" >&2; exit 2
+    }
+    [ "$resolved_image" = "$pinned_image" ] || {
+        echo "kairyu-bench: resolved runner image differs from the requested ID" >&2; exit 2
+    }
+    IMAGE=$pinned_image
+    PINNED_PULL_OPTION=--pull=never
+else
+    docker build -t "$IMAGE" "$ROOT"
+fi
 
 # KAIRYU_BENCH_DOCKER_NETWORK joins the runner to a Docker network, e.g. a
 # served model's compose network so `wsp run --logprob-endpoint` reaches its
 # vLLM replicas directly.
-exec docker run --rm --privileged \
+exec docker run --rm --privileged $PINNED_PULL_OPTION \
     ${KAIRYU_BENCH_DOCKER_NETWORK:+--network "$KAIRYU_BENCH_DOCKER_NETWORK"} \
     --add-host host.docker.internal:host-gateway \
     -v "$DOCKER_SOCKET:/var/run/docker.sock" \

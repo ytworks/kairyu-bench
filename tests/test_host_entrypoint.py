@@ -111,6 +111,51 @@ class HostEntrypointTest(unittest.TestCase):
             self.assertTrue(calls[1].endswith("kairyu-bench:local list"))
 
 
+    def test_pinned_runner_reuses_exact_local_image_without_build_or_pull(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            temp = Path(directory)
+            log = temp / "docker.log"
+            fake = temp / "docker"
+            fake.write_text(
+                "#!/bin/sh\n"
+                "printf '%s\\n' \"$*\" >> \"$FAKE_DOCKER_LOG\"\n"
+                "if [ \"$1\" = image ]; then\n"
+                "  [ \"$FAKE_IMAGE_ID\" != missing ] || exit 1\n"
+                "  printf '%s\\n' \"$FAKE_IMAGE_ID\"\n"
+                "fi\n",
+                encoding="utf-8",
+            )
+            fake.chmod(0o755)
+            pinned = "sha256:" + "a" * 64
+            env = {**os.environ, "PATH": f"{temp}:{os.environ['PATH']}",
+                   "FAKE_DOCKER_LOG": str(log), "KAIRYU_BENCH_IMAGE": "mutable-tag",
+                   "KAIRYU_BENCH_CACHE_DIR": str(temp / "cache")}
+            cases = ((pinned, pinned, True), (pinned, "missing", False),
+                     (pinned, "sha256:" + "b" * 64, False),
+                     ("mutable-tag", pinned, False), ("sha256:abc", pinned, False))
+            with socket.socket(socket.AF_UNIX) as docker_socket:
+                socket_path = temp / "docker.sock"
+                docker_socket.bind(str(socket_path))
+                env["KAIRYU_BENCH_DOCKER_SOCKET"] = str(socket_path)
+                for requested, available, succeeds in cases:
+                    with self.subTest(requested=requested, available=available):
+                        log.unlink(missing_ok=True)
+                        env["KAIRYU_BENCH_RUNNER_IMAGE_ID"] = requested
+                        env["FAKE_IMAGE_ID"] = available
+                        result = subprocess.run(
+                            [str(ROOT / "kairyu-bench"), "list"], cwd=temp, env=env,
+                            text=True, capture_output=True, check=False,
+                        )
+                        calls = log.read_text().splitlines() if log.exists() else []
+                        self.assertEqual(result.returncode == 0, succeeds, result.stderr)
+                        self.assertFalse(any(c.startswith(("build ", "pull ")) for c in calls))
+                        runs = [c for c in calls if c.startswith("run ")]
+                        self.assertEqual(len(runs), int(succeeds))
+                        if succeeds:
+                            self.assertIn("--pull=never", runs[0])
+                            self.assertIn(f"-v {temp}:{temp} -w {temp}", runs[0])
+                            self.assertTrue(runs[0].endswith(pinned + " list"))
+
     def test_explicit_results_survive_runner_removal_outside_calling_directory(self) -> None:
         # The fake daemon exposes only the declared binds. An unmounted output
         # goes to its temporary container filesystem and disappears on exit.
