@@ -1,0 +1,294 @@
+{
+  "inspected_at_utc": "2026-11-07T09:32:09.231688+00:00",
+  "scope": "Static source reads from exact live image only; no Torch/model import, operator invocation, weights load, generation, GPU computation, or serving mutation",
+  "closure": {
+    "cid": "fd4ec2eb9d7deba2ce3e790add6b50c0ee79a6390495320d8697873b32957bcf",
+    "image": "sha256:af9e746b913088cbf6c4464a31d6904a6b7e1d3ba62f0895362ddf13595f7abe",
+    "running": true,
+    "health": "healthy",
+    "runtime_flags_from_cmd": {
+      "--dtype": "bfloat16",
+      "--tensor-parallel-size": "2"
+    },
+    "safe_env_subset": {},
+    "source_hashes_rechecked": {
+      "/usr/local/lib/python3.12/dist-packages/transformers/models/gemma4/modeling_gemma4.py": "d42819dd9a2e5627da35a056e44b3c4c7b778e11c2067dcdd8312ee17ddc52f3",
+      "/usr/local/lib/python3.12/dist-packages/vllm/model_executor/models/gemma4.py": "e3922b9373db89b1aec00b06f4128448056f324e36c9ce7b81927bda04da3a33",
+      "/usr/local/lib/python3.12/dist-packages/vllm/model_executor/layers/layernorm.py": "45a29c6f8a78c6a76fb6abf4dbe68ff3ab21b73293cd0fe63d612322f098e0c6",
+      "/usr/local/lib/python3.12/dist-packages/vllm/model_executor/models/utils.py": "4b30956a7b5b16c27d82f785c83ec35cbf5115f300d7f292b869d2a91b26da4b",
+      "/usr/local/lib/python3.12/dist-packages/vllm/model_executor/model_loader/weight_utils.py": "d601523002f2f40a5467a7e68ad3c25625cda82bf5bdd888d6ef0ffcee5b1ec7",
+      "/usr/local/lib/python3.12/dist-packages/vllm/_custom_ops.py": "f7add10b87105ad21539625d7409c771b0228ea015f06a891468f3ba40bf6fa1",
+      "/usr/local/lib/python3.12/dist-packages/vllm/model_executor/custom_op.py": "caaa422b914d74a58c3d7a1653af76e2834f41cc2d4fbe65d10d4ad50dbb4d38",
+      "/usr/local/lib/python3.12/dist-packages/vllm/model_executor/models/gemma4_mm.py": "cb0ccbbe1b1b4563d84f7ebef9986a27d83b939a29eb01df29ab437e1efe68e3",
+      "/usr/local/lib/python3.12/dist-packages/vllm/ir/ops/layernorm.py": "b7621f663a97caf6908507b6cbe03adf23d0001a441d44af2b24c1ad0fc8bf57",
+      "/usr/local/lib/python3.12/dist-packages/vllm/model_executor/model_loader/default_loader.py": "995afc9196c02ca600094d73aec7f07e3fbff0d873f1952c64e98e325b3b857d",
+      "/usr/local/lib/python3.12/dist-packages/vllm/model_executor/model_loader/utils.py": "f81091610299bd1a18333a1d7cd3cce7bf35211e82ae8cb05ad381e79f15554f",
+      "/usr/local/lib/python3.12/dist-packages/vllm/model_executor/models/registry.py": "b0b2221e740dd40f7e9f7532b92cf764458fd188b77ff16859a4dc529e78154c",
+      "/usr/local/lib/python3.12/dist-packages/vllm/kernels/oink_ops.py": "1335e56cf452f6fe2b37d69534a24af45a21fba524e484e499788efc1df2c5ab",
+      "/usr/local/lib/python3.12/dist-packages/vllm/kernels/aiter_ops.py": "f8a5cc3e443c0930a9afb0abfc6c80a7f946af746b72cda22be3de0dc740f2dc",
+      "/usr/local/lib/python3.12/dist-packages/vllm/kernels/vllm_c.py": "ef37e71736807026f0b8ad187155b63f147984c03d287a78790ef8f8ed642ec1"
+    },
+    "all_source_unchanged": true,
+    "model_calls": 0,
+    "gpu_compute_calls": 0,
+    "service_mutations": 0,
+    "weight_payload_reads": 0
+  },
+  "sources": {
+    "transformers/models/gemma4/modeling_gemma4.py": {
+      "path": "/usr/local/lib/python3.12/dist-packages/transformers/models/gemma4/modeling_gemma4.py",
+      "version": "5.20.2",
+      "sha256": "d42819dd9a2e5627da35a056e44b3c4c7b778e11c2067dcdd8312ee17ddc52f3",
+      "size": 126981
+    },
+    "vllm/model_executor/models/gemma4.py": {
+      "path": "/usr/local/lib/python3.12/dist-packages/vllm/model_executor/models/gemma4.py",
+      "version": "0.33.0",
+      "sha256": "e3922b9373db89b1aec00b06f4128448056f324e36c9ce7b81927bda04da3a33",
+      "size": 58213
+    },
+    "vllm/model_executor/layers/layernorm.py": {
+      "path": "/usr/local/lib/python3.12/dist-packages/vllm/model_executor/layers/layernorm.py",
+      "version": "0.33.0",
+      "sha256": "45a29c6f8a78c6a76fb6abf4dbe68ff3ab21b73293cd0fe63d612322f098e0c6",
+      "size": 16122
+    },
+    "vllm/model_executor/models/utils.py": {
+      "path": "/usr/local/lib/python3.12/dist-packages/vllm/model_executor/models/utils.py",
+      "version": "0.33.0",
+      "sha256": "4b30956a7b5b16c27d82f785c83ec35cbf5115f300d7f292b869d2a91b26da4b",
+      "size": 45351
+    },
+    "vllm/model_executor/model_loader/weight_utils.py": {
+      "path": "/usr/local/lib/python3.12/dist-packages/vllm/model_executor/model_loader/weight_utils.py",
+      "version": "0.33.0",
+      "sha256": "d601523002f2f40a5467a7e68ad3c25625cda82bf5bdd888d6ef0ffcee5b1ec7",
+      "size": 73098
+    },
+    "vllm/_custom_ops.py": {
+      "path": "/usr/local/lib/python3.12/dist-packages/vllm/_custom_ops.py",
+      "version": "0.33.0",
+      "sha256": "f7add10b87105ad21539625d7409c771b0228ea015f06a891468f3ba40bf6fa1",
+      "size": 142160
+    },
+    "vllm/model_executor/custom_op.py": {
+      "path": "/usr/local/lib/python3.12/dist-packages/vllm/model_executor/custom_op.py",
+      "version": "0.33.0",
+      "sha256": "caaa422b914d74a58c3d7a1653af76e2834f41cc2d4fbe65d10d4ad50dbb4d38",
+      "size": 14163
+    },
+    "vllm/model_executor/models/gemma4_mm.py": {
+      "path": "/usr/local/lib/python3.12/dist-packages/vllm/model_executor/models/gemma4_mm.py",
+      "version": "0.33.0",
+      "sha256": "cb0ccbbe1b1b4563d84f7ebef9986a27d83b939a29eb01df29ab437e1efe68e3",
+      "size": 95714
+    },
+    "vllm/ir/ops/layernorm.py": {
+      "path": "/usr/local/lib/python3.12/dist-packages/vllm/ir/ops/layernorm.py",
+      "version": "0.33.0",
+      "sha256": "b7621f663a97caf6908507b6cbe03adf23d0001a441d44af2b24c1ad0fc8bf57",
+      "size": 2639
+    },
+    "vllm/model_executor/model_loader/default_loader.py": {
+      "path": "/usr/local/lib/python3.12/dist-packages/vllm/model_executor/model_loader/default_loader.py",
+      "version": "0.33.0",
+      "sha256": "995afc9196c02ca600094d73aec7f07e3fbff0d873f1952c64e98e325b3b857d",
+      "size": 23864
+    },
+    "vllm/model_executor/model_loader/utils.py": {
+      "path": "/usr/local/lib/python3.12/dist-packages/vllm/model_executor/model_loader/utils.py",
+      "version": "0.33.0",
+      "sha256": "f81091610299bd1a18333a1d7cd3cce7bf35211e82ae8cb05ad381e79f15554f",
+      "size": 15254
+    },
+    "vllm/model_executor/models/registry.py": {
+      "path": "/usr/local/lib/python3.12/dist-packages/vllm/model_executor/models/registry.py",
+      "version": "0.33.0",
+      "sha256": "b0b2221e740dd40f7e9f7532b92cf764458fd188b77ff16859a4dc529e78154c",
+      "size": 67558
+    },
+    "vllm/kernels/oink_ops.py": {
+      "path": "/usr/local/lib/python3.12/dist-packages/vllm/kernels/oink_ops.py",
+      "version": "0.33.0",
+      "sha256": "1335e56cf452f6fe2b37d69534a24af45a21fba524e484e499788efc1df2c5ab",
+      "size": 4064
+    },
+    "vllm/kernels/aiter_ops.py": {
+      "path": "/usr/local/lib/python3.12/dist-packages/vllm/kernels/aiter_ops.py",
+      "version": "0.33.0",
+      "sha256": "f8a5cc3e443c0930a9afb0abfc6c80a7f946af746b72cda22be3de0dc740f2dc",
+      "size": 5903
+    },
+    "vllm/kernels/vllm_c.py": {
+      "path": "/usr/local/lib/python3.12/dist-packages/vllm/kernels/vllm_c.py",
+      "version": "0.33.0",
+      "sha256": "ef37e71736807026f0b8ad187155b63f147984c03d287a78790ef8f8ed642ec1",
+      "size": 3320
+    }
+  },
+  "excerpts": {
+    "transformers/models/gemma4/modeling_gemma4.py": [
+      {
+        "first_line": 205,
+        "last_line": 223,
+        "text": "class Gemma4RMSNorm(nn.Module):\n    def __init__(self, dim: int, eps: float = 1e-6, with_scale: bool = True):\n        super().__init__()\n        self.eps = eps\n        self.with_scale = with_scale\n\n        if self.with_scale:\n            self.weight = nn.Parameter(torch.ones(dim), requires_grad=True)\n\n    def _norm(self, hidden_states: torch.Tensor):\n        mean_squared = hidden_states.pow(2).mean(-1, keepdim=True) + self.eps\n        # Use torch.pow() (over torch.sqrt() or torch.rsqrt()) to address compiler differences between Torch and JAX\n        return hidden_states * torch.pow(mean_squared, -0.5)\n\n    def forward(self, hidden_states: torch.Tensor) -> torch.Tensor:\n        normed_output = self._norm(hidden_states.float())\n        if self.with_scale:\n            normed_output = normed_output * self.weight.float()\n        return normed_output.type_as(hidden_states)"
+      },
+      {
+        "first_line": 1344,
+        "last_line": 1356,
+        "text": "class Gemma4TextDecoderLayer(GradientCheckpointingLayer):\n    def __init__(self, config: Gemma4TextConfig | Gemma4VisionConfig, layer_idx: int):\n        super().__init__()\n        self.config = config\n        self.hidden_size = config.hidden_size\n        self.layer_idx = layer_idx\n        self.self_attn = Gemma4TextAttention(config=config, layer_idx=layer_idx)\n        self.mlp = Gemma4TextMLP(config, layer_idx)\n        self.input_layernorm = Gemma4RMSNorm(self.hidden_size, eps=config.rms_norm_eps)\n        self.post_attention_layernorm = Gemma4RMSNorm(self.hidden_size, eps=config.rms_norm_eps)\n        self.pre_feedforward_layernorm = Gemma4RMSNorm(self.hidden_size, eps=config.rms_norm_eps)\n        self.post_feedforward_layernorm = Gemma4RMSNorm(self.hidden_size, eps=config.rms_norm_eps)\n        self.layer_scalar = nn.Buffer(torch.ones(1))"
+      },
+      {
+        "first_line": 1384,
+        "last_line": 1429,
+        "text": "        residual = hidden_states\n\n        hidden_states = self.input_layernorm(hidden_states)\n        hidden_states, _ = self.self_attn(\n            hidden_states=hidden_states,\n            position_embeddings=position_embeddings,\n            attention_mask=attention_mask,\n            shared_kv_states=shared_kv_states,\n            position_ids=position_ids,\n            past_key_values=past_key_values,\n            **kwargs,\n        )\n        hidden_states = self.post_attention_layernorm(hidden_states)\n        hidden_states = residual + hidden_states\n\n        residual = hidden_states\n        hidden_states = self.pre_feedforward_layernorm(hidden_states)\n        hidden_states = self.mlp(hidden_states)\n\n        if self.enable_moe_block:\n            hidden_states_1 = self.post_feedforward_layernorm_1(hidden_states)\n\n            # Take hidden states before MLP here\n            hidden_states_flat = residual.reshape(-1, residual.shape[-1])\n            _, top_k_weights, top_k_index = self.router(hidden_states_flat)\n            hidden_states_2 = self.pre_feedforward_layernorm_2(hidden_states_flat)\n            hidden_states_2 = self.experts(hidden_states_2, top_k_index, top_k_weights)\n            hidden_states_2 = hidden_states_2.reshape(residual.shape)\n            hidden_states_2 = self.post_feedforward_layernorm_2(hidden_states_2)\n\n            # Combine mlp and moe outputs\n            hidden_states = hidden_states_1 + hidden_states_2\n\n        hidden_states = self.post_feedforward_layernorm(hidden_states)\n        hidden_states = residual + hidden_states\n\n        if self.hidden_size_per_layer_input:\n            residual = hidden_states\n            hidden_states = self.per_layer_input_gate(hidden_states)\n            hidden_states = self.act_fn(hidden_states)\n            hidden_states = hidden_states * per_layer_input\n            hidden_states = self.per_layer_projection(hidden_states)\n            hidden_states = self.post_per_layer_input_norm(hidden_states)\n            hidden_states = residual + hidden_states\n\n        hidden_states *= self.layer_scalar"
+      }
+    ],
+    "vllm/model_executor/models/gemma4.py": [
+      {
+        "first_line": 45,
+        "last_line": 45,
+        "text": "from vllm.model_executor.layers.layernorm import RMSNorm"
+      },
+      {
+        "first_line": 86,
+        "last_line": 127,
+        "text": "def _gemma4_layer_weights_mapper(config) -> WeightsMapper:\n    \"\"\"Stack each decoder layer's projections the way its modules are built.\n\n    gate/up pack into `mlp.gate_up_proj`. Layers with a qkv_proj pack q/k/v\n    into it; `attention_k_eq_v` full-attention layers ship k_proj only, so K\n    is loaded into both the K and V shards and no v_proj is expected. KV-shared\n    layers only have q_proj; the K/V tensors original checkpoints still ship\n    for them are dropped.\n    \"\"\"\n    num_layers = config.num_hidden_layers\n    first_kv_shared = num_layers - getattr(config, \"num_kv_shared_layers\", 0)\n    k_eq_v_layers = (\n        {\n            i\n            for i, layer_type in enumerate(config.layer_types[:first_kv_shared])\n            if layer_type == \"full_attention\"\n        }\n        if getattr(config, \"attention_k_eq_v\", False)\n        else set()\n    )\n    qkv_shards: tuple[tuple[str, ShardIds], ...] = ((\"q\", \"q\"), (\"k\", \"k\"), (\"v\", \"v\"))\n    k_eq_v_shards: tuple[tuple[str, ShardIds], ...] = ((\"q\", \"q\"), (\"k\", [\"k\", \"v\"]))\n    stacked: dict[str, tuple[str, ShardIds]] = {\n        \".mlp.gate_proj.\": (\".mlp.gate_up_proj.\", 0),\n        \".mlp.up_proj.\": (\".mlp.gate_up_proj.\", 1),\n    }\n    stacked |= {\n        f\"layers.{i}.self_attn.{shard}_proj.\": (\n            f\"layers.{i}.self_attn.qkv_proj.\",\n            shard_id,\n        )\n        for i in range(first_kv_shared)\n        for shard, shard_id in (k_eq_v_shards if i in k_eq_v_layers else qkv_shards)\n    }\n    return WeightsMapper(\n        orig_to_new_substr={\n            f\"layers.{i}.self_attn.{name}.\": None\n            for i in range(first_kv_shared, num_layers)\n            for name in (\"k_proj\", \"v_proj\", \"k_norm\")\n        },\n        orig_to_new_stacked=stacked,\n    )"
+      },
+      {
+        "first_line": 617,
+        "last_line": 627,
+        "text": "        # Layer norms: output = norm(x) * weight\n        self.input_layernorm = RMSNorm(config.hidden_size, eps=config.rms_norm_eps)\n        self.post_attention_layernorm = RMSNorm(\n            config.hidden_size, eps=config.rms_norm_eps\n        )\n        self.pre_feedforward_layernorm = RMSNorm(\n            config.hidden_size, eps=config.rms_norm_eps\n        )\n        self.post_feedforward_layernorm = RMSNorm(\n            config.hidden_size, eps=config.rms_norm_eps\n        )"
+      },
+      {
+        "first_line": 708,
+        "last_line": 776,
+        "text": "        # Layer scalar (loaded from checkpoint) — applies to ALL text layers\n        self.register_buffer(\"layer_scalar\", torch.ones(1))\n\n    def forward(\n        self,\n        positions: torch.Tensor,\n        hidden_states: torch.Tensor,\n        residual: torch.Tensor | None,\n        per_layer_input: torch.Tensor | None = None,\n        **kwargs,\n    ) -> tuple[torch.Tensor, torch.Tensor]:\n        # Gemma4 residual pattern:\n        # 1. input_norm(x) → attn → post_attn_norm → ADD residual\n        # 2. pre_ff_norm → mlp → post_ff_norm → ADD residual\n        residual = hidden_states\n\n        hidden_states = self.input_layernorm(residual)\n\n        hidden_states = self.self_attn(\n            positions=positions,\n            hidden_states=hidden_states,\n            **kwargs,\n        )\n\n        hidden_states = self.post_attention_layernorm(hidden_states)\n        hidden_states = hidden_states + residual\n        residual = hidden_states\n\n        # MLP runs unconditionally (same inputs for MoE and non-MoE)\n        hidden_states = self.pre_feedforward_layernorm(hidden_states)\n        hidden_states = self.mlp(hidden_states)\n\n        if self.enable_moe_block:\n            assert self.post_feedforward_layernorm_1 is not None\n            assert self.pre_feedforward_layernorm_2 is not None\n            assert self.router is not None\n            assert self.experts is not None\n            assert self.post_feedforward_layernorm_2 is not None\n            hidden_states_1 = self.post_feedforward_layernorm_1(hidden_states)\n\n            hidden_states_2 = self.pre_feedforward_layernorm_2(residual)\n            router_logits = self.router(residual)\n            hidden_states_2 = self.experts(hidden_states_2, router_logits)\n            hidden_states_2 = self.post_feedforward_layernorm_2(hidden_states_2)\n\n            # Combine MLP and MoE outputs\n            hidden_states = hidden_states_1 + hidden_states_2\n\n        hidden_states = self.post_feedforward_layernorm(hidden_states)\n        hidden_states = hidden_states + residual\n\n        # Apply PLE (Per-Layer Embedding) if configured\n        if per_layer_input is not None and self.per_layer_input_gate is not None:\n            assert self.per_layer_projection is not None\n            assert self.post_per_layer_input_norm is not None\n            gate = self.per_layer_input_gate(hidden_states)\n            gate = torch.nn.functional.gelu(gate, approximate=\"tanh\")\n            gated_per_layer = gate * per_layer_input\n            per_layer_contribution = self.per_layer_projection(gated_per_layer)\n            per_layer_contribution = self.post_per_layer_input_norm(\n                per_layer_contribution\n            )\n            hidden_states = hidden_states + per_layer_contribution\n\n        # Apply layer scalar for full-attention layers\n        # Apply per-layer scalar (all text layers)\n        hidden_states = hidden_states * self.layer_scalar\n\n        return hidden_states, None"
+      },
+      {
+        "first_line": 1397,
+        "last_line": 1399,
+        "text": "    def load_weights(self, weights: Iterable[tuple[str, torch.Tensor]]) -> set[str]:\n        loader = AutoWeightsLoader(self)\n        return loader.load_weights(weights, mapper=self.hf_to_vllm_mapper)"
+      }
+    ],
+    "vllm/model_executor/layers/layernorm.py": [
+      {
+        "first_line": 37,
+        "last_line": 120,
+        "text": "# --8<-- [start:rms_norm]\n@CustomOp.register(\"rms_norm\")\nclass RMSNorm(CustomOp):\n    \"\"\"Root mean square normalization.\n\n    Computes x -> w * x / sqrt(E[x^2] + eps) where w is the learned weight.\n    Refer to https://arxiv.org/abs/1910.07467\n    \"\"\"\n\n    # --8<-- [end:rms_norm]\n\n    def __init__(\n        self,\n        hidden_size: int,\n        eps: float = 1e-6,\n        var_hidden_size: int | None = None,\n        has_weight: bool = True,\n        dtype: torch.dtype | None = None,\n    ) -> None:\n        super().__init__()\n\n        self.hidden_size = hidden_size\n        self.variance_epsilon = eps\n        self.variance_size_override = (\n            None if var_hidden_size == hidden_size else var_hidden_size\n        )\n        weight_dtype = dtype or torch.get_default_dtype()\n        self.has_weight = has_weight\n        self.weight = torch.ones(hidden_size, dtype=weight_dtype)\n        if self.has_weight:\n            self.weight = nn.Parameter(self.weight)\n            # Dummy weights keep norms neutral: random ones would shrink every\n            # activation and skew data-dependent kernels (e.g. sparse top-k).\n            set_weight_attrs(self.weight, {\"dummy_weight_value\": 1.0})\n\n        # When has_weight=False, pass weight=None so implementations that\n        # support a weightless path can skip the per-channel multiply.\n        # Implementations that require weight (e.g. oink) fall back via IR\n        # op priority when weight=None is unsupported.\n        self.pass_weight = self.has_weight\n        self.pass_weight_add = self.has_weight\n\n    def forward_native(\n        self,\n        x: torch.Tensor,\n        residual: torch.Tensor | None = None,\n    ) -> torch.Tensor | tuple[torch.Tensor, torch.Tensor]:\n        \"\"\"PyTorch-native implementation equivalent to forward().\"\"\"\n        if residual is None:\n            return ir.ops.rms_norm(\n                x,\n                self.weight.data if self.pass_weight else None,\n                self.variance_epsilon,\n                self.variance_size_override,\n            )\n        else:\n            return ir.ops.fused_add_rms_norm.maybe_inplace(\n                x,\n                residual,\n                self.weight.data if self.pass_weight_add else None,\n                self.variance_epsilon,\n                self.variance_size_override,\n            )\n\n    def forward_cuda(\n        self,\n        x: torch.Tensor,\n        residual: torch.Tensor | None = None,\n    ) -> torch.Tensor | tuple[torch.Tensor, torch.Tensor]:\n        if envs.VLLM_BATCH_INVARIANT:\n            assert self.variance_size_override is None, (\n                \"Batch invariance is not supported for variance_size_override\"\n            )\n            pass_weight = (\n                self.pass_weight_add if residual is not None else self.pass_weight\n            )\n            return rms_norm_batch_invariant(\n                x,\n                self.weight.data if pass_weight else None,\n                self.variance_epsilon,\n                residual=residual,\n            )\n\n        return self.forward_native(x, residual)"
+      },
+      {
+        "first_line": 143,
+        "last_line": 174,
+        "text": "# --8<-- [start:gemma_rms_norm]\n@CustomOp.register(\"gemma_rms_norm\")\nclass GemmaRMSNorm(CustomOp):\n    \"\"\"RMS normalization for Gemma.\n\n    Two differences from the above RMSNorm:\n        1. x * (1 + w) instead of x * w.\n        2. (x * w).to(orig_dtype) instead of x.to(orig_dtype) * w.\n    \"\"\"\n\n    # --8<-- [end:gemma_rms_norm]\n\n    def __init__(\n        self,\n        hidden_size: int,\n        eps: float = 1e-6,\n    ) -> None:\n        super().__init__()\n        self.weight = nn.Parameter(torch.zeros(hidden_size))\n        set_weight_attrs(self.weight, {\"dummy_weight_value\": 0.0})\n        self.variance_epsilon = eps\n\n    def forward_native(\n        self,\n        x: torch.Tensor,\n        residual: torch.Tensor | None = None,\n    ) -> torch.Tensor | tuple[torch.Tensor, torch.Tensor]:\n        \"\"\"PyTorch-native implementation equivalent to forward().\"\"\"\n        weight = self.weight.float() + 1.0\n        if residual is None:\n            return ir.ops.rms_norm(x, weight, self.variance_epsilon)\n        return ir.ops.fused_add_rms_norm(x, residual, weight, self.variance_epsilon)"
+      }
+    ],
+    "vllm/model_executor/models/gemma4_mm.py": [
+      {
+        "first_line": 1065,
+        "last_line": 1079,
+        "text": "    # Maps checkpoint prefixes to vLLM module paths.\n    hf_to_vllm_mapper = WeightsMapper(\n        orig_to_new_prefix={\n            # vision tower\n            \"model.vision_tower\": \"vision_tower\",\n            \"model.embed_vision\": \"embed_vision\",\n            # audio tower\n            \"model.audio_tower.\": \"audio_tower.\",\n            \"model.embed_audio.\": \"embed_audio.\",\n            # backbone\n            \"model.language_model.\": \"language_model.model.\",\n            \"lm_head.\": \"language_model.lm_head.\",\n            \"model\": \"language_model.model\",\n        },\n    )"
+      },
+      {
+        "first_line": 2254,
+        "last_line": 2275,
+        "text": "    def load_weights(self, weights: Iterable[tuple[str, torch.Tensor]]) -> set[str]:\n        # Some checkpoints have vestigial embed_vision.embedding and\n        # embed_audio.embedding weights from the Gemma3n architecture\n        # that are not used by Gemma4's MultimodalEmbedder (which only\n        # has embedding_projection + embedding_post_projection_norm).\n        ignore_prefixes = [\n            \"embed_vision.embedding.\",\n            \"embed_audio.embedding.\",\n        ]\n        # Models without audio tower should skip audio weights entirely.\n        if self.audio_tower is None:\n            ignore_prefixes.extend(\n                [\n                    \"audio_tower.\",\n                    \"embed_audio.\",\n                ]\n            )\n        loader = AutoWeightsLoader(\n            self,\n            ignore_unexpected_prefixes=ignore_prefixes,\n        )\n        return loader.load_weights(weights, mapper=self.hf_to_vllm_mapper)"
+      }
+    ],
+    "vllm/model_executor/models/utils.py": [
+      {
+        "first_line": 299,
+        "last_line": 341,
+        "text": "    def _load_param(\n        self,\n        base_prefix: str,\n        param: nn.Parameter,\n        weights: Iterable[tuple[str, torch.Tensor]],\n    ) -> Iterable[str]:\n        for weight_name, weight_data in weights:\n            weight_qualname = self._get_qualname(base_prefix, weight_name)\n\n            if self._can_skip(weight_qualname):\n                logger.debug(\"Skipping weight %s\", weight_qualname)\n\n                continue\n\n            if weight_name != \"\":\n                if self._can_ignore_unexpected(weight_qualname):\n                    logger.debug(\"Ignoring weight %s\", weight_qualname)\n\n                    continue\n\n                raise ValueError(\n                    f\"Attempted to load nested weight {weight_qualname!r} \"\n                    f\"into a single parameter {base_prefix!r}\"\n                )\n\n            if param.dtype != weight_data.dtype:\n                # An exact widening -- an fp32 accumulator reading a bf16\n                # table, say -- keeps every stored value, so it is a debug\n                # line. Every other mismatch still warns.\n                exact_widening = weight_data.dtype in (\n                    torch.float16,\n                    torch.bfloat16,\n                    torch.float32,\n                ) and param.dtype in (torch.float32, torch.float64)\n                (logger.debug if exact_widening else logger.warning)(\n                    \"Attempted to load weight %s with dtype %s into \"\n                    \"parameter with dtype %s\",\n                    weight_qualname,\n                    weight_data.dtype,\n                    param.dtype,\n                )\n            weight_loader = getattr(param, \"weight_loader\", default_weight_loader)\n            weight_loader(param, weight_data)"
+      },
+      {
+        "first_line": 347,
+        "last_line": 358,
+        "text": "    def _add_loadable_non_param_tensors(\n        self, module: nn.Module, child_params: dict[str, torch.Tensor]\n    ):\n        \"\"\"Add tensor names that are not in the model params that may be in the\n        safetensors, e.g., batch normalization stats and registered buffers.\n        \"\"\"\n        # Add persistent registered buffers.\n        # Non-persistent buffers are excluded, matching PyTorch state_dict().\n        non_persistent: set[str] = getattr(module, \"_non_persistent_buffers_set\", set())\n        for buf_name, buf in module.named_buffers(recurse=False):\n            if buf_name not in child_params and buf_name not in non_persistent:\n                child_params[buf_name] = buf"
+      },
+      {
+        "first_line": 376,
+        "last_line": 424,
+        "text": "    def _load_module(\n        self,\n        base_prefix: str,\n        module: nn.Module,\n        weights: Iterable[tuple[str, torch.Tensor]],\n    ) -> Iterable[str]:\n        if isinstance(module, (StageMissingLayer, PPMissingLayer)):\n            return\n\n        # Avoid infinite recursion since this function is typically\n        # called inside load_weights of the module itself\n        if module != self.module:\n            module_load_weights = getattr(module, \"load_weights\", None)\n            if callable(module_load_weights):\n                loaded_params = module_load_weights(weights)\n                if loaded_params is None:\n                    logger.warning(\n                        \"Unable to collect loaded parameters for module %s\", module\n                    )\n                    self._loaded_params_are_complete = False\n                else:\n                    yield from map(\n                        lambda x: self._get_qualname(base_prefix, x),\n                        loaded_params,\n                    )\n\n        child_modules = dict(module.named_children())\n        child_params = dict(module.named_parameters(recurse=False))\n\n        # Add missing tensors the weight loader needs to be able to load\n        # that aren't registered as params, e.g., batchnorm statistics.\n        self._add_loadable_non_param_tensors(module, child_params)\n\n        for child_prefix, child_weights in self._groupby_prefix(weights):\n            prefix = self._get_qualname(base_prefix, child_prefix)\n\n            if child_prefix in child_modules:\n                yield from self._load_module(\n                    prefix, child_modules[child_prefix], child_weights\n                )\n            elif child_prefix in child_params:\n                if self._can_skip(prefix):\n                    logger.debug(\"Skipping param %s\", prefix)\n\n                    continue\n\n                yield from self._load_param(\n                    prefix, child_params[child_prefix], child_weights\n                )"
+      },
+      {
+        "first_line": 451,
+        "last_line": 478,
+        "text": "    def load_weights(\n        self,\n        weights: Iterable[tuple[str, torch.Tensor]],\n        *,\n        mapper: WeightsMapper | None = None,\n    ) -> set[str]:\n        # Ignore unexpected biases (typically from GPTQ models)\n        self.ignore_unexpected_suffixes.append(\".bias\")\n\n        mapper = mapper or WeightsMapper()\n        # Many models store quant_config in the base model instead of the causal model.\n        # We look at the causal model's direct children for this reason.\n        modules = (self.module, *self.module.children())\n        iterator = (m.quant_config for m in modules if hasattr(m, \"quant_config\"))\n        if quant_config := next(iterator, None):\n            # Apply mappings for quantization-specific checkpoint tensors.\n            mapper |= quant_config.get_cache_scale_mapper()\n            mapper |= quant_config.get_checkpoint_weight_mapper()\n            ignore_unexpected_suffixes = quant_config._ignore_unexpected_suffixes\n            self.ignore_unexpected_suffixes.extend(ignore_unexpected_suffixes)\n        mapper |= self.REMOVE_UNUSED_ROTARY_EMBEDS_MAPPER\n\n        weights = mapper.apply(weights)\n        weights = self._filter_skipped(weights)\n\n        autoloaded_weights = set(self._load_module(\"\", self.module, weights))\n        self._check_skipped_aliases(autoloaded_weights)\n        return autoloaded_weights"
+      }
+    ],
+    "vllm/model_executor/model_loader/weight_utils.py": [
+      {
+        "first_line": 1529,
+        "last_line": 1544,
+        "text": "def default_weight_loader(param: torch.Tensor, loaded_weight: torch.Tensor) -> None:\n    \"\"\"Default weight loader.\"\"\"\n    try:\n        if param.numel() == 1 and loaded_weight.numel() == 1:\n            # Sometimes scalar values aren't considered tensors with shapes\n            # so if both param and loaded_weight are a scalar,\n            # reshape to match before copying\n            param.data.copy_(loaded_weight.view(param.shape))\n        else:\n            assert param.size() == loaded_weight.size(), (\n                f\"Attempted to load weight ({loaded_weight.size()}) \"\n                f\"into parameter ({param.size()})\"\n            )\n\n            param.data.copy_(loaded_weight)\n    except Exception:"
+      }
+    ],
+    "vllm/model_executor/model_loader/utils.py": [
+      {
+        "first_line": 139,
+        "last_line": 210,
+        "text": "def process_weights_after_loading(\n    model: nn.Module, model_config: ModelConfig, target_device: torch.device\n) -> None:\n    \"\"\"Post-process loaded weights into runtime format.\n\n    Under ``weights_already_processed`` (weight cache IPC loader), quant\n    methods skip tensor transforms and must declare\n    ``supports_pre_processed_weights``, otherwise this raises ``RuntimeError``.\n    \"\"\"\n    # Reclaim memory when an explicit lm_head has been\n    # loaded, but it is identical to the input embeddings.\n    from vllm.model_executor.layers.quantization.online.fp8 import OnlineLinearBase\n    from vllm.model_executor.layers.quantization.online.moe_base import (\n        OnlineMoEMethodBase,\n    )\n\n    maybe_retie_word_embeddings(model, model_config)\n\n    for name, module in model.named_modules():\n        quant_method = getattr(module, \"quant_method\", None)\n        if isinstance(quant_method, QuantizeMethodBase):\n            if (\n                is_weights_pre_processed()\n                and not quant_method.supports_pre_processed_weights\n            ):\n                raise RuntimeError(\n                    f\"layer {name or '<root>'}: {type(quant_method).__name__} \"\n                    \"does not support pre-processed weights\"\n                )\n            # When quant methods need to process weights after loading\n            # (for repacking, quantizing, etc), they typically expect parameters\n            # to be on the global target device. This scope is for the\n            # case where cpu offloading is used, where we will move the\n            # parameters onto device for processing and back off after.\n            # Methods that can process weights in place (e.g. PLE scale\n            # validation) set requires_device_loading=False to skip this move.\n            loading_context = (\n                device_loading_context(module, target_device)\n                if quant_method.requires_device_loading\n                else nullcontext()\n            )\n            timing_context = (\n                online_quantization_timing_context(module, quant_method)\n                if isinstance(quant_method, (OnlineLinearBase, OnlineMoEMethodBase))\n                else nullcontext()\n            )\n            with loading_context, timing_context:\n                quant_method.process_weights_after_loading(module)\n            # process_weights_after_loading may swap in freshly-created\n            # Parameters (e.g. FP8 requantization), which are stamped with the\n            # global rank in BasevLLMParameter.__init__. Re-reconcile their TP\n            # state to the layer so a later weight reload / RL weight-refit\n            # narrows replicated (disable_tp) weights at the correct offset.\n            if hasattr(module, \"update_param_tp_status\"):\n                module.update_param_tp_status()\n            # Repacking transients above can leave large amounts of memory in\n            # the caching allocator, which starves the OS on UMA devices.\n            release_device_memory_under_pressure(target_device)\n\n    # Initialize post-load attention weights for any attention layer and MM\n    # encoder. NOTE: Happens after other modules so we can easily decompress\n    # weights.\n    for _, module in model.named_modules():\n        if is_deferred_attention_layer(module):\n            # TODO(lucas): see if there is a way to unify the signatures\n            # of process_weights_after_loading\n            with device_loading_context(module, target_device):\n                module.process_weights_after_loading(model_config.dtype)\n\n    # Model-level post-load hook, after the per-layer quant finalize.\n    if hasattr(model, \"process_weights_after_loading\"):\n        model.process_weights_after_loading()"
+      }
+    ],
+    "vllm/ir/ops/layernorm.py": [
+      {
+        "first_line": 9,
+        "last_line": 21,
+        "text": "@register_op\ndef rms_norm(\n    x: Tensor, weight: Tensor | None, epsilon: float, variance_size: int | None = None\n) -> Tensor:\n    \"\"\"Weighted root-mean-square layer normalization.\"\"\"\n    orig_dtype = x.dtype\n    x = x.to(torch.float32)\n    x_var = x if variance_size is None else x[..., :variance_size]\n    variance = x_var.pow(2).mean(dim=-1, keepdim=True)\n    x = x * torch.rsqrt(variance + epsilon)\n    if weight is not None:\n        x = x.to(weight.dtype) * weight\n    return x.to(orig_dtype)"
+      }
+    ],
+    "vllm/kernels/vllm_c.py": [
+      {
+        "first_line": 17,
+        "last_line": 44,
+        "text": "rms_no_var_size = lambda x, weight, epsilon, variance_size=None: (\n    variance_size is None and (weight is None or weight.dtype == x.dtype)\n)\n\"\"\"vLLM kernel requires no variance_size override and matching input/weight dtype.\"\"\"\n\n\n@ir.ops.rms_norm.register_impl(\n    \"vllm_c\", supports_args=rms_no_var_size, supported=GPGPU_DEVICE\n)\ndef rms_norm(\n    x: Tensor, weight: Tensor | None, epsilon: float, variance_size: int | None = None\n) -> Tensor:\n    assert variance_size is None\n    # ROCm's vLLM C RMSNorm kernel operates on contiguous 2D tensors.\n    # Higher-rank callers still normalize over the last dimension, so flatten\n    # all leading dims. reshape handles strided views from q/k/v splits.\n    if IS_ROCM and (x.dim() > 2 or not x.is_contiguous()):\n        original_shape = x.shape\n        x = x.reshape(-1, original_shape[-1])\n        # empty_like preserves the strides of transposed inputs, but the\n        # libtorch-stable kernel requires a contiguous output tensor.\n        output = torch.empty(x.shape, device=x.device, dtype=x.dtype)\n        torch.ops._C.rms_norm(output, x, weight, epsilon)\n        return output.reshape(original_shape)\n\n    output = torch.empty(x.shape, device=x.device, dtype=x.dtype)\n    torch.ops._C.rms_norm(output, x, weight, epsilon)\n    return output"
+      }
+    ],
+    "vllm/model_executor/models/registry.py": [
+      {
+        "first_line": 427,
+        "last_line": 427,
+        "text": "    \"Gemma4ForConditionalGeneration\": (\"gemma4_mm\", \"Gemma4ForConditionalGeneration\"),"
+      }
+    ]
+  },
+  "configuration": {
+    "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/checkpoints/code90-current-ad-helper-av-v1/config.json",
+    "sha256": "e967dd38bc5cfd38bd09a995a7bf4a754075df2b46aba68f7fbb5a791e6d8dd1",
+    "text_fields": {
+      "hidden_size": 5376,
+      "hidden_size_per_layer_input": 0,
+      "enable_moe_block": false,
+      "num_experts": null,
+      "rms_norm_eps": 1e-06,
+      "num_hidden_layers": 60
+    },
+    "architectures": [
+      "Gemma4ForConditionalGeneration"
+    ]
+  },
+  "candidate_spec": {
+    "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f03-native-v1/proposal/fresh-native-contract-f03.json",
+    "sha256": "e10018748de2795a8af03b98abb6e18362393a152c74f46b7a7892fe4975e878",
+    "edited_tensors": 112,
+    "families": {
+      "layer_scalar": 2,
+      "post_attention_layernorm": 58,
+      "post_feedforward_layernorm": 52
+    }
+  },
+  "findings": {
+    "weight_semantics": "Direct w in HF Gemma4RMSNorm and vLLM RMSNorm; not GemmaRMSNorm 1+w",
+    "placement": "post_attention and post_feedforward normalize branch output before residual addition; layer_scalar multiplies complete text-layer output afterwards",
+    "loading": "prefix mapper only for these names; persistent scalar buffer admitted by AutoWeightsLoader; default loader copy_ or reshape+copy_; no offset transform found",
+    "precision": "HF FP32 norm and FP32 weight multiply before cast; vLLM IR native casts normalized x to weight dtype before multiply; pow(-.5) versus rsqrt. Source-level arithmetic ordering differs.",
+    "not_proven": [
+      "Exact loaded per-rank values in serving",
+      "Selected runtime IR/CUDA/compiler implementation",
+      "HF/vLLM bitwise or numerical forward equivalence",
+      "Effect on native free generation or official WSP"
+    ],
+    "decision_scope": "Only weight meaning/placement match; HF finite is an internal paired diagnostic and ordinary serving/native/WSP effect remains separate"
+  }
+}

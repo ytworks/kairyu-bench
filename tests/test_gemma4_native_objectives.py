@@ -557,5 +557,29 @@ class NativeDependencyGeometryTests(unittest.TestCase):
             dependency.bf16_gaps(np.array([1.001], dtype=np.float32))
 
 
+class NativeSpecAuditTests(unittest.TestCase):
+    def test_realized_box_excess_and_zero_denominator_are_not_hidden(self):
+        audit = load("native_spec_audit")
+        values = np.array([1.25, -1.25, 0.], dtype=np.float32)
+        target = audit.apply_edit(values, {"tensor": "fixture", "indices": [0, 1],
+                                          "set_values": [1.265625, -1.265625]})
+        row = audit.diff_stats(values, target, .01, 1e-6)
+        self.assertEqual((row["positive_delta"], row["negative_delta"], row["unchanged"]), (1, 1, 1))
+        self.assertEqual(row["exceeds_declared_continuous_box"], 2)
+        self.assertAlmostEqual(row["maximum_actual_to_box_ratio"], 1.25)
+        self.assertEqual(row["relative_delta_undefined_on_zero_source"], 1)
+        zero = audit.diff_stats(np.array([0.]), np.array([0.]), .01, 1e-6)
+        self.assertIsNone(zero["relative_delta_l2"])
+        self.assertIsNone(zero["max_relative_delta_on_nonzero_source"])
+
+    def test_sparse_spec_cannot_overwrite_duplicate_or_round_invalid_values(self):
+        audit = load("native_spec_audit")
+        base = np.array([1.], dtype=np.float32)
+        with self.assertRaisesRegex(ValueError, "duplicate"):
+            audit.apply_edit(base, {"tensor": "fixture", "indices": [0, 0], "set_values": [1., 2.]})
+        with self.assertRaisesRegex(ValueError, "exact finite BF16"):
+            audit.apply_edit(base, {"tensor": "fixture", "indices": [0], "set_values": [1.001]})
+
+
 if __name__ == "__main__":
     unittest.main()

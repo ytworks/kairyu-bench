@@ -1,0 +1,57 @@
+{
+  "status": "read_only_closure_confirmed",
+  "operation_count_reported_by_root": 1,
+  "operator_observation": "The first exec returned empty stdout. Root did not repeat apply; a separate read confirmed the completed receipt and state.",
+  "receipt_sha256": "04080a3e93263761195977decab7d9ace7f7c95817c5b4eebd00703b28e67635",
+  "marker_sha256": "8eaa2f057f10d23782b9139a29c725e3af15df4e4c60116d0776f86ac17f2ac4",
+  "operation_sha256": "435e01109887123db12519c100e304fa7bd4f5a71b772e6c96eedce1b130f894",
+  "plan_sha256": "9f758511d865d9444858bcf645746efced8f567246dcd3a4472b6c9b055f6a3a",
+  "all135_archive_hashes_verified_in_completed_operation": true,
+  "archive_index_identity_rechecked_here": true,
+  "all135_archive_payloads_rehashed_here": false,
+  "current_av9_nonweight7_full_stat_match": true,
+  "current_all27_service_snapshot_match": true,
+  "two_targets_absent": true,
+  "four_journals_match_order_and_targets": true,
+  "pid_absent": true,
+  "pid_lock_rows": [],
+  "released_logical_bytes": 62546338264,
+  "free_bytes_before": 71021838336,
+  "free_bytes_after": 133568122880,
+  "observed_free_bytes_delta": 62546284544,
+  "elapsed_seconds": 10.971487045288086,
+  "copies": [
+    {
+      "path": "journal-0-intent.json",
+      "sha256": "075ebac8f853b9052be1e38ea26e6f82b05fe9aad25ca86aba7a3c7e4a7f3e2b"
+    },
+    {
+      "path": "journal-0-released.json",
+      "sha256": "b380e82992801d0c3a86b9e1a61cdbdd1712f21755b4693426c9bbde28d04159"
+    },
+    {
+      "path": "journal-1-intent.json",
+      "sha256": "c93fb04c177fd095ec9defa6821b68321911bbfe93a0586086f82e56aa7cdb6e"
+    },
+    {
+      "path": "journal-1-released.json",
+      "sha256": "ef3294f5b50a33d0e692898fcc472c55b7980419a5a3746ebaabddedca66fa57"
+    },
+    {
+      "path": "precheck.json",
+      "sha256": "9b824d0b7fea416096c38cf95b3740c5e047170afda878de028d8829c01d567e"
+    },
+    {
+      "path": "receipt.json",
+      "sha256": "04080a3e93263761195977decab7d9ace7f7c95817c5b4eebd00703b28e67635"
+    }
+  ],
+  "physical_reconstruction": false,
+  "fresh_checkpoint_payload_hash": false,
+  "additional_apply_or_lock_or_service_operations": 0,
+  "limits": [
+    "Historical fullhash plus current stat continuity is not a new complete checkpoint hash.",
+    "Other-UID/inaccessible open references remain the operation-reported visibility limit.",
+    "Actual logical released bytes and observed free-space delta are distinct."
+  ]
+}

@@ -1,0 +1,20 @@
+{
+  "reviewer": "observation_audit",
+  "method": "read-only full source and fixed plan/preview receipt",
+  "source_sha256": "435e01109887123db12519c100e304fa7bd4f5a71b772e6c96eedce1b130f894",
+  "plan_sha256": "9f758511d865d9444858bcf645746efced8f567246dcd3a4472b6c9b055f6a3a",
+  "preview_sha256": "b260a0744ebd12b2ec1d5c2729f61b709f815e9e7860d1a549f09e7bdd7e2a7c",
+  "blocking_findings": [],
+  "reviewed": [
+    "exact2 basename and nofollow directory fd; immediate fstat/stat equality",
+    "nlink1 and distinct AV inode",
+    "global flock; per-file archive/marker/source/27mount/visible-reference guards",
+    "fsynced marker then intent then unlink then directory fsync then released journal",
+    "partial failure observed_absent and no automatic retry"
+  ],
+  "limits": [
+    "inaccessible /proc and other-UID processes not a complete host-open-file proof",
+    "no fresh complete payload hash or physical reconstruction claimed"
+  ],
+  "additional_model_service_gpu_api_unlink_or_preview_operations": 0
+}

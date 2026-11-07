@@ -602,3 +602,12 @@ optimizer. Output contains all 24-row geometry, family/layer/tensor denominators
 exact-zero counts distinct from unused tensors and adjacent BF16 spacing. It neither
 creates a candidate nor selects support. See [the measured report](../../../docs/experiments/2026-11-07-native-dependency-analysis.md)
 for scope, units and forced-empty-thought limitations.
+
+
+### Audit an existing native-only spec
+
+`native_spec_audit.py --root <fixed-proposal-root> --plan-sha256 <SHA> --output <new-directory>`
+reconstructs a fixed schema-1 spec, checks all native parent words and target hashes,
+and reports all tensor/family/layer differences and signed predictions. It does not
+optimize, materialize or call a model. Actual BF16 box excess and missing per-round
+vectors stay explicit. See [F03's audit](../../../docs/experiments/2026-11-07-f03-native-spec-audit.md).

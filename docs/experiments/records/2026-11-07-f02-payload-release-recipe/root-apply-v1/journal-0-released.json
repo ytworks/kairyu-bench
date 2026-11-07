@@ -1,0 +1,23 @@
+{
+  "free_bytes": 120944939008,
+  "released": [
+    {
+      "allocated_bytes": 49923174400,
+      "bytes": 49923154850,
+      "current_stat": {
+        "ctime_ns": 1794028171554622206,
+        "device": 2306,
+        "gid": 1003,
+        "inode": 182098078,
+        "mode": 33204,
+        "mtime_ns": 1794028171554622206,
+        "nlink": 1,
+        "size": 49923154850,
+        "uid": 1003
+      },
+      "hardlink_private": true,
+      "historical_full_sha256": "e6144c1c2322cd2a05ced629c754c229ec530747470b3ba423a3c905b8d6e97c",
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/checkpoints/fresh-code-joint-f02/model-00001-of-00002.safetensors"
+    }
+  ]
+}

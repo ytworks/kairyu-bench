@@ -205,3 +205,21 @@ fixture proves rejection before mutation and refusal of ambiguous rollback.
   [Measured report and validation](experiments/2026-11-07-native-dependency-analysis.md).
 
 - [全train12・保存native候補1件のfinite owner](experiments/2026-11-07-behavior12-finite-owner.md): 既存GPU4 ownerの明示mode分岐。全9file editor/full-hash/statとRAM選択BF16を結び、AV→candidate→AV全12・同CID復帰を検証する。22 focused CPU tests/Ruff成功、実candidate未bind・finite GPU未実行。
+
+
+### Existing native-spec audit (2026-11-07)
+
+- `scripts/experiments/gemma4-purpose/native_spec_audit.py`: reconstruct fixed
+  native-only BF16 spec and independently check source/target words, actual box
+  excess, all native tensor/layer/family support and all signed predictions.
+  No solver, checkpoint write or model call.
+  [F03 results, import-test failure and final focused validation](experiments/2026-11-07-f03-native-spec-audit.md).
+
+
+### Fixed F03 CPU materialization (2026-11-07)
+
+- `docs/experiments/scripts/fresh-f03-materialize-20261107.py`: exact authorized
+  AV→F03 private copy, one preview/apply/fresh full verify under the global flock,
+  50 GiB reserve, immutable CPU source snapshot, all-nine-file verified identity
+  bound to identical before/after stats without an extra payload-hash pass.
+  [Execution evidence](experiments/2026-11-07-f03-materialization.md).

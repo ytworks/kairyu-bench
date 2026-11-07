@@ -1,0 +1,38 @@
+{
+  "steps": [
+    {
+      "name": "preview",
+      "argv": [
+        "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/infra/weight-tools-ci/bin/python",
+        "scripts/experiments/gemma4-purpose/propose_native_objectives.py",
+        "--plan",
+        "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f03-native-v1/proposal-plan.json",
+        "--output",
+        "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f03-native-v1/proposal",
+        "--maximum-seconds",
+        "120"
+      ],
+      "returncode": 0,
+      "seconds": 0.3644713079556823
+    },
+    {
+      "name": "solve",
+      "argv": [
+        "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/infra/weight-tools-ci/bin/python",
+        "scripts/experiments/gemma4-purpose/propose_native_objectives.py",
+        "--plan",
+        "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f03-native-v1/proposal-plan.json",
+        "--output",
+        "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f03-native-v1/proposal",
+        "--maximum-seconds",
+        "120",
+        "--run",
+        "--write-spec"
+      ],
+      "returncode": 0,
+      "seconds": 10.378914122004062
+    }
+  ],
+  "model_calls": 0,
+  "checkpoint_writes": 0
+}

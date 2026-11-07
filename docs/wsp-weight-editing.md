@@ -195,3 +195,11 @@ lock, collect fresh serving/mount and full-weight-hash evidence, confirm complet
 official dev scoring, and prevent intervening mutations. Passing this validator
 does not authorize skipping manual, final, or publication recipe verification.
 No benchmark queue, serving operation, or automatic skip is implemented.
+
+
+A concrete CPU-only materialization record is
+[F03's preview, one apply and fresh full verification](experiments/2026-11-07-f03-materialization.md).
+Its content identity uses the fresh verify hashes only after complete before/after
+Checkpoint and POSIX stat equality; the derivation is explicit and does not repeat
+a full payload hash. That fixed recipe is specific to its authorized parent/spec,
+and successful file verification is separate from capability evaluation.

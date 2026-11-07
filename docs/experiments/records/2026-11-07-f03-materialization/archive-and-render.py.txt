@@ -1,0 +1,89 @@
+from pathlib import Path
+import gzip
+import hashlib
+import json
+import shutil
+
+B = Path.cwd()
+R = B.parents[1]
+M = R / "analysis/fresh-purpose-20261107-f03-native-v1/materialization"
+D = B / "docs/experiments/records/2026-11-07-f03-materialization"
+sha = lambda p: hashlib.sha256(p.read_bytes()).hexdigest()
+read = lambda p: json.loads(p.read_text())
+completed = read(M/"completion.json")
+assert completed["status"]=="completed" and completed["verified"]
+assert read(M/"lock-released.json")["released"]
+verify=read(M/"verify.json")
+identity=read(M/"fullcandidateidentity.json")
+assert len(verify["files"])==9 and identity["candidate_stat_unchanged_across_verify"]
+compression=[]
+for path in sorted(M.iterdir()):
+ if not path.is_file():continue
+ if path.name=="edit-manifest.json":
+  raw=path.read_bytes()
+  packed=gzip.compress(raw,mtime=0)
+  assert gzip.decompress(packed)==raw
+  target=D/"edit-manifest.json.gz"
+  target.write_bytes(packed)
+  compression.append({"input":str(path),"input_sha256":sha(path),"bytes":len(raw),
+                      "gzip":target.name,"gzip_sha256":sha(target),"gzip_bytes":len(packed),
+                      "lossless_roundtrip":True})
+ else:
+  target=D/(path.name if path.suffix==".json" else path.name+".txt")
+  shutil.copyfile(path,target)
+for path in sorted((M/"source").rglob("*.py")):
+ target=D/"source"/(str(path.relative_to(M/"source"))+".txt")
+ target.parent.mkdir(parents=True,exist_ok=True)
+ shutil.copyfile(path,target)
+(D/"compression.json").write_text(json.dumps(compression,indent=2)+"\n")
+create=read(M/"create-receipt.json")
+verification=read(M/"verify-receipt.json")
+summary={"status":"saved_and_fresh_full_verified",
+         "source_tree_sha256":identity["source_tree_sha256"],
+         "candidate_tree_sha256":identity["checkpoint"]["sha256"],
+         "manifest_sha256":identity["manifest"]["sha256"],
+         "verify_sha256":identity["verify"]["sha256"],
+         "identity_sha256":sha(M/"fullcandidateidentity.json"),
+         "spec_sha256":identity["spec_sha256"],
+         "create_seconds":create["seconds"],"fresh_verify_seconds":verification["seconds"],
+         "completion":completed,"all_files":verify["files"],
+         "derivation":identity["derivation"],
+         "gpu_model_service_calls":0,
+         "failures":[] if not (M/"failure.json").exists() else [read(M/"failure.json")]}
+(D/"summary.json").write_text(json.dumps(summary,indent=2)+"\n")
+text=f"""# F03 saved checkpoint and fresh full verification (2026-11-07)
+
+The explicitly authorized checkpoint @B@{R}/checkpoints/fresh-native-contract-f03@B@ was created once from AV. CPU preview, one apply and one separate fresh editor verify completed; GPU/API/service/finite calls were **0**. This records materialization, not capability improvement or adoption.
+
+- Exact source tree: @B@{identity['source_tree_sha256']}@B@.
+- Exact spec SHA: @B@{identity['spec_sha256']}@B@.
+- Candidate tree: @B@{identity['checkpoint']['sha256']}@B@.
+- Actual differences: **{verify['changed_elements']:,} elements / {verify['changed_tensors']} tensors**, L2 **{verify['delta_l2']:.17g}**, matching the frozen F03 spec and independent audit.
+- Apply: **{create['seconds']:.3f} s**; fresh full verify: **{verification['seconds']:.3f} s**; operation total **{completed['seconds']:.3f} s**.
+- Reserve: **50 GiB**; final NVMe free **{completed['free_bytes_after']:,} bytes**.
+- All **9 files** verified; @B@verified=true@B@ and @B@legacy_full_hashes_missing=false@B@. No failure or automatic retry was recorded.
+
+The exact [operation recipe](scripts/fresh-f03-materialize-20261107.py) was retained in this PR and copied with its five required package files to a hashed, read-only NVMe source snapshot. It held the global @B@candidate-evaluation.lock@B@ exclusively through preview, copy, verification and identity binding; normal release is recorded. The four running model replicas remained mounted read-only on AV; no serving action was made.
+
+The editor checked all source and candidate regular files, including undeclared bytes and nonweight files. Candidate edited bytes reconstruct their original source hashes when the manifest's before-values are restored. The source tree recomputed from those fresh verification hashes equals the pinned AV tree.
+
+## Candidate identity without an extra 63 GB hash pass
+
+Complete @B@Checkpoint.identity(hash_files=False)@B@ and full POSIX inventory were captured before and after fresh verify and required to match exactly. The identity uses the verify-produced candidate file SHA values with the matching post-verify sizes/stats, following Checkpoint's canonical tree serialization. Thus the content identity derives from a fresh complete verification under stat continuity; it does not claim a second independent payload-hash pass.
+
+Canonical evidence: @B@{M}/fullcandidateidentity.json@B@ (SHA @B@{sha(M/'fullcandidateidentity.json')}@B@). It contains the nine file hashes, exact stat identity and derivation. Source and candidate all-file hashes are retained below.
+
+| File | Source SHA256 | Candidate SHA256 |
+|---|---|---|
+"""
+for row in verify["files"]:
+ text+=f"| {row['path']} | @B@{row['source_sha256']}@B@ | @B@{row['candidate_sha256']}@B@ |\n"
+text+="""
+[Complete materialization records](records/2026-11-07-f03-materialization/) contain preview, plan, apply/verify receipts and stdout/stderr, all source snapshots, before/after stat proofs, full candidate identity, normal lock release and checksum manifest. The editor manifest is gzip-compressed losslessly, with original/compressed SHA and round-trip proof. Its exact values were neither rescaled nor recomputed.
+
+The native proxy's two unmet design targets and box-exceed counts remain in the [independent F03 audit](2026-11-07-f03-native-spec-audit.md); successful file verification does not turn those into passed behavioral requirements. No finite or WSP result is claimed here.
+"""
+(B/"docs/experiments/2026-11-07-f03-materialization.md").write_text(text.replace("@B@",chr(96)))
+(D/"SHA256SUMS").write_text("".join(sha(p)+"  "+str(p.relative_to(D))+"\n"
+ for p in sorted(D.rglob("*")) if p.is_file() and p.name!="SHA256SUMS"))
+print(json.dumps({k:summary[k] for k in ["candidate_tree_sha256","manifest_sha256","verify_sha256","identity_sha256","create_seconds","fresh_verify_seconds"]},indent=2))

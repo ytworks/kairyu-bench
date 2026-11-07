@@ -1,0 +1,43 @@
+{
+  "earlier_validation": {
+    "tests": 2,
+    "passed": 2,
+    "unittest_seconds": 0.021,
+    "ruff_returncode": 0,
+    "limitation": "Requested TMPDIR infra/tmp did not exist; tempfile fell back to remote /tmp. Only tiny journal fixture was created and automatically removed; no checkpoint/model/service operation. This is an environment-instruction deviation, not an NVMe-validated run."
+  },
+  "correction": "Explicit TemporaryDirectory dir=TMPDIR prevents silent fallback when provided; rerun uses existing NVMe analysis directory. Recipe source unchanged.",
+  "corrected_validation": [
+    {
+      "command": [
+        "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/infra/weight-tools-ci/bin/python",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests",
+        "-p",
+        "test_f02_payload_release_recipe.py",
+        "-v"
+      ],
+      "returncode": 0,
+      "seconds": 0.1407074820017442,
+      "stdout": "",
+      "stderr": "test_durable_evidence_never_overwrites_existing_journal (test_f02_payload_release_recipe.F02ReleaseGuards.test_durable_evidence_never_overwrites_existing_journal) ... ok\ntest_unapproved_apply_rejects_before_directory_lock_or_file_operations (test_f02_payload_release_recipe.F02ReleaseGuards.test_unapproved_apply_rejects_before_directory_lock_or_file_operations) ... ok\n\n----------------------------------------------------------------------\nRan 2 tests in 0.019s\n\nOK\n"
+    },
+    {
+      "command": [
+        "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/infra/weight-tools-ci/bin/ruff",
+        "check",
+        "docs/experiments/scripts/fresh-f02-payload-release-20261107.py",
+        "tests/test_f02_payload_release_recipe.py"
+      ],
+      "returncode": 0,
+      "seconds": 0.048125118017196655,
+      "stdout": "All checks passed!\n",
+      "stderr": ""
+    }
+  ],
+  "source_sha256": "435e01109887123db12519c100e304fa7bd4f5a71b772e6c96eedce1b130f894",
+  "test_sha256": "b66df86666d003e1723b460eac4979a1a1c5e52e1407ffc3ec3335f16680c9bc"
+}
