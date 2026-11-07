@@ -1,0 +1,74 @@
+from pathlib import Path
+import ast,difflib,gzip,hashlib,json,shutil,time
+R=Path('/mnt/nvme/kairyu/wsp/gemma4-coding-20261104'); B=R/'worktrees/kairyu-bench-weight-tools'
+V=R/'analysis/fresh-purpose-20261107-body-kl-implementation-v1'; D=B/'docs/experiments/records/2026-11-07-body-kl-implementation'
+D.mkdir(exist_ok=False)
+doc=B/'docs/experiments/2026-11-07-body-kl-training-implementation.md'
+(V/'implementation-doc.before-final.md').write_bytes(doc.read_bytes())
+s=doc.read_text()
+s=s.replace('Full204 tokenizer proof is a separate required CPU artifact before a new plan can run.',
+'''The final trim/owner changes passed 28 owner tests plus 4 host trainer tests (3 Torch tests skipped on the host), and focused Ruff. The earlier seven-test real Torch result remains the numerical evidence; the trim amendment does not change the loss math. The final all204 tokenizer proof passed separately.''')
+old='''The current GPU owner is unchanged: its training restoration proof is still explicitly F04-bound and it does not yet check separated teacher/student/total counts. Before a future GPU launch, bind the selected highest complete editing parent, selected teacher and these count contracts in that existing owner. The earlier informal assertion that it already had a fixed256 forward guard was incorrect; source inspection corrected it. No owner framework or serving action was added here.'''
+new='''The existing GPU owner now supports a separate editing-parent and currently served-target binding. This permits editing the selected F04 parent while stopping and restoring the exact currently served F06 CID; it does not require an extra F04 deployment. Its original default F04 binding remains intact. Add these top-level owner fields to opt in:
+
+    "training_binding": {
+      "editing_parent_label": "F04",
+      "served_model_label": "F06",
+      "served_checkpoint": {"path":"<absolute-checkpoint>",
+        "tree_sha256":"<content-tree>",
+        "attestation":{"path":"<full-hash-and-stat-receipt>","sha256":"<receipt-sha>"}}
+    },
+    "training_forward_contract": {
+      "teacher_once_per_train_case":true,
+      "student_microbatches_per_step":4,
+      "holdout_forwards":0
+    }
+
+The existing five training pins are unchanged. The served proof binds the current exact CID/read-only mount/full identity independently of the editing parent. The latter remains bound by the owner and trainer checkpoint/attestation equality and the selected-parent label. The optional KL contract requires the new helper source pin and checks completed/attempted teacher, student and total forwards, all teacher cache file hashes, same full-frame IDs/lengths and exact teacher/base metadata. Original stop/start, late-create cleanup and protected-container logic are unchanged. The earlier informal assertion that the old owner already had a fixed256 forward guard was incorrect; this work adds the explicit opt-in accounting.
+
+The first real204 tokenizer check retained 71 unsupported cases: the pinned official strip_thinking macro trims whitespace, whereas the initial mask helper expected raw reference text verbatim. Its failed v1 proof is preserved. The minimal fix accepts only official boundary whitespace trim, rejects channel-bearing references, checks the complete rendered string exactly, and records both trim amounts and raw/body offsets. The raw input rows and original complete token IDs are unchanged. V2 passed all204: 22,922 full tokens, maximum336, 12,621 selected body tokens, per-case range3–281, no unsupported/ineligible case, no prompt or turn-terminator target. The 9 later-function cases remain explicit suffix supervision. Container9.543s/tokenizer2.762s; teacher/model/gradient calls0. See the [failed and successful tokenizer records](2026-11-07-mbpp204-body-frame-proof.md).
+
+Final live source identities: trainer c9406e597d015ec4f3cf1d626b0208d26fd6de7d673c6efca580af7001756374; body helper290365237443e0138079e106452c88dcf64779e0dc6834447f29e92666c90ef8; owner8d48cd69f9fe4109dec8fe190dde665483b24c6edb92e59dde4118859de6b2da. Source freeze and exact checks are in final-optin-source-freeze.json. Both mask/identity fixes protect demonstrated failures; there is no new general training framework. No GPU model run or capability gain is claimed.'''
+assert old in s;s=s.replace(old,new);doc.write_text(s)
+for p in V.iterdir():
+ if p.is_file(): shutil.copyfile(p,D/p.name)
+for name in ('body-kl-integrate.py.txt','body-kl-tests-and-overlap.py.txt'):
+ p=R/'analysis'/name
+ if p.exists(): shutil.copyfile(p,D/name)
+live=['scripts/experiments/gemma4-purpose/train_lora.py','scripts/experiments/gemma4-purpose/train_lora_body_kl.py','docs/experiments/scripts/fresh-av-native-gpu4-20261107.py','tests/test_gemma4_lora_training.py','tests/test_gemma4_native_owner.py']
+for relative in live:
+ p=B/relative;shutil.copyfile(p,D/(p.name+'.txt'))
+pairs=[('train_lora.before.py.txt','scripts/experiments/gemma4-purpose/train_lora.py'),
+       ('train_lora_body_kl.before-template-trim.py.txt','scripts/experiments/gemma4-purpose/train_lora_body_kl.py'),
+       ('gpu-owner.before-body-kl.py.txt','docs/experiments/scripts/fresh-av-native-gpu4-20261107.py'),
+       ('test_gemma4_native_owner.before-body-kl.py.txt','tests/test_gemma4_native_owner.py')]
+for before,after in pairs:
+ text=''.join(difflib.unified_diff((V/before).read_text().splitlines(True),(B/after).read_text().splitlines(True),fromfile=before,tofile=after))
+ (D/(Path(after).name+'.diff.gz')).write_bytes(gzip.compress(text.encode(),mtime=0))
+before=ast.parse((V/'train_lora.before.py.txt').read_text());after=ast.parse((B/live[0]).read_text())
+proof={}
+for name in ('prepare_training_frames','answer_loss','make_adapter'):
+ left=next(n for n in before.body if isinstance(n,ast.FunctionDef) and n.name==name)
+ right=next(n for n in after.body if isinstance(n,ast.FunctionDef) and n.name==name)
+ proof[name]=ast.dump(left,include_attributes=False)==ast.dump(right,include_attributes=False)
+assert all(proof.values())
+(D/'final-default-path-ast-proof.json').write_text(json.dumps(proof,indent=2)+'\n')
+(D/'README.md').write_text('''# CPU-only body/KL implementation records
+
+Raw pre-change sources, old helper failure boundary, real Torch numerical log,
+final trim/owner focused logs, final live-source snapshots and compressed diffs
+are retained. The defaults AST proof covers three unchanged F06 functions; it
+does not claim all trainer orchestration is unchanged. The real Torch tests
+precede only whitespace mapping and final log/owner changes. New owner tests use
+CPU fixtures, not Docker/GPU. All204 actual-tokenizer v1/v2 records are linked
+from the parent implementation Markdown and retain all cases.
+
+The packaging source is package-final-records.py.txt. Editing uses explicit
+before/after source diffs; no hidden runtime code or untracked reusable tool is
+required. CLI preview builder is separate live source owned by the root agent.
+Real model training, separate-teacher CUDA release and downstream score changes
+remain untested in this record. No parent benchmark or model answer was rerun.
+''')
+index={str(p.relative_to(D)):hashlib.sha256(p.read_bytes()).hexdigest() for p in sorted(D.rglob('*')) if p.is_file()}
+(D/'SHA256SUMS.json').write_text(json.dumps(index,indent=2)+'\n')
+print(json.dumps(dict(records=str(D),files=len(index),sha_index=hashlib.sha256((D/'SHA256SUMS.json').read_bytes()).hexdigest(),doc_sha=hashlib.sha256(doc.read_bytes()).hexdigest(),all_default_ast=proof)))

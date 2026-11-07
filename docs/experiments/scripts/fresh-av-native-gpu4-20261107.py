@@ -126,11 +126,51 @@ def training_metadata(plan):
             and preview["trainer_arguments"] == training_args(plan), "CPU trainer metadata preview mismatch")
     restored = pinned(training["restoration_proof"])
     replica = restored["replicas"]["gemma-2"]
-    require(restored["current_model"] == restored["best_parent"] == "F04"
-            and restored["checkpoint_all9_fullstat_matched_manifest"] is True
-            and replica["cid"] == plan["target"]["id"] and replica["tree"] == plan["checkpoint_tree_sha256"]
-            and replica["checkpoint_mount"] == plan["checkpoint"] and replica["checkpoint_readonly"] is True,
-            "training F04 restoration proof differs")
+    binding = plan.get("training_binding")
+    if binding is None:
+        require(restored["current_model"] == restored["best_parent"] == "F04"
+                and replica["tree"] == plan["checkpoint_tree_sha256"]
+                and replica["checkpoint_mount"] == plan["checkpoint"],
+                "training F04 restoration proof differs")
+    else:
+        require(set(binding) == {"editing_parent_label", "served_model_label", "served_checkpoint"},
+                "explicit editing/served training identities required")
+        require(all(isinstance(binding[k], str) and re.fullmatch(r"[A-Za-z0-9_.-]+", binding[k])
+                    for k in ("editing_parent_label", "served_model_label")), "invalid explicit model labels")
+        served = binding["served_checkpoint"]
+        require(set(served) == {"path", "tree_sha256", "attestation"}, "explicit served checkpoint required")
+        served_path = Path(served["path"])
+        require(served_path.is_absolute() and served_path.resolve() == served_path
+                and served_path.is_relative_to(ROOT / "checkpoints"), "served checkpoint outside readonly task root")
+        served_identity = pinned(served["attestation"])["checkpoint"]
+        full_identity(served_identity, served_path)
+        require(restored["best_parent"] == binding["editing_parent_label"]
+                and restored["current_model"] == binding["served_model_label"]
+                and served_identity["sha256"] == served["tree_sha256"] == replica["tree"]
+                and replica["checkpoint_mount"] == served["path"], "editing/served restoration identity differs")
+    require(restored["checkpoint_all9_fullstat_matched_manifest"] is True
+            and replica["cid"] == plan["target"]["id"] and replica["checkpoint_readonly"] is True,
+            "training exact served target restoration proof differs")
+    protocol = task.get("loss_protocol")
+    if protocol is not None:
+        require(protocol == dict(kind="body_first_token_kl_v1", **{"lambda": 1.0},
+                    teacher_frame="identical_complete_frame", teacher_dtype="F32"),
+                "unsupported explicit training loss protocol")
+        require(plan.get("training_forward_contract") == dict(teacher_once_per_train_case=True,
+                    student_microbatches_per_step=4, holdout_forwards=0),
+                "explicit teacher/student/holdout forward contract required")
+        teacher = task.get("teacher_checkpoint", task["checkpoint"])
+        teacher_path = Path(teacher["path"])
+        require(teacher_path.is_absolute() and teacher_path.resolve() == teacher_path
+                and teacher_path.is_relative_to(ROOT / "checkpoints"), "teacher checkpoint outside readonly task root")
+        teacher_identity = pinned(teacher["attestation"])["checkpoint"]
+        full_identity(teacher_identity, teacher_path)
+        require(teacher_identity["sha256"] == teacher["tree_sha256"], "teacher identity differs")
+        require(not Path(teacher["attestation"]["path"]).resolve().is_relative_to(work),
+                "teacher evidence must stay outside writable work")
+    else:
+        require("training_forward_contract" not in plan and "teacher_checkpoint" not in task,
+                "teacher controls require the explicit loss protocol")
     return dict(ids=ids_by_split["train"], holdout_ids=ids_by_split["holdout"], task=task)
 
 
@@ -147,6 +187,36 @@ def training_complete(plan, result):
             "training completion parent/data/scope differs")
     require(summary["maximum_seconds_excludes_approval_wait"] is True and summary["error"] is None,
             "trainer timing/failure claim differs")
+    task = metadata["task"]
+    if task.get("loss_protocol") is not None:
+        teacher_count, student_count = len(metadata["ids"]), summary["completed_steps"] * 4
+        expected_counts = dict(teacher_model_forwards=teacher_count, teacher_forward_attempts=teacher_count,
+                               student_model_forwards=student_count, student_forward_attempts=student_count,
+                               model_forwards=teacher_count + student_count,
+                               forward_attempts=teacher_count + student_count)
+        require(summary["loss_protocol"] == task["loss_protocol"]
+                and all(summary.get(k) == v for k, v in expected_counts.items()),
+                "teacher/student/total forward accounting differs")
+        cache_path = result / "teacher-cache/summary.json"
+        require(summary["teacher_cache_summary_sha256"] == sha(cache_path), "teacher cache receipt changed")
+        cache = read(cache_path)
+        expected_metadata = dict(teacher_checkpoint=task.get("teacher_checkpoint", task["checkpoint"]),
+                                 editing_base_checkpoint=task["checkpoint"],
+                                 frame_evidence_sha256=task["frame_evidence"]["sha256"],
+                                 training_ids=metadata["ids"], holdout_ids=[], loss_protocol=task["loss_protocol"])
+        require(cache["status"] == "completed" and cache["error"] is None
+                and cache["attempted_forwards"] == cache["completed_forwards"] == teacher_count
+                and cache["holdout_forwards"] == 0 and cache["metadata"] == expected_metadata,
+                "teacher cache coverage/identity differs")
+        frames = pinned(task["frame_evidence"])["rows"]
+        require(len(cache["rows"]) == len(frames) == teacher_count, "teacher full-frame count differs")
+        for row, frame in zip(cache["rows"], frames, strict=True):
+            require(all(row[k] == frame[k] for k in ("id", "complete_tokens", "prefix_tokens", "token_ids_sha256"))
+                    and row["dtype"] == "F32" and row["vocabulary_size"] > 0,
+                    "teacher/student complete frame identity differs")
+            file = Path(row["path"]).resolve()
+            require(file.is_relative_to((result / "teacher-cache").resolve())
+                    and sha(file) == row["sha256"], "teacher cache tensor changed")
     require(summary["exports"], "training export absent")
     for export in summary["exports"]:
         receipt_path = Path(export["path"]).resolve()
@@ -416,6 +486,11 @@ def validate(plan, for_run=False):
     required = {str((recipe / name).resolve()) for name in ("native.py", "recipe_common.py", "objective_variants.py")}
     if jobs == ("train-lora",):
         required.add(str((recipe / "train_lora.py").resolve()))
+        if pinned(plan["training"]["plan"]).get("loss_protocol") is not None:
+            required.add(str((recipe / "train_lora_body_kl.py").resolve()))
+        if "training_binding" in plan:
+            inputs.append(plan["training_binding"]["served_checkpoint"]["attestation"]["path"])
+            require(not Path(inputs[-1]).resolve().is_relative_to(work), "served evidence inside writable work")
     required |= {str(p.resolve()) for p in (source / "src").rglob("*.py")}
     required.add(str(Path(__file__).with_name("fresh-f01-finite.py").resolve()))
     require(len(required) > 4 and required <= set(plan["source_pins"]), "complete executable source pins required")

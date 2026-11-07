@@ -728,3 +728,18 @@ The existing fresh-av-native-gpu4 owner has an explicit train-lora single-job mo
 ### Completed training-log audit
 
 `training_log_audit.py --study <completed-LoRA-study> --output <new-output>` audits saved logs only. For the fixed64-step/4-accumulation run, it requires all204 training IDs plus52 exact repeated presentations, matches every microbatch with its step, and retains all410 modules including zero gradients. Missing final summary defers work; terminal incomplete training is recorded as partial. CE changes apply only to the repeated training examples; input/output activations at steps1/4/64 have different case sets and are not a capability comparison. Factor payloads are referenced by export SHA/stat without copying to Git or new full hash.
+
+
+### Optional body-start suffix and first-token teacher KL
+
+train_lora.py keeps its default F06 framing/loss. Explicit loss_protocol
+body_first_token_kl_v1 instead uses train_lora_body_kl.py for a documented
+body-start suffix mask and lambda1 full-vocabulary first-token KL. Teacher and
+student use the same complete frame lengths. An optional separately attested
+teacher_checkpoint can supply the initial-mode reference while the highest
+completed checkpoint remains the editing base. Same-parent uses one load;
+different teacher is released before base load. See the [implementation and
+CPU/GPU evidence limits](../../../docs/experiments/2026-11-07-body-kl-training-implementation.md).
+No GPU execution is authorized by a CPU preview.
+
+The existing GPU4 owner accepts an explicit editing-parent/served-target binding and teacher/student/total-forward contract. The preview-only [plan builder](../../../docs/experiments/scripts/fresh-body-kl-plan-20261107.py) freezes the selected parent, optional teacher, current served CID and source snapshots; it does not train or switch services. [CPU r14](../../../docs/experiments/2026-11-07-cpu-validation-r14.md) preserves the initial Ruff driver-format failure and the sole Ruff-only correction.

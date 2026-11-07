@@ -1,0 +1,55 @@
+E702 Multiple statements on one line (semicolon)
+  --> docs/experiments/scripts/fresh-purpose-cpu-validation-r14-20261107.py:23:36
+   |
+21 | def save(name,value):
+22 |     with(D/name).open("x")as f:
+23 |         json.dump(value,f,indent=2);f.write("\n")
+   |                                    ^
+24 | record_sources = sorted(p for p in (B/"docs/experiments/records").rglob("*") if p.is_file() and p.name.endswith((".py", ".py.txt")))
+   |
+
+E702 Multiple statements on one line (semicolon)
+  --> docs/experiments/scripts/fresh-purpose-cpu-validation-r14-20261107.py:38:19
+   |
+36 | assert len(shell_paths)>0
+37 | assert all(sha(B/path)==value for path,value in pins.items())
+38 | before=inventory();save("sources-before.json",before)
+   |                   ^
+39 | save("freeze-inputs.json",{"pins":pins,"driver_sha256":sha(Path(__file__)),"shell_paths":shell_paths,"source_scope":"Python source/tes…
+40 | commands=[
+   |
+
+E702 Multiple statements on one line (semicolon)
+  --> docs/experiments/scripts/fresh-purpose-cpu-validation-r14-20261107.py:46:20
+   |
+44 |  ("data",[str(P/"python"),"scripts/update_model_comparison.py","--check"]),
+45 | ]
+46 | started=time.time();events=[]
+   |                    ^
+47 | for label,command in commands:
+48 |     t=time.time()
+   |
+
+E702 Multiple statements on one line (semicolon)
+  --> docs/experiments/scripts/fresh-purpose-cpu-validation-r14-20261107.py:55:14
+   |
+53 |     (D/"progress.json").write_text(json.dumps(events,indent=2)+"\n")
+54 |     print(json.dumps(event),flush=True)
+55 | shell_rows=[];t=time.time()
+   |              ^
+56 | for path in shell_paths:
+57 |     result=subprocess.run(["nice","-n","15","sh","-n",path],cwd=B,env=env,text=True,capture_output=True)
+   |
+
+E702 Multiple statements on one line (semicolon)
+  --> docs/experiments/scripts/fresh-purpose-cpu-validation-r14-20261107.py:62:18
+   |
+60 | save("repository-shell-check.json",shell)
+61 | events.append({"name":"tracked_shell","returncode":0 if shell["status"]=="passed"else 1,"elapsed_seconds":shell["elapsed_seconds"],"co…
+62 | after=inventory();save("sources-after.json",after)
+   |                  ^
+63 | changes=[p for p in before.keys()|after.keys()if before.get(p)!=after.get(p)]
+64 | receipt={"started_epoch":started,"elapsed_seconds":time.time()-started,"results":events,"source_count_before":len(before),"source_coun…
+   |
+
+Found 5 errors.

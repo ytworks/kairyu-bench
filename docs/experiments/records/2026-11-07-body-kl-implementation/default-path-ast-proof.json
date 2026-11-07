@@ -1,0 +1,11 @@
+{
+  "functions_ast_identical": [
+    "prepare_training_frames",
+    "answer_loss",
+    "make_adapter"
+  ],
+  "before_sha256": "8bfa6f3f5568264417d52e1cf297ebf0f988458c0c075f329a189a0233a7a846",
+  "after_sha256": "799d73b448d56a2035b03775d064fbf5e00a093ddae44abbf4a5585e98f8cb05",
+  "new_helper": "train_lora_body_kl.py",
+  "GPU_modelcalls": 0
+}

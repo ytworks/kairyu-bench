@@ -566,6 +566,85 @@ class TrainingOwnerGuards(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "pilot4 or total64"):
             OWNER.training_complete(self.plan, result)
 
+    def test_explicit_edit_parent_differs_from_exact_served_restore_target(self):
+        import hashlib
+        out = Path(self.plan["output_root"])
+        served = self.root / "checkpoints/current-served"
+        served.mkdir()
+        rows = []
+        for i in range(9):
+            file = served / str(i)
+            file.write_text("different served checkpoint fixture")
+            st = file.stat()
+            rows.append(dict(path=str(i), size=st.st_size, sha256=OWNER.sha(file), stat=dict(
+                device=st.st_dev, inode=st.st_ino, mtime_ns=st.st_mtime_ns, ctime_ns=st.st_ctime_ns)))
+        tree = hashlib.sha256(json.dumps([{k:r[k] for k in ("path","size","sha256")} for r in rows],
+                                        sort_keys=True, separators=(",", ":")).encode()).hexdigest()
+        att = self.pin(out / "served-attestation.json", dict(checkpoint=dict(path=str(served), files=rows,
+                sha256=tree, hash_files=True, identity_level="content_sha256", source_stable=True)))
+        self.plan["training_binding"] = dict(editing_parent_label="F04", served_model_label="F06",
+                served_checkpoint=dict(path=str(served), tree_sha256=tree, attestation=att))
+        restore = OWNER.read(self.plan["training"]["restoration_proof"]["path"])
+        restore["current_model"] = "F06"
+        restore["replicas"]["gemma-2"].update(tree=tree, checkpoint_mount=str(served))
+        self.plan["training"]["restoration_proof"] = self.pin(out / "restoration.json", restore)
+        with patch.object(OWNER.subprocess, "Popen", side_effect=AssertionError("no execution")):
+            self.assertEqual(OWNER.validate(self.plan), [601, 602])
+            self.plan["training_binding"]["served_checkpoint"]["tree_sha256"] = self.plan["checkpoint_tree_sha256"]
+            with self.assertRaisesRegex(ValueError, "editing/served"):
+                OWNER.validate(self.plan)
+
+    def test_body_kl_completion_separates_teacher_student_and_rejects_frame_mismatch(self):
+        out = Path(self.plan["output_root"])
+        protocol = dict(kind="body_first_token_kl_v1", **{"lambda":1.0},
+                        teacher_frame="identical_complete_frame", teacher_dtype="F32")
+        self.task["loss_protocol"] = protocol
+        self.plan["training_forward_contract"] = dict(teacher_once_per_train_case=True,
+                                                      student_microbatches_per_step=4, holdout_forwards=0)
+        helper = Path(self.plan["source_root"]) / "scripts/experiments/gemma4-purpose/train_lora_body_kl.py"
+        helper.write_text("# pinned CPU fixture, never executed")
+        self.plan["source_pins"][str(helper)] = OWNER.sha(helper)
+        frames = [dict(id=i, complete_tokens=6, prefix_tokens=2, token_ids_sha256=str(i)*21+"x") for i in [601,602]]
+        self.task["frame_evidence"] = self.pin(out / "train-frame.json", dict(rows=frames))
+        self.plan["training"]["plan"] = self.pin(out / "training-plan.json", self.task)
+        self.assertEqual(OWNER.validate(self.plan), [601,602])
+        result = out / "result"
+        cache_dir = result / "teacher-cache"
+        cache_dir.mkdir(parents=True)
+        rows=[]
+        for frame in frames:
+            file=cache_dir / (str(frame["id"])+".safetensors")
+            file.write_bytes(b"immutable fixture logits; never loaded")
+            rows.append(dict(frame, dtype="F32", vocabulary_size=11, path=str(file), sha256=OWNER.sha(file)))
+        cache=dict(status="completed", error=None, attempted_forwards=2, completed_forwards=2,
+                   holdout_forwards=0, rows=rows, metadata=dict(teacher_checkpoint=self.task["checkpoint"],
+                   editing_base_checkpoint=self.task["checkpoint"], frame_evidence_sha256=self.task["frame_evidence"]["sha256"],
+                   training_ids=[601,602], holdout_ids=[], loss_protocol=protocol))
+        cache_pin=self.pin(cache_dir / "summary.json",cache)
+        export=self.pin(result / "training-receipt.json",dict(status="exported",base_unchanged=True,
+                   parent_path=self.plan["checkpoint"],parent_tree_sha256=self.plan["checkpoint_tree_sha256"],
+                   data_sha256=self.task["data"]["sha256"],modules=410,steps=4))
+        summary=dict(status="pilot_only",completed_steps=4,trainer_plan_sha256=self.plan["training"]["plan"]["sha256"],
+                     base_unchanged=True,target_tensors=410,data_sha256=self.task["data"]["sha256"],
+                     training_ids=[601,602],holdout_gradient_ids=[],maximum_seconds_excludes_approval_wait=True,
+                     error=None,exports=[export],source_sha256=self.plan["source_pins"],loss_protocol=protocol,
+                     teacher_model_forwards=2,teacher_forward_attempts=2,student_model_forwards=16,
+                     student_forward_attempts=16,model_forwards=18,forward_attempts=18,
+                     teacher_cache_summary_sha256=cache_pin["sha256"])
+        self.pin(result / "summary.json",summary)
+        self.assertEqual(OWNER.training_complete(self.plan,result)["status"],"pilot_only")
+        summary["model_forwards"]=16
+        self.pin(result / "summary.json",summary)
+        with self.assertRaisesRegex(ValueError,"forward accounting"):
+            OWNER.training_complete(self.plan,result)
+        summary["model_forwards"]=18
+        cache["rows"][0]["complete_tokens"]=2
+        cache_pin=self.pin(cache_dir / "summary.json",cache)
+        summary["teacher_cache_summary_sha256"]=cache_pin["sha256"]
+        self.pin(result / "summary.json",summary)
+        with self.assertRaisesRegex(ValueError,"complete frame"):
+            OWNER.training_complete(self.plan,result)
+
     def test_failed_training_job_uses_owned_cleanup_before_exact_restore(self):
         self.plan["approved_for_execution"] = True
         out = Path(self.plan["output_root"])

@@ -1,0 +1,34 @@
+{
+  "source_sha256": {
+    "scripts/experiments/gemma4-purpose/train_lora.py": "f79925d3d6aca1ad52dae075a2ccb2da6bb76d4873f8d15e6353722571eb6f36",
+    "scripts/experiments/gemma4-purpose/train_lora_body_kl.py": "ca06473df9d80ea0aec0d7d4c6fcc26db175798a16fe10d837b4b40a7a08d444",
+    "tests/test_gemma4_lora_training.py": "b630e6b41eb1e82cd1d1f6a0cd24ac3fd0ce363cf46d3410e5c9d941eee7ebbb"
+  },
+  "default_function_AST_identical": [
+    "prepare_training_frames",
+    "answer_loss",
+    "make_adapter"
+  ],
+  "host_unittest": {
+    "count": 7,
+    "passed": 4,
+    "skipped": 3,
+    "reported_seconds": 0.003
+  },
+  "ruff": "passed",
+  "torch_CPU_unittest": {
+    "count": 7,
+    "passed": 7,
+    "skipped": 0,
+    "reported_seconds": 1.027,
+    "wall_seconds": 3.5126103600487113,
+    "test_only_warning": "float(loss) in assertion warns about requires_grad; no production path warning/failure"
+  },
+  "teacher_frame_requirement": "same complete frame as student; previous prefix-only estimate superseded for implementation",
+  "teacher_cases": 204,
+  "teacher_complete_tokens": 22922,
+  "teacher_maximum_complete_tokens": 336,
+  "training_GPU_verified": false,
+  "separate_teacher_GPU_release_verified": false,
+  "model_training_calls": 0
+}

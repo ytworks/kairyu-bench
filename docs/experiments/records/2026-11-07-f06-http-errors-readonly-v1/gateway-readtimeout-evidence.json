@@ -1,0 +1,43 @@
+{
+  "source_cid": "88943a0985ba97dfb17be6b5fb54040eba2570b70ce05126bd410162d3658ffb",
+  "scope": "2026-11-07T14:30:00Z to14:38:00Z",
+  "docker_logs_returncode": 0,
+  "raw_combined_sha256": "29d2bbcc83f97bc8dac091f6bf53247cb3ad6371055e99203eab99c4370fe3a5",
+  "errors": [
+    {
+      "docker_timestamp": "2026-11-07T14:33:16.467086940Z",
+      "ts": "2026-11-07T14:33:16+0000",
+      "logger": "kairyu.entrypoints.server.errors",
+      "message": "upstream backend error",
+      "exception_classes": [
+        "httpcore.ReadTimeout",
+        "httpx.ReadTimeout"
+      ],
+      "raw_line_sha256": "110998d021b8d69f104b72b4988c400c870b01021a526084febc3861e104b11e"
+    },
+    {
+      "docker_timestamp": "2026-11-07T14:33:20.351044360Z",
+      "ts": "2026-11-07T14:33:20+0000",
+      "logger": "kairyu.entrypoints.server.errors",
+      "message": "upstream backend error",
+      "exception_classes": [
+        "httpcore.ReadTimeout",
+        "httpx.ReadTimeout"
+      ],
+      "raw_line_sha256": "8b0341a503ff1ec088735bfbc3dd2ed4ac09b73b1c755bf5a84936c07be2db4d"
+    },
+    {
+      "docker_timestamp": "2026-11-07T14:35:11.282903747Z",
+      "ts": "2026-11-07T14:35:11+0000",
+      "logger": "kairyu.entrypoints.server.errors",
+      "message": "upstream backend error",
+      "exception_classes": [
+        "httpcore.ReadTimeout",
+        "httpx.ReadTimeout"
+      ],
+      "raw_line_sha256": "4e4817034f647de2d6a260e7ce516b21da1815f5baaeb9aef60544219593c595"
+    }
+  ],
+  "raw_credentials_or_env_dump": false,
+  "new_requests": 0
+}

@@ -1,0 +1,25 @@
+python3 - <<'PY'
+from pathlib import Path
+import json,hashlib,time,datetime
+R=Path("/mnt/nvme/kairyu/wsp/gemma4-coding-20261104")
+N=R/"analysis/fresh-purpose-20261107-f06-dev30-dp4-v1"
+run=R/"results/gemma4-fresh-f06-dev30-dp4-20261107-v1"
+p=N/"http-trace/requests-client.jsonl"
+raw=p.read_bytes();rows=[json.loads(l) for l in raw[:raw.rfind(b"\n")+1].splitlines()]
+ids={r["item_id"] for r in rows if r.get("error")}
+selected=[r for r in rows if r["item_id"] in ids]
+print("ATTEMPTS",json.dumps(selected,ensure_ascii=False))
+response_raw=(run/"responses.jsonl").read_bytes()
+responses={r["id"]:r for l in response_raw[:response_raw.rfind(b"\n")+1].splitlines() if (r:=json.loads(l))["id"] in ids}
+out=[]
+for i in sorted(ids):
+ r=responses.get(i)
+ samples=(r.get("outcome") or {}).get("samples",[]) if r else []
+ out.append({"id":i,"response_record_present":r is not None,"response_error":r.get("error") if r else None,"samples":[{k:s.get(k) for k in ("finish_reason","prompt_tokens","completion_tokens","seconds")} for s in samples]})
+print("RESPONSES",json.dumps(out))
+print("BN_TRACE",[{k:r.get(k) for k in ("item_id","request_scope","call_id","attempt_index","started_at_unix","seconds","error","operation")} for r in rows if "bn-fit" in str(r.get("item_id"))][-10:])
+D=R/"analysis/fresh-purpose-20261107-f06-http-errors-readonly-v1";D.mkdir(exist_ok=True)
+value={"snapshot_epoch":time.time(),"trace_prefix_sha256":hashlib.sha256(raw).hexdigest(),"trace_prefix_bytes":len(raw),"responses_prefix_sha256":hashlib.sha256(response_raw).hexdigest(),"attempt_rows":selected,"response_status":out,"bn_fit_error_id_match":any("bn-fit" in i for i in ids),"interpretation":"HTTP502 at approximately1800seconds; underlying exception not present in client trace; response absence is pending not failure.","model_requests":0,"rescore":0}
+f=D/("snapshot-"+str(time.time_ns())+".json");f.write_text(json.dumps(value,indent=2)+"\n")
+print("SAVED",str(f),hashlib.sha256(f.read_bytes()).hexdigest())
+PY

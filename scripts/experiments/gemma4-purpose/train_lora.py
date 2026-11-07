@@ -14,6 +14,7 @@ import re
 import time
 
 import recipe_common as common
+import train_lora_body_kl as body_kl
 from native import _SavedActivationStorage
 from kairyu_bench.wsp.weights.checkpoint import Checkpoint
 
@@ -273,9 +274,54 @@ def answer_loss(torch, net, head, frame, device):
     return torch.nn.functional.cross_entropy(logits, targets), targets.numel()
 
 
+def teacher_identity(plan, base_identity):
+    pin = plan.get("teacher_checkpoint", plan["checkpoint"])
+    checkpoint = Checkpoint(pin["path"])
+    receipt = json.loads(check_pin(pin["attestation"]).read_text())
+    identity = receipt.get("checkpoint", receipt)
+    current = checkpoint.identity(hash_files=False)
+    if (
+        identity.get("hash_files") is not True
+        or identity.get("identity_level") != "content_sha256"
+        or identity.get("sha256") != pin["tree_sha256"]
+        or len(current["files"]) != len(identity["files"])
+    ):
+        raise ValueError("complete explicit teacher attestation required")
+    for prior, actual in zip(identity["files"], current["files"], strict=True):
+        if not re.fullmatch("[0-9a-f]{64}", prior.get("sha256", "")) or any(
+            prior[key] != actual[key] for key in ("path", "size", "stat")
+        ):
+            raise ValueError("teacher full hash/stat continuity lost")
+    base_files = {row["path"]: row["sha256"] for row in base_identity["files"]}
+    teacher_files = {row["path"]: row["sha256"] for row in identity["files"]}
+    for name in (
+        "config.json",
+        "tokenizer.json",
+        "tokenizer_config.json",
+        "chat_template.jinja",
+        "generation_config.json",
+        "processor_config.json",
+    ):
+        if name not in base_files or base_files[name] != teacher_files.get(name):
+            raise ValueError("teacher/base tokenizer or configuration differs: " + name)
+    return checkpoint, identity, current
+
+
+def model_counters(output, forwards, attempts):
+    teacher = body_kl.counters(output)
+    return {
+        **teacher,
+        "student_model_forwards": forwards,
+        "student_forward_attempts": attempts,
+        "model_forwards": forwards + teacher["teacher_model_forwards"],
+        "forward_attempts": attempts + teacher["teacher_forward_attempts"],
+    }
+
+
 def preflight(args):
     plan_path = args.plan.resolve()
     plan = json.loads(plan_path.read_text())
+    use_kl = body_kl.selected(plan)
     if (
         plan.get("schema_version") != 1
         or plan.get("kind") != "gemma4_lora_sft_v1"
@@ -290,6 +336,7 @@ def preflight(args):
         raise ValueError("bounded training/continuation time required")
     source_paths = [
         Path(__file__),
+        Path(body_kl.__file__),
         Path(common.__file__),
         Path(common.finite_replay.__file__),
     ]
@@ -305,6 +352,8 @@ def preflight(args):
         check_pin(plan["input_quality"]),
         check_pin(plan["checkpoint"]["attestation"]),
     ]
+    if use_kl and "teacher_checkpoint" in plan:
+        pinned.append(check_pin(plan["teacher_checkpoint"]["attestation"]))
     states = {str(p.resolve()): common.input_state(p) for p in pinned}
     hashes = {str(p.resolve()): common.sha(p) for p in pinned}
     checkpoint = Checkpoint(plan["checkpoint"]["path"])
@@ -342,7 +391,15 @@ def preflight(args):
         )
     proof = json.loads(check_pin(plan["frame_evidence"]).read_text())
     if (
-        proof.get("frame_protocol") != FRAME_PROTOCOL
+        proof.get("frame_protocol")
+        != (body_kl.FRAME_PROTOCOL if use_kl else FRAME_PROTOCOL)
+        or (
+            use_kl
+            and (
+                proof.get("loss_protocol") != body_kl.PROTOCOL
+                or proof.get("unsupported_ids")
+            )
+        )
         or proof.get("ineligible_ids")
         or [r["id"] for r in proof["rows"]] != plan["data"]["ids"]
     ):
@@ -361,11 +418,25 @@ def preflight(args):
     if args.output.exists() or args.output.is_symlink():
         raise ValueError("new output only")
     output = args.output.resolve()
-    for path in [checkpoint.path, *pinned]:
+    for path in [
+        checkpoint.path,
+        *pinned,
+        *(
+            [Path(plan["teacher_checkpoint"]["path"])]
+            if use_kl and "teacher_checkpoint" in plan
+            else []
+        ),
+    ]:
         path = path.resolve()
         if path == output or path in output.parents or output in path.parents:
             raise ValueError("output must be disjoint from inputs")
     provenance = {"input_sha256": hashes, "input_stat": states, "checkpoint": current}
+    if use_kl:
+        teacher, teacher_full, teacher_current = teacher_identity(plan, identity)
+        provenance.update(
+            teacher_checkpoint=teacher_current, teacher_full_identity=teacher_full
+        )
+        common.assert_inputs(teacher, {**provenance, "checkpoint": teacher_current})
     common.assert_inputs(checkpoint, provenance)
     return plan, checkpoint, rows, proof, mapping, provenance, identity
 
@@ -435,6 +506,16 @@ def export_adapter(
         "fresh_parent_full_hash": False,
         "parent_proof": "prior full-content hash plus exact stat continuity",
         "claim": "training export only; saved BF16 merge and capability unmeasured",
+        **(
+            {
+                "loss_protocol": body_kl.PROTOCOL,
+                "teacher_checkpoint": plan.get(
+                    "teacher_checkpoint", plan["checkpoint"]
+                ),
+            }
+            if body_kl.selected(plan)
+            else {}
+        ),
     }
     receipt_path = directory / "training-receipt.json"
     write_new(receipt_path, receipt)
@@ -501,7 +582,12 @@ def train(args, plan, checkpoint, rows, proof, mapping, provenance, identity):
     start = time.monotonic()
     deadline = start + plan["maximum_seconds"]
     tokenizer = AutoTokenizer.from_pretrained(checkpoint.path, local_files_only=True)
-    frames, actual_proof = prepare_training_frames(tokenizer, rows)
+    use_kl = body_kl.selected(plan)
+    frames, actual_proof = (
+        body_kl.prepare_frames(tokenizer, rows, prepare_training_frames)
+        if use_kl
+        else prepare_training_frames(tokenizer, rows)
+    )
     if actual_proof != proof or actual_proof["ineligible_ids"]:
         raise ValueError("actual tokenizer frames differ; no truncation/fallback")
     args.checkpoint = checkpoint.path
@@ -512,6 +598,55 @@ def train(args, plan, checkpoint, rows, proof, mapping, provenance, identity):
         "original",
         88 if args.device != "cpu" else None,
     )
+    teacher_cache = None
+    if use_kl:
+        teacher, _, teacher_current = teacher_identity(plan, identity)
+        teacher_provenance = {**provenance, "checkpoint": teacher_current}
+        teacher_metadata = {
+            "teacher_checkpoint": plan.get("teacher_checkpoint", plan["checkpoint"]),
+            "editing_base_checkpoint": plan["checkpoint"],
+            "frame_evidence_sha256": plan["frame_evidence"]["sha256"],
+            "training_ids": plan["data"]["ids"],
+            "holdout_ids": [],
+            "loss_protocol": body_kl.PROTOCOL,
+        }
+        if teacher.path.resolve() != checkpoint.path.resolve():
+            args.checkpoint = teacher.path
+            torch, _, teacher_model = common.load_model(args)
+            torch.backends.cuda.matmul.allow_tf32 = False
+            teacher_model.eval().requires_grad_(False)
+            teacher_cache = body_kl.cache_teacher(
+                torch,
+                teacher_model,
+                frames,
+                args.output / "teacher-cache",
+                args.device,
+                deadline,
+                teacher_metadata,
+                lambda: common.assert_inputs(teacher, teacher_provenance),
+            )
+            del teacher_model
+            import gc
+
+            gc.collect()
+            allocated = None
+            if args.device != "cpu":
+                torch.cuda.synchronize()
+                torch.cuda.empty_cache()
+                allocated = torch.cuda.memory_allocated()
+            write_new(
+                args.output / "teacher-release.json",
+                {
+                    "separate_teacher": True,
+                    "allocated_bytes_after_release": allocated,
+                    "base_load_started": False,
+                },
+            )
+            if allocated not in (None, 0):
+                raise ValueError(
+                    "teacher CUDA tensors remain; refusing to load a second model"
+                )
+            args.checkpoint = checkpoint.path
     torch, _, model = common.load_model(args)
     torch.backends.cuda.matmul.allow_tf32 = False
     model.eval().requires_grad_(False)
@@ -523,6 +658,17 @@ def train(args, plan, checkpoint, rows, proof, mapping, provenance, identity):
         )
     base_parameters = list(model.parameters())
     frozen = frozen_state(base_parameters)
+    if use_kl and teacher_cache is None:
+        teacher_cache = body_kl.cache_teacher(
+            torch,
+            model,
+            frames,
+            args.output / "teacher-cache",
+            args.device,
+            deadline,
+            teacher_metadata,
+            lambda: common.assert_inputs(teacher, teacher_provenance),
+        )
     adapters, base_norms = {}, {}
     for name, info in sorted(mapping.items()):
         module_name = name.removesuffix(".weight")
@@ -579,6 +725,7 @@ def train(args, plan, checkpoint, rows, proof, mapping, provenance, identity):
                     a.activation = {} if observe else None
                     a.calls = 0
                 losses, ids, tokens = [], [], 0
+                objective_terms = []
                 for _ in range(4):
                     frame = frames[order[cursor % len(order)]]
                     cursor += 1
@@ -589,11 +736,24 @@ def train(args, plan, checkpoint, rows, proof, mapping, provenance, identity):
                     }
                     forward_attempts += 1
                     with storage.context() if args.device != "cpu" else nullcontext():
-                        loss, count = answer_loss(torch, net, head, frame, args.device)
+                        if use_kl:
+                            loss, count, terms = body_kl.body_kl_loss(
+                                torch,
+                                net,
+                                head,
+                                frame,
+                                teacher_cache[frame["id"]],
+                                args.device,
+                            )
+                            objective_terms.append(terms)
+                        else:
+                            loss, count = answer_loss(
+                                torch, net, head, frame, args.device
+                            )
                         if not torch.isfinite(loss):
                             raise ValueError("nonfinite actual CE")
                         (loss / 4).backward()
-                    losses.append(float(loss.detach()))
+                    losses.append(terms["body_CE"] if use_kl else float(loss.detach()))
                     examples.write(
                         json.dumps(
                             {
@@ -601,6 +761,7 @@ def train(args, plan, checkpoint, rows, proof, mapping, provenance, identity):
                                 "CE": losses[-1],
                                 "target_tokens": count,
                                 "backward_completed": True,
+                                **({"loss_terms": terms} if use_kl else {}),
                             },
                             allow_nan=False,
                         )
@@ -660,6 +821,19 @@ def train(args, plan, checkpoint, rows, proof, mapping, provenance, identity):
                     "learning_rate": 0.0001,
                     "seconds": time.monotonic() - t,
                     "modules": modules,
+                    **(
+                        {
+                            "loss_protocol": body_kl.PROTOCOL,
+                            "example_loss_terms": objective_terms,
+                            "mean_total_loss": sum(
+                                row["total_loss"] for row in objective_terms
+                            )
+                            / 4,
+                            "body_target_tokens": tokens,
+                        }
+                        if use_kl
+                        else {}
+                    ),
                     "gpu_peak_allocated": torch.cuda.max_memory_allocated()
                     if args.device != "cpu"
                     else None,
@@ -667,6 +841,8 @@ def train(args, plan, checkpoint, rows, proof, mapping, provenance, identity):
                     if args.device != "cpu"
                     else None,
                 }
+                if use_kl:
+                    record.pop("answer_EOS_tokens")  # New loss masks the turn terminator.
                 log.write(json.dumps(record, allow_nan=False) + "\n")
                 log.flush()
                 print(
@@ -704,6 +880,11 @@ def train(args, plan, checkpoint, rows, proof, mapping, provenance, identity):
                             "completed_steps": 4,
                             "modules": 410,
                             "model_forwards": forwards,
+                            **(
+                                model_counters(args.output, forwards, forward_attempts)
+                                if use_kl
+                                else {}
+                            ),
                             "base_unchanged": True,
                             "export": exported,
                             "step_log_sha256": common.sha(args.output / "steps.jsonl"),
@@ -763,6 +944,14 @@ def train(args, plan, checkpoint, rows, proof, mapping, provenance, identity):
                 "source_sha256": provenance["input_sha256"],
                 "plan_sha256": common.sha(args.plan),
                 "activation_storage": storage.report(),
+                **(
+                    {
+                        "loss_protocol": body_kl.PROTOCOL,
+                        **model_counters(args.output, forwards, forward_attempts),
+                    }
+                    if use_kl
+                    else {}
+                ),
                 "capability_claim": False,
             },
         )
@@ -792,6 +981,18 @@ def main():
                     "source_sha256": provenance["input_sha256"],
                     "maximum_seconds": plan["maximum_seconds"],
                     "continuation_wait_seconds": plan["continuation_wait_seconds"],
+                    **(
+                        {
+                            "loss_protocol": body_kl.PROTOCOL,
+                            "planned_teacher_forwards": len(rows),
+                            "planned_student_forwards": 256,
+                            "teacher_checkpoint": plan.get(
+                                "teacher_checkpoint", plan["checkpoint"]
+                            ),
+                        }
+                        if body_kl.selected(plan)
+                        else {}
+                    ),
                 }
             )
         )
@@ -807,6 +1008,11 @@ def main():
                     "status": "failed",
                     "completed_steps": 0,
                     "error_class": type(exc).__name__,
+                    **(
+                        model_counters(args.output, 0, 0)
+                        if body_kl.selected(plan)
+                        else {}
+                    ),
                     "error": str(exc),
                     "trainer_plan_sha256": common.sha(args.plan),
                     "source_sha256": provenance["input_sha256"],
