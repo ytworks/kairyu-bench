@@ -84,7 +84,8 @@ class RecordQueue:
             "rows": rows, "values": values.tolist(),
             "sample": sampling_metadata(self.writer.config.prefill_positions,
                                         self.writer.config.decode_positions,
-                                        self.writer.config.decode_offsets),
+                                        self.writer.config.decode_offsets,
+                                        self.writer.config.prefill_policy),
         }
         try:
             import msgspec

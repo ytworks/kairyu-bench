@@ -134,3 +134,21 @@ the owning example lifecycle after the probe. Before Compose manages that servic
 again, preserve any required retired-observer logs and remove only its exact owned
 container ID from the receipt, so old Compose service labels do not create duplicate
 service instances. Never prune unrelated containers.
+
+### Prompt-tail sampling for continuation likelihood diagnostics
+
+`wsp observe init ... --prefill-policy tail --decode-offsets 0` selects the
+last `prefill_positions` positions of each request's complete prompt (at most
+32), using that request's prompt length. Earlier chunked-prefill positions do
+not consume this quota; repeated positions are recorded only on their first
+execution. Short prompts contribute their available positions. Prefix-cached
+or otherwise unexecuted positions remain missing. Decode selection, hooks,
+metrics, scoring and storage quotas are unchanged. The default `head` retains
+the first executed unique positions behavior.
+
+The explicit policy is preserved in configuration, worker manifests, compact
+and legacy rows, and merged reports. The paired display refuses prefill
+differences between head and tail captures. Tail sampling locates the prompt
+end, not a semantic reasoning boundary; a continuation longer than 32 tokens
+still needs a separately registered observation design. Existing captures and
+their immutable source snapshots must be retained unchanged.

@@ -38,13 +38,22 @@ def read_decode_offsets(value: Any) -> tuple[int, ...] | None:
     return tuple(value)
 
 
+def read_prefill_policy(value: Any) -> str:
+    if value not in ("head", "tail"):
+        raise ValueError("prefill_policy must be head or tail")
+    return str(value)
+
+
 def sampling_metadata(prefill: int, decode: int,
-                      decode_offsets: tuple[int, ...] | None = None) -> dict[str, Any]:
+                      decode_offsets: tuple[int, ...] | None = None,
+                      prefill_policy: str = "head") -> dict[str, Any]:
     policy = ("first_execution_of_first_unique_positions" if decode_offsets is None
               else "first_execution_of_requested_decode_offsets")
     return {
         "policy": policy,
-        "prefill_policy": "first_execution_of_first_unique_positions",
+        "prefill_policy": ("first_execution_of_first_unique_positions"
+                           if read_prefill_policy(prefill_policy) == "head"
+                           else "first_execution_of_last_prompt_positions"),
         "decode_policy": policy,
         "requested_offsets": list(decode_offsets) if decode_offsets is not None else None,
         "offset_origin": "token_position_minus_prompt_length",
@@ -68,6 +77,7 @@ class CaptureConfig:
     detail_channels: dict[str, tuple[int, ...]] = field(default_factory=dict)
     detail_heads: dict[str, tuple[int, ...]] = field(default_factory=dict)
     decode_offsets: tuple[int, ...] | None = None
+    prefill_policy: str = "head"
 
     @classmethod
     def read(cls, path: str | Path) -> CaptureConfig:
@@ -106,7 +116,8 @@ class CaptureConfig:
         return cls(capture_id, out, dict(data["checkpoint"]), runtime,
                    gpu * 1024**2, storage, prefill, decode, float(threshold),
                    read_detail_selection(data.get("detail_channels", {}), heads=False),
-                   read_detail_selection(data.get("detail_heads", {}), heads=True), offsets)
+                   read_detail_selection(data.get("detail_heads", {}), heads=True), offsets,
+                   read_prefill_policy(data.get("prefill_policy", "head")))
 
 
 def read_detail_selection(value: Any, *, heads: bool) -> dict[str, tuple[int, ...]]:
@@ -237,9 +248,9 @@ class CaptureWriter:
             "observed_checkpoint": observed_checkpoint,
             "token_kind": "target", "draft_activation_collected": False,
             "sampling_policy": sampling_metadata(config.prefill_positions, config.decode_positions,
-                                                   config.decode_offsets)["policy"],
+                                                   config.decode_offsets, config.prefill_policy)["policy"],
             "sampling": sampling_metadata(config.prefill_positions, config.decode_positions,
-                                          config.decode_offsets),
+                                          config.decode_offsets, config.prefill_policy),
             "requested_offsets": list(config.decode_offsets) if config.decode_offsets is not None else None,
             "metrics_scope": "finite coordinates; nonfinite_count is separate",
             "outlier_rms_threshold": config.outlier_rms_threshold,
@@ -327,7 +338,9 @@ class PositionSampler:
     """Bounded per-active-request state. Never samples padding as a request."""
 
     def __init__(self, prefill: int = 32, decode: int = 32,
-                 decode_offsets: tuple[int, ...] | None = None):
+                 decode_offsets: tuple[int, ...] | None = None,
+                 prefill_policy: str = "head"):
+        self.prefill_policy = read_prefill_policy(prefill_policy)
         self.decode_offsets = read_decode_offsets(decode_offsets)
         if self.decode_offsets is not None and len(self.decode_offsets) > decode:
             raise ValueError("decode_offsets exceeds decode_positions limit")
@@ -360,6 +373,9 @@ class PositionSampler:
             for offset in range(count):
                 position = int(positions[start + offset])
                 phase = "prefill" if position < prompt_lengths[req] else "decode"
+                if (phase == "prefill" and self.prefill_policy == "tail"
+                        and position < max(0, prompt_lengths[req] - self.limits["prefill"])):
+                    continue
                 if (phase == "decode" and self.decode_offsets is not None
                         and position - prompt_lengths[req] not in self._decode_offset_set):
                     continue
@@ -443,7 +459,7 @@ def row_record(config: CaptureConfig, replica: str, rank: int, step: int,
         "acceptance_semantics": "rejection_sampler_prefix_not_stop_filtered",
         "metrics": values_out,
         "sample": {**sampling_metadata(config.prefill_positions, config.decode_positions,
-                                       config.decode_offsets),
+                                       config.decode_offsets, config.prefill_policy),
                    "limit": config.prefill_positions if row.phase == "prefill"
                    else (config.decode_positions if config.decode_offsets is None
                          else len(config.decode_offsets))},

@@ -151,19 +151,25 @@ class RuntimeCollectionTests(unittest.TestCase):
                     with self.subTest(offsets=offsets), self.assertRaisesRegex(ValueError, "decode_offsets"):
                         initialize_capture(root / "base", root / "bad", model="synthetic",
                                            decode_offsets=offsets)
+                for policy in (None, "middle", [], True):
+                    with self.subTest(policy=policy), self.assertRaisesRegex(ValueError, "prefill_policy"):
+                        initialize_capture(root / "base", root / "bad", model="synthetic",
+                                           prefill_policy=policy)
                 checkpoint.assert_not_called()
                 self.assertFalse((root / "bad").exists())
                 checkpoint.return_value.identity.return_value = {"sha256": "a" * 64}
                 with patch("builtins.print"):
                     self.assertEqual(main(["init", str(root / "base"), "--output-dir", str(root / "capture"),
                                            "--model", "synthetic", "--decode-offsets", "0,1,8",
-                                           "--decode-offsets", "64"]), 0)
+                                           "--decode-offsets", "64", "--prefill-policy", "tail"]), 0)
             config = CaptureConfig.read(root / "capture/capture.json")
             self.assertEqual(config.decode_offsets, (0, 1, 8, 64))
             self.assertEqual(config.decode_positions, 4)
+            self.assertEqual(config.prefill_policy, "tail")
             report = merge_capture(root / "capture")
             capture = report["runs"][0]["capture"]
             self.assertEqual(capture["sampling"]["requested_offsets"], [0, 1, 8, 64])
+            self.assertEqual(capture["sampling"]["prefill_policy"], "first_execution_of_last_prompt_positions")
             self.assertEqual(capture["sampling"]["policy"], "first_execution_of_requested_decode_offsets")
             self.assertEqual(capture["sampling"]["semantic_boundary"], "thinking_code_boundary_not_measured")
             self.assertEqual(report["runs"][0]["tasks"], [])  # No zero-valued fabricated late records.
@@ -178,6 +184,28 @@ class RuntimeCollectionTests(unittest.TestCase):
             (root / "capture/capture.json").write_text(json.dumps(data))
             with self.assertRaisesRegex(ValueError, "exceeds"):
                 CaptureConfig.read(root / "capture/capture.json")
+
+    def test_tail_prefill_tracks_each_prompt_across_chunks_without_changing_decode(self) -> None:
+        tail = PositionSampler(prefill=2, decode_offsets=(0, 2), prefill_policy="tail")
+        head = PositionSampler(prefill=2, decode_offsets=(0, 2))
+        prompts = {"long": 5, "short": 2}
+        batches = [(["long", "short"], {"long": 3, "short": 1}, [0, 1, 2, 0], {}),
+                   (["short", "long"], {"short": 3, "long": 5}, [0, 1, 2, 2, 3, 4, 5, 6], {}),
+                   (["long", "short"], {"long": 3, "short": 2}, [4, 5, 7, 2, 4], {"long": 1})]
+        tail_rows, head_rows = [], []
+        for requests, counts, positions, drafts in batches:
+            tail_rows.extend(tail.select(requests, counts, positions, prompts, drafts))
+            head_rows.extend(head.select(requests, counts, positions, prompts, drafts))
+        self.assertEqual([(r.request_id, r.token_position) for r in tail_rows if r.phase == "prefill"],
+                         [("short", 0), ("short", 1), ("long", 3), ("long", 4)])
+        self.assertEqual([r for r in tail_rows if r.phase == "decode"],
+                         [r for r in head_rows if r.phase == "decode"])
+        self.assertEqual([(r.request_id, r.token_position, r.speculative_index)
+                          for r in tail_rows if r.phase == "decode"],
+                         [("short", 2, None), ("long", 5, None), ("long", 7, 0), ("short", 4, None)])
+        self.assertEqual(tail.selected["long"]["prefill"], {3, 4})
+        tail.finish(["long"])
+        self.assertEqual([r.token_position for r in tail.select(["long"], {"long": 1}, [4], prompts, {})], [4])
 
     def test_decode_offsets_use_prompt_boundary_and_first_execution(self) -> None:
         sampler = PositionSampler(prefill=2, decode_offsets=(0, 2, 4, 64, 1024))
@@ -205,7 +233,7 @@ class RuntimeCollectionTests(unittest.TestCase):
         from kairyu_bench.wsp.observe.core import observation_records
 
         with tempfile.TemporaryDirectory() as temp:
-            config = replace(self.config(Path(temp)), decode_offsets=(0, 8, 64))
+            config = replace(self.config(Path(temp)), decode_offsets=(0, 8, 64), prefill_policy="tail")
             site = {"site_id": "layer.0.residual", "layer": 0, "role": "residual"}
             writer = CaptureWriter(config, "r0", 0, [site], 100)
             queue = RecordQueue(writer, [site])
@@ -225,6 +253,8 @@ class RuntimeCollectionTests(unittest.TestCase):
             self.assertEqual(legacy["sample"]["requested_offsets"], [0, 8, 64])
             sites = json.loads((writer.directory / "sites.json").read_text())
             self.assertEqual(sites["requested_offsets"], [0, 8, 64])
+            for metadata in (decoded[0]["sample"], legacy["sample"], sites["sampling"]):
+                self.assertEqual(metadata["prefill_policy"], "first_execution_of_last_prompt_positions")
             self.assertEqual(sites["sampling"]["missing_policy"], "unobserved_requested_offsets_are_missing_not_zero")
 
     def test_internal_warmup_request_is_excluded(self) -> None:

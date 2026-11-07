@@ -30,6 +30,8 @@ def build_parser() -> argparse.ArgumentParser:
     init.add_argument("--replicas", type=int, default=4)
     init.add_argument("--mtp-tokens", type=int, default=4)
     init.add_argument("--mode", choices=("live", "replay", "teacher_forced"), default="live")
+    init.add_argument("--prefill-policy", choices=("head", "tail"), default="head",
+                      help="head: first executed unique positions; tail: last prompt positions")
     init.add_argument("--decode-offsets", type=_decode_offsets, action="append",
                       help="ascending unique prompt-relative offsets, at most 32; comma-separated or repeated")
     merge = commands.add_parser("merge", help="join worker records and benchmark outcomes")
@@ -57,6 +59,7 @@ def main(argv: Sequence[str] | None = None) -> int:
             result = initialize_capture(
                 args.checkpoint, args.output_dir, model=args.model, tp_size=args.tp_size,
                 replicas=args.replicas, mtp_tokens=args.mtp_tokens, mode=args.mode,
+                prefill_policy=args.prefill_policy,
                 decode_offsets=([offset for group in args.decode_offsets for offset in group]
                                 if args.decode_offsets is not None else None),
             )

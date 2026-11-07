@@ -116,7 +116,8 @@ elements.search.value="";elements.search.fire("input");
 assert.equal(api.pairReason(ra,rb,a,b,ta,tb),null);
 for(const [kind,mutate,expected] of [
  ["mode",x=>x.observation_mode="live","mode"],
- ["runtime",x=>x.runtime.tp_size=4,"tp_size"]
+ ["runtime",x=>x.runtime.tp_size=4,"tp_size"],
+ ["sampling",x=>x.capture.sampling={prefill_policy:"first_execution_of_last_prompt_positions"},"prefill"]
 ]){
  const changed=JSON.parse(JSON.stringify(b));mutate(changed);
  assert(api.pairReason(ra,rb,a,changed,ta,tb).includes(expected));

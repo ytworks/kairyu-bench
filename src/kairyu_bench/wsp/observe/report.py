@@ -289,6 +289,8 @@ function pairReason(a,b,ra,rb,ta,tb){
   if(ta.id!==tb.id || ta.source!==tb.source)return "問題/出典が不一致";
   if(!ra.observation_mode || ra.observation_mode!==rb.observation_mode)return "観測modeが不一致/未記録";
   if(a.accepted!==true || b.accepted!==true)return "出力受理が未確認";
+  const prefillPolicy=r=>r.capture?.sampling?.prefill_policy??"first_execution_of_first_unique_positions";
+  if(a.phase==="prefill" && prefillPolicy(ra)!==prefillPolicy(rb))return "prefill採取policyが不一致";
   const fields=["site_id","layer","role","phase","token_kind","token_position","rank"];
   for(const key of fields)if(a[key]===undefined || b[key]===undefined || a[key]!==b[key])return key+"が不一致/未記録";
   if(sampleCount(a)!==sampleCount(b) || (a.token_end??a.token_position)!==(b.token_end??b.token_position))return "token bin範囲/採取数が不一致";
