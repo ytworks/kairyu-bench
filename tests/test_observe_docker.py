@@ -176,7 +176,10 @@ class DockerObserverTests(unittest.TestCase):
         self.assertFalse(docker.inspect("original")["State"]["Running"])
         directory = self.args.backup_dir / "replica"
         self.assertEqual((directory / "original.json").stat().st_mode & 0o777, 0o600)
-        self.assertEqual(json.loads((directory / "original.json").read_text()), self.original)
+        saved = json.loads((directory / "original.json").read_text())
+        self.assertEqual(saved["Id"], self.original["Id"])
+        self.assertNotIn("synthetic-private", (directory / "original.json").read_text())
+        self.assertNotIn("Config", saved)
         with patch.object(module.signal, "signal"):
             restored = module.restore(docker, self.args)
         self.assertEqual(restored["status"], "restored")
@@ -253,9 +256,11 @@ class DockerObserverTests(unittest.TestCase):
                 self.assertNotIn("observer", docker.containers)
                 if failure != "create":
                     log = self.args.backup_dir / "replica/failed-container.log"
-                    self.assertEqual(log.stat().st_size, 65536)
-                    self.assertEqual(log.stat().st_mode & 0o777, 0o600)
+                    self.assertFalse(log.exists())
                     self.assertEqual(state["failed_log_bytes"], 65536)
+                    self.assertEqual(len(state["failed_log_sha256"]), 64)
+                    for receipt in (self.args.backup_dir / "replica").glob("*.json"):
+                        self.assertNotIn("synthetic-private", receipt.read_text())
                 self.assertFalse(any(method == "DELETE" and "original" in path for method, path in docker.calls))
 
     def test_failed_restore_returns_to_owned_observer(self):
@@ -274,10 +279,11 @@ class DockerObserverTests(unittest.TestCase):
         docker = FakeDocker(self.original)
         self.apply(docker)
         directory = self.args.backup_dir / "replica"
+        saved = (directory / "original.json").read_bytes()
         (directory / "original.json").write_text("{}")
         with self.assertRaisesRegex(ValueError, "hash"):
             module.restore(docker, self.args)
-        module.private_json(directory / "original.json", self.original)
+        (directory / "original.json").write_bytes(saved)
         docker.containers["observer"]["Config"]["Labels"][module.LABEL] = "unrelated"
         with self.assertRaisesRegex(ValueError, "not the observer"):
             module.restore(docker, self.args)

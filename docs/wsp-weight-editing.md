@@ -203,3 +203,41 @@ Its content identity uses the fresh verify hashes only after complete before/aft
 Checkpoint and POSIX stat equality; the derivation is explicit and does not repeat
 a full payload hash. That fixed recipe is specific to its authorized parent/spec,
 and successful file verification is separate from capability evaluation.
+
+## Sequential reconstruction before retiring a parent
+
+Keep every adopted native editor manifest in chronological order. Each contains
+all retained file hashes and the exact saved-dtype before/after bytes, including
+each stage's rounding. Before deleting an old adopted checkpoint, verify the
+complete chain from the designated original to the new candidate:
+
+~~~sh
+python -m kairyu_bench.wsp.weights.chain /models/original /models/candidate \
+  --manifest /experiments/edit-001.json \
+  --manifest /experiments/edit-002.json > /experiments/chain-verification.json
+~~~
+
+The verifier streams the original once, applies the recorded byte transitions in
+order in bounded buffers, checks every stage's full-file hash and each patch's
+before bytes, and compares the final bytes to the candidate. Tensor headers,
+complete retained inventories, manifest path/hash continuity and source stability
+are checked. Intermediate checkpoint directories may already be absent. No third
+checkpoint, temporary weight payload, model load or gradient computation is used.
+The receipt records the reconstructor version and source hashes for the chain,
+editor and checkpoint modules. Retain those source versions, the manifests and
+the verification receipt with the trial evidence.
+
+This verifies exact reconstructability; it does not recreate a checkpoint or
+replace the separate saved-weight, serving-switch and complete benchmark checks.
+It accepts only native schema-1 manifests with full source/candidate hashes. The
+original and candidate paths must match the first/last manifest and every parent
+path must match the preceding candidate. Replay preserves each recorded stage's
+rounding; adding all numerical deltas and rounding once is a different operation.
+
+Checkpoint storage policy remains the caller's responsibility. The editor uses
+independent private copies unless an explicit verified shard pool is supplied.
+Before choosing private copies, record whether reflink or safe unchanged-file
+sharing is available and account for both complete checkpoints plus all other
+weight-equivalent artifacts. Do not silently rely on `st_blocks` to claim reflink
+sharing or change original file permissions to make sharing possible. A pool is
+not required when a documented private-copy fallback fits the storage ceiling.

@@ -127,11 +127,11 @@ def validate_capture(source: Path, capture: Path) -> None:
 def save_failure_log(docker, cid: str, directory: Path, state) -> None:
     try:
         data = docker.logs(cid, 65536)[:65536]
-        fd = os.open(directory / "failed-container.log", os.O_WRONLY | os.O_CREAT | os.O_EXCL, 0o600)
-        with os.fdopen(fd, "wb") as stream:
-            stream.write(data)
+        # Logs can contain credentials even when environment keys look harmless.
+        # Keep failure identity and bounded-stream integrity, never the raw body.
         state["failed_log_bytes"] = len(data)
-        state["failed_log_format"] = "bounded_docker_response_bytes_may_include_stream_frames"
+        state["failed_log_sha256"] = hashlib.sha256(data).hexdigest()
+        state["failed_log_persisted"] = False
     except (OSError, RuntimeError):
         state["failed_log_unavailable"] = True
 
@@ -247,7 +247,11 @@ def apply_attach(docker, original, config, summary, operation, timeout):
     directory = Path(summary["backup"])
     directory.parent.mkdir(parents=True, exist_ok=True, mode=0o700)
     directory.mkdir(mode=0o700)  # Exclusive reservation; a second attach cannot overwrite evidence.
-    private_json(directory / "original.json", original)
+    private_json(directory / "original.json", {
+        "Id": original["Id"], "Name": original["Name"], "Image": original["Image"],
+        "was_running": bool(original["State"].get("Running")),
+        "recovery": "restart the preserved original container; configuration is never serialized",
+    })
     original_name = summary["container"]
     backup_name = original_name[:90] + "-observer-backup-" + operation[:12]
     state = {**summary, "status": "prepared", "operation_id": operation,

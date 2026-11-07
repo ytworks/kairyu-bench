@@ -71,8 +71,10 @@ benchmarking. Auto-remove containers and shared-container network namespaces
 are rejected.
 
 On apply, the original container is stopped and renamed, but never removed.
-`original.json` is a full Docker inspect backup, stored with mode 0600; it can
-contain environment secrets and must not be printed, uploaded, or committed.
+`original.json` stores only the original container/image identifiers, name and
+running flag with mode 0600. Environment, command, labels and Docker inspect
+configuration are never serialized. Recovery requires the preserved original
+container, whose existing configuration stays inside Docker.
 The normal plan and receipt omit environment values. If creation, start, or the
 healthcheck fails, only the replacement identified by this operation is removed
 and the original container is renamed and restarted. TERM/INT/HUP also attempt
@@ -115,12 +117,11 @@ rolled back. Matching the source parser catches that error during dry-run.
 Increasing the quota requires a reviewed collector/tool change; changing only the
 JSON does not add support.
 
-When a created observer fails, the tool attempts to save at most 64KiB of the
-Docker log response from its last 200 lines to `failed-container.log` (mode 0600)
-before removing that owned container. Docker stream framing can be present and
-the bounded excerpt can be truncated. It may contain sensitive diagnostic
-values; it is never printed or uploaded. Failure to retrieve a log does not
-prevent the rollback, and the receipt records whether the excerpt was saved.
+When a created observer fails, the tool reads at most 64KiB of the last 200
+Docker log lines in memory and records only byte count and SHA-256. It never
+persists the log body because it may contain credentials. Failure class, owned
+container identity and rollback status remain in the receipt. Log retrieval
+failure does not prevent rollback.
 
 ### Releasing GPUs for a finite probe
 
