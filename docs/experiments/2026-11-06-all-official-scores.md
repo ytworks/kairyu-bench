@@ -1,7 +1,7 @@
 # Gemma4公式スコア全実行台帳（2026-11-06）
 
-snapshot: 2026-11-06T23:49:19.565420+00:00。WSP **138 runs**（completed133、partial4、running1＝旧保存記録のみ、現在の稼働を意味しない）。
-今回の探索的logical-overlay公式dev90完了8件を追加した。旧130行の全fieldは完全一致で保持し、logical labelを保存候補checkpointのtreeと混同しない。ANとARを物理保存・fresh ordinary比較へ選択した段階で未採用。working modelはAD、積み上げP→S→AC→ADを維持する。既存AL不採用・full14なしの判断も維持する。AD採用時のfresh dev90は+2.416667pp、歴史AC対full14 overallは−1.358562ppであり、全分野改善とは呼ばない。
+snapshot: 2026-11-07T00:10:44.107685+00:00。WSP **141 runs**（completed136、partial4、running1＝旧保存記録のみ、現在の稼働を意味しない）。
+今回のfresh ordinary AD/AN/AR完了3件を追記した。旧138行の全fieldは完全一致で保持し、過去のlogical-overlay実行も変更していない。保存重みAN/ARはfresh ADに対してcodeが低下し、両方不採用・full14なし。working modelはAD、積み上げP→S→AC→ADを維持する。AD採用時のfresh dev90は+2.416667pp、歴史AC対full14 overallは−1.358562ppであり、全分野改善とは呼ばない。
 新規採点・モデル実行なし。指定したNVMe resultsとlegacy resultsの直下run.json/report.jsonだけを採録した。
 5つのDeepSWE runはWSP台帳から分離し、完了・取消結果を代表表へ併記する。元R1/R2はincompleteで、この台帳から完成した点を捏造しない。
 公式reportから値を転記し、欠測は「—」。表は小数6桁表示、sourceの未丸め値はcatalog JSONに残す。
@@ -53,6 +53,9 @@ partialのoverallは公開表で空欄にし、reportの元値はcatalogのrepor
 | AD・AF/AGの同時対照 | 74.2421 | — | — | — | 同じADのfresh再測定、旧73.8254を代用しない |
 | AF＝AD＋科学nativeセットB | 72.6587 | fresh AD | 74.2421 | −1.5833 | Sci +2pp、LCB/MBPP各1 loss、不採用 |
 | AG＝AD＋科学連成セットH | 73.4087 | fresh AD | 74.2421 | −0.8333 | HE1 loss、他3source同点、不採用 |
+| AD・保存AN/ARの同時対照 | 74.7421 | — | — | — | fresh ordinary保存重み対照 |
+| AN＝AD＋functional science/code | 72.4365 | fresh AD | 74.7421 | −2.3056 | LCB1 loss＋Sci部分点2 loss、不採用・full14なし |
+| AR＝AD＋functional repair | 73.0754 | fresh AD | 74.7421 | −1.6667 | HE1 gain／LCB2 loss、不採用・full14なし |
 
 M−Oは−3.2778pp。Pのworking採用はユーザーの「改善後から積み上げる」方針による。
 最終code>90達成、未知集合への汎化、統計的確定とは別である。
@@ -5161,3 +5164,28 @@ AD→ALはHE28/30→27/30、MBPP24/30→24/30、LCB15/20→13/20、SciCode40.301
 | export-reproduction.py | 0d62cd62308c95490ae1cdaaa3095c80a7544f12e080620ba7d38472e9ace829 |
 
 最終numeric summary a750513f9f9f4b018c88ad6a9e0e0b3350827af1282bbe9e46f5be5e0081b52f、owner closure 9745550da9742a87813267497886fd81e1c2a7537c950136677d36d081d72a21。[機能target実験記録](2026-11-07-ad-functional-targets.md)にsource得失・復旧範囲を保持した。
+
+## v12追補：保存AN/ARのfresh ordinary確認（141 runs）
+
+旧v11の138 row objectsを全field完全一致で保持し、保存重みの3 runだけ追加した。全90採点・未知0。overlayを保存checkpointと同一視せず、今回のfresh AD対照だけから差を計算する。
+
+| Arm | Run ID | Code % | fresh AD差 pp | HE /30 | MBPP /30 | LCB /20 | SciCode % |
+|---|---|---:|---:|---:|---:|---:|---:|
+| AD | code90-current-ad-an-ar-ad-20261107-v1 | 74.742063 | — | 29 | 24 | 16 | 42.301587 |
+| AN | code90-current-ad-an-ar-an-20261107-v1 | 72.436508 | −2.305556 | 29 | 24 | 15 | 38.079365 |
+| AR | code90-current-ad-an-ar-ar-20261107-v1 | 73.075397 | −1.666667 | 30 | 24 | 14 | 42.301587 |
+
+ANはLCB arc195_bとSciCode58/72の数値3 loss、gain0。公式binary flipは1 lossで、Sci部分点2 lossは別記。CI[−5.361111,0]pp。ARはHumanEval/152 gain、LCB3777/abc390_g loss、CI[−5.416667,+1.666667]pp。両増分不採用・full14なし、AD7d65を維持。
+
+正式HTTP各119、error/retry/unknown/truncated/empty0。startup1件/input21/output1を正式回数から分離。AD/AN/AR input94,864/97,133/95,636、output336,577/341,074/325,302、wall374.2/385.1/391.4秒、agent steps不明。OCI/source82/親・配信identity・出力mount閉鎖PASS。
+
+| v12 Artifact | SHA256 |
+|---|---|
+| catalog.json | e22e9f36b6f0aaf02c60c3c29faf8002c767ea9fe1c2068c0bb1cc86a1612097 |
+| coverage.json | e67552a05c5d60c58ddaec9d360e991db4845befe245189e3b85150d65bd4620 |
+| runs.csv | 2d9af47c83c7ab78ef113dfc4aba0469e0d8c1ff19f0d3d2c1acea575bfa49a9 |
+| source-scores.csv | 8436aa106184c336ec0dd3276f7de60d1faefefee5717d44025b125b3af189d8 |
+| preservation.json | ee4cf717c01ea8b45edfd5c56289e36a7590efb11f49f27a2e2c937f44d653db |
+| export-reproduction.py | 339f49c72218156a30195024c97c9575f62d9710de4d2f74e362ab8e4be97a78 |
+
+最終summary 2f3a50cdf8610c42f2c753d588c190f64ba7dae71d2405f075b90170a1951b86、postchecks f2253c519b7341f66de894cc1fc8d8b6e152b308ed12f00ef4bc3d7b566a8169、working-decision 66aa64e14eaf5c69d114760bdea3e04af145617e172b7a9dc374c44cc6d5bd8d。[機能target実験記録](2026-11-07-ad-functional-targets.md)に対照窓・partial scoreと不採用理由を保持。

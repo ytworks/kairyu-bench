@@ -68,7 +68,7 @@ state = {
     "started_epoch": time.time(),
     "plan_sha256": PLAN_SHA,
     "jobs": [],
-    "model_calls_scope": "Expanded152 authored train cases, immutable accepted AD -> each selected alternative from AD -> restored AD finite diagnostics only",
+    "model_calls_scope": "Plan-bound authored train cases, immutable accepted AD -> each selected alternative from AD -> restored AD finite diagnostics only",
     "benchmark_calls": 0,
     "checkpoint_writes": 0,
 }
@@ -394,7 +394,7 @@ def run():
         summary = read(out / "summary.json")
         require(
             summary["status"] == "completed"
-            and len(summary["labels"]) == 42
+            and len(summary["labels"]) == plan["cases"]["folds"]
             and [c["id"] for c in summary["candidates"]]
             == [c["id"] for c in plan["selected_candidates"]],
             "finite completion incomplete",
@@ -442,10 +442,15 @@ def run():
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--owner-plan", type=Path, default=P / "owner-plan.json")
     parser.add_argument("--plan-sha", required=True)
     parser.add_argument("--authorization-sha")
     parser.add_argument("--apply", action="store_true")
     args = parser.parse_args()
+    require(
+        args.owner_plan.name == "owner-plan.json", "owner-plan.json filename required"
+    )
+    P = args.owner_plan.resolve().parent
     PLAN_SHA = args.plan_sha
     AUTH_SHA = args.authorization_sha
     require(sha(P / "owner-plan.json") == PLAN_SHA, "plan SHA mismatch")
@@ -498,12 +503,10 @@ if __name__ == "__main__":
                 )
                 if q.returncode == 0:
                     owned = json.loads(q.stdout)[0]
-                    if (
-                        owned["Image"] == plan["image"]
-                        and owned["Config"]
-                        .get("Labels", {})
-                        .get("kairyu.observation.owner")
-                        == "current-ad-functional-six-finite-v1"
+                    if owned["Image"] == plan["image"] and owned["Config"].get(
+                        "Labels", {}
+                    ).get("kairyu.observation.owner") == plan.get(
+                        "owner_label", "current-ad-functional-six-finite-v1"
                     ):
                         active_cid = owned["Id"]
             if active_cid:

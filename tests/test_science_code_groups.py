@@ -120,7 +120,10 @@ class ScienceCodeGroupTest(unittest.TestCase):
             rounding=dict(relative_radius=.025, absolute_radius=1e-6, rounds=16),
         )
         if functional:
-            method.update(target_mode="functional", ll_headroom_fraction=1/64,
+            # The uncapped LL goal would require twice the saved displacement.
+            # Exercise the cap through selection, solving, postcheck and BF16 bytes.
+            method.update(target_mode="functional", ll_headroom_fraction=1/32,
+                          ll_target_cap=1/64,
                           margin_target=1/64, cost_metric=dict(type="euclidean",
                           block_scales=dict(native=1., matrix=1.)))
             del method["ll_multiplier"], method["margin_multiplier"]

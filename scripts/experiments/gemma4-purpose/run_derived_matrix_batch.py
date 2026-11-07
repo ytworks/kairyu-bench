@@ -7,6 +7,7 @@ from concurrent.futures import ThreadPoolExecutor
 import copy
 import hashlib
 import json
+import math
 import os
 from pathlib import Path
 import re
@@ -75,10 +76,15 @@ def prepare(args):
     expected_calibration = dict(calibration_seconds=120, candidate_seconds=180,
                                fractional_buffer=1/128, floor=1e-6,
                                dual_tolerance=2e-10, maximum_iterations=20000)
+    calibration = dict(policy["analytic_calibration"])
+    declared_metric = calibration.pop("metric", None)
+    raw_cap = policy["realized_raw_cap"]
     if (roster["schema_version"] != 1 or policy["protocol"] != "functional_targets_v1"
             or policy["parent_state"] != roster["parent"]
-            or policy["analytic_calibration"] != expected_calibration
-            or not policy["native_frozen"] or policy["realized_raw_cap"] != 1
+            or calibration != expected_calibration
+            or declared_metric not in (None, "euclidean", "relative")
+            or not policy["native_frozen"] or type(raw_cap) not in (int, float)
+            or not math.isfinite(raw_cap) or raw_cap <= 0
             or not receipt["all_stat_stable"]):
         raise ValueError("batch policy or observation contract differs")
     cpu_sets = roster["cpu_sets"]
@@ -120,6 +126,9 @@ def prepare(args):
                 or len(plan["candidates"]) != 1 or plan["candidates"][0]["id"] != row["id"]
                 or plan["prospective_method"] != roster["policy"]):
             raise ValueError("reference plan identity differs")
+        if (declared_metric is not None
+                and plan["candidates"][0]["cost_metric"]["type"] != declared_metric):
+            raise ValueError("declared calibration metric differs from candidate")
         if any(observed_hashes.get(name) != digest
                for name, digest in plan["completed_collection_sha256"].items()):
             raise ValueError("reference observation hashes differ")

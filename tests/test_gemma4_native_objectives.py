@@ -3,6 +3,8 @@ from __future__ import annotations
 import copy
 import hashlib
 import json
+import shutil
+import sys
 from pathlib import Path
 import tempfile
 import unittest
@@ -199,6 +201,131 @@ class NativeCoupledTests(unittest.TestCase):
         self.assertEqual(saved.read_raw(qname), self.checkpoint.read_raw(qname))
         self.assertEqual(saved.read_raw(self.scalar), bytes.fromhex("0080"))
         self.assertEqual({p: self.sha(p) for p in self.checkpoint.files}, before)
+        # A separate completed purpose is copied into one ordinary adapter input
+        # without rerunning, averaging or altering the first purpose's gradients.
+        with unittest.mock.patch.dict(sys.modules, {"propose_native_objectives": COUPLED}):
+            composer = load("compose_purpose_collections")
+        new_cases = self.root / "helper-cases.json"
+        new_cases.write_text(json.dumps({"helper": [[{
+            "id": "helper-authored", "prompt": "hp", "correct": "yes", "foil": "no"}]]}))
+        full_cases = self.root / "combined-cases.json"
+        combined = json.loads(self.cases.read_text())
+        combined.update(json.loads(new_cases.read_text()))
+        full_cases.write_text(json.dumps(combined))
+        parent = self.root / "parent-state.json"
+        parent.write_text(json.dumps({"accepted": "fixture"}))
+        new_directories = {family: {} for family in ("native", "matrix")}
+        for family, objectives in self.plan["collections"].items():
+            for objective, source in objectives.items():
+                target = self.root / ("helper-" + family + "-" + objective)
+                shutil.copytree(source, target)
+                new_directories[family][objective] = str(target)
+                summary = json.loads((target / "summary.json").read_text())
+                row = summary["folds"][0]
+                row["purpose"] = "helper"
+                field = "correct_logprobs" if objective == "correct-logprob" else "margins"
+                row[field][0]["id"] = "helper-authored"
+                (target / "summary.json").write_text(json.dumps(summary))
+                frame = json.loads((target / "frame-evidence.json").read_text())
+                frame["frames"] = {"helper": [[{"id": "helper-authored"}]]}
+                (target / "frame-evidence.json").write_text(json.dumps(frame))
+                provenance = json.loads((target / "provenance.json").read_text())
+                provenance["input_sha256"] = {str(new_cases): self.sha(new_cases)}
+                (target / "provenance.json").write_text(json.dumps(provenance))
+        def collection_receipt(name, directories):
+            completion = self.root / (name + "-completion.json")
+            if not completion.exists():
+                completion.write_text(json.dumps({"status": "completed"}))
+            outputs = {}
+            for family, objectives in directories.items():
+                for objective, directory in objectives.items():
+                    paths = list(Path(directory).iterdir())
+                    outputs[family + "-" + objective] = {
+                        "path": directory, "files": {p.name: self.sha(p) for p in paths},
+                        "stat": {str(p): COUPLED.stamp(p) for p in paths}}
+            receipt = self.root / (name + "-receipt.json")
+            receipt.write_text(json.dumps({
+                "all_stat_stable": True,
+                "completion": {"path": str(completion), "sha256": self.sha(completion)},
+                "source_parent": {"path": str(parent), "sha256": self.sha(parent),
+                                  "tree": self.plan["checkpoint"]["tree_sha256"]},
+                "outputs": outputs}))
+            return {"path": str(receipt), "sha256": self.sha(receipt)}
+        compose_plan = {
+            "schema_version": 1, "kind": "disjoint_purpose_collections_v1",
+            "checkpoint": self.plan["checkpoint"], "baseline_tolerance": 1e-6,
+            "parent_state": {"path": str(parent), "sha256": self.sha(parent)},
+            "cases": {"path": str(full_cases), "sha256": self.sha(full_cases)},
+            "segments": [
+                {"cases": self.plan["cases"], "receipt": collection_receipt("old", self.plan["collections"])},
+                {"cases": {"path": str(new_cases), "sha256": self.sha(new_cases)},
+                 "receipt": collection_receipt("new", new_directories)}]}
+        compose_path = self.root / "compose-plan.json"
+        compose_path.write_text(json.dumps(compose_plan))
+        composed = self.root / "composed"
+        with unittest.mock.patch.object(COUPLED.joint, "quantized_proposal", side_effect=AssertionError("composer invoked solver")):
+            preview = composer.compose(compose_path, composed)
+            self.assertEqual(preview["folds"], 2)
+            self.assertFalse(composed.exists())
+            result = composer.compose(compose_path, composed, write=True)
+        self.assertTrue(result["composition"]["not_a_single_model_run"])
+        self.assertEqual(result["model_calls"], 0)
+        for family, objectives in self.plan["collections"].items():
+            for objective, source in objectives.items():
+                original = Path(source)
+                filename = json.loads((original / "summary.json").read_text())["folds"][0]["file"]
+                self.assertEqual((composed / (family + "-" + objective) / ("segment-0-" + filename)).read_bytes(),
+                                 (original / filename).read_bytes())
+        joined_plan_path = composed / "adapter-input-template.json"
+        _, joined_plan, _, joined_labels, _ = COUPLED.prepare(joined_plan_path)
+        self.assertEqual(joined_labels, [("science", 0), ("helper", 0)])
+        joined_plan["candidates"][0]["constraints"] = [
+            {"objective": o, "purpose": p, "fold": f, "minimum_delta": 1 / 128}
+            for o in COUPLED.OBJECTIVES for p, f in joined_labels]
+        joined_plan["candidates"][0]["rounding"]["relative_radius"] = .025
+        proposal_plan = self.root / "composed-proposal-plan.json"
+        proposal_plan.write_text(json.dumps(joined_plan))
+        proposal_output = self.root / "composed-proposal"
+        COUPLED.solve(proposal_plan, proposal_output, write_spec=True)
+        saved_path, manifest_path = self.root / "composed-saved", self.root / "composed-saved.json"
+        editor.create(self.checkpoint.path, saved_path,
+                      proposal_output / "composition-validation-only.json",
+                      manifest_path, apply=True, reserve_bytes=0)
+        editor.verify(manifest_path)
+        self.assertEqual(Checkpoint(saved_path).read_raw(qname), self.checkpoint.read_raw(qname))
+        self.assertEqual(Checkpoint(saved_path).read_raw(self.scalar), bytes.fromhex("0080"))
+        selected = copy.deepcopy(compose_plan)
+        selected["purpose_selection"] = {
+            "selected_purposes": ["helper"], "omitted_reasons": {"science": "fixture selection"}}
+        compose_path.write_text(json.dumps(selected))
+        subset = self.root / "composed-subset"
+        selected_result = composer.compose(compose_path, subset, write=True)
+        self.assertEqual((selected_result["cases"], selected_result["source_folds"]), (1, 2))
+        _, selected_plan, _, selected_labels, _ = COUPLED.prepare(subset / "adapter-input-template.json")
+        self.assertEqual(selected_labels, [("helper", 0)])
+        self.assertEqual(selected_plan["cases"]["path"], str(subset / "cases.json"))
+        for family, objectives in new_directories.items():
+            for objective, source in objectives.items():
+                filename = json.loads((Path(source) / "summary.json").read_text())["folds"][0]["file"]
+                self.assertEqual((subset / (family + "-" + objective) / ("segment-1-" + filename)).read_bytes(),
+                                 (Path(source) / filename).read_bytes())
+        compose_path.write_text(json.dumps(compose_plan))
+        overlapping = copy.deepcopy(compose_plan)
+        overlapping["segments"][1] = overlapping["segments"][0]
+        compose_path.write_text(json.dumps(overlapping))
+        with self.assertRaisesRegex(ValueError, "purposes must be disjoint"):
+            composer.compose(compose_path, self.root / "overlap", write=True)
+        self.assertFalse((self.root / "overlap").exists())
+        # Numerical equality is insufficient for signed-zero source identity.
+        altered = Path(new_directories["native"]["margin"]) / "source-native-values.npz"
+        np.savez(altered, **{self.norm: np.array([1., 2.], dtype=np.float32),
+                            self.scalar: np.array(0., dtype=np.float32)})
+        compose_plan["segments"][1]["receipt"] = collection_receipt("new", new_directories)
+        compose_path.write_text(json.dumps(compose_plan))
+        with self.assertRaisesRegex(ValueError, "source array/sample bytes differ"):
+            composer.compose(compose_path, self.root / "changed-source", write=True)
+        self.assertFalse((self.root / "changed-source").exists())
+
         # A new, explicit matrix-only hypothesis keeps all native source bytes fixed.
         self.plan["eligible_blocks"] = ["matrix"]
         self.plan["candidates"][0]["id"] = "matrix-only"

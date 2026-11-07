@@ -151,6 +151,11 @@ def build(args):
         if mode not in ("dual_norm", "functional"):
             raise ValueError("unsupported target mode")
         method_metric(method)
+        target_cap = method.get("ll_target_cap")
+        if target_cap is not None and (
+                mode != "functional" or type(target_cap) not in (int, float)
+                or not np.isfinite(target_cap) or target_cap <= 0):
+            raise ValueError("LL target cap requires a positive finite functional target")
         target_keys = (("ll_multiplier", "margin_multiplier", "ll_headroom_fraction")
                        if mode == "dual_norm" else ("ll_headroom_fraction", "margin_target"))
         for key in target_keys:
@@ -184,6 +189,8 @@ def build(args):
                     if mode == "functional":
                         target = (method["ll_headroom_fraction"] * headroom[index]
                                   if objective == "correct-logprob" else method["margin_target"])
+                        if objective == "correct-logprob" and target_cap is not None:
+                            target = min(target, target_cap)
                     else:
                         multiplier = method["ll_multiplier" if objective == "correct-logprob"
                                             else "margin_multiplier"]

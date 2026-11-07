@@ -119,3 +119,21 @@ The executing owner omitted its working-directory setting, so the immutable wrap
 All four exact original containers were restored healthy at 2026-11-06T23:35:37.827730Z, with unchanged AD state/checkpoint and protected services. Owner time was 1460.585 s; artifact-preservation IO overlapped execution, so no uncontended latency comparison is claimed. Within each round the actual runner image IDs match. Across rounds IDs differ, while RootFS, image-config hash, normalized command, noncredential environment, runtime, Python/packages and all 82 installed source files match exactly.
 
 Evidence: A/current-ad-functional-overlay-dev90-v1/numeric-final-summary.json SHA256 a750513f9f9f4b018c88ad6a9e0e0b3350827af1282bbe9e46f5be5e0081b52f; completion.json SHA256 9745550da9742a87813267497886fd81e1c2a7537c950136677d36d081d72a21. Round-one original-report preservation d88baf487fd2e6d4e98c98447f9f21d0cf1f6c14493b9a58f5f723325a18657f; round-two routing b73ffc7d89e2426cfc948798a75bbdb6d24cec0594f3818902290c3ea209e8fb.
+
+## Ordinary saved-weight confirmation: AN and AR rejected
+
+The fresh simultaneous ordinary-serving comparison did not confirm the exploratory overlay gains. All three models use saved, verified physical checkpoints with the same immutable official dev/tier30 code90 protocol, native thinking, c32 and symmetric prompt-free request observers.
+
+| Arm | Code (%) | Difference from fresh AD (pp) | HumanEval+ /30 | MBPP+ /30 | LiveCodeBench /20 | SciCode (%) |
+|---|---:|---:|---:|---:|---:|---:|
+| AD | 74.742063 | — | 29 | 24 | 16 | 42.301587 |
+| AN | 72.436508 | −2.305556 | 29 | 24 | 15 | 38.079365 |
+| AR | 73.075397 | −1.666667 | 30 | 24 | 14 | 42.301587 |
+
+AN has no numerical gain and three losses: LiveCodeBench arc195_b 1→0, SciCode58 1→0.8 and SciCode72 7/9→5/9. Its official binary flip summary counts one loss; the two SciCode partial-score losses are retained separately. The paired source-equal code CI is [−5.361111, 0] pp. AR gains HumanEval/152 0→1 and loses LiveCodeBench3777 and abc390_g 1→0; its CI is [−5.416667, +1.666667] pp. SciCode is unchanged for AR.
+
+Each run scored all 90 items, with zero unknown, truncated or empty outcomes. Each records 119 formal HTTP calls, zero retries/errors; startup adds one request with 21 input and one output token per server, separately accounted. AD/AN/AR formal input tokens are 94,864/97,133/95,636 and output tokens 336,577/341,074/325,302. Wall times are 374.2/385.1/391.4 seconds; agent steps are unavailable. Actual OCI identity, all 82 installed source/resource pins, serving/source/parent continuity and writable result mounts passed closure.
+
+Root rejected both increments, retained accepted AD state 7d65d218…, and did not launch the prepared full14 comparison. No further formal recheck is planned for these candidates. The earlier overlay scores are preserved as exploratory evidence and are not substituted for these fresh physical-checkpoint results. This does not establish why the two serving paths differed or claim code >90.
+
+Evidence under A/current-ad-an-ar-dev90-v1: final-summary.json SHA256 2f3a50cdf8610c42f2c753d588c190f64ba7dae71d2405f075b90170a1951b86; postchecks.json f2253c519b7341f66de894cc1fc8d8b6e152b308ed12f00ef4bc3d7b566a8169; working-decision.json 66aa64e14eaf5c69d114760bdea3e04af145617e172b7a9dc374c44cc6d5bd8d.

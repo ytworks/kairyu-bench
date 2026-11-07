@@ -11,7 +11,8 @@ service controller. Its absolute workspace, evidence directory and pinned
 operational helper are intentionally retained from the actual run. Read the
 source and provide those exact dependencies before use. An inert preview checks
 the bound plan; `--apply` additionally requires its exact authorization SHA.
-The published recipe does not authorize a new run.
+The published recipe does not authorize a new run. The current optional plan-directory
+parameter and declared fold-count support are described below.
 
 ## Executed relationship
 
@@ -22,9 +23,9 @@ The original runtime remained unchanged:
 - Plan SHA256: `b03b57ef2f0a84dcc2707e4c8774f08354b1012b9da2b434e3d77a385c43da14`
 - Finite core SHA256: `9a5fb90f262459d142f63889e3a5807cb231bf797c302247379ed24d0be57631`
 
-The publication changes formatting, splits the import statement, and removes the
+The initial publication changed formatting, split the import statement, and removed the
 unused local alias `W_COUNTER` while preserving `counter`. After normalizing
-those two syntax differences, the parsed AST is identical to the executed file.
+those two syntax differences, that initial parsed AST was identical to the executed file.
 Syntax compilation and Ruff check/format passed; publication did not repeat the
 GPU run or full CPU suite. The correspondence receipt is
 `A/functional-finite-owner-publication-v1/validation.json`.
@@ -93,3 +94,24 @@ Evidence in the owner directory:
 | `numeric-final-summary.json` | `3fab7ab83a3453bea77106b2f99ea52450ceb9b7dbf9d5315f82065d512776c8` |
 | `selected-byte-expectations.json` | `7b4a4880fba12399f5857322369bc53f6b15cc28c86268491e2b3a24cba6d7ed` |
 | `independent-numeric-review.json` | `98d533192257f8c9f04b7d9b798560e65524728b21e26da49e0256dc871c4442` |
+
+
+## Plan-bound cohort reuse
+
+The owner now accepts optional --owner-plan /absolute/owner-plan.json. Omitting
+it retains the historical directory above. The finite-completion fold count is
+read from the pinned plan instead of assuming 42, and the exact temporary
+container cleanup label is plan-bound with the historical value as its default.
+Source, checkpoint, selected-word checks, timeouts and independent same-CID
+restoration remain unchanged. This small parameterization passed syntax,
+Ruff check/format, inert preview and an independent limited-diff review; it does
+not change the finite numerical core or imply another executed batch.
+
+The prepared AT–AY reuse observes all 160 authored rows / 23 purposes / 46 folds,
+while its fitting subset is separately recorded as 112 rows / 17 purposes /
+34 folds. The 48 omitted fitting rows remain diagnostics. Its explicit matrix
+scope can include Q/K/O and coherent MLP, with native parameters and V frozen;
+there is no inherited all-QKV-zero claim. Rejected AN in slot0 is the planned
+scratch service, and AD1/O2/AR3 plus embeddings remain protected. Candidate
+eligibility, source proofs and actual container snapshots are bound at dispatch.
+The unbound template is A/current-ad-helper-six-finite-v1/owner-plan-template.json.

@@ -9,8 +9,11 @@ These two host-bound recipes reuse the successful AL saved-checkpoint path:
   derived from executed `launch-current-ad-al-dev90.py`,
   SHA `fc3de9942500b0ef8a5cd498ffe0a56a12ef14b95e7551cc095d062787ebca38`.
 
-The new parameter bindings are **prepared, not executed**. The source lineage
-does not claim that the new finalists have been saved, served or scored.
+The AN and AR materialization bindings have now executed once each. Both saved
+checkpoints passed independent full-file verification and the measured BF16
+selected-word comparison, then deployed healthy to slots0 and3. The fresh
+ordinary AD/AN/AR dev90 started on 2026-11-07 at 00:00:50 UTC; its scores and
+adoption decision remain pending at this update.
 The unchanged absolute workspace and existing operational helpers are part of
 this machine-specific recipe; this is not a general service orchestration SDK.
 
@@ -72,12 +75,48 @@ there is no implicit relaxation of the reserve or automatic deletion.
 
 A read-only metadata survey found the completed previous authored screen's
 private cache used 1,649,119,232 allocated file bytes (7,910 files, UID1003,
-no symlinks or multiply linked files). It is only a prospective cleanup option:
-the exact owner must be closed and all current/running/stopped mount references
-must be checked before separately authorized deletion. The active official
-screen cache is excluded. Retired AL weights may only become a cleanup option
-after a successful replacement; its metadata, results and all accepted ancestry
-must remain. Recheck free space immediately before each actual copy.
+no symlinks or multiply linked files). Root removed that exact cache after its owner closed and fresh all-three-daemon
+running/stopped mount and inventory checks passed (receipt SHA
+`622e04883d384cd42d48f8002ed7a6811516a7c58e049382773be2b8f2968d74`).
+After AN deployed healthy, root separately removed only the two unmounted
+retired AL payload shards, 62,546,338,264 bytes (receipt SHA
+`d183370da20917493af43ec990982e2016479f5199433f268aec1f654854ce38`).
+All AL metadata/results and accepted ancestry remained. The active official
+screen cache was excluded. Each create rechecked free space; no recipe performs
+automatic deletion.
+
+## Executed saved-weight confirmation
+
+Both candidates apply their original fixed specs directly to accepted AD tree
+`27629fd3cd4c7573ca535832ce4e97cb8bc10b28ddd3f6f12ddf1b194633b1e8`
+and incumbent state `7d65d218…`. AR does not use AN as its parent.
+
+| Saved candidate | Changed BF16 values | Tensors | Raw delta L2 | Create / verify / deploy seconds |
+|---|---:|---:|---:|---|
+| AN | 103,562 | 240 | 0.37208415696387465 | 239.725 / 183.252 / 111.849 |
+| AR | 98,769 | 240 | 0.2865434048114147 | 226.559 / 181.254 / 111.773 |
+
+The saved edited subsets match the measured candidate words within the
+115,498-coordinate finite union. Source/candidate full-file hashes come from
+the existing create/verify operations, with no third payload hash pass.
+
+- AN closure: `225697374dfc0fd59adcd180c1c599cb348c31197d886e5739d204554b7e6905`;
+  freeze: `bd1d74608ca10b1edb39b7ac2dfe93fc8cc81ba115cad7a0609de9b68649f39d`.
+- AR closure: `e1e2e65ddeae257c6b32126a2c1b8dc15dc415552da84d8f0c2a275bb7ba5d6e`;
+  freeze: `f1ef80185a375f926a5d6630c59d988d18cf687701ce8a709a817b64e31fbcfa`.
+- Ordinary comparison: `A/current-ad-an-ar-dev90-v1/plan.json`,
+  SHA `309c6bffdcf1136bce816700f2bac4a07be69302579d1725a2c7056ae20a2b97`;
+  actual launch `00:00:50.556234 UTC`, all three runner captures completed.
+
+The actual official child working directory is explicitly `R/results`, matching
+the absolute results argument and its host bind. This preserves results with
+the unchanged archived wrapper. An overlay score remains exploratory; these
+fresh ordinary saved-weight scores are the confirmation evidence. The completed
+AD/AN/AR scores were 74.742063/72.436508/73.075397: both candidates lost
+against fresh AD and were rejected, with no full14 run. All 90 items per arm
+were scored with zero unknown/truncated/empty outcomes. See the
+[experiment result](experiments/2026-11-07-ad-functional-targets.md#ordinary-saved-weight-confirmation-an-and-ar-rejected)
+for source tradeoffs, usage and closure hashes.
 
 Here `R=/mnt/nvme/kairyu/wsp/gemma4-coding-20261104`,
 `A=R/analysis/code90-resume-20261106`, and `CPU_PY=R/infra/weight-tools-ci/bin/python`.
