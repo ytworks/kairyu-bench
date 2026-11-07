@@ -1,0 +1,19 @@
+{
+  "command": [
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/infra/weight-tools-ci/bin/python",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/worktrees/kairyu-bench-weight-tools/docs/experiments/scripts/fresh-authored-native-margin-join-20261107.py",
+    "--root",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104",
+    "--repo",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/worktrees/kairyu-bench-weight-tools",
+    "--output",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-native-finite-case-join-v1/all120-joined.json"
+  ],
+  "source_sha256": "3247d576d0d32c84016b0097ff5d54edd441637dbe2c8e074f7d328130009261",
+  "returncode": 0,
+  "stdout": "{\"joined_cases\": 120, \"fixed48_cases\": 48, \"outside_fixed48_unscored\": 72, \"groups\": {\"fixed48_pass\": {\"cases\": 46, \"margin_increases\": 31, \"margin_decreases\": 15, \"ties\": 0, \"mean_delta\": 0.004829181277233622, \"median_delta\": 0.0021274983882904053, \"min_delta\": -0.018157482147216797, \"max_delta\": 0.04544401168823242}, \"fixed48_fail\": {\"cases\": 2, \"margin_increases\": 1, \"margin_decreases\": 1, \"ties\": 0, \"mean_delta\": 0.001117020845413208, \"median_delta\": 0.001117020845413208, \"min_delta\": -0.010445475578308105, \"max_delta\": 0.012679517269134521}, \"outside_fixed48_unscored\": {\"cases\": 72, \"margin_increases\": 39, \"margin_decreases\": 33, \"ties\": 0, \"mean_delta\": 0.08074780967500475, \"median_delta\": 0.0029503703117370605, \"min_delta\": -0.49376487731933594, \"max_delta\": 6.028739929199219}}, \"guard_literal_counts\": {\"correct_literal_match\": 10, \"foil_literal_match\": 0, \"both_literal_match\": 0, \"neither_literal_match\": 0, \"indeterminate_missing_or_error\": 0}, \"dominant_case\": {\"id\": \"guard_code_0_1\", \"native_public_answer\": \"7\", \"correct\": \"7\", \"foil\": \"3\", \"base_margin\": 0.28262901306152344, \"f02_margin\": 6.311368942260742, \"margin_delta\": 6.028739929199219, \"guard_positive_delta_sum\": 7.023149490356445, \"guard_net_delta_sum\": 5.490396022796631, \"share_of_guard_positive_delta\": 0.8584097401710358, \"share_of_guard_net_delta\": 1.0980519263396182, \"denominator_note\": \"Both denominators are sums over all 10 guard cases, not total WSP code or solver objective. Net share may exceed 1 because other cases lose margin.\"}}\n",
+  "stderr": "",
+  "seconds": 0.07230877876281738,
+  "new_model_requests": 0,
+  "generated_code_executions": 0
+}

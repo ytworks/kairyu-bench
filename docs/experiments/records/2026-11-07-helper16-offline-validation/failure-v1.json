@@ -1,0 +1,13 @@
+{
+  "status": "failed_test_expectation",
+  "command": "scientific Python -m unittest test_gemma4_helper_chains.OfflineHelperStagesTest test_gemma4_science_sandbox -v",
+  "collected_tests": 10,
+  "failing_subtests": 16,
+  "elapsed_seconds": 0.641,
+  "cause": "new payload-boundary assertion omitted existing allow_underflow=True flag; every E2E subtest stopped before trusted_run",
+  "adapter_or_worker_changed_to_fix": false,
+  "test_source_sha256": "875c1ffec30e550cef9c4113fcb5ea32f0d7fe5c67b985f31a2d75576837926a",
+  "sandbox_source_sha256": "4a19f0f5fc235f56d702d39dd9bc9e403eba98ffdeadabe4c6365b41566131a4",
+  "test_source_saved": "tests-before-allow-underflow-fix.py.txt",
+  "model_or_real_sandbox_calls": 0
+}

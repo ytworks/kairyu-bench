@@ -14,6 +14,7 @@ sys.path.insert(0, str(DIRECTORY))
 import helper_chain_cases as CHAINS  # noqa: E402
 import recipe_common as COMMON  # noqa: E402
 import long_helper_chain_cases as LONG  # noqa: E402
+import helper_stage_offline as OFFLINE  # noqa: E402
 
 
 class HelperChainsTest(unittest.TestCase):
@@ -147,6 +148,121 @@ class HelperChainsTest(unittest.TestCase):
             with self.assertRaises(FileExistsError):
                 LONG.write_bundle(long_output)
             self.assertEqual(base.read_bytes(), before)
+
+
+class OfflineHelperStagesTest(unittest.TestCase):
+    def fixture(self, root):
+        selected = OFFLINE.targets()
+        rows = [chain.row(stage) for _, chain, stage in selected.values()]
+        rows += [{"id": f"other-{i}", "prompt": "Not targeted.",
+                  "split": "train", "correct": "c", "foil": "f"} for i in range(56)]
+        cases = root / "cases.json"
+        cases.write_text(json.dumps({"cases": {"fixture": [rows, []]}}))
+        responses = root / "responses.json"
+        responses.write_text(json.dumps({
+            "schema_version": 1, "split": "train",
+            "cases_sha256": OFFLINE.sandbox.sha(cases.read_bytes()),
+            "generation": {"reasoning_saved": False},
+            "responses": [{"id": row["id"], "error_type": "HTTPError",
+                           "http_status": 400} for row in rows],
+        }))
+        return cases, responses
+
+    def read(self, cases, responses):
+        return OFFLINE.read_inputs(
+            cases, responses, OFFLINE.sandbox.sha(cases.read_bytes()),
+            OFFLINE.sandbox.sha(responses.read_bytes())
+        )
+
+    def test_full_identity_and_public_response_rejections(self):
+        with tempfile.TemporaryDirectory() as directory:
+            cases, responses = self.fixture(Path(directory))
+            selected, answers, _, _, rows = self.read(cases, responses)
+            self.assertEqual((len(selected), len(answers), len(rows)), (16, 72, 72))
+            with self.assertRaisesRegex(ValueError, "SHA mismatch"):
+                OFFLINE.read_inputs(cases, responses, "0" * 64,
+                                    OFFLINE.sandbox.sha(responses.read_bytes()))
+            original = json.loads(responses.read_text())
+            for bad in [
+                {**original, "cases_sha256": "0" * 64},
+                {**original, "responses": [{"id": "unknown"}]},
+                {**original, "responses": [original["responses"][0]] * 2},
+                {**original, "responses": [{"id": next(iter(selected)),
+                                           "reasoning_content": "not accepted"}]},
+            ]:
+                responses.write_text(json.dumps(bad))
+                with self.assertRaises(ValueError):
+                    self.read(cases, responses)
+            responses.write_text(json.dumps(original))
+            data = json.loads(cases.read_text())
+            data["cases"]["fixture"][0][0]["prompt"] += "changed"
+            cases.write_text(json.dumps(data))
+            original["cases_sha256"] = OFFLINE.sandbox.sha(cases.read_bytes())
+            responses.write_text(json.dumps(original))
+            with self.assertRaisesRegex(ValueError, "changed fixed"):
+                self.read(cases, responses)
+
+    def test_preview_and_all_errors_never_execute_answers(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            cases, responses = self.fixture(root)
+            args = ["--cases", str(cases), "--responses", str(responses),
+                    "--cases-sha256", OFFLINE.sandbox.sha(cases.read_bytes()),
+                    "--responses-sha256", OFFLINE.sandbox.sha(responses.read_bytes()),
+                    "--docker-socket", "/not-a-real-socket", "--daemon-id", "fixture",
+                    "--image", "sha256:" + "a" * 64]
+            def forbidden(*_args, **_kwargs):
+                self.fail("preview constructed Docker")
+            result = OFFLINE.main(args + ["--output", str(root / "preview")],
+                                  docker_factory=forbidden)
+            self.assertEqual(result["not_targeted_cases"], 56)
+
+            class NoAnswerDocker:
+                def __init__(self, *_args, **_kwargs):
+                    pass
+
+                def check_image(self):
+                    pass
+
+                def run(self, _payload):
+                    raise AssertionError("generation error reached execution")
+
+            result = OFFLINE.main(args + ["--output", str(root / "run"), "--run"],
+                                  docker_factory=NoAnswerDocker)
+            self.assertEqual(result["counts"], {
+                "expected": 16, "passed": 0, "failed": 0, "unknown": 16})
+            self.assertEqual(result["strata"]["known_dtype_contract_issue"]["unknown"], 3)
+            self.assertTrue(all(x["status"] == "generation_error" for x in result["results"]))
+
+    @unittest.skipUnless(importlib.util.find_spec("scipy"), "optional scientific CPU environment")
+    def test_all16_authored_correct_foil_and_fixed_helper_e2e(self):
+        for identifier, target in OFFLINE.targets().items():
+            module, chain, stage = target
+            authored = chain.row(stage)
+            def trusted_only(payload):
+                # No expected values enter the worker. The only code executed
+                # on the host is in the existing source-owned strict allowlist.
+                self.assertEqual(set(payload), {"code", "parameters", "trials", "allow_underflow"})
+                self.assertIs(payload["allow_underflow"], True)
+                return module.trusted_run(payload)
+            with self.subTest(id=identifier):
+                correct = OFFLINE.score_answer(
+                    target, {"public_answer": authored["correct"]},
+                    trusted_only, 20261107, 4)
+                foil = OFFLINE.score_answer(
+                    target, {"public_answer": authored["foil"]},
+                    trusted_only, 20261107, 4)
+                self.assertTrue(correct["passed"])
+                self.assertFalse(foil["passed"])
+                if stage:
+                    self.assertEqual(correct["supplied_helper_sha256"],
+                                     OFFLINE.sandbox.sha(CHAINS.as_helper(
+                                         chain.helper.code()).encode()))
+        target = next(iter(OFFLINE.targets().values()))
+        def forbidden(_payload):
+            self.fail("missing answer reached execution")
+        self.assertIsNone(OFFLINE.score_answer(
+            target, {}, forbidden, 20261107, 4)["passed"])
 
 
 if __name__ == "__main__":

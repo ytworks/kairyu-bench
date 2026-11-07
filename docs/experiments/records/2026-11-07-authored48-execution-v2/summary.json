@@ -1,0 +1,1099 @@
+{
+  "schema_version": 1,
+  "scope": "known authored calibration; fixed48 only, no official WSP score",
+  "plan_sha256": "5991b28285825fcb12dba32b9daf886adaf9c6d26b1b45b34c076d10b512771b",
+  "execution_receipt_sha256": "1f6ee87ee921489b27704bcb9250a80bdc650dad6e2239f33fc5fcda310a832d",
+  "counts": {
+    "cases": 48,
+    "passed": 46,
+    "failed": 2,
+    "unknown": 0,
+    "tests_passed": 375,
+    "tests_total": 384
+  },
+  "strata": {
+    "contract-question": {
+      "cases": 3,
+      "passed": 3,
+      "failed": 0,
+      "unknown": 0,
+      "tests_passed": 24,
+      "tests_total": 24
+    },
+    "other-catalog": {
+      "cases": 45,
+      "passed": 43,
+      "failed": 2,
+      "unknown": 0,
+      "tests_passed": 351,
+      "tests_total": 360
+    }
+  },
+  "status_counts": {
+    "evaluated": 48
+  },
+  "seconds": 49.88358756690286,
+  "batches": [
+    {
+      "catalog": "basic",
+      "sha256": "6dc54be9fba568a7209c38e85b007d980e88afe2bcc73591dcd0aba2120c2b90",
+      "path": "docs/experiments/records/2026-11-07-authored48-execution-v2/basic-report.json",
+      "passed": 15,
+      "failed": 1,
+      "unknown": 0,
+      "expected_cases": 16
+    },
+    {
+      "catalog": "advanced-v2",
+      "sha256": "87d5aa295b471972e950f392585f28e67098905d1fc3e3ca89fc3e51fef40f47",
+      "path": "docs/experiments/records/2026-11-07-authored48-execution-v2/advanced-v2-report.json",
+      "passed": 16,
+      "failed": 0,
+      "unknown": 0,
+      "expected_cases": 16
+    },
+    {
+      "catalog": "library-train-v1",
+      "sha256": "d4b42b6f09042a30fb10d2c034a237f3a43b728943fd343338865dbe200a8a34",
+      "path": "docs/experiments/records/2026-11-07-authored48-execution-v2/library-train-v1-report.json",
+      "passed": 15,
+      "failed": 1,
+      "unknown": 0,
+      "expected_cases": 16
+    }
+  ],
+  "sources": {
+    "science_sandbox.py": {
+      "sha256": "cf26e77e90d5789422ad2ebd3ac43599ee0a2ebc781b7a1c0c8ae834953a817e",
+      "path": "docs/experiments/records/2026-11-07-authored48-execution-v2/science_sandbox.py.txt"
+    },
+    "science_cases.py": {
+      "sha256": "2c4cc6e75c92c41b98e737ca2c0a653e0f7a7675c6150a6ad33e3f954122a26b",
+      "path": "docs/experiments/records/2026-11-07-authored48-execution-v2/science_cases.py.txt"
+    },
+    "advanced_science_cases.py": {
+      "sha256": "544bcf6ef8671c13038420169508419d433199ea8f41dc8abed195d59eaef1d4",
+      "path": "docs/experiments/records/2026-11-07-authored48-execution-v2/advanced_science_cases.py.txt"
+    },
+    "library_train_cases.py": {
+      "sha256": "7371327bb781ce6dc0d0df379208ae9704210626bc7b9e184b01a764fcc3628a",
+      "path": "docs/experiments/records/2026-11-07-authored48-execution-v2/library_train_cases.py.txt"
+    }
+  },
+  "all48": [
+    {
+      "request_id": "chatcmpl-b9852e7f3e014b52",
+      "finish_reason": "stop",
+      "usage": {
+        "input_tokens": 94,
+        "output_tokens": 1206
+      },
+      "seconds": 9.463322508032434,
+      "id": "science-weighted-moments",
+      "status": "evaluated",
+      "passed": true,
+      "public_answer_sha256": "c2155b24fc0c9cebcad4a1fc48500ca079c77bb4bc875f1da879d5498b401874",
+      "code_sha256": "32a7d27f66529b1656ca0199e47e4f73542120632675283ff7c38d6740051129",
+      "tests_passed": 8,
+      "tests_total": 8,
+      "failures": [],
+      "execution_seconds": 0.7517884509870782,
+      "catalog": "basic",
+      "stratum": "other-catalog"
+    },
+    {
+      "request_id": "chatcmpl-02a3be9cdc5f46cb",
+      "finish_reason": "stop",
+      "usage": {
+        "input_tokens": 94,
+        "output_tokens": 638
+      },
+      "seconds": 5.306897112983279,
+      "id": "science-cumulative-trapezoid",
+      "status": "evaluated",
+      "passed": true,
+      "public_answer_sha256": "59780a83cc61b68b1c8dbdc89c4c6e7ae23a7189cc6649940831286d00c4c24b",
+      "code_sha256": "429d25ebc0021991a13c0bd58e8ef80aaa3eadfca074d02e4b1042df8e801e0b",
+      "tests_passed": 8,
+      "tests_total": 8,
+      "failures": [],
+      "execution_seconds": 0.7450290049891919,
+      "catalog": "basic",
+      "stratum": "contract-question"
+    },
+    {
+      "request_id": "chatcmpl-22431e51eba8464d",
+      "finish_reason": "stop",
+      "usage": {
+        "input_tokens": 90,
+        "output_tokens": 1018
+      },
+      "seconds": 8.324657848919742,
+      "id": "science-periodic-laplacian",
+      "status": "evaluated",
+      "passed": true,
+      "public_answer_sha256": "936e5f3dbbb55ff080dc192259cf69de439829af939db28b0bc339e86f8861cd",
+      "code_sha256": "dc5faf480a46659fbab577fc04a9c5b4322dd85c83ace0b8bc7b15f42ac9bfe2",
+      "tests_passed": 8,
+      "tests_total": 8,
+      "failures": [],
+      "execution_seconds": 0.745617013075389,
+      "catalog": "basic",
+      "stratum": "other-catalog"
+    },
+    {
+      "request_id": "chatcmpl-cc727d91e4a74714",
+      "finish_reason": "stop",
+      "usage": {
+        "input_tokens": 91,
+        "output_tokens": 670
+      },
+      "seconds": 5.906913573970087,
+      "id": "science-row-softmax",
+      "status": "evaluated",
+      "passed": true,
+      "public_answer_sha256": "7ff3790bd814231269e921c1fe4f39f9d0e4f212941ef86c249d6de9a93001e0",
+      "code_sha256": "b4bd6f5beb2ec3edc0da9daccc7d2e62dcd9f5be950fdac97a1fa5ec04001487",
+      "tests_passed": 8,
+      "tests_total": 8,
+      "failures": [],
+      "execution_seconds": 0.7416063139680773,
+      "catalog": "basic",
+      "stratum": "other-catalog"
+    },
+    {
+      "request_id": "chatcmpl-f60a674c37d84376",
+      "finish_reason": "stop",
+      "usage": {
+        "input_tokens": 111,
+        "output_tokens": 979
+      },
+      "seconds": 8.176075845956802,
+      "id": "science-ridge-intercept",
+      "status": "evaluated",
+      "passed": true,
+      "public_answer_sha256": "df34d027fe13ec0a6076e19cf4a222a0f7b2eed89af872ddb38d89319bf0e12d",
+      "code_sha256": "e0106e637d25be7f41e69f7ad96c0dff6ea4125c4d1d9687a12d5b1fb09e824d",
+      "tests_passed": 8,
+      "tests_total": 8,
+      "failures": [],
+      "execution_seconds": 0.7214407379506156,
+      "catalog": "basic",
+      "stratum": "other-catalog"
+    },
+    {
+      "request_id": "chatcmpl-dd0714e34a4943f5",
+      "finish_reason": "stop",
+      "usage": {
+        "input_tokens": 94,
+        "output_tokens": 916
+      },
+      "seconds": 7.5507254670374095,
+      "id": "science-markov-row-state",
+      "status": "evaluated",
+      "passed": true,
+      "public_answer_sha256": "0564b89a508e6e12fb2fa01a70842425e955d0ec489f8d17aa6c97212e67e56d",
+      "code_sha256": "a71000a2a7853f5f9410c70b4ca29ef5d82d39116c1fe15c7c1cc59da1ef8250",
+      "tests_passed": 8,
+      "tests_total": 8,
+      "failures": [],
+      "execution_seconds": 0.7410496489610523,
+      "catalog": "basic",
+      "stratum": "other-catalog"
+    },
+    {
+      "request_id": "chatcmpl-0f4a9f69499d4ed1",
+      "finish_reason": "stop",
+      "usage": {
+        "input_tokens": 91,
+        "output_tokens": 1178
+      },
+      "seconds": 9.6864358530147,
+      "id": "science-orthogonal-residual",
+      "status": "evaluated",
+      "passed": true,
+      "public_answer_sha256": "0b7d37f30a68ad6bee6442bb6bb01b4776c8fff81d2669655ad916fe6e6b0055",
+      "code_sha256": "97d773c6655ee2ea06e48865f437de9dd30cf79e654c19d9e6d1d5cbc4a913e4",
+      "tests_passed": 8,
+      "tests_total": 8,
+      "failures": [],
+      "execution_seconds": 0.7593460289062932,
+      "catalog": "basic",
+      "stratum": "other-catalog"
+    },
+    {
+      "request_id": "chatcmpl-d3d4f0b8767f4b09",
+      "finish_reason": "stop",
+      "usage": {
+        "input_tokens": 120,
+        "output_tokens": 914
+      },
+      "seconds": 7.981369238928892,
+      "id": "science-weighted-density",
+      "status": "evaluated",
+      "passed": true,
+      "public_answer_sha256": "0172003191599a74fb5714cba240ab8a88e077d2a45497f8330bf5ba98b4c387",
+      "code_sha256": "d52a9eef417fc1c6c5173ae32330d64c97cd1b2aa35e691bd7b6736ed0969280",
+      "tests_passed": 8,
+      "tests_total": 8,
+      "failures": [],
+      "execution_seconds": 0.7192644259193912,
+      "catalog": "basic",
+      "stratum": "other-catalog"
+    },
+    {
+      "request_id": "chatcmpl-619fc08ab0634db7",
+      "finish_reason": "stop",
+      "usage": {
+        "input_tokens": 93,
+        "output_tokens": 497
+      },
+      "seconds": 4.57140466501005,
+      "id": "science-sample-covariance",
+      "status": "evaluated",
+      "passed": true,
+      "public_answer_sha256": "942583abe492cf4c528d9de2a97f7f1fadfc4d3c424f90bb8f31e63b0c1cf11d",
+      "code_sha256": "a7a8308132add20815af4c82ee24246d8d91f00412d83830f0314f4507ef7641",
+      "tests_passed": 8,
+      "tests_total": 8,
+      "failures": [],
+      "execution_seconds": 0.7333742181072012,
+      "catalog": "basic",
+      "stratum": "other-catalog"
+    },
+    {
+      "request_id": "chatcmpl-7a18c4c4c6e841da",
+      "finish_reason": "stop",
+      "usage": {
+        "input_tokens": 120,
+        "output_tokens": 867
+      },
+      "seconds": 7.377708062995225,
+      "id": "science-conservative-flux",
+      "status": "evaluated",
+      "passed": true,
+      "public_answer_sha256": "ee82c5dc1912c2957f1cedc1b4944e2c8c418d781d78554ee09ba64f25851763",
+      "code_sha256": "9025ec69ee1567a60c48af4779cbdb82e4146e272ad415af28729446e38774fb",
+      "tests_passed": 8,
+      "tests_total": 8,
+      "failures": [],
+      "execution_seconds": 0.7555003890302032,
+      "catalog": "basic",
+      "stratum": "other-catalog"
+    },
+    {
+      "request_id": "chatcmpl-67dd573cad7d429f",
+      "finish_reason": "stop",
+      "usage": {
+        "input_tokens": 97,
+        "output_tokens": 746
+      },
+      "seconds": 6.452388842939399,
+      "id": "science-implicit-decay",
+      "status": "evaluated",
+      "passed": true,
+      "public_answer_sha256": "a88eee7a02d86db0e1d8ea92e049ab46e7f7f2a5dc638299288de86fd2f206f0",
+      "code_sha256": "b4c37f104f942e41d9a0bafa3e76437f5ff25ecfa875449a057739885030503f",
+      "tests_passed": 8,
+      "tests_total": 8,
+      "failures": [],
+      "execution_seconds": 0.7230669460259378,
+      "catalog": "basic",
+      "stratum": "other-catalog"
+    },
+    {
+      "request_id": "chatcmpl-33a7c1707a6e45bb",
+      "finish_reason": "stop",
+      "usage": {
+        "input_tokens": 106,
+        "output_tokens": 1106
+      },
+      "seconds": 8.249964940943755,
+      "id": "science-merge-population-moments",
+      "status": "evaluated",
+      "passed": true,
+      "public_answer_sha256": "b32200f9c6b3a8ae87bfe1a32140362b7355581c644aa83a87b29b7c8b35e13a",
+      "code_sha256": "f6745bd5a98e75dadfb03cadecc332cccd4a01272dd30628717ef9409b244c4e",
+      "tests_passed": 8,
+      "tests_total": 8,
+      "failures": [],
+      "execution_seconds": 0.7404451729962602,
+      "catalog": "basic",
+      "stratum": "other-catalog"
+    },
+    {
+      "request_id": "chatcmpl-5356fa220c8240e9",
+      "finish_reason": "stop",
+      "usage": {
+        "input_tokens": 124,
+        "output_tokens": 711
+      },
+      "seconds": 5.591784982010722,
+      "id": "science-velocity-verlet",
+      "status": "evaluated",
+      "passed": true,
+      "public_answer_sha256": "ea4ee20408d745dcac207ce7247390df9949054b2f3ba889d03378b6e1a2c413",
+      "code_sha256": "722cd269eb8175e682a285a688cb8c09ec11e90e02403310a09eb706ed8e90e4",
+      "tests_passed": 8,
+      "tests_total": 8,
+      "failures": [],
+      "execution_seconds": 0.7289599180221558,
+      "catalog": "basic",
+      "stratum": "other-catalog"
+    },
+    {
+      "request_id": "chatcmpl-f8c8f3f3b8714398",
+      "finish_reason": "stop",
+      "usage": {
+        "input_tokens": 102,
+        "output_tokens": 643
+      },
+      "seconds": 5.2628933530068025,
+      "id": "science-segment-means",
+      "status": "evaluated",
+      "passed": true,
+      "public_answer_sha256": "699310d1bab24d332ae5c9619b1616e2017b883277b9fb935fde291429151cfc",
+      "code_sha256": "a675e54b8ed2934f49dcf95b2f6941b1eac400c0319b77b88cc4e493fea55317",
+      "tests_passed": 8,
+      "tests_total": 8,
+      "failures": [],
+      "execution_seconds": 0.7182099230121821,
+      "catalog": "basic",
+      "stratum": "other-catalog"
+    },
+    {
+      "request_id": "chatcmpl-b9c334ccb375454f",
+      "finish_reason": "stop",
+      "usage": {
+        "input_tokens": 97,
+        "output_tokens": 806
+      },
+      "seconds": 6.6054701480316,
+      "id": "science-piecewise-linear",
+      "status": "evaluated",
+      "passed": true,
+      "public_answer_sha256": "63acdc1dde9d7f3c3485a23f54b080a68b6084a28e871868397302dac9f3c2aa",
+      "code_sha256": "1153dddc01b4ef264f74c9f814472b16c7ffd4ac344c62304d4a3baf4a3565ea",
+      "tests_passed": 8,
+      "tests_total": 8,
+      "failures": [],
+      "execution_seconds": 0.740859512006864,
+      "catalog": "basic",
+      "stratum": "other-catalog"
+    },
+    {
+      "request_id": "chatcmpl-ff2b81b5b6db4772",
+      "finish_reason": "stop",
+      "usage": {
+        "input_tokens": 98,
+        "output_tokens": 324
+      },
+      "seconds": 3.3371142899850383,
+      "id": "science-batched-linear-system",
+      "status": "evaluated",
+      "passed": false,
+      "public_answer_sha256": "301193993bcddad53320b3ae75297274e75712339e8c056f85c594a48b2487fd",
+      "code_sha256": "adc5a2a59f8315d23820d51c3ede0c632cbec177e1194e42645c2d41fd08c914",
+      "tests_passed": 0,
+      "tests_total": 8,
+      "failures": [
+        {
+          "trial": 0,
+          "kind": "runtime",
+          "phase": "execution",
+          "exception_category": "ValueError"
+        },
+        {
+          "trial": 1,
+          "kind": "output_shape"
+        },
+        {
+          "trial": 2,
+          "kind": "runtime",
+          "phase": "execution",
+          "exception_category": "ValueError"
+        },
+        {
+          "trial": 3,
+          "kind": "runtime",
+          "phase": "execution",
+          "exception_category": "ValueError"
+        },
+        {
+          "trial": 4,
+          "kind": "output_shape"
+        },
+        {
+          "trial": 5,
+          "kind": "runtime",
+          "phase": "execution",
+          "exception_category": "ValueError"
+        },
+        {
+          "trial": 6,
+          "kind": "runtime",
+          "phase": "execution",
+          "exception_category": "ValueError"
+        },
+        {
+          "trial": 7,
+          "kind": "output_shape"
+        }
+      ],
+      "execution_seconds": 0.7497136510210112,
+      "catalog": "basic",
+      "stratum": "other-catalog"
+    },
+    {
+      "request_id": "chatcmpl-76d2f84582b440d6",
+      "finish_reason": "stop",
+      "usage": {
+        "input_tokens": 109,
+        "output_tokens": 5446
+      },
+      "seconds": 41.707918694010004,
+      "id": "science-advanced-reset-running-stats",
+      "status": "evaluated",
+      "passed": true,
+      "public_answer_sha256": "88984e6a2fafff486180e5c7e6f059f69346472493bcb11312da8dbacfbab5be",
+      "code_sha256": "f53c292dc18422345e1f57381bca1e5eead499f57b6650336a31902e8dc40540",
+      "tests_passed": 8,
+      "tests_total": 8,
+      "failures": [],
+      "execution_seconds": 0.714288215036504,
+      "catalog": "advanced-v2",
+      "stratum": "contract-question"
+    },
+    {
+      "request_id": "chatcmpl-598d29a7499a4833",
+      "finish_reason": "stop",
+      "usage": {
+        "input_tokens": 110,
+        "output_tokens": 816
+      },
+      "seconds": 6.376257102005184,
+      "id": "science-advanced-affine-state-history",
+      "status": "evaluated",
+      "passed": true,
+      "public_answer_sha256": "d97e26899a42de18156ef438645b08cb2a45a62e9051c34d7ab831a56881ae80",
+      "code_sha256": "b485f6c2b671482b85c947fdd234512dac5c5a17f5ebcbc9950dccb0f04f58e8",
+      "tests_passed": 8,
+      "tests_total": 8,
+      "failures": [],
+      "execution_seconds": 0.7349284739466384,
+      "catalog": "advanced-v2",
+      "stratum": "other-catalog"
+    },
+    {
+      "request_id": "chatcmpl-e9713b54889f43b3",
+      "finish_reason": "stop",
+      "usage": {
+        "input_tokens": 123,
+        "output_tokens": 1212
+      },
+      "seconds": 9.97526870004367,
+      "id": "science-advanced-capped-reservoir-chain",
+      "status": "evaluated",
+      "passed": true,
+      "public_answer_sha256": "5a53dbda8c462508685439f0291a5532820318072e248e5b24d843bd3765c8d9",
+      "code_sha256": "fbc42caf88c2a303914e6c5fec31a5ff4bf07fcdcfa8ec2d39fc97fb0b32976e",
+      "tests_passed": 8,
+      "tests_total": 8,
+      "failures": [],
+      "execution_seconds": 0.7251577110728249,
+      "catalog": "advanced-v2",
+      "stratum": "contract-question"
+    },
+    {
+      "request_id": "chatcmpl-421096e4a27747f9",
+      "finish_reason": "stop",
+      "usage": {
+        "input_tokens": 121,
+        "output_tokens": 709
+      },
+      "seconds": 5.713911933009513,
+      "id": "science-advanced-projected-gradient-chain",
+      "status": "evaluated",
+      "passed": true,
+      "public_answer_sha256": "e6e8fade19aae23e5e99d276db26ba0329bc1b58833fbc3557f80fc4b410923f",
+      "code_sha256": "c7a75b6850a70b34fc2096c863ec339ed827ea48b9db171ed340c2fad1fdb534",
+      "tests_passed": 8,
+      "tests_total": 8,
+      "failures": [],
+      "execution_seconds": 0.7294036200037226,
+      "catalog": "advanced-v2",
+      "stratum": "other-catalog"
+    },
+    {
+      "request_id": "chatcmpl-35d861bd940b470a",
+      "finish_reason": "stop",
+      "usage": {
+        "input_tokens": 111,
+        "output_tokens": 965
+      },
+      "seconds": 9.17469992802944,
+      "id": "science-advanced-merge-event-multiplicity",
+      "status": "evaluated",
+      "passed": true,
+      "public_answer_sha256": "47a60cd999d933130a506b6cc775ce15c2e2af1e524d023d983a3515e7aa2551",
+      "code_sha256": "b93a5b208f9be22cf311d043c1b243ac6c6c43942324392117944e955900adff",
+      "tests_passed": 8,
+      "tests_total": 8,
+      "failures": [],
+      "execution_seconds": 0.7427748409099877,
+      "catalog": "advanced-v2",
+      "stratum": "other-catalog"
+    },
+    {
+      "request_id": "chatcmpl-878cf8e83f4d435c",
+      "finish_reason": "stop",
+      "usage": {
+        "input_tokens": 127,
+        "output_tokens": 2021
+      },
+      "seconds": 16.35068592708558,
+      "id": "science-advanced-lexicographic-pair-ranking",
+      "status": "evaluated",
+      "passed": true,
+      "public_answer_sha256": "7f498cb27098a799864e8ff23ecd6ee12acc4d9a15006d51ada73a6519cc1959",
+      "code_sha256": "9c7a9a2ace9f2a449c850a4dcb3b784be1855270c0e4cc646ff17ed232c2aa61",
+      "tests_passed": 8,
+      "tests_total": 8,
+      "failures": [],
+      "execution_seconds": 0.7207199879921973,
+      "catalog": "advanced-v2",
+      "stratum": "other-catalog"
+    },
+    {
+      "request_id": "chatcmpl-fdbf6cca2c7c4edc",
+      "finish_reason": "stop",
+      "usage": {
+        "input_tokens": 119,
+        "output_tokens": 1054
+      },
+      "seconds": 8.701722436002456,
+      "id": "science-advanced-budget-prefix-cardinality",
+      "status": "evaluated",
+      "passed": true,
+      "public_answer_sha256": "8d19a6841141390ff6855d872d137151f3863bbfa80b4b245d6c296e3eefd73a",
+      "code_sha256": "f2c2e83e62f28a2e880f25a4a0242006c5c399d233cb7c22c8f5c19977691760",
+      "tests_passed": 8,
+      "tests_total": 8,
+      "failures": [],
+      "execution_seconds": 0.7527491149958223,
+      "catalog": "advanced-v2",
+      "stratum": "other-catalog"
+    },
+    {
+      "request_id": "chatcmpl-89d0c4b3c34f44cb",
+      "finish_reason": "stop",
+      "usage": {
+        "input_tokens": 102,
+        "output_tokens": 2913
+      },
+      "seconds": 21.47252228599973,
+      "id": "science-advanced-weighted-lattice-cardinality",
+      "status": "evaluated",
+      "passed": true,
+      "public_answer_sha256": "acc42878bbbf70cdaf3686d00fdfc4134c734289eb114d07a08ac82d885f3f17",
+      "code_sha256": "f19a9dbf06c535fb157e963b3e70a1705105a62f559591931d63626d6251873d",
+      "tests_passed": 8,
+      "tests_total": 8,
+      "failures": [],
+      "execution_seconds": 0.743482076912187,
+      "catalog": "advanced-v2",
+      "stratum": "other-catalog"
+    },
+    {
+      "request_id": "chatcmpl-a79c95d2a2604668",
+      "finish_reason": "stop",
+      "usage": {
+        "input_tokens": 127,
+        "output_tokens": 2158
+      },
+      "seconds": 17.541703947004862,
+      "id": "science-advanced-gaussian-pair-energy-force",
+      "status": "evaluated",
+      "passed": true,
+      "public_answer_sha256": "98ad43f581e65da7f45bf39de5b296319ca0303a70ba428065875031316c3ff0",
+      "code_sha256": "29018762670b138c14b72a8369887c592b49897e12dfc5734990628cd3dd18f7",
+      "tests_passed": 8,
+      "tests_total": 8,
+      "failures": [],
+      "execution_seconds": 0.7262006939854473,
+      "catalog": "advanced-v2",
+      "stratum": "other-catalog"
+    },
+    {
+      "request_id": "chatcmpl-79628825ba5044b0",
+      "finish_reason": "stop",
+      "usage": {
+        "input_tokens": 131,
+        "output_tokens": 718
+      },
+      "seconds": 5.8794793100096285,
+      "id": "science-advanced-periodic-kick-drift",
+      "status": "evaluated",
+      "passed": true,
+      "public_answer_sha256": "87c537564e6e03948e2cdff89fba1683f4e33a751883e6d90838b37918f86e8f",
+      "code_sha256": "e54ba16be40f2e62add51d03acbac42285a9a4d97acf318974f75c48e9665bc1",
+      "tests_passed": 8,
+      "tests_total": 8,
+      "failures": [],
+      "execution_seconds": 0.7339640469290316,
+      "catalog": "advanced-v2",
+      "stratum": "other-catalog"
+    },
+    {
+      "request_id": "chatcmpl-ec62716898864c2d",
+      "finish_reason": "stop",
+      "usage": {
+        "input_tokens": 133,
+        "output_tokens": 1287
+      },
+      "seconds": 10.375206622993574,
+      "id": "science-advanced-reflecting-wall-flight",
+      "status": "evaluated",
+      "passed": true,
+      "public_answer_sha256": "4727ce12dfa94f7b3db54deea5473574777f42b5b552a9bfc31fc587bf0dd82d",
+      "code_sha256": "49fa2f955d00f38926307930efe251a8aa8b3290406e4a9fbaa31c54a7ef7e1c",
+      "tests_passed": 8,
+      "tests_total": 8,
+      "failures": [],
+      "execution_seconds": 0.7564173410646617,
+      "catalog": "advanced-v2",
+      "stratum": "other-catalog"
+    },
+    {
+      "request_id": "chatcmpl-d2d5663eb39a41df",
+      "finish_reason": "stop",
+      "usage": {
+        "input_tokens": 125,
+        "output_tokens": 2061
+      },
+      "seconds": 15.159208986908197,
+      "id": "science-advanced-inelastic-two-body",
+      "status": "evaluated",
+      "passed": true,
+      "public_answer_sha256": "4a79c62f46b51a81567067a5e7244b1a2b4bb57b2ed00352070a0b58f9e53d9e",
+      "code_sha256": "caadce078fef93d41e3962694b995622e8fb05bd0ff60ffaf56770bae5e45a65",
+      "tests_passed": 8,
+      "tests_total": 8,
+      "failures": [],
+      "execution_seconds": 0.7361269679386169,
+      "catalog": "advanced-v2",
+      "stratum": "other-catalog"
+    },
+    {
+      "request_id": "chatcmpl-94f1a3520e924ab4",
+      "finish_reason": "stop",
+      "usage": {
+        "input_tokens": 135,
+        "output_tokens": 1936
+      },
+      "seconds": 16.421699921949767,
+      "id": "science-advanced-injected-metropolis-chain",
+      "status": "evaluated",
+      "passed": true,
+      "public_answer_sha256": "9f803bbf65613346ac1c1debfed32c2df74949e1e25b108501260ec006e47840",
+      "code_sha256": "ee7d9b13e35dcd8aec1558dcf6fdf6a17080c66414366efd8117a01a32e7e760",
+      "tests_passed": 8,
+      "tests_total": 8,
+      "failures": [],
+      "execution_seconds": 0.7326698959805071,
+      "catalog": "advanced-v2",
+      "stratum": "other-catalog"
+    },
+    {
+      "request_id": "chatcmpl-b06d12f5d75b4bee",
+      "finish_reason": "stop",
+      "usage": {
+        "input_tokens": 120,
+        "output_tokens": 2037
+      },
+      "seconds": 17.18046751304064,
+      "id": "science-advanced-categorical-without-replacement",
+      "status": "evaluated",
+      "passed": true,
+      "public_answer_sha256": "2327c8539fadf37e573f7566be1c000942eb8050999d2a03ccc841476eb7e97b",
+      "code_sha256": "3e42c43b090855efbf07389842b60de20c46f3930abae82498b4e086a9d6b576",
+      "tests_passed": 8,
+      "tests_total": 8,
+      "failures": [],
+      "execution_seconds": 0.7632506730733439,
+      "catalog": "advanced-v2",
+      "stratum": "other-catalog"
+    },
+    {
+      "request_id": "chatcmpl-cb89d6a8d9f8418d",
+      "finish_reason": "stop",
+      "usage": {
+        "input_tokens": 108,
+        "output_tokens": 2502
+      },
+      "seconds": 19.643679050030187,
+      "id": "science-advanced-piecewise-linear-density-cdf",
+      "status": "evaluated",
+      "passed": true,
+      "public_answer_sha256": "52b0505f04ef5da5a220a60b4b6f8bd530ef01e67614ff0b572fdd9e61862cd9",
+      "code_sha256": "6d2b2b358ce3291860c837c182d8891b633e66bd1f1f75f365132510153f7f96",
+      "tests_passed": 8,
+      "tests_total": 8,
+      "failures": [],
+      "execution_seconds": 0.7275985040469095,
+      "catalog": "advanced-v2",
+      "stratum": "other-catalog"
+    },
+    {
+      "request_id": "chatcmpl-422c867146ff474f",
+      "finish_reason": "stop",
+      "usage": {
+        "input_tokens": 111,
+        "output_tokens": 1836
+      },
+      "seconds": 14.718274920014665,
+      "id": "science-advanced-log-survival-event-masses",
+      "status": "evaluated",
+      "passed": true,
+      "public_answer_sha256": "aad02d8d631ade875669a978e546305e2b62292e3a234722fa5c7d83e74ddce0",
+      "code_sha256": "0e7c66db73e5f8763fc2a84eeb610a27fc257ff0c21ecfbfd02d62f46b9c11bf",
+      "tests_passed": 8,
+      "tests_total": 8,
+      "failures": [],
+      "execution_seconds": 0.7435237099416554,
+      "catalog": "advanced-v2",
+      "stratum": "other-catalog"
+    },
+    {
+      "request_id": "chatcmpl-b9c9083d70734b80",
+      "finish_reason": "stop",
+      "usage": {
+        "input_tokens": 116,
+        "output_tokens": 2110
+      },
+      "seconds": 17.517515833955258,
+      "id": "science-library-sparse-solve-fixed-boundary",
+      "status": "evaluated",
+      "passed": true,
+      "public_answer_sha256": "33a2237a057f4932d82d0a2b54ee11cdbb948e56ac10063b8c9b9a8dbb391a3c",
+      "code_sha256": "9f5b459cb1fc0e0f434a0e1db828fe12def2ab0da935fd02c76eb82c3a538976",
+      "tests_passed": 8,
+      "tests_total": 8,
+      "failures": [],
+      "execution_seconds": 1.200948670040816,
+      "catalog": "library-train-v1",
+      "stratum": "other-catalog"
+    },
+    {
+      "request_id": "chatcmpl-1db0616a915549e0",
+      "finish_reason": "stop",
+      "usage": {
+        "input_tokens": 105,
+        "output_tokens": 2275
+      },
+      "seconds": 16.36696735501755,
+      "id": "science-library-sparse-solve-banded-factor",
+      "status": "evaluated",
+      "passed": true,
+      "public_answer_sha256": "adfbb66e760c2f5c2dd0a23929361422e4c832fb0153058edfa460a5ee4de51b",
+      "code_sha256": "e3627f5f38ac9b0a84212dc3a9efd489b402396715e601a6bcda285e8675832c",
+      "tests_passed": 8,
+      "tests_total": 8,
+      "failures": [],
+      "execution_seconds": 0.7752130320295691,
+      "catalog": "library-train-v1",
+      "stratum": "other-catalog"
+    },
+    {
+      "request_id": "chatcmpl-5c5ef9f806484b8d",
+      "finish_reason": "stop",
+      "usage": {
+        "input_tokens": 129,
+        "output_tokens": 1395
+      },
+      "seconds": 11.758006991934963,
+      "id": "science-library-residual-jacobian-decay-fit",
+      "status": "evaluated",
+      "passed": true,
+      "public_answer_sha256": "3a269ed2bfb6b86692922e0fdf4eca1f291b7bd42c8ca3f643273e3adbf770eb",
+      "code_sha256": "04e594165311735bb82a1a830bff344d2c3078031c252a9550d2cc8bd4a584fc",
+      "tests_passed": 8,
+      "tests_total": 8,
+      "failures": [],
+      "execution_seconds": 1.511424701078795,
+      "catalog": "library-train-v1",
+      "stratum": "other-catalog"
+    },
+    {
+      "request_id": "chatcmpl-84800f144a2544d6",
+      "finish_reason": "stop",
+      "usage": {
+        "input_tokens": 98,
+        "output_tokens": 1020
+      },
+      "seconds": 8.299079024000093,
+      "id": "science-library-residual-jacobian-weighted-affine",
+      "status": "evaluated",
+      "passed": true,
+      "public_answer_sha256": "842a44ebb360a0f3d49ebc6b04ced0084daea5f35356ea42d1c7e9c636032637",
+      "code_sha256": "43c299e75e8fc69ff9266af99350acdaa9cdc880a13f81dc7d80e0e1f8ab751a",
+      "tests_passed": 8,
+      "tests_total": 8,
+      "failures": [],
+      "execution_seconds": 1.46903882001061,
+      "catalog": "library-train-v1",
+      "stratum": "other-catalog"
+    },
+    {
+      "request_id": "chatcmpl-202f12c278114c03",
+      "finish_reason": "stop",
+      "usage": {
+        "input_tokens": 110,
+        "output_tokens": 552
+      },
+      "seconds": 4.03328546998091,
+      "id": "science-library-root-contract-implicit-sensitivity",
+      "status": "evaluated",
+      "passed": true,
+      "public_answer_sha256": "75df533e40e7942f441ec1599b28becc139fbff4f2f82e989207cbb89aeaa572",
+      "code_sha256": "94a82151acf85b31a5332dcbbb77f33201b77f47dd43fb77dd2d688b0ec15796",
+      "tests_passed": 8,
+      "tests_total": 8,
+      "failures": [],
+      "execution_seconds": 1.468026670976542,
+      "catalog": "library-train-v1",
+      "stratum": "other-catalog"
+    },
+    {
+      "request_id": "chatcmpl-39c28f47c7cf4d98",
+      "finish_reason": "stop",
+      "usage": {
+        "input_tokens": 102,
+        "output_tokens": 980
+      },
+      "seconds": 7.89749192702584,
+      "id": "science-library-root-contract-log-coordinate",
+      "status": "evaluated",
+      "passed": true,
+      "public_answer_sha256": "34df3277ebee2a99570a1e671b0d21a1baacdb04cbb3344bb83dc7138213aff8",
+      "code_sha256": "a2603f5e02db9d84d7f4def1fb5aff21ffdf039592246b27f50c490498b23451",
+      "tests_passed": 8,
+      "tests_total": 8,
+      "failures": [],
+      "execution_seconds": 1.4977043269900605,
+      "catalog": "library-train-v1",
+      "stratum": "other-catalog"
+    },
+    {
+      "request_id": "chatcmpl-82240020acd4459a",
+      "finish_reason": "stop",
+      "usage": {
+        "input_tokens": 100,
+        "output_tokens": 1546
+      },
+      "seconds": 13.371594956028275,
+      "id": "science-library-quadrature-callback-piecewise-moments",
+      "status": "evaluated",
+      "passed": true,
+      "public_answer_sha256": "c0203b16a85cd56aa744d25480851c12ca814490faad501cf45a46b4788dd22c",
+      "code_sha256": "ac3e797595b44c967b2575b1377d749dffa74fb5777b0a7a110317e336198b62",
+      "tests_passed": 8,
+      "tests_total": 8,
+      "failures": [],
+      "execution_seconds": 1.5337408640189096,
+      "catalog": "library-train-v1",
+      "stratum": "other-catalog"
+    },
+    {
+      "request_id": "chatcmpl-be527802299f4522",
+      "finish_reason": "stop",
+      "usage": {
+        "input_tokens": 111,
+        "output_tokens": 1332
+      },
+      "seconds": 9.944414986064658,
+      "id": "science-library-quadrature-callback-domain-transform",
+      "status": "evaluated",
+      "passed": true,
+      "public_answer_sha256": "c310b69f34c585d87b4200238e73c960b37b3e96f54f158d6cb7f369e227d2d9",
+      "code_sha256": "eff971d49893ae56eef84e97f91864ff1d9c23e3126067ad5e5b8b4ce16c1176",
+      "tests_passed": 8,
+      "tests_total": 8,
+      "failures": [],
+      "execution_seconds": 1.5616512970300391,
+      "catalog": "library-train-v1",
+      "stratum": "other-catalog"
+    },
+    {
+      "request_id": "chatcmpl-28360e8b5b914b12",
+      "finish_reason": "stop",
+      "usage": {
+        "input_tokens": 115,
+        "output_tokens": 1413
+      },
+      "seconds": 12.15111477591563,
+      "id": "science-library-symbolic-numeric-variable-order",
+      "status": "evaluated",
+      "passed": false,
+      "public_answer_sha256": "331659208ad83713ca43524004096e06ebb1ce126b366e4f53520c1a760033dc",
+      "code_sha256": "e49786624fc6934d1966b32c5ab0b8c3114e753e07e87860c77366c2e9f2af8d",
+      "tests_passed": 7,
+      "tests_total": 8,
+      "failures": [
+        {
+          "trial": 0,
+          "kind": "runtime",
+          "phase": "execution",
+          "exception_category": "ValueError"
+        }
+      ],
+      "execution_seconds": 1.3331554249161854,
+      "catalog": "library-train-v1",
+      "stratum": "other-catalog"
+    },
+    {
+      "request_id": "chatcmpl-d27a027021b641bd",
+      "finish_reason": "stop",
+      "usage": {
+        "input_tokens": 113,
+        "output_tokens": 1670
+      },
+      "seconds": 12.369187562027946,
+      "id": "science-library-symbolic-numeric-chain-coordinates",
+      "status": "evaluated",
+      "passed": true,
+      "public_answer_sha256": "29ecb46626677db0ad8e358b36038aef25ef8cf0f3cb10b9427da74d89c03ca3",
+      "code_sha256": "a0698607c282a551fb66b45da0364a1689d085a6aac7bffb74e09ca581bd98d6",
+      "tests_passed": 8,
+      "tests_total": 8,
+      "failures": [],
+      "execution_seconds": 1.3398735540686175,
+      "catalog": "library-train-v1",
+      "stratum": "other-catalog"
+    },
+    {
+      "request_id": "chatcmpl-a3ada698196b4eb2",
+      "finish_reason": "stop",
+      "usage": {
+        "input_tokens": 90,
+        "output_tokens": 472
+      },
+      "seconds": 3.839734148932621,
+      "id": "science-library-spectral-contract-linear-convolution",
+      "status": "evaluated",
+      "passed": true,
+      "public_answer_sha256": "99db0415e1b525ae2cdf7a88d93b10ead5eb565f1a531f11ce80f9b2f96f15e9",
+      "code_sha256": "13c0c2db7c8c5366ba57e494b4dadb6bb7acac9bb3836981d37eb38afb43993f",
+      "tests_passed": 8,
+      "tests_total": 8,
+      "failures": [],
+      "execution_seconds": 1.2466816829983145,
+      "catalog": "library-train-v1",
+      "stratum": "other-catalog"
+    },
+    {
+      "request_id": "chatcmpl-39cc8f8e039e48ec",
+      "finish_reason": "stop",
+      "usage": {
+        "input_tokens": 110,
+        "output_tokens": 1087
+      },
+      "seconds": 8.931865982012823,
+      "id": "science-library-spectral-contract-periodic-correlation",
+      "status": "evaluated",
+      "passed": true,
+      "public_answer_sha256": "ac7a001bb6d8614021242195893a3c434eaf31b11d217a901ec03a54c3ccc9e0",
+      "code_sha256": "98b36d40b27758d72199f9a1a5bb51f1ae9a1982ed72876e6b848192376ccbc7",
+      "tests_passed": 8,
+      "tests_total": 8,
+      "failures": [],
+      "execution_seconds": 1.2447335040196776,
+      "catalog": "library-train-v1",
+      "stratum": "other-catalog"
+    },
+    {
+      "request_id": "chatcmpl-f6173975dfea4306",
+      "finish_reason": "stop",
+      "usage": {
+        "input_tokens": 97,
+        "output_tokens": 997
+      },
+      "seconds": 8.266314547974616,
+      "id": "science-library-optimizer-feasibility-simplex-equality",
+      "status": "evaluated",
+      "passed": true,
+      "public_answer_sha256": "7e0ddc8ab9a0396a0fa965a522de764d8ee6140edf3853adba334d544add9b76",
+      "code_sha256": "200477faa49492974bc1495019036272140445a775f73f6784ed8e818c594310",
+      "tests_passed": 8,
+      "tests_total": 8,
+      "failures": [],
+      "execution_seconds": 1.5148048690753058,
+      "catalog": "library-train-v1",
+      "stratum": "other-catalog"
+    },
+    {
+      "request_id": "chatcmpl-9ef9f06fa9d74585",
+      "finish_reason": "stop",
+      "usage": {
+        "input_tokens": 102,
+        "output_tokens": 1429
+      },
+      "seconds": 11.825368613004684,
+      "id": "science-library-optimizer-feasibility-weighted-hyperplane",
+      "status": "evaluated",
+      "passed": true,
+      "public_answer_sha256": "687c638eaa7fb755326824d3ef818ef375f4fe2fbfcc5182c0b8dabac322cb89",
+      "code_sha256": "cd4f484b21e81639ce767323a5e778125457b2560932c2296a78a6c7ab6685fc",
+      "tests_passed": 8,
+      "tests_total": 8,
+      "failures": [],
+      "execution_seconds": 1.5245944040361792,
+      "catalog": "library-train-v1",
+      "stratum": "other-catalog"
+    },
+    {
+      "request_id": "chatcmpl-0669171ee0b04093",
+      "finish_reason": "stop",
+      "usage": {
+        "input_tokens": 95,
+        "output_tokens": 712
+      },
+      "seconds": 5.733841447974555,
+      "id": "science-library-distribution-interface-batched-logdensity",
+      "status": "evaluated",
+      "passed": true,
+      "public_answer_sha256": "cc92762dbae452b25b2e8f750f8783b89fd7286a4540f4cbf67bcf685235a2eb",
+      "code_sha256": "69dbd2a8190f5437fba25f8c94c4d4d48b4e21bb49fadf58be8fe19d3a0a3f71",
+      "tests_passed": 8,
+      "tests_total": 8,
+      "failures": [],
+      "execution_seconds": 2.3069122049491853,
+      "catalog": "library-train-v1",
+      "stratum": "other-catalog"
+    },
+    {
+      "request_id": "chatcmpl-91e6c1a85ff84ba9",
+      "finish_reason": "stop",
+      "usage": {
+        "input_tokens": 98,
+        "output_tokens": 1103
+      },
+      "seconds": 8.593116624979302,
+      "id": "science-library-distribution-interface-lognormal-moments",
+      "status": "evaluated",
+      "passed": true,
+      "public_answer_sha256": "67164393240445c23c4771753d09637944b45b7610fe7c08449c2092e4982e16",
+      "code_sha256": "ca535b84daa6f457633d4656672c1ec3f57b4b8be039033fd3ec8fc9fb067d01",
+      "tests_passed": 8,
+      "tests_total": 8,
+      "failures": [],
+      "execution_seconds": 2.225113172084093,
+      "catalog": "library-train-v1",
+      "stratum": "other-catalog"
+    }
+  ],
+  "outside_catalog_unscored_at_this_stage": 72,
+  "generation_calls": 0,
+  "fixture_retries": 0,
+  "service_operations": 0
+}

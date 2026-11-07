@@ -1,0 +1,18 @@
+{
+  "command": [
+    "/mnt/nvme/kairyu/dev-logs/wsp/venv-scicode/bin/python",
+    "-m",
+    "unittest",
+    "test_gemma4_helper_chains.OfflineHelperStagesTest",
+    "test_gemma4_science_sandbox",
+    "-v"
+  ],
+  "returncode": 0,
+  "elapsed_seconds": 9.020780744962394,
+  "source_sha256": {
+    "scripts/experiments/gemma4-purpose/helper_stage_offline.py": "23da9fae9cf2dafaef18a3291f4e4e7e751832d023fde53a13a8aa5954c30396",
+    "scripts/experiments/gemma4-purpose/science_sandbox.py": "4a19f0f5fc235f56d702d39dd9bc9e403eba98ffdeadabe4c6365b41566131a4",
+    "tests/test_gemma4_helper_chains.py": "3ab75cc59f023c25ac0ea36857e17d5ff4fb85d70623a5465aaa5eb8d563e57e"
+  },
+  "scope": "trusted source-owned reference/foil only plus mocked Docker; no generated code executed and no real sandbox or model calls"
+}

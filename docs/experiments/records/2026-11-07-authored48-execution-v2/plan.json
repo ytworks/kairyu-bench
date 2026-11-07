@@ -1,0 +1,433 @@
+{
+  "scope": "known authored calibration; no WSP score or unseen-performance claim",
+  "contract_issue_ids": [
+    "science-cumulative-trapezoid",
+    "science-advanced-reset-running-stats",
+    "science-advanced-capped-reservoir-chain"
+  ],
+  "denominators": {
+    "generation": 120,
+    "existing_catalog_cases": 48,
+    "outside_catalog_unscored": 72,
+    "planned_trials_if_all48_have_usable_answers": 384,
+    "known_contract_issue_stratum": 3,
+    "other_catalog_stratum": 45
+  },
+  "limits": {
+    "trials": 8,
+    "seed": 20261107,
+    "seconds_per_case": 15,
+    "memory_mib": 512,
+    "cpus": 1,
+    "network": "none",
+    "user": "1003:1003",
+    "cap_drop": "ALL",
+    "security_opt": "no-new-privileges",
+    "read_only": true,
+    "runtime": "runc",
+    "host_mounts": [],
+    "gpus": false,
+    "image_pull": "never",
+    "sequential_catalogs": true
+  },
+  "schema_version": 2,
+  "status": "approved_ready_all3_previews_passed",
+  "approved_for_execution": true,
+  "authorization": "Root explicit 2026-11-07 delegation: after full120 normal completion, freeze commit4e088df, three previews and identity then execute fixed48 once.",
+  "created_utc": "2026-11-07T07:52:34.233852+00:00",
+  "source": {
+    "science_sandbox.py": {
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/runtime/fresh-purpose-20261107-av-authored48-execution-v2/science_sandbox.py",
+      "sha256": "cf26e77e90d5789422ad2ebd3ac43599ee0a2ebc781b7a1c0c8ae834953a817e",
+      "bytes": 28206,
+      "git_commit": "4e088df421fdb628cc8596c81d2220febd4de141",
+      "git_path": "scripts/experiments/gemma4-purpose/science_sandbox.py"
+    },
+    "science_cases.py": {
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/runtime/fresh-purpose-20261107-av-authored48-execution-v2/science_cases.py",
+      "sha256": "2c4cc6e75c92c41b98e737ca2c0a653e0f7a7675c6150a6ad33e3f954122a26b",
+      "bytes": 35229,
+      "git_commit": "4e088df421fdb628cc8596c81d2220febd4de141",
+      "git_path": "scripts/experiments/gemma4-purpose/science_cases.py"
+    },
+    "advanced_science_cases.py": {
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/runtime/fresh-purpose-20261107-av-authored48-execution-v2/advanced_science_cases.py",
+      "sha256": "544bcf6ef8671c13038420169508419d433199ea8f41dc8abed195d59eaef1d4",
+      "bytes": 33584,
+      "git_commit": "4e088df421fdb628cc8596c81d2220febd4de141",
+      "git_path": "scripts/experiments/gemma4-purpose/advanced_science_cases.py"
+    },
+    "library_train_cases.py": {
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/runtime/fresh-purpose-20261107-av-authored48-execution-v2/library_train_cases.py",
+      "sha256": "7371327bb781ce6dc0d0df379208ae9704210626bc7b9e184b01a764fcc3628a",
+      "bytes": 31458,
+      "git_commit": "4e088df421fdb628cc8596c81d2220febd4de141",
+      "git_path": "scripts/experiments/gemma4-purpose/library_train_cases.py"
+    }
+  },
+  "host_python": "/mnt/nvme/kairyu/dev-logs/wsp/venv-scicode/bin/python",
+  "host_python_environment_receipt": {
+    "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-authored120-generation-inputs-v1/cpu-environment-check-v1/host-science-python.json",
+    "sha256": "b5077e38ebba85668937d19eeb3490ef4b18a5da7d7eccb26d6b3a9dec4e28bd",
+    "bytes": 2690
+  },
+  "original_inactive_plan": {
+    "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-av-authored48-execution-plan-v1/plan.json",
+    "sha256": "b38ff6752ccd17c706670792f486ac78d2296044e89e8043756a514a660e46c8",
+    "bytes": 22093
+  },
+  "generation_completion": {
+    "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-av-authored120-native-v2/owner/owner-complete.json",
+    "sha256": "d91c6050cd297b2dd169084a2c831554e5034b7c294e10ddce1d8fd7188e1272",
+    "bytes": 41981
+  },
+  "generation_owner_pid": 603724,
+  "generation_owner_absent": true,
+  "generation_cases": 120,
+  "generation_public_answers": 120,
+  "generation_errors": 0,
+  "docker": {
+    "socket": "/var/run/docker.sock",
+    "daemon_id": "3e518d2b-6972-43f8-b325-f7f33697a2d2",
+    "docker_root_dir": "/mnt/nvme/docker",
+    "image_id": "sha256:c4ab50223f03fca17bf871e4d05f77001e76525a1c574b6c6ee7024db06cfdc2",
+    "socket_stat": {
+      "dev": 26,
+      "ino": 3105,
+      "mode": 49584,
+      "uid": 0,
+      "gid": 988
+    }
+  },
+  "immutable_generation_plan": {
+    "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-av-authored120-native-v2/launch-plan-approved.json",
+    "sha256": "a322a0285abfb21e9e7c1e99aeb90c016c55f34697f728237d193d05e81a7f3a",
+    "bytes": 29629
+  },
+  "partition_validation": {
+    "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-authored120-generation-inputs-v1/validation.json",
+    "sha256": "4adfa914b72b98b2c52a8788b597d8a30c5b20c1b43b05b8b5a39180b3d09a12",
+    "bytes": 23813
+  },
+  "batches": [
+    {
+      "catalog": "basic",
+      "cases": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-authored120-generation-inputs-v1/inputs/basic-train-cases.json",
+      "cases_sha256": "ed17e06c04c8d6416168e67501b4a07e9490fa4a76d5355a746370447ba99ae4",
+      "expected_ids": [
+        "science-weighted-moments",
+        "science-periodic-laplacian",
+        "science-ridge-intercept",
+        "science-orthogonal-residual",
+        "science-cumulative-trapezoid",
+        "science-row-softmax",
+        "science-markov-row-state",
+        "science-weighted-density",
+        "science-sample-covariance",
+        "science-implicit-decay",
+        "science-velocity-verlet",
+        "science-piecewise-linear",
+        "science-conservative-flux",
+        "science-merge-population-moments",
+        "science-segment-means",
+        "science-batched-linear-system"
+      ],
+      "expected_cases": 16,
+      "responses": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-av-authored120-native-v2/generations/00-basic/train-responses.json",
+      "responses_sha256": "a1481ca076cc853b8a1c970bfa9afbc48bbef6aba253b09314671616bb779b3d",
+      "generation_receipt": {
+        "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-av-authored120-native-v2/generations/00-basic/receipt.json",
+        "sha256": "4d25a15441aa6aead0486510f37a7277cead12270cf31a31f481c771729a8dc3",
+        "bytes": 1010
+      },
+      "public_answers": 16,
+      "generation_errors": 0,
+      "preview_command": [
+        "/mnt/nvme/kairyu/dev-logs/wsp/venv-scicode/bin/python",
+        "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/runtime/fresh-purpose-20261107-av-authored48-execution-v2/science_sandbox.py",
+        "--cases",
+        "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-authored120-generation-inputs-v1/inputs/basic-train-cases.json",
+        "--catalog",
+        "basic",
+        "--responses",
+        "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-av-authored120-native-v2/generations/00-basic/train-responses.json",
+        "--docker-socket",
+        "/var/run/docker.sock",
+        "--daemon-id",
+        "3e518d2b-6972-43f8-b325-f7f33697a2d2",
+        "--image",
+        "sha256:c4ab50223f03fca17bf871e4d05f77001e76525a1c574b6c6ee7024db06cfdc2",
+        "--seed",
+        "20261107",
+        "--trials",
+        "8",
+        "--seconds",
+        "15",
+        "--memory-mib",
+        "512",
+        "--cpus",
+        "1",
+        "--output",
+        "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-av-authored48-execution-plan-v2/previews/basic"
+      ],
+      "execution_command": [
+        "/mnt/nvme/kairyu/dev-logs/wsp/venv-scicode/bin/python",
+        "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/runtime/fresh-purpose-20261107-av-authored48-execution-v2/science_sandbox.py",
+        "--cases",
+        "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-authored120-generation-inputs-v1/inputs/basic-train-cases.json",
+        "--catalog",
+        "basic",
+        "--responses",
+        "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-av-authored120-native-v2/generations/00-basic/train-responses.json",
+        "--docker-socket",
+        "/var/run/docker.sock",
+        "--daemon-id",
+        "3e518d2b-6972-43f8-b325-f7f33697a2d2",
+        "--image",
+        "sha256:c4ab50223f03fca17bf871e4d05f77001e76525a1c574b6c6ee7024db06cfdc2",
+        "--seed",
+        "20261107",
+        "--trials",
+        "8",
+        "--seconds",
+        "15",
+        "--memory-mib",
+        "512",
+        "--cpus",
+        "1",
+        "--output",
+        "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-av-authored48-execution-plan-v2/execution/basic",
+        "--run"
+      ],
+      "preview": {
+        "returncode": 0,
+        "seconds": 0.173920713015832,
+        "log": {
+          "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-av-authored48-execution-plan-v2/basic-preview.log",
+          "sha256": "e2f584e5ed96335a25056371218b92f0728936f07901d9adc72145f55ddbbcd8",
+          "bytes": 93
+        },
+        "report": {
+          "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-av-authored48-execution-plan-v2/previews/basic/report.json",
+          "sha256": "d0f7d78300d19fb65e758c9d57961556f9d7d17ea7c959bbd268720284ed3532",
+          "bytes": 3248
+        }
+      }
+    },
+    {
+      "catalog": "advanced-v2",
+      "cases": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-authored120-generation-inputs-v1/inputs/advanced-v2-train-cases.json",
+      "cases_sha256": "9d51dfdeaa9e61a4d989b23459c4eff8b3d5b7d7d9291de3258bd3c12921797b",
+      "expected_ids": [
+        "science-advanced-reset-running-stats",
+        "science-advanced-capped-reservoir-chain",
+        "science-advanced-affine-state-history",
+        "science-advanced-projected-gradient-chain",
+        "science-advanced-merge-event-multiplicity",
+        "science-advanced-budget-prefix-cardinality",
+        "science-advanced-lexicographic-pair-ranking",
+        "science-advanced-weighted-lattice-cardinality",
+        "science-advanced-gaussian-pair-energy-force",
+        "science-advanced-reflecting-wall-flight",
+        "science-advanced-periodic-kick-drift",
+        "science-advanced-inelastic-two-body",
+        "science-advanced-injected-metropolis-chain",
+        "science-advanced-piecewise-linear-density-cdf",
+        "science-advanced-categorical-without-replacement",
+        "science-advanced-log-survival-event-masses"
+      ],
+      "expected_cases": 16,
+      "responses": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-av-authored120-native-v2/generations/01-advanced-v2/train-responses.json",
+      "responses_sha256": "6c0273973e8c163aeb80cf7d2b49bbafc51dffd8bb847ad9c4fa74618a8a78cc",
+      "generation_receipt": {
+        "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-av-authored120-native-v2/generations/01-advanced-v2/receipt.json",
+        "sha256": "ba925d3f3618991ca40f84b1de5f2dd1cb2b169ff1c5b595a8fe5ec94f612141",
+        "bytes": 1016
+      },
+      "public_answers": 16,
+      "generation_errors": 0,
+      "preview_command": [
+        "/mnt/nvme/kairyu/dev-logs/wsp/venv-scicode/bin/python",
+        "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/runtime/fresh-purpose-20261107-av-authored48-execution-v2/science_sandbox.py",
+        "--cases",
+        "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-authored120-generation-inputs-v1/inputs/advanced-v2-train-cases.json",
+        "--catalog",
+        "advanced-v2",
+        "--responses",
+        "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-av-authored120-native-v2/generations/01-advanced-v2/train-responses.json",
+        "--docker-socket",
+        "/var/run/docker.sock",
+        "--daemon-id",
+        "3e518d2b-6972-43f8-b325-f7f33697a2d2",
+        "--image",
+        "sha256:c4ab50223f03fca17bf871e4d05f77001e76525a1c574b6c6ee7024db06cfdc2",
+        "--seed",
+        "20261107",
+        "--trials",
+        "8",
+        "--seconds",
+        "15",
+        "--memory-mib",
+        "512",
+        "--cpus",
+        "1",
+        "--output",
+        "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-av-authored48-execution-plan-v2/previews/advanced-v2"
+      ],
+      "execution_command": [
+        "/mnt/nvme/kairyu/dev-logs/wsp/venv-scicode/bin/python",
+        "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/runtime/fresh-purpose-20261107-av-authored48-execution-v2/science_sandbox.py",
+        "--cases",
+        "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-authored120-generation-inputs-v1/inputs/advanced-v2-train-cases.json",
+        "--catalog",
+        "advanced-v2",
+        "--responses",
+        "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-av-authored120-native-v2/generations/01-advanced-v2/train-responses.json",
+        "--docker-socket",
+        "/var/run/docker.sock",
+        "--daemon-id",
+        "3e518d2b-6972-43f8-b325-f7f33697a2d2",
+        "--image",
+        "sha256:c4ab50223f03fca17bf871e4d05f77001e76525a1c574b6c6ee7024db06cfdc2",
+        "--seed",
+        "20261107",
+        "--trials",
+        "8",
+        "--seconds",
+        "15",
+        "--memory-mib",
+        "512",
+        "--cpus",
+        "1",
+        "--output",
+        "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-av-authored48-execution-plan-v2/execution/advanced-v2",
+        "--run"
+      ],
+      "preview": {
+        "returncode": 0,
+        "seconds": 0.20977084897458553,
+        "log": {
+          "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-av-authored48-execution-plan-v2/advanced-v2-preview.log",
+          "sha256": "e2f584e5ed96335a25056371218b92f0728936f07901d9adc72145f55ddbbcd8",
+          "bytes": 93
+        },
+        "report": {
+          "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-av-authored48-execution-plan-v2/previews/advanced-v2/report.json",
+          "sha256": "f695758774aa16c19651ec9cb734d9bfb45c924fe7817c97bad685eac9cc246d",
+          "bytes": 3684
+        }
+      }
+    },
+    {
+      "catalog": "library-train-v1",
+      "cases": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-authored120-generation-inputs-v1/inputs/library-train-v1-cases.json",
+      "cases_sha256": "d3059d4d1c073ba372d103ace9760398341a1add1133e70e306cfefab94db6fc",
+      "expected_ids": [
+        "science-library-sparse-solve-fixed-boundary",
+        "science-library-spectral-contract-linear-convolution",
+        "science-library-sparse-solve-banded-factor",
+        "science-library-spectral-contract-periodic-correlation",
+        "science-library-symbolic-numeric-variable-order",
+        "science-library-optimizer-feasibility-simplex-equality",
+        "science-library-symbolic-numeric-chain-coordinates",
+        "science-library-optimizer-feasibility-weighted-hyperplane",
+        "science-library-residual-jacobian-decay-fit",
+        "science-library-root-contract-implicit-sensitivity",
+        "science-library-residual-jacobian-weighted-affine",
+        "science-library-root-contract-log-coordinate",
+        "science-library-quadrature-callback-piecewise-moments",
+        "science-library-quadrature-callback-domain-transform",
+        "science-library-distribution-interface-batched-logdensity",
+        "science-library-distribution-interface-lognormal-moments"
+      ],
+      "expected_cases": 16,
+      "responses": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-av-authored120-native-v2/generations/02-library-train-v1/train-responses.json",
+      "responses_sha256": "f6ba82973281fb0cd21f6b4b1f3a3fb910ca5deb1fb3a2f5cebce78d2b7900c8",
+      "generation_receipt": {
+        "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-av-authored120-native-v2/generations/02-library-train-v1/receipt.json",
+        "sha256": "1670d1f024a73409f2a4caa41f638423a3705f39ee8fab77d4ecf0f88f394242",
+        "bytes": 1015
+      },
+      "public_answers": 16,
+      "generation_errors": 0,
+      "preview_command": [
+        "/mnt/nvme/kairyu/dev-logs/wsp/venv-scicode/bin/python",
+        "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/runtime/fresh-purpose-20261107-av-authored48-execution-v2/science_sandbox.py",
+        "--cases",
+        "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-authored120-generation-inputs-v1/inputs/library-train-v1-cases.json",
+        "--catalog",
+        "library-train-v1",
+        "--responses",
+        "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-av-authored120-native-v2/generations/02-library-train-v1/train-responses.json",
+        "--docker-socket",
+        "/var/run/docker.sock",
+        "--daemon-id",
+        "3e518d2b-6972-43f8-b325-f7f33697a2d2",
+        "--image",
+        "sha256:c4ab50223f03fca17bf871e4d05f77001e76525a1c574b6c6ee7024db06cfdc2",
+        "--seed",
+        "20261107",
+        "--trials",
+        "8",
+        "--seconds",
+        "15",
+        "--memory-mib",
+        "512",
+        "--cpus",
+        "1",
+        "--output",
+        "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-av-authored48-execution-plan-v2/previews/library-train-v1"
+      ],
+      "execution_command": [
+        "/mnt/nvme/kairyu/dev-logs/wsp/venv-scicode/bin/python",
+        "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/runtime/fresh-purpose-20261107-av-authored48-execution-v2/science_sandbox.py",
+        "--cases",
+        "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-authored120-generation-inputs-v1/inputs/library-train-v1-cases.json",
+        "--catalog",
+        "library-train-v1",
+        "--responses",
+        "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-av-authored120-native-v2/generations/02-library-train-v1/train-responses.json",
+        "--docker-socket",
+        "/var/run/docker.sock",
+        "--daemon-id",
+        "3e518d2b-6972-43f8-b325-f7f33697a2d2",
+        "--image",
+        "sha256:c4ab50223f03fca17bf871e4d05f77001e76525a1c574b6c6ee7024db06cfdc2",
+        "--seed",
+        "20261107",
+        "--trials",
+        "8",
+        "--seconds",
+        "15",
+        "--memory-mib",
+        "512",
+        "--cpus",
+        "1",
+        "--output",
+        "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-av-authored48-execution-plan-v2/execution/library-train-v1",
+        "--run"
+      ],
+      "preview": {
+        "returncode": 0,
+        "seconds": 0.23119745508302003,
+        "log": {
+          "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-av-authored48-execution-plan-v2/library-train-v1-preview.log",
+          "sha256": "e2f584e5ed96335a25056371218b92f0728936f07901d9adc72145f55ddbbcd8",
+          "bytes": 93
+        },
+        "report": {
+          "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-av-authored48-execution-plan-v2/previews/library-train-v1/report.json",
+          "sha256": "74b8bdc2a5688e20e9fa4bc3086d56e82a88ef8eb59823c9bdc7449d48c3b8dd",
+          "bytes": 3690
+        }
+      }
+    }
+  ],
+  "operation": {
+    "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/worktrees/kairyu-bench-weight-tools/docs/experiments/records/2026-11-07-authored48-execution-v2/prepare.py.txt",
+    "sha256": "1dde654bc884f6eac13c738c296def20e0cb960e359b55178e5aa564c5161503",
+    "bytes": 6969
+  },
+  "fixture_executions_before_plan": 0,
+  "preparation_seconds": 0.8574398340424523
+}

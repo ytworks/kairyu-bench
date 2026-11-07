@@ -1,0 +1,394 @@
+{
+  "schema_version": 1,
+  "status": "completed",
+  "split": "train",
+  "catalog": "advanced-v2",
+  "generation": {
+    "model_id": "gemma-4-31b",
+    "checkpoint_sha256": "5d056eb03f954db80313a85167153c875fe5e436e4f97c281a3f55202d9b3eaf",
+    "frame": "live-server-default-public-answer",
+    "enable_thinking": null,
+    "thinking_control": "server-default",
+    "reasoning_saved": false,
+    "sampling": "server_official_generation_config",
+    "temperature": null,
+    "max_tokens": 32768,
+    "seed": 0
+  },
+  "inputs": [
+    {
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-authored120-generation-inputs-v1/inputs/advanced-v2-train-cases.json",
+      "sha256": "9d51dfdeaa9e61a4d989b23459c4eff8b3d5b7d7d9291de3258bd3c12921797b",
+      "stat": {
+        "dev": 2306,
+        "ino": 182190619,
+        "size": 21482,
+        "mtime_ns": 1794036576797790232,
+        "ctime_ns": 1794036576797790232
+      }
+    },
+    {
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-av-authored120-native-v2/generations/01-advanced-v2/train-responses.json",
+      "sha256": "6c0273973e8c163aeb80cf7d2b49bbafc51dffd8bb847ad9c4fa74618a8a78cc",
+      "stat": {
+        "dev": 2306,
+        "ino": 182191123,
+        "size": 14300,
+        "mtime_ns": 1794037754831464118,
+        "ctime_ns": 1794037754831464118
+      }
+    },
+    {
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/runtime/fresh-purpose-20261107-av-authored48-execution-v2/science_sandbox.py",
+      "sha256": "cf26e77e90d5789422ad2ebd3ac43599ee0a2ebc781b7a1c0c8ae834953a817e",
+      "stat": {
+        "dev": 2306,
+        "ino": 182191148,
+        "size": 28206,
+        "mtime_ns": 1794037954005658481,
+        "ctime_ns": 1794037954005658481
+      }
+    },
+    {
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/runtime/fresh-purpose-20261107-av-authored48-execution-v2/science_cases.py",
+      "sha256": "2c4cc6e75c92c41b98e737ca2c0a653e0f7a7675c6150a6ad33e3f954122a26b",
+      "stat": {
+        "dev": 2306,
+        "ino": 182191149,
+        "size": 35229,
+        "mtime_ns": 1794037954009658344,
+        "ctime_ns": 1794037954009658344
+      }
+    },
+    {
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/runtime/fresh-purpose-20261107-av-authored48-execution-v2/advanced_science_cases.py",
+      "sha256": "544bcf6ef8671c13038420169508419d433199ea8f41dc8abed195d59eaef1d4",
+      "stat": {
+        "dev": 2306,
+        "ino": 182191150,
+        "size": 33584,
+        "mtime_ns": 1794037954013658208,
+        "ctime_ns": 1794037954013658208
+      }
+    }
+  ],
+  "seed": 20261107,
+  "trials": 8,
+  "expected_cases": 16,
+  "responses_received": 16,
+  "sandbox": {
+    "image": "sha256:c4ab50223f03fca17bf871e4d05f77001e76525a1c574b6c6ee7024db06cfdc2",
+    "daemon_id": "3e518d2b-6972-43f8-b325-f7f33697a2d2",
+    "socket": "/var/run/docker.sock",
+    "seconds": 15.0,
+    "memory_mib": 512,
+    "cpus": 1.0,
+    "network": "none",
+    "user": "1003:1003",
+    "read_only": true,
+    "host_mounts": [],
+    "gpus": false,
+    "output_limit_bytes": 1048576
+  },
+  "results": [
+    {
+      "request_id": "chatcmpl-76d2f84582b440d6",
+      "finish_reason": "stop",
+      "usage": {
+        "input_tokens": 109,
+        "output_tokens": 5446
+      },
+      "seconds": 41.707918694010004,
+      "id": "science-advanced-reset-running-stats",
+      "status": "evaluated",
+      "passed": true,
+      "public_answer_sha256": "88984e6a2fafff486180e5c7e6f059f69346472493bcb11312da8dbacfbab5be",
+      "code_sha256": "f53c292dc18422345e1f57381bca1e5eead499f57b6650336a31902e8dc40540",
+      "tests_passed": 8,
+      "tests_total": 8,
+      "failures": [],
+      "execution_seconds": 0.714288215036504
+    },
+    {
+      "request_id": "chatcmpl-598d29a7499a4833",
+      "finish_reason": "stop",
+      "usage": {
+        "input_tokens": 110,
+        "output_tokens": 816
+      },
+      "seconds": 6.376257102005184,
+      "id": "science-advanced-affine-state-history",
+      "status": "evaluated",
+      "passed": true,
+      "public_answer_sha256": "d97e26899a42de18156ef438645b08cb2a45a62e9051c34d7ab831a56881ae80",
+      "code_sha256": "b485f6c2b671482b85c947fdd234512dac5c5a17f5ebcbc9950dccb0f04f58e8",
+      "tests_passed": 8,
+      "tests_total": 8,
+      "failures": [],
+      "execution_seconds": 0.7349284739466384
+    },
+    {
+      "request_id": "chatcmpl-e9713b54889f43b3",
+      "finish_reason": "stop",
+      "usage": {
+        "input_tokens": 123,
+        "output_tokens": 1212
+      },
+      "seconds": 9.97526870004367,
+      "id": "science-advanced-capped-reservoir-chain",
+      "status": "evaluated",
+      "passed": true,
+      "public_answer_sha256": "5a53dbda8c462508685439f0291a5532820318072e248e5b24d843bd3765c8d9",
+      "code_sha256": "fbc42caf88c2a303914e6c5fec31a5ff4bf07fcdcfa8ec2d39fc97fb0b32976e",
+      "tests_passed": 8,
+      "tests_total": 8,
+      "failures": [],
+      "execution_seconds": 0.7251577110728249
+    },
+    {
+      "request_id": "chatcmpl-421096e4a27747f9",
+      "finish_reason": "stop",
+      "usage": {
+        "input_tokens": 121,
+        "output_tokens": 709
+      },
+      "seconds": 5.713911933009513,
+      "id": "science-advanced-projected-gradient-chain",
+      "status": "evaluated",
+      "passed": true,
+      "public_answer_sha256": "e6e8fade19aae23e5e99d276db26ba0329bc1b58833fbc3557f80fc4b410923f",
+      "code_sha256": "c7a75b6850a70b34fc2096c863ec339ed827ea48b9db171ed340c2fad1fdb534",
+      "tests_passed": 8,
+      "tests_total": 8,
+      "failures": [],
+      "execution_seconds": 0.7294036200037226
+    },
+    {
+      "request_id": "chatcmpl-35d861bd940b470a",
+      "finish_reason": "stop",
+      "usage": {
+        "input_tokens": 111,
+        "output_tokens": 965
+      },
+      "seconds": 9.17469992802944,
+      "id": "science-advanced-merge-event-multiplicity",
+      "status": "evaluated",
+      "passed": true,
+      "public_answer_sha256": "47a60cd999d933130a506b6cc775ce15c2e2af1e524d023d983a3515e7aa2551",
+      "code_sha256": "b93a5b208f9be22cf311d043c1b243ac6c6c43942324392117944e955900adff",
+      "tests_passed": 8,
+      "tests_total": 8,
+      "failures": [],
+      "execution_seconds": 0.7427748409099877
+    },
+    {
+      "request_id": "chatcmpl-878cf8e83f4d435c",
+      "finish_reason": "stop",
+      "usage": {
+        "input_tokens": 127,
+        "output_tokens": 2021
+      },
+      "seconds": 16.35068592708558,
+      "id": "science-advanced-lexicographic-pair-ranking",
+      "status": "evaluated",
+      "passed": true,
+      "public_answer_sha256": "7f498cb27098a799864e8ff23ecd6ee12acc4d9a15006d51ada73a6519cc1959",
+      "code_sha256": "9c7a9a2ace9f2a449c850a4dcb3b784be1855270c0e4cc646ff17ed232c2aa61",
+      "tests_passed": 8,
+      "tests_total": 8,
+      "failures": [],
+      "execution_seconds": 0.7207199879921973
+    },
+    {
+      "request_id": "chatcmpl-fdbf6cca2c7c4edc",
+      "finish_reason": "stop",
+      "usage": {
+        "input_tokens": 119,
+        "output_tokens": 1054
+      },
+      "seconds": 8.701722436002456,
+      "id": "science-advanced-budget-prefix-cardinality",
+      "status": "evaluated",
+      "passed": true,
+      "public_answer_sha256": "8d19a6841141390ff6855d872d137151f3863bbfa80b4b245d6c296e3eefd73a",
+      "code_sha256": "f2c2e83e62f28a2e880f25a4a0242006c5c399d233cb7c22c8f5c19977691760",
+      "tests_passed": 8,
+      "tests_total": 8,
+      "failures": [],
+      "execution_seconds": 0.7527491149958223
+    },
+    {
+      "request_id": "chatcmpl-89d0c4b3c34f44cb",
+      "finish_reason": "stop",
+      "usage": {
+        "input_tokens": 102,
+        "output_tokens": 2913
+      },
+      "seconds": 21.47252228599973,
+      "id": "science-advanced-weighted-lattice-cardinality",
+      "status": "evaluated",
+      "passed": true,
+      "public_answer_sha256": "acc42878bbbf70cdaf3686d00fdfc4134c734289eb114d07a08ac82d885f3f17",
+      "code_sha256": "f19a9dbf06c535fb157e963b3e70a1705105a62f559591931d63626d6251873d",
+      "tests_passed": 8,
+      "tests_total": 8,
+      "failures": [],
+      "execution_seconds": 0.743482076912187
+    },
+    {
+      "request_id": "chatcmpl-a79c95d2a2604668",
+      "finish_reason": "stop",
+      "usage": {
+        "input_tokens": 127,
+        "output_tokens": 2158
+      },
+      "seconds": 17.541703947004862,
+      "id": "science-advanced-gaussian-pair-energy-force",
+      "status": "evaluated",
+      "passed": true,
+      "public_answer_sha256": "98ad43f581e65da7f45bf39de5b296319ca0303a70ba428065875031316c3ff0",
+      "code_sha256": "29018762670b138c14b72a8369887c592b49897e12dfc5734990628cd3dd18f7",
+      "tests_passed": 8,
+      "tests_total": 8,
+      "failures": [],
+      "execution_seconds": 0.7262006939854473
+    },
+    {
+      "request_id": "chatcmpl-79628825ba5044b0",
+      "finish_reason": "stop",
+      "usage": {
+        "input_tokens": 131,
+        "output_tokens": 718
+      },
+      "seconds": 5.8794793100096285,
+      "id": "science-advanced-periodic-kick-drift",
+      "status": "evaluated",
+      "passed": true,
+      "public_answer_sha256": "87c537564e6e03948e2cdff89fba1683f4e33a751883e6d90838b37918f86e8f",
+      "code_sha256": "e54ba16be40f2e62add51d03acbac42285a9a4d97acf318974f75c48e9665bc1",
+      "tests_passed": 8,
+      "tests_total": 8,
+      "failures": [],
+      "execution_seconds": 0.7339640469290316
+    },
+    {
+      "request_id": "chatcmpl-ec62716898864c2d",
+      "finish_reason": "stop",
+      "usage": {
+        "input_tokens": 133,
+        "output_tokens": 1287
+      },
+      "seconds": 10.375206622993574,
+      "id": "science-advanced-reflecting-wall-flight",
+      "status": "evaluated",
+      "passed": true,
+      "public_answer_sha256": "4727ce12dfa94f7b3db54deea5473574777f42b5b552a9bfc31fc587bf0dd82d",
+      "code_sha256": "49fa2f955d00f38926307930efe251a8aa8b3290406e4a9fbaa31c54a7ef7e1c",
+      "tests_passed": 8,
+      "tests_total": 8,
+      "failures": [],
+      "execution_seconds": 0.7564173410646617
+    },
+    {
+      "request_id": "chatcmpl-d2d5663eb39a41df",
+      "finish_reason": "stop",
+      "usage": {
+        "input_tokens": 125,
+        "output_tokens": 2061
+      },
+      "seconds": 15.159208986908197,
+      "id": "science-advanced-inelastic-two-body",
+      "status": "evaluated",
+      "passed": true,
+      "public_answer_sha256": "4a79c62f46b51a81567067a5e7244b1a2b4bb57b2ed00352070a0b58f9e53d9e",
+      "code_sha256": "caadce078fef93d41e3962694b995622e8fb05bd0ff60ffaf56770bae5e45a65",
+      "tests_passed": 8,
+      "tests_total": 8,
+      "failures": [],
+      "execution_seconds": 0.7361269679386169
+    },
+    {
+      "request_id": "chatcmpl-94f1a3520e924ab4",
+      "finish_reason": "stop",
+      "usage": {
+        "input_tokens": 135,
+        "output_tokens": 1936
+      },
+      "seconds": 16.421699921949767,
+      "id": "science-advanced-injected-metropolis-chain",
+      "status": "evaluated",
+      "passed": true,
+      "public_answer_sha256": "9f803bbf65613346ac1c1debfed32c2df74949e1e25b108501260ec006e47840",
+      "code_sha256": "ee7d9b13e35dcd8aec1558dcf6fdf6a17080c66414366efd8117a01a32e7e760",
+      "tests_passed": 8,
+      "tests_total": 8,
+      "failures": [],
+      "execution_seconds": 0.7326698959805071
+    },
+    {
+      "request_id": "chatcmpl-b06d12f5d75b4bee",
+      "finish_reason": "stop",
+      "usage": {
+        "input_tokens": 120,
+        "output_tokens": 2037
+      },
+      "seconds": 17.18046751304064,
+      "id": "science-advanced-categorical-without-replacement",
+      "status": "evaluated",
+      "passed": true,
+      "public_answer_sha256": "2327c8539fadf37e573f7566be1c000942eb8050999d2a03ccc841476eb7e97b",
+      "code_sha256": "3e42c43b090855efbf07389842b60de20c46f3930abae82498b4e086a9d6b576",
+      "tests_passed": 8,
+      "tests_total": 8,
+      "failures": [],
+      "execution_seconds": 0.7632506730733439
+    },
+    {
+      "request_id": "chatcmpl-cb89d6a8d9f8418d",
+      "finish_reason": "stop",
+      "usage": {
+        "input_tokens": 108,
+        "output_tokens": 2502
+      },
+      "seconds": 19.643679050030187,
+      "id": "science-advanced-piecewise-linear-density-cdf",
+      "status": "evaluated",
+      "passed": true,
+      "public_answer_sha256": "52b0505f04ef5da5a220a60b4b6f8bd530ef01e67614ff0b572fdd9e61862cd9",
+      "code_sha256": "6d2b2b358ce3291860c837c182d8891b633e66bd1f1f75f365132510153f7f96",
+      "tests_passed": 8,
+      "tests_total": 8,
+      "failures": [],
+      "execution_seconds": 0.7275985040469095
+    },
+    {
+      "request_id": "chatcmpl-422c867146ff474f",
+      "finish_reason": "stop",
+      "usage": {
+        "input_tokens": 111,
+        "output_tokens": 1836
+      },
+      "seconds": 14.718274920014665,
+      "id": "science-advanced-log-survival-event-masses",
+      "status": "evaluated",
+      "passed": true,
+      "public_answer_sha256": "aad02d8d631ade875669a978e546305e2b62292e3a234722fa5c7d83e74ddce0",
+      "code_sha256": "0e7c66db73e5f8763fc2a84eeb610a27fc257ff0c21ecfbfd02d62f46b9c11bf",
+      "tests_passed": 8,
+      "tests_total": 8,
+      "failures": [],
+      "execution_seconds": 0.7435237099416554
+    }
+  ],
+  "scope": "Authored calibration execution, not WSP score.",
+  "limits": [
+    "Only plain Python or one whole-answer Python fence is accepted; this differs from WSP extraction.",
+    "Finite randomized tests do not prove correctness for all inputs.",
+    "Docker is process isolation, not a formal hostile-code security boundary.",
+    "Input mutation is checked inside the container; hostile protocol forgery is not ruled out.",
+    "Transfer results must not be used as gradient input; repeated selection makes them known."
+  ],
+  "passed": 16,
+  "failed": 0,
+  "unknown": 0
+}

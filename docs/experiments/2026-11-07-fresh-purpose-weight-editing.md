@@ -310,3 +310,53 @@ the four owned chat services; all unrelated services remain protected.
 Future candidate comparisons in this cohort must match its complete manifest,
 weights routing, sampler, environment and limits. The broad measurement
 will guide the next decision; no F02 rescue/adoption or new solve is implied.
+
+
+### Complete AV dev30 and native calibration behavior
+
+The [complete dev30 run](2026-11-07-av-dev30-dp4-run.md) scored all2338 items
+with zero unscored/errors/retries: official code72.9365079365 and overall
+76.7200592915. HumanEval29/30, LiveCodeBench15/20, MBPP23/30 and SciCode's
+per-problem source mean43.4126984127 remain separate. Its wall2018.9 seconds
+includes111.2 seconds of model loading. The [independent audit](2026-11-07-n30-independent-audit.md)
+recomputed the source/area report from every item. This cohort is not the
+DP1 observed dev10 cohort. AV remains the parent; neither score exceeds90.
+
+The subsequent [native120 generation](2026-11-07-av-authored120-native-generation.md)
+retains the first120 HTTP400 failures, a single ready smoke, and the explicit
+v2 remeasurement:120 public responses, zero errors/empty/truncated/retries,
+133.137 seconds. The gateway rejects the request-level thinking override;
+the opt-in generator repair omits that field while recording the exact four
+servers' already-enabled thinking default. No server default or weight changed.
+
+[Fixed48 execution](2026-11-07-authored48-execution-results.md) yielded46 pass,
+2 fail and0 unknown,375/384 numeric trials,49.884 seconds. Batched RHS shape
+and symbolic scalar/vector broadcasting explain concrete observed failures
+within these fixtures. [Additional16 helper stages](2026-11-07-av-helper16-offline-results.md)
+yielded16 pass,0 fail and0 unknown,128/128 trials,15.449 seconds. Their supplied
+public helper, float64 sampler and three unresolved dtype-contract issues are
+explicit; this does not prove generated-helper composition or the full input
+contract. These diagnostics are separately scoped known calibration data,
+not a new official score or unseen transfer result.
+
+The [all120 behavior/proxy join](2026-11-07-native-finite-case-contrast.md)
+shows all10 primitive literal answers already match their designated correct
+strings in AV. The largest F02 margin increase,+6.028739929, belongs to one
+such already-correct primitive. Among the48 executable cases, margin moves
+up/down on31/15 passing cases and1/1 failing cases. This does not measure
+F02 native generation and provides no evidence that maximizing the old
+aggregate margin repairs the observed coding failures.
+
+The next measurement will therefore first establish headroom on a small,
+independently authored contract/composition set, with reference and foil
+validation and an explicit calibration/transfer split before model results.
+Case-level correct-answer likelihood and actual saved BF16 changes are possible
+mechanistic measurements, not acceptance scores. No new edit or direction is
+adopted by this note. The full official manifests remain unchanged.
+
+The new offline helper adapter reuses the bounded CPU Docker worker and shares
+public-response validation. [CPU validation r6](2026-11-07-cpu-validation-r6.md)
+passed475 tests with57 optional skips, plus Ruff/mypy/data/31 shell checks.
+Model/GPU validity is supported only by the separately identified measurements.
+Final60/test, matched original/edited DeepSWE113x1 at32 workers, wiki append,
+and conditional Hugging Face publication remain outstanding.

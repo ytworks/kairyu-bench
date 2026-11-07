@@ -1,6 +1,6 @@
 # AV authored 120-case native generation, 2026-11-07
 
-Status: the authorized v1 trial finished with **120/120 HTTP errors and 0/120 public answers**. Gateway access logs identify all 120 as HTTP 400. All attempts and all failures are retained; correctness is unknown for every case. The generator receipt status `completed` means attempt processing ended, not that answers succeeded. No score or weight conclusion is drawn. This generation-only diagnostic changed no case, weight or service and executed no answer. The known authored calibration inputs are not presented as unseen evaluation.
+Status: v2 completed with **120/120 public answers**, API errors 0, empty answers 0 and length finishes 0; correctness grading is separate. The preserved v1 trial finished with **120/120 HTTP errors and 0/120 public answers**. Gateway access logs identify all 120 as HTTP 400. All attempts and all failures are retained; no correctness score is assigned by this generation record. The generator receipt status `completed` means attempt processing ended, not that answers succeeded. No score or weight conclusion is drawn. This generation-only diagnostic changed no case, weight or service and executed no answer. The known authored calibration inputs are not presented as unseen evaluation.
 
 The complete original 120-case ID set is retained as four fixed sequential
 batches. All original fields and purpose/fold positions remain unchanged;
@@ -32,7 +32,7 @@ unapproved `launch-plan.json` is retained even if a separately approved plan is
 later issued. The preview plan SHA256 is
 `97a3da29997bc14734cb461eca6c174385f8f8180d48da8018a65c054fb20e21`.
 
-[The small owner](scripts/fresh-av-authored120-20261107.py) is SHA256
+[The executed v1 owner](records/2026-11-07-av-authored120-v1/fresh-av-authored120-owner.py.txt) is SHA256
 `7cc455a29250f04819bc287397d45b594be742c2f7ff69cfaefb5a81024080d1`.
 It calls the existing `scripts/experiments/gemma4-purpose/science_generate.py`,
 SHA256 `8d05c960d4b8dbb3112f7fd2214df50b7b31c29c78f07ad1294f021a5fafb8af`.
@@ -217,4 +217,49 @@ It held the global evaluation flock, reused the frozen owner preflight, and
 confirmed before/after all four exact AV CIDs healthy/idle plus all nine
 checkpoint stats unchanged. Owner PID 600076 disappeared and the global lock
 was verified released. No service changed. This one transport success is not
-an authored-case or WSP result; full120 v2 still awaits separate authorization.
+an authored-case or WSP result; at that smoke checkpoint full120 v2 still awaited separate authorization.
+
+## Completed v2 generation and complete trial ledger
+
+Root authorized the full fixed v2 after reviewing the successful smoke. The
+separately approved plan SHA256 is
+`a322a0285abfb21e9e7c1e99aeb90c016c55f34697f728237d193d05e81a7f3a`,
+which additionally pins smoke completion and lock-release receipts. The
+original unapproved plan remains. Owner PID 603724 acquired the shared lock
+and executed the four unchanged batches once through the fixed source.
+
+[The complete v2 result](artifacts/av-authored120-native-v2-result-20261107.json)
+retains all 120 public answers plus ID/request/finish/usage/seconds, four source
+receipts, exact commands, current checkpoint/4-CID identity and closure pins.
+There are 120 unique expected IDs, no missing or unexpected IDs, zero API errors,
+zero empty answers, zero length finishes and 120 stop finishes. Each case had
+one attempt and no retry. Total usage is **17,705 input / 138,443 output tokens**,
+with zero missing usage records. Owner elapsed time is **133.1371023655 seconds**.
+The longest individual request was `science-advanced-reset-running-stats`,
+41.7079186940 seconds. These are generation results, not correctness scores.
+
+| Fixed batch | Received | Public answers | API errors | Length finishes | Batch seconds |
+|---|---:|---:|---:|---:|---:|
+| basic | 16/16 | 16 | 0 | 0 | 9.786089420 |
+| advanced-v2 | 16/16 | 16 | 0 | 0 | 41.795440197 |
+| library-train-v1 | 16/16 | 16 | 0 | 0 | 17.603582144 |
+| unsupported72 | 72/72 | 72 | 0 | 0 | 62.668471813 |
+
+All four exact ordinary AV replicas were healthy and idle at the owner's final
+preflight. The owner process disappeared, the global flock was released, and
+read-only checkpoint mounts and nine-file stat continuity remained intact.
+No service or weight changed. Closure SHA256 is
+`9136a1e978a156f5cef3a7617f345d5142bbc81fe4aa1ff9d58e898663c654a2`.
+Result artifact SHA256 is
+`008a6e027a7a5816512c74d98daf430806d80282bb3a6c232df21bc009315bd4`.
+The 48 catalog cases are handed off for separately authorized CPU execution;
+72 unsupported cases remain visible and cannot become invented failures.
+
+[The complete HTTP attempt ledger](artifacts/av-authored120-all-http-attempts-20261107.json)
+uses only safely extracted gateway access metadata and records **241 generation
+POST attempts**: 120 HTTP400 in v1, one HTTP200 in the independent smoke and
+120 HTTP200 in v2. This count excludes read-only preflight GETs and does not
+reclassify the failed v1 attempts as absent. The diagnostic used no additional
+generation request. There was no automatic retry; v2 is an explicitly authorized
+separate trial after a request-contract repair. All previews, failures, source
+snapshots and completed outputs remain retained in the same PR.

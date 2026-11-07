@@ -1,0 +1,62 @@
+from pathlib import Path
+import hashlib, json, os, subprocess, time
+R=Path('/mnt/nvme/kairyu/wsp/gemma4-coding-20261104')
+P=R/'analysis/fresh-purpose-20261107-av-authored48-execution-plan-v2'
+def h(path): return hashlib.sha256(Path(path).read_bytes()).hexdigest()
+def save(path,obj): path.write_text(json.dumps(obj,ensure_ascii=False,indent=2,allow_nan=False)+'\n')
+def check(plan):
+    for src in plan['source'].values(): assert h(src['path'])==src['sha256']
+    for key in ['generation_completion','immutable_generation_plan','partition_validation','host_python_environment_receipt']:
+        pin=plan[key]; assert h(pin['path'])==pin['sha256']
+    for b in plan['batches']:
+        assert h(b['cases'])==b['cases_sha256'] and h(b['responses'])==b['responses_sha256']
+        pin=b['generation_receipt']; assert h(pin['path'])==pin['sha256']
+    assert not Path(f"/proc/{plan['generation_owner_pid']}").exists()
+    st=os.stat(plan['docker']['socket'])
+    assert all(getattr(st,'st_'+k)==v for k,v in plan['docker']['socket_stat'].items())
+    prefix=['docker','--host','unix://'+plan['docker']['socket']]
+    fields=subprocess.check_output(prefix+['info','--format','{{.ID}} {{.DockerRootDir}}'],text=True).strip()
+    assert fields==plan['docker']['daemon_id']+' '+plan['docker']['docker_root_dir']
+    image=subprocess.check_output(prefix+['image','inspect',plan['docker']['image_id'],'--format','{{.Id}}'],text=True).strip()
+    assert image==plan['docker']['image_id']
+expected='5991b28285825fcb12dba32b9daf886adaf9c6d26b1b45b34c076d10b512771b'
+assert h(P/'plan.json')==expected
+plan=json.loads((P/'plan.json').read_text())
+assert plan['approved_for_execution'] and plan['status']=='approved_ready_all3_previews_passed'
+assert not (P/'execution').exists()
+receipt={'status':'preflight','plan_sha256':expected,'operation_sha256':h(__file__),'started_epoch':time.time(),'pid':os.getpid(),'batches':[]}
+save(P/'execution-receipt.json',receipt)
+t=time.monotonic()
+try:
+    check(plan)
+    receipt['status']='running'
+    save(P/'execution-receipt.json',receipt)
+    for batch in plan['batches']:
+        check(plan)
+        log=P/(batch['catalog']+'-execution.log')
+        row={'catalog':batch['catalog'],'started_epoch':time.time(),'command':batch['execution_command'],'status':'running'}
+        receipt['batches'].append(row); save(P/'execution-receipt.json',receipt)
+        print(json.dumps({'event':'start','catalog':batch['catalog']}),flush=True)
+        begin=time.monotonic()
+        env=os.environ.copy()
+        env['PYTHONDONTWRITEBYTECODE']='1'
+        with log.open('w') as f:
+            process=subprocess.run(batch['execution_command'],env=env,stdout=f,stderr=subprocess.STDOUT)
+        row.update(returncode=process.returncode,seconds=time.monotonic()-begin,log_sha256=h(log))
+        report=P/'execution'/batch['catalog']/'report.json'
+        if report.is_file():
+            row['report_sha256']=h(report)
+            data=json.loads(report.read_text())
+            row.update({k:data.get(k) for k in ['status','expected_cases','passed','failed','unknown']})
+        save(P/'execution-receipt.json',receipt)
+        print(json.dumps(row),flush=True)
+        if process.returncode: raise RuntimeError('sandbox subprocess failed; preserve report and stop')
+        assert row['status']=='completed'
+    check(plan)
+    receipt['status']='completed'
+except BaseException as exc:
+    receipt.update(status='failed',error_type=type(exc).__name__)
+    raise
+finally:
+    receipt.update(seconds=time.monotonic()-t,ended_epoch=time.time())
+    save(P/'execution-receipt.json',receipt)

@@ -1,0 +1,426 @@
+{
+  "schema_version": 1,
+  "status": "completed",
+  "split": "train",
+  "catalog": "basic",
+  "generation": {
+    "model_id": "gemma-4-31b",
+    "checkpoint_sha256": "5d056eb03f954db80313a85167153c875fe5e436e4f97c281a3f55202d9b3eaf",
+    "frame": "live-server-default-public-answer",
+    "enable_thinking": null,
+    "thinking_control": "server-default",
+    "reasoning_saved": false,
+    "sampling": "server_official_generation_config",
+    "temperature": null,
+    "max_tokens": 32768,
+    "seed": 0
+  },
+  "inputs": [
+    {
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-authored120-generation-inputs-v1/inputs/basic-train-cases.json",
+      "sha256": "ed17e06c04c8d6416168e67501b4a07e9490fa4a76d5355a746370447ba99ae4",
+      "stat": {
+        "dev": 2306,
+        "ino": 182190611,
+        "size": 17531,
+        "mtime_ns": 1794036576796790271,
+        "ctime_ns": 1794036576796790271
+      }
+    },
+    {
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-av-authored120-native-v2/generations/00-basic/train-responses.json",
+      "sha256": "a1481ca076cc853b8a1c970bfa9afbc48bbef6aba253b09314671616bb779b3d",
+      "stat": {
+        "dev": 2306,
+        "ino": 182191115,
+        "size": 9327,
+        "mtime_ns": 1794037712787905851,
+        "ctime_ns": 1794037712787905851
+      }
+    },
+    {
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/runtime/fresh-purpose-20261107-av-authored48-execution-v2/science_sandbox.py",
+      "sha256": "cf26e77e90d5789422ad2ebd3ac43599ee0a2ebc781b7a1c0c8ae834953a817e",
+      "stat": {
+        "dev": 2306,
+        "ino": 182191148,
+        "size": 28206,
+        "mtime_ns": 1794037954005658481,
+        "ctime_ns": 1794037954005658481
+      }
+    },
+    {
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/runtime/fresh-purpose-20261107-av-authored48-execution-v2/science_cases.py",
+      "sha256": "2c4cc6e75c92c41b98e737ca2c0a653e0f7a7675c6150a6ad33e3f954122a26b",
+      "stat": {
+        "dev": 2306,
+        "ino": 182191149,
+        "size": 35229,
+        "mtime_ns": 1794037954009658344,
+        "ctime_ns": 1794037954009658344
+      }
+    }
+  ],
+  "seed": 20261107,
+  "trials": 8,
+  "expected_cases": 16,
+  "responses_received": 16,
+  "sandbox": {
+    "image": "sha256:c4ab50223f03fca17bf871e4d05f77001e76525a1c574b6c6ee7024db06cfdc2",
+    "daemon_id": "3e518d2b-6972-43f8-b325-f7f33697a2d2",
+    "socket": "/var/run/docker.sock",
+    "seconds": 15.0,
+    "memory_mib": 512,
+    "cpus": 1.0,
+    "network": "none",
+    "user": "1003:1003",
+    "read_only": true,
+    "host_mounts": [],
+    "gpus": false,
+    "output_limit_bytes": 1048576
+  },
+  "results": [
+    {
+      "request_id": "chatcmpl-b9852e7f3e014b52",
+      "finish_reason": "stop",
+      "usage": {
+        "input_tokens": 94,
+        "output_tokens": 1206
+      },
+      "seconds": 9.463322508032434,
+      "id": "science-weighted-moments",
+      "status": "evaluated",
+      "passed": true,
+      "public_answer_sha256": "c2155b24fc0c9cebcad4a1fc48500ca079c77bb4bc875f1da879d5498b401874",
+      "code_sha256": "32a7d27f66529b1656ca0199e47e4f73542120632675283ff7c38d6740051129",
+      "tests_passed": 8,
+      "tests_total": 8,
+      "failures": [],
+      "execution_seconds": 0.7517884509870782
+    },
+    {
+      "request_id": "chatcmpl-02a3be9cdc5f46cb",
+      "finish_reason": "stop",
+      "usage": {
+        "input_tokens": 94,
+        "output_tokens": 638
+      },
+      "seconds": 5.306897112983279,
+      "id": "science-cumulative-trapezoid",
+      "status": "evaluated",
+      "passed": true,
+      "public_answer_sha256": "59780a83cc61b68b1c8dbdc89c4c6e7ae23a7189cc6649940831286d00c4c24b",
+      "code_sha256": "429d25ebc0021991a13c0bd58e8ef80aaa3eadfca074d02e4b1042df8e801e0b",
+      "tests_passed": 8,
+      "tests_total": 8,
+      "failures": [],
+      "execution_seconds": 0.7450290049891919
+    },
+    {
+      "request_id": "chatcmpl-22431e51eba8464d",
+      "finish_reason": "stop",
+      "usage": {
+        "input_tokens": 90,
+        "output_tokens": 1018
+      },
+      "seconds": 8.324657848919742,
+      "id": "science-periodic-laplacian",
+      "status": "evaluated",
+      "passed": true,
+      "public_answer_sha256": "936e5f3dbbb55ff080dc192259cf69de439829af939db28b0bc339e86f8861cd",
+      "code_sha256": "dc5faf480a46659fbab577fc04a9c5b4322dd85c83ace0b8bc7b15f42ac9bfe2",
+      "tests_passed": 8,
+      "tests_total": 8,
+      "failures": [],
+      "execution_seconds": 0.745617013075389
+    },
+    {
+      "request_id": "chatcmpl-cc727d91e4a74714",
+      "finish_reason": "stop",
+      "usage": {
+        "input_tokens": 91,
+        "output_tokens": 670
+      },
+      "seconds": 5.906913573970087,
+      "id": "science-row-softmax",
+      "status": "evaluated",
+      "passed": true,
+      "public_answer_sha256": "7ff3790bd814231269e921c1fe4f39f9d0e4f212941ef86c249d6de9a93001e0",
+      "code_sha256": "b4bd6f5beb2ec3edc0da9daccc7d2e62dcd9f5be950fdac97a1fa5ec04001487",
+      "tests_passed": 8,
+      "tests_total": 8,
+      "failures": [],
+      "execution_seconds": 0.7416063139680773
+    },
+    {
+      "request_id": "chatcmpl-f60a674c37d84376",
+      "finish_reason": "stop",
+      "usage": {
+        "input_tokens": 111,
+        "output_tokens": 979
+      },
+      "seconds": 8.176075845956802,
+      "id": "science-ridge-intercept",
+      "status": "evaluated",
+      "passed": true,
+      "public_answer_sha256": "df34d027fe13ec0a6076e19cf4a222a0f7b2eed89af872ddb38d89319bf0e12d",
+      "code_sha256": "e0106e637d25be7f41e69f7ad96c0dff6ea4125c4d1d9687a12d5b1fb09e824d",
+      "tests_passed": 8,
+      "tests_total": 8,
+      "failures": [],
+      "execution_seconds": 0.7214407379506156
+    },
+    {
+      "request_id": "chatcmpl-dd0714e34a4943f5",
+      "finish_reason": "stop",
+      "usage": {
+        "input_tokens": 94,
+        "output_tokens": 916
+      },
+      "seconds": 7.5507254670374095,
+      "id": "science-markov-row-state",
+      "status": "evaluated",
+      "passed": true,
+      "public_answer_sha256": "0564b89a508e6e12fb2fa01a70842425e955d0ec489f8d17aa6c97212e67e56d",
+      "code_sha256": "a71000a2a7853f5f9410c70b4ca29ef5d82d39116c1fe15c7c1cc59da1ef8250",
+      "tests_passed": 8,
+      "tests_total": 8,
+      "failures": [],
+      "execution_seconds": 0.7410496489610523
+    },
+    {
+      "request_id": "chatcmpl-0f4a9f69499d4ed1",
+      "finish_reason": "stop",
+      "usage": {
+        "input_tokens": 91,
+        "output_tokens": 1178
+      },
+      "seconds": 9.6864358530147,
+      "id": "science-orthogonal-residual",
+      "status": "evaluated",
+      "passed": true,
+      "public_answer_sha256": "0b7d37f30a68ad6bee6442bb6bb01b4776c8fff81d2669655ad916fe6e6b0055",
+      "code_sha256": "97d773c6655ee2ea06e48865f437de9dd30cf79e654c19d9e6d1d5cbc4a913e4",
+      "tests_passed": 8,
+      "tests_total": 8,
+      "failures": [],
+      "execution_seconds": 0.7593460289062932
+    },
+    {
+      "request_id": "chatcmpl-d3d4f0b8767f4b09",
+      "finish_reason": "stop",
+      "usage": {
+        "input_tokens": 120,
+        "output_tokens": 914
+      },
+      "seconds": 7.981369238928892,
+      "id": "science-weighted-density",
+      "status": "evaluated",
+      "passed": true,
+      "public_answer_sha256": "0172003191599a74fb5714cba240ab8a88e077d2a45497f8330bf5ba98b4c387",
+      "code_sha256": "d52a9eef417fc1c6c5173ae32330d64c97cd1b2aa35e691bd7b6736ed0969280",
+      "tests_passed": 8,
+      "tests_total": 8,
+      "failures": [],
+      "execution_seconds": 0.7192644259193912
+    },
+    {
+      "request_id": "chatcmpl-619fc08ab0634db7",
+      "finish_reason": "stop",
+      "usage": {
+        "input_tokens": 93,
+        "output_tokens": 497
+      },
+      "seconds": 4.57140466501005,
+      "id": "science-sample-covariance",
+      "status": "evaluated",
+      "passed": true,
+      "public_answer_sha256": "942583abe492cf4c528d9de2a97f7f1fadfc4d3c424f90bb8f31e63b0c1cf11d",
+      "code_sha256": "a7a8308132add20815af4c82ee24246d8d91f00412d83830f0314f4507ef7641",
+      "tests_passed": 8,
+      "tests_total": 8,
+      "failures": [],
+      "execution_seconds": 0.7333742181072012
+    },
+    {
+      "request_id": "chatcmpl-7a18c4c4c6e841da",
+      "finish_reason": "stop",
+      "usage": {
+        "input_tokens": 120,
+        "output_tokens": 867
+      },
+      "seconds": 7.377708062995225,
+      "id": "science-conservative-flux",
+      "status": "evaluated",
+      "passed": true,
+      "public_answer_sha256": "ee82c5dc1912c2957f1cedc1b4944e2c8c418d781d78554ee09ba64f25851763",
+      "code_sha256": "9025ec69ee1567a60c48af4779cbdb82e4146e272ad415af28729446e38774fb",
+      "tests_passed": 8,
+      "tests_total": 8,
+      "failures": [],
+      "execution_seconds": 0.7555003890302032
+    },
+    {
+      "request_id": "chatcmpl-67dd573cad7d429f",
+      "finish_reason": "stop",
+      "usage": {
+        "input_tokens": 97,
+        "output_tokens": 746
+      },
+      "seconds": 6.452388842939399,
+      "id": "science-implicit-decay",
+      "status": "evaluated",
+      "passed": true,
+      "public_answer_sha256": "a88eee7a02d86db0e1d8ea92e049ab46e7f7f2a5dc638299288de86fd2f206f0",
+      "code_sha256": "b4c37f104f942e41d9a0bafa3e76437f5ff25ecfa875449a057739885030503f",
+      "tests_passed": 8,
+      "tests_total": 8,
+      "failures": [],
+      "execution_seconds": 0.7230669460259378
+    },
+    {
+      "request_id": "chatcmpl-33a7c1707a6e45bb",
+      "finish_reason": "stop",
+      "usage": {
+        "input_tokens": 106,
+        "output_tokens": 1106
+      },
+      "seconds": 8.249964940943755,
+      "id": "science-merge-population-moments",
+      "status": "evaluated",
+      "passed": true,
+      "public_answer_sha256": "b32200f9c6b3a8ae87bfe1a32140362b7355581c644aa83a87b29b7c8b35e13a",
+      "code_sha256": "f6745bd5a98e75dadfb03cadecc332cccd4a01272dd30628717ef9409b244c4e",
+      "tests_passed": 8,
+      "tests_total": 8,
+      "failures": [],
+      "execution_seconds": 0.7404451729962602
+    },
+    {
+      "request_id": "chatcmpl-5356fa220c8240e9",
+      "finish_reason": "stop",
+      "usage": {
+        "input_tokens": 124,
+        "output_tokens": 711
+      },
+      "seconds": 5.591784982010722,
+      "id": "science-velocity-verlet",
+      "status": "evaluated",
+      "passed": true,
+      "public_answer_sha256": "ea4ee20408d745dcac207ce7247390df9949054b2f3ba889d03378b6e1a2c413",
+      "code_sha256": "722cd269eb8175e682a285a688cb8c09ec11e90e02403310a09eb706ed8e90e4",
+      "tests_passed": 8,
+      "tests_total": 8,
+      "failures": [],
+      "execution_seconds": 0.7289599180221558
+    },
+    {
+      "request_id": "chatcmpl-f8c8f3f3b8714398",
+      "finish_reason": "stop",
+      "usage": {
+        "input_tokens": 102,
+        "output_tokens": 643
+      },
+      "seconds": 5.2628933530068025,
+      "id": "science-segment-means",
+      "status": "evaluated",
+      "passed": true,
+      "public_answer_sha256": "699310d1bab24d332ae5c9619b1616e2017b883277b9fb935fde291429151cfc",
+      "code_sha256": "a675e54b8ed2934f49dcf95b2f6941b1eac400c0319b77b88cc4e493fea55317",
+      "tests_passed": 8,
+      "tests_total": 8,
+      "failures": [],
+      "execution_seconds": 0.7182099230121821
+    },
+    {
+      "request_id": "chatcmpl-b9c334ccb375454f",
+      "finish_reason": "stop",
+      "usage": {
+        "input_tokens": 97,
+        "output_tokens": 806
+      },
+      "seconds": 6.6054701480316,
+      "id": "science-piecewise-linear",
+      "status": "evaluated",
+      "passed": true,
+      "public_answer_sha256": "63acdc1dde9d7f3c3485a23f54b080a68b6084a28e871868397302dac9f3c2aa",
+      "code_sha256": "1153dddc01b4ef264f74c9f814472b16c7ffd4ac344c62304d4a3baf4a3565ea",
+      "tests_passed": 8,
+      "tests_total": 8,
+      "failures": [],
+      "execution_seconds": 0.740859512006864
+    },
+    {
+      "request_id": "chatcmpl-ff2b81b5b6db4772",
+      "finish_reason": "stop",
+      "usage": {
+        "input_tokens": 98,
+        "output_tokens": 324
+      },
+      "seconds": 3.3371142899850383,
+      "id": "science-batched-linear-system",
+      "status": "evaluated",
+      "passed": false,
+      "public_answer_sha256": "301193993bcddad53320b3ae75297274e75712339e8c056f85c594a48b2487fd",
+      "code_sha256": "adc5a2a59f8315d23820d51c3ede0c632cbec177e1194e42645c2d41fd08c914",
+      "tests_passed": 0,
+      "tests_total": 8,
+      "failures": [
+        {
+          "trial": 0,
+          "kind": "runtime",
+          "phase": "execution",
+          "exception_category": "ValueError"
+        },
+        {
+          "trial": 1,
+          "kind": "output_shape"
+        },
+        {
+          "trial": 2,
+          "kind": "runtime",
+          "phase": "execution",
+          "exception_category": "ValueError"
+        },
+        {
+          "trial": 3,
+          "kind": "runtime",
+          "phase": "execution",
+          "exception_category": "ValueError"
+        },
+        {
+          "trial": 4,
+          "kind": "output_shape"
+        },
+        {
+          "trial": 5,
+          "kind": "runtime",
+          "phase": "execution",
+          "exception_category": "ValueError"
+        },
+        {
+          "trial": 6,
+          "kind": "runtime",
+          "phase": "execution",
+          "exception_category": "ValueError"
+        },
+        {
+          "trial": 7,
+          "kind": "output_shape"
+        }
+      ],
+      "execution_seconds": 0.7497136510210112
+    }
+  ],
+  "scope": "Authored calibration execution, not WSP score.",
+  "limits": [
+    "Only plain Python or one whole-answer Python fence is accepted; this differs from WSP extraction.",
+    "Finite randomized tests do not prove correctness for all inputs.",
+    "Docker is process isolation, not a formal hostile-code security boundary.",
+    "Input mutation is checked inside the container; hostile protocol forgery is not ruled out.",
+    "Transfer results must not be used as gradient input; repeated selection makes them known."
+  ],
+  "passed": 15,
+  "failed": 1,
+  "unknown": 0
+}

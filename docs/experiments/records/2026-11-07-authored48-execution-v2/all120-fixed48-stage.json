@@ -1,0 +1,842 @@
+[
+  {
+    "id": "science-batched-linear-system",
+    "catalog": "basic",
+    "status": "evaluated",
+    "passed": false,
+    "stratum": "other-catalog"
+  },
+  {
+    "id": "science-sample-covariance",
+    "catalog": "basic",
+    "status": "evaluated",
+    "passed": true,
+    "stratum": "other-catalog"
+  },
+  {
+    "id": "science-segment-means",
+    "catalog": "basic",
+    "status": "evaluated",
+    "passed": true,
+    "stratum": "other-catalog"
+  },
+  {
+    "id": "science-cumulative-trapezoid",
+    "catalog": "basic",
+    "status": "evaluated",
+    "passed": true,
+    "stratum": "contract-question"
+  },
+  {
+    "id": "science-velocity-verlet",
+    "catalog": "basic",
+    "status": "evaluated",
+    "passed": true,
+    "stratum": "other-catalog"
+  },
+  {
+    "id": "science-row-softmax",
+    "catalog": "basic",
+    "status": "evaluated",
+    "passed": true,
+    "stratum": "other-catalog"
+  },
+  {
+    "id": "science-implicit-decay",
+    "catalog": "basic",
+    "status": "evaluated",
+    "passed": true,
+    "stratum": "other-catalog"
+  },
+  {
+    "id": "science-piecewise-linear",
+    "catalog": "basic",
+    "status": "evaluated",
+    "passed": true,
+    "stratum": "other-catalog"
+  },
+  {
+    "id": "science-conservative-flux",
+    "catalog": "basic",
+    "status": "evaluated",
+    "passed": true,
+    "stratum": "other-catalog"
+  },
+  {
+    "id": "science-markov-row-state",
+    "catalog": "basic",
+    "status": "evaluated",
+    "passed": true,
+    "stratum": "other-catalog"
+  },
+  {
+    "id": "science-weighted-density",
+    "catalog": "basic",
+    "status": "evaluated",
+    "passed": true,
+    "stratum": "other-catalog"
+  },
+  {
+    "id": "science-ridge-intercept",
+    "catalog": "basic",
+    "status": "evaluated",
+    "passed": true,
+    "stratum": "other-catalog"
+  },
+  {
+    "id": "science-merge-population-moments",
+    "catalog": "basic",
+    "status": "evaluated",
+    "passed": true,
+    "stratum": "other-catalog"
+  },
+  {
+    "id": "science-periodic-laplacian",
+    "catalog": "basic",
+    "status": "evaluated",
+    "passed": true,
+    "stratum": "other-catalog"
+  },
+  {
+    "id": "science-weighted-moments",
+    "catalog": "basic",
+    "status": "evaluated",
+    "passed": true,
+    "stratum": "other-catalog"
+  },
+  {
+    "id": "science-orthogonal-residual",
+    "catalog": "basic",
+    "status": "evaluated",
+    "passed": true,
+    "stratum": "other-catalog"
+  },
+  {
+    "id": "science-advanced-projected-gradient-chain",
+    "catalog": "advanced-v2",
+    "status": "evaluated",
+    "passed": true,
+    "stratum": "other-catalog"
+  },
+  {
+    "id": "science-advanced-periodic-kick-drift",
+    "catalog": "advanced-v2",
+    "status": "evaluated",
+    "passed": true,
+    "stratum": "other-catalog"
+  },
+  {
+    "id": "science-advanced-affine-state-history",
+    "catalog": "advanced-v2",
+    "status": "evaluated",
+    "passed": true,
+    "stratum": "other-catalog"
+  },
+  {
+    "id": "science-advanced-budget-prefix-cardinality",
+    "catalog": "advanced-v2",
+    "status": "evaluated",
+    "passed": true,
+    "stratum": "other-catalog"
+  },
+  {
+    "id": "science-advanced-merge-event-multiplicity",
+    "catalog": "advanced-v2",
+    "status": "evaluated",
+    "passed": true,
+    "stratum": "other-catalog"
+  },
+  {
+    "id": "science-advanced-capped-reservoir-chain",
+    "catalog": "advanced-v2",
+    "status": "evaluated",
+    "passed": true,
+    "stratum": "contract-question"
+  },
+  {
+    "id": "science-advanced-reflecting-wall-flight",
+    "catalog": "advanced-v2",
+    "status": "evaluated",
+    "passed": true,
+    "stratum": "other-catalog"
+  },
+  {
+    "id": "science-advanced-log-survival-event-masses",
+    "catalog": "advanced-v2",
+    "status": "evaluated",
+    "passed": true,
+    "stratum": "other-catalog"
+  },
+  {
+    "id": "science-advanced-inelastic-two-body",
+    "catalog": "advanced-v2",
+    "status": "evaluated",
+    "passed": true,
+    "stratum": "other-catalog"
+  },
+  {
+    "id": "science-advanced-lexicographic-pair-ranking",
+    "catalog": "advanced-v2",
+    "status": "evaluated",
+    "passed": true,
+    "stratum": "other-catalog"
+  },
+  {
+    "id": "science-advanced-injected-metropolis-chain",
+    "catalog": "advanced-v2",
+    "status": "evaluated",
+    "passed": true,
+    "stratum": "other-catalog"
+  },
+  {
+    "id": "science-advanced-categorical-without-replacement",
+    "catalog": "advanced-v2",
+    "status": "evaluated",
+    "passed": true,
+    "stratum": "other-catalog"
+  },
+  {
+    "id": "science-advanced-gaussian-pair-energy-force",
+    "catalog": "advanced-v2",
+    "status": "evaluated",
+    "passed": true,
+    "stratum": "other-catalog"
+  },
+  {
+    "id": "science-advanced-piecewise-linear-density-cdf",
+    "catalog": "advanced-v2",
+    "status": "evaluated",
+    "passed": true,
+    "stratum": "other-catalog"
+  },
+  {
+    "id": "science-advanced-weighted-lattice-cardinality",
+    "catalog": "advanced-v2",
+    "status": "evaluated",
+    "passed": true,
+    "stratum": "other-catalog"
+  },
+  {
+    "id": "science-advanced-reset-running-stats",
+    "catalog": "advanced-v2",
+    "status": "evaluated",
+    "passed": true,
+    "stratum": "contract-question"
+  },
+  {
+    "id": "science-library-spectral-contract-linear-convolution",
+    "catalog": "library-train-v1",
+    "status": "evaluated",
+    "passed": true,
+    "stratum": "other-catalog"
+  },
+  {
+    "id": "science-library-root-contract-implicit-sensitivity",
+    "catalog": "library-train-v1",
+    "status": "evaluated",
+    "passed": true,
+    "stratum": "other-catalog"
+  },
+  {
+    "id": "science-library-distribution-interface-batched-logdensity",
+    "catalog": "library-train-v1",
+    "status": "evaluated",
+    "passed": true,
+    "stratum": "other-catalog"
+  },
+  {
+    "id": "science-library-root-contract-log-coordinate",
+    "catalog": "library-train-v1",
+    "status": "evaluated",
+    "passed": true,
+    "stratum": "other-catalog"
+  },
+  {
+    "id": "science-library-optimizer-feasibility-simplex-equality",
+    "catalog": "library-train-v1",
+    "status": "evaluated",
+    "passed": true,
+    "stratum": "other-catalog"
+  },
+  {
+    "id": "science-library-residual-jacobian-weighted-affine",
+    "catalog": "library-train-v1",
+    "status": "evaluated",
+    "passed": true,
+    "stratum": "other-catalog"
+  },
+  {
+    "id": "science-library-distribution-interface-lognormal-moments",
+    "catalog": "library-train-v1",
+    "status": "evaluated",
+    "passed": true,
+    "stratum": "other-catalog"
+  },
+  {
+    "id": "science-library-spectral-contract-periodic-correlation",
+    "catalog": "library-train-v1",
+    "status": "evaluated",
+    "passed": true,
+    "stratum": "other-catalog"
+  },
+  {
+    "id": "science-library-quadrature-callback-domain-transform",
+    "catalog": "library-train-v1",
+    "status": "evaluated",
+    "passed": true,
+    "stratum": "other-catalog"
+  },
+  {
+    "id": "science-library-residual-jacobian-decay-fit",
+    "catalog": "library-train-v1",
+    "status": "evaluated",
+    "passed": true,
+    "stratum": "other-catalog"
+  },
+  {
+    "id": "science-library-optimizer-feasibility-weighted-hyperplane",
+    "catalog": "library-train-v1",
+    "status": "evaluated",
+    "passed": true,
+    "stratum": "other-catalog"
+  },
+  {
+    "id": "science-library-symbolic-numeric-variable-order",
+    "catalog": "library-train-v1",
+    "status": "evaluated",
+    "passed": false,
+    "stratum": "other-catalog"
+  },
+  {
+    "id": "science-library-symbolic-numeric-chain-coordinates",
+    "catalog": "library-train-v1",
+    "status": "evaluated",
+    "passed": true,
+    "stratum": "other-catalog"
+  },
+  {
+    "id": "science-library-quadrature-callback-piecewise-moments",
+    "catalog": "library-train-v1",
+    "status": "evaluated",
+    "passed": true,
+    "stratum": "other-catalog"
+  },
+  {
+    "id": "science-library-sparse-solve-banded-factor",
+    "catalog": "library-train-v1",
+    "status": "evaluated",
+    "passed": true,
+    "stratum": "other-catalog"
+  },
+  {
+    "id": "science-library-sparse-solve-fixed-boundary",
+    "catalog": "library-train-v1",
+    "status": "evaluated",
+    "passed": true,
+    "stratum": "other-catalog"
+  },
+  {
+    "id": "guard_code_1_4",
+    "catalog": null,
+    "status": "unsupported_not_scored_at_fixed48_stage",
+    "passed": null,
+    "stratum": "outside-fixed48"
+  },
+  {
+    "id": "guard_code_1_0",
+    "catalog": null,
+    "status": "unsupported_not_scored_at_fixed48_stage",
+    "passed": null,
+    "stratum": "outside-fixed48"
+  },
+  {
+    "id": "guard_code_0_3",
+    "catalog": null,
+    "status": "unsupported_not_scored_at_fixed48_stage",
+    "passed": null,
+    "stratum": "outside-fixed48"
+  },
+  {
+    "id": "guard_code_0_4",
+    "catalog": null,
+    "status": "unsupported_not_scored_at_fixed48_stage",
+    "passed": null,
+    "stratum": "outside-fixed48"
+  },
+  {
+    "id": "guard_code_1_3",
+    "catalog": null,
+    "status": "unsupported_not_scored_at_fixed48_stage",
+    "passed": null,
+    "stratum": "outside-fixed48"
+  },
+  {
+    "id": "guard_code_1_2",
+    "catalog": null,
+    "status": "unsupported_not_scored_at_fixed48_stage",
+    "passed": null,
+    "stratum": "outside-fixed48"
+  },
+  {
+    "id": "guard_code_1_1",
+    "catalog": null,
+    "status": "unsupported_not_scored_at_fixed48_stage",
+    "passed": null,
+    "stratum": "outside-fixed48"
+  },
+  {
+    "id": "guard_code_0_0",
+    "catalog": null,
+    "status": "unsupported_not_scored_at_fixed48_stage",
+    "passed": null,
+    "stratum": "outside-fixed48"
+  },
+  {
+    "id": "guard_code_0_1",
+    "catalog": null,
+    "status": "unsupported_not_scored_at_fixed48_stage",
+    "passed": null,
+    "stratum": "outside-fixed48"
+  },
+  {
+    "id": "guard_code_0_2",
+    "catalog": null,
+    "status": "unsupported_not_scored_at_fixed48_stage",
+    "passed": null,
+    "stratum": "outside-fixed48"
+  },
+  {
+    "id": "requested_temperature_conversion",
+    "catalog": null,
+    "status": "unsupported_not_scored_at_fixed48_stage",
+    "passed": null,
+    "stratum": "outside-fixed48"
+  },
+  {
+    "id": "inspect_account_quota",
+    "catalog": null,
+    "status": "unsupported_not_scored_at_fixed48_stage",
+    "passed": null,
+    "stratum": "outside-fixed48"
+  },
+  {
+    "id": "parcel_tracking_required",
+    "catalog": null,
+    "status": "unsupported_not_scored_at_fixed48_stage",
+    "passed": null,
+    "stratum": "outside-fixed48"
+  },
+  {
+    "id": "inventory_lookup_required",
+    "catalog": null,
+    "status": "unsupported_not_scored_at_fixed48_stage",
+    "passed": null,
+    "stratum": "outside-fixed48"
+  },
+  {
+    "id": "fetch_job",
+    "catalog": null,
+    "status": "unsupported_not_scored_at_fixed48_stage",
+    "passed": null,
+    "stratum": "outside-fixed48"
+  },
+  {
+    "id": "discard_only_unstaged",
+    "catalog": null,
+    "status": "unsupported_not_scored_at_fixed48_stage",
+    "passed": null,
+    "stratum": "outside-fixed48"
+  },
+  {
+    "id": "advance_ticket",
+    "catalog": null,
+    "status": "unsupported_not_scored_at_fixed48_stage",
+    "passed": null,
+    "stratum": "outside-fixed48"
+  },
+  {
+    "id": "archive_only_revision",
+    "catalog": null,
+    "status": "unsupported_not_scored_at_fixed48_stage",
+    "passed": null,
+    "stratum": "outside-fixed48"
+  },
+  {
+    "id": "preserve_false_smoothing",
+    "catalog": null,
+    "status": "unsupported_not_scored_at_fixed48_stage",
+    "passed": null,
+    "stratum": "outside-fixed48"
+  },
+  {
+    "id": "commit_only_fix",
+    "catalog": null,
+    "status": "unsupported_not_scored_at_fixed48_stage",
+    "passed": null,
+    "stratum": "outside-fixed48"
+  },
+  {
+    "id": "segment_count",
+    "catalog": null,
+    "status": "unsupported_not_scored_at_fixed48_stage",
+    "passed": null,
+    "stratum": "outside-fixed48"
+  },
+  {
+    "id": "preserve_label_prefix",
+    "catalog": null,
+    "status": "unsupported_not_scored_at_fixed48_stage",
+    "passed": null,
+    "stratum": "outside-fixed48"
+  },
+  {
+    "id": "record_verified_rename",
+    "catalog": null,
+    "status": "unsupported_not_scored_at_fixed48_stage",
+    "passed": null,
+    "stratum": "outside-fixed48"
+  },
+  {
+    "id": "read_level",
+    "catalog": null,
+    "status": "unsupported_not_scored_at_fixed48_stage",
+    "passed": null,
+    "stratum": "outside-fixed48"
+  },
+  {
+    "id": "call_and_close",
+    "catalog": null,
+    "status": "unsupported_not_scored_at_fixed48_stage",
+    "passed": null,
+    "stratum": "outside-fixed48"
+  },
+  {
+    "id": "preserve_reserved_window_filter",
+    "catalog": null,
+    "status": "unsupported_not_scored_at_fixed48_stage",
+    "passed": null,
+    "stratum": "outside-fixed48"
+  },
+  {
+    "id": "whole_units",
+    "catalog": null,
+    "status": "unsupported_not_scored_at_fixed48_stage",
+    "passed": null,
+    "stratum": "outside-fixed48"
+  },
+  {
+    "id": "write_if_acquired",
+    "catalog": null,
+    "status": "unsupported_not_scored_at_fixed48_stage",
+    "passed": null,
+    "stratum": "outside-fixed48"
+  },
+  {
+    "id": "answer_arithmetic_without_tool",
+    "catalog": null,
+    "status": "unsupported_not_scored_at_fixed48_stage",
+    "passed": null,
+    "stratum": "outside-fixed48"
+  },
+  {
+    "id": "preserve_sample_period",
+    "catalog": null,
+    "status": "unsupported_not_scored_at_fixed48_stage",
+    "passed": null,
+    "stratum": "outside-fixed48"
+  },
+  {
+    "id": "too_wide_hoop",
+    "catalog": null,
+    "status": "unsupported_not_scored_at_fixed48_stage",
+    "passed": null,
+    "stratum": "outside-fixed48"
+  },
+  {
+    "id": "rollable_cover",
+    "catalog": null,
+    "status": "unsupported_not_scored_at_fixed48_stage",
+    "passed": null,
+    "stratum": "outside-fixed48"
+  },
+  {
+    "id": "validate_before_publish",
+    "catalog": null,
+    "status": "unsupported_not_scored_at_fixed48_stage",
+    "passed": null,
+    "stratum": "outside-fixed48"
+  },
+  {
+    "id": "heat_protection",
+    "catalog": null,
+    "status": "unsupported_not_scored_at_fixed48_stage",
+    "passed": null,
+    "stratum": "outside-fixed48"
+  },
+  {
+    "id": "too_narrow_passage",
+    "catalog": null,
+    "status": "unsupported_not_scored_at_fixed48_stage",
+    "passed": null,
+    "stratum": "outside-fixed48"
+  },
+  {
+    "id": "loose_anchor",
+    "catalog": null,
+    "status": "unsupported_not_scored_at_fixed48_stage",
+    "passed": null,
+    "stratum": "outside-fixed48"
+  },
+  {
+    "id": "answer_from_supplied_poster",
+    "catalog": null,
+    "status": "unsupported_not_scored_at_fixed48_stage",
+    "passed": null,
+    "stratum": "outside-fixed48"
+  },
+  {
+    "id": "missing_timer_duration",
+    "catalog": null,
+    "status": "unsupported_not_scored_at_fixed48_stage",
+    "passed": null,
+    "stratum": "outside-fixed48"
+  },
+  {
+    "id": "brittle_support",
+    "catalog": null,
+    "status": "unsupported_not_scored_at_fixed48_stage",
+    "passed": null,
+    "stratum": "outside-fixed48"
+  },
+  {
+    "id": "spool_checkpoint",
+    "catalog": null,
+    "status": "unsupported_not_scored_at_fixed48_stage",
+    "passed": null,
+    "stratum": "outside-fixed48"
+  },
+  {
+    "id": "missing_meeting_time",
+    "catalog": null,
+    "status": "unsupported_not_scored_at_fixed48_stage",
+    "passed": null,
+    "stratum": "outside-fixed48"
+  },
+  {
+    "id": "tool_checkpoint",
+    "catalog": null,
+    "status": "unsupported_not_scored_at_fixed48_stage",
+    "passed": null,
+    "stratum": "outside-fixed48"
+  },
+  {
+    "id": "courier_checkpoint",
+    "catalog": null,
+    "status": "unsupported_not_scored_at_fixed48_stage",
+    "passed": null,
+    "stratum": "outside-fixed48"
+  },
+  {
+    "id": "permit_checkpoint",
+    "catalog": null,
+    "status": "unsupported_not_scored_at_fixed48_stage",
+    "passed": null,
+    "stratum": "outside-fixed48"
+  },
+  {
+    "id": "stage_checkpoint",
+    "catalog": null,
+    "status": "unsupported_not_scored_at_fixed48_stage",
+    "passed": null,
+    "stratum": "outside-fixed48"
+  },
+  {
+    "id": "room_checkpoint",
+    "catalog": null,
+    "status": "unsupported_not_scored_at_fixed48_stage",
+    "passed": null,
+    "stratum": "outside-fixed48"
+  },
+  {
+    "id": "voucher_count",
+    "catalog": null,
+    "status": "unsupported_not_scored_at_fixed48_stage",
+    "passed": null,
+    "stratum": "outside-fixed48"
+  },
+  {
+    "id": "min_toll",
+    "catalog": null,
+    "status": "unsupported_not_scored_at_fixed48_stage",
+    "passed": null,
+    "stratum": "outside-fixed48"
+  },
+  {
+    "id": "gate_hops",
+    "catalog": null,
+    "status": "unsupported_not_scored_at_fixed48_stage",
+    "passed": null,
+    "stratum": "outside-fixed48"
+  },
+  {
+    "id": "chain-quadrature-mixture-1",
+    "catalog": null,
+    "status": "unsupported_not_scored_at_fixed48_stage",
+    "passed": null,
+    "stratum": "outside-fixed48"
+  },
+  {
+    "id": "cover_span",
+    "catalog": null,
+    "status": "unsupported_not_scored_at_fixed48_stage",
+    "passed": null,
+    "stratum": "outside-fixed48"
+  },
+  {
+    "id": "chain-whitened-fit-1",
+    "catalog": null,
+    "status": "unsupported_not_scored_at_fixed48_stage",
+    "passed": null,
+    "stratum": "outside-fixed48"
+  },
+  {
+    "id": "solve_ledger",
+    "catalog": null,
+    "status": "unsupported_not_scored_at_fixed48_stage",
+    "passed": null,
+    "stratum": "outside-fixed48"
+  },
+  {
+    "id": "chain-log-mixture-score-1",
+    "catalog": null,
+    "status": "unsupported_not_scored_at_fixed48_stage",
+    "passed": null,
+    "stratum": "outside-fixed48"
+  },
+  {
+    "id": "painted_bins",
+    "catalog": null,
+    "status": "unsupported_not_scored_at_fixed48_stage",
+    "passed": null,
+    "stratum": "outside-fixed48"
+  },
+  {
+    "id": "best_schedule",
+    "catalog": null,
+    "status": "unsupported_not_scored_at_fixed48_stage",
+    "passed": null,
+    "stratum": "outside-fixed48"
+  },
+  {
+    "id": "cleanup_and_preserve_status",
+    "catalog": null,
+    "status": "unsupported_not_scored_at_fixed48_stage",
+    "passed": null,
+    "stratum": "outside-fixed48"
+  },
+  {
+    "id": "best_indices",
+    "catalog": null,
+    "status": "unsupported_not_scored_at_fixed48_stage",
+    "passed": null,
+    "stratum": "outside-fixed48"
+  },
+  {
+    "id": "chain-quadrature-mixture-2",
+    "catalog": null,
+    "status": "unsupported_not_scored_at_fixed48_stage",
+    "passed": null,
+    "stratum": "outside-fixed48"
+  },
+  {
+    "id": "chain-log-mixture-score-2",
+    "catalog": null,
+    "status": "unsupported_not_scored_at_fixed48_stage",
+    "passed": null,
+    "stratum": "outside-fixed48"
+  },
+  {
+    "id": "near_pairs",
+    "catalog": null,
+    "status": "unsupported_not_scored_at_fixed48_stage",
+    "passed": null,
+    "stratum": "outside-fixed48"
+  },
+  {
+    "id": "chain-boundary-response-2",
+    "catalog": null,
+    "status": "unsupported_not_scored_at_fixed48_stage",
+    "passed": null,
+    "stratum": "outside-fixed48"
+  },
+  {
+    "id": "chain-whitened-fit-2",
+    "catalog": null,
+    "status": "unsupported_not_scored_at_fixed48_stage",
+    "passed": null,
+    "stratum": "outside-fixed48"
+  },
+  {
+    "id": "chain-boundary-response-1",
+    "catalog": null,
+    "status": "unsupported_not_scored_at_fixed48_stage",
+    "passed": null,
+    "stratum": "outside-fixed48"
+  },
+  {
+    "id": "long-affine-state-history-1",
+    "catalog": null,
+    "status": "unsupported_not_scored_at_fixed48_stage",
+    "passed": null,
+    "stratum": "outside-fixed48"
+  },
+  {
+    "id": "long-affine-state-history-2",
+    "catalog": null,
+    "status": "unsupported_not_scored_at_fixed48_stage",
+    "passed": null,
+    "stratum": "outside-fixed48"
+  },
+  {
+    "id": "long-weighted-constraint-1",
+    "catalog": null,
+    "status": "unsupported_not_scored_at_fixed48_stage",
+    "passed": null,
+    "stratum": "outside-fixed48"
+  },
+  {
+    "id": "long-conditional-covariance-2",
+    "catalog": null,
+    "status": "unsupported_not_scored_at_fixed48_stage",
+    "passed": null,
+    "stratum": "outside-fixed48"
+  },
+  {
+    "id": "long-weighted-constraint-2",
+    "catalog": null,
+    "status": "unsupported_not_scored_at_fixed48_stage",
+    "passed": null,
+    "stratum": "outside-fixed48"
+  },
+  {
+    "id": "long-affine-mixture-moments-1",
+    "catalog": null,
+    "status": "unsupported_not_scored_at_fixed48_stage",
+    "passed": null,
+    "stratum": "outside-fixed48"
+  },
+  {
+    "id": "long-conditional-covariance-1",
+    "catalog": null,
+    "status": "unsupported_not_scored_at_fixed48_stage",
+    "passed": null,
+    "stratum": "outside-fixed48"
+  },
+  {
+    "id": "long-affine-mixture-moments-2",
+    "catalog": null,
+    "status": "unsupported_not_scored_at_fixed48_stage",
+    "passed": null,
+    "stratum": "outside-fixed48"
+  }
+]

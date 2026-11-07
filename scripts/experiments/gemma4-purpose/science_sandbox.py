@@ -483,6 +483,12 @@ def read_inputs(
     for row in rows:
         if row != catalog[row["id"]].public():
             raise ValueError("authored case content mismatch")
+    answers, generation = read_public_answers(responses, set(catalog))
+    return catalog, answers, generation, [case_receipt, response_receipt]
+
+
+def read_public_answers(responses: dict, allowed_ids: set[str]):
+    """Validate public-only response rows without changing their envelope identity."""
     generation = responses.get("generation", {})
     if generation.get("reasoning_saved") is not False:
         raise ValueError("public-answer-only provenance required")
@@ -525,7 +531,7 @@ def read_inputs(
             raise ValueError(
                 "unsupported response fields; no reasoning content accepted"
             )
-        if row.get("id") not in catalog or row["id"] in answers:
+        if row.get("id") not in allowed_ids or row["id"] in answers:
             raise ValueError("unknown or duplicate response ID")
         answer = row.get("public_answer")
         if "http_status" in row and (
@@ -562,7 +568,7 @@ def read_inputs(
         ):
             raise ValueError("usage must contain numeric token counts only")
         answers[row["id"]] = row
-    return catalog, answers, generation, [case_receipt, response_receipt]
+    return answers, generation
 
 
 def save(path: Path, data: dict) -> None:

@@ -1,0 +1,316 @@
+{
+  "schema_version": 1,
+  "created_utc": "2026-11-07T08:01:25.214502+00:00",
+  "approved_for_execution": true,
+  "authorization": "root explicitly authorized one all16 additional fixed diagnostic after full120 native v2 completed; no retry, no model or serving action",
+  "source_snapshot": [
+    {
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-av-helper16-offline-v1/source/helper_stage_offline.py",
+      "repo_path": "scripts/experiments/gemma4-purpose/helper_stage_offline.py",
+      "sha256": "23da9fae9cf2dafaef18a3291f4e4e7e751832d023fde53a13a8aa5954c30396",
+      "stat": {
+        "dev": 2306,
+        "ino": 182191242,
+        "size": 10014,
+        "mtime_ns": 1794037866245652707,
+        "ctime_ns": 1794038484602648702
+      }
+    },
+    {
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-av-helper16-offline-v1/source/helper_chain_cases.py",
+      "repo_path": "scripts/experiments/gemma4-purpose/helper_chain_cases.py",
+      "sha256": "08b27e7f0d36d90211fd7c9435d42fa5d53f1681e2a9b20f945ef65f05c44c6d",
+      "stat": {
+        "dev": 2306,
+        "ino": 182191243,
+        "size": 36111,
+        "mtime_ns": 1794014691729586831,
+        "ctime_ns": 1794038484603648666
+      }
+    },
+    {
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-av-helper16-offline-v1/source/long_helper_chain_cases.py",
+      "repo_path": "scripts/experiments/gemma4-purpose/long_helper_chain_cases.py",
+      "sha256": "9531f78cce00c5e41a5e1cd4d79f9f968c7730940b60e95fcbe2099eb66f4e0e",
+      "stat": {
+        "dev": 2306,
+        "ino": 182191244,
+        "size": 46787,
+        "mtime_ns": 1794015072961186644,
+        "ctime_ns": 1794038484603648666
+      }
+    },
+    {
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-av-helper16-offline-v1/source/science_sandbox.py",
+      "repo_path": "scripts/experiments/gemma4-purpose/science_sandbox.py",
+      "sha256": "4a19f0f5fc235f56d702d39dd9bc9e403eba98ffdeadabe4c6365b41566131a4",
+      "stat": {
+        "dev": 2306,
+        "ino": 182191245,
+        "size": 28466,
+        "mtime_ns": 1794037866236653014,
+        "ctime_ns": 1794038484604648631
+      }
+    },
+    {
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-av-helper16-offline-v1/source/science_generate.py",
+      "repo_path": "scripts/experiments/gemma4-purpose/science_generate.py",
+      "sha256": "df88767ebcd5a3138747a36fe7e0976dbb0c2ceb5b0f1eece74740818f0b7f89",
+      "stat": {
+        "dev": 2306,
+        "ino": 182191246,
+        "size": 10011,
+        "mtime_ns": 1794037321477455946,
+        "ctime_ns": 1794038484604648631
+      }
+    },
+    {
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-av-helper16-offline-v1/source/science_cases.py",
+      "repo_path": "scripts/experiments/gemma4-purpose/science_cases.py",
+      "sha256": "2c4cc6e75c92c41b98e737ca2c0a653e0f7a7675c6150a6ad33e3f954122a26b",
+      "stat": {
+        "dev": 2306,
+        "ino": 182191247,
+        "size": 35229,
+        "mtime_ns": 1793939595408268372,
+        "ctime_ns": 1794038484605648595
+      }
+    }
+  ],
+  "source_directory_readonly": true,
+  "input_pins": [
+    {
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-authored120-generation-inputs-v1/inputs/uncataloged72-train-cases.json",
+      "sha256": "30606fd3b14b4c7809a488fda2bc7bdf318fead9543228b50e7617b0754ca7be",
+      "stat": {
+        "dev": 2306,
+        "ino": 182190826,
+        "size": 93781,
+        "mtime_ns": 1794036576800790114,
+        "ctime_ns": 1794036576800790114
+      }
+    },
+    {
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-av-authored120-native-v2/generations/03-unsupported72/train-responses.json",
+      "sha256": "9803f7a2fd8f331c74805b7dd8cf5111e9efbfa4c15415bb10988edf50c54876",
+      "stat": {
+        "dev": 2306,
+        "ino": 182191137,
+        "size": 95175,
+        "mtime_ns": 1794037835569700894,
+        "ctime_ns": 1794037835570700860
+      }
+    },
+    {
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-av-authored120-native-v2/generations/03-unsupported72/receipt.json",
+      "sha256": "df00dab024bbd1154e1e08aeafc9dea4092c4f013e265089b53914b55439a2c8",
+      "stat": {
+        "dev": 2306,
+        "ino": 182191135,
+        "size": 1018,
+        "mtime_ns": 1794037835572700791,
+        "ctime_ns": 1794037835572700791
+      }
+    },
+    {
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-authored120-generation-inputs-v1/validation.json",
+      "sha256": "4adfa914b72b98b2c52a8788b597d8a30c5b20c1b43b05b8b5a39180b3d09a12",
+      "stat": {
+        "dev": 2306,
+        "ino": 182190832,
+        "size": 23813,
+        "mtime_ns": 1794036576806789877,
+        "ctime_ns": 1794036576806789877
+      }
+    }
+  ],
+  "host_python": "/mnt/nvme/kairyu/dev-logs/wsp/venv-scicode/bin/python",
+  "host_python_sha256": "e50d468e8b0adfb05733f5b87b3cff34829c4a8c1aea50c865aa8bdfe4bb150f",
+  "host_scientific_environment_receipt": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-authored120-generation-inputs-v1/cpu-environment-check-v1/host-science-python.json",
+  "docker": {
+    "socket": "/var/run/docker.sock",
+    "socket_stat": {
+      "dev": 26,
+      "ino": 3105,
+      "size": 0,
+      "mtime_ns": 1793351541989999672,
+      "ctime_ns": 1793351542003999671
+    },
+    "daemon_id": "3e518d2b-6972-43f8-b325-f7f33697a2d2",
+    "docker_root_dir": "/mnt/nvme/docker",
+    "image": "sha256:c4ab50223f03fca17bf871e4d05f77001e76525a1c574b6c6ee7024db06cfdc2",
+    "image_size_bytes": 9777059118,
+    "owned_science_containers_before": []
+  },
+  "protected_containers_before": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-av-helper16-offline-v1/before-containers.json",
+  "protected_containers_before_sha256": "9c0bfb4f1e8963696f54b87f09bb57a04488714abfbcbcb0b783002b7a06d8b8",
+  "targets": [
+    "chain-whitened-fit-1",
+    "chain-whitened-fit-2",
+    "chain-boundary-response-1",
+    "chain-boundary-response-2",
+    "chain-quadrature-mixture-1",
+    "chain-quadrature-mixture-2",
+    "chain-log-mixture-score-1",
+    "chain-log-mixture-score-2",
+    "long-weighted-constraint-1",
+    "long-weighted-constraint-2",
+    "long-conditional-covariance-1",
+    "long-conditional-covariance-2",
+    "long-affine-state-history-1",
+    "long-affine-state-history-2",
+    "long-affine-mixture-moments-1",
+    "long-affine-mixture-moments-2"
+  ],
+  "not_targeted_ids": [
+    "advance_ticket",
+    "answer_arithmetic_without_tool",
+    "answer_from_supplied_poster",
+    "archive_only_revision",
+    "best_indices",
+    "best_schedule",
+    "brittle_support",
+    "call_and_close",
+    "cleanup_and_preserve_status",
+    "commit_only_fix",
+    "courier_checkpoint",
+    "cover_span",
+    "discard_only_unstaged",
+    "fetch_job",
+    "gate_hops",
+    "guard_code_0_0",
+    "guard_code_0_1",
+    "guard_code_0_2",
+    "guard_code_0_3",
+    "guard_code_0_4",
+    "guard_code_1_0",
+    "guard_code_1_1",
+    "guard_code_1_2",
+    "guard_code_1_3",
+    "guard_code_1_4",
+    "heat_protection",
+    "inspect_account_quota",
+    "inventory_lookup_required",
+    "loose_anchor",
+    "min_toll",
+    "missing_meeting_time",
+    "missing_timer_duration",
+    "near_pairs",
+    "painted_bins",
+    "parcel_tracking_required",
+    "permit_checkpoint",
+    "preserve_false_smoothing",
+    "preserve_label_prefix",
+    "preserve_reserved_window_filter",
+    "preserve_sample_period",
+    "read_level",
+    "record_verified_rename",
+    "requested_temperature_conversion",
+    "rollable_cover",
+    "room_checkpoint",
+    "segment_count",
+    "solve_ledger",
+    "spool_checkpoint",
+    "stage_checkpoint",
+    "too_narrow_passage",
+    "too_wide_hoop",
+    "tool_checkpoint",
+    "validate_before_publish",
+    "voucher_count",
+    "whole_units",
+    "write_if_acquired"
+  ],
+  "contract_issue_ids": [
+    "chain-boundary-response-1",
+    "chain-quadrature-mixture-1",
+    "chain-whitened-fit-1"
+  ],
+  "command": [
+    "/mnt/nvme/kairyu/dev-logs/wsp/venv-scicode/bin/python",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-av-helper16-offline-v1/source/helper_stage_offline.py",
+    "--cases",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-authored120-generation-inputs-v1/inputs/uncataloged72-train-cases.json",
+    "--cases-sha256",
+    "30606fd3b14b4c7809a488fda2bc7bdf318fead9543228b50e7617b0754ca7be",
+    "--responses",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-av-authored120-native-v2/generations/03-unsupported72/train-responses.json",
+    "--responses-sha256",
+    "9803f7a2fd8f331c74805b7dd8cf5111e9efbfa4c15415bb10988edf50c54876",
+    "--docker-socket",
+    "/var/run/docker.sock",
+    "--daemon-id",
+    "3e518d2b-6972-43f8-b325-f7f33697a2d2",
+    "--image",
+    "sha256:c4ab50223f03fca17bf871e4d05f77001e76525a1c574b6c6ee7024db06cfdc2",
+    "--seed",
+    "20261107",
+    "--trials",
+    "8",
+    "--seconds",
+    "15",
+    "--memory-mib",
+    "512",
+    "--cpus",
+    "1",
+    "--output",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-av-helper16-offline-v1/run",
+    "--run"
+  ],
+  "cwd": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/worktrees/kairyu-bench-weight-tools",
+  "environment": {
+    "PYTHONDONTWRITEBYTECODE": "1",
+    "OMP_NUM_THREADS": "1",
+    "OPENBLAS_NUM_THREADS": "1",
+    "MKL_NUM_THREADS": "1",
+    "TMPDIR": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/infra/weight-tools-tmp"
+  },
+  "preview_command": [
+    "/mnt/nvme/kairyu/dev-logs/wsp/venv-scicode/bin/python",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-av-helper16-offline-v1/source/helper_stage_offline.py",
+    "--cases",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-authored120-generation-inputs-v1/inputs/uncataloged72-train-cases.json",
+    "--cases-sha256",
+    "30606fd3b14b4c7809a488fda2bc7bdf318fead9543228b50e7617b0754ca7be",
+    "--responses",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-av-authored120-native-v2/generations/03-unsupported72/train-responses.json",
+    "--responses-sha256",
+    "9803f7a2fd8f331c74805b7dd8cf5111e9efbfa4c15415bb10988edf50c54876",
+    "--docker-socket",
+    "/var/run/docker.sock",
+    "--daemon-id",
+    "3e518d2b-6972-43f8-b325-f7f33697a2d2",
+    "--image",
+    "sha256:c4ab50223f03fca17bf871e4d05f77001e76525a1c574b6c6ee7024db06cfdc2",
+    "--seed",
+    "20261107",
+    "--trials",
+    "8",
+    "--seconds",
+    "15",
+    "--memory-mib",
+    "512",
+    "--cpus",
+    "1",
+    "--output",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-av-helper16-offline-v1/preview"
+  ],
+  "preview_report_sha256": "69b1370b53422ec6cc1880f5d0119ef658002f3da5d5bfa4855ee0404623fcb6",
+  "preview_seconds": 0.23442616895772517,
+  "conditions": {
+    "trials": 8,
+    "seed": 20261107,
+    "seconds": 15,
+    "memory_mib": 512,
+    "cpus": 1,
+    "network": "none",
+    "user": "1003:1003",
+    "runtime": "runc",
+    "cap_drop": "ALL",
+    "host_mounts": [],
+    "gpus": false,
+    "model_calls": 0,
+    "serving_changes": false,
+    "attempts": 1,
+    "frozen48_modified": false
+  }
+}
