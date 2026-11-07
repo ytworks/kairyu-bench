@@ -285,3 +285,26 @@ The existing origin URL and working branch were not changed. An independent HTTP
 Receipt: analysis/fresh-final-wiki-ancestry-20261107-v1/receipt.json. It records the command, transport configuration, remote identities, ancestry/count results, page SHA and no-page-change/no-push status. Fetch/read success does not prove push authorization or privilege. No Wiki page was changed or pushed. After the full final result exists, fetch again into a fresh audit/ref, repeat ancestry and page comparison, append the complete result against the then-current parent, and use the existing HTTPS authentication flow for a normal push only at that result-publication stage.
 
 Actual source recheck for this amendment: repaired helper SHA 2e9da820fe30ba9b2436fb600cf14a533b1c496b2fed48ac3649fffb9d2bc9ae; current official wrapper SHA 56b53b7d72d75efcb2bef24643322f73625eba5c08a645c2f847768e558b6176. Future execution must recheck the selected source/image identities instead of relying on this document date.
+
+
+## Later state update: complete AV switch and active dev30
+
+The earlier mixed-service and stale-record descriptions above are historical.
+After the user's explicit four-inference-container approval, all four ordinary
+TP2 replicas were sequentially recreated onto AV, tree
+`5d056eb03f954db80313a85167153c875fe5e436e4f97c281a3f55202d9b3eaf`.
+All 23 protected unrelated containers retained identity; the combined closure
+and direct/gateway endpoint proof are in the
+[AV deployment record](2026-11-07-av-dev30-homogeneous-serving-plan.md).
+The global served-model record was subsequently atomically reconciled with AV;
+[before/after bytes and receipt](2026-11-07-av-served-record-update.md) retain
+the former h0397 record. No global identity is inferred from the old record.
+
+The separate [complete canonical dev30 run](2026-11-07-av-dev30-dp4-run.md)
+is active under owner PID 397808 and the global evaluation lock. It retains
+all 2,338 items and the immutable f91 runner. No CaptureWorker is deployed;
+its tracing is client HTTP only. Do not switch services or launch overlapping
+GPU work while this owner runs. Final DeepSWE selection, matched-original
+comparison, run, Wiki append and conditional Hugging Face publication remain
+unperformed. This state update does not bind AV as the final model or claim
+the coding target has been reached. Recheck all live state at the final handoff.

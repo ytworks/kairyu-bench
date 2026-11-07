@@ -1,0 +1,18 @@
+usage: editor.py create [-h] --spec SPEC --manifest MANIFEST [--apply]
+                        [--reserve-bytes RESERVE_BYTES]
+                        [--shard-pool SHARD_POOL]
+                        source candidate
+
+positional arguments:
+  source
+  candidate
+
+options:
+  -h, --help            show this help message and exit
+  --spec SPEC
+  --manifest MANIFEST
+  --apply
+  --reserve-bytes RESERVE_BYTES
+  --shard-pool SHARD_POOL
+                        Explicit verified pool index; only untouched shards
+                        may be linked
