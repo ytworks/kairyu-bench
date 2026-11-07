@@ -1,0 +1,306 @@
+{
+  "phase": "partial",
+  "started_epoch": 1794060487.5347376,
+  "seconds": 8.988784551620483,
+  "candidate_run_status_at_snapshot": "running",
+  "full_selection": 2338,
+  "full_code_selection": 90,
+  "response_records_observed": 491,
+  "code_response_records_observed": 26,
+  "candidate_errors_observed": 0,
+  "all_matched_nodes": 492,
+  "aggregate_nodes_excluded_from_stats": 15,
+  "all": {
+    "joined_leaf_nodes": 477,
+    "joined_item_count": 408,
+    "reasoning_characters": {
+      "observed_pairs": 477,
+      "unobserved_pairs": 0,
+      "base_sum": 3858913,
+      "candidate_sum": 1820,
+      "base_median": 5475,
+      "candidate_median": 0,
+      "candidate_less": 474,
+      "equal": 2,
+      "candidate_more": 1
+    },
+    "reasoning_utf8_bytes": {
+      "observed_pairs": 477,
+      "unobserved_pairs": 0,
+      "base_sum": 3896210,
+      "candidate_sum": 1820,
+      "base_median": 5523,
+      "candidate_median": 0,
+      "candidate_less": 474,
+      "equal": 2,
+      "candidate_more": 1
+    },
+    "content_characters": {
+      "observed_pairs": 477,
+      "unobserved_pairs": 0,
+      "base_sum": 758664,
+      "candidate_sum": 278985,
+      "base_median": 1619,
+      "candidate_median": 281,
+      "candidate_less": 374,
+      "equal": 0,
+      "candidate_more": 103
+    },
+    "completion_tokens": {
+      "observed_pairs": 477,
+      "unobserved_pairs": 0,
+      "base_sum": 1649064,
+      "candidate_sum": 107155,
+      "base_median": 2646,
+      "candidate_median": 117,
+      "candidate_less": 471,
+      "equal": 0,
+      "candidate_more": 6
+    },
+    "finish_reason": {
+      "base": {
+        "stop": 444,
+        "tool_calls": 32,
+        "length": 1
+      },
+      "candidate": {
+        "stop": 477
+      },
+      "transitions": {
+        "stop -> stop": 444,
+        "tool_calls -> stop": 32,
+        "length -> stop": 1
+      }
+    },
+    "code_first_appearance": {
+      "base": {
+        "False": 406,
+        "True": 38,
+        "None": 33
+      },
+      "candidate": {
+        "True": 428,
+        "False": 49
+      },
+      "transitions": {
+        "False -> True": 368,
+        "False -> False": 38,
+        "True -> True": 37,
+        "None -> True": 23,
+        "None -> False": 10,
+        "True -> False": 1
+      }
+    }
+  },
+  "code": {
+    "joined_leaf_nodes": 36,
+    "joined_item_count": 26,
+    "reasoning_characters": {
+      "observed_pairs": 36,
+      "unobserved_pairs": 0,
+      "base_sum": 289557,
+      "candidate_sum": 0,
+      "base_median": 5717.5,
+      "candidate_median": 0.0,
+      "candidate_less": 36,
+      "equal": 0,
+      "candidate_more": 0
+    },
+    "reasoning_utf8_bytes": {
+      "observed_pairs": 36,
+      "unobserved_pairs": 0,
+      "base_sum": 289560,
+      "candidate_sum": 0,
+      "base_median": 5717.5,
+      "candidate_median": 0.0,
+      "candidate_less": 36,
+      "equal": 0,
+      "candidate_more": 0
+    },
+    "content_characters": {
+      "observed_pairs": 36,
+      "unobserved_pairs": 0,
+      "base_sum": 86666,
+      "candidate_sum": 31672,
+      "base_median": 2355.5,
+      "candidate_median": 709.5,
+      "candidate_less": 35,
+      "equal": 0,
+      "candidate_more": 1
+    },
+    "completion_tokens": {
+      "observed_pairs": 36,
+      "unobserved_pairs": 0,
+      "base_sum": 135785,
+      "candidate_sum": 11294,
+      "base_median": 2745.0,
+      "candidate_median": 252.5,
+      "candidate_less": 36,
+      "equal": 0,
+      "candidate_more": 0
+    },
+    "finish_reason": {
+      "base": {
+        "stop": 36
+      },
+      "candidate": {
+        "stop": 36
+      },
+      "transitions": {
+        "stop -> stop": 36
+      }
+    },
+    "code_first_appearance": {
+      "base": {
+        "True": 36
+      },
+      "candidate": {
+        "True": 35,
+        "False": 1
+      },
+      "transitions": {
+        "True -> True": 35,
+        "True -> False": 1
+      }
+    }
+  },
+  "noncode": {
+    "joined_leaf_nodes": 441,
+    "joined_item_count": 382,
+    "reasoning_characters": {
+      "observed_pairs": 441,
+      "unobserved_pairs": 0,
+      "base_sum": 3569356,
+      "candidate_sum": 1820,
+      "base_median": 5475,
+      "candidate_median": 0,
+      "candidate_less": 438,
+      "equal": 2,
+      "candidate_more": 1
+    },
+    "reasoning_utf8_bytes": {
+      "observed_pairs": 441,
+      "unobserved_pairs": 0,
+      "base_sum": 3606650,
+      "candidate_sum": 1820,
+      "base_median": 5523,
+      "candidate_median": 0,
+      "candidate_less": 438,
+      "equal": 2,
+      "candidate_more": 1
+    },
+    "content_characters": {
+      "observed_pairs": 441,
+      "unobserved_pairs": 0,
+      "base_sum": 671998,
+      "candidate_sum": 247313,
+      "base_median": 1536,
+      "candidate_median": 267,
+      "candidate_less": 339,
+      "equal": 0,
+      "candidate_more": 102
+    },
+    "completion_tokens": {
+      "observed_pairs": 441,
+      "unobserved_pairs": 0,
+      "base_sum": 1513279,
+      "candidate_sum": 95861,
+      "base_median": 2640,
+      "candidate_median": 111,
+      "candidate_less": 435,
+      "equal": 0,
+      "candidate_more": 6
+    },
+    "finish_reason": {
+      "base": {
+        "stop": 408,
+        "tool_calls": 32,
+        "length": 1
+      },
+      "candidate": {
+        "stop": 441
+      },
+      "transitions": {
+        "stop -> stop": 408,
+        "tool_calls -> stop": 32,
+        "length -> stop": 1
+      }
+    },
+    "code_first_appearance": {
+      "base": {
+        "False": 406,
+        "None": 33,
+        "True": 2
+      },
+      "candidate": {
+        "True": 393,
+        "False": 48
+      },
+      "transitions": {
+        "False -> True": 368,
+        "False -> False": 38,
+        "None -> True": 23,
+        "None -> False": 10,
+        "True -> True": 2
+      }
+    }
+  },
+  "input_pins": {
+    "base_responses": {
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/results/gemma4-fresh-f04-dev30-dp4-20261107-v1/responses.jsonl",
+      "raw_prefix_sha256": "9e17d33c0552396f0f5892615f89f580a1c1df0f26dffd13f42f89c77b9ae81d",
+      "parsed_prefix_sha256": "9e17d33c0552396f0f5892615f89f580a1c1df0f26dffd13f42f89c77b9ae81d",
+      "bytes": 32369665,
+      "unparsed_tail_bytes": 0,
+      "snapshot": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f04-f06-reasoning-comparison-partial-v1/base/responses.jsonl.gz",
+      "file_size_after": 32369665,
+      "mtime_ns_before": 1794053609480254737,
+      "mtime_ns_after": 1794053609480254737
+    },
+    "base_items": {
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/results/gemma4-fresh-f04-dev30-dp4-20261107-v1/items.jsonl",
+      "raw_prefix_sha256": "112225547aa681dad402e7a3e62a2cbcafd15301e84987ad4610f2b08fffba65",
+      "parsed_prefix_sha256": "112225547aa681dad402e7a3e62a2cbcafd15301e84987ad4610f2b08fffba65",
+      "bytes": 32900667,
+      "unparsed_tail_bytes": 0,
+      "snapshot": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f04-f06-reasoning-comparison-partial-v1/base/items.jsonl.gz",
+      "file_size_after": 32900667,
+      "mtime_ns_before": 1794053610538217175,
+      "mtime_ns_after": 1794053610538217175
+    },
+    "candidate_responses": {
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/results/gemma4-fresh-f06-dev30-dp4-20261107-v1/responses.jsonl",
+      "raw_prefix_sha256": "268a97fc692af0eea81d00a65f0d7add697ed48c7ee615f82bcd17fca15ce84b",
+      "parsed_prefix_sha256": "268a97fc692af0eea81d00a65f0d7add697ed48c7ee615f82bcd17fca15ce84b",
+      "bytes": 464445,
+      "unparsed_tail_bytes": 0,
+      "snapshot": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f04-f06-reasoning-comparison-partial-v1/candidate/responses.jsonl.gz",
+      "file_size_after": 464445,
+      "mtime_ns_before": 1794060483724333700,
+      "mtime_ns_after": 1794060483724333700
+    },
+    "candidate_run": {
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/results/gemma4-fresh-f06-dev30-dp4-20261107-v1/run.json",
+      "raw_prefix_sha256": "80c4a63d5248bb9e52d94658ddbd50218455197a0059e46afbefeb696d4eebda",
+      "parsed_prefix_sha256": "80c4a63d5248bb9e52d94658ddbd50218455197a0059e46afbefeb696d4eebda",
+      "bytes": 683,
+      "unparsed_tail_bytes": 0,
+      "snapshot": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f04-f06-reasoning-comparison-partial-v1/candidate/run.json.gz",
+      "file_size_after": 683,
+      "mtime_ns_before": 1794060195605171432,
+      "mtime_ns_after": 1794060195605171432
+    }
+  },
+  "code_first_regex": "^(?:```|(?:async\\s+)?def\\s+\\w+\\s*\\(|class\\s+\\w+|import\\s+\\w|from\\s+[\\w.]+\\s+import\\s|#!)",
+  "limitations": [
+    "Partial snapshots have response-completion-order bias; counts apply only to observed matching nodes, not all 2338 or all 90 items.",
+    "Exact item/sample/path match is structural, not proof of identical input prefix or equivalent agent trajectory.",
+    "Aggregate nodes with descendant nodes are retained but excluded from additive summaries.",
+    "Reasoning text measures returned output, not internal computation or competence. Separate reasoning token counts are unobserved.",
+    "Total completion tokens cannot isolate reasoning tokens. Unknown/null values are not filled with zero.",
+    "Code-first is a narrow code-fence/Python-definition/import/shebang appearance heuristic; no match does not prove prose and a match does not prove incorrectness.",
+    "No scoring, model/API request, benchmark rerun, adoption or interruption is performed."
+  ],
+  "new_model_calls": 0,
+  "rescoring_calls": 0
+}

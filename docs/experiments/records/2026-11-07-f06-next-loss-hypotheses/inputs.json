@@ -1,0 +1,58 @@
+{
+  "status": "design_hypotheses_only_no_implementation",
+  "created_epoch": 1794060767.469562,
+  "inputs": {
+    "trainer": {
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/worktrees/kairyu-bench-weight-tools/scripts/experiments/gemma4-purpose/train_lora.py",
+      "sha256": "8bfa6f3f5568264417d52e1cf297ebf0f988458c0c075f329a189a0233a7a846"
+    },
+    "template": {
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/checkpoints/fresh-native-relative-f04-faststore-v1/checkpoint/chat_template.jinja",
+      "sha256": "ae53464bf3be25802b3a5b37def7fd89667067d7577049b3b2d74c4d8de4c6d4"
+    },
+    "F04_reasoning_metadata": {
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f04-reasoning-evidence-v1/summary.json",
+      "sha256": "2f691d95e7ecdefca837a2d2219c7b13b8d159f6bc13ed2dd158fafdac693f3d"
+    },
+    "F06_partial_metadata": {
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f04-f06-reasoning-comparison-partial-v1/summary.json",
+      "sha256": "815adbc4e44f6d6b2b55ae3b213b9daacb4e908546754c9799a903a1113bf635"
+    },
+    "training_audit": {
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f04-mbpp-lora-training-v1/log-audit-v1/summary.json",
+      "sha256": "11d584718b46174d1a38525249e914d75446a0efce4bd02c9d942a3e7d17ef1b"
+    },
+    "train_frame_proof": {
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-mbpp255-trainer-frames-v1/trainer-train204-frame-proof.json",
+      "sha256": "41fc78e1f8d26c52b1f5ce85120aba3049e6f2797c792232d59a9785b6c85cf7"
+    }
+  },
+  "source_line_references": {
+    "trainer_frame": [
+      73,
+      136
+    ],
+    "trainer_answer_loss": [
+      266,
+      276
+    ],
+    "template_optional_thought": [
+      239,
+      243
+    ],
+    "template_generation_prefix": [
+      381,
+      391
+    ]
+  },
+  "existing_training_prompts": 204,
+  "existing_training_prefix_tokens_sum": 6602,
+  "existing_training_prefix_tokens_max": 64,
+  "new_model_calls": 0,
+  "new_training_or_solver_runs": 0,
+  "new_GPU_service_operations": 0,
+  "source_edits": 0,
+  "reasoning_body_read_or_copied": false,
+  "benchmark_prompt_answer_reuse_for_training": false,
+  "ready_smoke_observation": "Operator reported code instead of one-word answer; no raw-content artifact independently inspected in this task."
+}

@@ -1,0 +1,76 @@
+[
+  {
+    "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f04-f06-reasoning-comparison-partial-v1/all-matched-node-pairs.json",
+    "sha256": "b76b6336d62a36b2e8de652ceab3bbc437c7220fca4ac17fd8452d3b302c447d",
+    "bytes": 306593,
+    "pr_copy": "all-matched-node-pairs.json"
+  },
+  {
+    "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f04-f06-reasoning-comparison-partial-v1/all-observed-item-coverage.json",
+    "sha256": "eab496f13be5abe432eb0b166f172526f3c0d3a7b617e77af6e44019ce9e88b3",
+    "bytes": 160019,
+    "pr_copy": "all-observed-item-coverage.json"
+  },
+  {
+    "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f04-f06-reasoning-comparison-partial-v1/base/items.jsonl.gz",
+    "sha256": "ab44e3047267fe273bc0fd8f4784552166e98172f876357a6752327f62e04d75",
+    "bytes": 7835111,
+    "pr_copy": false,
+    "reason": "Unchanged complete F04 inputs remain on NVMe with full raw hashes; avoid duplicate 16MB compressed baseline."
+  },
+  {
+    "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f04-f06-reasoning-comparison-partial-v1/base/responses.jsonl.gz",
+    "sha256": "935efcb27c6f00cbfdbf01fb9aa5a433d307327060ef86f6c342afc5aa518e81",
+    "bytes": 7929927,
+    "pr_copy": false,
+    "reason": "Unchanged complete F04 inputs remain on NVMe with full raw hashes; avoid duplicate 16MB compressed baseline."
+  },
+  {
+    "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f04-f06-reasoning-comparison-partial-v1/candidate/responses.jsonl.gz",
+    "sha256": "4930a3191e6d0c3c64da0e3fc66f4e3406c4edb728bc2fe39d9e3ef7ba38c854",
+    "bytes": 123568,
+    "pr_copy": "candidate/responses.jsonl.gz"
+  },
+  {
+    "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f04-f06-reasoning-comparison-partial-v1/candidate/run.json.gz",
+    "sha256": "12eff85495d9bf1f2e6f6c202795ab8e675de3075d32a3516b47c22d5f764574",
+    "bytes": 434,
+    "pr_copy": "candidate/run.json.gz"
+  },
+  {
+    "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f04-f06-reasoning-comparison-partial-v1/ruff-receipt.json",
+    "sha256": "67f795217b2a70ac9fcf376c7798ed4b6a8f0ae4c9e26a699ae8548bb543fa4c",
+    "bytes": 121,
+    "pr_copy": "ruff-receipt.json"
+  },
+  {
+    "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f04-f06-reasoning-comparison-partial-v1/ruff.stderr",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bytes": 0,
+    "pr_copy": "ruff.stderr"
+  },
+  {
+    "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f04-f06-reasoning-comparison-partial-v1/ruff.stdout",
+    "sha256": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18",
+    "bytes": 19,
+    "pr_copy": "ruff.stdout"
+  },
+  {
+    "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f04-f06-reasoning-comparison-partial-v1/same-observation-denominator.json",
+    "sha256": "07a2756d5a15223b26d079df87ca1f13ea8a3dd9b8df1a2ce523d382f738524e",
+    "bytes": 565,
+    "pr_copy": "same-observation-denominator.json"
+  },
+  {
+    "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f04-f06-reasoning-comparison-partial-v1/source.py.txt",
+    "sha256": "b83f77bda84a43fd04da26b26bb1c08a9ebff35ca80813da9577c78335cfd2a6",
+    "bytes": 8866,
+    "pr_copy": "source.py.txt"
+  },
+  {
+    "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f04-f06-reasoning-comparison-partial-v1/summary.json",
+    "sha256": "815adbc4e44f6d6b2b55ae3b213b9daacb4e908546754c9799a903a1113bf635",
+    "bytes": 9567,
+    "pr_copy": "summary.json"
+  }
+]

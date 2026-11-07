@@ -1,0 +1,140 @@
+{
+  "status": "completed",
+  "trainer_status": "completed",
+  "completed_steps": 64,
+  "training_ids": 204,
+  "presentations": 256,
+  "repeated_cases": 52,
+  "all_original_ids_covered": true,
+  "holdout_gradient_ids": [],
+  "same_case_CE": {
+    "first": {
+      "n": 52,
+      "minimum": 0.5561033487319946,
+      "mean": 2.534406861433616,
+      "median": 2.411831498146057,
+      "maximum": 5.698416709899902
+    },
+    "second": {
+      "n": 52,
+      "minimum": 0.21741743385791779,
+      "mean": 0.5559731868024056,
+      "median": 0.5390878617763519,
+      "maximum": 1.1973365545272827
+    },
+    "delta_second_minus_first": {
+      "n": 52,
+      "minimum": -5.023192822933197,
+      "mean": -1.9784336746312106,
+      "median": -1.8828200995922089,
+      "maximum": -0.3165183365345001
+    },
+    "lower": 52,
+    "equal": 0,
+    "higher": 0,
+    "token_weighted_first": 2.050065901452873,
+    "token_weighted_second": 0.49613554448937847
+  },
+  "modules": 410,
+  "observed_activation_steps": [
+    1,
+    4,
+    64
+  ],
+  "total_module_projection_events": 0,
+  "modules_projected_at_least_once": 0,
+  "global_gradient_clip_steps": 48,
+  "strict_radius_excess_events": 0,
+  "implementation_tolerance_radius_excess_events": 0,
+  "selected_step_summary": [
+    {
+      "step": 1,
+      "case_ids": [
+        869,
+        902,
+        664,
+        849
+      ],
+      "mean_CE": 3.8861565589904785,
+      "target_tokens": 305,
+      "seconds": 10.295643124962226,
+      "preclip_global_factor_gradient_l2": 2.8397576808929443,
+      "preclip_reconstructed_from_module_norms": 2.8397577961010314,
+      "gradient_norm_reconstruction_difference": 1.152080870703287e-07,
+      "global_clip_active": true,
+      "projection_modules": 0,
+      "strict_relative_after_over_0_005": 0,
+      "relative_after_over_implementation_tolerance": 0,
+      "max_relative_before": 0.00015097470055202533,
+      "max_relative_after": 0.00015097470055202533,
+      "all410_continuous_delta_l2": 0.334009386033808,
+      "all410_complete_matrix_denominator_l2": 2651.4095893171348,
+      "all410_relative_l2": 0.00012597426945258633,
+      "zero_A_gradient_modules": 410,
+      "zero_B_gradient_modules": 0
+    },
+    {
+      "step": 4,
+      "case_ids": [
+        674,
+        906,
+        795,
+        921
+      ],
+      "mean_CE": 3.58757621049881,
+      "target_tokens": 192,
+      "seconds": 5.394965245039202,
+      "preclip_global_factor_gradient_l2": 5.183244705200195,
+      "preclip_reconstructed_from_module_norms": 5.183244605894098,
+      "gradient_norm_reconstruction_difference": -9.93060975673643e-08,
+      "global_clip_active": true,
+      "projection_modules": 0,
+      "strict_relative_after_over_0_005": 0,
+      "relative_after_over_implementation_tolerance": 0,
+      "max_relative_before": 0.00044762569024081735,
+      "max_relative_after": 0.00044762569024081735,
+      "all410_continuous_delta_l2": 0.8645674978117988,
+      "all410_complete_matrix_denominator_l2": 2651.4095893171348,
+      "all410_relative_l2": 0.00032607843816181807,
+      "zero_A_gradient_modules": 0,
+      "zero_B_gradient_modules": 0
+    },
+    {
+      "step": 64,
+      "case_ids": [
+        876,
+        717,
+        816,
+        958
+      ],
+      "mean_CE": 0.3286808021366596,
+      "target_tokens": 501,
+      "seconds": 7.4313399330712855,
+      "preclip_global_factor_gradient_l2": 0.630831241607666,
+      "preclip_reconstructed_from_module_norms": 0.630831224056699,
+      "gradient_norm_reconstruction_difference": -1.7550967013058028e-08,
+      "global_clip_active": false,
+      "projection_modules": 0,
+      "strict_relative_after_over_0_005": 0,
+      "relative_after_over_implementation_tolerance": 0,
+      "max_relative_before": 0.00267117207460099,
+      "max_relative_after": 0.00267117207460099,
+      "all410_continuous_delta_l2": 3.848375559335702,
+      "all410_complete_matrix_denominator_l2": 2651.4095893171348,
+      "all410_relative_l2": 0.0014514451387825159,
+      "zero_A_gradient_modules": 0,
+      "zero_B_gradient_modules": 0
+    }
+  ],
+  "sum_logged_training_step_seconds": 400.2849520362215,
+  "trainer_elapsed_including_load_export_and_pilot_wait": 461.4254987810273,
+  "base_unchanged": true,
+  "capability_claim": false,
+  "additional_model_forwards": 0,
+  "GPU_service_operations": 0,
+  "activation_limit": "Each module's saved input/output aggregate spans four full-sequence calls in one step; different steps use different cases. No per-case/token/rank attribution or cross-step causal claim.",
+  "gradient_limit": "A/B factor-coordinate accumulated preclip gradients, not dense-weight derivatives. Continuous F32 BA norms precede any BF16 materialization.",
+  "CE_limit": "Teacher-forced CE on the same 52 training examples during optimization; no independent capability, generation, holdout or WSP conclusion.",
+  "source_sha256": "988a0de1ee1c00d60ee6ce96e44d71d8d86a0aa140d1fc47dbab1c27d74a629e",
+  "analysis_seconds": 0.3521236330270767
+}

@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import importlib.util
+import hashlib
 import json
 from pathlib import Path
 import tempfile
@@ -64,6 +65,33 @@ class N30EvidenceTests(unittest.TestCase):
             saved = json.loads(path.read_text())
         self.assertEqual(saved["items"][0]["raw_score"], {"invalid_nonfinite_float": "nan"})
         self.assertIsNone(saved["items"][0]["score"])
+
+
+    def test_versioned_owner_plan_ignores_invalid_old_original(self):
+        with tempfile.TemporaryDirectory() as directory:
+            study = Path(directory)
+            (study / "launch-plan-approved.json").write_text("{}" + chr(92) + "n")
+            actual = study / "launch-plan-approved-v2.json"
+            actual.write_text(json.dumps({"approved_for_execution": True}))
+            (study / "owner-start.json").write_text(json.dumps({
+                "plan_sha256": hashlib.sha256(actual.read_bytes()).hexdigest()}))
+            path, plan = self.audit.audit_launch_plan(study, actual)
+            self.assertEqual(path, actual)
+            self.assertTrue(plan["approved_for_execution"])
+
+    def test_explicit_plan_requires_matching_owner_and_legacy_default_is_preserved(self):
+        with tempfile.TemporaryDirectory() as directory:
+            study = Path(directory)
+            actual = study / "launch-plan-approved.json"
+            actual.write_text("{}")
+            self.assertEqual(self.audit.audit_launch_plan(study), (actual, {}))
+            with self.assertRaises(FileNotFoundError):
+                self.audit.audit_launch_plan(study, actual)
+            (study / "owner-start.json").write_text(json.dumps({"plan_sha256": "0" * 64}))
+            with self.assertRaisesRegex(ValueError, "executed owner"):
+                self.audit.audit_launch_plan(study, actual)
+            with self.assertRaisesRegex(ValueError, "executed owner"):
+                self.audit.audit_launch_plan(study)
 
 
 if __name__ == "__main__":

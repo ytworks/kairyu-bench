@@ -6,6 +6,7 @@ import argparse
 from collections import Counter
 from datetime import datetime, timezone
 import importlib.util
+import hashlib
 import json
 import math
 from pathlib import Path
@@ -104,12 +105,27 @@ def item_evidence(expected, rows, responses):
                        "unexpected_responses": unexpected_responses,
                        "actual_item_record_count": len(rows), "actual_response_record_count": len(responses)}
 
+
+def audit_launch_plan(study, explicit_path=None):
+    """Use the actual versioned owner plan, preserving the legacy default."""
+    path = explicit_path or study / "launch-plan-approved.json"
+    owner_path = study / "owner-start.json"
+    if explicit_path is not None or owner_path.exists():
+        owner = read(owner_path)
+        actual_sha = hashlib.sha256(path.read_bytes()).hexdigest()
+        if actual_sha != owner["plan_sha256"]:
+            raise ValueError("Launch plan does not match the executed owner plan SHA.")
+    return path, read(path)
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--project", type=Path, required=True)
     parser.add_argument("--repository", type=Path, required=True)
     parser.add_argument("--study", type=Path, required=True)
     parser.add_argument("--run", type=Path, required=True)
+    parser.add_argument("--launch-plan", type=Path, default=None,
+                        help="Explicit executed owner plan; defaults to study/launch-plan-approved.json.")
     parser.add_argument("--output", type=Path, required=True)
     parser.add_argument("--expected-tree", default="5d056eb03f954db80313a85167153c875fe5e436e4f97c281a3f55202d9b3eaf",
                         help="Expected checkpoint content tree; defaults to the established AV baseline.")
@@ -169,7 +185,7 @@ def main():
         save(args.output / "data-anomalies.json", anomalies)
         assert meta["tier"] == 30 and meta["split"] == "dev" and meta["items"] == 2338
         assert len(numeric) == 2338 and len(code) == 90
-        plan = read(args.study / "launch-plan-approved.json")
+        plan_path, plan = audit_launch_plan(args.study, args.launch_plan)
         actual = read(args.study / "actual-runner.json")["runner"]
         command = plan["command"]
         assert actual["command"] == command[1:]
@@ -297,9 +313,9 @@ def main():
             "source_sha256": source_checks, "analysis_seconds": time.monotonic() - started,
         }
         provenance.update(full["inputs"])
-        for path in [args.run / "responses.jsonl", trace_path, Path(__file__),
+        for path in [args.run / "responses.jsonl", trace_path, plan_path, Path(__file__),
                      Path(__file__).with_name("fresh-wsp-large-tier-audit.py")] + [
-                         args.study / name for name in ("launch-plan-approved.json", "actual-runner.json",
+                         args.study / name for name in ("actual-runner.json",
                                                         "launch-preflight.json", "run-start-verified.json")]:
             provenance[str(path)] = sha(path)
         summary["inputs_sha256"] = provenance

@@ -1,0 +1,6873 @@
+[
+  {
+    "id": "ifbench:190",
+    "area": "instructions",
+    "source": "ifbench",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "jamc-qa:jamcqa-test-healthcare-00008",
+    "area": "multilingual",
+    "source": "jamc-qa",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "ifbench:170",
+    "area": "instructions",
+    "source": "ifbench",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "jamc-qa:jamcqa-test-geography-00052",
+    "area": "multilingual",
+    "source": "jamc-qa",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "mmlu-prox-ja:8552",
+    "area": "multilingual",
+    "source": "mmlu-prox-ja",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "ifeval:1130",
+    "area": "instructions",
+    "source": "ifeval",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "triviaqa:sfq_20868",
+    "area": "facts",
+    "source": "triviaqa",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "mmlu-pro:1472",
+    "area": "knowledge",
+    "source": "mmlu-pro",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "ifeval:3305",
+    "area": "instructions",
+    "source": "ifeval",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "triviaqa:bt_3236",
+    "area": "facts",
+    "source": "triviaqa",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "mmlu-prox-ja:2067",
+    "area": "multilingual",
+    "source": "mmlu-prox-ja",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "ifbench:209",
+    "area": "instructions",
+    "source": "ifbench",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "bbeh:hyperbaton:159",
+    "area": "reasoning",
+    "source": "bbeh",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "arc-challenge:MCAS_1999_8_1",
+    "area": "commonsense",
+    "source": "arc-challenge",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 0,
+    "candidate_node_count": 0,
+    "matched_paths": [],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "jamc-qa:jamcqa-test-law-00090",
+    "area": "multilingual",
+    "source": "jamc-qa",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "ifbench:11",
+    "area": "instructions",
+    "source": "ifbench",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "humaneval-plus:HumanEval/116",
+    "area": "code",
+    "source": "humaneval-plus",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "livecodebench:3789",
+    "area": "code",
+    "source": "livecodebench",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "mmlu-pro:3789",
+    "area": "knowledge",
+    "source": "mmlu-pro",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "mmlu-prox-ja:2683",
+    "area": "multilingual",
+    "source": "mmlu-prox-ja",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "mmlu-prox-ja:4144",
+    "area": "multilingual",
+    "source": "mmlu-prox-ja",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "mmlu-prox-ja:3742",
+    "area": "multilingual",
+    "source": "mmlu-prox-ja",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "mmlu-pro:9499",
+    "area": "knowledge",
+    "source": "mmlu-pro",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "bbeh:multistep_arithmetic:013",
+    "area": "reasoning",
+    "source": "bbeh",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "mmlu-pro:9806",
+    "area": "knowledge",
+    "source": "mmlu-pro",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "livecodebench:arc196_a",
+    "area": "code",
+    "source": "livecodebench",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "mmlu-prox-ja:8161",
+    "area": "multilingual",
+    "source": "mmlu-prox-ja",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "ifeval:2273",
+    "area": "instructions",
+    "source": "ifeval",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "arc-challenge:MCAS_2003_8_7",
+    "area": "commonsense",
+    "source": "arc-challenge",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 0,
+    "candidate_node_count": 0,
+    "matched_paths": [],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "mmlu-prox-ja:1413",
+    "area": "multilingual",
+    "source": "mmlu-prox-ja",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "arc-challenge:MCAS_2003_8_21",
+    "area": "commonsense",
+    "source": "arc-challenge",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 0,
+    "candidate_node_count": 0,
+    "matched_paths": [],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "arc-challenge:MCAS_2002_8_17",
+    "area": "commonsense",
+    "source": "arc-challenge",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 0,
+    "candidate_node_count": 0,
+    "matched_paths": [],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "bbeh:sportqa:016",
+    "area": "reasoning",
+    "source": "bbeh",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "triviaqa:odql_1809",
+    "area": "facts",
+    "source": "triviaqa",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "mgsm:ru:085",
+    "area": "multilingual",
+    "source": "mgsm",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "ifeval:3188",
+    "area": "instructions",
+    "source": "ifeval",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "gpqa-diamond:0018",
+    "area": "expert",
+    "source": "gpqa-diamond",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "bbeh:sportqa:026",
+    "area": "reasoning",
+    "source": "bbeh",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "math-500:test/precalculus/801.json",
+    "area": "math",
+    "source": "math-500",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "mmmu-pro:vision:validation_Math_22",
+    "area": "vision",
+    "source": "mmmu-pro",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "musr:murder_mysteries:002",
+    "area": "reasoning",
+    "source": "musr",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "ifbench:197",
+    "area": "instructions",
+    "source": "ifbench",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "bbeh:object_counting:027",
+    "area": "reasoning",
+    "source": "bbeh",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "gpqa-diamond:0167",
+    "area": "expert",
+    "source": "gpqa-diamond",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "arc-challenge:MCAS_2004_8_7",
+    "area": "commonsense",
+    "source": "arc-challenge",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 0,
+    "candidate_node_count": 0,
+    "matched_paths": [],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "math-500:test/precalculus/190.json",
+    "area": "math",
+    "source": "math-500",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "mmlu-pro:7760",
+    "area": "knowledge",
+    "source": "mmlu-pro",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "bfcl:multi_turn_long_context_36",
+    "area": "tools",
+    "source": "bfcl",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 12,
+    "candidate_node_count": 4,
+    "matched_paths": [
+      "outcome.samples[0]",
+      "outcome.samples[0].calls[0]",
+      "outcome.samples[0].calls[1]",
+      "outcome.samples[0].calls[2]"
+    ],
+    "base_only_paths": [
+      "outcome.samples[0].calls[10]",
+      "outcome.samples[0].calls[3]",
+      "outcome.samples[0].calls[4]",
+      "outcome.samples[0].calls[5]",
+      "outcome.samples[0].calls[6]",
+      "outcome.samples[0].calls[7]",
+      "outcome.samples[0].calls[8]",
+      "outcome.samples[0].calls[9]"
+    ],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "math-500:test/geometry/183.json",
+    "area": "math",
+    "source": "math-500",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "gpqa-diamond:0001",
+    "area": "expert",
+    "source": "gpqa-diamond",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "livecodebench:3721",
+    "area": "code",
+    "source": "livecodebench",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "bbeh:disambiguation_qa:040",
+    "area": "reasoning",
+    "source": "bbeh",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "mmlu-pro:5639",
+    "area": "knowledge",
+    "source": "mmlu-pro",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "math-500:test/counting_and_probability/238.json",
+    "area": "math",
+    "source": "math-500",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "livecodebench:abc393_d",
+    "area": "code",
+    "source": "livecodebench",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "mmlu-pro:4789",
+    "area": "knowledge",
+    "source": "mmlu-pro",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "mmlu-prox-ja:8682",
+    "area": "multilingual",
+    "source": "mmlu-prox-ja",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "mmlu-pro:7663",
+    "area": "knowledge",
+    "source": "mmlu-pro",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "gpqa-diamond:0101",
+    "area": "expert",
+    "source": "gpqa-diamond",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "ruler:fwe:32768:007",
+    "area": "long-context",
+    "source": "ruler",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "gpqa-diamond:0003",
+    "area": "expert",
+    "source": "gpqa-diamond",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "mmlu-pro:7450",
+    "area": "knowledge",
+    "source": "mmlu-pro",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "longbench-v2:67078ecabb02136c067d0b89",
+    "area": "long-context",
+    "source": "longbench-v2",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "ifbench:149",
+    "area": "instructions",
+    "source": "ifbench",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "gpqa-diamond:0175",
+    "area": "expert",
+    "source": "gpqa-diamond",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "ifbench:198",
+    "area": "instructions",
+    "source": "ifbench",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "gpqa-diamond:0191",
+    "area": "expert",
+    "source": "gpqa-diamond",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "mmlu-prox-ja:8573",
+    "area": "multilingual",
+    "source": "mmlu-prox-ja",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "bfcl:multi_turn_miss_param_55",
+    "area": "tools",
+    "source": "bfcl",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 16,
+    "candidate_node_count": 7,
+    "matched_paths": [
+      "outcome.samples[0]",
+      "outcome.samples[0].calls[0]",
+      "outcome.samples[0].calls[1]",
+      "outcome.samples[0].calls[2]",
+      "outcome.samples[0].calls[3]",
+      "outcome.samples[0].calls[4]",
+      "outcome.samples[0].calls[5]"
+    ],
+    "base_only_paths": [
+      "outcome.samples[0].calls[10]",
+      "outcome.samples[0].calls[11]",
+      "outcome.samples[0].calls[12]",
+      "outcome.samples[0].calls[13]",
+      "outcome.samples[0].calls[14]",
+      "outcome.samples[0].calls[6]",
+      "outcome.samples[0].calls[7]",
+      "outcome.samples[0].calls[8]",
+      "outcome.samples[0].calls[9]"
+    ],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "mgsm:sw:093",
+    "area": "multilingual",
+    "source": "mgsm",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "math-500:test/intermediate_algebra/102.json",
+    "area": "math",
+    "source": "math-500",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "gpqa-diamond:0020",
+    "area": "expert",
+    "source": "gpqa-diamond",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "mmmu-pro:standard:validation_Mechanical_Engineering_20",
+    "area": "vision",
+    "source": "mmmu-pro",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "mmlu-pro:4037",
+    "area": "knowledge",
+    "source": "mmlu-pro",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "arc-challenge:ACTAAP_2008_5_10",
+    "area": "commonsense",
+    "source": "arc-challenge",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 0,
+    "candidate_node_count": 0,
+    "matched_paths": [],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "arc-challenge:ACTAAP_2013_5_17",
+    "area": "commonsense",
+    "source": "arc-challenge",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 0,
+    "candidate_node_count": 0,
+    "matched_paths": [],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "mmmu-pro:vision:test_Pharmacy_414",
+    "area": "vision",
+    "source": "mmmu-pro",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "arc-challenge:MCAS_2004_8_23",
+    "area": "commonsense",
+    "source": "arc-challenge",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 0,
+    "candidate_node_count": 0,
+    "matched_paths": [],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "math-500:test/intermediate_algebra/1405.json",
+    "area": "math",
+    "source": "math-500",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "gpqa-diamond:0111",
+    "area": "expert",
+    "source": "gpqa-diamond",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "arc-challenge:MCAS_2004_5_7",
+    "area": "commonsense",
+    "source": "arc-challenge",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 0,
+    "candidate_node_count": 0,
+    "matched_paths": [],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "gpqa-diamond:0034",
+    "area": "expert",
+    "source": "gpqa-diamond",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "mmlu-prox-ja:4839",
+    "area": "multilingual",
+    "source": "mmlu-prox-ja",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "humaneval-plus:HumanEval/47",
+    "area": "code",
+    "source": "humaneval-plus",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "bfcl:multi_turn_miss_func_128",
+    "area": "tools",
+    "source": "bfcl",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 12,
+    "candidate_node_count": 6,
+    "matched_paths": [
+      "outcome.samples[0]",
+      "outcome.samples[0].calls[0]",
+      "outcome.samples[0].calls[1]",
+      "outcome.samples[0].calls[2]",
+      "outcome.samples[0].calls[3]",
+      "outcome.samples[0].calls[4]"
+    ],
+    "base_only_paths": [
+      "outcome.samples[0].calls[10]",
+      "outcome.samples[0].calls[5]",
+      "outcome.samples[0].calls[6]",
+      "outcome.samples[0].calls[7]",
+      "outcome.samples[0].calls[8]",
+      "outcome.samples[0].calls[9]"
+    ],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "jamc-qa:jamcqa-test-law-00198",
+    "area": "multilingual",
+    "source": "jamc-qa",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "ifeval:374",
+    "area": "instructions",
+    "source": "ifeval",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "livecodebench:abc399_c",
+    "area": "code",
+    "source": "livecodebench",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "ifbench:174",
+    "area": "instructions",
+    "source": "ifbench",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "mmlu-pro:1433",
+    "area": "knowledge",
+    "source": "mmlu-pro",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "bbeh:movie_recommendation:179",
+    "area": "reasoning",
+    "source": "bbeh",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "mmlu-prox-ja:10899",
+    "area": "multilingual",
+    "source": "mmlu-prox-ja",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "gpqa-diamond:0083",
+    "area": "expert",
+    "source": "gpqa-diamond",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "arc-challenge:AKDE&ED_2012_8_6",
+    "area": "commonsense",
+    "source": "arc-challenge",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 0,
+    "candidate_node_count": 0,
+    "matched_paths": [],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "mmlu-pro:757",
+    "area": "knowledge",
+    "source": "mmlu-pro",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "mmlu-prox-ja:10530",
+    "area": "multilingual",
+    "source": "mmlu-prox-ja",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "ifbench:271",
+    "area": "instructions",
+    "source": "ifbench",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "ifbench:23",
+    "area": "instructions",
+    "source": "ifbench",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "ifeval:3089",
+    "area": "instructions",
+    "source": "ifeval",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "ifbench:205",
+    "area": "instructions",
+    "source": "ifbench",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "gpqa-diamond:0192",
+    "area": "expert",
+    "source": "gpqa-diamond",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "jamc-qa:jamcqa-test-geography-00039",
+    "area": "multilingual",
+    "source": "jamc-qa",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "ifeval:1834",
+    "area": "instructions",
+    "source": "ifeval",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "gpqa-diamond:0146",
+    "area": "expert",
+    "source": "gpqa-diamond",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "triviaqa:sfq_6015",
+    "area": "facts",
+    "source": "triviaqa",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "gpqa-diamond:0107",
+    "area": "expert",
+    "source": "gpqa-diamond",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "gpqa-diamond:0130",
+    "area": "expert",
+    "source": "gpqa-diamond",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "mmlu-pro:2144",
+    "area": "knowledge",
+    "source": "mmlu-pro",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "gpqa-diamond:0042",
+    "area": "expert",
+    "source": "gpqa-diamond",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "mmmu-pro:standard:validation_Accounting_24",
+    "area": "vision",
+    "source": "mmmu-pro",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "ifbench:285",
+    "area": "instructions",
+    "source": "ifbench",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "ruler:fwe:32768:013",
+    "area": "long-context",
+    "source": "ruler",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "ifbench:204",
+    "area": "instructions",
+    "source": "ifbench",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "mmlu-pro:1561",
+    "area": "knowledge",
+    "source": "mmlu-pro",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "arc-challenge:AKDE&ED_2008_4_35",
+    "area": "commonsense",
+    "source": "arc-challenge",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 0,
+    "candidate_node_count": 0,
+    "matched_paths": [],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "arc-challenge:ACTAAP_2013_7_2",
+    "area": "commonsense",
+    "source": "arc-challenge",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 0,
+    "candidate_node_count": 0,
+    "matched_paths": [],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "ifeval:3311",
+    "area": "instructions",
+    "source": "ifeval",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "arc-challenge:LEAP_2007_8_10417",
+    "area": "commonsense",
+    "source": "arc-challenge",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 0,
+    "candidate_node_count": 0,
+    "matched_paths": [],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "arc-challenge:ACTAAP_2009_7_8",
+    "area": "commonsense",
+    "source": "arc-challenge",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 0,
+    "candidate_node_count": 0,
+    "matched_paths": [],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "mmlu-pro:9478",
+    "area": "knowledge",
+    "source": "mmlu-pro",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "mmlu-pro:10492",
+    "area": "knowledge",
+    "source": "mmlu-pro",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "triviaqa:sfq_13222",
+    "area": "facts",
+    "source": "triviaqa",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "arc-challenge:MCAS_2004_9_5",
+    "area": "commonsense",
+    "source": "arc-challenge",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 0,
+    "candidate_node_count": 0,
+    "matched_paths": [],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "arc-challenge:MCAS_2005_9_6",
+    "area": "commonsense",
+    "source": "arc-challenge",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 0,
+    "candidate_node_count": 0,
+    "matched_paths": [],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "arc-challenge:MCAS_2004_9_2",
+    "area": "commonsense",
+    "source": "arc-challenge",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 0,
+    "candidate_node_count": 0,
+    "matched_paths": [],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "mmlu-prox-ja:3211",
+    "area": "multilingual",
+    "source": "mmlu-prox-ja",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "arc-challenge:AIMS_2008_8_11",
+    "area": "commonsense",
+    "source": "arc-challenge",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 0,
+    "candidate_node_count": 0,
+    "matched_paths": [],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "arc-challenge:MCAS_1999_8_5",
+    "area": "commonsense",
+    "source": "arc-challenge",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 0,
+    "candidate_node_count": 0,
+    "matched_paths": [],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "triviaqa:qb_3565",
+    "area": "facts",
+    "source": "triviaqa",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "arc-challenge:LEAP_2000_8_4",
+    "area": "commonsense",
+    "source": "arc-challenge",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 0,
+    "candidate_node_count": 0,
+    "matched_paths": [],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "arc-challenge:MCAS_2002_8_11",
+    "area": "commonsense",
+    "source": "arc-challenge",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 0,
+    "candidate_node_count": 0,
+    "matched_paths": [],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "ruler:cwe:32768:008",
+    "area": "long-context",
+    "source": "ruler",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "mmmu-pro:vision:test_Energy_and_Power_185",
+    "area": "vision",
+    "source": "mmmu-pro",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "mmlu-pro:772",
+    "area": "knowledge",
+    "source": "mmlu-pro",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "hmmt-feb-2026:2",
+    "area": "math",
+    "source": "hmmt-feb-2026",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 4,
+    "candidate_node_count": 4,
+    "matched_paths": [
+      "outcome.samples[0]",
+      "outcome.samples[1]",
+      "outcome.samples[2]",
+      "outcome.samples[3]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "ifeval:1418",
+    "area": "instructions",
+    "source": "ifeval",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "arc-challenge:MCAS_2004_5_33",
+    "area": "commonsense",
+    "source": "arc-challenge",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 0,
+    "candidate_node_count": 0,
+    "matched_paths": [],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "arc-challenge:MCAS_2005_5_25",
+    "area": "commonsense",
+    "source": "arc-challenge",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 0,
+    "candidate_node_count": 0,
+    "matched_paths": [],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "mmlu-prox-ja:1389",
+    "area": "multilingual",
+    "source": "mmlu-prox-ja",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "mmlu-pro:4656",
+    "area": "knowledge",
+    "source": "mmlu-pro",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "aime-2026:23",
+    "area": "math",
+    "source": "aime-2026",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 4,
+    "candidate_node_count": 4,
+    "matched_paths": [
+      "outcome.samples[0]",
+      "outcome.samples[1]",
+      "outcome.samples[2]",
+      "outcome.samples[3]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "ifeval:3369",
+    "area": "instructions",
+    "source": "ifeval",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "math-500:test/algebra/2626.json",
+    "area": "math",
+    "source": "math-500",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "ifeval:2041",
+    "area": "instructions",
+    "source": "ifeval",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "bbeh:nycc:018",
+    "area": "reasoning",
+    "source": "bbeh",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "ifbench:182",
+    "area": "instructions",
+    "source": "ifbench",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "ifbench:156",
+    "area": "instructions",
+    "source": "ifbench",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "bfcl:live_irrelevance_514-153-0",
+    "area": "tools",
+    "source": "bfcl",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "mmlu-pro:474",
+    "area": "knowledge",
+    "source": "mmlu-pro",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "gpqa-diamond:0099",
+    "area": "expert",
+    "source": "gpqa-diamond",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "mmlu-pro:9704",
+    "area": "knowledge",
+    "source": "mmlu-pro",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "arc-challenge:MEA_2013_8_18",
+    "area": "commonsense",
+    "source": "arc-challenge",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 0,
+    "candidate_node_count": 0,
+    "matched_paths": [],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "bbeh:word_sorting:002",
+    "area": "reasoning",
+    "source": "bbeh",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "hmmt-feb-2026:8",
+    "area": "math",
+    "source": "hmmt-feb-2026",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 4,
+    "candidate_node_count": 4,
+    "matched_paths": [
+      "outcome.samples[0]",
+      "outcome.samples[1]",
+      "outcome.samples[2]",
+      "outcome.samples[3]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "bbeh:geometric_shapes:136",
+    "area": "reasoning",
+    "source": "bbeh",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "hmmt-feb-2026:6",
+    "area": "math",
+    "source": "hmmt-feb-2026",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 4,
+    "candidate_node_count": 4,
+    "matched_paths": [
+      "outcome.samples[0]",
+      "outcome.samples[1]",
+      "outcome.samples[2]",
+      "outcome.samples[3]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "ifeval:332",
+    "area": "instructions",
+    "source": "ifeval",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "mmlu-pro:3335",
+    "area": "knowledge",
+    "source": "mmlu-pro",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "mmlu-pro:9715",
+    "area": "knowledge",
+    "source": "mmlu-pro",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "gpqa-diamond:0153",
+    "area": "expert",
+    "source": "gpqa-diamond",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "math-500:test/number_theory/234.json",
+    "area": "math",
+    "source": "math-500",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "mmlu-pro:11871",
+    "area": "knowledge",
+    "source": "mmlu-pro",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "mmlu-pro:11487",
+    "area": "knowledge",
+    "source": "mmlu-pro",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "bfcl:multi_turn_miss_param_31",
+    "area": "tools",
+    "source": "bfcl",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 15,
+    "candidate_node_count": 4,
+    "matched_paths": [
+      "outcome.samples[0]",
+      "outcome.samples[0].calls[0]",
+      "outcome.samples[0].calls[1]",
+      "outcome.samples[0].calls[2]"
+    ],
+    "base_only_paths": [
+      "outcome.samples[0].calls[10]",
+      "outcome.samples[0].calls[11]",
+      "outcome.samples[0].calls[12]",
+      "outcome.samples[0].calls[13]",
+      "outcome.samples[0].calls[3]",
+      "outcome.samples[0].calls[4]",
+      "outcome.samples[0].calls[5]",
+      "outcome.samples[0].calls[6]",
+      "outcome.samples[0].calls[7]",
+      "outcome.samples[0].calls[8]",
+      "outcome.samples[0].calls[9]"
+    ],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "mmlu-pro:8748",
+    "area": "knowledge",
+    "source": "mmlu-pro",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "bbeh:disambiguation_qa:119",
+    "area": "reasoning",
+    "source": "bbeh",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "mmmu-pro:vision:test_Music_103",
+    "area": "vision",
+    "source": "mmmu-pro",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "ifeval:3748",
+    "area": "instructions",
+    "source": "ifeval",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "scicode:9",
+    "area": "code",
+    "source": "scicode",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 2,
+    "candidate_node_count": 2,
+    "matched_paths": [
+      "outcome.samples[0]",
+      "outcome.samples[0].calls[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "bfcl:multi_turn_miss_param_96",
+    "area": "tools",
+    "source": "bfcl",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 9,
+    "candidate_node_count": 4,
+    "matched_paths": [
+      "outcome.samples[0]",
+      "outcome.samples[0].calls[0]",
+      "outcome.samples[0].calls[1]",
+      "outcome.samples[0].calls[2]"
+    ],
+    "base_only_paths": [
+      "outcome.samples[0].calls[3]",
+      "outcome.samples[0].calls[4]",
+      "outcome.samples[0].calls[5]",
+      "outcome.samples[0].calls[6]",
+      "outcome.samples[0].calls[7]"
+    ],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "musr:object_placements:187",
+    "area": "reasoning",
+    "source": "musr",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "mmmu-pro:standard:test_Design_162",
+    "area": "vision",
+    "source": "mmmu-pro",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "mgsm:bn:147",
+    "area": "multilingual",
+    "source": "mgsm",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "mmlu-pro:647",
+    "area": "knowledge",
+    "source": "mmlu-pro",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "humaneval-plus:HumanEval/95",
+    "area": "code",
+    "source": "humaneval-plus",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "mmmu-pro:standard:test_Computer_Science_140",
+    "area": "vision",
+    "source": "mmmu-pro",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "mmlu-pro:1854",
+    "area": "knowledge",
+    "source": "mmlu-pro",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "scicode:14",
+    "area": "code",
+    "source": "scicode",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 3,
+    "candidate_node_count": 3,
+    "matched_paths": [
+      "outcome.samples[0]",
+      "outcome.samples[0].calls[0]",
+      "outcome.samples[0].calls[1]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "math-500:test/number_theory/914.json",
+    "area": "math",
+    "source": "math-500",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "mmlu-prox-ja:3907",
+    "area": "multilingual",
+    "source": "mmlu-prox-ja",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "mmlu-pro:6975",
+    "area": "knowledge",
+    "source": "mmlu-pro",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "mmlu-pro:5885",
+    "area": "knowledge",
+    "source": "mmlu-pro",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "ifeval:1580",
+    "area": "instructions",
+    "source": "ifeval",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "mmlu-pro:5412",
+    "area": "knowledge",
+    "source": "mmlu-pro",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "math-500:test/algebra/975.json",
+    "area": "math",
+    "source": "math-500",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "mmlu-pro:2245",
+    "area": "knowledge",
+    "source": "mmlu-pro",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "ifeval:1944",
+    "area": "instructions",
+    "source": "ifeval",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "math-500:test/intermediate_algebra/1410.json",
+    "area": "math",
+    "source": "math-500",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "mmlu-pro:2034",
+    "area": "knowledge",
+    "source": "mmlu-pro",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "musr:team_allocation:058",
+    "area": "reasoning",
+    "source": "musr",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "hmmt-feb-2026:12",
+    "area": "math",
+    "source": "hmmt-feb-2026",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 4,
+    "candidate_node_count": 4,
+    "matched_paths": [
+      "outcome.samples[0]",
+      "outcome.samples[1]",
+      "outcome.samples[2]",
+      "outcome.samples[3]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "mmlu-pro:8719",
+    "area": "knowledge",
+    "source": "mmlu-pro",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "mbpp-plus:Mbpp/67",
+    "area": "code",
+    "source": "mbpp-plus",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "ifeval:3315",
+    "area": "instructions",
+    "source": "ifeval",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "triviaqa:qf_2195",
+    "area": "facts",
+    "source": "triviaqa",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "math-500:test/counting_and_probability/71.json",
+    "area": "math",
+    "source": "math-500",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "math-500:test/intermediate_algebra/1994.json",
+    "area": "math",
+    "source": "math-500",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "mmlu-pro:1810",
+    "area": "knowledge",
+    "source": "mmlu-pro",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "mmlu-prox-ja:6739",
+    "area": "multilingual",
+    "source": "mmlu-prox-ja",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "ifeval:2311",
+    "area": "instructions",
+    "source": "ifeval",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "mgsm:te:147",
+    "area": "multilingual",
+    "source": "mgsm",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "gpqa-diamond:0117",
+    "area": "expert",
+    "source": "gpqa-diamond",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "scicode:35",
+    "area": "code",
+    "source": "scicode",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 4,
+    "candidate_node_count": 4,
+    "matched_paths": [
+      "outcome.samples[0]",
+      "outcome.samples[0].calls[0]",
+      "outcome.samples[0].calls[1]",
+      "outcome.samples[0].calls[2]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "xstest:186",
+    "area": "safety",
+    "source": "xstest",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "gpqa-diamond:0119",
+    "area": "expert",
+    "source": "gpqa-diamond",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "musr:team_allocation:111",
+    "area": "reasoning",
+    "source": "musr",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "arc-challenge:LEAP_2001_8_10379",
+    "area": "commonsense",
+    "source": "arc-challenge",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 0,
+    "candidate_node_count": 0,
+    "matched_paths": [],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "arc-challenge:MDSA_2007_5_2",
+    "area": "commonsense",
+    "source": "arc-challenge",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 0,
+    "candidate_node_count": 0,
+    "matched_paths": [],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "ifbench:64",
+    "area": "instructions",
+    "source": "ifbench",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "arc-challenge:MCAS_2003_8_31",
+    "area": "commonsense",
+    "source": "arc-challenge",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 0,
+    "candidate_node_count": 0,
+    "matched_paths": [],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "gpqa-diamond:0104",
+    "area": "expert",
+    "source": "gpqa-diamond",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "arc-challenge:MCAS_2006_8_13",
+    "area": "commonsense",
+    "source": "arc-challenge",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 0,
+    "candidate_node_count": 0,
+    "matched_paths": [],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "jamc-qa:jamcqa-test-law-00086",
+    "area": "multilingual",
+    "source": "jamc-qa",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "livecodebench:abc395_c",
+    "area": "code",
+    "source": "livecodebench",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "bbeh:multistep_arithmetic:044",
+    "area": "reasoning",
+    "source": "bbeh",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "mmlu-pro:11897",
+    "area": "knowledge",
+    "source": "mmlu-pro",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "gpqa-diamond:0082",
+    "area": "expert",
+    "source": "gpqa-diamond",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "longbench-v2:66f3d10b821e116aacb2f14f",
+    "area": "long-context",
+    "source": "longbench-v2",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "mmmu-pro:vision:test_Marketing_27",
+    "area": "vision",
+    "source": "mmmu-pro",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "math-500:test/algebra/2277.json",
+    "area": "math",
+    "source": "math-500",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "mmlu-pro:4273",
+    "area": "knowledge",
+    "source": "mmlu-pro",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "arc-challenge:Mercury_175840",
+    "area": "commonsense",
+    "source": "arc-challenge",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 0,
+    "candidate_node_count": 0,
+    "matched_paths": [],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "ifeval:2069",
+    "area": "instructions",
+    "source": "ifeval",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "ifeval:2563",
+    "area": "instructions",
+    "source": "ifeval",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "bbeh:causal_understanding:139",
+    "area": "reasoning",
+    "source": "bbeh",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "mmlu-pro:4126",
+    "area": "knowledge",
+    "source": "mmlu-pro",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "math-500:test/precalculus/1291.json",
+    "area": "math",
+    "source": "math-500",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "mmlu-pro:5043",
+    "area": "knowledge",
+    "source": "mmlu-pro",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "longbench-v2:67062a63bb02136c067cf5ac",
+    "area": "long-context",
+    "source": "longbench-v2",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "mmlu-pro:9494",
+    "area": "knowledge",
+    "source": "mmlu-pro",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "mmlu-pro:10369",
+    "area": "knowledge",
+    "source": "mmlu-pro",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "xstest:70",
+    "area": "safety",
+    "source": "xstest",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "gsm8k-platinum:0065",
+    "area": "math",
+    "source": "gsm8k-platinum",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "math-500:test/number_theory/410.json",
+    "area": "math",
+    "source": "math-500",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "mmlu-pro:11214",
+    "area": "knowledge",
+    "source": "mmlu-pro",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "gpqa-diamond:0009",
+    "area": "expert",
+    "source": "gpqa-diamond",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "mmlu-pro:11601",
+    "area": "knowledge",
+    "source": "mmlu-pro",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "triviaqa:qz_4739",
+    "area": "facts",
+    "source": "triviaqa",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "mmlu-pro:1320",
+    "area": "knowledge",
+    "source": "mmlu-pro",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "mmlu-prox-ja:862",
+    "area": "multilingual",
+    "source": "mmlu-prox-ja",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "mmlu-pro:3324",
+    "area": "knowledge",
+    "source": "mmlu-pro",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "math-500:test/number_theory/1090.json",
+    "area": "math",
+    "source": "math-500",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "ifeval:3345",
+    "area": "instructions",
+    "source": "ifeval",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "ruler:fwe:131072:005",
+    "area": "long-context",
+    "source": "ruler",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "gpqa-diamond:0014",
+    "area": "expert",
+    "source": "gpqa-diamond",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "arc-challenge:MDSA_2007_8_42",
+    "area": "commonsense",
+    "source": "arc-challenge",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 0,
+    "candidate_node_count": 0,
+    "matched_paths": [],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "musr:object_placements:111",
+    "area": "reasoning",
+    "source": "musr",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "mmlu-pro:11319",
+    "area": "knowledge",
+    "source": "mmlu-pro",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "arc-challenge:MDSA_2012_8_6",
+    "area": "commonsense",
+    "source": "arc-challenge",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 0,
+    "candidate_node_count": 0,
+    "matched_paths": [],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "bfcl:multi_turn_miss_func_111",
+    "area": "tools",
+    "source": "bfcl",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 15,
+    "candidate_node_count": 6,
+    "matched_paths": [
+      "outcome.samples[0]",
+      "outcome.samples[0].calls[0]",
+      "outcome.samples[0].calls[1]",
+      "outcome.samples[0].calls[2]",
+      "outcome.samples[0].calls[3]",
+      "outcome.samples[0].calls[4]"
+    ],
+    "base_only_paths": [
+      "outcome.samples[0].calls[10]",
+      "outcome.samples[0].calls[11]",
+      "outcome.samples[0].calls[12]",
+      "outcome.samples[0].calls[13]",
+      "outcome.samples[0].calls[5]",
+      "outcome.samples[0].calls[6]",
+      "outcome.samples[0].calls[7]",
+      "outcome.samples[0].calls[8]",
+      "outcome.samples[0].calls[9]"
+    ],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "ifeval:3429",
+    "area": "instructions",
+    "source": "ifeval",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "musr:team_allocation:234",
+    "area": "reasoning",
+    "source": "musr",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "mmmu-pro:standard:validation_Marketing_17",
+    "area": "vision",
+    "source": "mmmu-pro",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "mmlu-pro:871",
+    "area": "knowledge",
+    "source": "mmlu-pro",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "ifbench:244",
+    "area": "instructions",
+    "source": "ifbench",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "arc-challenge:MCAS_2000_4_36",
+    "area": "commonsense",
+    "source": "arc-challenge",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 0,
+    "candidate_node_count": 0,
+    "matched_paths": [],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "arc-challenge:ACTAAP_2007_7_31",
+    "area": "commonsense",
+    "source": "arc-challenge",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 0,
+    "candidate_node_count": 0,
+    "matched_paths": [],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "arc-challenge:Mercury_178255",
+    "area": "commonsense",
+    "source": "arc-challenge",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 0,
+    "candidate_node_count": 0,
+    "matched_paths": [],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "hmmt-feb-2026:10",
+    "area": "math",
+    "source": "hmmt-feb-2026",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 4,
+    "candidate_node_count": 4,
+    "matched_paths": [
+      "outcome.samples[0]",
+      "outcome.samples[1]",
+      "outcome.samples[2]",
+      "outcome.samples[3]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "triviaqa:sfq_11150",
+    "area": "facts",
+    "source": "triviaqa",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "mmlu-pro:3044",
+    "area": "knowledge",
+    "source": "mmlu-pro",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "mbpp-plus:Mbpp/801",
+    "area": "code",
+    "source": "mbpp-plus",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "arc-challenge:CSZ30338",
+    "area": "commonsense",
+    "source": "arc-challenge",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 0,
+    "candidate_node_count": 0,
+    "matched_paths": [],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "arc-challenge:AKDE&ED_2008_4_19",
+    "area": "commonsense",
+    "source": "arc-challenge",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 0,
+    "candidate_node_count": 0,
+    "matched_paths": [],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "musr:team_allocation:121",
+    "area": "reasoning",
+    "source": "musr",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "arc-challenge:MCAS_2004_8_3",
+    "area": "commonsense",
+    "source": "arc-challenge",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 0,
+    "candidate_node_count": 0,
+    "matched_paths": [],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "arc-challenge:MCAS_2004_9_21-v1",
+    "area": "commonsense",
+    "source": "arc-challenge",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 0,
+    "candidate_node_count": 0,
+    "matched_paths": [],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "arc-challenge:AKDE&ED_2008_8_3",
+    "area": "commonsense",
+    "source": "arc-challenge",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 0,
+    "candidate_node_count": 0,
+    "matched_paths": [],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "arc-challenge:MCAS_1998_4_23",
+    "area": "commonsense",
+    "source": "arc-challenge",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 0,
+    "candidate_node_count": 0,
+    "matched_paths": [],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "bfcl:multi_turn_base_190",
+    "area": "tools",
+    "source": "bfcl",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 13,
+    "candidate_node_count": 6,
+    "matched_paths": [
+      "outcome.samples[0]",
+      "outcome.samples[0].calls[0]",
+      "outcome.samples[0].calls[1]",
+      "outcome.samples[0].calls[2]",
+      "outcome.samples[0].calls[3]",
+      "outcome.samples[0].calls[4]"
+    ],
+    "base_only_paths": [
+      "outcome.samples[0].calls[10]",
+      "outcome.samples[0].calls[11]",
+      "outcome.samples[0].calls[5]",
+      "outcome.samples[0].calls[6]",
+      "outcome.samples[0].calls[7]",
+      "outcome.samples[0].calls[8]",
+      "outcome.samples[0].calls[9]"
+    ],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "mmlu-pro:7075",
+    "area": "knowledge",
+    "source": "mmlu-pro",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "mmmu-pro:standard:test_Finance_204",
+    "area": "vision",
+    "source": "mmmu-pro",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "mmlu-pro:7249",
+    "area": "knowledge",
+    "source": "mmlu-pro",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "ifeval:3245",
+    "area": "instructions",
+    "source": "ifeval",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "arc-challenge:MCAS_1998_4_19",
+    "area": "commonsense",
+    "source": "arc-challenge",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 0,
+    "candidate_node_count": 0,
+    "matched_paths": [],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "mmlu-pro:8010",
+    "area": "knowledge",
+    "source": "mmlu-pro",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "mmlu-pro:10317",
+    "area": "knowledge",
+    "source": "mmlu-pro",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "arc-challenge:AKDE&ED_2008_8_47",
+    "area": "commonsense",
+    "source": "arc-challenge",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 0,
+    "candidate_node_count": 0,
+    "matched_paths": [],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "gsm8k-platinum:0493",
+    "area": "math",
+    "source": "gsm8k-platinum",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "arc-challenge:AKDE&ED_2008_8_36",
+    "area": "commonsense",
+    "source": "arc-challenge",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 0,
+    "candidate_node_count": 0,
+    "matched_paths": [],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "mmlu-prox-ja:4820",
+    "area": "multilingual",
+    "source": "mmlu-prox-ja",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "arc-challenge:MDSA_2010_4_20",
+    "area": "commonsense",
+    "source": "arc-challenge",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 0,
+    "candidate_node_count": 0,
+    "matched_paths": [],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "arc-challenge:MEAP_2005_5_14",
+    "area": "commonsense",
+    "source": "arc-challenge",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 0,
+    "candidate_node_count": 0,
+    "matched_paths": [],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "mmlu-pro:6482",
+    "area": "knowledge",
+    "source": "mmlu-pro",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "jamc-qa:jamcqa-test-law-00098",
+    "area": "multilingual",
+    "source": "jamc-qa",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "scicode:18",
+    "area": "code",
+    "source": "scicode",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 3,
+    "candidate_node_count": 3,
+    "matched_paths": [
+      "outcome.samples[0]",
+      "outcome.samples[0].calls[0]",
+      "outcome.samples[0].calls[1]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "ifeval:1954",
+    "area": "instructions",
+    "source": "ifeval",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "gpqa-diamond:0049",
+    "area": "expert",
+    "source": "gpqa-diamond",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "math-500:test/intermediate_algebra/199.json",
+    "area": "math",
+    "source": "math-500",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "ifbench:259",
+    "area": "instructions",
+    "source": "ifbench",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "mmlu-prox-ja:5043",
+    "area": "multilingual",
+    "source": "mmlu-prox-ja",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "math-500:test/precalculus/1313.json",
+    "area": "math",
+    "source": "math-500",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "musr:team_allocation:145",
+    "area": "reasoning",
+    "source": "musr",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "mgsm:fr:187",
+    "area": "multilingual",
+    "source": "mgsm",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "mmmu-pro:vision:validation_Biology_29",
+    "area": "vision",
+    "source": "mmmu-pro",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "arc-challenge:ACTAAP_2013_7_16",
+    "area": "commonsense",
+    "source": "arc-challenge",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 0,
+    "candidate_node_count": 0,
+    "matched_paths": [],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "bfcl:live_irrelevance_287-69-0",
+    "area": "tools",
+    "source": "bfcl",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "arc-challenge:MCAS_2016_8_15",
+    "area": "commonsense",
+    "source": "arc-challenge",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 0,
+    "candidate_node_count": 0,
+    "matched_paths": [],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "arc-challenge:MDSA_2012_8_16",
+    "area": "commonsense",
+    "source": "arc-challenge",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 0,
+    "candidate_node_count": 0,
+    "matched_paths": [],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "arc-challenge:Mercury_175560",
+    "area": "commonsense",
+    "source": "arc-challenge",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 0,
+    "candidate_node_count": 0,
+    "matched_paths": [],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "triviaqa:qb_6862",
+    "area": "facts",
+    "source": "triviaqa",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "arc-challenge:MEA_2016_8_15",
+    "area": "commonsense",
+    "source": "arc-challenge",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 0,
+    "candidate_node_count": 0,
+    "matched_paths": [],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "longbench-v2:6723a63bbb02136c067d71a1",
+    "area": "long-context",
+    "source": "longbench-v2",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "mmlu-pro:8269",
+    "area": "knowledge",
+    "source": "mmlu-pro",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "math-500:test/intermediate_algebra/1462.json",
+    "area": "math",
+    "source": "math-500",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "mmmu-pro:vision:test_Economics_215",
+    "area": "vision",
+    "source": "mmmu-pro",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "mmlu-prox-ja:1659",
+    "area": "multilingual",
+    "source": "mmlu-prox-ja",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "arc-challenge:Mercury_400877",
+    "area": "commonsense",
+    "source": "arc-challenge",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 0,
+    "candidate_node_count": 0,
+    "matched_paths": [],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "arc-challenge:Mercury_401428",
+    "area": "commonsense",
+    "source": "arc-challenge",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 0,
+    "candidate_node_count": 0,
+    "matched_paths": [],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "mmlu-pro:8314",
+    "area": "knowledge",
+    "source": "mmlu-pro",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "arc-challenge:MDSA_2007_8_17",
+    "area": "commonsense",
+    "source": "arc-challenge",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 0,
+    "candidate_node_count": 0,
+    "matched_paths": [],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "gpqa-diamond:0005",
+    "area": "expert",
+    "source": "gpqa-diamond",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "musr:team_allocation:141",
+    "area": "reasoning",
+    "source": "musr",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "gpqa-diamond:0016",
+    "area": "expert",
+    "source": "gpqa-diamond",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "mmlu-pro:207",
+    "area": "knowledge",
+    "source": "mmlu-pro",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "mmmu-pro:vision:test_Chemistry_102",
+    "area": "vision",
+    "source": "mmmu-pro",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "ifeval:3294",
+    "area": "instructions",
+    "source": "ifeval",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "arc-challenge:Mercury_183820",
+    "area": "commonsense",
+    "source": "arc-challenge",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 0,
+    "candidate_node_count": 0,
+    "matched_paths": [],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "mmlu-prox-ja:5045",
+    "area": "multilingual",
+    "source": "mmlu-prox-ja",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "jamc-qa:jamcqa-test-history-00033",
+    "area": "multilingual",
+    "source": "jamc-qa",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "aime-2026:6",
+    "area": "math",
+    "source": "aime-2026",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 4,
+    "candidate_node_count": 4,
+    "matched_paths": [
+      "outcome.samples[0]",
+      "outcome.samples[1]",
+      "outcome.samples[2]",
+      "outcome.samples[3]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "mmlu-pro:910",
+    "area": "knowledge",
+    "source": "mmlu-pro",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "arc-challenge:Mercury_405161",
+    "area": "commonsense",
+    "source": "arc-challenge",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 0,
+    "candidate_node_count": 0,
+    "matched_paths": [],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "xstest:328",
+    "area": "safety",
+    "source": "xstest",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "math-500:test/algebra/2486.json",
+    "area": "math",
+    "source": "math-500",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "mmlu-pro:7428",
+    "area": "knowledge",
+    "source": "mmlu-pro",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "jamc-qa:jamcqa-test-law-00298",
+    "area": "multilingual",
+    "source": "jamc-qa",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "xstest:124",
+    "area": "safety",
+    "source": "xstest",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "mmlu-pro:7704",
+    "area": "knowledge",
+    "source": "mmlu-pro",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "livecodebench:abc394_b",
+    "area": "code",
+    "source": "livecodebench",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "mbpp-plus:Mbpp/129",
+    "area": "code",
+    "source": "mbpp-plus",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "mmlu-pro:9095",
+    "area": "knowledge",
+    "source": "mmlu-pro",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "ifbench:57",
+    "area": "instructions",
+    "source": "ifbench",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "humaneval-plus:HumanEval/103",
+    "area": "code",
+    "source": "humaneval-plus",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "jamc-qa:jamcqa-test-culture-00183",
+    "area": "multilingual",
+    "source": "jamc-qa",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "mmlu-pro:4953",
+    "area": "knowledge",
+    "source": "mmlu-pro",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "mmlu-pro:9065",
+    "area": "knowledge",
+    "source": "mmlu-pro",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "ifeval:102",
+    "area": "instructions",
+    "source": "ifeval",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "mmlu-prox-ja:7358",
+    "area": "multilingual",
+    "source": "mmlu-prox-ja",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "mmlu-pro:11827",
+    "area": "knowledge",
+    "source": "mmlu-pro",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "ifeval:3697",
+    "area": "instructions",
+    "source": "ifeval",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "triviaqa:bt_2905",
+    "area": "facts",
+    "source": "triviaqa",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "aime-2026:16",
+    "area": "math",
+    "source": "aime-2026",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 4,
+    "candidate_node_count": 4,
+    "matched_paths": [
+      "outcome.samples[0]",
+      "outcome.samples[1]",
+      "outcome.samples[2]",
+      "outcome.samples[3]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "arc-challenge:MCAS_2006_8_24",
+    "area": "commonsense",
+    "source": "arc-challenge",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 0,
+    "candidate_node_count": 0,
+    "matched_paths": [],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "arc-challenge:Mercury_401865",
+    "area": "commonsense",
+    "source": "arc-challenge",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 0,
+    "candidate_node_count": 0,
+    "matched_paths": [],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "arc-challenge:Mercury_400091",
+    "area": "commonsense",
+    "source": "arc-challenge",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 0,
+    "candidate_node_count": 0,
+    "matched_paths": [],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "arc-challenge:Mercury_175053",
+    "area": "commonsense",
+    "source": "arc-challenge",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 0,
+    "candidate_node_count": 0,
+    "matched_paths": [],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "arc-challenge:MCAS_2014_5_13",
+    "area": "commonsense",
+    "source": "arc-challenge",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 0,
+    "candidate_node_count": 0,
+    "matched_paths": [],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "xstest:333",
+    "area": "safety",
+    "source": "xstest",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "xstest:74",
+    "area": "safety",
+    "source": "xstest",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "mmlu-pro:5181",
+    "area": "knowledge",
+    "source": "mmlu-pro",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "ifeval:1759",
+    "area": "instructions",
+    "source": "ifeval",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "scicode:46",
+    "area": "code",
+    "source": "scicode",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 5,
+    "candidate_node_count": 5,
+    "matched_paths": [
+      "outcome.samples[0]",
+      "outcome.samples[0].calls[0]",
+      "outcome.samples[0].calls[1]",
+      "outcome.samples[0].calls[2]",
+      "outcome.samples[0].calls[3]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "scicode:45",
+    "area": "code",
+    "source": "scicode",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 5,
+    "candidate_node_count": 5,
+    "matched_paths": [
+      "outcome.samples[0]",
+      "outcome.samples[0].calls[0]",
+      "outcome.samples[0].calls[1]",
+      "outcome.samples[0].calls[2]",
+      "outcome.samples[0].calls[3]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "bfcl:live_irrelevance_265-57-0",
+    "area": "tools",
+    "source": "bfcl",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "mmlu-pro:3893",
+    "area": "knowledge",
+    "source": "mmlu-pro",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "ifeval:209",
+    "area": "instructions",
+    "source": "ifeval",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "ifeval:1776",
+    "area": "instructions",
+    "source": "ifeval",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "mmlu-prox-ja:7966",
+    "area": "multilingual",
+    "source": "mmlu-prox-ja",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "mmlu-pro:8121",
+    "area": "knowledge",
+    "source": "mmlu-pro",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "ifbench:34",
+    "area": "instructions",
+    "source": "ifbench",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "xstest:53",
+    "area": "safety",
+    "source": "xstest",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "ifeval:3224",
+    "area": "instructions",
+    "source": "ifeval",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "musr:object_placements:179",
+    "area": "reasoning",
+    "source": "musr",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "mmlu-pro:4721",
+    "area": "knowledge",
+    "source": "mmlu-pro",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "mmlu-prox-ja:6357",
+    "area": "multilingual",
+    "source": "mmlu-prox-ja",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "mmlu-pro:9844",
+    "area": "knowledge",
+    "source": "mmlu-pro",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "math-500:test/prealgebra/846.json",
+    "area": "math",
+    "source": "math-500",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "xstest:155",
+    "area": "safety",
+    "source": "xstest",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "ifbench:26",
+    "area": "instructions",
+    "source": "ifbench",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "xstest:13",
+    "area": "safety",
+    "source": "xstest",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "ifeval:1402",
+    "area": "instructions",
+    "source": "ifeval",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "xstest:23",
+    "area": "safety",
+    "source": "xstest",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "xstest:224",
+    "area": "safety",
+    "source": "xstest",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "xstest:217",
+    "area": "safety",
+    "source": "xstest",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "mmlu-pro:6573",
+    "area": "knowledge",
+    "source": "mmlu-pro",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "mmlu-prox-ja:8852",
+    "area": "multilingual",
+    "source": "mmlu-prox-ja",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "bfcl:multi_turn_miss_func_5",
+    "area": "tools",
+    "source": "bfcl",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 15,
+    "candidate_node_count": 6,
+    "matched_paths": [
+      "outcome.samples[0]",
+      "outcome.samples[0].calls[0]",
+      "outcome.samples[0].calls[1]",
+      "outcome.samples[0].calls[2]",
+      "outcome.samples[0].calls[3]",
+      "outcome.samples[0].calls[4]"
+    ],
+    "base_only_paths": [
+      "outcome.samples[0].calls[10]",
+      "outcome.samples[0].calls[11]",
+      "outcome.samples[0].calls[12]",
+      "outcome.samples[0].calls[13]",
+      "outcome.samples[0].calls[5]",
+      "outcome.samples[0].calls[6]",
+      "outcome.samples[0].calls[7]",
+      "outcome.samples[0].calls[8]",
+      "outcome.samples[0].calls[9]"
+    ],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "mmmu-pro:standard:test_Electronics_81",
+    "area": "vision",
+    "source": "mmmu-pro",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "mmmu-pro:standard:test_Chemistry_43",
+    "area": "vision",
+    "source": "mmmu-pro",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "math-500:test/number_theory/255.json",
+    "area": "math",
+    "source": "math-500",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "gsm8k-platinum:1040",
+    "area": "math",
+    "source": "gsm8k-platinum",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "mmmu-pro:vision:test_Physics_397",
+    "area": "vision",
+    "source": "mmmu-pro",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "math-500:test/intermediate_algebra/1151.json",
+    "area": "math",
+    "source": "math-500",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "ifeval:122",
+    "area": "instructions",
+    "source": "ifeval",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "mmlu-pro:101",
+    "area": "knowledge",
+    "source": "mmlu-pro",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "mmlu-pro:2488",
+    "area": "knowledge",
+    "source": "mmlu-pro",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "arc-challenge:MCAS_2014_5_7",
+    "area": "commonsense",
+    "source": "arc-challenge",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 0,
+    "candidate_node_count": 0,
+    "matched_paths": [],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "humaneval-plus:HumanEval/148",
+    "area": "code",
+    "source": "humaneval-plus",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "arc-challenge:MEA_2013_5_15",
+    "area": "commonsense",
+    "source": "arc-challenge",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 0,
+    "candidate_node_count": 0,
+    "matched_paths": [],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "mmlu-pro:8627",
+    "area": "knowledge",
+    "source": "mmlu-pro",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "mmlu-pro:6813",
+    "area": "knowledge",
+    "source": "mmlu-pro",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "math-500:test/number_theory/459.json",
+    "area": "math",
+    "source": "math-500",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "arc-challenge:MCAS_2003_8_29",
+    "area": "commonsense",
+    "source": "arc-challenge",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 0,
+    "candidate_node_count": 0,
+    "matched_paths": [],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "arc-challenge:MEA_2014_5_11",
+    "area": "commonsense",
+    "source": "arc-challenge",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 0,
+    "candidate_node_count": 0,
+    "matched_paths": [],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "arc-challenge:Mercury_400828",
+    "area": "commonsense",
+    "source": "arc-challenge",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 0,
+    "candidate_node_count": 0,
+    "matched_paths": [],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "mmlu-pro:6323",
+    "area": "knowledge",
+    "source": "mmlu-pro",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "mmlu-prox-ja:3114",
+    "area": "multilingual",
+    "source": "mmlu-prox-ja",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "gpqa-diamond:0058",
+    "area": "expert",
+    "source": "gpqa-diamond",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "mmlu-pro:7087",
+    "area": "knowledge",
+    "source": "mmlu-pro",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "gsm8k-platinum:0617",
+    "area": "math",
+    "source": "gsm8k-platinum",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "mmlu-pro:1826",
+    "area": "knowledge",
+    "source": "mmlu-pro",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "arc-challenge:Mercury_404097",
+    "area": "commonsense",
+    "source": "arc-challenge",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 0,
+    "candidate_node_count": 0,
+    "matched_paths": [],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "longbench-v2:67062fbfbb02136c067cf66a",
+    "area": "long-context",
+    "source": "longbench-v2",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "ifbench:263",
+    "area": "instructions",
+    "source": "ifbench",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "arc-challenge:Mercury_400443",
+    "area": "commonsense",
+    "source": "arc-challenge",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 0,
+    "candidate_node_count": 0,
+    "matched_paths": [],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "mmlu-prox-ja:5980",
+    "area": "multilingual",
+    "source": "mmlu-prox-ja",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "mmmu-pro:standard:test_Math_19",
+    "area": "vision",
+    "source": "mmmu-pro",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "mmlu-pro:10175",
+    "area": "knowledge",
+    "source": "mmlu-pro",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "jamc-qa:jamcqa-test-culture-00401",
+    "area": "multilingual",
+    "source": "jamc-qa",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "xstest:2",
+    "area": "safety",
+    "source": "xstest",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "aime-2026:1",
+    "area": "math",
+    "source": "aime-2026",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 4,
+    "candidate_node_count": 4,
+    "matched_paths": [
+      "outcome.samples[0]",
+      "outcome.samples[1]",
+      "outcome.samples[2]",
+      "outcome.samples[3]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "xstest:123",
+    "area": "safety",
+    "source": "xstest",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "ifeval:2653",
+    "area": "instructions",
+    "source": "ifeval",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "ifbench:39",
+    "area": "instructions",
+    "source": "ifbench",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "mmlu-pro:731",
+    "area": "knowledge",
+    "source": "mmlu-pro",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "mmlu-prox-ja:9084",
+    "area": "multilingual",
+    "source": "mmlu-prox-ja",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "livecodebench:abc395_f",
+    "area": "code",
+    "source": "livecodebench",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "xstest:167",
+    "area": "safety",
+    "source": "xstest",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "gpqa-diamond:0087",
+    "area": "expert",
+    "source": "gpqa-diamond",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "ifeval:3691",
+    "area": "instructions",
+    "source": "ifeval",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "ifeval:1107",
+    "area": "instructions",
+    "source": "ifeval",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "mmlu-prox-ja:8975",
+    "area": "multilingual",
+    "source": "mmlu-prox-ja",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "xstest:64",
+    "area": "safety",
+    "source": "xstest",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "xstest:54",
+    "area": "safety",
+    "source": "xstest",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "ifbench:96",
+    "area": "instructions",
+    "source": "ifbench",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "gpqa-diamond:0025",
+    "area": "expert",
+    "source": "gpqa-diamond",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "mmlu-pro:8925",
+    "area": "knowledge",
+    "source": "mmlu-pro",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "ifeval:2704",
+    "area": "instructions",
+    "source": "ifeval",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "jamc-qa:jamcqa-test-culture-00076",
+    "area": "multilingual",
+    "source": "jamc-qa",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "arc-challenge:Mercury_185010",
+    "area": "commonsense",
+    "source": "arc-challenge",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 0,
+    "candidate_node_count": 0,
+    "matched_paths": [],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "mmlu-pro:8770",
+    "area": "knowledge",
+    "source": "mmlu-pro",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "ifeval:168",
+    "area": "instructions",
+    "source": "ifeval",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "arc-challenge:Mercury_401014",
+    "area": "commonsense",
+    "source": "arc-challenge",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 0,
+    "candidate_node_count": 0,
+    "matched_paths": [],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "mmlu-pro:11583",
+    "area": "knowledge",
+    "source": "mmlu-pro",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "arc-challenge:Mercury_400084",
+    "area": "commonsense",
+    "source": "arc-challenge",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 0,
+    "candidate_node_count": 0,
+    "matched_paths": [],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "mmlu-prox-ja:1395",
+    "area": "multilingual",
+    "source": "mmlu-prox-ja",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "mmlu-prox-ja:2417",
+    "area": "multilingual",
+    "source": "mmlu-prox-ja",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "arc-challenge:Mercury_404272",
+    "area": "commonsense",
+    "source": "arc-challenge",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 0,
+    "candidate_node_count": 0,
+    "matched_paths": [],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "ifbench:6",
+    "area": "instructions",
+    "source": "ifbench",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "arc-challenge:Mercury_401433",
+    "area": "commonsense",
+    "source": "arc-challenge",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 0,
+    "candidate_node_count": 0,
+    "matched_paths": [],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "mmlu-pro:10815",
+    "area": "knowledge",
+    "source": "mmlu-pro",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "arc-challenge:Mercury_403232",
+    "area": "commonsense",
+    "source": "arc-challenge",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 0,
+    "candidate_node_count": 0,
+    "matched_paths": [],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "arc-challenge:Mercury_405950",
+    "area": "commonsense",
+    "source": "arc-challenge",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 0,
+    "candidate_node_count": 0,
+    "matched_paths": [],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "bbeh:linguini:115",
+    "area": "reasoning",
+    "source": "bbeh",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "musr:team_allocation:048",
+    "area": "reasoning",
+    "source": "musr",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "bfcl:multi_turn_miss_func_190",
+    "area": "tools",
+    "source": "bfcl",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 13,
+    "candidate_node_count": 7,
+    "matched_paths": [
+      "outcome.samples[0]",
+      "outcome.samples[0].calls[0]",
+      "outcome.samples[0].calls[1]",
+      "outcome.samples[0].calls[2]",
+      "outcome.samples[0].calls[3]",
+      "outcome.samples[0].calls[4]",
+      "outcome.samples[0].calls[5]"
+    ],
+    "base_only_paths": [
+      "outcome.samples[0].calls[10]",
+      "outcome.samples[0].calls[11]",
+      "outcome.samples[0].calls[6]",
+      "outcome.samples[0].calls[7]",
+      "outcome.samples[0].calls[8]",
+      "outcome.samples[0].calls[9]"
+    ],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "mmlu-pro:4636",
+    "area": "knowledge",
+    "source": "mmlu-pro",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "arc-challenge:Mercury_402216",
+    "area": "commonsense",
+    "source": "arc-challenge",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 0,
+    "candidate_node_count": 0,
+    "matched_paths": [],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "gpqa-diamond:0112",
+    "area": "expert",
+    "source": "gpqa-diamond",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "math-500:test/intermediate_algebra/428.json",
+    "area": "math",
+    "source": "math-500",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "arc-challenge:Mercury_400750",
+    "area": "commonsense",
+    "source": "arc-challenge",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 0,
+    "candidate_node_count": 0,
+    "matched_paths": [],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "gsm8k-platinum:0634",
+    "area": "math",
+    "source": "gsm8k-platinum",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "humaneval-plus:HumanEval/57",
+    "area": "code",
+    "source": "humaneval-plus",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "mmlu-prox-ja:5286",
+    "area": "multilingual",
+    "source": "mmlu-prox-ja",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "ifbench:234",
+    "area": "instructions",
+    "source": "ifbench",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "arc-challenge:Mercury_406800",
+    "area": "commonsense",
+    "source": "arc-challenge",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 0,
+    "candidate_node_count": 0,
+    "matched_paths": [],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "xstest:153",
+    "area": "safety",
+    "source": "xstest",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "arc-challenge:Mercury_411071",
+    "area": "commonsense",
+    "source": "arc-challenge",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 0,
+    "candidate_node_count": 0,
+    "matched_paths": [],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "ifeval:2857",
+    "area": "instructions",
+    "source": "ifeval",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "arc-challenge:Mercury_412681",
+    "area": "commonsense",
+    "source": "arc-challenge",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 0,
+    "candidate_node_count": 0,
+    "matched_paths": [],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "ifeval:3287",
+    "area": "instructions",
+    "source": "ifeval",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "gpqa-diamond:0193",
+    "area": "expert",
+    "source": "gpqa-diamond",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "xstest:347",
+    "area": "safety",
+    "source": "xstest",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "mmmu-pro:standard:test_Economics_83",
+    "area": "vision",
+    "source": "mmmu-pro",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "arc-challenge:Mercury_416683",
+    "area": "commonsense",
+    "source": "arc-challenge",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 0,
+    "candidate_node_count": 0,
+    "matched_paths": [],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "arc-challenge:Mercury_412774",
+    "area": "commonsense",
+    "source": "arc-challenge",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 0,
+    "candidate_node_count": 0,
+    "matched_paths": [],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "mmlu-pro:6163",
+    "area": "knowledge",
+    "source": "mmlu-pro",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "humaneval-plus:HumanEval/146",
+    "area": "code",
+    "source": "humaneval-plus",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "mmlu-pro:11812",
+    "area": "knowledge",
+    "source": "mmlu-pro",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "arc-challenge:Mercury_417118",
+    "area": "commonsense",
+    "source": "arc-challenge",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 0,
+    "candidate_node_count": 0,
+    "matched_paths": [],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "triviaqa:bb_6292",
+    "area": "facts",
+    "source": "triviaqa",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "ifbench:113",
+    "area": "instructions",
+    "source": "ifbench",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "math-500:test/algebra/246.json",
+    "area": "math",
+    "source": "math-500",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "mmmu-pro:vision:test_Agriculture_248",
+    "area": "vision",
+    "source": "mmmu-pro",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "bfcl:live_irrelevance_349-81-10",
+    "area": "tools",
+    "source": "bfcl",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "math-500:test/algebra/529.json",
+    "area": "math",
+    "source": "math-500",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "bfcl:live_irrelevance_371-81-32",
+    "area": "tools",
+    "source": "bfcl",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "mmlu-pro:3179",
+    "area": "knowledge",
+    "source": "mmlu-pro",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "triviaqa:sfq_25398",
+    "area": "facts",
+    "source": "triviaqa",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "mmlu-pro:10362",
+    "area": "knowledge",
+    "source": "mmlu-pro",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "arc-challenge:Mercury_7016800",
+    "area": "commonsense",
+    "source": "arc-challenge",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 0,
+    "candidate_node_count": 0,
+    "matched_paths": [],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "ifeval:1936",
+    "area": "instructions",
+    "source": "ifeval",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "xstest:172",
+    "area": "safety",
+    "source": "xstest",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "ifeval:1686",
+    "area": "instructions",
+    "source": "ifeval",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "math-500:test/algebra/2064.json",
+    "area": "math",
+    "source": "math-500",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "mbpp-plus:Mbpp/103",
+    "area": "code",
+    "source": "mbpp-plus",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "mmlu-pro:4605",
+    "area": "knowledge",
+    "source": "mmlu-pro",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "humaneval-plus:HumanEval/151",
+    "area": "code",
+    "source": "humaneval-plus",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "mmlu-pro:1757",
+    "area": "knowledge",
+    "source": "mmlu-pro",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  },
+  {
+    "id": "bfcl:live_irrelevance_300-74-0",
+    "area": "tools",
+    "source": "bfcl",
+    "base_error": null,
+    "candidate_error": null,
+    "base_node_count": 1,
+    "candidate_node_count": 1,
+    "matched_paths": [
+      "outcome.samples[0]"
+    ],
+    "base_only_paths": [],
+    "candidate_only_paths": []
+  }
+]
