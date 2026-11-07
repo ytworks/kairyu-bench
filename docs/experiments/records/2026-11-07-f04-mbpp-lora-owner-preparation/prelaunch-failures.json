@@ -1,0 +1,21 @@
+{
+  "before_remote_execution": [
+    {
+      "kind": "local_shell_quoting_error",
+      "impact": "remote script and checks not executed"
+    },
+    {
+      "kind": "Ruff E741",
+      "path": "fresh-f04-mbpp-lora-plan-20261107.py",
+      "impact": "plan preparation not started",
+      "fix": "O renamed PREPARATION"
+    },
+    {
+      "kind": "record_packaging_JS_syntax_error",
+      "impact": "no remote command or records written"
+    }
+  ],
+  "actual_training": 0,
+  "model_calls": 0,
+  "service_changes": 0
+}

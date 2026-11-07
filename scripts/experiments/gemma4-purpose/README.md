@@ -647,3 +647,80 @@ these exact IDs and tree rather than the historical fixed AV/train12 cohort;
 its legacy schema1 checks are preserved. Actual F04 train19 evidence and the
 separate execution outcomes are in
 [the run record](../../../docs/experiments/2026-11-07-f04-behavior19-native-generation.md).
+
+### Public TRAIN reference quality
+
+`mbpp_reference_quality.py --inputs <filtered-MBPP-directory> --output <new-directory>` validates unchanged public TRAIN references with original setup/assertions inside the existing Docker sandbox. The currently fixed cohort is train204/holdout51, with no use of held-out examples for optimization. It records failed/unknown references as exclusions without modifying input rows. The fixed pinned image and no-network/no-GPU resource boundary, exact original asserts, case timeout, closure and separate challenge results are retained. This is reference quality verification, not a model capability score. See `docs/experiments/2026-11-07-mbpp-reference-quality-and-frames.md` for the measured cohort and official ON turn-terminator evidence.
+
+### Bounded local LoRA training (explicit opt-in)
+
+train_lora.py implements the current small Gemma4 experiment; it is not a training
+framework. It needs the existing Torch/Transformers/safetensors runtime, NumPy,
+the local BF16 checkpoint and no PEFT install. The default is metadata-only:
+
+    python train_lora.py --plan /inputs/trainer-plan.json --output /new/train
+    # Exclusive-owner authorization is required before this actual run:
+    python train_lora.py --plan /inputs/trainer-plan.json --output /new/train \
+      --run --device cuda:0 --gpu-exclusive-approved
+
+Plan schema_version=1 and kind=gemma4_lora_sft_v1 bind checkpoint
+{path,tree_sha256,attestation:{path,sha256}}, data
+{path,sha256,split:"train",ids:[ordered original task IDs],
+split_summary:{path,sha256}}, frame_evidence:{path,sha256}, and
+input_quality:{path,sha256}. The quality input is the completed reference-quality
+summary with exactly the declared train eligible IDs and zero unknown.
+The split summary defines original training and held-out IDs; holdout overlap
+is rejected. Input rows retain original MBPP task_id/text/code; no tests or
+benchmark answers enter the loss. No input is silently dropped or truncated.
+
+hyperparameters must equal the recipe's HYPERPARAMETERS dictionary:
+rank8/alpha8, LR1e-4, weight_decay0, clip1, accumulation4, seed0, maxframe1024,
+per-matrix continuous relative-delta cap0.005, pilot4/total64. Set
+maximum_seconds and continuation_wait_seconds explicitly. Computation time
+includes tokenizer/model loading; only the bounded operator wait is added to
+that deadline. The initial experiment uses1800 and300 seconds.
+
+prepare_training_frames returns the actual official ON user+assistant-reference
+dialog with exact prefix token masking. Targets include the reference and
+official turn terminator (<turn|> plus newline), not a manually appended global
+EOS1. It does not insert an empty thought or pad to a foil. Each example has its
+own exact length; four example-mean CE losses form one optimizer step. This is
+direct-answer SFT, not a claim to reproduce free-thinking trajectories.
+
+The BF16 base stays frozen/eval, with FP32 A/B, no dropout and no gradient
+checkpointing. A starts random and B zero: A's first gradient can correctly be
+zero. FP32 saved nonleaf activations reuse native.py's CPU offload; BF16 tensors
+remain on the device. Every projection must execute four times and receive
+gradients in every completed step. Per-module A/B grad norms and zero flags,
+full-matrix norm denominators, r×r Gram-derived delta norms, and every B
+projection factor are logged. B alone is projected when its ratio exceeds
+0.005; Adam moments are not rescaled. Steps1/4/64 also collect input/output
+element counts, sums, squared sums and maxima. These aggregates do not identify
+capability-specific neurons.
+
+The4-step pilot exports F32 factors/config/training receipt/merge spec and
+pilot-ready.json, then holds the same model/optimizer in memory. Root may write
+/new/train/continue.json with exactly:
+
+    {"pilot_receipt_sha256":"SHA256_OF_pilot-ready.json","continue_to_step":64}
+
+A bound continue_to_step4 or wait timeout produces pilot_only; the factors and
+all completed/partial-step records remain. No optimizer checkpoint is required.
+Continuing always ends at step64, with no best-step selection. A failed operation
+is retained and is not retried automatically. steps.jsonl and microbatches.jsonl
+record the successful work before any failure; summary records attempts and
+frozen-base/stat continuity. All records distinguish continuous training deltas
+from actual saved BF16 changes.
+
+Exports use standalone dense_lora_recipe.py factor_format v2 (F32, all820
+factors) and its new local_training receipt opt-in; no fictional public donor
+identity is inserted. Merge to a new checkpoint and verify with that existing
+tool separately. It recomputes actual saved BF16 differences and unchanged
+bytes; an unmerged adapter's activations are not bit-equivalent to a BF16-merged
+matmul. Native-only faststore cannot save matrix edits. Recalculate actual NVMe
+free space and the explicit5GiB reserve before the approximately63GB dense copy.
+See the [implementation and CPU validation](../../../docs/experiments/2026-11-07-f04-lora-training-implementation.md).
+
+The ordinary ON chat format does not prove that direct-code supervision preserves reasoning. A lower answer loss may reflect immediate-code/output-format fitting or suppressed thinking rather than better inference. Compare the candidate’s existing WSP reasoning-token/finish traces with the completed parent traces; no new parent run is required, and no training-loss gain is a capability claim.
+
+The existing fresh-av-native-gpu4 owner has an explicit train-lora single-job mode, a separately bounded training deadline (initial2400s including startup/approval allowances), exact same-CID restoration and a distinct pilot_only result. [Owner preparation](../../../docs/experiments/2026-11-07-f04-mbpp-lora-owner-preparation.md) preserves the original native-mode bounds.

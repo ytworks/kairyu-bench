@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Preview metadata, or own native/finite GPU4 diagnostics and restore exact gemma-2."""
+"""Preview metadata, or own native/finite/train-lora GPU4 work and restore exact gemma-2."""
 from __future__ import annotations
 
 import argparse
@@ -66,8 +66,102 @@ def native_args(plan, objective, run=False):
 
 def stages(plan):
     mode = plan.get("mode", "native")
-    require(mode in ("native", "finite"), "explicit supported owner mode required")
-    return ("finite",) if mode == "finite" else OBJECTIVES
+    require(mode in ("native", "finite", "train-lora"), "explicit supported owner mode required")
+    return OBJECTIVES if mode == "native" else (mode,)
+
+
+def training_args(plan, run=False):
+    args = [str(Path(plan["source_root"]) / "scripts/experiments/gemma4-purpose/train_lora.py"),
+            "--plan", plan["training"]["plan"]["path"],
+            "--output", str(Path(plan["output_root"]) / "work/train-lora")]
+    return args + (["--run", "--device", "cuda:0", "--gpu-exclusive-approved"] if run else [])
+
+
+def training_metadata(plan):
+    """Training identity only; trainer preview owns its frame/math validation."""
+    training = plan["training"]
+    require(set(training) == {"plan", "cpu_preview", "input_quality", "holdout", "restoration_proof"},
+            "explicit training identity pins required")
+    task = pinned(training["plan"])
+    require(task["kind"] == "gemma4_lora_sft_v1", "LoRA trainer kind required")
+    require(task["checkpoint"] == dict(path=plan["checkpoint"], tree_sha256=plan["checkpoint_tree_sha256"],
+                                     attestation=plan["attestation"]), "training parent differs")
+    deadline = plan["maximum_training_seconds"]
+    require(type(task["maximum_seconds"]) is int and task["maximum_seconds"] > 0
+            and type(task["continuation_wait_seconds"]) is int and task["continuation_wait_seconds"] > 0
+            and type(plan["training_startup_allowance_seconds"]) is int
+            and 30 <= plan["training_startup_allowance_seconds"] <= 300
+            and deadline == task["maximum_seconds"] + task["continuation_wait_seconds"]
+                + plan["training_startup_allowance_seconds"], "explicit training/pause/startup deadline required")
+    data = task["data"]
+    require(data["split"] == "train", "trainer must use the training split")
+    split = pinned(data["split_summary"])
+    frame = task["frame_evidence"]
+    pinned(frame)
+    ids_by_split = {}
+    inputs = [data, data["split_summary"], frame, training["holdout"]]
+    work = Path(plan["output_root"]).resolve() / "work"
+    require(all(not Path(v["path"]).resolve().is_relative_to(work) for v in inputs),
+            "training inputs must stay outside writable work")
+    for label, pin in (("train", data), ("holdout", training["holdout"])):
+        require(sha(pin["path"]) == pin["sha256"], "training/holdout file changed")
+        rows = [json.loads(line) for line in Path(pin["path"]).read_text().splitlines() if line.strip()]
+        ids = [row["task_id"] for row in rows]
+        expected = split["training_ids" if label == "train" else "holdout_ids"]
+        require(0 < len(ids) <= 512 and len(set(ids)) == len(ids) and ids == expected
+                and len(ids) == split[label + "_rows"], "exact training/holdout IDs required")
+        ids_by_split[label] = ids
+    require(task["data"]["ids"] == ids_by_split["train"], "trainer selected IDs differ")
+    require(not set(ids_by_split["train"]) & set(ids_by_split["holdout"]), "holdout overlaps training")
+    quality = pinned(training["input_quality"])
+    require(task["input_quality"] == quality["reference_quality_summary"],
+            "trainer and owner reference-quality evidence differs")
+    pinned(task["input_quality"])
+    require(quality["status"] == "completed" and quality["training_data_sha256"] == data["sha256"]
+            and quality["holdout_data_sha256"] == training["holdout"]["sha256"]
+            and quality["train_ids"] == quality["passed_train_ids"] == ids_by_split["train"]
+            and quality["gradient_holdout_ids"] == [], "all training references must pass; holdout gradients prohibited")
+    preview = pinned(training["cpu_preview"])
+    require(preview["returncode"] == 0 and preview["model_calls"] == 0
+            and preview["trainer_arguments"] == training_args(plan), "CPU trainer metadata preview mismatch")
+    restored = pinned(training["restoration_proof"])
+    replica = restored["replicas"]["gemma-2"]
+    require(restored["current_model"] == restored["best_parent"] == "F04"
+            and restored["checkpoint_all9_fullstat_matched_manifest"] is True
+            and replica["cid"] == plan["target"]["id"] and replica["tree"] == plan["checkpoint_tree_sha256"]
+            and replica["checkpoint_mount"] == plan["checkpoint"] and replica["checkpoint_readonly"] is True,
+            "training F04 restoration proof differs")
+    return dict(ids=ids_by_split["train"], holdout_ids=ids_by_split["holdout"], task=task)
+
+
+def training_complete(plan, result):
+    metadata = training_metadata(plan)
+    summary = read(result / "summary.json")
+    require(summary["status"] in ("completed", "pilot_only")
+            and summary["completed_steps"] == (64 if summary["status"] == "completed" else 4),
+            "training must explicitly finish pilot4 or total64")
+    require(summary["trainer_plan_sha256"] == plan["training"]["plan"]["sha256"]
+            and summary["base_unchanged"] is True and summary["target_tensors"] == 410
+            and summary["data_sha256"] == metadata["task"]["data"]["sha256"]
+            and summary["training_ids"] == metadata["ids"] and summary["holdout_gradient_ids"] == [],
+            "training completion parent/data/scope differs")
+    require(summary["maximum_seconds_excludes_approval_wait"] is True and summary["error"] is None,
+            "trainer timing/failure claim differs")
+    require(summary["exports"], "training export absent")
+    for export in summary["exports"]:
+        receipt_path = Path(export["path"]).resolve()
+        require(receipt_path.is_relative_to(result.resolve()), "training export outside owned output")
+        receipt = pinned(export)
+        require(receipt["status"] == "exported" and receipt["base_unchanged"] is True
+                and receipt["parent_path"] == plan["checkpoint"]
+                and receipt["parent_tree_sha256"] == plan["checkpoint_tree_sha256"]
+                and receipt["data_sha256"] == metadata["task"]["data"]["sha256"]
+                and receipt["modules"] == 410 and receipt["steps"] in (4, 64), "training export identity differs")
+    require(receipt["steps"] == summary["completed_steps"], "final export step differs")
+    for path, digest in summary["source_sha256"].items():
+        require(sha(path) == digest and (path not in plan["source_pins"] or plan["source_pins"][path] == digest),
+                "training input/source changed")
+    return {k: summary[k] for k in ("status", "completed_steps", "trainer_plan_sha256", "target_tensors", "data_sha256")}
 
 
 def finite_args(plan):
@@ -256,25 +350,63 @@ def command(plan, objective, plan_sha):
     for key, value in env.items():
         args.extend(["--env", key + "=" + value])
     require(objective in stages(plan), "job differs from selected owner mode")
-    payload = finite_args(plan) if stages(plan) == ("finite",) else native_args(plan, objective, run=True)
+    payload = (training_args(plan, run=True) if objective == "train-lora" else
+               finite_args(plan) if objective == "finite" else native_args(plan, objective, run=True))
     return args + [IMAGE, *payload]
+
+
+def expected_cohort(plan):
+    legacy = [(g, i, "behavior-" + g + str(i + 1)) for g in "ABCDEF" for i in range(2)]
+    if "native_cohort" not in plan:
+        return legacy
+    require(stages(plan) == OBJECTIVES, "explicit cohort is native only")
+    cohort = plan["native_cohort"]
+    require(set(cohort) == {"count", "rows"} and type(cohort["count"]) is int
+            and 1 <= cohort["count"] <= 64 and len(cohort["rows"]) == cohort["count"], "explicit bounded native cohort required")
+    rows = cohort["rows"]
+    require(all(set(r) == {"purpose", "fold", "id"} and isinstance(r["purpose"], str)
+                and r["purpose"] and type(r["fold"]) is int and r["fold"] >= 0
+                and isinstance(r["id"], str) and r["id"] for r in rows), "invalid native cohort row")
+    expected = [(r["purpose"], r["fold"], r["id"]) for r in rows]
+    require(len({r[2] for r in expected}) == len({r[:2] for r in expected}) == len(expected),
+            "duplicate native cohort ID/fold")
+    return expected
 
 
 def validate(plan, for_run=False):
     jobs = stages(plan)
-    require(plan["schema_version"] == 1 and plan["maximum_collection_seconds"] == 900, "fixed collection scope")
-    require(plan["target"]["id"] == CID and plan["target"]["image"] == IMAGE, "exact target/image required")
+    require(plan["schema_version"] == 1, "owner schema required")
+    if jobs == ("train-lora",):
+        require(type(plan["maximum_training_seconds"]) is int and 1 <= plan["maximum_training_seconds"] <= 3600,
+                "bounded training deadline required")
+        require(not any(k in plan for k in ("cases", "frame", "native_cohort", "native_behavior_result", "cpu_previews", "maximum_collection_seconds")),
+                "training must not masquerade as native observation")
+    else:
+        require(plan["maximum_collection_seconds"] == 900, "fixed collection scope")
+    require(re.fullmatch(r"[0-9a-f]{64}", plan["target"]["id"]) and plan["target"]["image"] == IMAGE, "exact target/image required")
+    if jobs == ("finite",):
+        require(plan["target"]["id"] == CID, "legacy finite target required")
     protected_ids = {v["id"] for v in plan["protected"].values()}
-    require(len(plan["protected"]) == len(protected_ids) == 26 and CID not in protected_ids, "other26 unique required")
+    require(len(plan["protected"]) == len(protected_ids) == 26 and plan["target"]["id"] not in protected_ids, "other26 unique required")
     require(re.fullmatch(r"[a-z0-9][a-z0-9_.-]{1,90}", plan["container_prefix"]), "safe owned-container prefix required")
-    require(plan["checkpoint"] == str(ROOT / "checkpoints/code90-current-ad-helper-av-v1"), "AV checkpoint required")
+    parent_tree = plan.get("checkpoint_tree_sha256", TREE)
+    checkpoint = Path(plan["checkpoint"])
+    require(checkpoint.is_absolute() and checkpoint.resolve() == checkpoint
+            and checkpoint.is_relative_to(ROOT / "checkpoints") and checkpoint.is_dir()
+            and re.fullmatch(r"[0-9a-f]{64}", parent_tree), "explicit NVMe checkpoint/tree required")
+    if jobs == ("finite",) or "checkpoint_tree_sha256" not in plan:
+        require(plan["checkpoint"] == str(ROOT / "checkpoints/code90-current-ad-helper-av-v1")
+                and parent_tree == TREE, "legacy AV checkpoint required")
     for key in ("source_root", "output_root"):
         path = Path(plan[key])
         require(path.is_absolute() and path.resolve().is_relative_to(ROOT), "NVMe task path required")
     require(Path(plan["output_root"]).resolve().is_relative_to(ROOT / "analysis"), "analysis output required")
     require(str(Path(__file__).resolve()) in plan["source_pins"], "owner source must be pinned")
     work = Path(plan["output_root"]).resolve() / "work"
-    inputs = [plan[k]["path"] for k in ("cases", "frame", "attestation", "native_behavior_result")]
+    input_keys = ("attestation",) if jobs == ("train-lora",) else ("cases", "frame", "attestation", "native_behavior_result")
+    inputs = [plan[k]["path"] for k in input_keys]
+    if jobs == ("train-lora",):
+        inputs += [v["path"] for v in plan["training"].values()]
     inputs += list(plan["source_pins"]) + [v["path"] for v in plan.get("cpu_previews", {}).values()]
     if jobs == ("finite",):
         inputs += [v["path"] for v in plan["finite"].values()]
@@ -282,34 +414,43 @@ def validate(plan, for_run=False):
     source = Path(plan["source_root"])
     recipe = source / "scripts/experiments/gemma4-purpose"
     required = {str((recipe / name).resolve()) for name in ("native.py", "recipe_common.py", "objective_variants.py")}
+    if jobs == ("train-lora",):
+        required.add(str((recipe / "train_lora.py").resolve()))
     required |= {str(p.resolve()) for p in (source / "src").rglob("*.py")}
     required.add(str(Path(__file__).with_name("fresh-f01-finite.py").resolve()))
     require(len(required) > 4 and required <= set(plan["source_pins"]), "complete executable source pins required")
     for path, expected in plan["source_pins"].items():
         require(sha(path) == expected, "source changed: " + path)
     att = pinned(plan["attestation"])["checkpoint"]
-    require(att["path"] == plan["checkpoint"] and att["sha256"] == TREE and att["hash_files"] is True
-            and att["identity_level"] == "content_sha256" and len(att["files"]) == 9, "full AV attestation required")
+    require(att["path"] == plan["checkpoint"] and att["sha256"] == parent_tree and att["hash_files"] is True
+            and att["identity_level"] == "content_sha256" and len(att["files"]) == 9, "full parent attestation required")
+    if "checkpoint_tree_sha256" in plan:
+        full_identity(att, checkpoint)
     for row in att["files"]:
         st = (Path(plan["checkpoint"]) / row["path"]).stat()
         actual = dict(device=st.st_dev, inode=st.st_ino, mtime_ns=st.st_mtime_ns, ctime_ns=st.st_ctime_ns)
         require(st.st_size == row["size"] and actual == row["stat"], "checkpoint stat changed")
+    if jobs == ("train-lora",):
+        ids = training_metadata(plan)["ids"]
+        if for_run:
+            require(plan.get("approved_for_execution") is True, "root-reviewed approval required")
+        return ids
     cases = pinned(plan["cases"])
     require(cases.get("split", "train") == "train" and cases.get("gradient_allowed") is not False,
             "transfer/evaluation envelope prohibited")
     groups = cases.get("cases", cases)
-    require(list(groups) == list("ABCDEF"), "exact six train groups required")
+    expected = expected_cohort(plan)
+    require(list(groups) == list(dict.fromkeys(row[0] for row in expected)), "exact declared train groups required")
     folds = [(group, i, rows) for group, fs in groups.items() for i, rows in enumerate(fs)]
-    require(len(folds) == 12 and all(len(rows) == 1 for _, _, rows in folds), "12 singleton train folds required")
-    expected = [(g, i, "behavior-" + g + str(i + 1)) for g in "ABCDEF" for i in range(2)]
+    require(len(folds) == len(expected) and all(len(rows) == 1 for _, _, rows in folds), "declared singleton train folds required")
     require([(g, i, rows[0]["id"]) for g, i, rows in folds] == expected
             and all(rows[0].get("split") == "train" and rows[0].get("gradient_allowed") is not False
-                    for _, _, rows in folds), "exact train12 IDs/row split required; transfer/duplicates prohibited")
+                    for _, _, rows in folds), "exact declared train IDs/row split required; transfer/duplicates prohibited")
     ids = [row[2] for row in expected]
     frames = pinned(plan["frame"])
     observed = {(g, i, row["id"]) for g, fs in frames["frames"].items() for i, rows in enumerate(fs) for row in rows}
     require(observed == {(g, i, rows[0]["id"]) for g, i, rows in folds}
-            and sum(len(rows) for fs in frames["frames"].values() for rows in fs) == 12, "exact train frame join required")
+            and sum(len(rows) for fs in frames["frames"].values() for rows in fs) == len(expected), "exact train frame join required")
     require(all(row["prefix_tokens"] + max(row["correct_tokens"], row["foil_tokens"]) <= 1024
                 for fs in frames["frames"].values() for rows in fs for row in rows), "complete frame exceeds1024")
     for objective in (() if jobs == ("finite",) else OBJECTIVES):
@@ -340,8 +481,8 @@ def services(plan, guard, serving=True):
         require(guard.snapshot(TARGET) == plan["target"], "target changed before stop")
 
 
-def idle(guard):
-    result = guard.target_metrics(CID)
+def idle(guard, plan):
+    result = guard.target_metrics(plan["target"]["id"])
     require(all(v == 0 for values in result["queues"].values() for v in values), "target not idle")
     return result
 
@@ -407,14 +548,14 @@ def finish(plan, guard, process, stopped, status, plan_sha):
     status["collector_client_finished"] = client_finished
     if stopped and safe:
         try:
-            guard.docker("start", CID)
+            guard.docker("start", plan["target"]["id"])
             deadline = time.monotonic() + 600
             while time.monotonic() < deadline:
                 actual = guard.snapshot(TARGET)
                 require(all(actual[k] == v for k, v in plan["target"].items() if k not in
                             ("started_at", "running", "health")), "restored identity differs")
                 if actual["running"] and actual["health"] == "healthy":
-                    status["after_queues"] = idle(guard)
+                    status["after_queues"] = idle(guard, plan)
                     status["restored"] = True
                     break
                 time.sleep(2)
@@ -446,9 +587,9 @@ def run(plan, expected_sha, plan_path):
         status["lock_proof"] = guard.lock_owner_proof(ROOT / "candidate-evaluation.lock", os.getpid(), 1003)
         validate(plan, for_run=True)
         services(plan, guard)
-        status["before_queues"] = idle(guard)
+        status["before_queues"] = idle(guard, plan)
         require(set(guard.docker("ps", "-aq", "--no-trunc").split()) ==
-                {CID, *(v["id"] for v in plan["protected"].values())}, "container inventory changed")
+                {plan["target"]["id"], *(v["id"] for v in plan["protected"].values())}, "container inventory changed")
         save(out / "launch.json", status)
         for path in (out / "work", out / "work/tmp", out / "work/cache"):
             path.mkdir()
@@ -459,13 +600,13 @@ def run(plan, expected_sha, plan_path):
             signal.signal(sig, interrupted)
         try:
             stopped = True  # Stop may succeed even if its client is interrupted.
-            guard.docker("stop", "--time", "90", CID)
-            require(not guard.inspect(CID)["State"]["Running"], "target still running")
+            guard.docker("stop", "--time", "90", plan["target"]["id"])
+            require(not guard.inspect(plan["target"]["id"])["State"]["Running"], "target still running")
             free = int(subprocess.check_output(["nvidia-smi", "-i", "4", "--query-gpu=memory.free",
                                                 "--format=csv,noheader,nounits"], text=True).strip())
             require(free >= 92 * 1024, "need88GiB allocator plus4GiB reserve")
             status["gpu4_free_mib"] = free
-            deadline = time.monotonic() + 900
+            deadline = time.monotonic() + (plan["maximum_training_seconds"] if stages(plan) == ("train-lora",) else 900)
             for objective in stages(plan):
                 validate(plan, for_run=True)
                 services(plan, guard, serving=False)
@@ -479,20 +620,25 @@ def run(plan, expected_sha, plan_path):
                 entry["finished_epoch"] = time.time()
                 require(entry["returncode"] == 0, "collector failed")
                 result = out / "work" / objective
-                if objective == "finite":
+                if objective == "train-lora":
+                    entry["training_result"] = training_complete(plan, result)
+                    status["training_result"] = entry["training_result"]
+                elif objective == "finite":
                     entry["finite_identity"] = finite_complete(plan, result)
                 else:
                     summary = read(result / "summary.json")
                     require(summary["status"] == "completed" and summary["objective_kind"] == objective
-                            and summary["source_values_unchanged"] is True and len(summary["folds"]) == 12
-                            and sum(v["examples"] for v in summary["folds"]) == 12, "partial collector result")
+                            and summary["source_values_unchanged"] is True and len(summary["folds"]) == len(expected_cohort(plan))
+                            and sum(v["examples"] for v in summary["folds"]) == len(expected_cohort(plan)), "partial collector result")
                     require(summary["coverage"]["native_tensors"] == 421
                             and summary["coverage"]["native_coordinates"] == 1331516, "native inventory differs")
                     require(read(result / "frame-evidence.json") == pinned(plan["frame"]), "measured frame mismatch")
                 entry["summary_sha256"] = sha(result / "summary.json")
                 save(out / (objective + "-complete.json"), entry)
             validate(plan, for_run=True)
-            status["collections_completed"] = True
+            status["jobs_completed"] = True
+            if stages(plan) != ("train-lora",):
+                status["collections_completed"] = True
         except BaseException as error:
             status["error_type"] = type(error).__name__
         finally:
@@ -501,10 +647,11 @@ def run(plan, expected_sha, plan_path):
             finish(plan, guard, process, stopped, status, expected_sha)
             status["finished_epoch"] = time.time()
             status["elapsed_seconds"] = status["finished_epoch"] - status["started_epoch"]
-            status["status"] = "completed" if (status.get("collections_completed") and status["restored"]
+            success = status.get("training_result", {}).get("status", "completed")
+            status["status"] = success if (status.get("jobs_completed") and status["restored"]
                 and status["protected_exact"] and not any(k.endswith("error_type") for k in status)) else "failed"
             save(out / "completion.json", status)
-        require(status["status"] == "completed", "preserved incomplete attempt; inspect completion")
+        require(status["status"] in ("completed", "pilot_only"), "preserved incomplete attempt; inspect completion")
     return status
 
 
@@ -527,8 +674,11 @@ def main():
         print(json.dumps({k: result[k] for k in ("status", "elapsed_seconds", "restored", "protected_exact")}))
     else:
         ids = validate(plan)
-        print(json.dumps(dict(status="preview_no_execution", plan_sha256=sha(args.plan), case_ids=ids,
-                              commands=[command(plan, o, sha(args.plan)) for o in stages(plan)], mode=plan.get("mode", "native"), model_calls=0, service_changes=0)))
+        result = dict(status="preview_no_execution", plan_sha256=sha(args.plan),
+                      commands=[command(plan, o, sha(args.plan)) for o in stages(plan)],
+                      mode=plan.get("mode", "native"), model_calls=0, service_changes=0)
+        result["training_task_ids" if stages(plan) == ("train-lora",) else "case_ids"] = ids
+        print(json.dumps(result))
 
 
 if __name__ == "__main__":

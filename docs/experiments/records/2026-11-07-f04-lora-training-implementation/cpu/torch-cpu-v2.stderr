@@ -1,0 +1,10 @@
+test_continuation_binds_exact_pilot_and_timeout_stops (test_gemma4_lora_training.FrameTests.test_continuation_binds_exact_pilot_and_timeout_stops) ... ok
+test_holdout_and_incomplete_training_inventory_rejected (test_gemma4_lora_training.FrameTests.test_holdout_and_incomplete_training_inventory_rejected) ... ok
+test_official_terminator_is_not_global_eos_and_no_padding (test_gemma4_lora_training.FrameTests.test_official_terminator_is_not_global_eos_and_no_padding) ... ok
+test_gram_cap_projects_only_B_and_reports_full_denominator (test_gemma4_lora_training.LoraOptimizerTests.test_gram_cap_projects_only_B_and_reports_full_denominator) ... ok
+test_two_steps_reach_A_and_B_preserve_base_and_f32_merge_function (test_gemma4_lora_training.LoraOptimizerTests.test_two_steps_reach_A_and_B_preserve_base_and_f32_merge_function) ... ok
+
+----------------------------------------------------------------------
+Ran 5 tests in 1.378s
+
+OK

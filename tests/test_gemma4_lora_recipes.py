@@ -429,6 +429,47 @@ class LoraRecipeTests(unittest.TestCase):
         with self.assertRaises(subprocess.CalledProcessError):
             self.call("dense_lora_native_recipe.py", "verify", self.manifest)
 
+
+    def test_local_training_receipt_opt_in_binds_parent_factors_and_data(self):
+        self._f32_factors()
+        self.spec.pop("donor_repo")
+        self.spec.pop("donor_revision")
+        receipt_path = self.work/"local-training.json"
+        receipt = {
+            "schema_version": 1, "kind": "local_lora_training_v1", "status": "exported",
+            "steps": 4, "base_unchanged": True, "parent_path": str(self.base.resolve()),
+            "parent_dense_tree_sha256": self.spec["base_tree_sha256"],
+            "adapter_sha256": self.spec["donor_sha256"],
+            "config_sha256": self.spec["donor_config_sha256"],
+            "data_sha256": "1"*64, "source_sha256": {"trainer.py": "2"*64},
+            "modules": 410, "rank": 128, "dtype": "F32",
+        }
+        receipt_path.write_text(json.dumps(receipt))
+        self.spec["local_training"] = {"version": 1, "path": str(receipt_path),
+                                       "sha256": self.recipe.digest(receipt_path)}
+        self.spec_path.write_text(json.dumps(self.spec))
+        validated, _, _, _ = self.recipe.materialization_recipe(self.base, self.spec)
+        self.assertNotIn("donor_repo", validated)
+        self.assertEqual(validated["local_training_receipt"]["steps"], 4)
+        with self.assertRaisesRegex(ValueError, "exclusive"):
+            self.recipe.materialization_recipe(self.base, dict(self.spec, donor_repo="invented/donor"))
+        for key, value in (("steps", 0), ("base_unchanged", False),
+                           ("adapter_sha256", "f"*64), ("parent_path", str(self.work/"other"))):
+            invalid = dict(receipt, **{key: value})
+            receipt_path.write_text(json.dumps(invalid))
+            self.spec["local_training"]["sha256"] = self.recipe.digest(receipt_path)
+            with self.assertRaisesRegex(ValueError, "does not bind"):
+                self.recipe.materialization_recipe(self.base, self.spec)
+        receipt_path.write_text(json.dumps(receipt))
+        self.spec["local_training"]["sha256"] = self.recipe.digest(receipt_path)
+        self.spec_path.write_text(json.dumps(self.spec))
+        with contextlib.redirect_stdout(io.StringIO()):
+            self.recipe.create(self.base, self.dest, self.spec_path, self.manifest)
+            self.recipe.verify(self.manifest)
+        receipt_path.write_text(json.dumps(dict(receipt, steps=5)))
+        with self.assertRaisesRegex(ValueError, "receipt path/hash"):
+            self.recipe.verify(self.manifest)
+
     def _native_create(self):
         self.call(
             "dense_lora_native_recipe.py",

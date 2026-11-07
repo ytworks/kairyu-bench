@@ -1,0 +1,201 @@
+{
+  "created_epoch": 1794057712.2525043,
+  "records": [
+    {
+      "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-train-lora-owner-preparation-v1/tests-v1.stdout",
+      "source_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "record": "preparation/tests-v1.stdout",
+      "record_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-train-lora-owner-preparation-v1/tests-v2.stderr",
+      "source_sha256": "f35ab3bf7611446056032dcef5a81d4858341148a041ea120818cedc617dfefa",
+      "bytes": 4361,
+      "record": "preparation/tests-v2.stderr",
+      "record_sha256": "f35ab3bf7611446056032dcef5a81d4858341148a041ea120818cedc617dfefa"
+    },
+    {
+      "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-train-lora-owner-preparation-v1/scope.json",
+      "source_sha256": "396a3c4ce945548bf3291a779e54b621563224217650f359b342b9260d36857e",
+      "bytes": 615,
+      "record": "preparation/scope.json",
+      "record_sha256": "396a3c4ce945548bf3291a779e54b621563224217650f359b342b9260d36857e"
+    },
+    {
+      "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-train-lora-owner-preparation-v1/owner-before.py.txt",
+      "source_sha256": "56dca4ce4b1508084664a9e8ce9e9a2bb3b7f528d840fb35fb352c07e92f0bd9",
+      "bytes": 33720,
+      "record": "preparation/owner-before.py.txt",
+      "record_sha256": "56dca4ce4b1508084664a9e8ce9e9a2bb3b7f528d840fb35fb352c07e92f0bd9"
+    },
+    {
+      "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-train-lora-owner-preparation-v1/safe27-snapshot.json",
+      "source_sha256": "ab5872d35e9ffe905a5fe04597e149336e8f1f68725a19a81aec0bb40695d74e",
+      "bytes": 16897,
+      "record": "preparation/safe27-snapshot.json",
+      "record_sha256": "ab5872d35e9ffe905a5fe04597e149336e8f1f68725a19a81aec0bb40695d74e"
+    },
+    {
+      "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-train-lora-owner-preparation-v1/cpu-validation-v2.json",
+      "source_sha256": "ed3adda3052b83fbfd6a1a7c181d8d2aa1579d48eb4e9ea307c728b5363d0f99",
+      "bytes": 1268,
+      "record": "preparation/cpu-validation-v2.json",
+      "record_sha256": "ed3adda3052b83fbfd6a1a7c181d8d2aa1579d48eb4e9ea307c728b5363d0f99"
+    },
+    {
+      "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-train-lora-owner-preparation-v1/tests-v2.stdout",
+      "source_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "record": "preparation/tests-v2.stdout",
+      "record_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-train-lora-owner-preparation-v1/ruff-v1.stdout",
+      "source_sha256": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18",
+      "bytes": 19,
+      "record": "preparation/ruff-v1.stdout",
+      "record_sha256": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18"
+    },
+    {
+      "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-train-lora-owner-preparation-v1/test-before.py.txt",
+      "source_sha256": "9487f5f77f3a1e0775b7507afb9423695b13a30432f9e0c2e18032474776996b",
+      "bytes": 27616,
+      "record": "preparation/test-before.py.txt",
+      "record_sha256": "9487f5f77f3a1e0775b7507afb9423695b13a30432f9e0c2e18032474776996b"
+    },
+    {
+      "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-train-lora-owner-preparation-v1/ruff-v2.stdout",
+      "source_sha256": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18",
+      "bytes": 19,
+      "record": "preparation/ruff-v2.stdout",
+      "record_sha256": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18"
+    },
+    {
+      "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-train-lora-owner-preparation-v1/tests-v1.stderr",
+      "source_sha256": "c7180dabb0b4ca4b4be46eacfe33929c0e3bc20b302f95810d03014e899de5b7",
+      "bytes": 4361,
+      "record": "preparation/tests-v1.stderr",
+      "record_sha256": "c7180dabb0b4ca4b4be46eacfe33929c0e3bc20b302f95810d03014e899de5b7"
+    },
+    {
+      "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-train-lora-owner-preparation-v1/ruff-v1.stderr",
+      "source_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "record": "preparation/ruff-v1.stderr",
+      "record_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-train-lora-owner-preparation-v1/cpu-validation-v1.json",
+      "source_sha256": "7dca5ebc3adf8650b7bc51bdf3abcb06dffdefa6ac13f26f4f7bd66e734adb08",
+      "bytes": 1241,
+      "record": "preparation/cpu-validation-v1.json",
+      "record_sha256": "7dca5ebc3adf8650b7bc51bdf3abcb06dffdefa6ac13f26f4f7bd66e734adb08"
+    },
+    {
+      "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-train-lora-owner-preparation-v1/ruff-v2.stderr",
+      "source_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "record": "preparation/ruff-v2.stderr",
+      "record_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f04-mbpp-lora-training-v1/prepare-source.py.txt",
+      "source_sha256": "4192cd3341dcbac5213ab7e3b8d0ca3100ada740f7d6d6a9bfdcf56b9469af20",
+      "bytes": 7701,
+      "record": "plan/prepare-source.py.txt",
+      "record_sha256": "4192cd3341dcbac5213ab7e3b8d0ca3100ada740f7d6d6a9bfdcf56b9469af20"
+    },
+    {
+      "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f04-mbpp-lora-training-v1/source-pins.json",
+      "source_sha256": "9221f3c8ae2ddbc0d4c9800fcc8e87684a1acba7869419e01d54fc46aed2dfb9",
+      "bytes": 17583,
+      "record": "plan/source-pins.json",
+      "record_sha256": "9221f3c8ae2ddbc0d4c9800fcc8e87684a1acba7869419e01d54fc46aed2dfb9"
+    },
+    {
+      "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f04-mbpp-lora-training-v1/input-quality-identity.json",
+      "source_sha256": "25d67c99ff8ddc3f729b5cc15bacc9910162e23aeeb0ef79d922117e69ff6731",
+      "bytes": 4838,
+      "record": "plan/input-quality-identity.json",
+      "record_sha256": "25d67c99ff8ddc3f729b5cc15bacc9910162e23aeeb0ef79d922117e69ff6731"
+    },
+    {
+      "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f04-mbpp-lora-training-v1/trainer-plan.json",
+      "source_sha256": "5f8de3c395cf249be6d22406f9c0d339c1cf21150a6ea0497967d6805f9b83df",
+      "bytes": 4149,
+      "record": "plan/trainer-plan.json",
+      "record_sha256": "5f8de3c395cf249be6d22406f9c0d339c1cf21150a6ea0497967d6805f9b83df"
+    },
+    {
+      "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f04-mbpp-lora-training-v1/trainer-preview.stdout",
+      "source_sha256": "b7e7dc2f1aa27f277fae87bf19b5436b553020d05580d6ea00125775681895fb",
+      "bytes": 2537,
+      "record": "plan/trainer-preview.stdout",
+      "record_sha256": "b7e7dc2f1aa27f277fae87bf19b5436b553020d05580d6ea00125775681895fb"
+    },
+    {
+      "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f04-mbpp-lora-training-v1/trainer-preview.stderr",
+      "source_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "record": "plan/trainer-preview.stderr",
+      "record_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f04-mbpp-lora-training-v1/trainer-preview.json",
+      "source_sha256": "a9de117adc0bf5e7002aa776b858c76817a0bfc1fcbb6dbcba25c81ddc7246f0",
+      "bytes": 18906,
+      "record": "plan/trainer-preview.json",
+      "record_sha256": "a9de117adc0bf5e7002aa776b858c76817a0bfc1fcbb6dbcba25c81ddc7246f0"
+    },
+    {
+      "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f04-mbpp-lora-training-v1/owner-plan.json",
+      "source_sha256": "c3de99ec89a2730d1350d645b557d6d7fe8bb7f94a8a209085b3cf9634eccd67",
+      "bytes": 36854,
+      "record": "plan/owner-plan.json",
+      "record_sha256": "c3de99ec89a2730d1350d645b557d6d7fe8bb7f94a8a209085b3cf9634eccd67"
+    },
+    {
+      "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f04-mbpp-lora-training-v1/owner-preview.stdout",
+      "source_sha256": "0eeb38d8a8e971b9f58799673e349d9295a0e0d1966fcda7c1c170857deb13ae",
+      "bytes": 4413,
+      "record": "plan/owner-preview.stdout",
+      "record_sha256": "0eeb38d8a8e971b9f58799673e349d9295a0e0d1966fcda7c1c170857deb13ae"
+    },
+    {
+      "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f04-mbpp-lora-training-v1/owner-preview.stderr",
+      "source_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "record": "plan/owner-preview.stderr",
+      "record_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f04-mbpp-lora-training-v1/owner-preview.json",
+      "source_sha256": "c4f5117a0053f6e5678e0ec158ad7ec2f6d666580590d1f7cf4241b2785c83a6",
+      "bytes": 764,
+      "record": "plan/owner-preview.json",
+      "record_sha256": "c4f5117a0053f6e5678e0ec158ad7ec2f6d666580590d1f7cf4241b2785c83a6"
+    },
+    {
+      "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/worktrees/kairyu-bench-weight-tools/docs/experiments/scripts/fresh-av-native-gpu4-20261107.py",
+      "source_sha256": "3e7e9c58b68a679d87623e1507e6508adcc731c3da36d51dd390f9bffcdb2b07",
+      "bytes": 41714,
+      "record": "source/fresh-av-native-gpu4-20261107.py.txt",
+      "record_sha256": "3e7e9c58b68a679d87623e1507e6508adcc731c3da36d51dd390f9bffcdb2b07"
+    },
+    {
+      "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/worktrees/kairyu-bench-weight-tools/docs/experiments/scripts/fresh-f04-mbpp-lora-plan-20261107.py",
+      "source_sha256": "4192cd3341dcbac5213ab7e3b8d0ca3100ada740f7d6d6a9bfdcf56b9469af20",
+      "bytes": 7701,
+      "record": "source/fresh-f04-mbpp-lora-plan-20261107.py.txt",
+      "record_sha256": "4192cd3341dcbac5213ab7e3b8d0ca3100ada740f7d6d6a9bfdcf56b9469af20"
+    },
+    {
+      "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/worktrees/kairyu-bench-weight-tools/tests/test_gemma4_native_owner.py",
+      "source_sha256": "9dbd86288d5b38ea34da59dc27c931a63ea2492dce5207c79acf3b780ac15e3f",
+      "bytes": 36910,
+      "record": "source/test_gemma4_native_owner.py.txt",
+      "record_sha256": "9dbd86288d5b38ea34da59dc27c931a63ea2492dce5207c79acf3b780ac15e3f"
+    }
+  ]
+}

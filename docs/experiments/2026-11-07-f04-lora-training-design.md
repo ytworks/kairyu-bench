@@ -15,3 +15,5 @@
 学習速度は未測定。既存F04 native19のcorrect-LLは43.970秒/19forward、margin73.084秒/38forward（load除外、LoRA trainingではない）。歴史的dense+native materializeは430.45秒、別saved verifier112.55秒で、今回rank8の所要時間を保証しない。新しい損失学習がcoding能力を改善するかは保存候補の通常生成と同条件の正規WSPで判断する。
 
 [現物410形状、コード/設定SHA、調査範囲](records/2026-11-07-f04-lora-training-design/source-and-inventory.json)を保存。設計合意までは学習コード本体を作らない。
+
+Historical-stage note: the statements above describe the initial read-only design before implementation. The agreed implementation and CPU validation are now recorded in [the current guide](2026-11-07-f04-lora-training-implementation.md); GPU pilot/continuation results belong to the separate execution record. The original design claims are retained as history.

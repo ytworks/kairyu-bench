@@ -79,6 +79,36 @@ class NativeOwnerGuards(unittest.TestCase):
                 self.assertIn(OWNER.IMAGE, cmd)
                 self.assertEqual(cmd.count("--run"), 1)
 
+    def test_new_parent_and_explicit_19_case_cohort_preview_rejects_omission(self):
+        old = Path(self.plan["checkpoint"])
+        cp = old.with_name("new-parent-faststore")
+        old.rename(cp)
+        identity = OWNER.read(self.plan["attestation"]["path"])["checkpoint"]
+        identity.update(path=str(cp), source_stable=True)
+        canonical = [{k: row[k] for k in ("path", "size", "sha256")} for row in identity["files"]]
+        import hashlib
+        identity["sha256"] = hashlib.sha256(json.dumps(canonical, sort_keys=True, separators=(",", ":")).encode()).hexdigest()
+        self.plan.update(checkpoint=str(cp), checkpoint_tree_sha256=identity["sha256"])
+        self.plan["target"]["id"] = "f" * 64
+        self.plan["attestation"] = self.pin(Path(self.plan["attestation"]["path"]), dict(checkpoint=identity))
+        cases = {g: [[dict(id=f"behavior-{g}{i + 1}", split="train", prompt="p", correct="a", foil="b")]
+                      for i in range(1 if g == "J" else 2)] for g in "ABCDEFGHIJ"}
+        rows = [dict(purpose=g, fold=i, id=fold[0]["id"]) for g, folds in cases.items() for i, fold in enumerate(folds)]
+        self.plan["native_cohort"] = dict(count=19, rows=rows)
+        self.plan["cases"] = self.pin(Path(self.plan["cases"]["path"]), cases)
+        frames = {g: [[dict(id=fold[0]["id"], prefix_tokens=20, correct_tokens=4, foil_tokens=5)] for fold in folds]
+                  for g, folds in cases.items()}
+        self.plan["frame"] = self.pin(Path(self.plan["frame"]["path"]), dict(frames=frames))
+        self.plan["cpu_previews"] = {objective: self.pin(Path(self.plan["output_root"]) / (objective + "-preview.json"), dict(
+            returncode=0, model_calls=0, collector_arguments=OWNER.native_args(self.plan, objective)))
+            for objective in OWNER.OBJECTIVES}
+        with patch.object(OWNER.subprocess, "Popen", side_effect=AssertionError("no process")):
+            self.assertEqual(OWNER.validate(self.plan), [r["id"] for r in rows])
+            cases["J"].clear()
+            self.plan["cases"] = self.pin(Path(self.plan["cases"]["path"]), cases)
+            with self.assertRaisesRegex(ValueError, "singleton train folds"):
+                OWNER.validate(self.plan)
+
     def test_unapproved_plan_rejected_before_helper_or_lock(self):
         path = Path(self.plan["output_root"]) / "plan.json"
         path.write_text(json.dumps(self.plan))
@@ -149,10 +179,13 @@ class NativeOwnerGuards(unittest.TestCase):
             target_metrics=lambda cid: dict(queues={"running": [0], "waiting": [0]})), calls
 
     def test_exact_restart_and_protected_drift_reported(self):
+        # Rebinding to a new ordinary parent must never restart the old AV CID.
+        self.plan["target"]["id"] = "e" * 64
         guard, calls = self.fake_guard(drift=True)
         status = dict(restored=False, protected_exact=False)
         OWNER.finish(self.plan, guard, None, True, status, "a" * 64)
-        self.assertIn(("start", OWNER.CID), calls)
+        self.assertIn(("start", self.plan["target"]["id"]), calls)
+        self.assertNotIn(("start", OWNER.CID), calls)
         self.assertTrue(status["restored"])
         self.assertFalse(status["protected_exact"])
         self.assertEqual(status["protected_error_type"], "ValueError")
@@ -449,6 +482,148 @@ class FiniteOwnerGuards(unittest.TestCase):
         self.assertEqual(len(status["collector_cleanup"]), 2)
         self.assertEqual([a for a in calls if a[0] != "ps"], [
             ("stop", "--time", "30", "finite-own"), ("kill", "finite-own"), ("start", OWNER.CID)])
+
+
+class TrainingOwnerGuards(unittest.TestCase):
+    pin = NativeOwnerGuards.pin
+
+    def setUp(self):
+        import hashlib
+        NativeOwnerGuards.setUp(self)
+        for key in ("cases", "frame", "native_behavior_result", "cpu_previews", "maximum_collection_seconds"):
+            self.plan.pop(key)
+        identity = OWNER.read(self.plan["attestation"]["path"])["checkpoint"]
+        identity["source_stable"] = True
+        canonical = [{k: r[k] for k in ("path", "size", "sha256")} for r in identity["files"]]
+        identity["sha256"] = hashlib.sha256(json.dumps(canonical, sort_keys=True, separators=(",", ":")).encode()).hexdigest()
+        self.plan["attestation"] = self.pin(Path(self.plan["attestation"]["path"]), dict(checkpoint=identity))
+        self.plan.update(mode="train-lora", checkpoint_tree_sha256=identity["sha256"],
+                         maximum_training_seconds=2400, training_startup_allowance_seconds=300)
+        self.plan["target"]["id"] = "e" * 64
+        out = Path(self.plan["output_root"])
+        trainer = Path(self.plan["source_root"]) / "scripts/experiments/gemma4-purpose/train_lora.py"
+        trainer.write_text("# pinned CPU fixture, never executed\n")
+        self.plan["source_pins"][str(trainer)] = OWNER.sha(trainer)
+        data = out / "train.jsonl"
+        data.write_text(' {"task_id":601,"text":"p","code":"pass"}\n{"task_id":602,"text":"q","code":"pass"}\n')
+        holdout = out / "holdout.jsonl"
+        holdout.write_text('{"task_id":603,"text":"held out","code":"pass"}\n')
+        split = self.pin(out / "split.json", dict(training_ids=[601, 602], holdout_ids=[603], train_rows=2, holdout_rows=1))
+        frame = self.pin(out / "train-frame.json", dict(training_ids=[601, 602], maximum_tokens=128))
+        self.task = dict(kind="gemma4_lora_sft_v1", checkpoint=dict(path=self.plan["checkpoint"],
+                         tree_sha256=identity["sha256"], attestation=self.plan["attestation"]),
+                         data=dict(path=str(data), sha256=OWNER.sha(data), split="train", ids=[601, 602], split_summary=split),
+                         frame_evidence=frame, maximum_seconds=1800, continuation_wait_seconds=300)
+        quality_summary = self.pin(out / "reference-quality.json", dict(status="completed"))
+        quality = dict(status="completed", training_data_sha256=OWNER.sha(data), holdout_data_sha256=OWNER.sha(holdout),
+                       train_ids=[601, 602], passed_train_ids=[601, 602], gradient_holdout_ids=[],
+                       reference_quality_summary=quality_summary)
+        restoration = dict(current_model="F04", best_parent="F04", checkpoint_all9_fullstat_matched_manifest=True,
+                           replicas={"gemma-2": dict(cid=self.plan["target"]["id"], tree=identity["sha256"],
+                           checkpoint_mount=self.plan["checkpoint"], checkpoint_readonly=True)})
+        self.plan["training"] = dict(plan=self.pin(out / "training-plan.json", self.task),
+             input_quality=self.pin(out / "quality.json", quality), holdout=dict(path=str(holdout), sha256=OWNER.sha(holdout)),
+             restoration_proof=self.pin(out / "restoration.json", restoration))
+        self.task["input_quality"] = quality_summary
+        self.plan["training"]["plan"] = self.pin(out / "training-plan.json", self.task)
+        self.plan["training"]["cpu_preview"] = self.pin(out / "trainer-preview.json", dict(
+            returncode=0, model_calls=0, trainer_arguments=OWNER.training_args(self.plan)))
+
+    def test_training_preview_has_separate_inputs_and_rejects_unpassed_reference(self):
+        with patch.object(OWNER.subprocess, "Popen", side_effect=AssertionError("no execution")):
+            self.assertEqual(OWNER.validate(self.plan), [601, 602])
+            command = OWNER.command(self.plan, "train-lora", "a" * 64)
+            self.assertIn("train_lora.py", " ".join(command))
+            self.assertNotIn("--cases", command)
+            self.assertNotIn("--objective", command)
+            self.assertEqual(command[command.index("--gpus") + 1], "device=4")
+            self.plan["native_cohort"] = dict(count=2, rows=[])
+            with self.assertRaisesRegex(ValueError, "masquerade"):
+                OWNER.validate(self.plan)
+            del self.plan["native_cohort"]
+            pin = self.plan["training"]["input_quality"]
+            quality = OWNER.read(pin["path"])
+            quality["passed_train_ids"].pop()
+            self.plan["training"]["input_quality"] = self.pin(Path(pin["path"]), quality)
+            with self.assertRaisesRegex(ValueError, "all training references"):
+                OWNER.validate(self.plan)
+
+    def test_pilot_only_result_cannot_claim_total64_completed(self):
+        result = Path(self.plan["output_root"]) / "result"
+        result.mkdir()
+        summary = dict(status="pilot_only", completed_steps=4, trainer_plan_sha256=self.plan["training"]["plan"]["sha256"],
+                       base_unchanged=True, target_tensors=410, data_sha256=self.task["data"]["sha256"],
+                       training_ids=[601, 602], holdout_gradient_ids=[])
+        export = self.pin(result / "training-receipt.json", dict(status="exported", base_unchanged=True,
+                parent_path=self.plan["checkpoint"], parent_tree_sha256=self.plan["checkpoint_tree_sha256"],
+                data_sha256=self.task["data"]["sha256"], modules=410, steps=4))
+        summary.update(maximum_seconds_excludes_approval_wait=True, error=None, exports=[export],
+                       source_sha256=self.plan["source_pins"])
+        (result / "summary.json").write_text(json.dumps(summary))
+        self.assertEqual(OWNER.training_complete(self.plan, result)["status"], "pilot_only")
+        summary["status"] = "completed"
+        (result / "summary.json").write_text(json.dumps(summary))
+        with self.assertRaisesRegex(ValueError, "pilot4 or total64"):
+            OWNER.training_complete(self.plan, result)
+
+    def test_failed_training_job_uses_owned_cleanup_before_exact_restore(self):
+        self.plan["approved_for_execution"] = True
+        out = Path(self.plan["output_root"])
+        plan_path = out / "owner-plan.json"
+        plan_path.write_text(json.dumps(self.plan))
+        digest = OWNER.sha(plan_path)
+        state = dict(stopped=False, owned=False, original_started=False)
+        calls = []
+        owned = dict(Id="own-train", Image=OWNER.IMAGE,
+                     Name="/"+self.plan["container_prefix"]+"-train-lora", State=dict(Running=True),
+                     Config=dict(Labels={"kairyu.native.owner-plan-sha256": digest,
+                                         "kairyu.native.owner-root": self.plan["output_root"]}))
+        def docker(*args):
+            calls.append(args)
+            if args[:2] == ("stop", "--time"):
+                if args[-1] == self.plan["target"]["id"]:
+                    state["stopped"] = True
+                else:
+                    owned["State"]["Running"] = False
+            if args[0] == "start":
+                self.assertFalse(owned["State"]["Running"])
+                self.assertEqual(args[1], self.plan["target"]["id"])
+                state["original_started"] = True
+            if args[0] == "ps":
+                return "\n".join([self.plan["target"]["id"], *(v["id"] for v in self.plan["protected"].values())])
+            return ""
+        def inspect(identifier):
+            if identifier == self.plan["target"]["id"]:
+                return dict(State=dict(Running=not state["stopped"]))
+            if state["owned"]:
+                return owned
+            raise subprocess.CalledProcessError(1, "inspect")
+        def snapshot(name):
+            if name == OWNER.TARGET:
+                return dict(self.plan["target"], started_at="restored" if state["original_started"] else "old")
+            return self.plan["protected"][name]
+        guard = SimpleNamespace(docker=docker, inspect=inspect, snapshot=snapshot,
+                 target_metrics=lambda cid: dict(queues={"running":[0], "waiting":[0]}),
+                 lock_owner_proof=lambda *args: dict(fixture=True))
+        class FailedChild:
+            def __init__(self, command, **kwargs):
+                state["owned"] = True
+                (out / "work/train-lora.cid").write_text("own-train")
+            def wait(self, timeout):
+                return 1
+            def poll(self):
+                return 1
+        with patch.object(OWNER, "helper", return_value=guard), patch.object(OWNER.os, "getuid", return_value=1003), \
+             patch.object(OWNER.signal, "signal"), patch.object(OWNER.subprocess, "Popen", FailedChild), \
+             patch.object(OWNER.subprocess, "check_output", return_value="97252\n"):
+            with self.assertRaisesRegex(ValueError, "preserved incomplete"):
+                OWNER.run(self.plan, digest, plan_path)
+        final = OWNER.read(out / "completion.json")
+        self.assertEqual(final["status"], "failed")
+        self.assertTrue(final["restored"] and final["protected_exact"])
+        self.assertEqual([j["objective"] for j in final["jobs"]], ["train-lora"])
+        self.assertNotIn("collections_completed", final)
+        self.assertLess(calls.index(("stop", "--time", "30", "own-train")), calls.index(("start", self.plan["target"]["id"])))
 
 
 if __name__ == "__main__":

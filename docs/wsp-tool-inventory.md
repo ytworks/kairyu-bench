@@ -242,3 +242,9 @@ The fixed [F03 release wrapper](experiments/scripts/fresh-f03-payload-release-20
 The experiment-owned behavior follow-up module exports training_payload()/training_catalog() for fixed19 calibration entries; existing fixtures and worker are reused, transfers excluded. [Input, lineage and F04 CPU score](experiments/2026-11-07-behavior19-inputs-and-f04-score.md).
 
 - [公式MBPP original TRAIN準備](experiments/2026-11-07-mbpp-train-preparation.md): 公式commit/license/元splitを固定し、全WSP/probe＋MBPP+pool/exact/near重複を除外。全374理由台帳・train204/holdout51、CPU syntaxのみで実行品質未検証。専用recipeと全downloadをPRに保存、training/model0。
+
+- Public training-reference CPU verification: `scripts/experiments/gemma4-purpose/mbpp_reference_quality.py` reuses the existing sandbox boundary and records all original assertions, optional challenge scope, unknowns and exclusions. Experiment-only official ON tokenizer checks: `docs/experiments/scripts/fresh-mbpp255-frames-20261107.py` and `fresh-mbpp255-trainer-frames-20261107.py`. Measured 255 references/765 asserts and exact tokenizer/trainer frames; no model forwards. See `docs/experiments/2026-11-07-mbpp-reference-quality-and-frames.md` for limits and evidence.
+
+- Bounded explicit local LoRA SFT: scripts/experiments/gemma4-purpose/train_lora.py, fixed rank8 all410 text projections,4-step pilot/optional same-process64, full logs and F32 export. Existing standalone dense factor_format v2 accepts SHA-bound local training provenance; merge/verify arithmetic unchanged. [Implementation, CPU checks and limitations](experiments/2026-11-07-f04-lora-training-implementation.md). No GPU validation is claimed by CPU fixtures.
+
+- Existing GPU4 owner explicit train-lora single job: initial2400s bounded run/4-step pilot-only distinction, current exactCID restoration and26 protected containers. [Preparation and CPU guards](experiments/2026-11-07-f04-mbpp-lora-owner-preparation.md).

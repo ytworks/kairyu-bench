@@ -144,6 +144,39 @@ def implementation():
     }
 
 
+def local_training_provenance(base, spec, *, extended):
+    """Explicit local receipt alternative; never invent a public donor identity."""
+    pin = spec.get("local_training")
+    if pin is None:
+        if not re.fullmatch("[0-9a-f]{40}", spec["donor_revision"]) or not re.fullmatch(
+            r"[^/\s]+/[^/\s]+", spec["donor_repo"]
+        ):
+            raise ValueError("donor public provenance")
+        return {"donor_repo": spec["donor_repo"], "donor_revision": spec["donor_revision"]}
+    if (not extended or not isinstance(pin, dict) or set(pin) != {"version", "path", "sha256"}
+            or pin["version"] != 1 or "donor_repo" in spec or "donor_revision" in spec):
+        raise ValueError("local training requires exclusive explicit factor-format-v2 provenance")
+    path = Path(pin["path"]).resolve()
+    if path.is_relative_to(base) or not re.fullmatch("[0-9a-f]{64}", pin["sha256"]) or digest(path) != pin["sha256"]:
+        raise ValueError("local training receipt path/hash")
+    receipt = read(path)
+    if (receipt.get("schema_version") != 1 or receipt.get("kind") != "local_lora_training_v1"
+            or receipt.get("status") != "exported" or receipt.get("base_unchanged") is not True
+            or type(receipt.get("steps")) is not int or receipt["steps"] < 1
+            or Path(receipt.get("parent_path", "")).resolve() != base
+            or receipt.get("parent_dense_tree_sha256") != spec["base_tree_sha256"]
+            or receipt.get("adapter_sha256") != spec["donor_sha256"]
+            or receipt.get("config_sha256") != spec["donor_config_sha256"]
+            or receipt.get("modules") != 410
+            or receipt.get("rank") != spec["factor_format"]["rank"]
+            or receipt.get("dtype") != spec["factor_format"]["dtype"]
+            or not re.fullmatch("[0-9a-f]{64}", str(receipt.get("data_sha256", "")))
+            or not isinstance(receipt.get("source_sha256"), dict) or not receipt["source_sha256"]
+            or any(not re.fullmatch("[0-9a-f]{64}", str(v)) for v in receipt["source_sha256"].values())):
+        raise ValueError("local training receipt does not bind these exact parent/factors/data")
+    return {"local_training": dict(pin, path=str(path)), "local_training_receipt": receipt}
+
+
 def validated_recipe(base, spec, *, allow_factor_format=False):
     if (
         spec.get("schema_version") != 2
@@ -177,10 +210,7 @@ def validated_recipe(base, spec, *, allow_factor_format=False):
     for path, key in ((donor, "donor_sha256"), (config_path, "donor_config_sha256")):
         if not re.fullmatch("[0-9a-f]{64}", spec[key]) or digest(path) != spec[key]:
             raise ValueError("pinned donor/config SHA mismatch")
-    if not re.fullmatch("[0-9a-f]{40}", spec["donor_revision"]) or not re.fullmatch(
-        r"[^/\s]+/[^/\s]+", spec["donor_repo"]
-    ):
-        raise ValueError("donor public provenance")
+    provenance = local_training_provenance(base, spec, extended=extended)
     c = float(spec["coefficient"])
     if not math.isfinite(c) or not 0 < c <= 1 or float(np.float32(c)) != c:
         raise ValueError("coefficient must be exactly representable FP32 in (0,1]")
@@ -356,8 +386,7 @@ def validated_recipe(base, spec, *, allow_factor_format=False):
         "donor_config_path": str(config_path),
         "donor_sha256": spec["donor_sha256"],
         "donor_config_sha256": spec["donor_config_sha256"],
-        "donor_repo": spec["donor_repo"],
-        "donor_revision": spec["donor_revision"],
+        **provenance,
         "coefficient": c,
         "r": rank,
         "alpha": alpha,
@@ -545,6 +574,8 @@ def verification_snapshot(base, candidate, record, manifest):
         RUNTIME / "bf16_lora_ops.py",
         RUNTIME / "bf16_lora_kernel.cpp",
     ]
+    if "local_training" in record["spec"]:
+        paths.append(Path(record["spec"]["local_training"]["path"]))
     if record["spec"].get("native_edits"):
         from kairyu_bench.wsp.weights import checkpoint as checkpoint_reader
         from kairyu_bench.wsp.weights import editor

@@ -480,3 +480,17 @@ stored BF16 results, untouched negative zero, source preservation, freeze
 counts and refusal of an out-of-scope byte modification. This fixture is not
 a model-quality measurement. A later candidate must separately pin the active
 incumbent's path, tree and decision receipt before creation.
+
+### Locally trained factor provenance
+
+Standalone factor_format v2 also accepts
+local_training={version:1,path:TRAINING_RECEIPT,sha256:RECEIPT_SHA256}
+instead of donor_repo/donor_revision. Supplying both is refused. The pinned
+local_lora_training_v1 receipt must bind this exact resolved parent path and
+dense-tree digest, adapter/config hashes, rank/dtype,410 modules, positive
+completed steps, unchanged base, training-data hash and source hashes.
+It is provenance, not evidence that training improved ability. The receipt is
+rechecked during create/verify and included in verification stat continuity.
+Legacy public-donor inputs and wrappers retain their previous rules.
+train_lora.py emits this format directly; the arithmetic and BF16 byte
+verification are unchanged.
