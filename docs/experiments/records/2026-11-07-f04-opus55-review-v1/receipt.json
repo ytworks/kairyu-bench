@@ -1,0 +1,121 @@
+{
+  "mode": "send",
+  "prompt_sha256": "2e6d476755133c9084cd7a70f92c59725f3640e0adc6549e6e38d204e29a0535",
+  "prompt_bytes": 8363,
+  "requested_model": "claude-opus-5-5",
+  "labels": "A",
+  "fallback_model": null,
+  "allow_text_review": false,
+  "anonymity": "pattern lint only; caller must review every prompt byte for private identifiers and measurements",
+  "schema_version": 1,
+  "started_at": "2026-11-07T10:51:48.764177+00:00",
+  "scope": "User-reviewed anonymous prompt retained with this receipt; the review is not a model capability measurement",
+  "verified_requested_model": true,
+  "controls": {
+    "safe_mode": true,
+    "restricted": true,
+    "tools": [],
+    "mcp_servers": [],
+    "session_persistence": false,
+    "custom_generic_system_prompt": true
+  },
+  "raw_stream_persisted": false,
+  "thinking_blocks_persisted": false,
+  "environment_persisted": false,
+  "returncode": 0,
+  "stderr_bytes": 0,
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "assistant_models": [
+    "claude-opus-5-5"
+  ],
+  "model_usage": {
+    "claude-opus-5-5": {
+      "inputTokens": 2,
+      "outputTokens": 5399,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 3506,
+      "webSearchRequests": 0,
+      "costUSD": 0.136036,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 128000,
+      "canonicalModel": "claude-opus-5-5"
+    }
+  },
+  "is_error": false,
+  "labels_match": true,
+  "tool_uses": 0,
+  "event_types": {
+    "system": 25,
+    "assistant": 2,
+    "rate_limit_event": 1,
+    "result": 1
+  },
+  "review_format": "json_reviews",
+  "review_usable": true,
+  "review_context_label": null,
+  "public_final_text": null,
+  "response": {
+    "reviews": [
+      {
+        "label": "A",
+        "decision": "conditional_proceed_exploratory_only: one complete canonical dev30 run of saved A is a defensible bounded capability measurement only if the parent condition holds and the integrity checks pass. Prior expected gain is low. Do not adopt or rank A now.",
+        "validity_blockers": [
+          "Parent condition is unresolved. The running candidate has no final score. If it finishes as the highest comparable parent, record parent_changed and do not materialize or evaluate A. No decision may use its partial run.",
+          "The checkpoint does not exist yet. Integrity checks and exact BF16 value checks against the recorded round-9 spec (429 values in 140 tensors, all other tensors bit-identical to the parent) must pass before serving.",
+          "The served model must provably load those exact values, for example by a tensor hash or value check on the serving side. Otherwise a null or partial edit is indistinguishable from an ineffective one.",
+          "Comparability requires the same runner, manifest, prompts, limits, sampling, TP2x4, MTP4 and 256/32/4 concurrency as the completed parent. All 2,338 items must be retained, with errors and unscored items preserved, not dropped or zeroed.",
+          "Before the run, predeclare the comparison and decision rule: coding metric, per-area loss tolerance and the tier cohorts kept separate. This prevents outcome-dependent interpretation."
+        ],
+        "scientific_uncertainties_not_blockers": [
+          "Quantization dominates the edit. cosine(realized, continuous) is 0.22 and the relative rounding error is 0.98. The 1% relative box is about 2-3 BF16 ulps, so most continuous moves round to zero. The realized edit is mainly a set of boundary-crossing ulp flips chosen by correction rounds, not the optimized direction.",
+          "Linear predictions are first-order gradient dot-products on teacher-forced frames with an empty thought span. Predicted LL gains of +0.05 to +0.13 nats are small. Free-running thinking generation is not modeled.",
+          "Serving and native code differ in normalization/cast/rounding order. Edits near ulp scale are exactly the regime where such differences can absorb or distort the change. The selected serving kernel's numerics were not measured.",
+          "The calibration set is 12 known tasks with singleton folds and no held-out use of the folds. The 24 constraints over roughly 1.3M eligible coordinates are easily satisfiable and may overfit the calibration frames.",
+          "The relaxed floors (margin -0.10 on the second failure, -0.05 elsewhere, LL -0.02) allow foil gains. Margin improvement need not fix the generated bug types (batched RHS contract, off-by-one cumulative).",
+          "The relative diagonal metric with a 1e-4 floor is a design choice motivated by gradient-energy concentration, not shown superior. Fixing the 60 scalars excludes the direction a relative metric would favor.",
+          "A prior matrix candidate tied all 26 tier10 code outcomes despite surrogate changes. Surrogate-to-benchmark transfer is weak.",
+          "There is no run-to-run variance estimate for dev30 under sampling, because baseline reruns were cancelled. Small coding differences on 90 code items cannot be separated from sampling noise."
+        ],
+        "mechanism_assessment": "Not a demonstrated joint mechanism. The 429 changes are scattered across seven families. Query and key norms account for 255, which plausibly act through attention-logit scale, and 3 final-norm values affect every output. However, the selection is driven by BF16 rounding boundaries and linear constraint satisfaction, with no activation or causal evidence for these coordinates. At most it is a sparse first-order perturbation consistent with 12 calibration frames. Moving official coding from 72.94 toward >90 via ulp-scale normalization changes is implausible on this evidence.",
+        "unsupported_even_if_dev30_improves": [
+          "That the gain exceeds sampling noise, absent a variance estimate. A paired item-level discordance count helps but does not settle this.",
+          "Causal attribution to the selected coordinates, to the normalization-family mechanism, or to the relative metric.",
+          "That the two calibration failure modes were repaired, or that teacher-forced margin gains transferred.",
+          "Any claim of official source-average coding >90, or held-out generalization (final held-out confirmation, DeepSWE all113) not yet run.",
+          "Pooling tier10 with the dev30 cohort, or inferring tier10 change from dev30.",
+          "Superiority over the running candidate or any parent other than the completed one compared.",
+          "That native-path numerics equal serving numerics; any effect is a serving-stack effect.",
+          "Adoption or publication readiness."
+        ],
+        "minimum_next_action": "Wait for the running candidate's final full score. If it is the new best, record parent_changed and stop. Otherwise materialize A, verify integrity, exact BF16 values and served-tensor identity, freeze the decision rule, then run the single canonical dev30 under identical settings and compare paired per-item outcomes against the completed parent.",
+        "claims_now": "No evidence warrants claiming >90, any capability gain, or adopting A. Only CPU linear predictions exist."
+      }
+    ],
+    "sequence": [
+      "1. Gate: await the final complete score of the running candidate. If it becomes highest, record parent_changed and redesign from it. Use no partial or proxy result.",
+      "2. Spec-only reuse of the existing CPU output, no model calls: confirm the realized spec equals the recorded round-9 values. Tabulate per-coordinate final |delta| in ulps and relative to the continuous box. Report box exceedance as a spec fact, not a capability signal.",
+      "3. Text-only check: confirm none of the 12 calibration tasks or fixtures overlap dev30, held-out or DeepSWE items.",
+      "4. Optional, spec-level: from the existing serving source, determine whether the selected kernel's cast/rounding order can absorb 1-2 ulp normalization-weight changes. If it can, note the run may test a partially null edit. Skip if the user treats this as a cancelled diagnostic.",
+      "5. Materialize the checkpoint. Run integrity, exact BF16 and served-tensor identity checks.",
+      "6. Predeclare the comparison rule. Run one complete canonical dev30 with identical runner, manifest, sampling, replicas, MTP4, concurrency and gateway/logprob endpoints. Collect the HTTP client trace.",
+      "7. Analyze the single run: overall and per-area scores versus the completed parent, with tier cohorts separate. Report paired per-item win/loss/tie on the 90 code items and on all 2,338 items. Report errors and unscored items unchanged. Optionally inspect whether code items resembling the two failure types changed, labeled descriptive only.",
+      "8. Regardless of outcome, keep held-out confirmation, DeepSWE all113, wiki and publication as later required steps. No adoption from dev30 alone."
+    ],
+    "evidence_limits": [
+      "All A evidence is CPU linear prediction from fixed parent gradients. There is no forward pass, generation, checkpoint or benchmark for A.",
+      "Gradients come from 12 authored calibration tasks with an empty thought span. These are not benchmarks and not free-running thinking.",
+      "The realized BF16 edit preserves little of the continuous direction (cosine 0.22).",
+      "Native-versus-serving numerical equivalence is unmeasured. Final BF16 box exceedance is unquantified.",
+      "The parent was run once on dev30, so variance is unknown. Prior surrogate changes failed to move tier10 outcomes.",
+      "Activation observations from earlier tier10 runs do not measure A or establish causality for its coordinates."
+    ],
+    "fresh_reserve": [
+      "The six ungenerated transfer tasks remain unused for gradients, selection and tuning of A.",
+      "Final held-out confirmation set: untouched and not used for any A decision before dev30 adjudication.",
+      "DeepSWE all113 at 32 workers, one pass: reserved for later confirmation.",
+      "Do not reuse the canonical dev30 outcome of A to re-tune A and then re-report on the same dev30 as confirmation."
+    ]
+  },
+  "finished_at": "2026-11-07T10:52:47.026967+00:00",
+  "duration_seconds": 58.262830661959015
+}

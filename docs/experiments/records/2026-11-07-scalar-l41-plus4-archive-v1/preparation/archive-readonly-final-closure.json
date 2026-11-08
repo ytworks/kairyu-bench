@@ -1,0 +1,17 @@
+{
+  "status": "non_destructive_archive_completed_release_not_executed",
+  "epoch": 1794063009.7655382,
+  "archive": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-scalar-l41-plus4-lossless-v1",
+  "archive_sha256": "35f0d4a320f94d41f8258d38ae01bea6376f9b2fb4e7e6be399b2f6817d8c58b",
+  "verify_sha256": "22efe41e5c4b662c42a7c3dabde65b3b5c00d2f5cfcb9d6b89ef4bc2833d2b7f",
+  "checksum_list_sha256": "a9758e95bb902efdceb9ad67def3bee85154ebc5c50d64ff363c8d0180aeba5a",
+  "checksum_entries_verified": 110,
+  "payloads_released": 0,
+  "eval_results_byte_exact": true,
+  "archive_owner_exited": true,
+  "free_bytes": 68102352896,
+  "container_count_at_readonly_audit": 28,
+  "release_baseline_must_be_fresh_after_WSP_exit": true,
+  "inaccessible_pids_count": 1605,
+  "unknown_process_visibility_accepted_for_release": false
+}

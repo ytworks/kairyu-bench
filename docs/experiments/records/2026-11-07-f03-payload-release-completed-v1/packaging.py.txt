@@ -1,0 +1,38 @@
+import difflib,gzip,hashlib,json,pathlib,shutil,time
+R=pathlib.Path('/mnt/nvme/kairyu/wsp/gemma4-coding-20261104');B=R/'worktrees/kairyu-bench-weight-tools'
+P=R/'analysis/fresh-purpose-20261107-f03-native-v1';N=R/'analysis/fresh-purpose-20261107-f04-dev30-dp4-v1'
+E=B/'docs/experiments';out=E/'records/2026-11-07-f03-payload-release-completed-v1';out.mkdir()
+n4=E/'records/2026-11-07-f04-dev30-bound-v1';n4.mkdir()
+def sha(b):return hashlib.sha256(b).hexdigest()
+rows=[]
+def cp(src,dest):
+ data=src.read_bytes();dest.parent.mkdir(parents=True,exist_ok=True)
+ if len(data)>65536:
+  dest=dest.with_name(dest.name+'.gz');stored=gzip.compress(data,mtime=0);assert gzip.decompress(stored)==data
+ else:stored=data
+ with dest.open('xb') as f:f.write(stored)
+ rows.append({'source':str(src),'destination':str(dest.relative_to(E)),'raw_bytes':len(data),'raw_sha256':sha(data),'stored_bytes':len(stored),'stored_sha256':sha(stored)})
+for dirname in ['lossless-release-preview-v1','lossless-release-preview-v2','lossless-release-apply-v1']:
+ for f in sorted((P/dirname).iterdir()):
+  if f.is_file():cp(f,out/dirname/f.name)
+for name in ['plan-ready.json','plan-ready-v2.json','read-only-audit.json','reference-visibility-diagnostic-v1.json','preview-command.json','preview-execution.json','preview.stdout','preview.stderr','focused-tests-v2.log']:
+ cp(P/'lossless-release-plan-v1'/name,out/'plans'/name)
+cp(R/'checkpoints/fresh-native-contract-f03/ARCHIVED.json',out/'ARCHIVED.json')
+cp(E/'scripts/fresh-f03-payload-release-20261107.py',out/'wrapper-v2.py.txt')
+old=E/'records/2026-11-07-f03-payload-release-preparation/withdrawn-wrapper-v1.py.txt'
+cp(old,out/'withdrawn-wrapper-v1.py.txt')
+patch=''.join(difflib.unified_diff(old.read_text().splitlines(True),(E/'scripts/fresh-f03-payload-release-20261107.py').read_text().splitlines(True),fromfile='wrapper-v1.py',tofile='wrapper-v2.py'))
+data=patch.encode();(out/'wrapper-v2.diff.gz').write_bytes(gzip.compress(data,mtime=0))
+for name in ['launch-plan-approved.json','http-trace-identity-check.json','owner-preview.json']:
+ cp(N/name,n4/name)
+cp(N/'http-trace/capture.json',n4/'capture.json')
+cp(N/'bind-and-preview.py',n4/'bind-and-preview.py.txt')
+for name in ['root-launch.json','owner-start.json','launch-preflight.json','wrapper-start.json']:
+ if (N/name).is_file():cp(N/name,n4/name)
+cp(pathlib.Path(__file__),out/'packaging.py.txt')
+summary={'created_epoch':time.time(),'files':rows,'raw_inputs_unchanged':True,'model_service_lock_operations':0,'live_logs_excluded':True,'patch':{'file':'wrapper-v2.diff.gz','uncompressed_sha256':sha(data),'stored_sha256':sha((out/'wrapper-v2.diff.gz').read_bytes())},'release_source_engine_sha256':'435e01109887123db12519c100e304fa7bd4f5a71b772e6c96eedce1b130f894','release_wrapper_sha256':'c181b7291d542e961d7f6421ce5ae0661f3c0a122a7eb0a4cc046c4690ddd3ae'}
+(out/'packaging.json').write_text(json.dumps(summary,indent=2)+chr(10))
+for d in [out,n4]:
+ fs=sorted(x for x in d.rglob('*') if x.is_file())
+ (d/'SHA256SUMS').write_text(''.join(sha(x.read_bytes())+'  '+str(x.relative_to(d))+chr(10) for x in fs))
+print(json.dumps({'release_records':str(out),'release_files':len(list(out.rglob('*'))),'release_checksums':sha((out/'SHA256SUMS').read_bytes()),'n4_records':str(n4),'n4_checksums':sha((n4/'SHA256SUMS').read_bytes())}))

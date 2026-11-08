@@ -1,0 +1,35 @@
+{"status": "prepared_no_solve", "roster": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/infra/tmp/r14/tmp2znyguw6/output/plan-roster.json", "roster_sha256": "0c84579aa94da09dd6f8dbc6aa020be0c471926474c972753de1a70d5e7caab5", "preparation_sha256": "628fefafa6a21190907e2017a6aca44e11bde5e6f207822ae138ca65833268b3", "method_sha256": "cee4fd4b606864c85f42e9e473c49574a22713ded837d21605634d855a1f51e7", "seconds": 0.14642087707761675, "F_scales": {"native": 2.0, "matrix": 1000000.0000005}}
+{"status": "prepared_no_solve", "roster": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/infra/tmp/r14/tmp2znyguw6/science-output/plan-roster.json", "roster_sha256": "eb3b8b5a1108cca5fcfd344e372861e4b5f38293a0bdc46f5803344b813efdb4", "preparation_sha256": "ae9c6920dc082f6579b3d426a3c9c3438b4db6094c72f583658b5b28e47d439d", "method_sha256": "e8ed969e42b214f191285c121ed340db6b46696f31e6253d7b279e719c0c847f", "seconds": 0.13535077404230833, "H_scales": {"native": 2.0, "matrix": 1000000.0000005}}
+{"kind": "dense_lora_recipe_v1", "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/infra/tmp/r14/tmp2m16lok9/base", "candidate": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/infra/tmp/r14/tmp2m16lok9/candidate", "changed_elements": 1230, "changed_tensors": 410, "delta_l2": 0.1369974837246108, "candidate_tree_sha256": "ebe2d02712e500b9a6d052a3fc8f7a742ae8814e7d043c756516435dbeadfbb6", "elapsed_seconds": 0.04147056303918362}
+{"status": "metadata_preview", "checkpoint": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/infra/tmp/r14/tmp3k7w_g9q/model", "folds_per_objective": 1, "candidates": 1, "gradient_payload_reads": 0, "model_calls": 0}
+{"id": "fixture", "changed_elements": 1, "actual_delta_l2": 0.0078125, "predicted_constraints_satisfied": true, "model_response_measured": false, "written": false, "spec_emitted": false, "editor_compatibility": {"matrix_coordinates_per_tensor": {}, "total_matrix_coordinates": 0, "requires_matrix_batch": false, "within_batched_editor_limit": true, "batch_opt_in": false, "spec_emission_allowed": true, "full_unit_opt_in": false}}
+{"id": "fixture", "changed_elements": 1, "actual_delta_l2": 0.0078125, "predicted_constraints_satisfied": true, "model_response_measured": false, "written": true, "spec_emitted": true, "editor_compatibility": {"matrix_coordinates_per_tensor": {}, "total_matrix_coordinates": 0, "requires_matrix_batch": false, "within_batched_editor_limit": true, "batch_opt_in": false, "spec_emission_allowed": true, "full_unit_opt_in": false}}
+{"id": "matrix-fixture", "changed_elements": 1, "actual_delta_l2": 0.0078125, "predicted_constraints_satisfied": true, "model_response_measured": false, "written": true, "spec_emitted": true, "editor_compatibility": {"matrix_coordinates_per_tensor": {"model.language_model.layers.0.mlp.down_proj.weight": 1}, "total_matrix_coordinates": 1, "requires_matrix_batch": false, "within_batched_editor_limit": true, "batch_opt_in": false, "spec_emission_allowed": true, "full_unit_opt_in": false}}
+{"status": "completed", "tree": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc", "output": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/infra/tmp/r14/tmpmm4f33e8/out"}
+{"status": "preview", "source": {"endpoint": "http://host:8000/metrics", "model": "gemma-4-31b", "container_id": "abc", "identity_kind": "caller_declared", "attestation_sha256": null}, "output": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/infra/tmp/r14/tmpyv654og4/out.json", "http_requests": 0, "writes": 0, "max_bytes": 2097152}
+Terminal-Bench 4.0 plan: trials=1 retry=3
+Terminal-Bench 4.0 interrupted: task=terminal-bench/batched-eval-parity trial=batched-eval-parity__0
+Terminal-Bench 4.0 plan: trials=1 retry=3
+Terminal-Bench 4.0 cleanup failed: kept:1 exit=1
+Terminal-Bench 4.0 plan: trials=1 retry=3
+Terminal-Bench 4.0 plugin error: stage=end type=AttributeError
+Terminal-Bench 4.0 plan: trials=5 retry=3
+Terminal-Bench 4.0 trial finished: task=terminal-bench/batched-eval-parity trial=batched-eval-parity__0 error=None
+Terminal-Bench 4.0 progress: scored=0/5 passed=0 gpu_unavailable=0 unscored=5 tasks=0/1 active=0 elapsed=0s api=unconfigured docker=ok root_free=365595815936 cache_free=68103118848
+Terminal-Bench 4.0 trial finished: task=terminal-bench/batched-eval-parity trial=batched-eval-parity__1 error=None
+Terminal-Bench 4.0 progress: scored=0/5 passed=0 gpu_unavailable=0 unscored=5 tasks=0/1 active=0 elapsed=0s api=unconfigured docker=ok root_free=365595840512 cache_free=68103106560
+Terminal-Bench 4.0 trial finished: task=terminal-bench/batched-eval-parity trial=batched-eval-parity__2 error=None
+Terminal-Bench 4.0 progress: scored=0/5 passed=0 gpu_unavailable=0 unscored=5 tasks=0/1 active=0 elapsed=0s api=unconfigured docker=ok root_free=365595840512 cache_free=68103106560
+Terminal-Bench 4.0 trial finished: task=terminal-bench/batched-eval-parity trial=batched-eval-parity__3 error=None
+Terminal-Bench 4.0 progress: scored=0/5 passed=0 gpu_unavailable=0 unscored=5 tasks=0/1 active=0 elapsed=0s api=unconfigured docker=ok root_free=365595840512 cache_free=68103106560
+Terminal-Bench 4.0 trial finished: task=terminal-bench/batched-eval-parity trial=batched-eval-parity__4 error=AgentTimeoutError
+Terminal-Bench 4.0 cleanup failed: fail-rm:latest exit=1
+Terminal-Bench 4.0 progress: scored=0/5 passed=0 gpu_unavailable=0 unscored=5 tasks=0/1 active=0 elapsed=0s api=unconfigured docker=ok root_free=365595840512 cache_free=68103098368
+Terminal-Bench 4.0 plan: trials=1 retry=3
+Terminal-Bench 4.0 cleanup failed: kept:1 exit=1
+Terminal-Bench 4.0 progress: scored=0/1 passed=0 gpu_unavailable=0 unscored=1 tasks=0/1 active=0 elapsed=0s api=unconfigured docker=ok root_free=365595840512 cache_free=68103110656
+Terminal-Bench 4.0 plan: trials=5 retry=3
+Terminal-Bench 4.0 plan: trials=1 retry=3
+Terminal-Bench 4.0 retry: task=terminal-bench/batched-eval-parity trial=batched-eval-parity__0 type=RuntimeError attempt=1
+Terminal-Bench 4.0 plan: trials=1 retry=3
+Terminal-Bench 4.0 retry: task=terminal-bench/batched-eval-parity trial=batched-eval-parity__0 type=RuntimeError attempt=1

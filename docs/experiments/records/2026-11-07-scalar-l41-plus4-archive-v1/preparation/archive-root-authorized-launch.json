@@ -1,0 +1,22 @@
+{
+  "pid": 1944888,
+  "argv": [
+    "nice",
+    "-n",
+    "15",
+    "ionice",
+    "-c",
+    "3",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/infra/weight-tools-ci/bin/python",
+    "-B",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/worktrees/kairyu-bench-weight-tools/docs/experiments/scripts/fresh-scalar-l41-plus4-archive-20261107.py"
+  ],
+  "started_epoch": 1794062664.9875455,
+  "plan_sha256": "b2c9a77ee73839e05b4b08c4366d3e07815e639be2745258709e43be686575a3",
+  "source_sha256": "5e2dfac81cda73e9d90f7e4e60ba7e2517cd9cf44554cd844858161b711a7072",
+  "source_prior_sha256": "ff3e09abbb18168634fe4f2f8939453924eb0f103c4a74ef7a5573a5b61c52b4",
+  "scope": "root authorized non-destructive full verify and archive only; no release",
+  "during_WSP": "F06 active; nice15 idleIO threads1; background IO is not a baseline latency measurement",
+  "release_authorized": false,
+  "model_calls": 0
+}

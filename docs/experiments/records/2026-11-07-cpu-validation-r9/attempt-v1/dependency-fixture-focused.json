@@ -1,0 +1,23 @@
+{
+  "command": [
+    "nice",
+    "-n",
+    "15",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/infra/weight-tools-ci/bin/python",
+    "-m",
+    "unittest",
+    "discover",
+    "-s",
+    "tests",
+    "-p",
+    "test_dependency_set_plans.py",
+    "-v"
+  ],
+  "returncode": 0,
+  "elapsed_seconds": 0.6614112854003906,
+  "before_sha256": "c11704bd4ffb2fcdccc7688e2ebd876ed5ca072618cc8df0d8fc3d3ae34a8219",
+  "after_sha256": "253897469b6c9ec8a26a9a7adae546643361d140917e9e46e6ab1b4afd83f2d0",
+  "change": "Read declared gradient filenames from fixture summary; no production recipe or shared fixture change.",
+  "TMPDIR": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/infra/tmp/r9",
+  "PATH_prefix": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/infra/weight-tools-ci/bin"
+}

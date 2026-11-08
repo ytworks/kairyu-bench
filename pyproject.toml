@@ -8,6 +8,7 @@ version = "0.1.0"
 description = "Standalone official benchmark runner for Kairyu-compatible APIs"
 requires-python = ">=3.11"
 dependencies = [
+  "numpy>=1.26,<3",
   "datasets==5.0.0",
   "tiktoken==0.13.0",
 ]
@@ -20,3 +21,7 @@ where = ["src"]
 
 [tool.setuptools.package-data]
 kairyu_bench = ["data/*.json", "data/wsp/*.json"]
+
+[tool.ruff]
+# Immutable experiment evidence is preserved byte-for-byte, not maintained code.
+extend-exclude = ["docs/experiments/records/**"]

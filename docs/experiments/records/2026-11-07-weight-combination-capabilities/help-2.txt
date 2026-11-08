@@ -1,0 +1,48 @@
+usage: matrix.py [-h] --checkpoint CHECKPOINT --cases CASES --output OUTPUT
+                 [--checkpoint-attestation CHECKPOINT_ATTESTATION]
+                 [--attestation-sha256 ATTESTATION_SHA256]
+                 [--device {cpu,cuda:0}] [--threads THREADS] [--seed SEED]
+                 [--max-cases-per-microbatch MAX_CASES_PER_MICROBATCH]
+                 [--reference-tolerance REFERENCE_TOLERANCE] [--run]
+                 [--gpu-exclusive-approved] [--max-frame-tokens {1024,2048}]
+                 [--text-attention-backend {eager,sdpa}]
+                 [--execution-order {original,longest_frame_first}]
+                 [--cuda-memory-cap-gib CUDA_MEMORY_CAP_GIB]
+                 [--mode {raw-next-token,chat-public-answer}]
+                 [--objective {margin,correct-logprob}]
+                 [--answer-batching {paired,serial}]
+                 [--sampling-mode {independent,mlp-triplets}]
+
+Collect 512 stratified true weight-coordinate derivatives per Gemma 4
+projection.
+
+options:
+  -h, --help            show this help message and exit
+  --checkpoint CHECKPOINT
+  --cases CASES
+  --output OUTPUT
+  --checkpoint-attestation CHECKPOINT_ATTESTATION
+  --attestation-sha256 ATTESTATION_SHA256
+  --device {cpu,cuda:0}
+  --threads THREADS
+  --seed SEED
+  --max-cases-per-microbatch MAX_CASES_PER_MICROBATCH
+                        split each existing pack into at most this many
+                        correct/foil pairs
+  --reference-tolerance REFERENCE_TOLERANCE
+  --run                 otherwise validate inputs and print a preview only
+  --gpu-exclusive-approved
+  --max-frame-tokens {1024,2048}
+                        opt-in complete prefix+answer limit; reject oversize,
+                        never truncate
+  --text-attention-backend {eager,sdpa}
+  --execution-order {original,longest_frame_first}
+  --cuda-memory-cap-gib CUDA_MEMORY_CAP_GIB
+                        optional CUDA caching-allocator limit, not total
+                        device memory
+  --mode {raw-next-token,chat-public-answer}
+  --objective {margin,correct-logprob}
+  --answer-batching {paired,serial}
+  --sampling-mode {independent,mlp-triplets}
+                        mlp-triplets shares stratified hidden-unit indices
+                        across gate/up/down; attention unchanged

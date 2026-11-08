@@ -1,0 +1,52 @@
+{
+  "schema_version": 1,
+  "source_run_directory": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-cpu-validation-r6",
+  "counts": {
+    "collected": 532,
+    "passed": 475,
+    "skipped": 57,
+    "failed": 0,
+    "inline_ok": 463,
+    "standalone_ok": 12
+  },
+  "unittest_reported_seconds": 47.444,
+  "unittest_wall_seconds": 47.96312641201075,
+  "checks": {
+    "unittest": {
+      "returncode": 0,
+      "seconds": 47.96312641201075
+    },
+    "ruff": {
+      "returncode": 0,
+      "seconds": 0.05081323999911547
+    },
+    "mypy": {
+      "returncode": 0,
+      "seconds": 0.34845886297989637
+    },
+    "data": {
+      "returncode": 0,
+      "seconds": 0.0640257530612871
+    }
+  },
+  "mypy_source_files": 74,
+  "shell_files": 31,
+  "all_shell_returncodes_zero": true,
+  "source_files": 6,
+  "before_after_current_sha_equal": true,
+  "gpu_validation": false,
+  "original_sha256": {
+    "receipt.json": "85f8de63e4fa98b636fd86a2a5850061932e5019b9e99902df4614e9efbb525d",
+    "unittest.log": "add9e733a1f8050f08a68abb7418db85691cbf3e28053e646804ac38b8bc291b",
+    "ruff.log": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18",
+    "mypy.log": "4ef32b02733c640ba275e5de2c0f630d3ea2a6293bb124ad0dc2173d46e40541",
+    "data.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "unittest_gzip": {
+    "file": "unittest.log.gz",
+    "sha256": "f8c8d2629bab829eae5ab7465b21191bf8ccfbfc323ab4ce5e5a541a994cd233",
+    "original_bytes": 96796,
+    "compressed_bytes": 17807,
+    "roundtrip_bytes_exact": true
+  }
+}

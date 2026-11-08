@@ -1,0 +1,214 @@
+{
+  "checkpoint_tree_sha256": "7b9e9488e3cd4e0b6c5f61ae341e5eeccdf5bd31c46d1c8354950dbc29d0f924",
+  "case_rows": [
+    {
+      "id": "behavior-A1",
+      "correct_logprob": -1.3750416040420532,
+      "margin": -0.2539327144622803
+    },
+    {
+      "id": "behavior-A2",
+      "correct_logprob": -1.628711462020874,
+      "margin": 0.2234656810760498
+    },
+    {
+      "id": "behavior-B1",
+      "correct_logprob": -1.7384389638900757,
+      "margin": 0.06904006004333496
+    },
+    {
+      "id": "behavior-B2",
+      "correct_logprob": -1.1050609350204468,
+      "margin": 0.062152981758117676
+    },
+    {
+      "id": "behavior-C1",
+      "correct_logprob": -2.408848285675049,
+      "margin": 0.6322929859161377
+    },
+    {
+      "id": "behavior-C2",
+      "correct_logprob": -1.2654201984405518,
+      "margin": 0.40371084213256836
+    },
+    {
+      "id": "behavior-D1",
+      "correct_logprob": -1.5119428634643555,
+      "margin": 0.28526771068573
+    },
+    {
+      "id": "behavior-D2",
+      "correct_logprob": -1.091444730758667,
+      "margin": 0.4501749277114868
+    },
+    {
+      "id": "behavior-E1",
+      "correct_logprob": -1.0722202062606812,
+      "margin": 0.037589430809020996
+    },
+    {
+      "id": "behavior-E2",
+      "correct_logprob": -1.8361141681671143,
+      "margin": 0.2135941982269287
+    },
+    {
+      "id": "behavior-F1",
+      "correct_logprob": -2.045177698135376,
+      "margin": 0.5641462802886963
+    },
+    {
+      "id": "behavior-F2",
+      "correct_logprob": -1.8117161989212036,
+      "margin": 0.5637091398239136
+    },
+    {
+      "id": "behavior-G1",
+      "correct_logprob": -1.9875068664550781,
+      "margin": 0.6835582256317139
+    },
+    {
+      "id": "behavior-G2",
+      "correct_logprob": -1.7819246053695679,
+      "margin": 0.4354149103164673
+    },
+    {
+      "id": "behavior-H1",
+      "correct_logprob": -1.740635871887207,
+      "margin": 1.4952914714813232
+    },
+    {
+      "id": "behavior-H2",
+      "correct_logprob": -2.2480626106262207,
+      "margin": 1.1769094467163086
+    },
+    {
+      "id": "behavior-I1",
+      "correct_logprob": -1.7869364023208618,
+      "margin": 0.10353076457977295
+    },
+    {
+      "id": "behavior-I2",
+      "correct_logprob": -1.783743143081665,
+      "margin": 0.060129404067993164
+    },
+    {
+      "id": "behavior-J1",
+      "correct_logprob": -1.8198169469833374,
+      "margin": -0.14493274688720703
+    }
+  ],
+  "source_summaries": {
+    "correct-logprob": {
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f04-native19-gpu4-v1/work/correct-logprob/summary.json",
+      "sha256": "d1af7cd3dedc18eb458342f1f1af99f53780208a35d2fc5c0eff8b5a398173ec",
+      "bytes": 132642
+    },
+    "margin": {
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f04-native19-gpu4-v1/work/margin/summary.json",
+      "sha256": "168268a51fd0742a859eef6ed65dea5efb0141724c736468314a9a95db789858",
+      "bytes": 133373
+    }
+  },
+  "ordered_cohort": [
+    {
+      "purpose": "A",
+      "fold": 0,
+      "id": "behavior-A1"
+    },
+    {
+      "purpose": "A",
+      "fold": 1,
+      "id": "behavior-A2"
+    },
+    {
+      "purpose": "B",
+      "fold": 0,
+      "id": "behavior-B1"
+    },
+    {
+      "purpose": "B",
+      "fold": 1,
+      "id": "behavior-B2"
+    },
+    {
+      "purpose": "C",
+      "fold": 0,
+      "id": "behavior-C1"
+    },
+    {
+      "purpose": "C",
+      "fold": 1,
+      "id": "behavior-C2"
+    },
+    {
+      "purpose": "D",
+      "fold": 0,
+      "id": "behavior-D1"
+    },
+    {
+      "purpose": "D",
+      "fold": 1,
+      "id": "behavior-D2"
+    },
+    {
+      "purpose": "E",
+      "fold": 0,
+      "id": "behavior-E1"
+    },
+    {
+      "purpose": "E",
+      "fold": 1,
+      "id": "behavior-E2"
+    },
+    {
+      "purpose": "F",
+      "fold": 0,
+      "id": "behavior-F1"
+    },
+    {
+      "purpose": "F",
+      "fold": 1,
+      "id": "behavior-F2"
+    },
+    {
+      "purpose": "G",
+      "fold": 0,
+      "id": "behavior-G1"
+    },
+    {
+      "purpose": "G",
+      "fold": 1,
+      "id": "behavior-G2"
+    },
+    {
+      "purpose": "H",
+      "fold": 0,
+      "id": "behavior-H1"
+    },
+    {
+      "purpose": "H",
+      "fold": 1,
+      "id": "behavior-H2"
+    },
+    {
+      "purpose": "I",
+      "fold": 0,
+      "id": "behavior-I1"
+    },
+    {
+      "purpose": "I",
+      "fold": 1,
+      "id": "behavior-I2"
+    },
+    {
+      "purpose": "J",
+      "fold": 0,
+      "id": "behavior-J1"
+    }
+  ],
+  "origin": "F04 native19 measured summaries only; no AV values, no model request or recomputation",
+  "case_input": {
+    "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-behavior19-inputs-v1/train-cases.json",
+    "sha256": "74e1cd2000fda0abdc03f4454b18f4231b9891360af266391744e13976f199f1"
+  }
+}

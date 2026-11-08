@@ -1,0 +1,42 @@
+{
+  "results": [
+    {
+      "argv": [
+        "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/infra/weight-tools-ci/bin/python",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests",
+        "-p",
+        "test_gemma4_native_owner.py",
+        "-v"
+      ],
+      "returncode": 0,
+      "stdout": "",
+      "stderr": "test_docker_unavailable_cannot_be_mistaken_for_removed_collector (test_gemma4_native_owner.NativeOwnerGuards.test_docker_unavailable_cannot_be_mistaken_for_removed_collector) ... ok\ntest_exact_restart_and_protected_drift_reported (test_gemma4_native_owner.NativeOwnerGuards.test_exact_restart_and_protected_drift_reported) ... ok\ntest_frame_overflow_is_rejection_not_truncation (test_gemma4_native_owner.NativeOwnerGuards.test_frame_overflow_is_rejection_not_truncation) ... ok\ntest_hung_exact_owned_collector_killed_before_original_restart (test_gemma4_native_owner.NativeOwnerGuards.test_hung_exact_owned_collector_killed_before_original_restart) ... ok\ntest_input_cannot_be_mounted_writable (test_gemma4_native_owner.NativeOwnerGuards.test_input_cannot_be_mounted_writable) ... ok\ntest_late_create_during_client_wait_is_rechecked_before_restart (test_gemma4_native_owner.NativeOwnerGuards.test_late_create_during_client_wait_is_rechecked_before_restart) ... ok\ntest_preview_validation_never_calls_docker_or_gpu (test_gemma4_native_owner.NativeOwnerGuards.test_preview_validation_never_calls_docker_or_gpu) ... ok\ntest_source_and_checkpoint_stat_changes_reject (test_gemma4_native_owner.NativeOwnerGuards.test_source_and_checkpoint_stat_changes_reject) ... ok\ntest_train_envelope_and_raw_mapping_have_exact_same_ids (test_gemma4_native_owner.NativeOwnerGuards.test_train_envelope_and_raw_mapping_have_exact_same_ids) ... ok\ntest_transfer_and_duplicate_case_guards (test_gemma4_native_owner.NativeOwnerGuards.test_transfer_and_duplicate_case_guards) ... ok\ntest_unapproved_plan_rejected_before_helper_or_lock (test_gemma4_native_owner.NativeOwnerGuards.test_unapproved_plan_rejected_before_helper_or_lock) ... ok\ntest_unfinished_client_blocks_restore (test_gemma4_native_owner.NativeOwnerGuards.test_unfinished_client_blocks_restore) ... ok\ntest_unknown_owner_is_not_killed_and_blocks_restore (test_gemma4_native_owner.NativeOwnerGuards.test_unknown_owner_is_not_killed_and_blocks_restore) ... ok\n\n----------------------------------------------------------------------\nRan 13 tests in 0.064s\n\nOK\n",
+      "seconds": 0.18753582402132452
+    },
+    {
+      "argv": [
+        "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/infra/weight-tools-ci/bin/python",
+        "-m",
+        "ruff",
+        "check",
+        "docs/experiments/scripts/fresh-av-native-gpu4-20261107.py",
+        "tests/test_gemma4_native_owner.py"
+      ],
+      "returncode": 0,
+      "stdout": "All checks passed!\n",
+      "stderr": "",
+      "seconds": 0.061829680926166475
+    }
+  ],
+  "source_sha256": {
+    "docs/experiments/scripts/fresh-av-native-gpu4-20261107.py": "9a8d9255312a97ae2762ec97c34c9701ac5d64dcb0dc273e01f8d7f6700b7183",
+    "tests/test_gemma4_native_owner.py": "a26f75bd50fb445eab9e3c43076a619ae08cdc27955ef21211bce19fe7f45ed3"
+  },
+  "model_calls": 0,
+  "service_changes": 0,
+  "change": "post-client-exit fresh cidfile/daemon lookup blocks late-create restoration race"
+}

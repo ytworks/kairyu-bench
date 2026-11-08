@@ -1,0 +1,201 @@
+{
+  "expected": 19,
+  "received": 19,
+  "missing_ids": [],
+  "errors": 0,
+  "empty": 0,
+  "length_finished": 0,
+  "responses_sha256": "4105a5c87f9c54a4fa552a31927ce1bf8e330a5831a3a78d23cb0b1802cbc07f",
+  "rows": [
+    {
+      "id": "behavior-H1",
+      "request_id": "chatcmpl-0382ccae6c5e48af",
+      "finish_reason": "stop",
+      "usage": {
+        "input_tokens": 118,
+        "output_tokens": 497
+      },
+      "seconds": 3.9996164629701525
+    },
+    {
+      "id": "behavior-H2",
+      "request_id": "chatcmpl-b6c5215d4f094a0a",
+      "finish_reason": "stop",
+      "usage": {
+        "input_tokens": 120,
+        "output_tokens": 546
+      },
+      "seconds": 4.270717611070722
+    },
+    {
+      "id": "behavior-D2",
+      "request_id": "chatcmpl-67afc04ce6254d16",
+      "finish_reason": "stop",
+      "usage": {
+        "input_tokens": 117,
+        "output_tokens": 573
+      },
+      "seconds": 4.893150007002987
+    },
+    {
+      "id": "behavior-F1",
+      "request_id": "chatcmpl-fb5a77cb124242fb",
+      "finish_reason": "stop",
+      "usage": {
+        "input_tokens": 88,
+        "output_tokens": 613
+      },
+      "seconds": 5.258437555050477
+    },
+    {
+      "id": "behavior-D1",
+      "request_id": "chatcmpl-f232790fecff4060",
+      "finish_reason": "stop",
+      "usage": {
+        "input_tokens": 109,
+        "output_tokens": 692
+      },
+      "seconds": 5.957528849015944
+    },
+    {
+      "id": "behavior-E1",
+      "request_id": "chatcmpl-e2b2170ccb424e0b",
+      "finish_reason": "stop",
+      "usage": {
+        "input_tokens": 121,
+        "output_tokens": 781
+      },
+      "seconds": 6.521495628054254
+    },
+    {
+      "id": "behavior-A1",
+      "request_id": "chatcmpl-7346d560efd84a14",
+      "finish_reason": "stop",
+      "usage": {
+        "input_tokens": 114,
+        "output_tokens": 965
+      },
+      "seconds": 8.3116300329566
+    },
+    {
+      "id": "behavior-E2",
+      "request_id": "chatcmpl-9803283139aa4cfe",
+      "finish_reason": "stop",
+      "usage": {
+        "input_tokens": 107,
+        "output_tokens": 1028
+      },
+      "seconds": 8.438689481001347
+    },
+    {
+      "id": "behavior-F2",
+      "request_id": "chatcmpl-34ce24f06a1f4710",
+      "finish_reason": "stop",
+      "usage": {
+        "input_tokens": 99,
+        "output_tokens": 1122
+      },
+      "seconds": 9.905365646933205
+    },
+    {
+      "id": "behavior-B2",
+      "request_id": "chatcmpl-212acc4936ce40c9",
+      "finish_reason": "stop",
+      "usage": {
+        "input_tokens": 117,
+        "output_tokens": 1239
+      },
+      "seconds": 10.127875790931284
+    },
+    {
+      "id": "behavior-I1",
+      "request_id": "chatcmpl-f137e331276e4d76",
+      "finish_reason": "stop",
+      "usage": {
+        "input_tokens": 105,
+        "output_tokens": 860
+      },
+      "seconds": 6.638335865107365
+    },
+    {
+      "id": "behavior-A2",
+      "request_id": "chatcmpl-2d3f135e6351451b",
+      "finish_reason": "stop",
+      "usage": {
+        "input_tokens": 108,
+        "output_tokens": 1236
+      },
+      "seconds": 11.083363102050498
+    },
+    {
+      "id": "behavior-C1",
+      "request_id": "chatcmpl-bd528eb89c2e4ff8",
+      "finish_reason": "stop",
+      "usage": {
+        "input_tokens": 109,
+        "output_tokens": 1548
+      },
+      "seconds": 12.587165700038895
+    },
+    {
+      "id": "behavior-J1",
+      "request_id": "chatcmpl-928c8b00d9f94b19",
+      "finish_reason": "stop",
+      "usage": {
+        "input_tokens": 99,
+        "output_tokens": 1041
+      },
+      "seconds": 8.113209304981865
+    },
+    {
+      "id": "behavior-C2",
+      "request_id": "chatcmpl-f7e1dd883a33420f",
+      "finish_reason": "stop",
+      "usage": {
+        "input_tokens": 120,
+        "output_tokens": 1533
+      },
+      "seconds": 13.184408177970909
+    },
+    {
+      "id": "behavior-I2",
+      "request_id": "chatcmpl-b175bfa810e84b74",
+      "finish_reason": "stop",
+      "usage": {
+        "input_tokens": 111,
+        "output_tokens": 1544
+      },
+      "seconds": 11.58457091206219
+    },
+    {
+      "id": "behavior-G1",
+      "request_id": "chatcmpl-66017f94e3fa4efd",
+      "finish_reason": "stop",
+      "usage": {
+        "input_tokens": 111,
+        "output_tokens": 2180
+      },
+      "seconds": 18.140429841005243
+    },
+    {
+      "id": "behavior-B1",
+      "request_id": "chatcmpl-48d314564ffd4afc",
+      "finish_reason": "stop",
+      "usage": {
+        "input_tokens": 106,
+        "output_tokens": 2146
+      },
+      "seconds": 18.229477079003118
+    },
+    {
+      "id": "behavior-G2",
+      "request_id": "chatcmpl-292e993830434b43",
+      "finish_reason": "stop",
+      "usage": {
+        "input_tokens": 125,
+        "output_tokens": 3230
+      },
+      "seconds": 24.256591145996936
+    }
+  ]
+}

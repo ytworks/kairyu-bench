@@ -1,0 +1,88 @@
+from pathlib import Path
+import hashlib,json
+B=Path('/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/worktrees/kairyu-bench-weight-tools')
+p=B/'scripts/experiments/gemma4-purpose/train_lora.py';s=p.read_text()
+s=s.replace('    for path in [checkpoint.path, *pinned]:','    for path in [checkpoint.path, *pinned, *([Path(plan["teacher_checkpoint"]["path"])]\n                 if use_kl and "teacher_checkpoint" in plan else [])]:',1)
+p.write_text(s)
+t=B/'tests/test_gemma4_lora_training.py';s=t.read_text().replace('import importlib\n','import importlib\nimport copy\nfrom types import SimpleNamespace\nimport time\n')
+anchor='@unittest.skipIf(torch is None, "requires existing Torch CPU environment")'
+new='''class BodyMaskTests(unittest.TestCase):
+    def test_opt_in_and_body_suffix_mask_preserve_full_frames_and_unsupported_rows(self):
+        class Tokenizer:
+            chat_template = "synthetic ON"
+            def apply_chat_template(self, messages, **kwargs):
+                prefix = messages[0]["content"] + "<|turn>model\\n"
+                return prefix if kwargs["add_generation_prompt"] else prefix + messages[1]["content"] + "<turn|>\\n"
+            def encode(self, text, **kwargs):
+                return [ord(c) for c in text]
+            def __call__(self, text, **kwargs):
+                return {"input_ids": self.encode(text), "offset_mapping": [(i, i+1) for i in range(len(text))]}
+        rows = [{"task_id": 1, "text": "p", "code": 'import math\\ndef f():\\n    """contract"""\\n    return 1\\ndef g(): return 2\\n'},
+                {"task_id": 2, "text": "p", "code": "x = 1"}]
+        direct, direct_proof = recipe.prepare_training_frames(Tokenizer(), rows)
+        frames, proof = recipe.body_kl.prepare_frames(Tokenizer(), rows, recipe.prepare_training_frames)
+        self.assertEqual([x["ids"] for x in direct], [x["ids"] for x in frames])
+        self.assertEqual(direct_proof["ineligible_ids"], [])
+        self.assertEqual(proof["unsupported_ids"], [2])
+        self.assertEqual(len(frames), 2)
+        targets = "".join(chr(frames[0]["ids"][i]) for i in frames[0]["body_target_positions"])
+        self.assertTrue(targets.startswith("return 1"))
+        self.assertIn("def g():", targets)  # precise suffix scope, not all function headers masked
+        self.assertNotIn("<turn|>", targets)
+        self.assertFalse(recipe.body_kl.selected({}))
+        self.assertTrue(recipe.body_kl.selected({"loss_protocol": recipe.body_kl.PROTOCOL}))
+        for bad in ({"teacher_checkpoint": {}}, {"loss_protocol": {"kind": "unknown"}}):
+            with self.assertRaises(ValueError):
+                recipe.body_kl.selected(bad)
+
+
+'''
+assert s.count(anchor)==1;s=s.replace(anchor,new+anchor)
+anchor2='    def test_two_steps_reach_A_and_B_preserve_base_and_f32_merge_function(self):'
+new2='''    def test_full_frame_teacher_cache_detached_and_body_plus_first_token_kl(self):
+        torch.manual_seed(3)
+        class Net(torch.nn.Module):
+            def __init__(self):
+                super().__init__()
+                self.embed = torch.nn.Embedding(11, 4)
+                self.config = SimpleNamespace(final_logit_softcapping=3.0)
+                self.seen_lengths = []
+            def forward(self, input_ids, **kwargs):
+                self.seen_lengths.append(input_ids.shape[1])
+                return SimpleNamespace(last_hidden_state=self.embed(input_ids) + input_ids.shape[1] * 0.01)
+        teacher_net = Net().requires_grad_(False)
+        teacher_head = torch.nn.Linear(4, 11).requires_grad_(False)
+        teacher = SimpleNamespace(model=SimpleNamespace(language_model=teacher_net),
+                                  get_output_embeddings=lambda: teacher_head)
+        student_net, student_head = copy.deepcopy(teacher_net), copy.deepcopy(teacher_head)
+        student_net.requires_grad_(True)
+        student_head.requires_grad_(True)
+        frame = {"id": 1, "ids": [1, 2, 3, 4, 5, 6, 7], "prefix_tokens": 3,
+                 "body_target_positions": [4, 5]}
+        with tempfile.TemporaryDirectory() as directory:
+            out = Path(directory) / "teacher-cache"
+            cache = recipe.body_kl.cache_teacher(torch, teacher, [frame], out, "cpu",
+                                                 time.monotonic()+10, {}, lambda: None)
+            self.assertEqual(teacher_net.seen_lengths, [7])  # never prefix length 3
+            self.assertEqual(cache[1].dtype, torch.float32)
+            self.assertEqual(cache[1].shape, (11,))
+            logits = cache[1].clone().requires_grad_(True)
+            loss, count, terms = recipe.body_kl.body_kl_loss(
+                torch, student_net, student_head, frame, logits, "cpu")
+            self.assertEqual(student_net.seen_lengths, [7])
+            self.assertEqual(count, 2)
+            self.assertAlmostEqual(terms["first_token_KL"], 0, places=6)
+            self.assertAlmostEqual(float(loss), terms["body_CE"], places=6)
+            loss.backward()
+            self.assertIsNone(logits.grad)
+            self.assertIsNone(teacher_head.weight.grad)
+            self.assertGreater(float(student_head.weight.grad.norm()), 0)
+            counts = recipe.model_counters(Path(directory), 256, 256)
+            self.assertEqual(counts["teacher_model_forwards"], 1)
+            self.assertEqual(counts["student_model_forwards"], 256)
+            self.assertEqual(counts["model_forwards"], 257)
+
+'''
+assert s.count(anchor2)==1;s=s.replace(anchor2,new2+anchor2);t.write_text(s)
+print({'source_sha256':hashlib.sha256(p.read_bytes()).hexdigest(),'test_sha256':hashlib.sha256(t.read_bytes()).hexdigest()})
+

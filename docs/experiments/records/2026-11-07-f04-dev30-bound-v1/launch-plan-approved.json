@@ -1,0 +1,314 @@
+{
+  "schema_version": 1,
+  "status": "approved_for_execution",
+  "approved_for_execution": true,
+  "created_epoch": 1794049632.738031,
+  "run_id": "gemma4-fresh-f04-dev30-dp4-20261107-v1",
+  "cwd": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/results",
+  "command": [
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/worktrees/kairyu-bench-weight-tools/kairyu-bench",
+    "wsp",
+    "run",
+    "http://kairyu:8000/v1",
+    "--tier",
+    "30",
+    "--split",
+    "dev",
+    "--label",
+    "7b9e9488e3cd4e0b6c5f61ae341e5eeccdf5bd31c46d1c8354950dbc29d0f924",
+    "--run-id",
+    "gemma4-fresh-f04-dev30-dp4-20261107-v1",
+    "--results-dir",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/results",
+    "--chat-concurrency",
+    "256",
+    "--logprob-concurrency",
+    "32",
+    "--agent-concurrency",
+    "4",
+    "--logprob-endpoint",
+    "http://gemma-0:8000/v1",
+    "--logprob-endpoint",
+    "http://gemma-1:8000/v1",
+    "--logprob-endpoint",
+    "http://gemma-2:8000/v1",
+    "--logprob-endpoint",
+    "http://gemma-3:8000/v1",
+    "--observe-config",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f04-dev30-dp4-v1/http-trace/capture.json"
+  ],
+  "environment_allowlist": {
+    "KAIRYU_BENCH_CACHE_DIR": "/mnt/nvme/kairyu/bench-cache/wsp",
+    "KAIRYU_BENCH_DOCKER_SOCKET": "/mnt/nvme/kairyu/docker/wsp/run/docker.sock",
+    "KAIRYU_BENCH_DOCKER_NETWORK": "gemma-4-31b-8gpu_default",
+    "KAIRYU_BENCH_CLEAN_TASK_IMAGES": "0",
+    "KAIRYU_BENCH_RUNNER_IMAGE_ID": "sha256:f91bdcf997af6d7b194bec229812fd018277158f6795de7d91e58448936e7ad8",
+    "KAIRYU_BENCH_TERMINAL_BENCH_WORKERS": "4",
+    "KAIRYU_BENCH_LIVECODEBENCH_PRO_WORKERS": "4",
+    "KAIRYU_BENCH_SWEBENCH_PRO_WORKERS": "4"
+  },
+  "credential_policy": "inherit approved shell credentials silently; never print or persist values",
+  "global_lock": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/candidate-evaluation.lock",
+  "prior_owner_pid": 1274997,
+  "handoff": {
+    "root_authorized": true,
+    "prior_owner_pid": 1274997,
+    "release_required_before_launch": true,
+    "normal_global_release": {
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f04-relative-v1/deployment-dp4-v1/global-lock-released.json",
+      "bytes": 281,
+      "sha256": "ed8a921b735573190cafd162c38f524f0c6c9afe6f0fa58219e66bd4842886c9"
+    },
+    "endpoint_closure": {
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f04-relative-v1/deployment-dp4-v1/endpoint-closure.json",
+      "bytes": 4047,
+      "sha256": "44c5fd4e3a725353eca32fb56278000886cc9ca92bd03013f64fea0c6dc36727"
+    },
+    "authorization": "Root explicitly authorized fully bound existing-owner preview and immediate root launch after F03 lossless release. No base rerun or additional finite/proxy evaluation.",
+    "lossless_release_receipt": {
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f03-native-v1/lossless-release-apply-v1/receipt.json",
+      "bytes": 59266,
+      "sha256": "601464cd0002841809d96890db1a20010964a5adf72542e1b60735fd2a1b07cf"
+    }
+  },
+  "expected_serving": {
+    "model": "gemma-4-31b",
+    "checkpoint": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/checkpoints/fresh-native-relative-f04-faststore-v1/checkpoint",
+    "tree_sha256": "7b9e9488e3cd4e0b6c5f61ae341e5eeccdf5bd31c46d1c8354950dbc29d0f924",
+    "replicas": 4,
+    "tp_size": 2,
+    "mtp_tokens": 4,
+    "dtype": "native BF16",
+    "ordinary_only": true,
+    "service_cids": {
+      "gemma-0": "dc117b29cb6f7ef23c8bab4ecb5d734114ebb828c3b569b2e2ba0843b7f962dd",
+      "gemma-1": "08037f93d105bc27be35b05b93fed55b463fc4776e446c1152fa5c6cb4563052",
+      "gemma-2": "fc3e14a0b216e622004db9b0cf754c7d33e4410d2ab63a28b762ef32607327ca",
+      "gemma-3": "d8ad71d8d13f18fa5311b89b08860ac0c8fefcbae03b9d631816d74c68a929a0"
+    },
+    "gateway": "gemma-4-31b-8gpu-kairyu-1",
+    "closures": [
+      {
+        "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f04-relative-v1/deployment-dp4-v1/gemma-0-closure-v1.json",
+        "bytes": 627,
+        "sha256": "9c8cb98b6ed22c6cafb80bffa792ce0d28230e1bda013b70f385416cf6f7f126"
+      },
+      {
+        "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f04-relative-v1/deployment-dp4-v1/gemma-1-closure-v1.json",
+        "bytes": 627,
+        "sha256": "5db50b29c8b3036bac1b437d170f33492b95a33e8e129d514e4b811778722e1c"
+      },
+      {
+        "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f04-relative-v1/deployment-dp4-v1/gemma-2-closure-v1.json",
+        "bytes": 627,
+        "sha256": "3c602f0541f14cdf63799577e0d1d2e13f5c7ff674b36c3834aa5a0df48304f4"
+      },
+      {
+        "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f04-relative-v1/deployment-dp4-v1/gemma-3-closure-v1.json",
+        "bytes": 626,
+        "sha256": "ae1630ca31c3691ef50d6ae459eec0cbf202c2721f67429917b6ea4d42e6e1d2"
+      }
+    ],
+    "four_replica_closure": {
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f04-relative-v1/deployment-dp4-v1/four-apply-closure.json",
+      "bytes": 4189,
+      "sha256": "91d0d6cfbcbf093c56b575633493e5a21ab15e89b986e8c7aeb579940e3c26bf"
+    }
+  },
+  "selection": {
+    "tier": 30,
+    "split": "dev",
+    "items": 2338,
+    "source_counts": {
+      "aime-2026": 12,
+      "arc-challenge": 300,
+      "bbeh": 46,
+      "bfcl": 120,
+      "gpqa-diamond": 48,
+      "gsm8k-platinum": 50,
+      "hellaswag": 300,
+      "hmmt-feb-2026": 13,
+      "humaneval-plus": 30,
+      "ifbench": 50,
+      "ifeval": 120,
+      "jamc-qa": 72,
+      "livecodebench": 20,
+      "longbench-v2": 10,
+      "math-500": 60,
+      "mbpp-plus": 30,
+      "mgsm": 55,
+      "mmlu-pro": 180,
+      "mmlu-prox-ja": 60,
+      "mmmu-pro": 48,
+      "mrcr-v2": 16,
+      "musr": 30,
+      "probe-code": 40,
+      "probe-wikipedia-ja": 40,
+      "probe-wikitext": 16,
+      "ruler": 24,
+      "scicode": 10,
+      "swe-bench-pro": 4,
+      "terminal-bench": 6,
+      "triviaqa": 120,
+      "winogrande": 300,
+      "xstest": 108
+    },
+    "named_area_counts": {
+      "agents": 10,
+      "code": 90,
+      "commonsense": 900,
+      "expert": 48,
+      "facts": 120,
+      "instructions": 170,
+      "knowledge": 180,
+      "long-context": 50,
+      "math": 135,
+      "multilingual": 187,
+      "reasoning": 76,
+      "safety": 108,
+      "tools": 120,
+      "vision": 48
+    },
+    "probe_count_without_official_area": 96,
+    "kind_counts": {
+      "chat": 1332,
+      "logprob": 996,
+      "agent": 10
+    },
+    "manifest_sha256": "a3a0b60e0872a38c6b1abf7e97d7fe729fabf9e25cd3f09a3da9544b9ca39b5b",
+    "item_ids_sha256": "a15df4fb42125148b85a9b98d6961a82d2ef626558ba6c87507e79b65f979f6e",
+    "excluded_ids": [],
+    "only": null,
+    "incomplete_manifest": false
+  },
+  "source_identity": {
+    "actual_runner_image_id": "sha256:f91bdcf997af6d7b194bec229812fd018277158f6795de7d91e58448936e7ad8",
+    "archive": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/runtime/fresh-purpose-20261107-av-live10-v1/runner-app",
+    "baseline_runner_source_receipt": {
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-av-live10-v1/runner-image-source.json",
+      "bytes": 28007,
+      "sha256": "e28866ef8a081b578e0be192bdc803ad28cb868797085bbdb5b4b1fa0ab7066d"
+    },
+    "wrapper": {
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/worktrees/kairyu-bench-weight-tools/kairyu-bench",
+      "bytes": 6875,
+      "sha256": "56b53b7d72d75efcb2bef24643322f73625eba5c08a645c2f847768e558b6176"
+    },
+    "critical_archived_files": [
+      {
+        "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/runtime/fresh-purpose-20261107-av-live10-v1/runner-app/src/kairyu_bench/wsp/cli.py",
+        "bytes": 16960,
+        "sha256": "406b07cb9bed06bd3b814292329cd67d0acf89fcaf5fddca8858cc865bbed090"
+      },
+      {
+        "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/runtime/fresh-purpose-20261107-av-live10-v1/runner-app/src/kairyu_bench/wsp/run.py",
+        "bytes": 12314,
+        "sha256": "9272730f132a72002cc38f7c3c47690893f8288652364c1b644e0cf27bf04ce2"
+      },
+      {
+        "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/runtime/fresh-purpose-20261107-av-live10-v1/runner-app/src/kairyu_bench/wsp/manifest.py",
+        "bytes": 5653,
+        "sha256": "d41c24bec59f7e84bd0065fae400d2c1209bdc7384d277ab82eff3c91debbfe3"
+      },
+      {
+        "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/runtime/fresh-purpose-20261107-av-live10-v1/runner-app/src/kairyu_bench/data/wsp/manifest.json",
+        "bytes": 2130847,
+        "sha256": "a3a0b60e0872a38c6b1abf7e97d7fe729fabf9e25cd3f09a3da9544b9ca39b5b"
+      },
+      {
+        "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/runtime/fresh-purpose-20261107-av-live10-v1/runner-app/src/kairyu_bench/wsp/observe/tracing.py",
+        "bytes": 4528,
+        "sha256": "02b21d991f2d3be7a4f5bd648857e9a887bf1fd7dd7984245b5244ed96ee27b4"
+      }
+    ],
+    "host_git_head": "b158209eb496b446a49bd629f64d0d367e4448b5"
+  },
+  "http_trace": {
+    "config": {
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f04-dev30-dp4-v1/http-trace/capture.json",
+      "bytes": 4997,
+      "sha256": "0603eda94113c56f5e574666af62d2e4213ed71376d1e6e0a4323ec877220b12"
+    },
+    "identity_check": {
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f04-dev30-dp4-v1/http-trace-identity-check.json",
+      "bytes": 5663,
+      "sha256": "3485159d2e47855e89809fa1788d9ffb9375df3a17fe6683b3429737e595e89c"
+    },
+    "scope": "HTTP client traces only; no serving CaptureWorker or CaptureMiddleware; no activation-completeness claim",
+    "workers_expected": 0
+  },
+  "limits": "All frozen item max_tokens/samples and unchanged harness/serving defaults; no new timeout or problem reduction",
+  "cache": {
+    "preflight": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-av-dev30-cache-preflight-v4",
+    "normal_online_metadata_behavior": true,
+    "tiktoken_download_root_filesystem": "NVMe /mnt/nvme/docker",
+    "new_offline_flags": false,
+    "task_image_cleanup": false
+  },
+  "prelaunch_requirements": [
+    "AV remains best complete same-cohort parent; F03 partial trial preserved and all90 code lower than AV, no adoption.",
+    "root approval and all four closure/hash/CID bindings",
+    "prior keeper normal release; acquire global lock nonblocking",
+    "fresh results and empty HTTP-client trace",
+    "same local immutable f91 image and wrapper hash",
+    "all four exact ordinary CIDs healthy, F04 mount and zero running/waiting requests",
+    "all nine checkpoint stats still match native-faststore mixed full-hash/stat capture identity",
+    "current GPU/process/NVMe and model inventory; no active conflicting benchmark",
+    "all inherited task-selector overrides absent",
+    "dedicated WSP DinD socket/network/cache and prepared image receipts intact"
+  ],
+  "monitoring": {
+    "cadence_seconds": 60,
+    "read_only": true,
+    "fields": [
+      "completed response items /2338",
+      "scored/unscored separately; unknown until available",
+      "all code source item IDs and available official outcomes",
+      "agent task IDs/exceptions/steps/tool calls/elapsed (unknown if absent)",
+      "retry attempts and request errors",
+      "API running/waiting state, exact CIDs, GPU use, free NVMe"
+    ],
+    "partial_ranking": false,
+    "healthy_work_stop": false
+  },
+  "failure_policy": "record every setup/run/scoring failure; no silent rerun or automatic model mutation",
+  "model_calls_so_far": 0,
+  "owner_source": {
+    "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/worktrees/kairyu-bench-weight-tools/docs/experiments/scripts/fresh-av-dev30-20261107.py",
+    "sha256": "956af488fe54578c32c9baa856e9c32170dc49c1bbce2b1ba5db9af9ea1dd524"
+  },
+  "closure_bound_epoch": 1794051599.4728558,
+  "launch_process": {
+    "detached": true,
+    "start_new_session": true,
+    "stdin": "DEVNULL",
+    "credential_initialization": "standard approved shell startup, stdout/stderr suppressed before exec of Python owner",
+    "owner_interactive": false,
+    "credentials_serialized": false,
+    "automatic_retry": false
+  },
+  "comparison": {
+    "baseline_plan": {
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-av-dev30-dp4-v1/launch-plan-approved.json",
+      "sha256": "bdd8d4ab62d7a2b31aa697e8cf0554858fb931a216a6612a971f824e1532a5e7"
+    },
+    "baseline_run_id": "gemma4-fresh-av-dev30-dp4-20261107-v1",
+    "baseline_reruns": 0,
+    "candidate_repetitions": 1,
+    "extra_finite_proxy_or_transfer_diagnostics": 0,
+    "source_identity_host_git_head_is_historical": true,
+    "current_host_git_head": "98ba6a6ec298cb0198f19e94af7c486addaf8813"
+  },
+  "pending_deployment_bindings": [],
+  "candidate_identity": {
+    "manifest_path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/checkpoints/fresh-native-relative-f04-faststore-v1/manifest.json",
+    "manifest_sha256": "fd189cf276a1219ad627186d2dfb4a895c79768821f247a0b33d9abd8953d8c1",
+    "verification_receipt_path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f04-relative-v1/faststore-plan-v1/materialization-v1/verify.stdout",
+    "verification_receipt_sha256": "a7237a2b82d68e64467c791c3781a86b8b216f584272ef5db77c956383c4b0cd",
+    "checkpoint_path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/checkpoints/fresh-native-relative-f04-faststore-v1/checkpoint",
+    "spec_path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f04-relative-v1/proposal/fresh-native-relative-f04.json",
+    "spec_sha256": "52e293bdd36a4c09715c8c211e035562b1eeb26aabb6490e21d4b511f2a0987b",
+    "hash_contract": "all_checkpoint_files hashes from successful faststore manifest: freshly verified private files plus shared prior-fullhash and exact inode/full stat continuity; no fresh full model hash claim",
+    "extra_payload_hash_pass": false
+  }
+}

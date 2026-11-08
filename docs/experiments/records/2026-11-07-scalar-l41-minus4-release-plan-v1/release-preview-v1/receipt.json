@@ -1,0 +1,32 @@
+{
+  "apply": false,
+  "elapsed_seconds": 0.08416366577148438,
+  "error_message": "",
+  "error_type": "AssertionError",
+  "finished_epoch": 1794058992.2489977,
+  "free_bytes_after": 6405013504,
+  "fresh_payload_hash": false,
+  "global_lock_acquired": true,
+  "global_lock_stat": {
+    "ctime_ns": 1793844261043624533,
+    "device": 2306,
+    "gid": 1003,
+    "inode": 181180584,
+    "mode": 33204,
+    "mtime_ns": 1793844261043624533,
+    "nlink": 1,
+    "size": 0,
+    "uid": 1003
+  },
+  "model_calls": 0,
+  "observed_absent_targets": [],
+  "operation_sha256": "435e01109887123db12519c100e304fa7bd4f5a71b772e6c96eedce1b130f894",
+  "physical_reconstruction": false,
+  "pid": 1729157,
+  "plan_sha256": "29ffb3ec92040e911501d51b58c15e855100f483ebf9cbe1d20ea07e75e6aed1",
+  "released": [],
+  "released_logical_bytes": 0,
+  "service_operations": 0,
+  "started_epoch": 1794058992.164834,
+  "status": "partial_or_failed_no_automatic_retry"
+}

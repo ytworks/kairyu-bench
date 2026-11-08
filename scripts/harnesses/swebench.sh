@@ -155,6 +155,14 @@ if [ "$benchmark" = "swe-bench-pro" ]; then
         current_image=$(python -m kairyu_bench.swebench_pro image \
             "$raw/selected.jsonl" "$instance_id")
 
+        set --
+        if [ -n "${KAIRYU_BENCH_WSP_OBSERVE_CONFIG:-}" ]; then
+            observation_headers=$(python -m kairyu_bench.wsp.sources.agents \
+                --config "$KAIRYU_BENCH_WSP_OBSERVE_CONFIG" \
+                --run-id "$KAIRYU_BENCH_WSP_OBSERVE_RUN_ID" \
+                --item-id "swe-bench-pro:$instance_id" --trial-id "$item")
+            set -- --config "model.model_kwargs.extra_headers=$observation_headers"
+        fi
         echo "SWE-bench Pro problem $index/$total: generating $instance_id"
         "$environment/bin/mini-extra" swebench \
             --subset "$item_dataset" \
@@ -169,7 +177,8 @@ if [ "$benchmark" = "swe-bench-pro" ]; then
             --config environment.container_timeout=12h \
             --config environment.pull_timeout=1800 \
             --config 'environment.run_args=["--rm","--entrypoint",""]' \
-            --config 'run.env_startup_command=test -e /testbed || ln -s /app /testbed'
+            --config 'run.env_startup_command=test -e /testbed || ln -s /app /testbed' \
+            "$@"
 
         python -m kairyu_bench.swebench_pro predictions \
             "$item_generation/preds.json" \

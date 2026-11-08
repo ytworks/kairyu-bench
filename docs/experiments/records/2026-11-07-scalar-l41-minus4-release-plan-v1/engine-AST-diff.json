@@ -1,0 +1,13 @@
+{
+  "original_source_sha256": "435e01109887123db12519c100e304fa7bd4f5a71b772e6c96eedce1b130f894",
+  "replacements": [
+    {
+      "line": 232,
+      "before": 62546338264,
+      "after": 62546338248
+    }
+  ],
+  "original_ast_sha256": "aff8a3730883045479e757d3c4d2d8ea7a5527b2f17868faacf7a8e23779b641",
+  "transformed_ast_sha256": "dc9b5196efa2ea2b3361ca1c994f26c40d9db385f7c3e8bf56cb05e1f4c10bca",
+  "only_byte_literal_changed": true
+}

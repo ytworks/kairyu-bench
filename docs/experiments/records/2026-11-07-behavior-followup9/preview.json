@@ -1,0 +1,277 @@
+{
+  "status": "preview",
+  "inputs": [
+    {
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/worktrees/kairyu-bench-weight-tools/docs/experiments/records/2026-11-07-behavior-followup9/validate-authored-once.py.txt",
+      "sha256": "369285a1f2794ae8fdd78f23a4077da6eb9cc42fb695322168704c4bb5b27f85",
+      "stat": {
+        "dev": 2306,
+        "ino": 182193534,
+        "size": 5869,
+        "mtime_ns": 1794051387795627442,
+        "ctime_ns": 1794051387795627442
+      }
+    },
+    {
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/worktrees/kairyu-bench-weight-tools/scripts/experiments/gemma4-purpose/behavior_followup_cases.py",
+      "sha256": "44421fbc4f3b55b6de18d7c91f09237e30193a9848d59a189771de851ab0c4e6",
+      "stat": {
+        "dev": 2306,
+        "ino": 181443598,
+        "size": 10696,
+        "mtime_ns": 1794051335902756529,
+        "ctime_ns": 1794051335902756529
+      }
+    },
+    {
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/worktrees/kairyu-bench-weight-tools/scripts/experiments/gemma4-purpose/behavior_cases.py",
+      "sha256": "10ba3e480c8685933904060629b351758cf7b61362756179e55779435d01a310",
+      "stat": {
+        "dev": 2306,
+        "ino": 181443577,
+        "size": 22945,
+        "mtime_ns": 1794039620099355316,
+        "ctime_ns": 1794039620099355316
+      }
+    },
+    {
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/worktrees/kairyu-bench-weight-tools/scripts/experiments/gemma4-purpose/behavior_offline.py",
+      "sha256": "30715a30e02c7fab8ec4e1ffad28e57c4925b16fb45048680d6f5735bd3af9e5",
+      "stat": {
+        "dev": 2306,
+        "ino": 181443578,
+        "size": 13272,
+        "mtime_ns": 1794039975698227153,
+        "ctime_ns": 1794039975698227153
+      }
+    },
+    {
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/worktrees/kairyu-bench-weight-tools/scripts/experiments/gemma4-purpose/science_sandbox.py",
+      "sha256": "4a65378e493fb2f109afdaf0d98b5b93dc067d6d3f48d2a4cf17017f1aadcb78",
+      "stat": {
+        "dev": 2306,
+        "ino": 181419342,
+        "size": 29092,
+        "mtime_ns": 1794039975691227392,
+        "ctime_ns": 1794039975691227392
+      }
+    },
+    {
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/worktrees/kairyu-bench-weight-tools/scripts/experiments/gemma4-purpose/science_cases.py",
+      "sha256": "2c4cc6e75c92c41b98e737ca2c0a653e0f7a7675c6150a6ad33e3f954122a26b",
+      "stat": {
+        "dev": 2306,
+        "ino": 181419270,
+        "size": 35229,
+        "mtime_ns": 1793939595408268372,
+        "ctime_ns": 1793939595408268372
+      }
+    },
+    {
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-behavior-followup9-v1/train-cases.json",
+      "sha256": "adc645385045ea8a0dc8da7ba70fe62743f426424e6e1021060aaab36a932ac4",
+      "stat": {
+        "dev": 2306,
+        "ino": 182193536,
+        "size": 5793,
+        "mtime_ns": 1794051387952623953,
+        "ctime_ns": 1794051387952623953
+      }
+    },
+    {
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-behavior-followup9-v1/transfer-cases.json",
+      "sha256": "d237511d22b8c88685f3062fc2cacf2ddccadbd8df40bcefeedeee83fe881ce5",
+      "stat": {
+        "dev": 2306,
+        "ino": 182193537,
+        "size": 3110,
+        "mtime_ns": 1794051387952623953,
+        "ctime_ns": 1794051387952623953
+      }
+    }
+  ],
+  "rows": [
+    {
+      "id": "behavior-G1",
+      "split": "train",
+      "foil": false,
+      "seed": 202611071,
+      "trials": 16,
+      "payload_sha256": "a268fe03229d87ee0134f7210ee1a799d58e78dbb54e6b37b9414fa4167a8101",
+      "expected_sha256": "1a276ca7f76a3da965bda64c21e9cc104995b7d793f8fd8553021931ba3d19db"
+    },
+    {
+      "id": "behavior-G1",
+      "split": "train",
+      "foil": true,
+      "seed": 202611071,
+      "trials": 16,
+      "payload_sha256": "af081b405a3ec347299970c5af4f3dfb6f2a3ef097f4c162536a6f6d9a24f071",
+      "expected_sha256": "1a276ca7f76a3da965bda64c21e9cc104995b7d793f8fd8553021931ba3d19db"
+    },
+    {
+      "id": "behavior-G2",
+      "split": "train",
+      "foil": false,
+      "seed": 202611071,
+      "trials": 16,
+      "payload_sha256": "11f4f692088bc0fd805a64a4b0c6dd624a576e766710729f359593b72789872b",
+      "expected_sha256": "867f9b8202e05c77e37c9a3601841b0a85e5afb01a29b41ffb1ef6f6183daa70"
+    },
+    {
+      "id": "behavior-G2",
+      "split": "train",
+      "foil": true,
+      "seed": 202611071,
+      "trials": 16,
+      "payload_sha256": "8cde9d361310c45769ea226d446cac5afc97fe1fcf476038ab82854bc1fb134a",
+      "expected_sha256": "867f9b8202e05c77e37c9a3601841b0a85e5afb01a29b41ffb1ef6f6183daa70"
+    },
+    {
+      "id": "behavior-G3",
+      "split": "transfer",
+      "foil": false,
+      "seed": 202611072,
+      "trials": 16,
+      "payload_sha256": "6a85517e754b8c5793ab29e00d33db4aaf7a822b3c681ad7b57d1c477498f0e8",
+      "expected_sha256": "d447b6158468c2c2d0c85e501df55a7f02474071d6804fa53fa8240fd083884c"
+    },
+    {
+      "id": "behavior-G3",
+      "split": "transfer",
+      "foil": true,
+      "seed": 202611072,
+      "trials": 16,
+      "payload_sha256": "5b7a1994420575c40ce7d302321a879cbe450629e6eefa026d5277888f007ed2",
+      "expected_sha256": "d447b6158468c2c2d0c85e501df55a7f02474071d6804fa53fa8240fd083884c"
+    },
+    {
+      "id": "behavior-H1",
+      "split": "train",
+      "foil": false,
+      "seed": 202611071,
+      "trials": 16,
+      "payload_sha256": "8fdfcba53401c16a9024de6ea8002b6095ed3dc02510fefcf57d8e6896cd5d7e",
+      "expected_sha256": "e0a5de8058f12a41d417c77e424145f0e220d7dc95ee210e38c950acba5c6111"
+    },
+    {
+      "id": "behavior-H1",
+      "split": "train",
+      "foil": true,
+      "seed": 202611071,
+      "trials": 16,
+      "payload_sha256": "85247f0454fd0094a398169983045a1e81631e7c6b8929491acc628b269721ad",
+      "expected_sha256": "e0a5de8058f12a41d417c77e424145f0e220d7dc95ee210e38c950acba5c6111"
+    },
+    {
+      "id": "behavior-H2",
+      "split": "train",
+      "foil": false,
+      "seed": 202611071,
+      "trials": 16,
+      "payload_sha256": "2736b6c5c3b46fe1165e0fd4b033270ad2486e6770c81c3f5c428c277dead0b8",
+      "expected_sha256": "3797b7fe9083a34b3f09c73366138586f233360df89e31162559f7f6725d7ac0"
+    },
+    {
+      "id": "behavior-H2",
+      "split": "train",
+      "foil": true,
+      "seed": 202611071,
+      "trials": 16,
+      "payload_sha256": "e07ff018176a5d88f6bc2d3c195de3b2fcf33df746dfdcf18f3e99e19b6cac1d",
+      "expected_sha256": "3797b7fe9083a34b3f09c73366138586f233360df89e31162559f7f6725d7ac0"
+    },
+    {
+      "id": "behavior-H3",
+      "split": "transfer",
+      "foil": false,
+      "seed": 202611072,
+      "trials": 16,
+      "payload_sha256": "1c2dfb1278060cf48e6334aaef236e657dd84a7538472e45cf245262f96f6dd7",
+      "expected_sha256": "358a611bcb0494ab4a719835e76d40065104f8abb2df34e2346d494c1aca31a8"
+    },
+    {
+      "id": "behavior-H3",
+      "split": "transfer",
+      "foil": true,
+      "seed": 202611072,
+      "trials": 16,
+      "payload_sha256": "0a89bb65ad2dc9c7592547874f0e1bf260dc7eeee6f7a6ccf2bc5d7e9d425414",
+      "expected_sha256": "358a611bcb0494ab4a719835e76d40065104f8abb2df34e2346d494c1aca31a8"
+    },
+    {
+      "id": "behavior-I1",
+      "split": "train",
+      "foil": false,
+      "seed": 202611071,
+      "trials": 16,
+      "payload_sha256": "0975e0911970f8c1a5a562cc91d7a79213554869c141c077acf5a458c2801634",
+      "expected_sha256": "78f186572dfdd63b274338903f249c9604a7b5ccc57cc691615086068849545f"
+    },
+    {
+      "id": "behavior-I1",
+      "split": "train",
+      "foil": true,
+      "seed": 202611071,
+      "trials": 16,
+      "payload_sha256": "4a172134771829f0a9b13ef985fb7a69211a4783992230b851147687c833edf5",
+      "expected_sha256": "78f186572dfdd63b274338903f249c9604a7b5ccc57cc691615086068849545f"
+    },
+    {
+      "id": "behavior-I2",
+      "split": "train",
+      "foil": false,
+      "seed": 202611071,
+      "trials": 16,
+      "payload_sha256": "f070fc3962758cf374d83dc006ce52fe2d2d868c85e4a67e78a9fd58c132db44",
+      "expected_sha256": "09b148bb5595a59e29f533456d3f4f53a83c052900e92cf503aa932e8161ac40"
+    },
+    {
+      "id": "behavior-I2",
+      "split": "train",
+      "foil": true,
+      "seed": 202611071,
+      "trials": 16,
+      "payload_sha256": "328a1e37d6328ea3816bf8ed6ab10b4c5119fdd174661674ddacb2fa07380a4c",
+      "expected_sha256": "09b148bb5595a59e29f533456d3f4f53a83c052900e92cf503aa932e8161ac40"
+    },
+    {
+      "id": "behavior-I3",
+      "split": "transfer",
+      "foil": false,
+      "seed": 202611072,
+      "trials": 16,
+      "payload_sha256": "9e072993bcb46cc2ddfd8354308c9f3a248b5202619824d98371dbec1f232403",
+      "expected_sha256": "bcb9d9d2c2ff539f85d1ee5ae0ece55d6925cced01db31934b5a6792b03a94b0"
+    },
+    {
+      "id": "behavior-I3",
+      "split": "transfer",
+      "foil": true,
+      "seed": 202611072,
+      "trials": 16,
+      "payload_sha256": "703674f85af909d0cd73ab790071d8a3863308361ea7158873040fbe9570b3e2",
+      "expected_sha256": "bcb9d9d2c2ff539f85d1ee5ae0ece55d6925cced01db31934b5a6792b03a94b0"
+    }
+  ],
+  "docker_calls": 0,
+  "model_calls": 0,
+  "cases": 9,
+  "train": 6,
+  "transfer": 3,
+  "transfer_generation_or_gradient_used": false,
+  "sandbox": {
+    "image": "sha256:c4ab50223f03fca17bf871e4d05f77001e76525a1c574b6c6ee7024db06cfdc2",
+    "daemon_id": "3e518d2b-6972-43f8-b325-f7f33697a2d2",
+    "socket": "/var/run/docker.sock",
+    "cpu_shares": 128,
+    "cpus": 1,
+    "memory_mib": 512,
+    "seconds": 15,
+    "network": "none",
+    "user": "1003:1003",
+    "host_mounts": [],
+    "gpus": false
+  },
+  "token_count_measured": false
+}

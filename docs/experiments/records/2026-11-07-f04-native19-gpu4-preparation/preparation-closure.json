@@ -1,0 +1,37 @@
+{
+  "epoch": 1794054621.1808193,
+  "owner_sha256": "56dca4ce4b1508084664a9e8ce9e9a2bb3b7f528d840fb35fb352c07e92f0bd9",
+  "test_sha256": "9487f5f77f3a1e0775b7507afb9423695b13a30432f9e0c2e18032474776996b",
+  "independent_read_only_review": {
+    "agent": "final_eval_audit",
+    "blocking_findings": 0,
+    "scope": "explicit native cohort, new parent identity/stat, exact target CID restart, 26 protected, legacy finite unchanged"
+  },
+  "native_generation_response": {
+    "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f04-behavior19-native-v1/generation/train-responses.json",
+    "sha256": "4105a5c87f9c54a4fa552a31927ce1bf8e330a5831a3a78d23cb0b1802cbc07f"
+  },
+  "score": {
+    "report_sha256": "1599a3c564aa9fe019087618f9373a4d65d268ab2c11d7fb56859dab70cd9c82",
+    "passed": 16,
+    "failed": 3,
+    "unknown": 0,
+    "trials_passed": 264,
+    "trials_total": 304,
+    "failures": {
+      "behavior-A1": "0/16",
+      "behavior-F2": "4/16",
+      "behavior-J1": "4/16"
+    }
+  },
+  "cleanup": {
+    "sha256": "7a1c2ff04c16ec20dbdab9a0e81df981b8870320337ec1827eebb18f87222c66",
+    "all_cpu_finished": true,
+    "labeled_container_ids": [],
+    "container_count": 27
+  },
+  "new_owner_preparation_gpu_calls": 0,
+  "new_owner_preparation_service_mutations": 0,
+  "root_final_bind_and_launch_owned_separately": true,
+  "F2_J1_note": "Correct answer and public prompt are semantically duplicated. Serial collector pads each frame to max(correct,foil) length; different foil lengths can change BF16 execution shapes. Do not assume measured LL or gradient bit equality."
+}

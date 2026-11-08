@@ -1,0 +1,34 @@
+{
+  "adapter_sha256": "23da9fae9cf2dafaef18a3291f4e4e7e751832d023fde53a13a8aa5954c30396",
+  "sandbox_sha256": "4a19f0f5fc235f56d702d39dd9bc9e403eba98ffdeadabe4c6365b41566131a4",
+  "tests_sha256": "3ab75cc59f023c25ac0ea36857e17d5ff4fb85d70623a5465aaa5eb8d563e57e",
+  "scientific_cpu_tests": {
+    "collected": 10,
+    "passed": 10,
+    "seconds": 9.020780744962394,
+    "source_owned_correct_programs": 16,
+    "source_owned_foil_programs": 16,
+    "trials_per_program": 4
+  },
+  "scope_clarification": "The scientific suite also executes the existing fixed source-owned sandbox diagnostic fixtures; no model-generated or external program is host-executed. The adapter runtime never calls trusted_run.",
+  "ci_cpu_tests": {
+    "passed": 2,
+    "optional_scipy_skipped": 1
+  },
+  "ruff": "pass",
+  "diff_check": "pass",
+  "live_generated72_preview": "pass_only_no_execution",
+  "real_docker_calls": 0,
+  "model_calls": 0,
+  "initial_test_failure_retained": "failure-v1.json",
+  "independent_review": {
+    "reviewer": "audit_results",
+    "status": "no_blocking_findings",
+    "scope": "read-only source; no source changes or tests by reviewer"
+  },
+  "approval_rejection": {
+    "executed": false,
+    "cause": "documentation-write SSH hostname was mistyped as 203.137130.34 instead of authorized 203.137.130.34",
+    "resolution": "same read/write operation resubmitted to exact authorized host; no permission or scope expansion"
+  }
+}

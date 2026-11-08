@@ -1,0 +1,14 @@
+usage: dense_lora_recipe.py create [-h] --spec SPEC --manifest MANIFEST
+                                   [--apply] [--min-free-gib MIN_FREE_GIB]
+                                   source candidate
+
+positional arguments:
+  source
+  candidate
+
+options:
+  -h, --help            show this help message and exit
+  --spec SPEC
+  --manifest MANIFEST
+  --apply
+  --min-free-gib MIN_FREE_GIB

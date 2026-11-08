@@ -1,0 +1,69 @@
+"""Fixed 19-train export and new-J1 authored validation only; no model requests."""
+import hashlib,json,pathlib,subprocess,sys,time
+R=pathlib.Path('/mnt/nvme/kairyu/wsp/gemma4-coding-20261104');B=R/'worktrees/kairyu-bench-weight-tools';S=B/'scripts/experiments/gemma4-purpose'
+sys.path.insert(0,str(S))
+sys.path.insert(0,str(B/"src"))
+import behavior_cases as original
+import behavior_followup_cases as cases
+import behavior_offline as offline
+import science_sandbox as sandbox
+import recipe_common
+P=R/'analysis/fresh-purpose-20261107-behavior19-inputs-v1'
+P.mkdir()
+def sha(p):return hashlib.sha256(p.read_bytes()).hexdigest()
+def save(name,v):
+ with (P/name).open('x') as f:json.dump(v,f,indent=2,ensure_ascii=False,allow_nan=False);f.write(chr(10))
+inputs={
+ 'old_train':R/'analysis/fresh-purpose-20261107-behavior18-inputs-v1/train-cases.json',
+ 'old_transfer':R/'analysis/fresh-purpose-20261107-behavior18-inputs-v1/transfer-cases.json',
+ 'followup_train':R/'analysis/fresh-purpose-20261107-behavior-followup9-v1/train-cases.json',
+ 'followup_transfer':R/'analysis/fresh-purpose-20261107-behavior-followup9-v1/transfer-cases.json'}
+pins={k:{'path':str(p),'sha256':sha(p),'bytes':p.stat().st_size} for k,p in inputs.items()}
+assert pins['old_train']['sha256']=='b42990b0caac24ccc7843e40718c0c5e7ad61dd5baa131ed6852c126bf37f66d'
+assert json.loads(inputs['old_train'].read_text())==original.payload('train')
+assert json.loads(inputs['followup_train'].read_text())==cases.payload('train')
+assert json.loads(inputs['old_transfer'].read_text())==original.payload('transfer')
+assert json.loads(inputs['followup_transfer'].read_text())==cases.payload('transfer')
+train=cases.training_payload()
+rows=[r for folds in train.values() for fold in folds for r in fold]
+assert len(rows)==19 and len({r['id'] for r in rows})==19
+assert {k:train[k] for k in 'ABCDEF'}==json.loads(inputs['old_train'].read_text())
+assert {k:train[k] for k in 'GHI'}==json.loads(inputs['followup_train'].read_text())
+assert all(r['split']=='train' for r in rows)
+save('train-cases.json',train)
+assert recipe_common.read_cases(P/'train-cases.json')==train
+ordered=[{'purpose':g,'fold':i,'id':r['id'],'row_sha256':hashlib.sha256(json.dumps(r,sort_keys=True).encode()).hexdigest()} for g,folds in train.items() for i,fold in enumerate(folds) for r in fold]
+save('ordered-case-map.json',ordered)
+sources=[pathlib.Path(__file__),pathlib.Path(cases.__file__),pathlib.Path(original.__file__),pathlib.Path(offline.__file__),pathlib.Path(sandbox.__file__),pathlib.Path(sandbox.science_cases.__file__)]
+sourcepins=[sandbox.capture(p,2*1024*1024)[1] for p in sources]
+case=cases.offset_contrast()
+preview={'status':'frozen_before_numeric_execution','inputs':pins,'source_pins':sourcepins,'train_sha256':sha(P/'train-cases.json'),'case_count':19,'fold_counts':{k:len(v) for k,v in train.items()},'new_case':'behavior-J1','old_case_retained':'behavior-F2','original_18_rows_equal':True,'transfer_files_unchanged':True,'transfer_cases_excluded':9,'planned_docker_calls':2,'trials_per_code':16,'model_calls':0,'new_foil':'values[0::k]','oracle':'unchanged original.sample(F2); enumerate events from1 and select i%k==0','frame_token_count_measured':False}
+save('preview.json',preview)
+print(json.dumps({'train':str(P/'train-cases.json'),'sha256':preview['train_sha256'],'cases':19,'status':'exported_validation_starting'}),flush=True)
+docker=sandbox.Docker(pathlib.Path('/var/run/docker.sock'),'3e518d2b-6972-43f8-b325-f7f33697a2d2','sha256:c4ab50223f03fca17bf871e4d05f77001e76525a1c574b6c6ee7024db06cfdc2',seconds=15,memory_mib=512,cpus=1)
+docker.check_image()
+def running():return sorted(subprocess.check_output(['docker','ps','--no-trunc','--format','{{.ID}}'],text=True).split())
+report={'status':'running','preview_sha256':sha(P/'preview.json'),'started_epoch':time.time(),'docker_calls':0,'model_calls':0,'protected_running_before':running(),'raw_worker_outputs':[],'existing_18_cases_reexecuted':0}
+offline.cases=cases
+def run(payload):
+ result=docker.run(payload)
+ report['raw_worker_outputs'].append({'payload_sha256':sandbox.sha(json.dumps(payload,sort_keys=True,allow_nan=False).encode()),'result':result})
+ report['docker_calls']+=1
+ return result
+try:
+ report['correct']=offline.score(case,{'public_answer':case.code()},run)
+ report['foil']=offline.score(case,{'public_answer':case.code(True)},run)
+ report['fixed_foil_witness']=any(not x['passed'] for x in report['foil']['trial_results'][:8])
+ assert report['correct']['passed'] is True and report['foil']['passed'] is False and report['fixed_foil_witness']
+ sandbox.continuity(sourcepins)
+ assert all(sha(inputs[k])==v['sha256'] for k,v in pins.items())
+ report['status']='completed';report['validation_passed']=True
+except BaseException as error:
+ report['status']='failed';report['error_type']=type(error).__name__;raise
+finally:
+ report['elapsed_seconds']=time.time()-report['started_epoch'];report['protected_running_after']=running()
+ report['protected_missing_after']=sorted(set(report['protected_running_before'])-set(report['protected_running_after']))
+ save('new-case-validation.json',report)
+assert not report['protected_missing_after']
+save('freeze.json',{'status':'complete19_train_inputs_newcase_validated','train':{'path':str(P/'train-cases.json'),'sha256':sha(P/'train-cases.json')},'case_map_sha256':sha(P/'ordered-case-map.json'),'preview_sha256':sha(P/'preview.json'),'validation_sha256':sha(P/'new-case-validation.json'),'source_pins':sourcepins,'old_inputs':pins,'model_calls':0,'case_count':19,'transfer_used':False})
+print(json.dumps({'train_sha256':sha(P/'train-cases.json'),'freeze_sha256':sha(P/'freeze.json'),'correct':report['correct']['tests_passed'],'foil':report['foil']['tests_passed'],'docker_calls':report['docker_calls'],'elapsed_seconds':report['elapsed_seconds'],'newcase_only':True}),flush=True)

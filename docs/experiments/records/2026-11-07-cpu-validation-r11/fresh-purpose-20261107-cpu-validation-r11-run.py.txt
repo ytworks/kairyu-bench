@@ -1,0 +1,68 @@
+"""Single CPU CI pass for frozen LoRA trainer, dense merge and existing owner."""
+import hashlib
+import json
+import os
+from pathlib import Path
+import subprocess
+import time
+
+R = Path("/mnt/nvme/kairyu/wsp/gemma4-coding-20261104")
+B = R / "worktrees/kairyu-bench-weight-tools"
+D = R / "analysis/fresh-purpose-20261107-cpu-validation-r11"
+P = R / "infra/weight-tools-ci/bin"
+D.mkdir(exist_ok=False)
+TMP = R / "infra/tmp/r11"
+TMP.mkdir(parents=True, exist_ok=True)
+env = dict(os.environ, TMPDIR=str(TMP), PATH=str(P)+os.pathsep+os.environ["PATH"],
+           PYTHONDONTWRITEBYTECODE="1", OMP_NUM_THREADS="1", OPENBLAS_NUM_THREADS="1", MKL_NUM_THREADS="1")
+pins = {
+    "scripts/experiments/gemma4-purpose/train_lora.py": "8bfa6f3f5568264417d52e1cf297ebf0f988458c0c075f329a189a0233a7a846",
+    "scripts/experiments/gemma4_lora/dense_lora_recipe.py": "5c06f59a2734f94a2e50310392a7959e9b8f73f012f0cef646df13bf79dae84c",
+    "docs/experiments/scripts/fresh-av-native-gpu4-20261107.py": "3e7e9c58b68a679d87623e1507e6508adcc731c3da36d51dd390f9bffcdb2b07",
+}
+def sha(path):
+    return hashlib.sha256(path.read_bytes()).hexdigest()
+def save(name,value):
+    with(D/name).open("x")as f:
+        json.dump(value,f,indent=2);f.write("\n")
+def inventory():
+    paths=[]
+    for root in ("src","tests","scripts","docs/experiments/scripts"):
+        paths.extend(p for p in (B/root).rglob("*.py")if "__pycache__"not in p.parts)
+    paths.extend((B/"pyproject.toml",B/".github/workflows/ci.yml"))
+    paths.extend(B/x for x in shell_paths)
+    return {str(p.relative_to(B)):sha(p)for p in sorted(set(paths))}
+tracked=subprocess.check_output(["git","ls-files","--cached","-z"],cwd=B).decode().split("\0")
+shell_paths=sorted(p for p in tracked if p.endswith(".sh")and(B/p).is_file())
+assert len(shell_paths)>0
+assert all(sha(B/path)==value for path,value in pins.items())
+before=inventory();save("sources-before.json",before)
+save("freeze-inputs.json",{"pins":pins,"driver_sha256":sha(Path(__file__)),"shell_paths":shell_paths,"source_scope":"Python source/tests/experiment scripts, pyproject, CI workflow and tracked shell; concurrent Markdown/records excluded","TMPDIR":str(TMP),"PATH_prefix":str(P)})
+commands=[
+ ("unittest",[str(P/"python"),"-m","unittest","discover","-s","tests","-v"]),
+ ("ruff",[str(P/"ruff"),"check","."]),
+ ("mypy",[str(P/"mypy"),"--ignore-missing-imports","src"]),
+ ("data",[str(P/"python"),"scripts/update_model_comparison.py","--check"]),
+]
+started=time.time();events=[]
+for label,command in commands:
+    t=time.time()
+    with(D/(label+".stdout")).open("x")as out,(D/(label+".stderr")).open("x")as err:
+        result=subprocess.run(["nice","-n","15",*command],cwd=B,env=env,stdout=out,stderr=err)
+    event={"name":label,"command":["nice","-n","15",*command],"returncode":result.returncode,"elapsed_seconds":time.time()-t,"stdout_sha256":sha(D/(label+".stdout")),"stderr_sha256":sha(D/(label+".stderr"))}
+    events.append(event)
+    (D/"progress.json").write_text(json.dumps(events,indent=2)+"\n")
+    print(json.dumps(event),flush=True)
+shell_rows=[];t=time.time()
+for path in shell_paths:
+    result=subprocess.run(["nice","-n","15","sh","-n",path],cwd=B,env=env,text=True,capture_output=True)
+    shell_rows.append({"path":path,"sha256":sha(B/path),"returncode":result.returncode,"stdout":result.stdout,"stderr":result.stderr})
+shell={"status":"passed"if all(x["returncode"]==0 for x in shell_rows)else"failed","count":len(shell_rows),"rows":shell_rows,"elapsed_seconds":time.time()-t,"scope":"All tracked repository shell files; runtime gitignored cache traversal intentionally not part of source syntax check"}
+save("repository-shell-check.json",shell)
+events.append({"name":"tracked_shell","returncode":0 if shell["status"]=="passed"else 1,"elapsed_seconds":shell["elapsed_seconds"],"count":len(shell_rows)})
+after=inventory();save("sources-after.json",after)
+changes=[p for p in before.keys()|after.keys()if before.get(p)!=after.get(p)]
+receipt={"started_epoch":started,"elapsed_seconds":time.time()-started,"results":events,"source_count_before":len(before),"source_count_after":len(after),"sources_unchanged":not changes,"source_changes":changes,"explicit_pins_unchanged":all(sha(B/path)==value for path,value in pins.items()),"success":all(x["returncode"]==0 for x in events)and not changes,"full_suite_repetitions":1,"model_GPU_service_operations":0,"TMPDIR":str(TMP),"PATH_prefix":str(P),"runtime_cache_find_not_repeated":True}
+save("completion.json",receipt)
+print(json.dumps(receipt),flush=True)
+raise SystemExit(0 if receipt["success"]else 1)

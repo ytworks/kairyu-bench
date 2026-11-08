@@ -1,0 +1,11 @@
+{
+  "status": "publication_check_initial_failure_then_whitespace_only_fix",
+  "failed_check": "git diff --cached --check -- . excluding immutable records",
+  "failure": "tests/test_wsp_progress_cli.py:95: new blank line at EOF",
+  "before_sha256": "5e7a82c0c273bc9ca59f29515c21d7d57597ec8bc9592384842685a741e39be7",
+  "after_sha256": "fee17d88ba3d24995cdab0ff1a8ba04833df44755c102f5e2132ef84b3b1f260",
+  "change": "Remove one extra blank EOF line; preserve complete previous source",
+  "test_behavior_changed": false,
+  "new_model_calls": 0,
+  "suite_rerun": false
+}

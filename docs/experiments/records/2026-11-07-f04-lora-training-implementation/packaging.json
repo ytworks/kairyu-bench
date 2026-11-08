@@ -1,0 +1,230 @@
+{
+  "epoch": 1794057909.816461,
+  "files": [
+    {
+      "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-lora-training-cpu-validation-v1/final-source.json",
+      "stored": "cpu/final-source.json",
+      "raw_sha256": "1d4d816e8df2dd44f2ed4104ee24163ae0b7bfd5d456097aa29a78fa26a7c992",
+      "stored_sha256": "1d4d816e8df2dd44f2ed4104ee24163ae0b7bfd5d456097aa29a78fa26a7c992",
+      "raw_bytes": 890,
+      "stored_bytes": 890
+    },
+    {
+      "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-lora-training-cpu-validation-v1/host-tests.json",
+      "stored": "cpu/host-tests.json",
+      "raw_sha256": "864fd0b8093a1f0df901a04b5aae910c8c7398999ace4dda97e9297aab086228",
+      "stored_sha256": "864fd0b8093a1f0df901a04b5aae910c8c7398999ace4dda97e9297aab086228",
+      "raw_bytes": 269,
+      "stored_bytes": 269
+    },
+    {
+      "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-lora-training-cpu-validation-v1/host-tests.stderr",
+      "stored": "cpu/host-tests.stderr",
+      "raw_sha256": "445b25b5fb434ad1579f727ccc5001b07de66f9672b227ea98a779408209b1ef",
+      "stored_sha256": "445b25b5fb434ad1579f727ccc5001b07de66f9672b227ea98a779408209b1ef",
+      "raw_bytes": 2283,
+      "stored_bytes": 2283
+    },
+    {
+      "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-lora-training-cpu-validation-v1/host-tests.stdout",
+      "stored": "cpu/host-tests.stdout",
+      "raw_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stored_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "raw_bytes": 0,
+      "stored_bytes": 0
+    },
+    {
+      "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-lora-training-cpu-validation-v1/initial-ruff.json",
+      "stored": "cpu/initial-ruff.json",
+      "raw_sha256": "a11def2a21ef78628611a1bef2192afc0af1fa6b337344e361ed4b237ead2827",
+      "stored_sha256": "a11def2a21ef78628611a1bef2192afc0af1fa6b337344e361ed4b237ead2827",
+      "raw_bytes": 2562,
+      "stored_bytes": 2562
+    },
+    {
+      "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-lora-training-cpu-validation-v1/initial-ruff.stderr",
+      "stored": "cpu/initial-ruff.stderr",
+      "raw_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stored_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "raw_bytes": 0,
+      "stored_bytes": 0
+    },
+    {
+      "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-lora-training-cpu-validation-v1/ruff.json",
+      "stored": "cpu/ruff.json",
+      "raw_sha256": "bfc778b5f1be57e9dd17387927587ae4cc1c3c3d408b92691717c81ee4986b06",
+      "stored_sha256": "bfc778b5f1be57e9dd17387927587ae4cc1c3c3d408b92691717c81ee4986b06",
+      "raw_bytes": 368,
+      "stored_bytes": 368
+    },
+    {
+      "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-lora-training-cpu-validation-v1/ruff.stderr",
+      "stored": "cpu/ruff.stderr",
+      "raw_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stored_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "raw_bytes": 0,
+      "stored_bytes": 0
+    },
+    {
+      "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-lora-training-cpu-validation-v1/ruff.stdout",
+      "stored": "cpu/ruff.stdout",
+      "raw_sha256": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18",
+      "stored_sha256": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18",
+      "raw_bytes": 19,
+      "stored_bytes": 19
+    },
+    {
+      "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-lora-training-cpu-validation-v1/torch-cpu-v2.json",
+      "stored": "cpu/torch-cpu-v2.json",
+      "raw_sha256": "9205d700ac06f317990c8b1bf664d43c24a7ae6a00a60ead98a311830bea7a36",
+      "stored_sha256": "9205d700ac06f317990c8b1bf664d43c24a7ae6a00a60ead98a311830bea7a36",
+      "raw_bytes": 1222,
+      "stored_bytes": 1222
+    },
+    {
+      "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-lora-training-cpu-validation-v1/torch-cpu-v2.stderr",
+      "stored": "cpu/torch-cpu-v2.stderr",
+      "raw_sha256": "499624abba2a86b1c4d809d67003fc13debcbf7059fc6eed89bb2749c689a812",
+      "stored_sha256": "499624abba2a86b1c4d809d67003fc13debcbf7059fc6eed89bb2749c689a812",
+      "raw_bytes": 930,
+      "stored_bytes": 930
+    },
+    {
+      "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-lora-training-cpu-validation-v1/torch-cpu-v2.stdout",
+      "stored": "cpu/torch-cpu-v2.stdout",
+      "raw_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stored_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "raw_bytes": 0,
+      "stored_bytes": 0
+    },
+    {
+      "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-lora-training-cpu-validation-v1/torch-cpu.json",
+      "stored": "cpu/torch-cpu.json",
+      "raw_sha256": "4c085767108def280a5431d2461654234ffcbe16bd2a520758f5153336aca970",
+      "stored_sha256": "4c085767108def280a5431d2461654234ffcbe16bd2a520758f5153336aca970",
+      "raw_bytes": 1239,
+      "stored_bytes": 1239
+    },
+    {
+      "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-lora-training-cpu-validation-v1/torch-cpu.stderr",
+      "stored": "cpu/torch-cpu.stderr",
+      "raw_sha256": "ecd9b7eb845acf0542a161dea20e50f670f7e2ba3e232adae93fecdbc07e54f5",
+      "stored_sha256": "ecd9b7eb845acf0542a161dea20e50f670f7e2ba3e232adae93fecdbc07e54f5",
+      "raw_bytes": 309,
+      "stored_bytes": 309
+    },
+    {
+      "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-lora-training-cpu-validation-v1/torch-cpu.stdout",
+      "stored": "cpu/torch-cpu.stdout",
+      "raw_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stored_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "raw_bytes": 0,
+      "stored_bytes": 0
+    },
+    {
+      "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f04-mbpp-lora-training-v1/merge-preparation-v1/capacity-and-help.json",
+      "stored": "merge-preparation/capacity-and-help.json",
+      "raw_sha256": "a062c4e0adf3a7006fade4ff6955fe6146a38bfdf004e791a2bdc2d0d5f66f19",
+      "stored_sha256": "a062c4e0adf3a7006fade4ff6955fe6146a38bfdf004e791a2bdc2d0d5f66f19",
+      "raw_bytes": 3452,
+      "stored_bytes": 3452
+    },
+    {
+      "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f04-mbpp-lora-training-v1/merge-preparation-v1/create-help.stderr",
+      "stored": "merge-preparation/create-help.stderr",
+      "raw_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stored_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "raw_bytes": 0,
+      "stored_bytes": 0
+    },
+    {
+      "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f04-mbpp-lora-training-v1/merge-preparation-v1/create-help.stdout",
+      "stored": "merge-preparation/create-help.stdout",
+      "raw_sha256": "fae633fbd1bdf8bb1f3b1af5480c5bda9758da66eaa12519026657c3bd96c900",
+      "stored_sha256": "fae633fbd1bdf8bb1f3b1af5480c5bda9758da66eaa12519026657c3bd96c900",
+      "raw_bytes": 385,
+      "stored_bytes": 385
+    },
+    {
+      "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f04-mbpp-lora-training-v1/merge-preparation-v1/prepared-plan.json",
+      "stored": "merge-preparation/prepared-plan.json",
+      "raw_sha256": "54d7696929c5157bfb8798cda40891b6089f58c99d4071428593b6bd66ea04b0",
+      "stored_sha256": "54d7696929c5157bfb8798cda40891b6089f58c99d4071428593b6bd66ea04b0",
+      "raw_bytes": 4959,
+      "stored_bytes": 4959
+    },
+    {
+      "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f04-mbpp-lora-training-v1/merge-preparation-v1/verify-help.stderr",
+      "stored": "merge-preparation/verify-help.stderr",
+      "raw_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stored_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "raw_bytes": 0,
+      "stored_bytes": 0
+    },
+    {
+      "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f04-mbpp-lora-training-v1/merge-preparation-v1/verify-help.stdout",
+      "stored": "merge-preparation/verify-help.stdout",
+      "raw_sha256": "33994b580fa5684515a91718a24618ca08a0b63a4454312c1903e397a4a0d995",
+      "stored_sha256": "33994b580fa5684515a91718a24618ca08a0b63a4454312c1903e397a4a0d995",
+      "raw_bytes": 139,
+      "stored_bytes": 139
+    },
+    {
+      "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/worktrees/kairyu-bench-weight-tools/scripts/experiments/gemma4-purpose/train_lora.py",
+      "stored": "source/scripts/experiments/gemma4-purpose/train_lora.py.txt",
+      "raw_sha256": "8bfa6f3f5568264417d52e1cf297ebf0f988458c0c075f329a189a0233a7a846",
+      "stored_sha256": "8bfa6f3f5568264417d52e1cf297ebf0f988458c0c075f329a189a0233a7a846",
+      "raw_bytes": 32727,
+      "stored_bytes": 32727
+    },
+    {
+      "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/worktrees/kairyu-bench-weight-tools/scripts/experiments/gemma4_lora/dense_lora_recipe.py",
+      "stored": "source/scripts/experiments/gemma4_lora/dense_lora_recipe.py.txt",
+      "raw_sha256": "5c06f59a2734f94a2e50310392a7959e9b8f73f012f0cef646df13bf79dae84c",
+      "stored_sha256": "5c06f59a2734f94a2e50310392a7959e9b8f73f012f0cef646df13bf79dae84c",
+      "raw_bytes": 36865,
+      "stored_bytes": 36865
+    },
+    {
+      "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/worktrees/kairyu-bench-weight-tools/tests/test_gemma4_lora_training.py",
+      "stored": "source/tests/test_gemma4_lora_training.py.txt",
+      "raw_sha256": "dfe4fb321051422a18b3adb4bf3353916511c1e36e991a148064b7ee1ba9e0a7",
+      "stored_sha256": "dfe4fb321051422a18b3adb4bf3353916511c1e36e991a148064b7ee1ba9e0a7",
+      "raw_bytes": 6377,
+      "stored_bytes": 6377
+    },
+    {
+      "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/worktrees/kairyu-bench-weight-tools/tests/test_gemma4_lora_recipes.py",
+      "stored": "source/tests/test_gemma4_lora_recipes.py.txt",
+      "raw_sha256": "7fefbc3a7b1ea42f88b0c5412625470b029cbbca241734b3d0f5c7cb890c7117",
+      "stored_sha256": "7fefbc3a7b1ea42f88b0c5412625470b029cbbca241734b3d0f5c7cb890c7117",
+      "raw_bytes": 21997,
+      "stored_bytes": 21997
+    },
+    {
+      "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-lora-training-cpu-validation-v1/source-diff.patch",
+      "stored": "source-diff.patch.gz",
+      "raw_sha256": "8bebcbbf85646b56623a2962b40154d78f1e2fc9a5a08ad02587f6c890c90664",
+      "stored_sha256": "6a1c998c4c119fb210f83b5c9a2c250a43b2d2c26c6681c61199be4059d5d3da",
+      "raw_bytes": 7424,
+      "stored_bytes": 2182
+    },
+    {
+      "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-lora-training-package.py.txt",
+      "stored": "packaging-source.py.txt",
+      "raw_sha256": "f04831411faa7d6043b6e7ae27fc849696e4624cc07eb490ceff7b0aedb91841",
+      "stored_sha256": "f04831411faa7d6043b6e7ae27fc849696e4624cc07eb490ceff7b0aedb91841",
+      "raw_bytes": 2362,
+      "stored_bytes": 2362
+    }
+  ],
+  "source_sha256": {
+    "scripts/experiments/gemma4-purpose/train_lora.py": "8bfa6f3f5568264417d52e1cf297ebf0f988458c0c075f329a189a0233a7a846",
+    "scripts/experiments/gemma4_lora/dense_lora_recipe.py": "5c06f59a2734f94a2e50310392a7959e9b8f73f012f0cef646df13bf79dae84c",
+    "tests/test_gemma4_lora_training.py": "dfe4fb321051422a18b3adb4bf3353916511c1e36e991a148064b7ee1ba9e0a7",
+    "tests/test_gemma4_lora_recipes.py": "7fefbc3a7b1ea42f88b0c5412625470b029cbbca241734b3d0f5c7cb890c7117"
+  },
+  "source_unchanged_during_packaging": true,
+  "GPU_or_model_operations": 0,
+  "note": "Source diff uses git tracked changes; newly added source/test are separately retained in full. Running GPU owner/training outputs are excluded."
+}

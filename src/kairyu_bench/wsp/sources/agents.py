@@ -203,12 +203,16 @@ def _batch(source: str):  # type: ignore[no-untyped-def]
 
         assert context.chat is not None and context.run_dir is not None
         names = [rows[item.id]["name"] for item in items]
-        os.environ[SELECTION_ENV[source]] = ",".join(names)
-        os.environ[WORKERS_ENV[source]] = str(workers)
+        # Per-child settings: the two agent batches may run concurrently.
+        environment = {
+            SELECTION_ENV[source]: ",".join(names),
+            WORKERS_ENV[source]: str(workers),
+            "KAIRYU_BENCH_HARBOR_CACHE_DIR": str(harbor_cache()),
+            "KAIRYU_BENCH_WSP_OBSERVE_CONFIG": str(context.observe_config or ""),
+            "KAIRYU_BENCH_WSP_OBSERVE_RUN_ID": context.run_id or "",
+        }
         if source == "terminal-bench":
-            os.environ["KAIRYU_BENCH_TERMINAL_BENCH_MAX_TURNS"] = str(TERMINAL_BENCH_MAX_TURNS)
-        # Task packages and images come from `wsp prepare` (untimed).
-        os.environ["KAIRYU_BENCH_HARBOR_CACHE_DIR"] = str(harbor_cache())
+            environment["KAIRYU_BENCH_TERMINAL_BENCH_MAX_TURNS"] = str(TERMINAL_BENCH_MAX_TURNS)
         endpoint = Endpoint.parse(context.chat.base_url)
         config = RunConfig(
             endpoint=endpoint,
@@ -217,6 +221,7 @@ def _batch(source: str):  # type: ignore[no-untyped-def]
             results_root=context.run_dir / "agents",
             run_id=source,
             app_root=_app_root(),
+            adapter_env=environment,
         )
         outcome = run_benchmarks(config, TargetClient(endpoint, api_key=context.chat.api_key), load_benchmarks())
         found = (
@@ -260,3 +265,30 @@ for _source in ("terminal-bench", "swe-bench-pro"):
             worker_limit=_worker_limit(_source),
         ),
     )
+
+
+def trial_headers(config: Path, run_id: str, item_id: str, trial_id: str) -> dict[str, str]:
+    """Register the single mini-swe-agent trial before its first model call."""
+    from kairyu_bench.wsp.observe.tracing import RequestRecorder
+
+    return RequestRecorder(config, run_id=run_id).register_trial(
+        item_id, trial_id, attempt_index=0,
+    )
+
+
+def main() -> None:
+    import argparse
+
+    parser = argparse.ArgumentParser(description="Register agent-trial observation metadata")
+    parser.add_argument("--config", type=Path, required=True)
+    parser.add_argument("--run-id", required=True)
+    parser.add_argument("--item-id", required=True)
+    parser.add_argument("--trial-id", required=True)
+    arguments = parser.parse_args()
+    print(json.dumps(trial_headers(
+        arguments.config, arguments.run_id, arguments.item_id, arguments.trial_id,
+    ), separators=(",", ":")))
+
+
+if __name__ == "__main__":
+    main()

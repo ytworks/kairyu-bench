@@ -1,0 +1,52 @@
+"""Read-only snapshot of the six original F06 TerminalBench tasks; no control actions."""
+from pathlib import Path
+import datetime
+import hashlib
+import json
+import time
+
+R=Path("/mnt/nvme/kairyu/wsp/gemma4-coding-20261104")
+RUN=R/"results/gemma4-fresh-f06-dev30-dp4-20261107-v1"
+T=RUN/"agents/terminal-bench/raw/terminal-bench/jobs/terminal-bench-terminal-bench"
+D=R/"analysis/fresh-purpose-20261107-f06-terminal-progress-readonly-v1"
+D.mkdir(exist_ok=True)
+def load(p):
+    raw=p.read_bytes()
+    return json.loads(raw),{"path":str(p),"sha256":hashlib.sha256(raw).hexdigest(),"bytes":len(raw),"mtime_ns":p.stat().st_mtime_ns}
+run,runpin=load(RUN/"run.json")
+config,configpin=load(T/"config.json")
+job,jobpin=load(T/"result.json")
+rows=[];pins=[runpin,configpin,jobpin]
+for task in config["datasets"][0]["task_names"]:
+    dirs=list(T.glob(task.rsplit("/",1)[-1]+"__*"))
+    assert len(dirs)<=1
+    row={"task":task,"state":"pending_directory_absent","agent_steps":None,"total_trajectory_rows":None,"tool_calls":None,"reward":None,"trial_exception_type":None,"parser_no_valid_json_warning_count":None,"parser_extra_text_warning_count":None,"wall_seconds":None,"agent_seconds":None}
+    if dirs:
+        d=dirs[0];row["directory"]=str(d);row["state"]="started_no_final_result"
+        if (d/"result.json").exists():
+            result,pin=load(d/"result.json");pins.append(pin)
+            row["state"]="completed_result_saved"
+            row["reward"]=(result.get("verifier_result") or {}).get("rewards",{}).get("reward")
+            exc=result.get("exception_info");row["trial_exception_type"]=exc.get("exception_type",type(exc).__name__) if isinstance(exc,dict) else exc
+            for key,start,finish in (("wall_seconds",result.get("started_at"),result.get("finished_at")),("agent_seconds",(result.get("agent_execution") or {}).get("started_at"),(result.get("agent_execution") or {}).get("finished_at"))):
+                if start and finish:row[key]=(datetime.datetime.fromisoformat(finish)-datetime.datetime.fromisoformat(start)).total_seconds()
+        if (d/"agent/trajectory.json").exists():
+            traj,pin=load(d/"agent/trajectory.json");pins.append(pin);steps=traj.get("steps",[])
+            row["agent_steps"]=sum(s.get("source")=="agent" for s in steps)
+            row["total_trajectory_rows"]=len(steps)
+            row["tool_calls"]=sum(len(s.get("tool_calls") or []) for s in steps)
+            row["last_trajectory_timestamp"]=steps[-1].get("timestamp") if steps else None
+            row["saved_final_metrics"]=traj.get("final_metrics")
+        p=d/"trial.log"
+        if p.exists():
+            raw=p.read_bytes();lines=raw.decode(errors="replace").splitlines()
+            pins.append({"path":str(p),"sha256":hashlib.sha256(raw).hexdigest(),"bytes":len(raw),"mtime_ns":p.stat().st_mtime_ns})
+            row["parser_no_valid_json_warning_count"]=sum("No valid JSON object found" in s for s in lines)
+            row["parser_extra_text_warning_count"]=sum("Extra text detected" in s for s in lines)
+            row["timeout_warning_lines"]=sum("timeout" in s.lower() or "timed out" in s.lower() for s in lines)
+            row["log_mtime_ns"]=p.stat().st_mtime_ns
+        row["verifier_result_present"]=(d/"verifier/reward.txt").exists()
+    rows.append(row)
+out={"epoch":time.time(),"run_status":run["status"],"job_stats":job["stats"],"task_count":len(rows),"tasks":rows,"pins":pins,"limitations":["Agent steps count only trajectory source=agent; total rows include initial user rows.","Parser warnings measure protocol failures and are distinct from HTTP errors or terminal trial exceptions.","Absent trajectory means step count unknown, never zero. Saved output does not establish instantaneous active generation or remaining duration."],"model_requests":0,"control_actions":0,"rescoring":0}
+p=D/("snapshot-"+str(time.time_ns())+".json");p.write_text(json.dumps(out,indent=2)+"\n")
+print(json.dumps({"snapshot":str(p),"sha256":hashlib.sha256(p.read_bytes()).hexdigest(),"run_status":out["run_status"],"job_stats":{k:job["stats"].get(k) for k in ("n_completed_trials","n_running_trials","n_pending_trials","n_errored_trials","n_retries")},"tasks":rows}))

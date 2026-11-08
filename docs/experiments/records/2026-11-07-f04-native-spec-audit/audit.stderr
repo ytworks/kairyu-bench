@@ -1,0 +1,25 @@
+Traceback (most recent call last):
+  File "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/worktrees/kairyu-bench-weight-tools/scripts/experiments/gemma4-purpose/native_spec_audit.py", line 240, in <module>
+    main()
+  File "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/worktrees/kairyu-bench-weight-tools/scripts/experiments/gemma4-purpose/native_spec_audit.py", line 228, in main
+    result = audit(args.root.resolve(), args.plan_sha256)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/worktrees/kairyu-bench-weight-tools/scripts/experiments/gemma4-purpose/native_spec_audit.py", line 97, in audit
+    execution = read(root / "solver-execution.json")
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/worktrees/kairyu-bench-weight-tools/scripts/experiments/gemma4-purpose/native_spec_audit.py", line 78, in read
+    return json.loads(pin(path, expected).read_text())
+                      ^^^^^^^^^^^^^^^^^^^
+  File "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/worktrees/kairyu-bench-weight-tools/scripts/experiments/gemma4-purpose/native_spec_audit.py", line 71, in pin
+    digest = sha(path)
+             ^^^^^^^^^
+  File "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/worktrees/kairyu-bench-weight-tools/scripts/experiments/gemma4-purpose/native_spec_audit.py", line 21, in sha
+    return hashlib.sha256(path.read_bytes()).hexdigest()
+                          ^^^^^^^^^^^^^^^^^
+  File "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/infra/managed-python/cpython-3.12.13-linux-x86_64-gnu/lib/python3.12/pathlib.py", line 1019, in read_bytes
+    with self.open(mode='rb') as f:
+         ^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/infra/managed-python/cpython-3.12.13-linux-x86_64-gnu/lib/python3.12/pathlib.py", line 1013, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f04-relative-v1/solver-execution.json'

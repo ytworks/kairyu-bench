@@ -1,0 +1,15 @@
+test_all16_authored_correct_foil_and_fixed_helper_e2e (test_gemma4_helper_chains.OfflineHelperStagesTest.test_all16_authored_correct_foil_and_fixed_helper_e2e) ... ok
+test_full_identity_and_public_response_rejections (test_gemma4_helper_chains.OfflineHelperStagesTest.test_full_identity_and_public_response_rejections) ... ok
+test_preview_and_all_errors_never_execute_answers (test_gemma4_helper_chains.OfflineHelperStagesTest.test_preview_and_all_errors_never_execute_answers) ... ok
+test_daemon_guard_and_bounded_own_container_cleanup (test_gemma4_science_sandbox.ScienceSandboxTest.test_daemon_guard_and_bounded_own_container_cleanup) ... ok
+test_http_failure_stays_unknown_without_generated_code_execution (test_gemma4_science_sandbox.ScienceSandboxTest.test_http_failure_stays_unknown_without_generated_code_execution) ... ok
+test_http_status_and_thinking_provenance_reject_inconsistent_values (test_gemma4_science_sandbox.ScienceSandboxTest.test_http_status_and_thinking_provenance_reject_inconsistent_values) ... ok
+test_no_reference_payload_and_host_numeric_contracts (test_gemma4_science_sandbox.ScienceSandboxTest.test_no_reference_payload_and_host_numeric_contracts) ... ok
+test_preview_preserves_inputs_and_does_not_construct_docker (test_gemma4_science_sandbox.ScienceSandboxTest.test_preview_preserves_inputs_and_does_not_construct_docker) ... ok
+test_process_output_and_time_limits_on_trusted_fixtures (test_gemma4_science_sandbox.ScienceSandboxTest.test_process_output_and_time_limits_on_trusted_fixtures) ... ok
+test_strict_public_answer_extraction_and_reasoning_rejection (test_gemma4_science_sandbox.ScienceSandboxTest.test_strict_public_answer_extraction_and_reasoning_rejection) ... ok
+
+----------------------------------------------------------------------
+Ran 10 tests in 8.776s
+
+OK

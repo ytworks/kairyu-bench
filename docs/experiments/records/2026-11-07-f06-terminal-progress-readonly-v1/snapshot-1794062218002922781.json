@@ -1,0 +1,313 @@
+{
+  "epoch": 1794062218.0029185,
+  "run_status": "running",
+  "job_stats": {
+    "n_completed_trials": 5,
+    "n_errored_trials": 0,
+    "n_running_trials": 1,
+    "n_pending_trials": 0,
+    "n_cancelled_trials": 0,
+    "n_retries": 0,
+    "evals": {
+      "terminus-2__gemma-4-31b__terminal-bench/terminal-bench-2-1": {
+        "n_trials": 5,
+        "n_errors": 0,
+        "metrics": [
+          {
+            "mean": 0.4
+          }
+        ],
+        "pass_at_k": {},
+        "reward_stats": {
+          "reward": {
+            "0.0": [
+              "reshard-c4-data__MQRSEWM",
+              "install-windows-3.11__MuiREgh",
+              "cobol-modernization__Hc7CVWB"
+            ],
+            "1.0": [
+              "polyglot-c-py__sQB3Cpq",
+              "portfolio-optimization__Ae6UdEP"
+            ]
+          }
+        },
+        "exception_stats": {}
+      }
+    },
+    "n_input_tokens": 3195342,
+    "n_cache_tokens": 0,
+    "n_output_tokens": 59610,
+    "cost_usd": null
+  },
+  "task_count": 6,
+  "tasks": [
+    {
+      "task": "terminal-bench/portfolio-optimization",
+      "state": "completed_result_saved",
+      "agent_steps": 12,
+      "total_trajectory_rows": 13,
+      "tool_calls": 22,
+      "reward": 1.0,
+      "trial_exception_type": null,
+      "parser_no_valid_json_warning_count": 1,
+      "parser_extra_text_warning_count": 22,
+      "wall_seconds": 360.047947,
+      "agent_seconds": 146.925582,
+      "directory": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/results/gemma4-fresh-f06-dev30-dp4-20261107-v1/agents/terminal-bench/raw/terminal-bench/jobs/terminal-bench-terminal-bench/portfolio-optimization__Ae6UdEP",
+      "last_trajectory_timestamp": "2026-11-07T14:30:28.998865+00:00",
+      "saved_final_metrics": {
+        "total_prompt_tokens": 128801,
+        "total_completion_tokens": 7575,
+        "total_cached_tokens": 0
+      },
+      "timeout_warning_lines": 0,
+      "log_mtime_ns": 1794061829537209175,
+      "verifier_result_present": true
+    },
+    {
+      "task": "terminal-bench/install-windows-3.11",
+      "state": "completed_result_saved",
+      "agent_steps": 15,
+      "total_trajectory_rows": 16,
+      "tool_calls": 23,
+      "reward": 0.0,
+      "trial_exception_type": null,
+      "parser_no_valid_json_warning_count": 0,
+      "parser_extra_text_warning_count": 2,
+      "wall_seconds": 222.799031,
+      "agent_seconds": 151.083702,
+      "directory": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/results/gemma4-fresh-f06-dev30-dp4-20261107-v1/agents/terminal-bench/raw/terminal-bench/jobs/terminal-bench-terminal-bench/install-windows-3.11__MuiREgh",
+      "last_trajectory_timestamp": "2026-11-07T14:17:55.442128+00:00",
+      "saved_final_metrics": {
+        "total_prompt_tokens": 84124,
+        "total_completion_tokens": 5403,
+        "total_cached_tokens": 0
+      },
+      "timeout_warning_lines": 0,
+      "log_mtime_ns": 1794061075936219487,
+      "verifier_result_present": true
+    },
+    {
+      "task": "terminal-bench/bn-fit-modify",
+      "state": "started_no_final_result",
+      "agent_steps": 7,
+      "total_trajectory_rows": 8,
+      "tool_calls": 6,
+      "reward": null,
+      "trial_exception_type": null,
+      "parser_no_valid_json_warning_count": 0,
+      "parser_extra_text_warning_count": 14,
+      "wall_seconds": null,
+      "agent_seconds": null,
+      "directory": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/results/gemma4-fresh-f06-dev30-dp4-20261107-v1/agents/terminal-bench/raw/terminal-bench/jobs/terminal-bench-terminal-bench/bn-fit-modify__r5ivRDc",
+      "last_trajectory_timestamp": "2026-11-07T14:27:50.886955+00:00",
+      "saved_final_metrics": {
+        "total_prompt_tokens": 22244,
+        "total_completion_tokens": 5765,
+        "total_cached_tokens": 0
+      },
+      "timeout_warning_lines": 0,
+      "log_mtime_ns": 1794061670887533234,
+      "verifier_result_present": false
+    },
+    {
+      "task": "terminal-bench/cobol-modernization",
+      "state": "completed_result_saved",
+      "agent_steps": 250,
+      "total_trajectory_rows": 251,
+      "tool_calls": 0,
+      "reward": 0.0,
+      "trial_exception_type": null,
+      "parser_no_valid_json_warning_count": 250,
+      "parser_extra_text_warning_count": 0,
+      "wall_seconds": 1468.07254,
+      "agent_seconds": 1440.085676,
+      "directory": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/results/gemma4-fresh-f06-dev30-dp4-20261107-v1/agents/terminal-bench/raw/terminal-bench/jobs/terminal-bench-terminal-bench/cobol-modernization__Hc7CVWB",
+      "last_trajectory_timestamp": "2026-11-07T14:27:33.470791+00:00",
+      "saved_final_metrics": {
+        "total_prompt_tokens": 2882753,
+        "total_completion_tokens": 9497,
+        "total_cached_tokens": 0
+      },
+      "timeout_warning_lines": 0,
+      "log_mtime_ns": 1794061653995098913,
+      "verifier_result_present": true
+    },
+    {
+      "task": "terminal-bench/reshard-c4-data",
+      "state": "completed_result_saved",
+      "agent_steps": 8,
+      "total_trajectory_rows": 9,
+      "tool_calls": 16,
+      "reward": 0.0,
+      "trial_exception_type": null,
+      "parser_no_valid_json_warning_count": 0,
+      "parser_extra_text_warning_count": 2,
+      "wall_seconds": 696.779658,
+      "agent_seconds": 608.224159,
+      "directory": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/results/gemma4-fresh-f06-dev30-dp4-20261107-v1/agents/terminal-bench/raw/terminal-bench/jobs/terminal-bench-terminal-bench/reshard-c4-data__MQRSEWM",
+      "last_trajectory_timestamp": "2026-11-07T14:13:42.218379+00:00",
+      "saved_final_metrics": {
+        "total_prompt_tokens": 41712,
+        "total_completion_tokens": 6687,
+        "total_cached_tokens": 0
+      },
+      "timeout_warning_lines": 0,
+      "log_mtime_ns": 1794060822724756917,
+      "verifier_result_present": true
+    },
+    {
+      "task": "terminal-bench/polyglot-c-py",
+      "state": "completed_result_saved",
+      "agent_steps": 12,
+      "total_trajectory_rows": 13,
+      "tool_calls": 15,
+      "reward": 1.0,
+      "trial_exception_type": null,
+      "parser_no_valid_json_warning_count": 1,
+      "parser_extra_text_warning_count": 20,
+      "wall_seconds": 442.57213,
+      "agent_seconds": 399.433033,
+      "directory": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/results/gemma4-fresh-f06-dev30-dp4-20261107-v1/agents/terminal-bench/raw/terminal-bench/jobs/terminal-bench-terminal-bench/polyglot-c-py__sQB3Cpq",
+      "last_trajectory_timestamp": "2026-11-07T14:25:42.219066+00:00",
+      "saved_final_metrics": {
+        "total_prompt_tokens": 57952,
+        "total_completion_tokens": 30448,
+        "total_cached_tokens": 0
+      },
+      "timeout_warning_lines": 0,
+      "log_mtime_ns": 1794061542740817515,
+      "verifier_result_present": true
+    }
+  ],
+  "pins": [
+    {
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/results/gemma4-fresh-f06-dev30-dp4-20261107-v1/run.json",
+      "sha256": "80c4a63d5248bb9e52d94658ddbd50218455197a0059e46afbefeb696d4eebda",
+      "bytes": 683,
+      "mtime_ns": 1794060195605171432
+    },
+    {
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/results/gemma4-fresh-f06-dev30-dp4-20261107-v1/agents/terminal-bench/raw/terminal-bench/jobs/terminal-bench-terminal-bench/config.json",
+      "sha256": "2e168c082ce4ab62a4e97dd1b54880da78c180c7689ff02e83964dae5979602a",
+      "bytes": 1380,
+      "mtime_ns": 1794060200081018621
+    },
+    {
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/results/gemma4-fresh-f06-dev30-dp4-20261107-v1/agents/terminal-bench/raw/terminal-bench/jobs/terminal-bench-terminal-bench/result.json",
+      "sha256": "5822fb262bd98e627ba25f5035f93ae1432c3b0a88223e634beff31306d49ff0",
+      "bytes": 1426,
+      "mtime_ns": 1794062031181418985
+    },
+    {
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/results/gemma4-fresh-f06-dev30-dp4-20261107-v1/agents/terminal-bench/raw/terminal-bench/jobs/terminal-bench-terminal-bench/portfolio-optimization__Ae6UdEP/result.json",
+      "sha256": "6d1349ea797096f7dd8919c954d7ebff3d6e413d3b975cda70d276d3d9bc5e30",
+      "bytes": 5152,
+      "mtime_ns": 1794062031181418985
+    },
+    {
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/results/gemma4-fresh-f06-dev30-dp4-20261107-v1/agents/terminal-bench/raw/terminal-bench/jobs/terminal-bench-terminal-bench/portfolio-optimization__Ae6UdEP/agent/trajectory.json",
+      "sha256": "22d409bb77f6380b61ab68689dee7297d71b97073aad0ce557b0cd9c76197140",
+      "bytes": 69522,
+      "mtime_ns": 1794061829002227160
+    },
+    {
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/results/gemma4-fresh-f06-dev30-dp4-20261107-v1/agents/terminal-bench/raw/terminal-bench/jobs/terminal-bench-terminal-bench/portfolio-optimization__Ae6UdEP/trial.log",
+      "sha256": "94645c348e3ba877709191e1e748aa490f9236fd7e45c9f79e48998cf26753a7",
+      "bytes": 4180,
+      "mtime_ns": 1794061829537209175
+    },
+    {
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/results/gemma4-fresh-f06-dev30-dp4-20261107-v1/agents/terminal-bench/raw/terminal-bench/jobs/terminal-bench-terminal-bench/install-windows-3.11__MuiREgh/result.json",
+      "sha256": "dca97970a610c71a4be91243b69bfdd91db48d41b25cbdc1142b4d5e31d71cff",
+      "bytes": 5236,
+      "mtime_ns": 1794061122578700926
+    },
+    {
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/results/gemma4-fresh-f06-dev30-dp4-20261107-v1/agents/terminal-bench/raw/terminal-bench/jobs/terminal-bench-terminal-bench/install-windows-3.11__MuiREgh/agent/trajectory.json",
+      "sha256": "0512968397e13b837eba4cab0725c6a770be7c2d1fcd3bed42c6fb3f4517300e",
+      "bytes": 49866,
+      "mtime_ns": 1794061075444235472
+    },
+    {
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/results/gemma4-fresh-f06-dev30-dp4-20261107-v1/agents/terminal-bench/raw/terminal-bench/jobs/terminal-bench-terminal-bench/install-windows-3.11__MuiREgh/trial.log",
+      "sha256": "e1e88468ca38d321332b5dc5a9a93ce48848f4a58a1dafe3dcd3e8287dd1eb1e",
+      "bytes": 3610,
+      "mtime_ns": 1794061075936219487
+    },
+    {
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/results/gemma4-fresh-f06-dev30-dp4-20261107-v1/agents/terminal-bench/raw/terminal-bench/jobs/terminal-bench-terminal-bench/bn-fit-modify__r5ivRDc/agent/trajectory.json",
+      "sha256": "7da9a035aeb1f8e26cf006dada3616432439a571cc4834e15cdf4dbba3fc2583",
+      "bytes": 42074,
+      "mtime_ns": 1794061670887533234
+    },
+    {
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/results/gemma4-fresh-f06-dev30-dp4-20261107-v1/agents/terminal-bench/raw/terminal-bench/jobs/terminal-bench-terminal-bench/bn-fit-modify__r5ivRDc/trial.log",
+      "sha256": "3eb245fad084ed36c0e7da46a362328040b94e76b25b522d7ed932a952c6bdbd",
+      "bytes": 1503,
+      "mtime_ns": 1794061670887533234
+    },
+    {
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/results/gemma4-fresh-f06-dev30-dp4-20261107-v1/agents/terminal-bench/raw/terminal-bench/jobs/terminal-bench-terminal-bench/cobol-modernization__Hc7CVWB/result.json",
+      "sha256": "d66c219f3710e33b810876766b9cb0a617b01b9991563dd62b26c51bc5e8704c",
+      "bytes": 13454,
+      "mtime_ns": 1794061670735538325
+    },
+    {
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/results/gemma4-fresh-f06-dev30-dp4-20261107-v1/agents/terminal-bench/raw/terminal-bench/jobs/terminal-bench-terminal-bench/cobol-modernization__Hc7CVWB/agent/trajectory.json",
+      "sha256": "b9b5c3e1b2e5a22ff5c77c2cc51d9b57a78f97ce96d0e1324edf13ffaeafc578",
+      "bytes": 172387,
+      "mtime_ns": 1794061653480116155
+    },
+    {
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/results/gemma4-fresh-f06-dev30-dp4-20261107-v1/agents/terminal-bench/raw/terminal-bench/jobs/terminal-bench-terminal-bench/cobol-modernization__Hc7CVWB/trial.log",
+      "sha256": "ce4589e2caa912a0f13a0d57ab36e86db130e05d77c7ac6453c99a8c6add05ac",
+      "bytes": 11891,
+      "mtime_ns": 1794061653995098913
+    },
+    {
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/results/gemma4-fresh-f06-dev30-dp4-20261107-v1/agents/terminal-bench/raw/terminal-bench/jobs/terminal-bench-terminal-bench/reshard-c4-data__MQRSEWM/result.json",
+      "sha256": "9711255ec7d094631c7c75df52b9dde6231ba130b5066ac5e39f6d24cdf4150a",
+      "bytes": 4962,
+      "mtime_ns": 1794060899399138344
+    },
+    {
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/results/gemma4-fresh-f06-dev30-dp4-20261107-v1/agents/terminal-bench/raw/terminal-bench/jobs/terminal-bench-terminal-bench/reshard-c4-data__MQRSEWM/agent/trajectory.json",
+      "sha256": "8c7eef569f276b09e77bafc4bda0a6c41e897febc4a5842cf5f1f3063d437594",
+      "bytes": 44094,
+      "mtime_ns": 1794060822220774129
+    },
+    {
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/results/gemma4-fresh-f06-dev30-dp4-20261107-v1/agents/terminal-bench/raw/terminal-bench/jobs/terminal-bench-terminal-bench/reshard-c4-data__MQRSEWM/trial.log",
+      "sha256": "a4c5450b5966d3d472e6a6f975c3da8fe4c0c6ad0d83ef5c62f09838c8a80d16",
+      "bytes": 2130,
+      "mtime_ns": 1794060822724756917
+    },
+    {
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/results/gemma4-fresh-f06-dev30-dp4-20261107-v1/agents/terminal-bench/raw/terminal-bench/jobs/terminal-bench-terminal-bench/polyglot-c-py__sQB3Cpq/result.json",
+      "sha256": "6ee93895cb11cd193d5ee69ccf30086dc9d1c10612065740a2ac11ac9f880df1",
+      "bytes": 5094,
+      "mtime_ns": 1794061565672052116
+    },
+    {
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/results/gemma4-fresh-f06-dev30-dp4-20261107-v1/agents/terminal-bench/raw/terminal-bench/jobs/terminal-bench-terminal-bench/polyglot-c-py__sQB3Cpq/agent/trajectory.json",
+      "sha256": "699e5abfcb812de838d85834949d5b24eac611b2bb6c7711a75f46d7ea321882",
+      "bytes": 105569,
+      "mtime_ns": 1794061542222834797
+    },
+    {
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/results/gemma4-fresh-f06-dev30-dp4-20261107-v1/agents/terminal-bench/raw/terminal-bench/jobs/terminal-bench-terminal-bench/polyglot-c-py__sQB3Cpq/trial.log",
+      "sha256": "a00e86439bc1b1ad6909c5fb826579b6285e8e21ee6d4b4a372ed7cb34600ef1",
+      "bytes": 2827,
+      "mtime_ns": 1794061542740817515
+    }
+  ],
+  "limitations": [
+    "Agent steps count only trajectory source=agent; total rows include initial user rows.",
+    "Parser warnings measure protocol failures and are distinct from HTTP errors or terminal trial exceptions.",
+    "Absent trajectory means step count unknown, never zero. Saved output does not establish instantaneous active generation or remaining duration."
+  ],
+  "model_requests": 0,
+  "control_actions": 0,
+  "rescoring": 0
+}

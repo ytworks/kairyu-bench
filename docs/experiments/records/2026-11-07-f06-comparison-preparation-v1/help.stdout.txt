@@ -1,0 +1,23 @@
+usage: fresh-n30-complete-audit.py [-h] --project PROJECT --repository
+                                   REPOSITORY --study STUDY --run RUN
+                                   [--launch-plan LAUNCH_PLAN] --output OUTPUT
+                                   [--expected-tree EXPECTED_TREE]
+                                   [--allow-partial]
+
+Audit completed canonical dev30; CPU reads only, never calls a model.
+
+options:
+  -h, --help            show this help message and exit
+  --project PROJECT
+  --repository REPOSITORY
+  --study STUDY
+  --run RUN
+  --launch-plan LAUNCH_PLAN
+                        Explicit executed owner plan; defaults to
+                        study/launch-plan-approved.json.
+  --output OUTPUT
+  --expected-tree EXPECTED_TREE
+                        Expected checkpoint content tree; defaults to the
+                        established AV baseline.
+  --allow-partial       Preserve an explicitly partial run; never permits
+                        full-score ranking.

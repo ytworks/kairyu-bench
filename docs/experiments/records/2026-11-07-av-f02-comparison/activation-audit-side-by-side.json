@@ -1,0 +1,6516 @@
+{
+  "schema_version": 1,
+  "kind": "existing_audit_metadata_side_by_side_not_numeric_pairing",
+  "created_epoch": 1794032952.2798352,
+  "inputs": {
+    "AV": {
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-av-live10-v1/code-capture-audit-v2.json",
+      "sha256": "3c5ce3756ffb966ee13ad58721af6fd498f3c317db629c9376cd2e7e65b28360",
+      "recipe_sha256": "4f73da8d944875617c3bbeda0588e19c0e63e48c44f6b7ad2e884ac470885d5b"
+    },
+    "F02": {
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f02-live10-v1/code-capture-audit.json",
+      "sha256": "b47de1e83b4451fd4beed2219e7a4f899b97c6431e212ec5b922211c6a651188",
+      "recipe_sha256": "83e4ba37a34d47cacd7ad2421e2e3eb10e9f0c75ac4d5a0b9bb8715624ded2e8"
+    }
+  },
+  "summary": {
+    "code_items": 26,
+    "unique_one_call_both": 26,
+    "full_input_sha256_equal_items": 26,
+    "score_unchanged_items": 26,
+    "rank_pairs": 52,
+    "prefill_positions_equal_rank_pairs": 52,
+    "prefill_acceptance_equal_rank_pairs": 52,
+    "decode_offsets_equal_rank_pairs": 48,
+    "numeric_activation_deltas_computed": 0,
+    "pair_keys_added": 0
+  },
+  "run_counts": {
+    "AV": {
+      "records": 7001280,
+      "excluded_other_run_records": 18360,
+      "unlinked_records": 5760,
+      "official_records": 6977160
+    },
+    "F02": {
+      "records": 6958800,
+      "excluded_other_run_records": 18360,
+      "unlinked_records": 5760,
+      "official_records": 6934680
+    }
+  },
+  "closure": {
+    "AV": [
+      {
+        "rank": 0,
+        "closed": true,
+        "dropped_records": 0,
+        "writer_queue_depth": 0,
+        "quota_exhausted": false
+      },
+      {
+        "rank": 1,
+        "closed": true,
+        "dropped_records": 0,
+        "writer_queue_depth": 0,
+        "quota_exhausted": false
+      }
+    ],
+    "F02": [
+      {
+        "rank": 0,
+        "closed": false,
+        "dropped_records": 0,
+        "writer_queue_depth": 0,
+        "quota_exhausted": false
+      },
+      {
+        "rank": 1,
+        "closed": false,
+        "dropped_records": 0,
+        "writer_queue_depth": 0,
+        "quota_exhausted": false
+      }
+    ]
+  },
+  "code_items": [
+    {
+      "item_id": "humaneval-plus:HumanEval/116",
+      "official_score_AV": 1.0,
+      "official_score_F02": 1.0,
+      "call_counts": {
+        "AV": 1,
+        "F02": 1
+      },
+      "calls": {
+        "AV": [
+          {
+            "request_id": "chatcmpl-observe-2d59203efa194ac29a421b54c9a8326e-72978731cb114c01a4c506e3eed57fa5-a564cbe5",
+            "call_id": "f70e1fad9ee84ae984f8d2203ac5c65f",
+            "input_sha256": "e8a2afd1211eb7b25b295305e25e4c00a33620177d71d763dc5473f82a576fd3",
+            "seed": 79445533,
+            "seconds": 199.57453506393358,
+            "usage": {
+              "prompt_tokens": 229,
+              "total_tokens": 6727,
+              "completion_tokens": 6498,
+              "prompt_tokens_details": null,
+              "completion_tokens_details": {
+                "reasoning_tokens": 5725
+              }
+            }
+          }
+        ],
+        "F02": [
+          {
+            "request_id": "chatcmpl-observe-14b0a532dc0f460bbfdc6218ed7890a9-8da3f62bac454d65b22ec178b735d3c0-a2c62519",
+            "call_id": "318c82fd74c2469b9c04fc1ede28aca5",
+            "input_sha256": "e8a2afd1211eb7b25b295305e25e4c00a33620177d71d763dc5473f82a576fd3",
+            "seed": 79445533,
+            "seconds": 278.87447575095575,
+            "usage": {
+              "prompt_tokens": 229,
+              "total_tokens": 7688,
+              "completion_tokens": 7459,
+              "prompt_tokens_details": null,
+              "completion_tokens_details": {
+                "reasoning_tokens": 6570
+              }
+            }
+          }
+        ]
+      },
+      "full_input_sha256_equal": true,
+      "seed_equal": true,
+      "prompt_token_count_equal": true,
+      "rank_sets_equal": true,
+      "ranks": {
+        "0": {
+          "AV": {
+            "prefill_positions": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5,
+              6,
+              7
+            ],
+            "prefill_accepted_state_positions": {
+              "True": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6,
+                7
+              ]
+            },
+            "decode_offsets": [
+              0,
+              1,
+              2,
+              4,
+              8,
+              16,
+              32,
+              64,
+              128,
+              256,
+              512,
+              1024,
+              2048,
+              4096
+            ],
+            "decode_position_counts_by_accepted_state": {
+              "True": 10,
+              "False": 4
+            },
+            "profile_offset_64_records": 180,
+            "profile_offset_64_counts_by_accepted_state": {
+              "True": 180
+            }
+          },
+          "F02": {
+            "prefill_positions": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5,
+              6,
+              7
+            ],
+            "prefill_accepted_state_positions": {
+              "True": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6,
+                7
+              ]
+            },
+            "decode_offsets": [
+              0,
+              1,
+              2,
+              4,
+              8,
+              16,
+              32,
+              64,
+              128,
+              256,
+              512,
+              1024,
+              2048,
+              4096
+            ],
+            "decode_position_counts_by_accepted_state": {
+              "True": 11,
+              "False": 3
+            },
+            "profile_offset_64_records": 180,
+            "profile_offset_64_counts_by_accepted_state": {
+              "True": 180
+            }
+          },
+          "prefill_positions_equal": true,
+          "prefill_acceptance_equal": true,
+          "decode_offsets_equal": true
+        },
+        "1": {
+          "AV": {
+            "prefill_positions": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5,
+              6,
+              7
+            ],
+            "prefill_accepted_state_positions": {
+              "True": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6,
+                7
+              ]
+            },
+            "decode_offsets": [
+              0,
+              1,
+              2,
+              4,
+              8,
+              16,
+              32,
+              64,
+              128,
+              256,
+              512,
+              1024,
+              2048,
+              4096
+            ],
+            "decode_position_counts_by_accepted_state": {
+              "True": 10,
+              "False": 4
+            },
+            "profile_offset_64_records": 180,
+            "profile_offset_64_counts_by_accepted_state": {
+              "True": 180
+            }
+          },
+          "F02": {
+            "prefill_positions": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5,
+              6,
+              7
+            ],
+            "prefill_accepted_state_positions": {
+              "True": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6,
+                7
+              ]
+            },
+            "decode_offsets": [
+              0,
+              1,
+              2,
+              4,
+              8,
+              16,
+              32,
+              64,
+              128,
+              256,
+              512,
+              1024,
+              2048,
+              4096
+            ],
+            "decode_position_counts_by_accepted_state": {
+              "True": 11,
+              "False": 3
+            },
+            "profile_offset_64_records": 180,
+            "profile_offset_64_counts_by_accepted_state": {
+              "True": 180
+            }
+          },
+          "prefill_positions_equal": true,
+          "prefill_acceptance_equal": true,
+          "decode_offsets_equal": true
+        }
+      }
+    },
+    {
+      "item_id": "humaneval-plus:HumanEval/144",
+      "official_score_AV": 1.0,
+      "official_score_F02": 1.0,
+      "call_counts": {
+        "AV": 1,
+        "F02": 1
+      },
+      "calls": {
+        "AV": [
+          {
+            "request_id": "chatcmpl-observe-21e3628783c045699f3b533aacfc71f2-2a9db8f596ca4f62a951228c41a3441d-8e4ebc41",
+            "call_id": "7a09c999582e4cd0b9639bf535cb1de4",
+            "input_sha256": "2010489cd0092db50ba0d10a43e15ffb8d1f238cae2e9f0ffca1bed69f14c51f",
+            "seed": 1368382268,
+            "seconds": 46.25857334199827,
+            "usage": {
+              "prompt_tokens": 206,
+              "total_tokens": 1315,
+              "completion_tokens": 1109,
+              "prompt_tokens_details": null,
+              "completion_tokens_details": {
+                "reasoning_tokens": 606
+              }
+            }
+          }
+        ],
+        "F02": [
+          {
+            "request_id": "chatcmpl-observe-95871a4e3ca743999a1dbecd4656d776-72a9565fe7194e549d2b7013df3e374a-b04f4c80",
+            "call_id": "3d4ac84b68ee456398e49ac66dfae628",
+            "input_sha256": "2010489cd0092db50ba0d10a43e15ffb8d1f238cae2e9f0ffca1bed69f14c51f",
+            "seed": 1368382268,
+            "seconds": 17.76568974298425,
+            "usage": {
+              "prompt_tokens": 206,
+              "total_tokens": 1451,
+              "completion_tokens": 1245,
+              "prompt_tokens_details": null,
+              "completion_tokens_details": {
+                "reasoning_tokens": 701
+              }
+            }
+          }
+        ]
+      },
+      "full_input_sha256_equal": true,
+      "seed_equal": true,
+      "prompt_token_count_equal": true,
+      "rank_sets_equal": true,
+      "ranks": {
+        "0": {
+          "AV": {
+            "prefill_positions": [
+              32,
+              33,
+              34,
+              35,
+              36,
+              37,
+              38,
+              39
+            ],
+            "prefill_accepted_state_positions": {
+              "True": [
+                32,
+                33,
+                34,
+                35,
+                36,
+                37,
+                38,
+                39
+              ]
+            },
+            "decode_offsets": [
+              0,
+              1,
+              2,
+              4,
+              8,
+              16,
+              32,
+              64,
+              128,
+              256,
+              512,
+              1024
+            ],
+            "decode_position_counts_by_accepted_state": {
+              "True": 12
+            },
+            "profile_offset_64_records": 180,
+            "profile_offset_64_counts_by_accepted_state": {
+              "True": 180
+            }
+          },
+          "F02": {
+            "prefill_positions": [
+              32,
+              33,
+              34,
+              35,
+              36,
+              37,
+              38,
+              39
+            ],
+            "prefill_accepted_state_positions": {
+              "True": [
+                32,
+                33,
+                34,
+                35,
+                36,
+                37,
+                38,
+                39
+              ]
+            },
+            "decode_offsets": [
+              0,
+              1,
+              2,
+              4,
+              8,
+              16,
+              32,
+              64,
+              128,
+              256,
+              512,
+              1024
+            ],
+            "decode_position_counts_by_accepted_state": {
+              "True": 12
+            },
+            "profile_offset_64_records": 180,
+            "profile_offset_64_counts_by_accepted_state": {
+              "True": 180
+            }
+          },
+          "prefill_positions_equal": true,
+          "prefill_acceptance_equal": true,
+          "decode_offsets_equal": true
+        },
+        "1": {
+          "AV": {
+            "prefill_positions": [
+              32,
+              33,
+              34,
+              35,
+              36,
+              37,
+              38,
+              39
+            ],
+            "prefill_accepted_state_positions": {
+              "True": [
+                32,
+                33,
+                34,
+                35,
+                36,
+                37,
+                38,
+                39
+              ]
+            },
+            "decode_offsets": [
+              0,
+              1,
+              2,
+              4,
+              8,
+              16,
+              32,
+              64,
+              128,
+              256,
+              512,
+              1024
+            ],
+            "decode_position_counts_by_accepted_state": {
+              "True": 12
+            },
+            "profile_offset_64_records": 180,
+            "profile_offset_64_counts_by_accepted_state": {
+              "True": 180
+            }
+          },
+          "F02": {
+            "prefill_positions": [
+              32,
+              33,
+              34,
+              35,
+              36,
+              37,
+              38,
+              39
+            ],
+            "prefill_accepted_state_positions": {
+              "True": [
+                32,
+                33,
+                34,
+                35,
+                36,
+                37,
+                38,
+                39
+              ]
+            },
+            "decode_offsets": [
+              0,
+              1,
+              2,
+              4,
+              8,
+              16,
+              32,
+              64,
+              128,
+              256,
+              512,
+              1024
+            ],
+            "decode_position_counts_by_accepted_state": {
+              "True": 12
+            },
+            "profile_offset_64_records": 180,
+            "profile_offset_64_counts_by_accepted_state": {
+              "True": 180
+            }
+          },
+          "prefill_positions_equal": true,
+          "prefill_acceptance_equal": true,
+          "decode_offsets_equal": true
+        }
+      }
+    },
+    {
+      "item_id": "humaneval-plus:HumanEval/148",
+      "official_score_AV": 1.0,
+      "official_score_F02": 1.0,
+      "call_counts": {
+        "AV": 1,
+        "F02": 1
+      },
+      "calls": {
+        "AV": [
+          {
+            "request_id": "chatcmpl-observe-030ac7be76e5474885e77c28f90b9bbc-a6c02a9ced0e41daba604eedff2848f1-a100e705",
+            "call_id": "c2b368d004fe464bb6695f9935883e3c",
+            "input_sha256": "9c87d1521fb251fffd7e60ff35b19ffc945a584754e0f07df45ddc4fb547429f",
+            "seed": 1951682443,
+            "seconds": 54.00335512496531,
+            "usage": {
+              "prompt_tokens": 264,
+              "total_tokens": 1518,
+              "completion_tokens": 1254,
+              "prompt_tokens_details": null,
+              "completion_tokens_details": {
+                "reasoning_tokens": 674
+              }
+            }
+          }
+        ],
+        "F02": [
+          {
+            "request_id": "chatcmpl-observe-efd85f568da2427d90f2f359b01bb666-2c311e24ff95482fba7d92ae85121fb6-b5ee7bbc",
+            "call_id": "922c0db2a0ed4c46a189ddf1dc0d8619",
+            "input_sha256": "9c87d1521fb251fffd7e60ff35b19ffc945a584754e0f07df45ddc4fb547429f",
+            "seed": 1951682443,
+            "seconds": 24.960417505004443,
+            "usage": {
+              "prompt_tokens": 264,
+              "total_tokens": 1820,
+              "completion_tokens": 1556,
+              "prompt_tokens_details": null,
+              "completion_tokens_details": {
+                "reasoning_tokens": 1009
+              }
+            }
+          }
+        ]
+      },
+      "full_input_sha256_equal": true,
+      "seed_equal": true,
+      "prompt_token_count_equal": true,
+      "rank_sets_equal": true,
+      "ranks": {
+        "0": {
+          "AV": {
+            "prefill_positions": [
+              32,
+              33,
+              34,
+              35,
+              36,
+              37,
+              38,
+              39
+            ],
+            "prefill_accepted_state_positions": {
+              "True": [
+                32,
+                33,
+                34,
+                35,
+                36,
+                37,
+                38,
+                39
+              ]
+            },
+            "decode_offsets": [
+              0,
+              1,
+              2,
+              4,
+              8,
+              16,
+              32,
+              64,
+              128,
+              256,
+              512,
+              1024
+            ],
+            "decode_position_counts_by_accepted_state": {
+              "True": 10,
+              "False": 2
+            },
+            "profile_offset_64_records": 180,
+            "profile_offset_64_counts_by_accepted_state": {
+              "True": 180
+            }
+          },
+          "F02": {
+            "prefill_positions": [
+              32,
+              33,
+              34,
+              35,
+              36,
+              37,
+              38,
+              39
+            ],
+            "prefill_accepted_state_positions": {
+              "True": [
+                32,
+                33,
+                34,
+                35,
+                36,
+                37,
+                38,
+                39
+              ]
+            },
+            "decode_offsets": [
+              0,
+              1,
+              2,
+              4,
+              8,
+              16,
+              32,
+              64,
+              128,
+              256,
+              512,
+              1024
+            ],
+            "decode_position_counts_by_accepted_state": {
+              "True": 10,
+              "False": 2
+            },
+            "profile_offset_64_records": 180,
+            "profile_offset_64_counts_by_accepted_state": {
+              "True": 180
+            }
+          },
+          "prefill_positions_equal": true,
+          "prefill_acceptance_equal": true,
+          "decode_offsets_equal": true
+        },
+        "1": {
+          "AV": {
+            "prefill_positions": [
+              32,
+              33,
+              34,
+              35,
+              36,
+              37,
+              38,
+              39
+            ],
+            "prefill_accepted_state_positions": {
+              "True": [
+                32,
+                33,
+                34,
+                35,
+                36,
+                37,
+                38,
+                39
+              ]
+            },
+            "decode_offsets": [
+              0,
+              1,
+              2,
+              4,
+              8,
+              16,
+              32,
+              64,
+              128,
+              256,
+              512,
+              1024
+            ],
+            "decode_position_counts_by_accepted_state": {
+              "True": 10,
+              "False": 2
+            },
+            "profile_offset_64_records": 180,
+            "profile_offset_64_counts_by_accepted_state": {
+              "True": 180
+            }
+          },
+          "F02": {
+            "prefill_positions": [
+              32,
+              33,
+              34,
+              35,
+              36,
+              37,
+              38,
+              39
+            ],
+            "prefill_accepted_state_positions": {
+              "True": [
+                32,
+                33,
+                34,
+                35,
+                36,
+                37,
+                38,
+                39
+              ]
+            },
+            "decode_offsets": [
+              0,
+              1,
+              2,
+              4,
+              8,
+              16,
+              32,
+              64,
+              128,
+              256,
+              512,
+              1024
+            ],
+            "decode_position_counts_by_accepted_state": {
+              "True": 10,
+              "False": 2
+            },
+            "profile_offset_64_records": 180,
+            "profile_offset_64_counts_by_accepted_state": {
+              "True": 180
+            }
+          },
+          "prefill_positions_equal": true,
+          "prefill_acceptance_equal": true,
+          "decode_offsets_equal": true
+        }
+      }
+    },
+    {
+      "item_id": "humaneval-plus:HumanEval/155",
+      "official_score_AV": 1.0,
+      "official_score_F02": 1.0,
+      "call_counts": {
+        "AV": 1,
+        "F02": 1
+      },
+      "calls": {
+        "AV": [
+          {
+            "request_id": "chatcmpl-observe-966613ba203f421eb8bf3a3a68f5aabc-10838ea423f3421387dc2885faccdf09-a429ed43",
+            "call_id": "27153bb4a34243f6ada59b1a200f4402",
+            "input_sha256": "1c0c0c3c60bebbdbad656d9575d8e730f906d7a33864c2c094d6b1b935b808ff",
+            "seed": 1979807477,
+            "seconds": 48.248911738046445,
+            "usage": {
+              "prompt_tokens": 125,
+              "total_tokens": 1149,
+              "completion_tokens": 1024,
+              "prompt_tokens_details": null,
+              "completion_tokens_details": {
+                "reasoning_tokens": 652
+              }
+            }
+          }
+        ],
+        "F02": [
+          {
+            "request_id": "chatcmpl-observe-8e8401abb15d4dff8a22bdb281abf822-9f33f226a95243288780461a435dbe72-871e1605",
+            "call_id": "4278b9a1d21b4be19310d62ed6ab0d3d",
+            "input_sha256": "1c0c0c3c60bebbdbad656d9575d8e730f906d7a33864c2c094d6b1b935b808ff",
+            "seed": 1979807477,
+            "seconds": 23.148531968006864,
+            "usage": {
+              "prompt_tokens": 125,
+              "total_tokens": 1184,
+              "completion_tokens": 1059,
+              "prompt_tokens_details": null,
+              "completion_tokens_details": {
+                "reasoning_tokens": 662
+              }
+            }
+          }
+        ]
+      },
+      "full_input_sha256_equal": true,
+      "seed_equal": true,
+      "prompt_token_count_equal": true,
+      "rank_sets_equal": true,
+      "ranks": {
+        "0": {
+          "AV": {
+            "prefill_positions": [
+              32,
+              33,
+              34,
+              35,
+              36,
+              37,
+              38,
+              39
+            ],
+            "prefill_accepted_state_positions": {
+              "True": [
+                32,
+                33,
+                34,
+                35,
+                36,
+                37,
+                38,
+                39
+              ]
+            },
+            "decode_offsets": [
+              0,
+              1,
+              2,
+              4,
+              8,
+              16,
+              32,
+              64,
+              128,
+              256,
+              512,
+              1024
+            ],
+            "decode_position_counts_by_accepted_state": {
+              "True": 11,
+              "False": 1
+            },
+            "profile_offset_64_records": 180,
+            "profile_offset_64_counts_by_accepted_state": {
+              "True": 180
+            }
+          },
+          "F02": {
+            "prefill_positions": [
+              32,
+              33,
+              34,
+              35,
+              36,
+              37,
+              38,
+              39
+            ],
+            "prefill_accepted_state_positions": {
+              "True": [
+                32,
+                33,
+                34,
+                35,
+                36,
+                37,
+                38,
+                39
+              ]
+            },
+            "decode_offsets": [
+              0,
+              1,
+              2,
+              4,
+              8,
+              16,
+              32,
+              64,
+              128,
+              256,
+              512,
+              1024
+            ],
+            "decode_position_counts_by_accepted_state": {
+              "True": 11,
+              "False": 1
+            },
+            "profile_offset_64_records": 180,
+            "profile_offset_64_counts_by_accepted_state": {
+              "True": 180
+            }
+          },
+          "prefill_positions_equal": true,
+          "prefill_acceptance_equal": true,
+          "decode_offsets_equal": true
+        },
+        "1": {
+          "AV": {
+            "prefill_positions": [
+              32,
+              33,
+              34,
+              35,
+              36,
+              37,
+              38,
+              39
+            ],
+            "prefill_accepted_state_positions": {
+              "True": [
+                32,
+                33,
+                34,
+                35,
+                36,
+                37,
+                38,
+                39
+              ]
+            },
+            "decode_offsets": [
+              0,
+              1,
+              2,
+              4,
+              8,
+              16,
+              32,
+              64,
+              128,
+              256,
+              512,
+              1024
+            ],
+            "decode_position_counts_by_accepted_state": {
+              "True": 11,
+              "False": 1
+            },
+            "profile_offset_64_records": 180,
+            "profile_offset_64_counts_by_accepted_state": {
+              "True": 180
+            }
+          },
+          "F02": {
+            "prefill_positions": [
+              32,
+              33,
+              34,
+              35,
+              36,
+              37,
+              38,
+              39
+            ],
+            "prefill_accepted_state_positions": {
+              "True": [
+                32,
+                33,
+                34,
+                35,
+                36,
+                37,
+                38,
+                39
+              ]
+            },
+            "decode_offsets": [
+              0,
+              1,
+              2,
+              4,
+              8,
+              16,
+              32,
+              64,
+              128,
+              256,
+              512,
+              1024
+            ],
+            "decode_position_counts_by_accepted_state": {
+              "True": 11,
+              "False": 1
+            },
+            "profile_offset_64_records": 180,
+            "profile_offset_64_counts_by_accepted_state": {
+              "True": 180
+            }
+          },
+          "prefill_positions_equal": true,
+          "prefill_acceptance_equal": true,
+          "decode_offsets_equal": true
+        }
+      }
+    },
+    {
+      "item_id": "humaneval-plus:HumanEval/21",
+      "official_score_AV": 1.0,
+      "official_score_F02": 1.0,
+      "call_counts": {
+        "AV": 1,
+        "F02": 1
+      },
+      "calls": {
+        "AV": [
+          {
+            "request_id": "chatcmpl-observe-45654527a23441d78359f4f4593d70d7-8b866f8c90b04677a23f2dfd73486764-9374389d",
+            "call_id": "42314af97db64514837f1c0e9eb0616d",
+            "input_sha256": "ad1549afe95fed6b8e502a691262c15b1f2c7da3ae93fa5551d04e56c045fe6f",
+            "seed": 561444048,
+            "seconds": 53.90414093108848,
+            "usage": {
+              "prompt_tokens": 181,
+              "total_tokens": 1400,
+              "completion_tokens": 1219,
+              "prompt_tokens_details": null,
+              "completion_tokens_details": {
+                "reasoning_tokens": 652
+              }
+            }
+          }
+        ],
+        "F02": [
+          {
+            "request_id": "chatcmpl-observe-25297f43ed304006a6a0bcc4080f91cf-b950a4b223f841fca9ef6cfdc33f6d57-a21a6e2f",
+            "call_id": "6cdf8fd8625243688e71c870c2404f88",
+            "input_sha256": "ad1549afe95fed6b8e502a691262c15b1f2c7da3ae93fa5551d04e56c045fe6f",
+            "seed": 561444048,
+            "seconds": 19.044608217896894,
+            "usage": {
+              "prompt_tokens": 181,
+              "total_tokens": 1316,
+              "completion_tokens": 1135,
+              "prompt_tokens_details": null,
+              "completion_tokens_details": {
+                "reasoning_tokens": 742
+              }
+            }
+          }
+        ]
+      },
+      "full_input_sha256_equal": true,
+      "seed_equal": true,
+      "prompt_token_count_equal": true,
+      "rank_sets_equal": true,
+      "ranks": {
+        "0": {
+          "AV": {
+            "prefill_positions": [
+              32,
+              33,
+              34,
+              35,
+              36,
+              37,
+              38,
+              39
+            ],
+            "prefill_accepted_state_positions": {
+              "True": [
+                32,
+                33,
+                34,
+                35,
+                36,
+                37,
+                38,
+                39
+              ]
+            },
+            "decode_offsets": [
+              0,
+              1,
+              2,
+              4,
+              8,
+              16,
+              32,
+              64,
+              128,
+              256,
+              512,
+              1024
+            ],
+            "decode_position_counts_by_accepted_state": {
+              "True": 9,
+              "False": 3
+            },
+            "profile_offset_64_records": 180,
+            "profile_offset_64_counts_by_accepted_state": {
+              "False": 180
+            }
+          },
+          "F02": {
+            "prefill_positions": [
+              32,
+              33,
+              34,
+              35,
+              36,
+              37,
+              38,
+              39
+            ],
+            "prefill_accepted_state_positions": {
+              "True": [
+                32,
+                33,
+                34,
+                35,
+                36,
+                37,
+                38,
+                39
+              ]
+            },
+            "decode_offsets": [
+              0,
+              1,
+              2,
+              4,
+              8,
+              16,
+              32,
+              64,
+              128,
+              256,
+              512,
+              1024
+            ],
+            "decode_position_counts_by_accepted_state": {
+              "True": 9,
+              "False": 3
+            },
+            "profile_offset_64_records": 180,
+            "profile_offset_64_counts_by_accepted_state": {
+              "False": 180
+            }
+          },
+          "prefill_positions_equal": true,
+          "prefill_acceptance_equal": true,
+          "decode_offsets_equal": true
+        },
+        "1": {
+          "AV": {
+            "prefill_positions": [
+              32,
+              33,
+              34,
+              35,
+              36,
+              37,
+              38,
+              39
+            ],
+            "prefill_accepted_state_positions": {
+              "True": [
+                32,
+                33,
+                34,
+                35,
+                36,
+                37,
+                38,
+                39
+              ]
+            },
+            "decode_offsets": [
+              0,
+              1,
+              2,
+              4,
+              8,
+              16,
+              32,
+              64,
+              128,
+              256,
+              512,
+              1024
+            ],
+            "decode_position_counts_by_accepted_state": {
+              "True": 9,
+              "False": 3
+            },
+            "profile_offset_64_records": 180,
+            "profile_offset_64_counts_by_accepted_state": {
+              "False": 180
+            }
+          },
+          "F02": {
+            "prefill_positions": [
+              32,
+              33,
+              34,
+              35,
+              36,
+              37,
+              38,
+              39
+            ],
+            "prefill_accepted_state_positions": {
+              "True": [
+                32,
+                33,
+                34,
+                35,
+                36,
+                37,
+                38,
+                39
+              ]
+            },
+            "decode_offsets": [
+              0,
+              1,
+              2,
+              4,
+              8,
+              16,
+              32,
+              64,
+              128,
+              256,
+              512,
+              1024
+            ],
+            "decode_position_counts_by_accepted_state": {
+              "True": 9,
+              "False": 3
+            },
+            "profile_offset_64_records": 180,
+            "profile_offset_64_counts_by_accepted_state": {
+              "False": 180
+            }
+          },
+          "prefill_positions_equal": true,
+          "prefill_acceptance_equal": true,
+          "decode_offsets_equal": true
+        }
+      }
+    },
+    {
+      "item_id": "humaneval-plus:HumanEval/22",
+      "official_score_AV": 1.0,
+      "official_score_F02": 1.0,
+      "call_counts": {
+        "AV": 1,
+        "F02": 1
+      },
+      "calls": {
+        "AV": [
+          {
+            "request_id": "chatcmpl-observe-39850e8b7cdb4572b6d2b1d2dd7bc1f5-f9fec3209e1243608240d87b5a548193-bec1f3cd",
+            "call_id": "42034bb9ce7843f285bc1dca8d237a54",
+            "input_sha256": "0e745e50c076437513c8927427d7c24725df2eea97798e9df75de5451aa94e84",
+            "seed": 1524338946,
+            "seconds": 95.02500130003318,
+            "usage": {
+              "prompt_tokens": 148,
+              "total_tokens": 2071,
+              "completion_tokens": 1923,
+              "prompt_tokens_details": null,
+              "completion_tokens_details": {
+                "reasoning_tokens": 1591
+              }
+            }
+          }
+        ],
+        "F02": [
+          {
+            "request_id": "chatcmpl-observe-6648bb3102764248bcba308de2bedaa4-78829c83bbd44505a65dafcf75a02152-bb52e768",
+            "call_id": "30d2942c635445688bb9b5342df22caa",
+            "input_sha256": "0e745e50c076437513c8927427d7c24725df2eea97798e9df75de5451aa94e84",
+            "seed": 1524338946,
+            "seconds": 38.49773775995709,
+            "usage": {
+              "prompt_tokens": 148,
+              "total_tokens": 2133,
+              "completion_tokens": 1985,
+              "prompt_tokens_details": null,
+              "completion_tokens_details": {
+                "reasoning_tokens": 1724
+              }
+            }
+          }
+        ]
+      },
+      "full_input_sha256_equal": true,
+      "seed_equal": true,
+      "prompt_token_count_equal": true,
+      "rank_sets_equal": true,
+      "ranks": {
+        "0": {
+          "AV": {
+            "prefill_positions": [
+              32,
+              33,
+              34,
+              35,
+              36,
+              37,
+              38,
+              39
+            ],
+            "prefill_accepted_state_positions": {
+              "True": [
+                32,
+                33,
+                34,
+                35,
+                36,
+                37,
+                38,
+                39
+              ]
+            },
+            "decode_offsets": [
+              0,
+              1,
+              2,
+              4,
+              8,
+              16,
+              32,
+              64,
+              128,
+              256,
+              512,
+              1024
+            ],
+            "decode_position_counts_by_accepted_state": {
+              "True": 9,
+              "False": 3
+            },
+            "profile_offset_64_records": 180,
+            "profile_offset_64_counts_by_accepted_state": {
+              "False": 180
+            }
+          },
+          "F02": {
+            "prefill_positions": [
+              32,
+              33,
+              34,
+              35,
+              36,
+              37,
+              38,
+              39
+            ],
+            "prefill_accepted_state_positions": {
+              "True": [
+                32,
+                33,
+                34,
+                35,
+                36,
+                37,
+                38,
+                39
+              ]
+            },
+            "decode_offsets": [
+              0,
+              1,
+              2,
+              4,
+              8,
+              16,
+              32,
+              64,
+              128,
+              256,
+              512,
+              1024
+            ],
+            "decode_position_counts_by_accepted_state": {
+              "True": 8,
+              "False": 4
+            },
+            "profile_offset_64_records": 180,
+            "profile_offset_64_counts_by_accepted_state": {
+              "True": 180
+            }
+          },
+          "prefill_positions_equal": true,
+          "prefill_acceptance_equal": true,
+          "decode_offsets_equal": true
+        },
+        "1": {
+          "AV": {
+            "prefill_positions": [
+              32,
+              33,
+              34,
+              35,
+              36,
+              37,
+              38,
+              39
+            ],
+            "prefill_accepted_state_positions": {
+              "True": [
+                32,
+                33,
+                34,
+                35,
+                36,
+                37,
+                38,
+                39
+              ]
+            },
+            "decode_offsets": [
+              0,
+              1,
+              2,
+              4,
+              8,
+              16,
+              32,
+              64,
+              128,
+              256,
+              512,
+              1024
+            ],
+            "decode_position_counts_by_accepted_state": {
+              "True": 9,
+              "False": 3
+            },
+            "profile_offset_64_records": 180,
+            "profile_offset_64_counts_by_accepted_state": {
+              "False": 180
+            }
+          },
+          "F02": {
+            "prefill_positions": [
+              32,
+              33,
+              34,
+              35,
+              36,
+              37,
+              38,
+              39
+            ],
+            "prefill_accepted_state_positions": {
+              "True": [
+                32,
+                33,
+                34,
+                35,
+                36,
+                37,
+                38,
+                39
+              ]
+            },
+            "decode_offsets": [
+              0,
+              1,
+              2,
+              4,
+              8,
+              16,
+              32,
+              64,
+              128,
+              256,
+              512,
+              1024
+            ],
+            "decode_position_counts_by_accepted_state": {
+              "True": 8,
+              "False": 4
+            },
+            "profile_offset_64_records": 180,
+            "profile_offset_64_counts_by_accepted_state": {
+              "True": 180
+            }
+          },
+          "prefill_positions_equal": true,
+          "prefill_acceptance_equal": true,
+          "decode_offsets_equal": true
+        }
+      }
+    },
+    {
+      "item_id": "humaneval-plus:HumanEval/30",
+      "official_score_AV": 1.0,
+      "official_score_F02": 1.0,
+      "call_counts": {
+        "AV": 1,
+        "F02": 1
+      },
+      "calls": {
+        "AV": [
+          {
+            "request_id": "chatcmpl-observe-588ef29258db404eb937fcc82399dc79-6add99d7b3d84e058e352cdfc232ccb7-bd5a377a",
+            "call_id": "0d95b03c00cd43179f86db14f2458d79",
+            "input_sha256": "e95b553898cd871c69163718fe41e5daa0cf2fd43ac8a832657f4514377b9d2a",
+            "seed": 366360133,
+            "seconds": 20.810398246976547,
+            "usage": {
+              "prompt_tokens": 173,
+              "total_tokens": 655,
+              "completion_tokens": 482,
+              "prompt_tokens_details": null,
+              "completion_tokens_details": {
+                "reasoning_tokens": 276
+              }
+            }
+          }
+        ],
+        "F02": [
+          {
+            "request_id": "chatcmpl-observe-21d917db710d4e7f821a46a34262d314-c43b71ed295d4be68dfe0c949daf33e0-a0264e27",
+            "call_id": "1b9e1dbad1d740c58b65f30a2ae8b3fb",
+            "input_sha256": "e95b553898cd871c69163718fe41e5daa0cf2fd43ac8a832657f4514377b9d2a",
+            "seed": 366360133,
+            "seconds": 61.593910411931574,
+            "usage": {
+              "prompt_tokens": 173,
+              "total_tokens": 639,
+              "completion_tokens": 466,
+              "prompt_tokens_details": null,
+              "completion_tokens_details": {
+                "reasoning_tokens": 256
+              }
+            }
+          }
+        ]
+      },
+      "full_input_sha256_equal": true,
+      "seed_equal": true,
+      "prompt_token_count_equal": true,
+      "rank_sets_equal": true,
+      "ranks": {
+        "0": {
+          "AV": {
+            "prefill_positions": [
+              32,
+              33,
+              34,
+              35,
+              36,
+              37,
+              38,
+              39
+            ],
+            "prefill_accepted_state_positions": {
+              "True": [
+                32,
+                33,
+                34,
+                35,
+                36,
+                37,
+                38,
+                39
+              ]
+            },
+            "decode_offsets": [
+              0,
+              1,
+              2,
+              4,
+              8,
+              16,
+              32,
+              64,
+              128,
+              256
+            ],
+            "decode_position_counts_by_accepted_state": {
+              "True": 9,
+              "False": 1
+            },
+            "profile_offset_64_records": 180,
+            "profile_offset_64_counts_by_accepted_state": {
+              "True": 180
+            }
+          },
+          "F02": {
+            "prefill_positions": [
+              32,
+              33,
+              34,
+              35,
+              36,
+              37,
+              38,
+              39
+            ],
+            "prefill_accepted_state_positions": {
+              "True": [
+                32,
+                33,
+                34,
+                35,
+                36,
+                37,
+                38,
+                39
+              ]
+            },
+            "decode_offsets": [
+              0,
+              1,
+              2,
+              4,
+              8,
+              16,
+              32,
+              64,
+              128,
+              256
+            ],
+            "decode_position_counts_by_accepted_state": {
+              "True": 9,
+              "False": 1
+            },
+            "profile_offset_64_records": 180,
+            "profile_offset_64_counts_by_accepted_state": {
+              "True": 180
+            }
+          },
+          "prefill_positions_equal": true,
+          "prefill_acceptance_equal": true,
+          "decode_offsets_equal": true
+        },
+        "1": {
+          "AV": {
+            "prefill_positions": [
+              32,
+              33,
+              34,
+              35,
+              36,
+              37,
+              38,
+              39
+            ],
+            "prefill_accepted_state_positions": {
+              "True": [
+                32,
+                33,
+                34,
+                35,
+                36,
+                37,
+                38,
+                39
+              ]
+            },
+            "decode_offsets": [
+              0,
+              1,
+              2,
+              4,
+              8,
+              16,
+              32,
+              64,
+              128,
+              256
+            ],
+            "decode_position_counts_by_accepted_state": {
+              "True": 9,
+              "False": 1
+            },
+            "profile_offset_64_records": 180,
+            "profile_offset_64_counts_by_accepted_state": {
+              "True": 180
+            }
+          },
+          "F02": {
+            "prefill_positions": [
+              32,
+              33,
+              34,
+              35,
+              36,
+              37,
+              38,
+              39
+            ],
+            "prefill_accepted_state_positions": {
+              "True": [
+                32,
+                33,
+                34,
+                35,
+                36,
+                37,
+                38,
+                39
+              ]
+            },
+            "decode_offsets": [
+              0,
+              1,
+              2,
+              4,
+              8,
+              16,
+              32,
+              64,
+              128,
+              256
+            ],
+            "decode_position_counts_by_accepted_state": {
+              "True": 9,
+              "False": 1
+            },
+            "profile_offset_64_records": 180,
+            "profile_offset_64_counts_by_accepted_state": {
+              "True": 180
+            }
+          },
+          "prefill_positions_equal": true,
+          "prefill_acceptance_equal": true,
+          "decode_offsets_equal": true
+        }
+      }
+    },
+    {
+      "item_id": "humaneval-plus:HumanEval/49",
+      "official_score_AV": 1.0,
+      "official_score_F02": 1.0,
+      "call_counts": {
+        "AV": 1,
+        "F02": 1
+      },
+      "calls": {
+        "AV": [
+          {
+            "request_id": "chatcmpl-observe-a1b37842d8d14ea6aa16d2932c85bbeb-586dce62a2b04f578781e118f6b5cf60-aa5a5e46",
+            "call_id": "cff1cb7b1b6c4ebd951dab3e6e4e9149",
+            "input_sha256": "c8ca599c7dc0621577a357f5539e35f6d3365c5593802d478d19ade4621e235c",
+            "seed": 789604656,
+            "seconds": 42.07449051900767,
+            "usage": {
+              "prompt_tokens": 165,
+              "total_tokens": 970,
+              "completion_tokens": 805,
+              "prompt_tokens_details": null,
+              "completion_tokens_details": {
+                "reasoning_tokens": 543
+              }
+            }
+          }
+        ],
+        "F02": [
+          {
+            "request_id": "chatcmpl-observe-20f5078ee1834e398d0bfcc591e2f5c6-e44364cc18cb4d909a6b74db4be075f9-9f311f39",
+            "call_id": "709d278a12194a29bc9eaf3d5e2ab1f2",
+            "input_sha256": "c8ca599c7dc0621577a357f5539e35f6d3365c5593802d478d19ade4621e235c",
+            "seed": 789604656,
+            "seconds": 16.32338958408218,
+            "usage": {
+              "prompt_tokens": 165,
+              "total_tokens": 994,
+              "completion_tokens": 829,
+              "prompt_tokens_details": null,
+              "completion_tokens_details": {
+                "reasoning_tokens": 562
+              }
+            }
+          }
+        ]
+      },
+      "full_input_sha256_equal": true,
+      "seed_equal": true,
+      "prompt_token_count_equal": true,
+      "rank_sets_equal": true,
+      "ranks": {
+        "0": {
+          "AV": {
+            "prefill_positions": [
+              32,
+              33,
+              34,
+              35,
+              36,
+              37,
+              38,
+              39
+            ],
+            "prefill_accepted_state_positions": {
+              "True": [
+                32,
+                33,
+                34,
+                35,
+                36,
+                37,
+                38,
+                39
+              ]
+            },
+            "decode_offsets": [
+              0,
+              1,
+              2,
+              4,
+              8,
+              16,
+              32,
+              64,
+              128,
+              256,
+              512
+            ],
+            "decode_position_counts_by_accepted_state": {
+              "True": 10,
+              "False": 1
+            },
+            "profile_offset_64_records": 180,
+            "profile_offset_64_counts_by_accepted_state": {
+              "True": 180
+            }
+          },
+          "F02": {
+            "prefill_positions": [
+              32,
+              33,
+              34,
+              35,
+              36,
+              37,
+              38,
+              39
+            ],
+            "prefill_accepted_state_positions": {
+              "True": [
+                32,
+                33,
+                34,
+                35,
+                36,
+                37,
+                38,
+                39
+              ]
+            },
+            "decode_offsets": [
+              0,
+              1,
+              2,
+              4,
+              8,
+              16,
+              32,
+              64,
+              128,
+              256,
+              512
+            ],
+            "decode_position_counts_by_accepted_state": {
+              "True": 8,
+              "False": 3
+            },
+            "profile_offset_64_records": 180,
+            "profile_offset_64_counts_by_accepted_state": {
+              "True": 180
+            }
+          },
+          "prefill_positions_equal": true,
+          "prefill_acceptance_equal": true,
+          "decode_offsets_equal": true
+        },
+        "1": {
+          "AV": {
+            "prefill_positions": [
+              32,
+              33,
+              34,
+              35,
+              36,
+              37,
+              38,
+              39
+            ],
+            "prefill_accepted_state_positions": {
+              "True": [
+                32,
+                33,
+                34,
+                35,
+                36,
+                37,
+                38,
+                39
+              ]
+            },
+            "decode_offsets": [
+              0,
+              1,
+              2,
+              4,
+              8,
+              16,
+              32,
+              64,
+              128,
+              256,
+              512
+            ],
+            "decode_position_counts_by_accepted_state": {
+              "True": 10,
+              "False": 1
+            },
+            "profile_offset_64_records": 180,
+            "profile_offset_64_counts_by_accepted_state": {
+              "True": 180
+            }
+          },
+          "F02": {
+            "prefill_positions": [
+              32,
+              33,
+              34,
+              35,
+              36,
+              37,
+              38,
+              39
+            ],
+            "prefill_accepted_state_positions": {
+              "True": [
+                32,
+                33,
+                34,
+                35,
+                36,
+                37,
+                38,
+                39
+              ]
+            },
+            "decode_offsets": [
+              0,
+              1,
+              2,
+              4,
+              8,
+              16,
+              32,
+              64,
+              128,
+              256,
+              512
+            ],
+            "decode_position_counts_by_accepted_state": {
+              "True": 8,
+              "False": 3
+            },
+            "profile_offset_64_records": 180,
+            "profile_offset_64_counts_by_accepted_state": {
+              "True": 180
+            }
+          },
+          "prefill_positions_equal": true,
+          "prefill_acceptance_equal": true,
+          "decode_offsets_equal": true
+        }
+      }
+    },
+    {
+      "item_id": "humaneval-plus:HumanEval/57",
+      "official_score_AV": 1.0,
+      "official_score_F02": 1.0,
+      "call_counts": {
+        "AV": 1,
+        "F02": 1
+      },
+      "calls": {
+        "AV": [
+          {
+            "request_id": "chatcmpl-observe-eb8faa602f6e46f19bbd5bc02187d493-8a544d5b7cd341aba4760e18298ea5a4-94f16ace",
+            "call_id": "42a0feb0d60041c0a5524ce0730f3438",
+            "input_sha256": "450a29784ad9f648f2726cca945190e9f7dc81910db044abb63b75c2b1679f59",
+            "seed": 1282189032,
+            "seconds": 59.79995033098385,
+            "usage": {
+              "prompt_tokens": 136,
+              "total_tokens": 1490,
+              "completion_tokens": 1354,
+              "prompt_tokens_details": null,
+              "completion_tokens_details": {
+                "reasoning_tokens": 1018
+              }
+            }
+          }
+        ],
+        "F02": [
+          {
+            "request_id": "chatcmpl-observe-23a32de5708e4e9bb5c0b335cda303e9-456b569e49f04ca0bea2185fee635133-b2fa0a38",
+            "call_id": "b362f10b13aa42108de749c44365210f",
+            "input_sha256": "450a29784ad9f648f2726cca945190e9f7dc81910db044abb63b75c2b1679f59",
+            "seed": 1282189032,
+            "seconds": 16.384027853026055,
+            "usage": {
+              "prompt_tokens": 136,
+              "total_tokens": 1160,
+              "completion_tokens": 1024,
+              "prompt_tokens_details": null,
+              "completion_tokens_details": {
+                "reasoning_tokens": 749
+              }
+            }
+          }
+        ]
+      },
+      "full_input_sha256_equal": true,
+      "seed_equal": true,
+      "prompt_token_count_equal": true,
+      "rank_sets_equal": true,
+      "ranks": {
+        "0": {
+          "AV": {
+            "prefill_positions": [
+              32,
+              33,
+              34,
+              35,
+              36,
+              37,
+              38,
+              39
+            ],
+            "prefill_accepted_state_positions": {
+              "True": [
+                32,
+                33,
+                34,
+                35,
+                36,
+                37,
+                38,
+                39
+              ]
+            },
+            "decode_offsets": [
+              0,
+              1,
+              2,
+              4,
+              8,
+              16,
+              32,
+              64,
+              128,
+              256,
+              512,
+              1024
+            ],
+            "decode_position_counts_by_accepted_state": {
+              "True": 11,
+              "False": 1
+            },
+            "profile_offset_64_records": 180,
+            "profile_offset_64_counts_by_accepted_state": {
+              "True": 180
+            }
+          },
+          "F02": {
+            "prefill_positions": [
+              32,
+              33,
+              34,
+              35,
+              36,
+              37,
+              38,
+              39
+            ],
+            "prefill_accepted_state_positions": {
+              "True": [
+                32,
+                33,
+                34,
+                35,
+                36,
+                37,
+                38,
+                39
+              ]
+            },
+            "decode_offsets": [
+              0,
+              1,
+              2,
+              4,
+              8,
+              16,
+              32,
+              64,
+              128,
+              256,
+              512,
+              1024
+            ],
+            "decode_position_counts_by_accepted_state": {
+              "True": 10,
+              "False": 2
+            },
+            "profile_offset_64_records": 180,
+            "profile_offset_64_counts_by_accepted_state": {
+              "True": 180
+            }
+          },
+          "prefill_positions_equal": true,
+          "prefill_acceptance_equal": true,
+          "decode_offsets_equal": true
+        },
+        "1": {
+          "AV": {
+            "prefill_positions": [
+              32,
+              33,
+              34,
+              35,
+              36,
+              37,
+              38,
+              39
+            ],
+            "prefill_accepted_state_positions": {
+              "True": [
+                32,
+                33,
+                34,
+                35,
+                36,
+                37,
+                38,
+                39
+              ]
+            },
+            "decode_offsets": [
+              0,
+              1,
+              2,
+              4,
+              8,
+              16,
+              32,
+              64,
+              128,
+              256,
+              512,
+              1024
+            ],
+            "decode_position_counts_by_accepted_state": {
+              "True": 11,
+              "False": 1
+            },
+            "profile_offset_64_records": 180,
+            "profile_offset_64_counts_by_accepted_state": {
+              "True": 180
+            }
+          },
+          "F02": {
+            "prefill_positions": [
+              32,
+              33,
+              34,
+              35,
+              36,
+              37,
+              38,
+              39
+            ],
+            "prefill_accepted_state_positions": {
+              "True": [
+                32,
+                33,
+                34,
+                35,
+                36,
+                37,
+                38,
+                39
+              ]
+            },
+            "decode_offsets": [
+              0,
+              1,
+              2,
+              4,
+              8,
+              16,
+              32,
+              64,
+              128,
+              256,
+              512,
+              1024
+            ],
+            "decode_position_counts_by_accepted_state": {
+              "True": 10,
+              "False": 2
+            },
+            "profile_offset_64_records": 180,
+            "profile_offset_64_counts_by_accepted_state": {
+              "True": 180
+            }
+          },
+          "prefill_positions_equal": true,
+          "prefill_acceptance_equal": true,
+          "decode_offsets_equal": true
+        }
+      }
+    },
+    {
+      "item_id": "humaneval-plus:HumanEval/90",
+      "official_score_AV": 1.0,
+      "official_score_F02": 1.0,
+      "call_counts": {
+        "AV": 1,
+        "F02": 1
+      },
+      "calls": {
+        "AV": [
+          {
+            "request_id": "chatcmpl-observe-31d8b39e122d4d2aa285775656340e96-590ebab6d8e847b990b963572279b78d-997b6374",
+            "call_id": "d472739cdc9e4adba37812efbd424371",
+            "input_sha256": "e9d081970dfc048cd73cefde1b862bfc23482711a396bedeb596f94210fd17e6",
+            "seed": 1939377970,
+            "seconds": 53.24590520793572,
+            "usage": {
+              "prompt_tokens": 175,
+              "total_tokens": 1372,
+              "completion_tokens": 1197,
+              "prompt_tokens_details": null,
+              "completion_tokens_details": {
+                "reasoning_tokens": 745
+              }
+            }
+          }
+        ],
+        "F02": [
+          {
+            "request_id": "chatcmpl-observe-be20d273b62d4eb0b42ef14687a7bc3f-9eb536c284754870be4c7439587815c8-8a2b1ce0",
+            "call_id": "ab9670cffabd43e2b08a8d00cd78c312",
+            "input_sha256": "e9d081970dfc048cd73cefde1b862bfc23482711a396bedeb596f94210fd17e6",
+            "seed": 1939377970,
+            "seconds": 17.753862500889227,
+            "usage": {
+              "prompt_tokens": 175,
+              "total_tokens": 1304,
+              "completion_tokens": 1129,
+              "prompt_tokens_details": null,
+              "completion_tokens_details": {
+                "reasoning_tokens": 706
+              }
+            }
+          }
+        ]
+      },
+      "full_input_sha256_equal": true,
+      "seed_equal": true,
+      "prompt_token_count_equal": true,
+      "rank_sets_equal": true,
+      "ranks": {
+        "0": {
+          "AV": {
+            "prefill_positions": [
+              32,
+              33,
+              34,
+              35,
+              36,
+              37,
+              38,
+              39
+            ],
+            "prefill_accepted_state_positions": {
+              "True": [
+                32,
+                33,
+                34,
+                35,
+                36,
+                37,
+                38,
+                39
+              ]
+            },
+            "decode_offsets": [
+              0,
+              1,
+              2,
+              4,
+              8,
+              16,
+              32,
+              64,
+              128,
+              256,
+              512,
+              1024
+            ],
+            "decode_position_counts_by_accepted_state": {
+              "True": 10,
+              "False": 2
+            },
+            "profile_offset_64_records": 180,
+            "profile_offset_64_counts_by_accepted_state": {
+              "False": 180
+            }
+          },
+          "F02": {
+            "prefill_positions": [
+              32,
+              33,
+              34,
+              35,
+              36,
+              37,
+              38,
+              39
+            ],
+            "prefill_accepted_state_positions": {
+              "True": [
+                32,
+                33,
+                34,
+                35,
+                36,
+                37,
+                38,
+                39
+              ]
+            },
+            "decode_offsets": [
+              0,
+              1,
+              2,
+              4,
+              8,
+              16,
+              32,
+              64,
+              128,
+              256,
+              512,
+              1024
+            ],
+            "decode_position_counts_by_accepted_state": {
+              "True": 9,
+              "False": 3
+            },
+            "profile_offset_64_records": 180,
+            "profile_offset_64_counts_by_accepted_state": {
+              "False": 180
+            }
+          },
+          "prefill_positions_equal": true,
+          "prefill_acceptance_equal": true,
+          "decode_offsets_equal": true
+        },
+        "1": {
+          "AV": {
+            "prefill_positions": [
+              32,
+              33,
+              34,
+              35,
+              36,
+              37,
+              38,
+              39
+            ],
+            "prefill_accepted_state_positions": {
+              "True": [
+                32,
+                33,
+                34,
+                35,
+                36,
+                37,
+                38,
+                39
+              ]
+            },
+            "decode_offsets": [
+              0,
+              1,
+              2,
+              4,
+              8,
+              16,
+              32,
+              64,
+              128,
+              256,
+              512,
+              1024
+            ],
+            "decode_position_counts_by_accepted_state": {
+              "True": 10,
+              "False": 2
+            },
+            "profile_offset_64_records": 180,
+            "profile_offset_64_counts_by_accepted_state": {
+              "False": 180
+            }
+          },
+          "F02": {
+            "prefill_positions": [
+              32,
+              33,
+              34,
+              35,
+              36,
+              37,
+              38,
+              39
+            ],
+            "prefill_accepted_state_positions": {
+              "True": [
+                32,
+                33,
+                34,
+                35,
+                36,
+                37,
+                38,
+                39
+              ]
+            },
+            "decode_offsets": [
+              0,
+              1,
+              2,
+              4,
+              8,
+              16,
+              32,
+              64,
+              128,
+              256,
+              512,
+              1024
+            ],
+            "decode_position_counts_by_accepted_state": {
+              "True": 9,
+              "False": 3
+            },
+            "profile_offset_64_records": 180,
+            "profile_offset_64_counts_by_accepted_state": {
+              "False": 180
+            }
+          },
+          "prefill_positions_equal": true,
+          "prefill_acceptance_equal": true,
+          "decode_offsets_equal": true
+        }
+      }
+    },
+    {
+      "item_id": "livecodebench:abc393_d",
+      "official_score_AV": 1.0,
+      "official_score_F02": 1.0,
+      "call_counts": {
+        "AV": 1,
+        "F02": 1
+      },
+      "calls": {
+        "AV": [
+          {
+            "request_id": "chatcmpl-observe-2ef582185b714616bb813cd8055f517d-a97f0c0eb7b14bf180e4711cb66640d8-b0429ee9",
+            "call_id": "7fedb1a34eae4fdf87e3aaa306cd2b07",
+            "input_sha256": "4ecf3830581207e4ca66ec0d9e0dd87941dce3cf46d33de97a261f39226b91a4",
+            "seed": 1134776926,
+            "seconds": 78.60943852504715,
+            "usage": {
+              "prompt_tokens": 588,
+              "total_tokens": 2727,
+              "completion_tokens": 2139,
+              "prompt_tokens_details": null,
+              "completion_tokens_details": {
+                "reasoning_tokens": 1563
+              }
+            }
+          }
+        ],
+        "F02": [
+          {
+            "request_id": "chatcmpl-observe-0c68c4b983854cbc83f8347075d0e64a-f7a625f5489448ee802f3eca53aad079-baefb9c6",
+            "call_id": "fb857cda52dd4b10b9dcfe4bdfc17f29",
+            "input_sha256": "4ecf3830581207e4ca66ec0d9e0dd87941dce3cf46d33de97a261f39226b91a4",
+            "seed": 1134776926,
+            "seconds": 177.57018351601437,
+            "usage": {
+              "prompt_tokens": 588,
+              "total_tokens": 5294,
+              "completion_tokens": 4706,
+              "prompt_tokens_details": null,
+              "completion_tokens_details": {
+                "reasoning_tokens": 3799
+              }
+            }
+          }
+        ]
+      },
+      "full_input_sha256_equal": true,
+      "seed_equal": true,
+      "prompt_token_count_equal": true,
+      "rank_sets_equal": true,
+      "ranks": {
+        "0": {
+          "AV": {
+            "prefill_positions": [
+              32,
+              33,
+              34,
+              35,
+              36,
+              37,
+              38,
+              39
+            ],
+            "prefill_accepted_state_positions": {
+              "True": [
+                32,
+                33,
+                34,
+                35,
+                36,
+                37,
+                38,
+                39
+              ]
+            },
+            "decode_offsets": [
+              0,
+              1,
+              2,
+              4,
+              8,
+              16,
+              32,
+              64,
+              128,
+              256,
+              512,
+              1024,
+              2048
+            ],
+            "decode_position_counts_by_accepted_state": {
+              "True": 13
+            },
+            "profile_offset_64_records": 180,
+            "profile_offset_64_counts_by_accepted_state": {
+              "True": 180
+            }
+          },
+          "F02": {
+            "prefill_positions": [
+              32,
+              33,
+              34,
+              35,
+              36,
+              37,
+              38,
+              39
+            ],
+            "prefill_accepted_state_positions": {
+              "True": [
+                32,
+                33,
+                34,
+                35,
+                36,
+                37,
+                38,
+                39
+              ]
+            },
+            "decode_offsets": [
+              0,
+              1,
+              2,
+              4,
+              8,
+              16,
+              32,
+              64,
+              128,
+              256,
+              512,
+              1024,
+              2048,
+              4096
+            ],
+            "decode_position_counts_by_accepted_state": {
+              "True": 14
+            },
+            "profile_offset_64_records": 180,
+            "profile_offset_64_counts_by_accepted_state": {
+              "True": 180
+            }
+          },
+          "prefill_positions_equal": true,
+          "prefill_acceptance_equal": true,
+          "decode_offsets_equal": false
+        },
+        "1": {
+          "AV": {
+            "prefill_positions": [
+              32,
+              33,
+              34,
+              35,
+              36,
+              37,
+              38,
+              39
+            ],
+            "prefill_accepted_state_positions": {
+              "True": [
+                32,
+                33,
+                34,
+                35,
+                36,
+                37,
+                38,
+                39
+              ]
+            },
+            "decode_offsets": [
+              0,
+              1,
+              2,
+              4,
+              8,
+              16,
+              32,
+              64,
+              128,
+              256,
+              512,
+              1024,
+              2048
+            ],
+            "decode_position_counts_by_accepted_state": {
+              "True": 13
+            },
+            "profile_offset_64_records": 180,
+            "profile_offset_64_counts_by_accepted_state": {
+              "True": 180
+            }
+          },
+          "F02": {
+            "prefill_positions": [
+              32,
+              33,
+              34,
+              35,
+              36,
+              37,
+              38,
+              39
+            ],
+            "prefill_accepted_state_positions": {
+              "True": [
+                32,
+                33,
+                34,
+                35,
+                36,
+                37,
+                38,
+                39
+              ]
+            },
+            "decode_offsets": [
+              0,
+              1,
+              2,
+              4,
+              8,
+              16,
+              32,
+              64,
+              128,
+              256,
+              512,
+              1024,
+              2048,
+              4096
+            ],
+            "decode_position_counts_by_accepted_state": {
+              "True": 14
+            },
+            "profile_offset_64_records": 180,
+            "profile_offset_64_counts_by_accepted_state": {
+              "True": 180
+            }
+          },
+          "prefill_positions_equal": true,
+          "prefill_acceptance_equal": true,
+          "decode_offsets_equal": false
+        }
+      }
+    },
+    {
+      "item_id": "livecodebench:abc394_b",
+      "official_score_AV": 1.0,
+      "official_score_F02": 1.0,
+      "call_counts": {
+        "AV": 1,
+        "F02": 1
+      },
+      "calls": {
+        "AV": [
+          {
+            "request_id": "chatcmpl-observe-795945fd579443bb977b84a48342a197-b73d1764bffd479e8c525e9096fe69ef-934df079",
+            "call_id": "4c26a917540c4f43b3f0b9c6d3015f3b",
+            "input_sha256": "95db9cd067b9733e546e04e42741f728a943874eb118df6567a4fe80bc18efe1",
+            "seed": 1122716615,
+            "seconds": 45.27965142799076,
+            "usage": {
+              "prompt_tokens": 401,
+              "total_tokens": 1320,
+              "completion_tokens": 919,
+              "prompt_tokens_details": null,
+              "completion_tokens_details": {
+                "reasoning_tokens": 705
+              }
+            }
+          }
+        ],
+        "F02": [
+          {
+            "request_id": "chatcmpl-observe-044c8143bf594389999d8de6cdbb08d9-be6ca87645bf4fc386a5339b67e480ad-bca6dca5",
+            "call_id": "659eb93856004092b564f2edfa79e1cd",
+            "input_sha256": "95db9cd067b9733e546e04e42741f728a943874eb118df6567a4fe80bc18efe1",
+            "seed": 1122716615,
+            "seconds": 30.96874351601582,
+            "usage": {
+              "prompt_tokens": 401,
+              "total_tokens": 1653,
+              "completion_tokens": 1252,
+              "prompt_tokens_details": null,
+              "completion_tokens_details": {
+                "reasoning_tokens": 941
+              }
+            }
+          }
+        ]
+      },
+      "full_input_sha256_equal": true,
+      "seed_equal": true,
+      "prompt_token_count_equal": true,
+      "rank_sets_equal": true,
+      "ranks": {
+        "0": {
+          "AV": {
+            "prefill_positions": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5,
+              6,
+              7
+            ],
+            "prefill_accepted_state_positions": {
+              "True": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6,
+                7
+              ]
+            },
+            "decode_offsets": [
+              0,
+              1,
+              2,
+              4,
+              8,
+              16,
+              32,
+              64,
+              128,
+              256,
+              512
+            ],
+            "decode_position_counts_by_accepted_state": {
+              "True": 10,
+              "False": 1
+            },
+            "profile_offset_64_records": 180,
+            "profile_offset_64_counts_by_accepted_state": {
+              "True": 180
+            }
+          },
+          "F02": {
+            "prefill_positions": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5,
+              6,
+              7
+            ],
+            "prefill_accepted_state_positions": {
+              "True": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6,
+                7
+              ]
+            },
+            "decode_offsets": [
+              0,
+              1,
+              2,
+              4,
+              8,
+              16,
+              32,
+              64,
+              128,
+              256,
+              512,
+              1024
+            ],
+            "decode_position_counts_by_accepted_state": {
+              "True": 10,
+              "False": 2
+            },
+            "profile_offset_64_records": 180,
+            "profile_offset_64_counts_by_accepted_state": {
+              "True": 180
+            }
+          },
+          "prefill_positions_equal": true,
+          "prefill_acceptance_equal": true,
+          "decode_offsets_equal": false
+        },
+        "1": {
+          "AV": {
+            "prefill_positions": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5,
+              6,
+              7
+            ],
+            "prefill_accepted_state_positions": {
+              "True": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6,
+                7
+              ]
+            },
+            "decode_offsets": [
+              0,
+              1,
+              2,
+              4,
+              8,
+              16,
+              32,
+              64,
+              128,
+              256,
+              512
+            ],
+            "decode_position_counts_by_accepted_state": {
+              "True": 10,
+              "False": 1
+            },
+            "profile_offset_64_records": 180,
+            "profile_offset_64_counts_by_accepted_state": {
+              "True": 180
+            }
+          },
+          "F02": {
+            "prefill_positions": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5,
+              6,
+              7
+            ],
+            "prefill_accepted_state_positions": {
+              "True": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6,
+                7
+              ]
+            },
+            "decode_offsets": [
+              0,
+              1,
+              2,
+              4,
+              8,
+              16,
+              32,
+              64,
+              128,
+              256,
+              512,
+              1024
+            ],
+            "decode_position_counts_by_accepted_state": {
+              "True": 10,
+              "False": 2
+            },
+            "profile_offset_64_records": 180,
+            "profile_offset_64_counts_by_accepted_state": {
+              "True": 180
+            }
+          },
+          "prefill_positions_equal": true,
+          "prefill_acceptance_equal": true,
+          "decode_offsets_equal": false
+        }
+      }
+    },
+    {
+      "item_id": "livecodebench:abc395_f",
+      "official_score_AV": 1.0,
+      "official_score_F02": 1.0,
+      "call_counts": {
+        "AV": 1,
+        "F02": 1
+      },
+      "calls": {
+        "AV": [
+          {
+            "request_id": "chatcmpl-observe-effd7fcf46984a5d929dc99153b58cfd-864fddd657054d6396c20a18897eb041-9bf3a3ca",
+            "call_id": "d243061f323f4f9b94e64279ee57ed68",
+            "input_sha256": "64bffd9ea998cabc0b480c6ac15a69af49a40080c65e1a96aeedd23f4711c978",
+            "seed": 959881915,
+            "seconds": 385.7034547680523,
+            "usage": {
+              "prompt_tokens": 961,
+              "total_tokens": 12333,
+              "completion_tokens": 11372,
+              "prompt_tokens_details": null,
+              "completion_tokens_details": {
+                "reasoning_tokens": 10104
+              }
+            }
+          }
+        ],
+        "F02": [
+          {
+            "request_id": "chatcmpl-observe-7a2a078648734a4981b4812ee6b93c29-52c03f8664e74c2e828cb0abafa93433-ae941cfc",
+            "call_id": "c40b94aba12d43839b8526399853e0a0",
+            "input_sha256": "64bffd9ea998cabc0b480c6ac15a69af49a40080c65e1a96aeedd23f4711c978",
+            "seed": 959881915,
+            "seconds": 353.97596913401503,
+            "usage": {
+              "prompt_tokens": 961,
+              "total_tokens": 11898,
+              "completion_tokens": 10937,
+              "prompt_tokens_details": null,
+              "completion_tokens_details": {
+                "reasoning_tokens": 10017
+              }
+            }
+          }
+        ]
+      },
+      "full_input_sha256_equal": true,
+      "seed_equal": true,
+      "prompt_token_count_equal": true,
+      "rank_sets_equal": true,
+      "ranks": {
+        "0": {
+          "AV": {
+            "prefill_positions": [
+              32,
+              33,
+              34,
+              35,
+              36,
+              37,
+              38,
+              39
+            ],
+            "prefill_accepted_state_positions": {
+              "True": [
+                32,
+                33,
+                34,
+                35,
+                36,
+                37,
+                38,
+                39
+              ]
+            },
+            "decode_offsets": [
+              0,
+              1,
+              2,
+              4,
+              8,
+              16,
+              32,
+              64,
+              128,
+              256,
+              512,
+              1024,
+              2048,
+              4096,
+              8192
+            ],
+            "decode_position_counts_by_accepted_state": {
+              "True": 13,
+              "False": 2
+            },
+            "profile_offset_64_records": 180,
+            "profile_offset_64_counts_by_accepted_state": {
+              "False": 180
+            }
+          },
+          "F02": {
+            "prefill_positions": [
+              32,
+              33,
+              34,
+              35,
+              36,
+              37,
+              38,
+              39
+            ],
+            "prefill_accepted_state_positions": {
+              "True": [
+                32,
+                33,
+                34,
+                35,
+                36,
+                37,
+                38,
+                39
+              ]
+            },
+            "decode_offsets": [
+              0,
+              1,
+              2,
+              4,
+              8,
+              16,
+              32,
+              64,
+              128,
+              256,
+              512,
+              1024,
+              2048,
+              4096,
+              8192
+            ],
+            "decode_position_counts_by_accepted_state": {
+              "True": 14,
+              "False": 1
+            },
+            "profile_offset_64_records": 180,
+            "profile_offset_64_counts_by_accepted_state": {
+              "False": 180
+            }
+          },
+          "prefill_positions_equal": true,
+          "prefill_acceptance_equal": true,
+          "decode_offsets_equal": true
+        },
+        "1": {
+          "AV": {
+            "prefill_positions": [
+              32,
+              33,
+              34,
+              35,
+              36,
+              37,
+              38,
+              39
+            ],
+            "prefill_accepted_state_positions": {
+              "True": [
+                32,
+                33,
+                34,
+                35,
+                36,
+                37,
+                38,
+                39
+              ]
+            },
+            "decode_offsets": [
+              0,
+              1,
+              2,
+              4,
+              8,
+              16,
+              32,
+              64,
+              128,
+              256,
+              512,
+              1024,
+              2048,
+              4096,
+              8192
+            ],
+            "decode_position_counts_by_accepted_state": {
+              "True": 13,
+              "False": 2
+            },
+            "profile_offset_64_records": 180,
+            "profile_offset_64_counts_by_accepted_state": {
+              "False": 180
+            }
+          },
+          "F02": {
+            "prefill_positions": [
+              32,
+              33,
+              34,
+              35,
+              36,
+              37,
+              38,
+              39
+            ],
+            "prefill_accepted_state_positions": {
+              "True": [
+                32,
+                33,
+                34,
+                35,
+                36,
+                37,
+                38,
+                39
+              ]
+            },
+            "decode_offsets": [
+              0,
+              1,
+              2,
+              4,
+              8,
+              16,
+              32,
+              64,
+              128,
+              256,
+              512,
+              1024,
+              2048,
+              4096,
+              8192
+            ],
+            "decode_position_counts_by_accepted_state": {
+              "True": 14,
+              "False": 1
+            },
+            "profile_offset_64_records": 180,
+            "profile_offset_64_counts_by_accepted_state": {
+              "False": 180
+            }
+          },
+          "prefill_positions_equal": true,
+          "prefill_acceptance_equal": true,
+          "decode_offsets_equal": true
+        }
+      }
+    },
+    {
+      "item_id": "livecodebench:abc397_b",
+      "official_score_AV": 1.0,
+      "official_score_F02": 1.0,
+      "call_counts": {
+        "AV": 1,
+        "F02": 1
+      },
+      "calls": {
+        "AV": [
+          {
+            "request_id": "chatcmpl-observe-2a2a77f30cd8487fb48401c50e776d13-9b50d39f09434493b4265d8033653a38-af0cbeac",
+            "call_id": "1bd7236ff2474df6ac16af510fa3e8f6",
+            "input_sha256": "dc7b990e5eb1b7cf08c9dc9340d49d149d5499212a708e9189b70ae7c4077f29",
+            "seed": 387794447,
+            "seconds": 261.9503779410152,
+            "usage": {
+              "prompt_tokens": 464,
+              "total_tokens": 4824,
+              "completion_tokens": 4360,
+              "prompt_tokens_details": null,
+              "completion_tokens_details": {
+                "reasoning_tokens": 3725
+              }
+            }
+          }
+        ],
+        "F02": [
+          {
+            "request_id": "chatcmpl-observe-2f7c40bd6fa3416381f419303a053669-5719c93890b34f138405b5350ddbd899-b0c612a2",
+            "call_id": "2498c42b99ec46d8873f1ddff76aa21e",
+            "input_sha256": "dc7b990e5eb1b7cf08c9dc9340d49d149d5499212a708e9189b70ae7c4077f29",
+            "seed": 387794447,
+            "seconds": 264.76475726196077,
+            "usage": {
+              "prompt_tokens": 464,
+              "total_tokens": 4909,
+              "completion_tokens": 4445,
+              "prompt_tokens_details": null,
+              "completion_tokens_details": {
+                "reasoning_tokens": 3885
+              }
+            }
+          }
+        ]
+      },
+      "full_input_sha256_equal": true,
+      "seed_equal": true,
+      "prompt_token_count_equal": true,
+      "rank_sets_equal": true,
+      "ranks": {
+        "0": {
+          "AV": {
+            "prefill_positions": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5,
+              6,
+              7
+            ],
+            "prefill_accepted_state_positions": {
+              "True": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6,
+                7
+              ]
+            },
+            "decode_offsets": [
+              0,
+              1,
+              2,
+              4,
+              8,
+              16,
+              32,
+              64,
+              128,
+              256,
+              512,
+              1024,
+              2048,
+              4096
+            ],
+            "decode_position_counts_by_accepted_state": {
+              "True": 11,
+              "False": 3
+            },
+            "profile_offset_64_records": 180,
+            "profile_offset_64_counts_by_accepted_state": {
+              "False": 180
+            }
+          },
+          "F02": {
+            "prefill_positions": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5,
+              6,
+              7
+            ],
+            "prefill_accepted_state_positions": {
+              "True": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6,
+                7
+              ]
+            },
+            "decode_offsets": [
+              0,
+              1,
+              2,
+              4,
+              8,
+              16,
+              32,
+              64,
+              128,
+              256,
+              512,
+              1024,
+              2048,
+              4096
+            ],
+            "decode_position_counts_by_accepted_state": {
+              "True": 10,
+              "False": 4
+            },
+            "profile_offset_64_records": 180,
+            "profile_offset_64_counts_by_accepted_state": {
+              "False": 180
+            }
+          },
+          "prefill_positions_equal": true,
+          "prefill_acceptance_equal": true,
+          "decode_offsets_equal": true
+        },
+        "1": {
+          "AV": {
+            "prefill_positions": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5,
+              6,
+              7
+            ],
+            "prefill_accepted_state_positions": {
+              "True": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6,
+                7
+              ]
+            },
+            "decode_offsets": [
+              0,
+              1,
+              2,
+              4,
+              8,
+              16,
+              32,
+              64,
+              128,
+              256,
+              512,
+              1024,
+              2048,
+              4096
+            ],
+            "decode_position_counts_by_accepted_state": {
+              "True": 11,
+              "False": 3
+            },
+            "profile_offset_64_records": 180,
+            "profile_offset_64_counts_by_accepted_state": {
+              "False": 180
+            }
+          },
+          "F02": {
+            "prefill_positions": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5,
+              6,
+              7
+            ],
+            "prefill_accepted_state_positions": {
+              "True": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6,
+                7
+              ]
+            },
+            "decode_offsets": [
+              0,
+              1,
+              2,
+              4,
+              8,
+              16,
+              32,
+              64,
+              128,
+              256,
+              512,
+              1024,
+              2048,
+              4096
+            ],
+            "decode_position_counts_by_accepted_state": {
+              "True": 10,
+              "False": 4
+            },
+            "profile_offset_64_records": 180,
+            "profile_offset_64_counts_by_accepted_state": {
+              "False": 180
+            }
+          },
+          "prefill_positions_equal": true,
+          "prefill_acceptance_equal": true,
+          "decode_offsets_equal": true
+        }
+      }
+    },
+    {
+      "item_id": "livecodebench:abc399_c",
+      "official_score_AV": 1.0,
+      "official_score_F02": 1.0,
+      "call_counts": {
+        "AV": 1,
+        "F02": 1
+      },
+      "calls": {
+        "AV": [
+          {
+            "request_id": "chatcmpl-observe-6841189e640147ff875102a7544f5492-1e4122e53e9e42fdb87fc23e9e736568-9ff8e75b",
+            "call_id": "1bf4aef5d1f0450eb87db33d44c883e0",
+            "input_sha256": "fbc1a84e7924dbef96447ddc513ba50367057e2e607634d1fda0b69dcfd708d6",
+            "seed": 1535267046,
+            "seconds": 117.58194574702065,
+            "usage": {
+              "prompt_tokens": 512,
+              "total_tokens": 6719,
+              "completion_tokens": 6207,
+              "prompt_tokens_details": null,
+              "completion_tokens_details": {
+                "reasoning_tokens": 5211
+              }
+            }
+          }
+        ],
+        "F02": [
+          {
+            "request_id": "chatcmpl-observe-53770b7f784d40028c3416039e18f6f1-a63e8f650fab4a39a7b1c7f09243a486-a31c2aca",
+            "call_id": "e89690a3c52c408ba9a6c93f24db0acc",
+            "input_sha256": "fbc1a84e7924dbef96447ddc513ba50367057e2e607634d1fda0b69dcfd708d6",
+            "seed": 1535267046,
+            "seconds": 118.96546794497408,
+            "usage": {
+              "prompt_tokens": 512,
+              "total_tokens": 5516,
+              "completion_tokens": 5004,
+              "prompt_tokens_details": null,
+              "completion_tokens_details": {
+                "reasoning_tokens": 4140
+              }
+            }
+          }
+        ]
+      },
+      "full_input_sha256_equal": true,
+      "seed_equal": true,
+      "prompt_token_count_equal": true,
+      "rank_sets_equal": true,
+      "ranks": {
+        "0": {
+          "AV": {
+            "prefill_positions": [
+              32,
+              33,
+              34,
+              35,
+              36,
+              37,
+              38,
+              39
+            ],
+            "prefill_accepted_state_positions": {
+              "True": [
+                32,
+                33,
+                34,
+                35,
+                36,
+                37,
+                38,
+                39
+              ]
+            },
+            "decode_offsets": [
+              0,
+              1,
+              2,
+              4,
+              8,
+              16,
+              32,
+              64,
+              128,
+              256,
+              512,
+              1024,
+              2048,
+              4096
+            ],
+            "decode_position_counts_by_accepted_state": {
+              "True": 12,
+              "False": 2
+            },
+            "profile_offset_64_records": 180,
+            "profile_offset_64_counts_by_accepted_state": {
+              "True": 180
+            }
+          },
+          "F02": {
+            "prefill_positions": [
+              32,
+              33,
+              34,
+              35,
+              36,
+              37,
+              38,
+              39
+            ],
+            "prefill_accepted_state_positions": {
+              "True": [
+                32,
+                33,
+                34,
+                35,
+                36,
+                37,
+                38,
+                39
+              ]
+            },
+            "decode_offsets": [
+              0,
+              1,
+              2,
+              4,
+              8,
+              16,
+              32,
+              64,
+              128,
+              256,
+              512,
+              1024,
+              2048,
+              4096
+            ],
+            "decode_position_counts_by_accepted_state": {
+              "True": 10,
+              "False": 4
+            },
+            "profile_offset_64_records": 180,
+            "profile_offset_64_counts_by_accepted_state": {
+              "True": 180
+            }
+          },
+          "prefill_positions_equal": true,
+          "prefill_acceptance_equal": true,
+          "decode_offsets_equal": true
+        },
+        "1": {
+          "AV": {
+            "prefill_positions": [
+              32,
+              33,
+              34,
+              35,
+              36,
+              37,
+              38,
+              39
+            ],
+            "prefill_accepted_state_positions": {
+              "True": [
+                32,
+                33,
+                34,
+                35,
+                36,
+                37,
+                38,
+                39
+              ]
+            },
+            "decode_offsets": [
+              0,
+              1,
+              2,
+              4,
+              8,
+              16,
+              32,
+              64,
+              128,
+              256,
+              512,
+              1024,
+              2048,
+              4096
+            ],
+            "decode_position_counts_by_accepted_state": {
+              "True": 12,
+              "False": 2
+            },
+            "profile_offset_64_records": 180,
+            "profile_offset_64_counts_by_accepted_state": {
+              "True": 180
+            }
+          },
+          "F02": {
+            "prefill_positions": [
+              32,
+              33,
+              34,
+              35,
+              36,
+              37,
+              38,
+              39
+            ],
+            "prefill_accepted_state_positions": {
+              "True": [
+                32,
+                33,
+                34,
+                35,
+                36,
+                37,
+                38,
+                39
+              ]
+            },
+            "decode_offsets": [
+              0,
+              1,
+              2,
+              4,
+              8,
+              16,
+              32,
+              64,
+              128,
+              256,
+              512,
+              1024,
+              2048,
+              4096
+            ],
+            "decode_position_counts_by_accepted_state": {
+              "True": 10,
+              "False": 4
+            },
+            "profile_offset_64_records": 180,
+            "profile_offset_64_counts_by_accepted_state": {
+              "True": 180
+            }
+          },
+          "prefill_positions_equal": true,
+          "prefill_acceptance_equal": true,
+          "decode_offsets_equal": true
+        }
+      }
+    },
+    {
+      "item_id": "livecodebench:arc191_c",
+      "official_score_AV": 0.0,
+      "official_score_F02": 0.0,
+      "call_counts": {
+        "AV": 1,
+        "F02": 1
+      },
+      "calls": {
+        "AV": [
+          {
+            "request_id": "chatcmpl-observe-abe332b2453f4640ae16d828052b0895-f23e6033ccd540c6a819d1141123cece-bd36e2b2",
+            "call_id": "8e64591acb7249a5909f320c49bf2dc7",
+            "input_sha256": "f20d0675c63fc7d9ea9fc6a4043428e768d83519e245bf38dfb5d39381836436",
+            "seed": 1844130331,
+            "seconds": 244.99012302001938,
+            "usage": {
+              "prompt_tokens": 613,
+              "total_tokens": 9508,
+              "completion_tokens": 8895,
+              "prompt_tokens_details": null,
+              "completion_tokens_details": {
+                "reasoning_tokens": 7831
+              }
+            }
+          }
+        ],
+        "F02": [
+          {
+            "request_id": "chatcmpl-observe-2757d5b64107461b8ff41f657c3ba7a9-a1bf8d9fba5b425980d50b3e4e4ad303-bc906ce4",
+            "call_id": "259cc923d7444280a9e3366f29359464",
+            "input_sha256": "f20d0675c63fc7d9ea9fc6a4043428e768d83519e245bf38dfb5d39381836436",
+            "seed": 1844130331,
+            "seconds": 371.09470186103135,
+            "usage": {
+              "prompt_tokens": 613,
+              "total_tokens": 11200,
+              "completion_tokens": 10587,
+              "prompt_tokens_details": null,
+              "completion_tokens_details": {
+                "reasoning_tokens": 9440
+              }
+            }
+          }
+        ]
+      },
+      "full_input_sha256_equal": true,
+      "seed_equal": true,
+      "prompt_token_count_equal": true,
+      "rank_sets_equal": true,
+      "ranks": {
+        "0": {
+          "AV": {
+            "prefill_positions": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5,
+              6,
+              7
+            ],
+            "prefill_accepted_state_positions": {
+              "True": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6,
+                7
+              ]
+            },
+            "decode_offsets": [
+              0,
+              1,
+              2,
+              4,
+              8,
+              16,
+              32,
+              64,
+              128,
+              256,
+              512,
+              1024,
+              2048,
+              4096,
+              8192
+            ],
+            "decode_position_counts_by_accepted_state": {
+              "True": 13,
+              "False": 2
+            },
+            "profile_offset_64_records": 180,
+            "profile_offset_64_counts_by_accepted_state": {
+              "False": 180
+            }
+          },
+          "F02": {
+            "prefill_positions": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5,
+              6,
+              7
+            ],
+            "prefill_accepted_state_positions": {
+              "True": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6,
+                7
+              ]
+            },
+            "decode_offsets": [
+              0,
+              1,
+              2,
+              4,
+              8,
+              16,
+              32,
+              64,
+              128,
+              256,
+              512,
+              1024,
+              2048,
+              4096,
+              8192
+            ],
+            "decode_position_counts_by_accepted_state": {
+              "True": 13,
+              "False": 2
+            },
+            "profile_offset_64_records": 180,
+            "profile_offset_64_counts_by_accepted_state": {
+              "False": 180
+            }
+          },
+          "prefill_positions_equal": true,
+          "prefill_acceptance_equal": true,
+          "decode_offsets_equal": true
+        },
+        "1": {
+          "AV": {
+            "prefill_positions": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5,
+              6,
+              7
+            ],
+            "prefill_accepted_state_positions": {
+              "True": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6,
+                7
+              ]
+            },
+            "decode_offsets": [
+              0,
+              1,
+              2,
+              4,
+              8,
+              16,
+              32,
+              64,
+              128,
+              256,
+              512,
+              1024,
+              2048,
+              4096,
+              8192
+            ],
+            "decode_position_counts_by_accepted_state": {
+              "True": 13,
+              "False": 2
+            },
+            "profile_offset_64_records": 180,
+            "profile_offset_64_counts_by_accepted_state": {
+              "False": 180
+            }
+          },
+          "F02": {
+            "prefill_positions": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5,
+              6,
+              7
+            ],
+            "prefill_accepted_state_positions": {
+              "True": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6,
+                7
+              ]
+            },
+            "decode_offsets": [
+              0,
+              1,
+              2,
+              4,
+              8,
+              16,
+              32,
+              64,
+              128,
+              256,
+              512,
+              1024,
+              2048,
+              4096,
+              8192
+            ],
+            "decode_position_counts_by_accepted_state": {
+              "True": 13,
+              "False": 2
+            },
+            "profile_offset_64_records": 180,
+            "profile_offset_64_counts_by_accepted_state": {
+              "False": 180
+            }
+          },
+          "prefill_positions_equal": true,
+          "prefill_acceptance_equal": true,
+          "decode_offsets_equal": true
+        }
+      }
+    },
+    {
+      "item_id": "mbpp-plus:Mbpp/256",
+      "official_score_AV": 1.0,
+      "official_score_F02": 1.0,
+      "call_counts": {
+        "AV": 1,
+        "F02": 1
+      },
+      "calls": {
+        "AV": [
+          {
+            "request_id": "chatcmpl-observe-ec051d08fe1444208db3663c098568f3-6bb4c0dbffd045b586b2320089baea06-ab6a3c16",
+            "call_id": "83ce3b9a7b274dcaaf989ca52f069e10",
+            "input_sha256": "54ef94a91efc00c43f81c7b06e1642c81bf53b5d00d82ba9789894404a12c3aa",
+            "seed": 1837418261,
+            "seconds": 59.656175151932985,
+            "usage": {
+              "prompt_tokens": 97,
+              "total_tokens": 1500,
+              "completion_tokens": 1403,
+              "prompt_tokens_details": null,
+              "completion_tokens_details": {
+                "reasoning_tokens": 800
+              }
+            }
+          }
+        ],
+        "F02": [
+          {
+            "request_id": "chatcmpl-observe-3a941c4f70034bc1bde60ef6bc3d4892-67c269eb46a3444f818698027676790f-91ea8a5c",
+            "call_id": "1642a018dfcf4c7697bc5d2244a3ada9",
+            "input_sha256": "54ef94a91efc00c43f81c7b06e1642c81bf53b5d00d82ba9789894404a12c3aa",
+            "seed": 1837418261,
+            "seconds": 18.668953930027783,
+            "usage": {
+              "prompt_tokens": 97,
+              "total_tokens": 1276,
+              "completion_tokens": 1179,
+              "prompt_tokens_details": null,
+              "completion_tokens_details": {
+                "reasoning_tokens": 620
+              }
+            }
+          }
+        ]
+      },
+      "full_input_sha256_equal": true,
+      "seed_equal": true,
+      "prompt_token_count_equal": true,
+      "rank_sets_equal": true,
+      "ranks": {
+        "0": {
+          "AV": {
+            "prefill_positions": [
+              32,
+              33,
+              34,
+              35,
+              36,
+              37,
+              38,
+              39
+            ],
+            "prefill_accepted_state_positions": {
+              "True": [
+                32,
+                33,
+                34,
+                35,
+                36,
+                37,
+                38,
+                39
+              ]
+            },
+            "decode_offsets": [
+              0,
+              1,
+              2,
+              4,
+              8,
+              16,
+              32,
+              64,
+              128,
+              256,
+              512,
+              1024
+            ],
+            "decode_position_counts_by_accepted_state": {
+              "True": 8,
+              "False": 4
+            },
+            "profile_offset_64_records": 180,
+            "profile_offset_64_counts_by_accepted_state": {
+              "False": 180
+            }
+          },
+          "F02": {
+            "prefill_positions": [
+              32,
+              33,
+              34,
+              35,
+              36,
+              37,
+              38,
+              39
+            ],
+            "prefill_accepted_state_positions": {
+              "True": [
+                32,
+                33,
+                34,
+                35,
+                36,
+                37,
+                38,
+                39
+              ]
+            },
+            "decode_offsets": [
+              0,
+              1,
+              2,
+              4,
+              8,
+              16,
+              32,
+              64,
+              128,
+              256,
+              512,
+              1024
+            ],
+            "decode_position_counts_by_accepted_state": {
+              "True": 9,
+              "False": 3
+            },
+            "profile_offset_64_records": 180,
+            "profile_offset_64_counts_by_accepted_state": {
+              "False": 180
+            }
+          },
+          "prefill_positions_equal": true,
+          "prefill_acceptance_equal": true,
+          "decode_offsets_equal": true
+        },
+        "1": {
+          "AV": {
+            "prefill_positions": [
+              32,
+              33,
+              34,
+              35,
+              36,
+              37,
+              38,
+              39
+            ],
+            "prefill_accepted_state_positions": {
+              "True": [
+                32,
+                33,
+                34,
+                35,
+                36,
+                37,
+                38,
+                39
+              ]
+            },
+            "decode_offsets": [
+              0,
+              1,
+              2,
+              4,
+              8,
+              16,
+              32,
+              64,
+              128,
+              256,
+              512,
+              1024
+            ],
+            "decode_position_counts_by_accepted_state": {
+              "True": 8,
+              "False": 4
+            },
+            "profile_offset_64_records": 180,
+            "profile_offset_64_counts_by_accepted_state": {
+              "False": 180
+            }
+          },
+          "F02": {
+            "prefill_positions": [
+              32,
+              33,
+              34,
+              35,
+              36,
+              37,
+              38,
+              39
+            ],
+            "prefill_accepted_state_positions": {
+              "True": [
+                32,
+                33,
+                34,
+                35,
+                36,
+                37,
+                38,
+                39
+              ]
+            },
+            "decode_offsets": [
+              0,
+              1,
+              2,
+              4,
+              8,
+              16,
+              32,
+              64,
+              128,
+              256,
+              512,
+              1024
+            ],
+            "decode_position_counts_by_accepted_state": {
+              "True": 9,
+              "False": 3
+            },
+            "profile_offset_64_records": 180,
+            "profile_offset_64_counts_by_accepted_state": {
+              "False": 180
+            }
+          },
+          "prefill_positions_equal": true,
+          "prefill_acceptance_equal": true,
+          "decode_offsets_equal": true
+        }
+      }
+    },
+    {
+      "item_id": "mbpp-plus:Mbpp/271",
+      "official_score_AV": 1.0,
+      "official_score_F02": 1.0,
+      "call_counts": {
+        "AV": 1,
+        "F02": 1
+      },
+      "calls": {
+        "AV": [
+          {
+            "request_id": "chatcmpl-observe-14e731cd85334e73bf51821fd40299c9-4bfa428800694144a4be77452b0ac240-b1eca781",
+            "call_id": "fc72d4b5bd2c433a93a68f616da38189",
+            "input_sha256": "dd3584fa3d831e5fa4569bc4a1ee02ed5d2eae6a54484412636849539f9db81f",
+            "seed": 29638895,
+            "seconds": 40.28304362902418,
+            "usage": {
+              "prompt_tokens": 100,
+              "total_tokens": 906,
+              "completion_tokens": 806,
+              "prompt_tokens_details": null,
+              "completion_tokens_details": {
+                "reasoning_tokens": 483
+              }
+            }
+          }
+        ],
+        "F02": [
+          {
+            "request_id": "chatcmpl-observe-a8a69c20b52344b28f95edcdf98ed2ad-8635d300570d488fbef27b4b3360b4a3-b4295058",
+            "call_id": "b1cb4d1fbf83422c83b4bbb01f7b4593",
+            "input_sha256": "dd3584fa3d831e5fa4569bc4a1ee02ed5d2eae6a54484412636849539f9db81f",
+            "seed": 29638895,
+            "seconds": 31.089463292970322,
+            "usage": {
+              "prompt_tokens": 100,
+              "total_tokens": 795,
+              "completion_tokens": 695,
+              "prompt_tokens_details": null,
+              "completion_tokens_details": {
+                "reasoning_tokens": 347
+              }
+            }
+          }
+        ]
+      },
+      "full_input_sha256_equal": true,
+      "seed_equal": true,
+      "prompt_token_count_equal": true,
+      "rank_sets_equal": true,
+      "ranks": {
+        "0": {
+          "AV": {
+            "prefill_positions": [
+              32,
+              33,
+              34,
+              35,
+              36,
+              37,
+              38,
+              39
+            ],
+            "prefill_accepted_state_positions": {
+              "True": [
+                32,
+                33,
+                34,
+                35,
+                36,
+                37,
+                38,
+                39
+              ]
+            },
+            "decode_offsets": [
+              0,
+              1,
+              2,
+              4,
+              8,
+              16,
+              32,
+              64,
+              128,
+              256,
+              512
+            ],
+            "decode_position_counts_by_accepted_state": {
+              "True": 9,
+              "False": 2
+            },
+            "profile_offset_64_records": 180,
+            "profile_offset_64_counts_by_accepted_state": {
+              "True": 180
+            }
+          },
+          "F02": {
+            "prefill_positions": [
+              32,
+              33,
+              34,
+              35,
+              36,
+              37,
+              38,
+              39
+            ],
+            "prefill_accepted_state_positions": {
+              "True": [
+                32,
+                33,
+                34,
+                35,
+                36,
+                37,
+                38,
+                39
+              ]
+            },
+            "decode_offsets": [
+              0,
+              1,
+              2,
+              4,
+              8,
+              16,
+              32,
+              64,
+              128,
+              256,
+              512
+            ],
+            "decode_position_counts_by_accepted_state": {
+              "True": 10,
+              "False": 1
+            },
+            "profile_offset_64_records": 180,
+            "profile_offset_64_counts_by_accepted_state": {
+              "True": 180
+            }
+          },
+          "prefill_positions_equal": true,
+          "prefill_acceptance_equal": true,
+          "decode_offsets_equal": true
+        },
+        "1": {
+          "AV": {
+            "prefill_positions": [
+              32,
+              33,
+              34,
+              35,
+              36,
+              37,
+              38,
+              39
+            ],
+            "prefill_accepted_state_positions": {
+              "True": [
+                32,
+                33,
+                34,
+                35,
+                36,
+                37,
+                38,
+                39
+              ]
+            },
+            "decode_offsets": [
+              0,
+              1,
+              2,
+              4,
+              8,
+              16,
+              32,
+              64,
+              128,
+              256,
+              512
+            ],
+            "decode_position_counts_by_accepted_state": {
+              "True": 9,
+              "False": 2
+            },
+            "profile_offset_64_records": 180,
+            "profile_offset_64_counts_by_accepted_state": {
+              "True": 180
+            }
+          },
+          "F02": {
+            "prefill_positions": [
+              32,
+              33,
+              34,
+              35,
+              36,
+              37,
+              38,
+              39
+            ],
+            "prefill_accepted_state_positions": {
+              "True": [
+                32,
+                33,
+                34,
+                35,
+                36,
+                37,
+                38,
+                39
+              ]
+            },
+            "decode_offsets": [
+              0,
+              1,
+              2,
+              4,
+              8,
+              16,
+              32,
+              64,
+              128,
+              256,
+              512
+            ],
+            "decode_position_counts_by_accepted_state": {
+              "True": 10,
+              "False": 1
+            },
+            "profile_offset_64_records": 180,
+            "profile_offset_64_counts_by_accepted_state": {
+              "True": 180
+            }
+          },
+          "prefill_positions_equal": true,
+          "prefill_acceptance_equal": true,
+          "decode_offsets_equal": true
+        }
+      }
+    },
+    {
+      "item_id": "mbpp-plus:Mbpp/410",
+      "official_score_AV": 0.0,
+      "official_score_F02": 0.0,
+      "call_counts": {
+        "AV": 1,
+        "F02": 1
+      },
+      "calls": {
+        "AV": [
+          {
+            "request_id": "chatcmpl-observe-d636d2ba4c7340faa1b1498d80bf17e0-687a2cfd72624a4dbd3a174fe564c69b-af901af0",
+            "call_id": "d2b8fb8f04b644ed8567dc53c792ac34",
+            "input_sha256": "a6f3252b475c3413ac4bb4286441fc465c5e528bbc3fb4d8db3ad0d7846b8eb8",
+            "seed": 2019563469,
+            "seconds": 45.1807824310381,
+            "usage": {
+              "prompt_tokens": 94,
+              "total_tokens": 891,
+              "completion_tokens": 797,
+              "prompt_tokens_details": null,
+              "completion_tokens_details": {
+                "reasoning_tokens": 547
+              }
+            }
+          }
+        ],
+        "F02": [
+          {
+            "request_id": "chatcmpl-observe-ece2be1df1cc48c98262c0cd2ec34010-864c8d75b56642fbaeaba4fa597a5f55-b59c8766",
+            "call_id": "dfe479f7e03e47b98d3b7db9d0830475",
+            "input_sha256": "a6f3252b475c3413ac4bb4286441fc465c5e528bbc3fb4d8db3ad0d7846b8eb8",
+            "seed": 2019563469,
+            "seconds": 37.244804107933305,
+            "usage": {
+              "prompt_tokens": 94,
+              "total_tokens": 817,
+              "completion_tokens": 723,
+              "prompt_tokens_details": null,
+              "completion_tokens_details": {
+                "reasoning_tokens": 485
+              }
+            }
+          }
+        ]
+      },
+      "full_input_sha256_equal": true,
+      "seed_equal": true,
+      "prompt_token_count_equal": true,
+      "rank_sets_equal": true,
+      "ranks": {
+        "0": {
+          "AV": {
+            "prefill_positions": [
+              32,
+              33,
+              34,
+              35,
+              36,
+              37,
+              38,
+              39
+            ],
+            "prefill_accepted_state_positions": {
+              "True": [
+                32,
+                33,
+                34,
+                35,
+                36,
+                37,
+                38,
+                39
+              ]
+            },
+            "decode_offsets": [
+              0,
+              1,
+              2,
+              4,
+              8,
+              16,
+              32,
+              64,
+              128,
+              256,
+              512
+            ],
+            "decode_position_counts_by_accepted_state": {
+              "True": 9,
+              "False": 2
+            },
+            "profile_offset_64_records": 180,
+            "profile_offset_64_counts_by_accepted_state": {
+              "True": 180
+            }
+          },
+          "F02": {
+            "prefill_positions": [
+              32,
+              33,
+              34,
+              35,
+              36,
+              37,
+              38,
+              39
+            ],
+            "prefill_accepted_state_positions": {
+              "True": [
+                32,
+                33,
+                34,
+                35,
+                36,
+                37,
+                38,
+                39
+              ]
+            },
+            "decode_offsets": [
+              0,
+              1,
+              2,
+              4,
+              8,
+              16,
+              32,
+              64,
+              128,
+              256,
+              512
+            ],
+            "decode_position_counts_by_accepted_state": {
+              "True": 10,
+              "False": 1
+            },
+            "profile_offset_64_records": 180,
+            "profile_offset_64_counts_by_accepted_state": {
+              "True": 180
+            }
+          },
+          "prefill_positions_equal": true,
+          "prefill_acceptance_equal": true,
+          "decode_offsets_equal": true
+        },
+        "1": {
+          "AV": {
+            "prefill_positions": [
+              32,
+              33,
+              34,
+              35,
+              36,
+              37,
+              38,
+              39
+            ],
+            "prefill_accepted_state_positions": {
+              "True": [
+                32,
+                33,
+                34,
+                35,
+                36,
+                37,
+                38,
+                39
+              ]
+            },
+            "decode_offsets": [
+              0,
+              1,
+              2,
+              4,
+              8,
+              16,
+              32,
+              64,
+              128,
+              256,
+              512
+            ],
+            "decode_position_counts_by_accepted_state": {
+              "True": 9,
+              "False": 2
+            },
+            "profile_offset_64_records": 180,
+            "profile_offset_64_counts_by_accepted_state": {
+              "True": 180
+            }
+          },
+          "F02": {
+            "prefill_positions": [
+              32,
+              33,
+              34,
+              35,
+              36,
+              37,
+              38,
+              39
+            ],
+            "prefill_accepted_state_positions": {
+              "True": [
+                32,
+                33,
+                34,
+                35,
+                36,
+                37,
+                38,
+                39
+              ]
+            },
+            "decode_offsets": [
+              0,
+              1,
+              2,
+              4,
+              8,
+              16,
+              32,
+              64,
+              128,
+              256,
+              512
+            ],
+            "decode_position_counts_by_accepted_state": {
+              "True": 10,
+              "False": 1
+            },
+            "profile_offset_64_records": 180,
+            "profile_offset_64_counts_by_accepted_state": {
+              "True": 180
+            }
+          },
+          "prefill_positions_equal": true,
+          "prefill_acceptance_equal": true,
+          "decode_offsets_equal": true
+        }
+      }
+    },
+    {
+      "item_id": "mbpp-plus:Mbpp/567",
+      "official_score_AV": 1.0,
+      "official_score_F02": 1.0,
+      "call_counts": {
+        "AV": 1,
+        "F02": 1
+      },
+      "calls": {
+        "AV": [
+          {
+            "request_id": "chatcmpl-observe-a007d5cf4b864d5c95d228816bb56095-a518c01deb0941bf96d53f57f2c98d44-9f4f4b8a",
+            "call_id": "ab6f73af2d2f4bdb907231cf83f20b18",
+            "input_sha256": "b4a93de185fcf0d0eefb156e75359565183d30f681ea67ba0208f9c3ac23919b",
+            "seed": 1136872522,
+            "seconds": 80.59429475408979,
+            "usage": {
+              "prompt_tokens": 103,
+              "total_tokens": 934,
+              "completion_tokens": 831,
+              "prompt_tokens_details": null,
+              "completion_tokens_details": {
+                "reasoning_tokens": 474
+              }
+            }
+          }
+        ],
+        "F02": [
+          {
+            "request_id": "chatcmpl-observe-cd308dd694d04972804854d9486f8d19-4d9eb4a8729c45e3ad61b079933bebc0-81efa547",
+            "call_id": "9642f21121a2434f882488da82f96fce",
+            "input_sha256": "b4a93de185fcf0d0eefb156e75359565183d30f681ea67ba0208f9c3ac23919b",
+            "seed": 1136872522,
+            "seconds": 60.82602029002737,
+            "usage": {
+              "prompt_tokens": 103,
+              "total_tokens": 789,
+              "completion_tokens": 686,
+              "prompt_tokens_details": null,
+              "completion_tokens_details": {
+                "reasoning_tokens": 339
+              }
+            }
+          }
+        ]
+      },
+      "full_input_sha256_equal": true,
+      "seed_equal": true,
+      "prompt_token_count_equal": true,
+      "rank_sets_equal": true,
+      "ranks": {
+        "0": {
+          "AV": {
+            "prefill_positions": [
+              32,
+              33,
+              34,
+              35,
+              36,
+              37,
+              38,
+              39
+            ],
+            "prefill_accepted_state_positions": {
+              "True": [
+                32,
+                33,
+                34,
+                35,
+                36,
+                37,
+                38,
+                39
+              ]
+            },
+            "decode_offsets": [
+              0,
+              1,
+              2,
+              4,
+              8,
+              16,
+              32,
+              64,
+              128,
+              256,
+              512
+            ],
+            "decode_position_counts_by_accepted_state": {
+              "True": 9,
+              "False": 2
+            },
+            "profile_offset_64_records": 180,
+            "profile_offset_64_counts_by_accepted_state": {
+              "True": 180
+            }
+          },
+          "F02": {
+            "prefill_positions": [
+              32,
+              33,
+              34,
+              35,
+              36,
+              37,
+              38,
+              39
+            ],
+            "prefill_accepted_state_positions": {
+              "True": [
+                32,
+                33,
+                34,
+                35,
+                36,
+                37,
+                38,
+                39
+              ]
+            },
+            "decode_offsets": [
+              0,
+              1,
+              2,
+              4,
+              8,
+              16,
+              32,
+              64,
+              128,
+              256,
+              512
+            ],
+            "decode_position_counts_by_accepted_state": {
+              "True": 9,
+              "False": 2
+            },
+            "profile_offset_64_records": 180,
+            "profile_offset_64_counts_by_accepted_state": {
+              "True": 180
+            }
+          },
+          "prefill_positions_equal": true,
+          "prefill_acceptance_equal": true,
+          "decode_offsets_equal": true
+        },
+        "1": {
+          "AV": {
+            "prefill_positions": [
+              32,
+              33,
+              34,
+              35,
+              36,
+              37,
+              38,
+              39
+            ],
+            "prefill_accepted_state_positions": {
+              "True": [
+                32,
+                33,
+                34,
+                35,
+                36,
+                37,
+                38,
+                39
+              ]
+            },
+            "decode_offsets": [
+              0,
+              1,
+              2,
+              4,
+              8,
+              16,
+              32,
+              64,
+              128,
+              256,
+              512
+            ],
+            "decode_position_counts_by_accepted_state": {
+              "True": 9,
+              "False": 2
+            },
+            "profile_offset_64_records": 180,
+            "profile_offset_64_counts_by_accepted_state": {
+              "True": 180
+            }
+          },
+          "F02": {
+            "prefill_positions": [
+              32,
+              33,
+              34,
+              35,
+              36,
+              37,
+              38,
+              39
+            ],
+            "prefill_accepted_state_positions": {
+              "True": [
+                32,
+                33,
+                34,
+                35,
+                36,
+                37,
+                38,
+                39
+              ]
+            },
+            "decode_offsets": [
+              0,
+              1,
+              2,
+              4,
+              8,
+              16,
+              32,
+              64,
+              128,
+              256,
+              512
+            ],
+            "decode_position_counts_by_accepted_state": {
+              "True": 9,
+              "False": 2
+            },
+            "profile_offset_64_records": 180,
+            "profile_offset_64_counts_by_accepted_state": {
+              "True": 180
+            }
+          },
+          "prefill_positions_equal": true,
+          "prefill_acceptance_equal": true,
+          "decode_offsets_equal": true
+        }
+      }
+    },
+    {
+      "item_id": "mbpp-plus:Mbpp/576",
+      "official_score_AV": 0.0,
+      "official_score_F02": 0.0,
+      "call_counts": {
+        "AV": 1,
+        "F02": 1
+      },
+      "calls": {
+        "AV": [
+          {
+            "request_id": "chatcmpl-observe-dac4e2240ae849d59281f35130309028-566a5676a443430b8b88e9ee6ee2c740-870340d2",
+            "call_id": "95a27f82f6774271afdac67d4575912e",
+            "input_sha256": "fb0eb1ee5ebfc7b5aa3fa539ab9d190767da4354e6986d618cc800741560cba1",
+            "seed": 1701126007,
+            "seconds": 62.67363524704706,
+            "usage": {
+              "prompt_tokens": 94,
+              "total_tokens": 1486,
+              "completion_tokens": 1392,
+              "prompt_tokens_details": null,
+              "completion_tokens_details": {
+                "reasoning_tokens": 875
+              }
+            }
+          }
+        ],
+        "F02": [
+          {
+            "request_id": "chatcmpl-observe-77fee053153f4bf3ae9b8af3db35247f-ad92a06116c144d788233603781e489f-9547aa4a",
+            "call_id": "2f0e189d06ea4de9803b3186c839af45",
+            "input_sha256": "fb0eb1ee5ebfc7b5aa3fa539ab9d190767da4354e6986d618cc800741560cba1",
+            "seed": 1701126007,
+            "seconds": 20.613698361907154,
+            "usage": {
+              "prompt_tokens": 94,
+              "total_tokens": 1357,
+              "completion_tokens": 1263,
+              "prompt_tokens_details": null,
+              "completion_tokens_details": {
+                "reasoning_tokens": 729
+              }
+            }
+          }
+        ]
+      },
+      "full_input_sha256_equal": true,
+      "seed_equal": true,
+      "prompt_token_count_equal": true,
+      "rank_sets_equal": true,
+      "ranks": {
+        "0": {
+          "AV": {
+            "prefill_positions": [
+              32,
+              33,
+              34,
+              35,
+              36,
+              37,
+              38,
+              39
+            ],
+            "prefill_accepted_state_positions": {
+              "True": [
+                32,
+                33,
+                34,
+                35,
+                36,
+                37,
+                38,
+                39
+              ]
+            },
+            "decode_offsets": [
+              0,
+              1,
+              2,
+              4,
+              8,
+              16,
+              32,
+              64,
+              128,
+              256,
+              512,
+              1024
+            ],
+            "decode_position_counts_by_accepted_state": {
+              "True": 10,
+              "False": 2
+            },
+            "profile_offset_64_records": 180,
+            "profile_offset_64_counts_by_accepted_state": {
+              "True": 180
+            }
+          },
+          "F02": {
+            "prefill_positions": [
+              32,
+              33,
+              34,
+              35,
+              36,
+              37,
+              38,
+              39
+            ],
+            "prefill_accepted_state_positions": {
+              "True": [
+                32,
+                33,
+                34,
+                35,
+                36,
+                37,
+                38,
+                39
+              ]
+            },
+            "decode_offsets": [
+              0,
+              1,
+              2,
+              4,
+              8,
+              16,
+              32,
+              64,
+              128,
+              256,
+              512,
+              1024
+            ],
+            "decode_position_counts_by_accepted_state": {
+              "True": 10,
+              "False": 2
+            },
+            "profile_offset_64_records": 180,
+            "profile_offset_64_counts_by_accepted_state": {
+              "True": 180
+            }
+          },
+          "prefill_positions_equal": true,
+          "prefill_acceptance_equal": true,
+          "decode_offsets_equal": true
+        },
+        "1": {
+          "AV": {
+            "prefill_positions": [
+              32,
+              33,
+              34,
+              35,
+              36,
+              37,
+              38,
+              39
+            ],
+            "prefill_accepted_state_positions": {
+              "True": [
+                32,
+                33,
+                34,
+                35,
+                36,
+                37,
+                38,
+                39
+              ]
+            },
+            "decode_offsets": [
+              0,
+              1,
+              2,
+              4,
+              8,
+              16,
+              32,
+              64,
+              128,
+              256,
+              512,
+              1024
+            ],
+            "decode_position_counts_by_accepted_state": {
+              "True": 10,
+              "False": 2
+            },
+            "profile_offset_64_records": 180,
+            "profile_offset_64_counts_by_accepted_state": {
+              "True": 180
+            }
+          },
+          "F02": {
+            "prefill_positions": [
+              32,
+              33,
+              34,
+              35,
+              36,
+              37,
+              38,
+              39
+            ],
+            "prefill_accepted_state_positions": {
+              "True": [
+                32,
+                33,
+                34,
+                35,
+                36,
+                37,
+                38,
+                39
+              ]
+            },
+            "decode_offsets": [
+              0,
+              1,
+              2,
+              4,
+              8,
+              16,
+              32,
+              64,
+              128,
+              256,
+              512,
+              1024
+            ],
+            "decode_position_counts_by_accepted_state": {
+              "True": 10,
+              "False": 2
+            },
+            "profile_offset_64_records": 180,
+            "profile_offset_64_counts_by_accepted_state": {
+              "True": 180
+            }
+          },
+          "prefill_positions_equal": true,
+          "prefill_acceptance_equal": true,
+          "decode_offsets_equal": true
+        }
+      }
+    },
+    {
+      "item_id": "mbpp-plus:Mbpp/612",
+      "official_score_AV": 1.0,
+      "official_score_F02": 1.0,
+      "call_counts": {
+        "AV": 1,
+        "F02": 1
+      },
+      "calls": {
+        "AV": [
+          {
+            "request_id": "chatcmpl-observe-2d692e8cdb874c1084171076c4e0d92a-5a76760ed0964c2d988526c1e182dcb8-b67d6d44",
+            "call_id": "734d871b7547475e9d8a63eaa9a2b9a2",
+            "input_sha256": "ce9465e36c47e0f8e3dbd92c1c85ba5a211b3dee4f6927aea1e42af3c314c98d",
+            "seed": 519693655,
+            "seconds": 56.882211316959,
+            "usage": {
+              "prompt_tokens": 142,
+              "total_tokens": 1257,
+              "completion_tokens": 1115,
+              "prompt_tokens_details": null,
+              "completion_tokens_details": {
+                "reasoning_tokens": 776
+              }
+            }
+          }
+        ],
+        "F02": [
+          {
+            "request_id": "chatcmpl-observe-c17e087d9f7e437f916e068d248c25b1-6698aa8491c64e79b2d743093958ca45-ac2567b3",
+            "call_id": "a4c62ca9d0cf4c519c8b3d5610b63415",
+            "input_sha256": "ce9465e36c47e0f8e3dbd92c1c85ba5a211b3dee4f6927aea1e42af3c314c98d",
+            "seed": 519693655,
+            "seconds": 25.094027036917396,
+            "usage": {
+              "prompt_tokens": 142,
+              "total_tokens": 1232,
+              "completion_tokens": 1090,
+              "prompt_tokens_details": null,
+              "completion_tokens_details": {
+                "reasoning_tokens": 823
+              }
+            }
+          }
+        ]
+      },
+      "full_input_sha256_equal": true,
+      "seed_equal": true,
+      "prompt_token_count_equal": true,
+      "rank_sets_equal": true,
+      "ranks": {
+        "0": {
+          "AV": {
+            "prefill_positions": [
+              32,
+              33,
+              34,
+              35,
+              36,
+              37,
+              38,
+              39
+            ],
+            "prefill_accepted_state_positions": {
+              "True": [
+                32,
+                33,
+                34,
+                35,
+                36,
+                37,
+                38,
+                39
+              ]
+            },
+            "decode_offsets": [
+              0,
+              1,
+              2,
+              4,
+              8,
+              16,
+              32,
+              64,
+              128,
+              256,
+              512,
+              1024
+            ],
+            "decode_position_counts_by_accepted_state": {
+              "True": 10,
+              "False": 2
+            },
+            "profile_offset_64_records": 180,
+            "profile_offset_64_counts_by_accepted_state": {
+              "True": 180
+            }
+          },
+          "F02": {
+            "prefill_positions": [
+              32,
+              33,
+              34,
+              35,
+              36,
+              37,
+              38,
+              39
+            ],
+            "prefill_accepted_state_positions": {
+              "True": [
+                32,
+                33,
+                34,
+                35,
+                36,
+                37,
+                38,
+                39
+              ]
+            },
+            "decode_offsets": [
+              0,
+              1,
+              2,
+              4,
+              8,
+              16,
+              32,
+              64,
+              128,
+              256,
+              512,
+              1024
+            ],
+            "decode_position_counts_by_accepted_state": {
+              "True": 11,
+              "False": 1
+            },
+            "profile_offset_64_records": 180,
+            "profile_offset_64_counts_by_accepted_state": {
+              "True": 180
+            }
+          },
+          "prefill_positions_equal": true,
+          "prefill_acceptance_equal": true,
+          "decode_offsets_equal": true
+        },
+        "1": {
+          "AV": {
+            "prefill_positions": [
+              32,
+              33,
+              34,
+              35,
+              36,
+              37,
+              38,
+              39
+            ],
+            "prefill_accepted_state_positions": {
+              "True": [
+                32,
+                33,
+                34,
+                35,
+                36,
+                37,
+                38,
+                39
+              ]
+            },
+            "decode_offsets": [
+              0,
+              1,
+              2,
+              4,
+              8,
+              16,
+              32,
+              64,
+              128,
+              256,
+              512,
+              1024
+            ],
+            "decode_position_counts_by_accepted_state": {
+              "True": 10,
+              "False": 2
+            },
+            "profile_offset_64_records": 180,
+            "profile_offset_64_counts_by_accepted_state": {
+              "True": 180
+            }
+          },
+          "F02": {
+            "prefill_positions": [
+              32,
+              33,
+              34,
+              35,
+              36,
+              37,
+              38,
+              39
+            ],
+            "prefill_accepted_state_positions": {
+              "True": [
+                32,
+                33,
+                34,
+                35,
+                36,
+                37,
+                38,
+                39
+              ]
+            },
+            "decode_offsets": [
+              0,
+              1,
+              2,
+              4,
+              8,
+              16,
+              32,
+              64,
+              128,
+              256,
+              512,
+              1024
+            ],
+            "decode_position_counts_by_accepted_state": {
+              "True": 11,
+              "False": 1
+            },
+            "profile_offset_64_records": 180,
+            "profile_offset_64_counts_by_accepted_state": {
+              "True": 180
+            }
+          },
+          "prefill_positions_equal": true,
+          "prefill_acceptance_equal": true,
+          "decode_offsets_equal": true
+        }
+      }
+    },
+    {
+      "item_id": "mbpp-plus:Mbpp/63",
+      "official_score_AV": 1.0,
+      "official_score_F02": 1.0,
+      "call_counts": {
+        "AV": 1,
+        "F02": 1
+      },
+      "calls": {
+        "AV": [
+          {
+            "request_id": "chatcmpl-observe-6f0152a04bee4725ba7cfe14672533d0-e568a9095e52492688ce5e9c8df52998-bddff249",
+            "call_id": "8b9d447350714f0bb72be50e7e6a2660",
+            "input_sha256": "775f73a2fcd1de6aea0579e49bd6bcc95156a05cb859d0dc439865369b4d7ffe",
+            "seed": 1382393352,
+            "seconds": 44.15313074900769,
+            "usage": {
+              "prompt_tokens": 105,
+              "total_tokens": 944,
+              "completion_tokens": 839,
+              "prompt_tokens_details": null,
+              "completion_tokens_details": {
+                "reasoning_tokens": 593
+              }
+            }
+          }
+        ],
+        "F02": [
+          {
+            "request_id": "chatcmpl-observe-264ec71d2bfa4d2395de346ae6acb842-8a35c397cf5744148cb46bfae5f43302-b4fdcb49",
+            "call_id": "0bb56fb0fff54a6581d75eaa423fe046",
+            "input_sha256": "775f73a2fcd1de6aea0579e49bd6bcc95156a05cb859d0dc439865369b4d7ffe",
+            "seed": 1382393352,
+            "seconds": 12.468784575001337,
+            "usage": {
+              "prompt_tokens": 105,
+              "total_tokens": 855,
+              "completion_tokens": 750,
+              "prompt_tokens_details": null,
+              "completion_tokens_details": {
+                "reasoning_tokens": 511
+              }
+            }
+          }
+        ]
+      },
+      "full_input_sha256_equal": true,
+      "seed_equal": true,
+      "prompt_token_count_equal": true,
+      "rank_sets_equal": true,
+      "ranks": {
+        "0": {
+          "AV": {
+            "prefill_positions": [
+              32,
+              33,
+              34,
+              35,
+              36,
+              37,
+              38,
+              39
+            ],
+            "prefill_accepted_state_positions": {
+              "True": [
+                32,
+                33,
+                34,
+                35,
+                36,
+                37,
+                38,
+                39
+              ]
+            },
+            "decode_offsets": [
+              0,
+              1,
+              2,
+              4,
+              8,
+              16,
+              32,
+              64,
+              128,
+              256,
+              512
+            ],
+            "decode_position_counts_by_accepted_state": {
+              "True": 10,
+              "False": 1
+            },
+            "profile_offset_64_records": 180,
+            "profile_offset_64_counts_by_accepted_state": {
+              "True": 180
+            }
+          },
+          "F02": {
+            "prefill_positions": [
+              32,
+              33,
+              34,
+              35,
+              36,
+              37,
+              38,
+              39
+            ],
+            "prefill_accepted_state_positions": {
+              "True": [
+                32,
+                33,
+                34,
+                35,
+                36,
+                37,
+                38,
+                39
+              ]
+            },
+            "decode_offsets": [
+              0,
+              1,
+              2,
+              4,
+              8,
+              16,
+              32,
+              64,
+              128,
+              256,
+              512
+            ],
+            "decode_position_counts_by_accepted_state": {
+              "True": 10,
+              "False": 1
+            },
+            "profile_offset_64_records": 180,
+            "profile_offset_64_counts_by_accepted_state": {
+              "True": 180
+            }
+          },
+          "prefill_positions_equal": true,
+          "prefill_acceptance_equal": true,
+          "decode_offsets_equal": true
+        },
+        "1": {
+          "AV": {
+            "prefill_positions": [
+              32,
+              33,
+              34,
+              35,
+              36,
+              37,
+              38,
+              39
+            ],
+            "prefill_accepted_state_positions": {
+              "True": [
+                32,
+                33,
+                34,
+                35,
+                36,
+                37,
+                38,
+                39
+              ]
+            },
+            "decode_offsets": [
+              0,
+              1,
+              2,
+              4,
+              8,
+              16,
+              32,
+              64,
+              128,
+              256,
+              512
+            ],
+            "decode_position_counts_by_accepted_state": {
+              "True": 10,
+              "False": 1
+            },
+            "profile_offset_64_records": 180,
+            "profile_offset_64_counts_by_accepted_state": {
+              "True": 180
+            }
+          },
+          "F02": {
+            "prefill_positions": [
+              32,
+              33,
+              34,
+              35,
+              36,
+              37,
+              38,
+              39
+            ],
+            "prefill_accepted_state_positions": {
+              "True": [
+                32,
+                33,
+                34,
+                35,
+                36,
+                37,
+                38,
+                39
+              ]
+            },
+            "decode_offsets": [
+              0,
+              1,
+              2,
+              4,
+              8,
+              16,
+              32,
+              64,
+              128,
+              256,
+              512
+            ],
+            "decode_position_counts_by_accepted_state": {
+              "True": 10,
+              "False": 1
+            },
+            "profile_offset_64_records": 180,
+            "profile_offset_64_counts_by_accepted_state": {
+              "True": 180
+            }
+          },
+          "prefill_positions_equal": true,
+          "prefill_acceptance_equal": true,
+          "decode_offsets_equal": true
+        }
+      }
+    },
+    {
+      "item_id": "mbpp-plus:Mbpp/791",
+      "official_score_AV": 1.0,
+      "official_score_F02": 1.0,
+      "call_counts": {
+        "AV": 1,
+        "F02": 1
+      },
+      "calls": {
+        "AV": [
+          {
+            "request_id": "chatcmpl-observe-260f2051fd3f47b8b1b2f0d401d88727-5963bebb0f294baabcbfa9803e48b7de-a62caeec",
+            "call_id": "b672450f0c544f578b2ddf105ff6791e",
+            "input_sha256": "c0f64fe8795c99c3bb11cbaae5491c42e9c73c38ff5e68c7e666e05555463e46",
+            "seed": 1006730502,
+            "seconds": 36.27270784100983,
+            "usage": {
+              "prompt_tokens": 104,
+              "total_tokens": 724,
+              "completion_tokens": 620,
+              "prompt_tokens_details": null,
+              "completion_tokens_details": {
+                "reasoning_tokens": 361
+              }
+            }
+          }
+        ],
+        "F02": [
+          {
+            "request_id": "chatcmpl-observe-1feb2162712a4d23a381d8359a173e63-3da8232ad1064336a6a0ca7d4a9982d3-be45e472",
+            "call_id": "1c76d517550c4a768b6718943662489f",
+            "input_sha256": "c0f64fe8795c99c3bb11cbaae5491c42e9c73c38ff5e68c7e666e05555463e46",
+            "seed": 1006730502,
+            "seconds": 32.9031877159141,
+            "usage": {
+              "prompt_tokens": 104,
+              "total_tokens": 791,
+              "completion_tokens": 687,
+              "prompt_tokens_details": null,
+              "completion_tokens_details": {
+                "reasoning_tokens": 395
+              }
+            }
+          }
+        ]
+      },
+      "full_input_sha256_equal": true,
+      "seed_equal": true,
+      "prompt_token_count_equal": true,
+      "rank_sets_equal": true,
+      "ranks": {
+        "0": {
+          "AV": {
+            "prefill_positions": [
+              32,
+              33,
+              34,
+              35,
+              36,
+              37,
+              38,
+              39
+            ],
+            "prefill_accepted_state_positions": {
+              "True": [
+                32,
+                33,
+                34,
+                35,
+                36,
+                37,
+                38,
+                39
+              ]
+            },
+            "decode_offsets": [
+              0,
+              1,
+              2,
+              4,
+              8,
+              16,
+              32,
+              64,
+              128,
+              256,
+              512
+            ],
+            "decode_position_counts_by_accepted_state": {
+              "True": 9,
+              "False": 2
+            },
+            "profile_offset_64_records": 180,
+            "profile_offset_64_counts_by_accepted_state": {
+              "True": 180
+            }
+          },
+          "F02": {
+            "prefill_positions": [
+              32,
+              33,
+              34,
+              35,
+              36,
+              37,
+              38,
+              39
+            ],
+            "prefill_accepted_state_positions": {
+              "True": [
+                32,
+                33,
+                34,
+                35,
+                36,
+                37,
+                38,
+                39
+              ]
+            },
+            "decode_offsets": [
+              0,
+              1,
+              2,
+              4,
+              8,
+              16,
+              32,
+              64,
+              128,
+              256,
+              512
+            ],
+            "decode_position_counts_by_accepted_state": {
+              "True": 9,
+              "False": 2
+            },
+            "profile_offset_64_records": 180,
+            "profile_offset_64_counts_by_accepted_state": {
+              "True": 180
+            }
+          },
+          "prefill_positions_equal": true,
+          "prefill_acceptance_equal": true,
+          "decode_offsets_equal": true
+        },
+        "1": {
+          "AV": {
+            "prefill_positions": [
+              32,
+              33,
+              34,
+              35,
+              36,
+              37,
+              38,
+              39
+            ],
+            "prefill_accepted_state_positions": {
+              "True": [
+                32,
+                33,
+                34,
+                35,
+                36,
+                37,
+                38,
+                39
+              ]
+            },
+            "decode_offsets": [
+              0,
+              1,
+              2,
+              4,
+              8,
+              16,
+              32,
+              64,
+              128,
+              256,
+              512
+            ],
+            "decode_position_counts_by_accepted_state": {
+              "True": 9,
+              "False": 2
+            },
+            "profile_offset_64_records": 180,
+            "profile_offset_64_counts_by_accepted_state": {
+              "True": 180
+            }
+          },
+          "F02": {
+            "prefill_positions": [
+              32,
+              33,
+              34,
+              35,
+              36,
+              37,
+              38,
+              39
+            ],
+            "prefill_accepted_state_positions": {
+              "True": [
+                32,
+                33,
+                34,
+                35,
+                36,
+                37,
+                38,
+                39
+              ]
+            },
+            "decode_offsets": [
+              0,
+              1,
+              2,
+              4,
+              8,
+              16,
+              32,
+              64,
+              128,
+              256,
+              512
+            ],
+            "decode_position_counts_by_accepted_state": {
+              "True": 9,
+              "False": 2
+            },
+            "profile_offset_64_records": 180,
+            "profile_offset_64_counts_by_accepted_state": {
+              "True": 180
+            }
+          },
+          "prefill_positions_equal": true,
+          "prefill_acceptance_equal": true,
+          "decode_offsets_equal": true
+        }
+      }
+    },
+    {
+      "item_id": "mbpp-plus:Mbpp/792",
+      "official_score_AV": 1.0,
+      "official_score_F02": 1.0,
+      "call_counts": {
+        "AV": 1,
+        "F02": 1
+      },
+      "calls": {
+        "AV": [
+          {
+            "request_id": "chatcmpl-observe-b47e846cbe0a491e92513ce8fb3824c5-0e6ae27ab16b43a78853c102d3c37672-b471b77d",
+            "call_id": "c8bf487e32a84428babf6efa75e41e02",
+            "input_sha256": "405c7cb5786357ec61a2a663ed3b7a946468e10c177474e0fdb6103e947952ba",
+            "seed": 1480249566,
+            "seconds": 48.96167150500696,
+            "usage": {
+              "prompt_tokens": 111,
+              "total_tokens": 870,
+              "completion_tokens": 759,
+              "prompt_tokens_details": null,
+              "completion_tokens_details": {
+                "reasoning_tokens": 463
+              }
+            }
+          }
+        ],
+        "F02": [
+          {
+            "request_id": "chatcmpl-observe-a215b0aac84c4494aaa611ef1a743e0b-764edeb8d4654696b3f02e29ba3dd79f-b7fe0e25",
+            "call_id": "db9b9aa27dd24cb79663b3b078638df8",
+            "input_sha256": "405c7cb5786357ec61a2a663ed3b7a946468e10c177474e0fdb6103e947952ba",
+            "seed": 1480249566,
+            "seconds": 70.30801202508155,
+            "usage": {
+              "prompt_tokens": 111,
+              "total_tokens": 1054,
+              "completion_tokens": 943,
+              "prompt_tokens_details": null,
+              "completion_tokens_details": {
+                "reasoning_tokens": 705
+              }
+            }
+          }
+        ]
+      },
+      "full_input_sha256_equal": true,
+      "seed_equal": true,
+      "prompt_token_count_equal": true,
+      "rank_sets_equal": true,
+      "ranks": {
+        "0": {
+          "AV": {
+            "prefill_positions": [
+              32,
+              33,
+              34,
+              35,
+              36,
+              37,
+              38,
+              39
+            ],
+            "prefill_accepted_state_positions": {
+              "True": [
+                32,
+                33,
+                34,
+                35,
+                36,
+                37,
+                38,
+                39
+              ]
+            },
+            "decode_offsets": [
+              0,
+              1,
+              2,
+              4,
+              8,
+              16,
+              32,
+              64,
+              128,
+              256,
+              512
+            ],
+            "decode_position_counts_by_accepted_state": {
+              "True": 9,
+              "False": 2
+            },
+            "profile_offset_64_records": 180,
+            "profile_offset_64_counts_by_accepted_state": {
+              "False": 180
+            }
+          },
+          "F02": {
+            "prefill_positions": [
+              32,
+              33,
+              34,
+              35,
+              36,
+              37,
+              38,
+              39
+            ],
+            "prefill_accepted_state_positions": {
+              "True": [
+                32,
+                33,
+                34,
+                35,
+                36,
+                37,
+                38,
+                39
+              ]
+            },
+            "decode_offsets": [
+              0,
+              1,
+              2,
+              4,
+              8,
+              16,
+              32,
+              64,
+              128,
+              256,
+              512
+            ],
+            "decode_position_counts_by_accepted_state": {
+              "True": 9,
+              "False": 2
+            },
+            "profile_offset_64_records": 180,
+            "profile_offset_64_counts_by_accepted_state": {
+              "False": 180
+            }
+          },
+          "prefill_positions_equal": true,
+          "prefill_acceptance_equal": true,
+          "decode_offsets_equal": true
+        },
+        "1": {
+          "AV": {
+            "prefill_positions": [
+              32,
+              33,
+              34,
+              35,
+              36,
+              37,
+              38,
+              39
+            ],
+            "prefill_accepted_state_positions": {
+              "True": [
+                32,
+                33,
+                34,
+                35,
+                36,
+                37,
+                38,
+                39
+              ]
+            },
+            "decode_offsets": [
+              0,
+              1,
+              2,
+              4,
+              8,
+              16,
+              32,
+              64,
+              128,
+              256,
+              512
+            ],
+            "decode_position_counts_by_accepted_state": {
+              "True": 9,
+              "False": 2
+            },
+            "profile_offset_64_records": 180,
+            "profile_offset_64_counts_by_accepted_state": {
+              "False": 180
+            }
+          },
+          "F02": {
+            "prefill_positions": [
+              32,
+              33,
+              34,
+              35,
+              36,
+              37,
+              38,
+              39
+            ],
+            "prefill_accepted_state_positions": {
+              "True": [
+                32,
+                33,
+                34,
+                35,
+                36,
+                37,
+                38,
+                39
+              ]
+            },
+            "decode_offsets": [
+              0,
+              1,
+              2,
+              4,
+              8,
+              16,
+              32,
+              64,
+              128,
+              256,
+              512
+            ],
+            "decode_position_counts_by_accepted_state": {
+              "True": 9,
+              "False": 2
+            },
+            "profile_offset_64_records": 180,
+            "profile_offset_64_counts_by_accepted_state": {
+              "False": 180
+            }
+          },
+          "prefill_positions_equal": true,
+          "prefill_acceptance_equal": true,
+          "decode_offsets_equal": true
+        }
+      }
+    },
+    {
+      "item_id": "mbpp-plus:Mbpp/801",
+      "official_score_AV": 1.0,
+      "official_score_F02": 1.0,
+      "call_counts": {
+        "AV": 1,
+        "F02": 1
+      },
+      "calls": {
+        "AV": [
+          {
+            "request_id": "chatcmpl-observe-55680bd8d7664d2786263a8ff889b54c-e766f6cb23bf48e0a5d2be88d2bc4a2c-a8c1cfec",
+            "call_id": "3d14101175504f258db1868e80e700ef",
+            "input_sha256": "2eb043c7594926f626a6ba9a289ffabd71286e8182160a09949ea8015decded6",
+            "seed": 1035508668,
+            "seconds": 60.890997588052414,
+            "usage": {
+              "prompt_tokens": 88,
+              "total_tokens": 1338,
+              "completion_tokens": 1250,
+              "prompt_tokens_details": null,
+              "completion_tokens_details": {
+                "reasoning_tokens": 947
+              }
+            }
+          }
+        ],
+        "F02": [
+          {
+            "request_id": "chatcmpl-observe-be5a109e45444d52bcaa0cdcf624f8c4-00aa26544c5240aa89d787d36c5460a3-80d074ea",
+            "call_id": "5b9a6efd9c324fa2843832bbf0356dd2",
+            "input_sha256": "2eb043c7594926f626a6ba9a289ffabd71286e8182160a09949ea8015decded6",
+            "seed": 1035508668,
+            "seconds": 31.51011190097779,
+            "usage": {
+              "prompt_tokens": 88,
+              "total_tokens": 1324,
+              "completion_tokens": 1236,
+              "prompt_tokens_details": null,
+              "completion_tokens_details": {
+                "reasoning_tokens": 977
+              }
+            }
+          }
+        ]
+      },
+      "full_input_sha256_equal": true,
+      "seed_equal": true,
+      "prompt_token_count_equal": true,
+      "rank_sets_equal": true,
+      "ranks": {
+        "0": {
+          "AV": {
+            "prefill_positions": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5,
+              6,
+              7
+            ],
+            "prefill_accepted_state_positions": {
+              "True": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6,
+                7
+              ]
+            },
+            "decode_offsets": [
+              0,
+              1,
+              2,
+              4,
+              8,
+              16,
+              32,
+              64,
+              128,
+              256,
+              512,
+              1024
+            ],
+            "decode_position_counts_by_accepted_state": {
+              "True": 10,
+              "False": 2
+            },
+            "profile_offset_64_records": 180,
+            "profile_offset_64_counts_by_accepted_state": {
+              "True": 180
+            }
+          },
+          "F02": {
+            "prefill_positions": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5,
+              6,
+              7
+            ],
+            "prefill_accepted_state_positions": {
+              "True": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6,
+                7
+              ]
+            },
+            "decode_offsets": [
+              0,
+              1,
+              2,
+              4,
+              8,
+              16,
+              32,
+              64,
+              128,
+              256,
+              512,
+              1024
+            ],
+            "decode_position_counts_by_accepted_state": {
+              "True": 9,
+              "False": 3
+            },
+            "profile_offset_64_records": 180,
+            "profile_offset_64_counts_by_accepted_state": {
+              "True": 180
+            }
+          },
+          "prefill_positions_equal": true,
+          "prefill_acceptance_equal": true,
+          "decode_offsets_equal": true
+        },
+        "1": {
+          "AV": {
+            "prefill_positions": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5,
+              6,
+              7
+            ],
+            "prefill_accepted_state_positions": {
+              "True": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6,
+                7
+              ]
+            },
+            "decode_offsets": [
+              0,
+              1,
+              2,
+              4,
+              8,
+              16,
+              32,
+              64,
+              128,
+              256,
+              512,
+              1024
+            ],
+            "decode_position_counts_by_accepted_state": {
+              "True": 10,
+              "False": 2
+            },
+            "profile_offset_64_records": 180,
+            "profile_offset_64_counts_by_accepted_state": {
+              "True": 180
+            }
+          },
+          "F02": {
+            "prefill_positions": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5,
+              6,
+              7
+            ],
+            "prefill_accepted_state_positions": {
+              "True": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6,
+                7
+              ]
+            },
+            "decode_offsets": [
+              0,
+              1,
+              2,
+              4,
+              8,
+              16,
+              32,
+              64,
+              128,
+              256,
+              512,
+              1024
+            ],
+            "decode_position_counts_by_accepted_state": {
+              "True": 9,
+              "False": 3
+            },
+            "profile_offset_64_records": 180,
+            "profile_offset_64_counts_by_accepted_state": {
+              "True": 180
+            }
+          },
+          "prefill_positions_equal": true,
+          "prefill_acceptance_equal": true,
+          "decode_offsets_equal": true
+        }
+      }
+    }
+  ],
+  "limits": [
+    "No raw activation reread or generated reasoning inspection.",
+    "Matching full input and exact prefill positions is metadata eligibility, not a paired numeric result.",
+    "No decoder same-prefix claim. Accepted/rejected/unknown remain distinct.",
+    "Current strict HTML pairing lacks explicit pair_key and runtime vllm_version.",
+    "F02 closed acknowledgement missing; gzip EOF and writer accounting evidence do not turn closed=false into true."
+  ]
+}

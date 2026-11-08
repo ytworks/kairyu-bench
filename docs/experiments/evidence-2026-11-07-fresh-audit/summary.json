@@ -1,0 +1,174 @@
+{
+  "schema_version": 1,
+  "captured_utc": "2026-11-07T04:10:19.615714+00:00",
+  "scope": "All immediate-child WSP run.json files in the two declared result roots; raw responses and historical decisions were not exported.",
+  "canonical_manifest_sha256": "a3a0b60e0872a38c6b1abf7e97d7fe729fabf9e25cd3f09a3da9544b9ca39b5b",
+  "run_count": 151,
+  "unique_run_ids": 151,
+  "status_counts": {
+    "partial": 4,
+    "completed": 146,
+    "running": 1
+  },
+  "complete_canonical_counts": [
+    {
+      "tier": 10,
+      "split": "dev",
+      "count": 23
+    },
+    {
+      "tier": 10,
+      "split": "test",
+      "count": 2
+    },
+    {
+      "tier": 30,
+      "split": "dev",
+      "count": 1
+    },
+    {
+      "tier": 30,
+      "split": "test",
+      "count": 1
+    },
+    {
+      "tier": 60,
+      "split": "dev",
+      "count": 1
+    },
+    {
+      "tier": 60,
+      "split": "test",
+      "count": 1
+    }
+  ],
+  "dev10_max_code": 0.8777777777777778,
+  "dev10_max_run_ids": [
+    "gemma4-joint-purpose-balanced-small-dev10-full-20261105",
+    "gemma4-joint-purpose-programming-set-dev10-full-20261105",
+    "gemma4-joint-purpose-chat-set-dev10-full-20261105",
+    "gemma4-finalnorm-plus1pct-dev10-full-20261105",
+    "gemma4-base-observed-dev10-20261106",
+    "gemma4-resume-h0397-dev10-full-20261106",
+    "gemma4-code90-original-base-c32-dev10-full14-20261106",
+    "gemma4-code90-original-base-c32-dev10-full14-pairh-20261106",
+    "gemma4-code90-incumbent-p-c32-dev10-full14-20261106",
+    "gemma4-code90-candidate-ac-c32-dev10-full14-20261107",
+    "gemma4-code90-candidate-ad-c32-dev10-full14-20261107",
+    "gemma4-ad-av-ad-c32-dev10-full14-20261107-v1",
+    "gemma4-ad-av-av-c32-dev10-full14-20261107-v1"
+  ],
+  "validation_errors": [],
+  "pair": {
+    "ad": {
+      "run_id": "gemma4-ad-av-ad-c32-dev10-full14-20261107-v1",
+      "label": "27629fd3cd4c7573ca535832ce4e97cb8bc10b28ddd3f6f12ddf1b194633b1e8",
+      "scored_item_rows": 778,
+      "areas": {
+        "knowledge": 0.8833333333333333,
+        "expert": 0.875,
+        "facts": 0.7,
+        "math": 0.975,
+        "code": 0.8777777777777778,
+        "instructions": 0.9208333333333334,
+        "tools": 0.8,
+        "agents": 0.5,
+        "long-context": 0.7512794268167861,
+        "reasoning": 0.7695652173913043,
+        "commonsense": 0.63,
+        "multilingual": 0.820959595959596,
+        "vision": 0.75,
+        "safety": 0.5555555555555556
+      },
+      "code_source_mean": 0.8777777777777778,
+      "overall": 0.7720931600119776,
+      "timing": {
+        "load_seconds": 106.2,
+        "wall_seconds": 1696.6,
+        "generation_seconds": 1696.6,
+        "chat_api_calls": 566,
+        "logprob_api_calls": 3062
+      }
+    },
+    "av": {
+      "run_id": "gemma4-ad-av-av-c32-dev10-full14-20261107-v1",
+      "label": "5d056eb03f954db80313a85167153c875fe5e436e4f97c281a3f55202d9b3eaf",
+      "scored_item_rows": 778,
+      "areas": {
+        "knowledge": 0.9,
+        "expert": 0.875,
+        "facts": 0.725,
+        "math": 0.971875,
+        "code": 0.8777777777777778,
+        "instructions": 0.8875,
+        "tools": 0.75,
+        "agents": 0.5,
+        "long-context": 0.7302052456992524,
+        "reasoning": 0.791304347826087,
+        "commonsense": 0.64,
+        "multilingual": 0.8196969696969697,
+        "vision": 0.75,
+        "safety": 0.5833333333333334
+      },
+      "code_source_mean": 0.8777777777777778,
+      "overall": 0.7715494767381015,
+      "timing": {
+        "load_seconds": 107.7,
+        "wall_seconds": 1559.1,
+        "generation_seconds": 1559.1,
+        "chat_api_calls": 563,
+        "logprob_api_calls": 3062
+      }
+    }
+  },
+  "pair_area_deltas": {
+    "knowledge": 0.01666666666666672,
+    "expert": 0.0,
+    "facts": 0.025000000000000022,
+    "math": -0.0031249999999999334,
+    "code": 0.0,
+    "instructions": -0.03333333333333344,
+    "tools": -0.050000000000000044,
+    "agents": 0.0,
+    "long-context": -0.021074181117533675,
+    "reasoning": 0.021739130434782705,
+    "commonsense": 0.010000000000000009,
+    "multilingual": -0.0012626262626262985,
+    "vision": 0.0,
+    "safety": 0.02777777777777779
+  },
+  "pair_gains": 31,
+  "pair_losses": 29,
+  "pair_code_failures": [
+    {
+      "id": "livecodebench:arc191_c",
+      "source": "livecodebench",
+      "area": "code",
+      "ad": 0.0,
+      "av": 0.0,
+      "delta": 0.0
+    },
+    {
+      "id": "mbpp-plus:Mbpp/410",
+      "source": "mbpp-plus",
+      "area": "code",
+      "ad": 0.0,
+      "av": 0.0,
+      "delta": 0.0
+    },
+    {
+      "id": "mbpp-plus:Mbpp/576",
+      "source": "mbpp-plus",
+      "area": "code",
+      "ad": 0.0,
+      "av": 0.0,
+      "delta": 0.0
+    }
+  ],
+  "limitations": [
+    "Only the AD/AV pair conditions have been verified here from launch and container evidence. Other historical runs share manifest/tier/split where indicated, but are not presumed to share topology/concurrency/capture or scorer revision.",
+    "The 30-minute 90-item code subsets are exploratory measurements, not completed canonical 2,338-item WSP runs.",
+    "Test results were catalogued for preservation and are not used to select or optimize a checkpoint.",
+    "Running and partial rows remain as stored, without converting missing outcomes to zero. A historical running marker is not proof a process is still active."
+  ]
+}

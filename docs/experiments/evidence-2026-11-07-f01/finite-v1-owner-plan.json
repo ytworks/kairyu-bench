@@ -1,0 +1,272 @@
+{
+  "schema_version": 1,
+  "status": "prepared_no_gpu_execution",
+  "checkpoint": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/checkpoints/code90-current-ad-helper-av-v1",
+  "finite_plan": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f01/finite-gpu6-v1/finite-plan.json",
+  "sublease": {
+    "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-av-live10-v1/finite-gpu6-sublease.json",
+    "sha256": "8848dddf60d8e4dceadff3b10858f21119911251bba63eaa5a73bed458f293bb"
+  },
+  "target_name": "gemma-4-31b-8gpu-gemma-3-1",
+  "target": {
+    "id": "64f27c717165a4e4ea37abec691b5871f87fdfc8ddcd8dd2ecddfd832e5df550",
+    "image": "sha256:af9e746b913088cbf6c4464a31d6904a6b7e1d3ba62f0895362ddf13595f7abe",
+    "running": true,
+    "health": "healthy",
+    "started_at": "2026-11-07T03:31:29.72019868Z",
+    "config_sha256": "cd9e74721c0389ed30f92c41247e6812faa09879e669ff0d2269cdf2f7776365",
+    "host_config_sha256": "bd1efd70cf43d6d95894f87533ce07cfb77271e933d82b1b2d60b0f4ae19a039",
+    "cpuset": "48-63,112-127",
+    "devices": [
+      {
+        "Driver": "nvidia",
+        "Count": 0,
+        "DeviceIDs": [
+          "6",
+          "7"
+        ],
+        "Capabilities": [
+          [
+            "gpu"
+          ]
+        ],
+        "Options": null
+      }
+    ]
+  },
+  "protected": {
+    "gemma-4-31b-8gpu-gemma-0-1": {
+      "id": "21aaf4aed1096bd7205fb5369528d6c84d61672b01fc5ef36bfd57bbbbb690cd",
+      "image": "sha256:af9e746b913088cbf6c4464a31d6904a6b7e1d3ba62f0895362ddf13595f7abe",
+      "running": true,
+      "health": "healthy",
+      "started_at": "2026-11-07T04:15:21.19611959Z",
+      "config_sha256": "17984451bb2c70732f17c263c2e2922232044e080a40912988388a95b15fb549",
+      "host_config_sha256": "1dd93df1e766588e27d7e0a0e9634a75088be0006167cbc6cd65a7dc65a8dcba",
+      "cpuset": "0-15,64-79",
+      "devices": [
+        {
+          "Driver": "nvidia",
+          "Count": 0,
+          "DeviceIDs": [
+            "0",
+            "1"
+          ],
+          "Capabilities": [
+            [
+              "gpu"
+            ]
+          ],
+          "Options": null
+        }
+      ]
+    },
+    "gemma-4-31b-8gpu-gemma-1-1": {
+      "id": "32517829133b9a4a852eed753ae50b274343733307d65b2c01fa10172d513892",
+      "image": "sha256:af9e746b913088cbf6c4464a31d6904a6b7e1d3ba62f0895362ddf13595f7abe",
+      "running": true,
+      "health": "healthy",
+      "started_at": "2026-11-07T03:31:29.109391414Z",
+      "config_sha256": "2da946f21e6eb082728ac4c264e4fe6c3115bc7edfc11b36f47d268bbb192900",
+      "host_config_sha256": "1ca37c636127d41145d7f9b7b5e0310fc71d7fee1040ebb0a2597bb75653c8d4",
+      "cpuset": "16-31,80-95",
+      "devices": [
+        {
+          "Driver": "nvidia",
+          "Count": 0,
+          "DeviceIDs": [
+            "2",
+            "3"
+          ],
+          "Capabilities": [
+            [
+              "gpu"
+            ]
+          ],
+          "Options": null
+        }
+      ]
+    },
+    "gemma-4-31b-8gpu-gemma-2-1": {
+      "id": "132833f603a6cbd1b6beed302590cbafd6d9e09bad879720f4c35f39cb806210",
+      "image": "sha256:af9e746b913088cbf6c4464a31d6904a6b7e1d3ba62f0895362ddf13595f7abe",
+      "running": true,
+      "health": "healthy",
+      "started_at": "2026-11-07T03:31:29.419978923Z",
+      "config_sha256": "d84f0ee1d62c33130a2646f32d29b4bd7de61c0550aeb46c3f029ec1a2ed1f51",
+      "host_config_sha256": "d104e19337c026400f5abd1c7f99e7241045815239e6360491510d410a2ed5fc",
+      "cpuset": "32-47,96-111",
+      "devices": [
+        {
+          "Driver": "nvidia",
+          "Count": 0,
+          "DeviceIDs": [
+            "4",
+            "5"
+          ],
+          "Capabilities": [
+            [
+              "gpu"
+            ]
+          ],
+          "Options": null
+        }
+      ]
+    },
+    "gemma-4-31b-8gpu-embed-0-1": {
+      "id": "b4302da3c2814fa2458ae7e4652b0041af34bd45d6872b86ecd40cfa06bf9985",
+      "image": "sha256:af9e746b913088cbf6c4464a31d6904a6b7e1d3ba62f0895362ddf13595f7abe",
+      "running": true,
+      "health": "healthy",
+      "started_at": "2026-11-03T22:58:39.917321358Z",
+      "config_sha256": "f4535b4de6114f5db3049d4eda5f211907324d3cf5a8bc2f9c17e7b8f1f78dc4",
+      "host_config_sha256": "c76de161932061f0f19efdc92340a723b31283ee58176f9b520ab3ddb6f64790",
+      "cpuset": "0-15,64-79",
+      "devices": [
+        {
+          "Driver": "nvidia",
+          "Count": 0,
+          "DeviceIDs": [
+            "1"
+          ],
+          "Capabilities": [
+            [
+              "gpu"
+            ]
+          ],
+          "Options": null
+        }
+      ]
+    },
+    "gemma-4-31b-8gpu-embed-1-1": {
+      "id": "897103115f63e39d3261f39bf449bfa9258121d270ae700f65c0321837eeec08",
+      "image": "sha256:af9e746b913088cbf6c4464a31d6904a6b7e1d3ba62f0895362ddf13595f7abe",
+      "running": true,
+      "health": "healthy",
+      "started_at": "2026-11-03T22:58:39.916999785Z",
+      "config_sha256": "9ac074311550ac5edad3cf600b746cb2ce5307c638f23500bed71b09c1462c29",
+      "host_config_sha256": "52e979a281df89425cc2c3a81308d13f523876bb6ad57cae4929bbd4a98e3db2",
+      "cpuset": "48-63,112-127",
+      "devices": [
+        {
+          "Driver": "nvidia",
+          "Count": 0,
+          "DeviceIDs": [
+            "7"
+          ],
+          "Capabilities": [
+            [
+              "gpu"
+            ]
+          ],
+          "Options": null
+        }
+      ]
+    }
+  },
+  "image": "sha256:af9e746b913088cbf6c4464a31d6904a6b7e1d3ba62f0895362ddf13595f7abe",
+  "gpu": 6,
+  "cpuset": "48-55",
+  "memory": "128g",
+  "maximum_seconds": 600,
+  "uid_gid": "1003:1003",
+  "network": "none",
+  "cases": 120,
+  "target_queue_metrics": {
+    "metrics_sha256": "05a2769637e3c3867658cf9038b61f60f11caddccfefff973c83768efa26c72f",
+    "queues": {
+      "vllm:num_requests_running": [
+        0.0
+      ],
+      "vllm:num_requests_waiting": [
+        0.0
+      ]
+    }
+  },
+  "pins": {
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f01/finite-gpu6-v1/finite-plan.json": "29045b3ecdc9fd3990100895bdf5f890f199481406ca2f8d3e9e430a91d455a8",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/code90-resume-20261106/long-helper-chain-curriculum-v1/train-cases.json": "bd6fcba70e93b1870ee882f6e92893b93490ad4099af7a9a290ba3d324d68951",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f01/proposal/fresh-code-joint-f01.json": "12f4e111a9d31539c6e2d3a94e8270c34b4dbc8a1c4f145fcdcf21ef936eb9d5",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/code90-resume-20261106/science-gpu-runs/provisional-av-long-purpose-v3/matrix-correct-logprob/frame-evidence.json": "74c07c8e9e8e53f723c1c857268c35a92f0a26b716a6afb042574dd9a8b298d9",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/code90-resume-20261106/provisional-av-long-purpose-observation-v1/checkpoint-attestation.json": "12ba81915ae02dfc9d898bc5639d4deb689821071b3a36fceb3befa4e0f01755",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-av-live10-v1/finite-gpu6-sublease.json": "8848dddf60d8e4dceadff3b10858f21119911251bba63eaa5a73bed458f293bb",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f01/finite-gpu6-v1/source/kairyu_bench/deepswe.py": "8c28ed9b6ceef268cb4863a9f69210d75d8778a3804a586e5c46a3e9c8406406",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f01/finite-gpu6-v1/source/kairyu_bench/artifacts.py": "b30a66967d435dc2e03a4e780e88591e8586c3b95355bbb163cc0b54d457d6ca",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f01/finite-gpu6-v1/source/kairyu_bench/terminal_bench4_accounting.py": "fcf4b2b1496253dee73509ed3edfa25d8395805e314ff1c9dccbe98463cc304f",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f01/finite-gpu6-v1/source/kairyu_bench/__init__.py": "adb3e3c453270cc36bdfe5b78fb4b3543eeb8b1bc8de356847e8580086be0709",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f01/finite-gpu6-v1/source/kairyu_bench/harness_data.py": "dc0546ff96c9355c88c11087aa95c4e497270492ab17fbe94174e60c5fe84d57",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f01/finite-gpu6-v1/source/kairyu_bench/inspect_summary.py": "16b21eefdb064e5d1f12b17281084437491aa3c1e029ffc5d901bffa2b9a6a0c",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f01/finite-gpu6-v1/source/kairyu_bench/deepswe_dsh.py": "5b1f4b59c1ec85924508948be0f5e451ebddc5499d4e5d587d9491035c1396be",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f01/finite-gpu6-v1/source/kairyu_bench/runner.py": "750e95de9865bfb0a29fb75c828ee3281c7fff2f6271544ea6fc45b46f0e57c1",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f01/finite-gpu6-v1/source/kairyu_bench/terminal_bench4_cli.py": "37c843e6ce926de92e7de8a9afbd66cc677574d78a61d38e176ddf3437cf7833",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f01/finite-gpu6-v1/source/kairyu_bench/public_results.py": "3771ef066f18dd098ceacf99abfac97bcc6a60c8e600e560e7b657f2c3e8c14d",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f01/finite-gpu6-v1/source/kairyu_bench/manifest.py": "eaa526757736a83afddd0e1b4298e70f53642129d312d3425acc6c44e97772a4",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f01/finite-gpu6-v1/source/kairyu_bench/selection.py": "d9d95b6be7b3d6648deaa0b7103d902a6fe717ef6c2b96a520f8b37e587e6f31",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f01/finite-gpu6-v1/source/kairyu_bench/deepswe_dsh_runner.py": "bbe7073fe525ede0d06618a028d5b7f192e655e6f5c396eaf42a883249334992",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f01/finite-gpu6-v1/source/kairyu_bench/benchmarks.py": "fa551e044a9e7f43ca18eec853b99512830606a389feccab4c79d69e9dabfa95",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f01/finite-gpu6-v1/source/kairyu_bench/__main__.py": "53c3bc3ff7afa01b08c74fdf30e51a57f1b6ce7d730bfa2d9af9b108fbd42804",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f01/finite-gpu6-v1/source/kairyu_bench/cli.py": "dd679d0f8cb7f6bfdf9e48a25e040bb6d336e6222038ad6de36f381de64cf32a",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f01/finite-gpu6-v1/source/kairyu_bench/target.py": "b44a5d515105b7d1ead8378b3627a12e893106d63533fda8ea517d2b741fca7d",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f01/finite-gpu6-v1/source/kairyu_bench/deepswe_runtime.py": "a3ebcf772fba4c2aabe365c5346120df3c57367714129dc81f2092c15c868ca3",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f01/finite-gpu6-v1/source/kairyu_bench/swebench_pro.py": "9c5b2615a5c99e699c9cee88c348630a4bef221e43c500be1bad5cad35829df0",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f01/finite-gpu6-v1/source/kairyu_bench/terminal_bench4.py": "93c88cf502a417a9c3fff962ece2256da29b4fb00832c9dadd3d9f7c4aac3b99",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f01/finite-gpu6-v1/source/kairyu_bench/terminal_bench4_plugin.py": "c34dcde7247d5903affc643e91a9cb9240540f0a9b31c7430d79d88080a16776",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f01/finite-gpu6-v1/source/kairyu_bench/adapter_context.py": "59e89313bb4b45df025a9856c9bc16f2648a84cb879ad85ed98f63433d0ecdbe",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f01/finite-gpu6-v1/source/kairyu_bench/direct.py": "7105d15cb6d07d3924ca4f05cdf1ce7eff0d1ffe448cbdecb616f3fc35379aa8",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f01/finite-gpu6-v1/source/kairyu_bench/results.py": "d51922e9ae70f757ee976943cabf72ca280b9e41c41953ad81d63b93ba6f790a",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f01/finite-gpu6-v1/source/kairyu_bench/official.py": "5d7f12e2cf833bd509cf65dbb4619095de2ae936df1a0dfad86b6bdfe6439612",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f01/finite-gpu6-v1/source/kairyu_bench/harness_config.py": "5416032ec738d8cfd774da7d78e81308727c518d13557673e9ca020aeb11a416",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f01/finite-gpu6-v1/source/kairyu_bench/reporting.py": "213994cc5596affc5a8a93fde75f52d290f8ac49bdc510b29b1ecae0b979c3e6",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f01/finite-gpu6-v1/source/kairyu_bench/wsp/__init__.py": "066441d666206cec6fe79218c4b94f84b75481769261f88d8092a28bfc2f1927",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f01/finite-gpu6-v1/source/kairyu_bench/wsp/report.py": "f708cab18226874ac26d2b9fce642db811fcdbe985f2420eeda40920e2575784",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f01/finite-gpu6-v1/source/kairyu_bench/wsp/manifest.py": "d41c24bec59f7e84bd0065fae400d2c1209bdc7384d277ab82eff3c91debbfe3",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f01/finite-gpu6-v1/source/kairyu_bench/wsp/select.py": "6e3de893d9bd8e0bbb60daa2e75fe3f4e11124dade6daa1e841ab25f1d8f7ed4",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f01/finite-gpu6-v1/source/kairyu_bench/wsp/cli.py": "406b07cb9bed06bd3b814292329cd67d0acf89fcaf5fddca8858cc865bbed090",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f01/finite-gpu6-v1/source/kairyu_bench/wsp/client.py": "3a99ddd6c19697bee533ba3e87d3d13170ba5299571b523b773cd72e60cc7b2c",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f01/finite-gpu6-v1/source/kairyu_bench/wsp/catalog.py": "8f250f3180bc0e16876980d681836cd74f4c275b978fa23721e3ee5b0c50a0a7",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f01/finite-gpu6-v1/source/kairyu_bench/wsp/run.py": "9272730f132a72002cc38f7c3c47690893f8288652364c1b644e0cf27bf04ce2",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f01/finite-gpu6-v1/source/kairyu_bench/wsp/weights/__init__.py": "84407e8a57e31b915d5ba936a309457422b3b6c347fde2056f1dd492ad511cca",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f01/finite-gpu6-v1/source/kairyu_bench/wsp/weights/checkpoint.py": "898297c05e7179cdc4568d6f290b978073bcebafea804ac043b54030e8205bf9",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f01/finite-gpu6-v1/source/kairyu_bench/wsp/weights/statistics.py": "7c021ac29e0e6bdbcb5a0bc150a598eeef7c9d1a39baf3931525d849ca0370f0",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f01/finite-gpu6-v1/source/kairyu_bench/wsp/weights/shard_pool.py": "f45d073c9950579753c74143dbc9cdc89abfdc6b0d2e4c694c91807d9b4cbc2f",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f01/finite-gpu6-v1/source/kairyu_bench/wsp/weights/receipts.py": "b7299c8c89ad07e2f7df6cacfac39adabb4c98e6407da2585d6649dc26b37f27",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f01/finite-gpu6-v1/source/kairyu_bench/wsp/weights/cli.py": "4193ee3863ac8d96ead9ba167ac572619d280ed9277f5729df970361cb882b26",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f01/finite-gpu6-v1/source/kairyu_bench/wsp/weights/finite_replay.py": "71c424bffac775ba112e709632df0a37351a79c3121827be7c9844f321c7c4d3",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f01/finite-gpu6-v1/source/kairyu_bench/wsp/weights/matrix.py": "002761474fd4bba4bce089b23eb6fcf701ab7c40b39b819a272a39dfdbac97e9",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f01/finite-gpu6-v1/source/kairyu_bench/wsp/weights/editor.py": "0983580f41989c26e84c16c26924f2850dd4e5d3d12917bb9553d7feb92333d2",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f01/finite-gpu6-v1/source/kairyu_bench/wsp/weights/native_faststore.py": "445cc73783bd6bd61890b107bb76ddca1e388a9bf84b630125a01486389578cd",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f01/finite-gpu6-v1/source/kairyu_bench/wsp/weights/finite_response.py": "2f4b474089290d66a291d61eea176743d2502303943c6fded5b4331ebbff77af",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f01/finite-gpu6-v1/source/kairyu_bench/wsp/weights/composition.py": "7ce2bc057ad3974d8c4d8509be0c193dbb7fd6b42cd523e1c9df5619bf7f84b7",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f01/finite-gpu6-v1/source/kairyu_bench/wsp/scorers/__init__.py": "2145b19f2e3bb058c3261903dad4ca4bb525bfa0ab66e28006c0eee7a8c52616",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f01/finite-gpu6-v1/source/kairyu_bench/wsp/scorers/evalplus_score.py": "142c57786f1658d28c3d3927115c1ebb574ac2e5d2f7e54772c704db31b56291",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f01/finite-gpu6-v1/source/kairyu_bench/wsp/scorers/livecodebench_score.py": "45ea6a0f27150a148904f1b3a145f51fe2ac9953874e4c7fc7e5e1feda550f60",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f01/finite-gpu6-v1/source/kairyu_bench/wsp/scorers/scicode_score.py": "623c459292e33fb406cbeef5aae446657644faef9913af4bb149addbacd0641c",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f01/finite-gpu6-v1/source/kairyu_bench/wsp/observe/__init__.py": "a42b91d537a800b48f8b4e8b99f74e862ab2f4b8b3a394706ee6b348c1b2b9fe",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f01/finite-gpu6-v1/source/kairyu_bench/wsp/observe/report.py": "eb3f44c74034a2087d78a8941823ef5e7f3a82ec1be5d8f566dc01d462258258",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f01/finite-gpu6-v1/source/kairyu_bench/wsp/observe/core.py": "363fc7e33bcb22b20d846171892366fa067bdb7f3062cd35e4b8e616dba2849d",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f01/finite-gpu6-v1/source/kairyu_bench/wsp/observe/collector.py": "fcb8bbe3f964d47ac2f57e89804c82132b14b9434813fff0a607316bc04fb7d7",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f01/finite-gpu6-v1/source/kairyu_bench/wsp/observe/cli.py": "3bfbb7e6dd2fe0e89fbd2b2211e1688a9e56daa704bde6575f8e229e51042b9f",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f01/finite-gpu6-v1/source/kairyu_bench/wsp/observe/collector_io.py": "85668993159e0788089627b27360918e4761176edea0e35c7b504408be3473f8",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f01/finite-gpu6-v1/source/kairyu_bench/wsp/observe/tracing.py": "02b21d991f2d3be7a4f5bd648857e9a887bf1fd7dd7984245b5244ed96ee27b4",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f01/finite-gpu6-v1/source/kairyu_bench/wsp/observe/middleware.py": "d5e7e1cf05c5a6081c1cd8185f04a2ecc4a0373f59a9331a0719f588eedf11b6",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f01/finite-gpu6-v1/source/kairyu_bench/wsp/observe/gpu_kernel.py": "622b4ab43a0e83446bbe375a1e604896eb0ed7090c85bdc4c625f6d5a88196fa",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f01/finite-gpu6-v1/source/kairyu_bench/wsp/observe/vllm_worker.py": "03c86d216e1177fb879d5314bb43b83cf5a934651be70fa3d6ef8d245cb2fd0d",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f01/finite-gpu6-v1/source/kairyu_bench/wsp/observe/budget.py": "edb3bb7554e4b5228c8768a8a8932bbe5237df1b4f7ba4b2bed26d676f468b1a",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f01/finite-gpu6-v1/source/kairyu_bench/wsp/sources/__init__.py": "92a8db31d765d06a8f3c111bf42618fa8f49b8db0b7d2915d0eea0ef6b8ccc4a",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f01/finite-gpu6-v1/source/kairyu_bench/wsp/sources/terminal_bench_observe.py": "79754d3568828424eff5c1adaabf03d7fdd0491ca30e7257322610319c3c46e0",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f01/finite-gpu6-v1/source/kairyu_bench/wsp/sources/agents.py": "c84d8d2a2ea879ab65d72f535b9108db111909aa1b474c0060275610deb4379d",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f01/finite-gpu6-v1/source/kairyu_bench/wsp/sources/long_context.py": "1078a7a05a5d645f1da4c870c0b5c50053fd392826614484552944048963bbb5",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f01/finite-gpu6-v1/source/kairyu_bench/wsp/sources/code.py": "523ab727598a80f06f49d7118ad6cfb4206fdae9c1135a63d64b87b3ed5a31c6",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f01/finite-gpu6-v1/source/kairyu_bench/wsp/sources/instructions.py": "560366c343de22d23a379dc64ec1101a6d8cbfc4598e8c55dabe41db420b8e25",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f01/finite-gpu6-v1/source/kairyu_bench/wsp/sources/tools.py": "79832fe172a2eb10ce11ba759a9ad5127ac759802f0e336afe8c05a0d702ed67",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f01/finite-gpu6-v1/source/kairyu_bench/wsp/sources/logprob.py": "fafc8d0c6b1623621301f2515b1c393948ffbed3fbe5ecfa86571bac1ef6fe89",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f01/finite-gpu6-v1/source/kairyu_bench/wsp/sources/vision.py": "be03da1f6ea0706e59292f06920272bb73105b54b2404cc5af495d1145b5a58a",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f01/finite-gpu6-v1/source/kairyu_bench/wsp/sources/mathematics.py": "8d911891ac7cea5af1b910e03e38866c9c9dfaf471b7c6b7775d4f194a558826",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f01/finite-gpu6-v1/source/kairyu_bench/wsp/sources/choice.py": "bc85beadf73b38368ba43b297ce7a39420d8fdf1621da1c38cca43a4233375b6",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f01/finite-gpu6-v1/source/kairyu_bench/wsp/sources/text.py": "d997d902f42b09abe8252d5b8575fa3e365334f2c21ccdff1f2f80e8da37092d"
+  },
+  "owner_source_sha256": "66f3f6ac48e1e77fb8bcbb9ee74d16c6facca718e4b60f76d2c4f4e555f3991d",
+  "output": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f01/finite-gpu6-v1/work/replay",
+  "gpu_lock": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/gpu6-finite.lock",
+  "timing_note": "May overlap gemma0 WSP on disjoint GPUs; shared host resources mean no uncontended latency claim."
+}

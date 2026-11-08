@@ -1,0 +1,401 @@
+{
+  "schema_version": 1,
+  "candidate_path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/checkpoints/scalar-l41-plus4",
+  "mandatory_base_path": "/mnt/nvme/kairyu/model-volumes/gemma-4-31b-8gpu/models/gemma-4-31b-it",
+  "original_spec_sha256": "125878049cb6e1fa10629b5c9c64c21b93487d11b8eb02d2d3878b7e9b669c8e",
+  "original_manifest_sha256": "c541105f145c947c93c82368aaed111f9ec524917b00565408cc0bb1d4fef43e",
+  "original_manifest_legacy_hashes_missing": true,
+  "fresh_full_verify_sha256": "22efe41e5c4b662c42a7c3dabde65b3b5c00d2f5cfcb9d6b89ef4bc2833d2b7f",
+  "streamed_restoration_equals_original_base": true,
+  "changed_elements": 1,
+  "changed_bytes": 2,
+  "patches": [
+    {
+      "tensor": "model.language_model.layers.41.layer_scalar",
+      "shard": "model-00002-of-00002.safetensors",
+      "offset": 6727700018,
+      "size": 2,
+      "dtype": "BF16",
+      "shape": [
+        1
+      ],
+      "operation": "set",
+      "requested_value": 0.67578125,
+      "selected_indices": [
+        0
+      ],
+      "changed_indices": [
+        0
+      ],
+      "changed_count": 1,
+      "source_tensor_sha256": "4d1324dab677e4d4e97434d3f9c2400a1d7978b9ea8e18a39a04aafb06e1b5f3",
+      "candidate_tensor_sha256": "a2a124965e01e989ea20797eb852fe418bf1b8e46f99e554553e2916d193cad8",
+      "before_hex": "293f",
+      "after_hex": "2d3f",
+      "source_l2": 0.66015625,
+      "delta_l2": 0.015625,
+      "relative_delta_l2": 0.023668639053254437
+    }
+  ],
+  "files": [
+    {
+      "path": ".eval_results/mmmu_pro.yaml",
+      "source_sha256": "e673fe773afc0807cf25534cefac2e9c4c81673fc450fb1fe501624fb807532c",
+      "candidate_sha256": "e673fe773afc0807cf25534cefac2e9c4c81673fc450fb1fe501624fb807532c"
+    },
+    {
+      "path": ".gitattributes",
+      "source_sha256": "aa4fc74fe06acc698271341dee76eca26c6672a1f4b2840dedbf37f1b4fe27a4",
+      "candidate_sha256": "aa4fc74fe06acc698271341dee76eca26c6672a1f4b2840dedbf37f1b4fe27a4"
+    },
+    {
+      "path": "README.md",
+      "source_sha256": "e209f5c435b1e66055bd6d7c29185103ae8d2027a03a96b359335154f206b82b",
+      "candidate_sha256": "e209f5c435b1e66055bd6d7c29185103ae8d2027a03a96b359335154f206b82b"
+    },
+    {
+      "path": "chat_template.jinja",
+      "source_sha256": "ae53464bf3be25802b3a5b37def7fd89667067d7577049b3b2d74c4d8de4c6d4",
+      "candidate_sha256": "ae53464bf3be25802b3a5b37def7fd89667067d7577049b3b2d74c4d8de4c6d4"
+    },
+    {
+      "path": "config.json",
+      "source_sha256": "e967dd38bc5cfd38bd09a995a7bf4a754075df2b46aba68f7fbb5a791e6d8dd1",
+      "candidate_sha256": "e967dd38bc5cfd38bd09a995a7bf4a754075df2b46aba68f7fbb5a791e6d8dd1"
+    },
+    {
+      "path": "generation_config.json",
+      "source_sha256": "d4226bbe3117d2d253ba4609720ba82c6c4ce4627a9a6ae05387c78983ac03de",
+      "candidate_sha256": "d4226bbe3117d2d253ba4609720ba82c6c4ce4627a9a6ae05387c78983ac03de"
+    },
+    {
+      "path": "model-00001-of-00002.safetensors",
+      "source_sha256": "eeef8791537bc04f110967c513149e037d2a9ae97d49add7291ebfa62806bbfa",
+      "candidate_sha256": "eeef8791537bc04f110967c513149e037d2a9ae97d49add7291ebfa62806bbfa"
+    },
+    {
+      "path": "model-00002-of-00002.safetensors",
+      "source_sha256": "018912220f559f7025d60333e0996183cd538aa77ad6f4988a89ce47be681f10",
+      "candidate_sha256": "86aa2a5651aa7bee2e642572df5f722d5844a4ff3ca2324c3ac0ba336e5c60d1"
+    },
+    {
+      "path": "model.safetensors.index.json",
+      "source_sha256": "d4aff3b976d69c123a29d1c085d7ba4de1ac3f4ca1726a7f81e1b11462a64ea2",
+      "candidate_sha256": "d4aff3b976d69c123a29d1c085d7ba4de1ac3f4ca1726a7f81e1b11462a64ea2"
+    },
+    {
+      "path": "processor_config.json",
+      "source_sha256": "32bdf45d2ad4cc29a0822ddd157a182de76644f0419a6228d151495256e9813c",
+      "candidate_sha256": "32bdf45d2ad4cc29a0822ddd157a182de76644f0419a6228d151495256e9813c"
+    },
+    {
+      "path": "tokenizer.json",
+      "source_sha256": "cc8d3a0ce36466ccc1278bf987df5f71db1719b9ca6b4118264f45cb627bfe0f",
+      "candidate_sha256": "cc8d3a0ce36466ccc1278bf987df5f71db1719b9ca6b4118264f45cb627bfe0f"
+    },
+    {
+      "path": "tokenizer_config.json",
+      "source_sha256": "9f4fec4b1dc6ecddf8f4a92e9caea5971c0e67d81309f3f9066a2bee8c362633",
+      "candidate_sha256": "9f4fec4b1dc6ecddf8f4a92e9caea5971c0e67d81309f3f9066a2bee8c362633"
+    }
+  ],
+  "metadata_count": 10,
+  "source_stats": {
+    ".eval_results/mmmu_pro.yaml": {
+      "device": 2306,
+      "inode": 181176111,
+      "size": 182,
+      "mtime_ns": 1793718022773510504,
+      "ctime_ns": 1793718022773510504,
+      "mode": 33188,
+      "uid": 0,
+      "gid": 0,
+      "nlink": 1
+    },
+    ".gitattributes": {
+      "device": 2306,
+      "inode": 181176109,
+      "size": 1708,
+      "mtime_ns": 1793718022726512112,
+      "ctime_ns": 1793718022726512112,
+      "mode": 33188,
+      "uid": 0,
+      "gid": 0,
+      "nlink": 1
+    },
+    "README.md": {
+      "device": 2306,
+      "inode": 181176110,
+      "size": 27963,
+      "mtime_ns": 1793718022732511907,
+      "ctime_ns": 1793718022733511873,
+      "mode": 33188,
+      "uid": 0,
+      "gid": 0,
+      "nlink": 1
+    },
+    "chat_template.jinja": {
+      "device": 2306,
+      "inode": 181176107,
+      "size": 18683,
+      "mtime_ns": 1793718022685513514,
+      "ctime_ns": 1793718022686513480,
+      "mode": 33188,
+      "uid": 0,
+      "gid": 0,
+      "nlink": 1
+    },
+    "config.json": {
+      "device": 2306,
+      "inode": 181176108,
+      "size": 4621,
+      "mtime_ns": 1793718022717512420,
+      "ctime_ns": 1793718022717512420,
+      "mode": 33188,
+      "uid": 0,
+      "gid": 0,
+      "nlink": 1
+    },
+    "generation_config.json": {
+      "device": 2306,
+      "inode": 181176112,
+      "size": 208,
+      "mtime_ns": 1793718022761510915,
+      "ctime_ns": 1793718022761510915,
+      "mode": 33188,
+      "uid": 0,
+      "gid": 0,
+      "nlink": 1
+    },
+    "model-00001-of-00002.safetensors": {
+      "device": 2306,
+      "inode": 181176101,
+      "size": 49784788364,
+      "mtime_ns": 1793718096477990897,
+      "ctime_ns": 1793718102417787962,
+      "mode": 33188,
+      "uid": 0,
+      "gid": 0,
+      "nlink": 1
+    },
+    "model-00002-of-00002.safetensors": {
+      "device": 2306,
+      "inode": 181176102,
+      "size": 12761549884,
+      "mtime_ns": 1793718043716794265,
+      "ctime_ns": 1793718047148676921,
+      "mode": 33188,
+      "uid": 0,
+      "gid": 0,
+      "nlink": 1
+    },
+    "model.safetensors.index.json": {
+      "device": 2306,
+      "inode": 181176124,
+      "size": 120246,
+      "mtime_ns": 1793718023192496174,
+      "ctime_ns": 1793718023192496174,
+      "mode": 33188,
+      "uid": 0,
+      "gid": 0,
+      "nlink": 1
+    },
+    "processor_config.json": {
+      "device": 2306,
+      "inode": 181176125,
+      "size": 1689,
+      "mtime_ns": 1793718023240494532,
+      "ctime_ns": 1793718023241494498,
+      "mode": 33188,
+      "uid": 0,
+      "gid": 0,
+      "nlink": 1
+    },
+    "tokenizer.json": {
+      "device": 2306,
+      "inode": 181176119,
+      "size": 32169626,
+      "mtime_ns": 1793718029370284877,
+      "ctime_ns": 1793718029569278071,
+      "mode": 33188,
+      "uid": 0,
+      "gid": 0,
+      "nlink": 1
+    },
+    "tokenizer_config.json": {
+      "device": 2306,
+      "inode": 181176126,
+      "size": 3082,
+      "mtime_ns": 1793718023249494224,
+      "ctime_ns": 1793718023250494190,
+      "mode": 33188,
+      "uid": 0,
+      "gid": 0,
+      "nlink": 1
+    }
+  },
+  "candidate_stats": {
+    ".eval_results/mmmu_pro.yaml": {
+      "device": 2306,
+      "inode": 181570971,
+      "size": 182,
+      "mtime_ns": 1793718022773510504,
+      "ctime_ns": 1793800959112135783,
+      "mode": 33188,
+      "uid": 1003,
+      "gid": 1003,
+      "nlink": 1
+    },
+    ".gitattributes": {
+      "device": 2306,
+      "inode": 181570972,
+      "size": 1708,
+      "mtime_ns": 1793718022726512112,
+      "ctime_ns": 1793800959112135783,
+      "mode": 33188,
+      "uid": 1003,
+      "gid": 1003,
+      "nlink": 1
+    },
+    "README.md": {
+      "device": 2306,
+      "inode": 181570973,
+      "size": 27963,
+      "mtime_ns": 1793718022732511907,
+      "ctime_ns": 1793800959112135783,
+      "mode": 33188,
+      "uid": 1003,
+      "gid": 1003,
+      "nlink": 1
+    },
+    "chat_template.jinja": {
+      "device": 2306,
+      "inode": 181570974,
+      "size": 18683,
+      "mtime_ns": 1793718022685513514,
+      "ctime_ns": 1793800959112135783,
+      "mode": 33188,
+      "uid": 1003,
+      "gid": 1003,
+      "nlink": 1
+    },
+    "config.json": {
+      "device": 2306,
+      "inode": 181570975,
+      "size": 4621,
+      "mtime_ns": 1793718022717512420,
+      "ctime_ns": 1793800959113135749,
+      "mode": 33188,
+      "uid": 1003,
+      "gid": 1003,
+      "nlink": 1
+    },
+    "generation_config.json": {
+      "device": 2306,
+      "inode": 181570976,
+      "size": 208,
+      "mtime_ns": 1793718022761510915,
+      "ctime_ns": 1793800959113135749,
+      "mode": 33188,
+      "uid": 1003,
+      "gid": 1003,
+      "nlink": 1
+    },
+    "model-00001-of-00002.safetensors": {
+      "device": 2306,
+      "inode": 181570977,
+      "size": 49784788364,
+      "mtime_ns": 1793800998623810408,
+      "ctime_ns": 1793800998623810408,
+      "mode": 33188,
+      "uid": 1003,
+      "gid": 1003,
+      "nlink": 1
+    },
+    "model-00002-of-00002.safetensors": {
+      "device": 2306,
+      "inode": 181570979,
+      "size": 12761549884,
+      "mtime_ns": 1793801006132558297,
+      "ctime_ns": 1793801006132558297,
+      "mode": 33188,
+      "uid": 1003,
+      "gid": 1003,
+      "nlink": 1
+    },
+    "model.safetensors.index.json": {
+      "device": 2306,
+      "inode": 181570980,
+      "size": 120246,
+      "mtime_ns": 1793718023192496174,
+      "ctime_ns": 1793801006112558968,
+      "mode": 33188,
+      "uid": 1003,
+      "gid": 1003,
+      "nlink": 1
+    },
+    "processor_config.json": {
+      "device": 2306,
+      "inode": 181570981,
+      "size": 1689,
+      "mtime_ns": 1793718023240494532,
+      "ctime_ns": 1793801006112558968,
+      "mode": 33188,
+      "uid": 1003,
+      "gid": 1003,
+      "nlink": 1
+    },
+    "tokenizer.json": {
+      "device": 2306,
+      "inode": 181570982,
+      "size": 32169626,
+      "mtime_ns": 1793718029370284877,
+      "ctime_ns": 1793801006132558297,
+      "mode": 33188,
+      "uid": 1003,
+      "gid": 1003,
+      "nlink": 1
+    },
+    "tokenizer_config.json": {
+      "device": 2306,
+      "inode": 181570983,
+      "size": 3082,
+      "mtime_ns": 1793718023249494224,
+      "ctime_ns": 1793801006132558297,
+      "mode": 33188,
+      "uid": 1003,
+      "gid": 1003,
+      "nlink": 1
+    }
+  },
+  "release_scope": {
+    "model-00001-of-00002.safetensors": {
+      "device": 2306,
+      "inode": 181570977,
+      "size": 49784788364,
+      "mtime_ns": 1793800998623810408,
+      "ctime_ns": 1793800998623810408,
+      "mode": 33188,
+      "uid": 1003,
+      "gid": 1003,
+      "nlink": 1
+    },
+    "model-00002-of-00002.safetensors": {
+      "device": 2306,
+      "inode": 181570979,
+      "size": 12761549884,
+      "mtime_ns": 1793801006132558297,
+      "ctime_ns": 1793801006132558297,
+      "mode": 33188,
+      "uid": 1003,
+      "gid": 1003,
+      "nlink": 1
+    }
+  },
+  "physical_full_reconstruction": false,
+  "historical_tree_identity_not_rehashed": false,
+  "model_calls": 0,
+  "gpu_calls": 0,
+  "service_changes": 0,
+  "checkpoint_mutations": 0
+}

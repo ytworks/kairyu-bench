@@ -1,0 +1,13 @@
+{
+  "epoch": 1794060087.2786453,
+  "approved": true,
+  "plan_path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f06-dev30-dp4-v1/launch-plan-approved-v2.json",
+  "plan_sha256": "cb8a8c6642c53d2dcb6b40269ba2910816bf3a09ff308d04124c97e94a5f8f39",
+  "source_sha256": "4035bcb4362d9ebbddecce1e9c19bb3bc902f153926502e68c39d81b6287445a",
+  "owner_sha256": "956af488fe54578c32c9baa856e9c32170dc49c1bbce2b1ba5db9af9ea1dd524",
+  "conditions_equal_F04": true,
+  "items": 2338,
+  "model_calls_before_launch": 0,
+  "baseline_calls": 0,
+  "authorization": "Root explicitly delegated approval and immediate launch after existing owner preview PASS and exact F04 conditions plus verified F06 save, actual Opus and all4 endpoint identity. One unchanged full2338 run; no baseline rerun."
+}

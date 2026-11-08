@@ -1,0 +1,26 @@
+{
+  "review_kind": "source-only independent review; no candidate or actual plan exists",
+  "blocking_findings": [],
+  "owner_sha256": "39707865f4cc4851290d218d0f4cb6a3fa8768a940a124a9f0ea953ee0d2c5d7",
+  "tests_sha256": "d76064bc0ddebe6dc10cce0f8d26fa2b4562e8fb8aaa5bf73e427ec0102187ff",
+  "existing_cpu_validation_path": "docs/experiments/records/2026-11-07-native-gpu4-owner/cpu-validation-finite-v1.json",
+  "existing_cpu_validation_sha256": "6269332743a44efe6b7e022206f56094eb6cc031723d1c81eba0751f0b1c5d3f",
+  "reviewed_boundaries": [
+    "native default retained; explicit finite one-job mode",
+    "all12 train / all3 sweeps / one immutable candidate",
+    "full9file verified identity and stat continuity / same spec / actual saved selected BF16 words",
+    "raw deltas and numeric restoration / actual SDPA 88GiB",
+    "shared cleanup before and after client exit / fresh cidfile / original exact target / other26"
+  ],
+  "model_calls": 0,
+  "gpu_calls": 0,
+  "service_operations": 0,
+  "independent_test_reruns": 0,
+  "limits": [
+    "Actual saved candidate and immutable finite execution plan still required before run",
+    "Existing CPU tests are fixture/mocked Docker evidence, not real GPU verification"
+  ],
+  "read_only_command_errors": [
+    "Two guessed test filenames did not exist; correct tests/test_gemma4_native_owner.py was located without source mutation"
+  ]
+}

@@ -1,0 +1,182 @@
+{
+  "epoch": 1794040628.7135541,
+  "status": "all12_public_answers_received_scoring_pending",
+  "cases": 12,
+  "requests": 12,
+  "attempts_per_case": 1,
+  "retries": 0,
+  "transfer_requests": 0,
+  "missing_ids": [],
+  "errors": 0,
+  "empty": 0,
+  "length_finished": 0,
+  "owner_elapsed_seconds": 18.620285272598267,
+  "max_request_seconds": 16.19538350997027,
+  "sum_request_seconds_not_wall_time": 127.67670799093321,
+  "input_tokens": 1315,
+  "output_tokens": 15186,
+  "usage_scope": "API-reported prompt/completion counters; not asserted public-code-only tokens; hidden reasoning not stored",
+  "responses_sha256": "5ea0e169922048a2e5bf649ceb6b1add7bb81db5ee19bcf48c620cb00f3de3db",
+  "approved_plan_sha256": "e088cf58f25426395a9754094e66e7b4046c452a78acfa71a1baa7aaefe720f1",
+  "owner_sha256": "5de93a34ab2a45b0309eddbb8eb73b9919968bc6c9d9fd18579ad0b926ed2264",
+  "normal_lock_release": true,
+  "service_changes": false,
+  "rows": [
+    {
+      "id": "behavior-A1",
+      "request_id": "chatcmpl-20304846662a4b4d",
+      "finish_reason": "stop",
+      "usage": {
+        "input_tokens": 114,
+        "output_tokens": 1424
+      },
+      "seconds": 12.641205227002501,
+      "public_answer_sha256": "bebad0785515646fe8602b24abd8b316e05608fc6ee1c5a05070f8077ffa2a48",
+      "public_answer_bytes": 458,
+      "numerical_score": null
+    },
+    {
+      "id": "behavior-A2",
+      "request_id": "chatcmpl-a503f5f1b9b84a17",
+      "finish_reason": "stop",
+      "usage": {
+        "input_tokens": 108,
+        "output_tokens": 1119
+      },
+      "seconds": 9.86415343300905,
+      "public_answer_sha256": "3d689505ac7fc613e7ee790e1aea80bfc26cb21853538349e70bfdf5dcf3ac05",
+      "public_answer_bytes": 454,
+      "numerical_score": null
+    },
+    {
+      "id": "behavior-B1",
+      "request_id": "chatcmpl-6e28c654c0eb487e",
+      "finish_reason": "stop",
+      "usage": {
+        "input_tokens": 106,
+        "output_tokens": 1769
+      },
+      "seconds": 15.351406575995497,
+      "public_answer_sha256": "051f10bf5e7b3d4c22f2f6f19089b78dea478d2b059658d394f9e34eea18f105",
+      "public_answer_bytes": 302,
+      "numerical_score": null
+    },
+    {
+      "id": "behavior-B2",
+      "request_id": "chatcmpl-958eb635e7254874",
+      "finish_reason": "stop",
+      "usage": {
+        "input_tokens": 117,
+        "output_tokens": 1996
+      },
+      "seconds": 16.19538350997027,
+      "public_answer_sha256": "e1a1ab510b6bee251ba31c0dda335dc3a251f145d0869408b5e8a7ab13cc8a49",
+      "public_answer_bytes": 809,
+      "numerical_score": null
+    },
+    {
+      "id": "behavior-C1",
+      "request_id": "chatcmpl-5ae09fd2048b4c09",
+      "finish_reason": "stop",
+      "usage": {
+        "input_tokens": 109,
+        "output_tokens": 1256
+      },
+      "seconds": 10.81804951094091,
+      "public_answer_sha256": "510bcb910f1adf192b5bfb18f2ebeabf197ee5091e0d0f330b5652e5c02bad91",
+      "public_answer_bytes": 195,
+      "numerical_score": null
+    },
+    {
+      "id": "behavior-C2",
+      "request_id": "chatcmpl-4ceeac5dfba040c9",
+      "finish_reason": "stop",
+      "usage": {
+        "input_tokens": 120,
+        "output_tokens": 1122
+      },
+      "seconds": 9.092020276933908,
+      "public_answer_sha256": "8052f4eb3b60f4cc911d11ebe3314a7025b193121a7755148fa78cf8599265ae",
+      "public_answer_bytes": 118,
+      "numerical_score": null
+    },
+    {
+      "id": "behavior-D1",
+      "request_id": "chatcmpl-af0bab6e98d54311",
+      "finish_reason": "stop",
+      "usage": {
+        "input_tokens": 109,
+        "output_tokens": 699
+      },
+      "seconds": 5.91647987102624,
+      "public_answer_sha256": "cb0ba5ec321627a9ce8da28bd205efd691aefcba56dfecb6506ed3cfdfc60eda",
+      "public_answer_bytes": 304,
+      "numerical_score": null
+    },
+    {
+      "id": "behavior-D2",
+      "request_id": "chatcmpl-134e2a6b105e4bc4",
+      "finish_reason": "stop",
+      "usage": {
+        "input_tokens": 117,
+        "output_tokens": 631
+      },
+      "seconds": 5.4753332160180435,
+      "public_answer_sha256": "5781c29e6b18cf7b65d207ecf3a5b665881774341f4e5c3f984030373fc46ac5",
+      "public_answer_bytes": 195,
+      "numerical_score": null
+    },
+    {
+      "id": "behavior-E1",
+      "request_id": "chatcmpl-f276c8434cc64520",
+      "finish_reason": "stop",
+      "usage": {
+        "input_tokens": 121,
+        "output_tokens": 989
+      },
+      "seconds": 8.047748113051057,
+      "public_answer_sha256": "e7592a970472c7e06b12953fba528748b9171ea340e09a5d019e0c19286d8202",
+      "public_answer_bytes": 567,
+      "numerical_score": null
+    },
+    {
+      "id": "behavior-E2",
+      "request_id": "chatcmpl-745c8707dfe1417e",
+      "finish_reason": "stop",
+      "usage": {
+        "input_tokens": 107,
+        "output_tokens": 1311
+      },
+      "seconds": 10.08235736307688,
+      "public_answer_sha256": "390ae7f76209cf37817f4bae43b74e39c3159d5e451a8fe638def652a7f67a09",
+      "public_answer_bytes": 458,
+      "numerical_score": null
+    },
+    {
+      "id": "behavior-F1",
+      "request_id": "chatcmpl-fd989bee85504062",
+      "finish_reason": "stop",
+      "usage": {
+        "input_tokens": 88,
+        "output_tokens": 1661
+      },
+      "seconds": 13.936542310984805,
+      "public_answer_sha256": "059013382bd7288e45a4e91816dd03d064319b57d06a00a3b92b2e890087df95",
+      "public_answer_bytes": 184,
+      "numerical_score": null
+    },
+    {
+      "id": "behavior-F2",
+      "request_id": "chatcmpl-b37b294c0cec48b1",
+      "finish_reason": "stop",
+      "usage": {
+        "input_tokens": 99,
+        "output_tokens": 1209
+      },
+      "seconds": 10.256028582924046,
+      "public_answer_sha256": "1f132690bd7dd79934c90c765d5100e0fc3a3ad5fd9ed537fd82529a6ad42ad2",
+      "public_answer_bytes": 547,
+      "numerical_score": null
+    }
+  ]
+}

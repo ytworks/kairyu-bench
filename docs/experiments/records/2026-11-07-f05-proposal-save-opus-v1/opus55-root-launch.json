@@ -1,0 +1,25 @@
+{
+  "pid": 1534630,
+  "epoch": 1794055133.480126,
+  "command": [
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/infra/weight-tools-ci/bin/python",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/worktrees/kairyu-bench-weight-tools/scripts/claude-method-review.py",
+    "--prompt",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f05-native-contract-v1/anonymous-opus55-prompt-v1.txt",
+    "--output",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f05-native-contract-v1/opus55-review-v1",
+    "--model",
+    "claude-opus-5-5",
+    "--labels",
+    "A",
+    "--timeout-seconds",
+    "300",
+    "--max-budget-usd",
+    "2",
+    "--send",
+    "--approved-prompt-sha256",
+    "57c6e4de0b23e1dc69aa01398a4ab16feed4d13f70acb46ec272059a3d61dcfc"
+  ],
+  "prompt_sha256": "57c6e4de0b23e1dc69aa01398a4ab16feed4d13f70acb46ec272059a3d61dcfc",
+  "send_attempt": 1
+}

@@ -1,0 +1,380 @@
+#!/usr/bin/env python3
+"""Preview-first fixed18 authored validation or separate train/transfer execution."""
+
+from __future__ import annotations
+
+import argparse
+import ast
+import json
+import os
+from pathlib import Path
+import re
+import signal
+import time
+
+import numpy as np
+
+import behavior_cases as cases
+import science_sandbox as sandbox
+
+
+def executable(case, answer):
+    code = sandbox.extract(answer)
+    if case.entrypoint != "solve":
+        tree = ast.parse(code)
+        functions = [
+            n
+            for n in tree.body
+            if isinstance(n, (ast.FunctionDef, ast.AsyncFunctionDef))
+        ]
+        if (
+            len(functions) != 1
+            or not isinstance(functions[0], ast.FunctionDef)
+            or functions[0].name != case.entrypoint
+            or any(
+                not isinstance(n, (ast.Import, ast.ImportFrom, ast.FunctionDef))
+                for n in tree.body
+            )
+        ):
+            return None, {
+                "status": "entrypoint_contract_error",
+                "passed": False,
+                "entrypoint_contract_passed": False,
+                "numeric_execution": False,
+            }
+        # Only after the exact public contract passes; no missing-name rescue.
+        code += "\nsolve = " + case.entrypoint + "\n"
+    return code, None
+
+
+def score(case, row, run):
+    item = {
+        k: row[k]
+        for k in (
+            "request_id",
+            "finish_reason",
+            "usage",
+            "seconds",
+            "error_type",
+            "http_status",
+        )
+        if k in row
+    }
+    item.update(
+        id="behavior-" + case.name,
+        split=case.split,
+        seed=case.seed,
+        fixture_cases_planned=cases.TRIALS,
+        status="missing_response",
+        passed=None,
+        entrypoint_contract_passed=None,
+        method_requirement_checked=False if case.symbolic else None,
+    )
+    if row.get("error") or row.get("error_type"):
+        item["status"] = "generation_error"
+        return item
+    if row.get("public_answer") is None:
+        return item
+    answer = row["public_answer"]
+    item["public_answer_sha256"] = sandbox.sha(answer.encode())
+    try:
+        code, failure = executable(case, answer)
+    except (ValueError, SyntaxError):
+        item.update(
+            status="format_or_syntax_error",
+            passed=False,
+            format_passed=False,
+            numeric_execution=False,
+        )
+        return item
+    if failure:
+        item.update(failure)
+        return item
+    item.update(
+        format_passed=True,
+        entrypoint_contract_passed=True if case.entrypoint != "solve" else None,
+        executable_sha256=sandbox.sha(code.encode()),
+    )
+    payload, expected = sandbox.prepare(
+        case, code, case.seed, cases.TRIALS, sample_fn=cases.sample
+    )
+    item["fixture_sha256"] = sandbox.sha(
+        json.dumps(
+            {
+                "parameters": payload["parameters"],
+                "trials": payload["trials"],
+                "expected": [sandbox.pack(x) for x in expected],
+            },
+            sort_keys=True,
+            allow_nan=False,
+        ).encode()
+    )
+    started = time.monotonic()
+    try:
+        result = run(payload)
+        item.update(sandbox.compare(result, expected))
+        item["numeric_execution"] = True
+        # Coordinate/count contracts additionally require exact values.
+        failures = item.get("failures", [])
+        failed_trials = {f.get("trial") for f in failures}
+        if case.exact and "setup_error" not in result:
+            for index, (actual, reference) in enumerate(
+                zip(result["trials"], expected)
+            ):
+                if index not in failed_trials and not np.array_equal(
+                    np.asarray(actual["data"], dtype=np.float64).reshape(
+                        reference.shape
+                    ),
+                    reference,
+                ):
+                    failures.append({"trial": index, "kind": "discrete_exact"})
+                    failed_trials.add(index)
+            item["tests_passed"] = len(expected) - len(failed_trials)
+            item["passed"] = not failures
+        item["trial_results"] = [
+            {
+                "trial": i,
+                "suite": "fixed_boundary" if i < 8 else "seeded",
+                "passed": not any(f.get("trial") in (None, i) for f in failures),
+            }
+            for i in range(len(expected))
+        ]
+    except sandbox.SafetyError:
+        raise
+    except TimeoutError:
+        item.update(
+            status="execution_timeout", passed=None, error_category="wall_timeout"
+        )
+    except sandbox.SandboxError as error:
+        item.update(
+            status="sandbox_or_protocol_error",
+            passed=None,
+            error_category=error.category,
+            return_code=error.return_code,
+        )
+    except (ValueError, RuntimeError, OSError) as error:
+        item.update(
+            status="sandbox_or_protocol_error",
+            passed=None,
+            error_category=type(error).__name__,
+        )
+    item["execution_seconds"] = time.monotonic() - started
+    return item
+
+
+def read_inputs(case_path, response_path, case_hash, response_hash, split):
+    data, a = sandbox.capture(case_path, 8 * 1024 * 1024)
+    response, b = sandbox.capture(response_path, 16 * 1024 * 1024)
+    if a["sha256"] != case_hash or b["sha256"] != response_hash:
+        raise ValueError("pinned case/response SHA mismatch")
+    if json.loads(data) != cases.payload(split):
+        raise ValueError("complete fixed split content required")
+    document = json.loads(response)
+    if (
+        document.get("schema_version") != 1
+        or document.get("split") != split
+        or document.get("cases_sha256") != case_hash
+    ):
+        raise ValueError("case/response identity mismatch")
+    selected = [c for c in cases.catalog() if c.split == split]
+    answers, generation = sandbox.read_public_answers(
+        document, {"behavior-" + c.name for c in selected}
+    )
+    return selected, answers, generation, [a, b]
+
+
+def main(argv=None, docker_factory=sandbox.Docker):
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument(
+        "--mode", choices=("score", "validate-authored"), default="score"
+    )
+    parser.add_argument("--split", choices=("train", "transfer"))
+    for name in ("cases", "responses"):
+        parser.add_argument("--" + name, type=Path)
+        parser.add_argument("--" + name + "-sha256")
+    parser.add_argument("--output", type=Path, required=True)
+    parser.add_argument("--docker-socket", type=Path, required=True)
+    parser.add_argument("--daemon-id", required=True)
+    parser.add_argument("--image", required=True)
+    parser.add_argument("--run", action="store_true")
+    args = parser.parse_args(argv)
+    if (
+        not args.docker_socket.is_absolute()
+        or not args.daemon_id
+        or not re.fullmatch(r"sha256:[0-9a-f]{64}", args.image)
+    ):
+        raise ValueError("explicit socket/daemon/immutable image required")
+    if os.path.lexists(args.output):
+        raise FileExistsError(args.output)
+    inputs, generation, answers = [], None, {}
+    if args.mode == "score":
+        if not args.split or any(
+            getattr(args, key) is None
+            for key in ("cases", "responses", "cases_sha256", "responses_sha256")
+        ):
+            raise ValueError("score requires the complete split and pinned inputs")
+        selected, answers, generation, inputs = read_inputs(
+            args.cases,
+            args.responses,
+            args.cases_sha256,
+            args.responses_sha256,
+            args.split,
+        )
+    else:
+        if any(
+            getattr(args, key) is not None
+            for key in (
+                "split",
+                "cases",
+                "responses",
+                "cases_sha256",
+                "responses_sha256",
+            )
+        ):
+            raise ValueError("authored validation takes no supplied programs")
+        selected = cases.catalog()
+    for source in (
+        Path(__file__),
+        Path(cases.__file__),
+        Path(sandbox.__file__),
+        Path(sandbox.science_cases.__file__),
+    ):
+        _, pin = sandbox.capture(source, 1024 * 1024)
+        inputs.append(pin)
+    output = args.output.resolve()
+    if any(Path(pin["path"]).is_relative_to(output) for pin in inputs):
+        raise ValueError("output overlaps input")
+    report = {
+        "schema_version": 1,
+        "status": "preview",
+        "mode": args.mode,
+        "split": args.split,
+        "inputs": inputs,
+        "generation": generation,
+        "target_ids": ["behavior-" + c.name for c in selected],
+        "expected_cases": len(selected),
+        "responses_received": len(answers),
+        "results": [],
+        "docker_calls": 0,
+        "model_calls": 0,
+        "trials_per_numeric_execution": 16,
+        "fixed_boundary": 8,
+        "seeded": 8,
+        "train_seed": cases.TRAIN_SEED,
+        "transfer_seed": cases.TRANSFER_SEED,
+        "sandbox": {
+            "socket": str(args.docker_socket),
+            "daemon_id": args.daemon_id,
+            "image": args.image,
+            "seconds": 15,
+            "memory_mib": 512,
+            "cpus": 1,
+            "network": "none",
+            "user": "1003:1003",
+            "host_mounts": [],
+            "gpus": False,
+        },
+        "scope": "Authored behavior calibration, not WSP. Initial generation train12 only.",
+        "token_count_measured": False,
+        "limits": [
+            "passed is numeric/interface fixture status, not proof of every public contract.",
+            "C entrypoint_contract_passed covers only AST name/count/top-level form.",
+            "B SymPy differentiation/lambdify use is not established by numeric fixtures; manual public-code review remains required.",
+        ],
+    }
+    output.mkdir(parents=True)
+    path = output / "report.json"
+    sandbox.save(path, report)
+    if not args.run:
+        return report
+    docker = docker_factory(
+        args.docker_socket,
+        args.daemon_id,
+        args.image,
+        seconds=15,
+        memory_mib=512,
+        cpus=1,
+    )
+    previous = signal.getsignal(signal.SIGTERM)
+
+    def terminate(_signum, _frame):
+        raise KeyboardInterrupt("termination requested")
+
+    def run(payload):
+        report["docker_calls"] += 1
+        result = docker.run(payload)
+        if args.mode == "validate-authored":
+            report.setdefault("raw_worker_outputs", []).append(
+                {
+                    "call_index": report["docker_calls"] - 1,
+                    "payload_sha256": sandbox.sha(
+                        json.dumps(payload, sort_keys=True, allow_nan=False).encode()
+                    ),
+                    "result": result,
+                }
+            )
+        return result
+
+    signal.signal(signal.SIGTERM, terminate)
+    try:
+        docker.check_image()
+        report["status"] = "running"
+        for case in selected:
+            sandbox.continuity(inputs)
+            if args.mode == "validate-authored":
+                correct = score(case, {"public_answer": case.code()}, run)
+                foil = score(case, {"public_answer": case.code(True)}, run)
+                foil_witness = foil.get("entrypoint_contract_passed") is False or any(
+                    not t["passed"] for t in foil.get("trial_results", [])[:8]
+                )
+                item = {
+                    "id": "behavior-" + case.name,
+                    "split": case.split,
+                    "correct": correct,
+                    "foil": foil,
+                    "validation_passed": correct["passed"] is True
+                    and foil["passed"] is False
+                    and foil_witness,
+                    "foil_fixed_witness_rejected": foil_witness,
+                }
+            else:
+                item = score(case, answers.get("behavior-" + case.name, {}), run)
+            report["results"].append(item)
+            sandbox.save(path, report)
+        sandbox.continuity(inputs)
+        report["status"] = "completed"
+    except BaseException:
+        report["status"] = "interrupted_or_error"
+        raise
+    finally:
+        signal.signal(signal.SIGTERM, previous)
+        if args.mode == "validate-authored":
+            report["validation_passed"] = len(report["results"]) == 18 and all(
+                r["validation_passed"] for r in report["results"]
+            )
+        else:
+            report["passed"] = sum(r["passed"] is True for r in report["results"])
+            report["failed"] = sum(r["passed"] is False for r in report["results"])
+            report["unknown"] = len(selected) - report["passed"] - report["failed"]
+        sandbox.save(path, report)
+    return report
+
+
+if __name__ == "__main__":
+    result = main()
+    print(
+        json.dumps(
+            {
+                k: result.get(k)
+                for k in (
+                    "status",
+                    "expected_cases",
+                    "validation_passed",
+                    "passed",
+                    "failed",
+                    "unknown",
+                    "docker_calls",
+                )
+            }
+        )
+    )

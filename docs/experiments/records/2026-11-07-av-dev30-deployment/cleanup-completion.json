@@ -1,0 +1,63 @@
+{
+  "status": "only_authorized_stopped_observer_removed",
+  "removed_cid": "584418d20c2701e2339a6ce964332e905819c4c9454f0417d489452d9e988ee9",
+  "command": [
+    "docker",
+    "rm",
+    "584418d20c2701e2339a6ce964332e905819c4c9454f0417d489452d9e988ee9"
+  ],
+  "remaining_containers": 27,
+  "protected_count": 23,
+  "all_survivors_unchanged": true,
+  "compose_membership": {
+    "gemma-0": {
+      "project": "gemma-4-31b-8gpu",
+      "service": "gemma-0",
+      "container_ids": [
+        "e275b7bcc331d6bcdd82a1729c0ec0cc7a80e581a008bd273d0b1aa953e82c02"
+      ],
+      "includes_stopped": true
+    },
+    "gemma-1": {
+      "project": "gemma-4-31b-8gpu",
+      "service": "gemma-1",
+      "container_ids": [
+        "32517829133b9a4a852eed753ae50b274343733307d65b2c01fa10172d513892"
+      ],
+      "includes_stopped": true
+    },
+    "gemma-2": {
+      "project": "gemma-4-31b-8gpu",
+      "service": "gemma-2",
+      "container_ids": [
+        "132833f603a6cbd1b6beed302590cbafd6d9e09bad879720f4c35f39cb806210"
+      ],
+      "includes_stopped": true
+    },
+    "gemma-3": {
+      "project": "gemma-4-31b-8gpu",
+      "service": "gemma-3",
+      "container_ids": [
+        "64f27c717165a4e4ea37abec691b5871f87fdfc8ddcd8dd2ecddfd832e5df550"
+      ],
+      "includes_stopped": true
+    }
+  },
+  "writer_closed_flags_unchanged": true,
+  "clarification": "Original false close acknowledgements retained in original capture; no capture status edited.",
+  "lock": {
+    "owner": {
+      "status": "global_lock_held",
+      "pid": 319432,
+      "uid": 1003,
+      "started_epoch": 1794032371.296285
+    },
+    "lock_identity": "09:02:181180584",
+    "proc_locks_line": "35: FLOCK  ADVISORY  WRITE 319432 09:02:181180584 0 EOF"
+  },
+  "seconds": 7.6468987464904785,
+  "finished_epoch": 1794032537.1426306,
+  "source_sha256": "99a9cc25006a988d1d7cfe11b8f579ea0bbb857c4de34c39f21bf0769b5a12ce",
+  "before_sha256": "b67c8e0851ddb06474fef5aa573893406737bd87b1a004773bdf727f2657ec16",
+  "after_sha256": "4795081ea6b251fb27c8b52aa5855ea6ca518c582d4e10032cf2106412a75346"
+}

@@ -1,0 +1,213 @@
+"""F05-only metadata binding; four existing previews, no service mutation or approval."""
+
+import argparse
+import ast
+import fcntl
+import importlib.util
+import json
+import os
+from pathlib import Path
+import shutil
+import subprocess
+import sys
+import time
+
+R = Path("/mnt/nvme/kairyu/wsp/gemma4-coding-20261104")
+B = R / "worktrees/kairyu-bench-weight-tools"
+D = R / "analysis/fresh-purpose-20261107-f05-native-contract-v1/deployment-dp4-v1"
+PR = B / "docs/experiments/records/2026-11-07-f05-deployment-dp4-v1"
+CANDIDATE = R / "checkpoints/fresh-native-contract-f05-faststore-v1/checkpoint"
+PARENT = R / "checkpoints/fresh-native-relative-f04-faststore-v1/checkpoint"
+PARENT_MANIFEST = PARENT.parent / "manifest.json"
+PARENT_TREE = "7b9e9488e3cd4e0b6c5f61ae341e5eeccdf5bd31c46d1c8354950dbc29d0f924"
+DECISION = B / "docs/experiments/records/2026-11-07-f04-official-comparison/parent-selection.json"
+TEMPLATE = R / "analysis/fresh-purpose-20261107-f04-relative-v1/deployment-dp4-v1/plan-bound-approved.json"
+H = B / "docs/experiments/scripts/redeploy-replica.py"
+OWNER = B / "docs/experiments/scripts/fresh-four-parallel-redeploy-20261107.py"
+INVENTORY_SOURCE = R / "analysis/fresh-purpose-20261107-av-dev30-deployment-plan-v1/remove-completed-observer-v2.py"
+TARGETS = {
+    "gemma-0": "dc117b29cb6f7ef23c8bab4ecb5d734114ebb828c3b569b2e2ba0843b7f962dd",
+    "gemma-1": "08037f93d105bc27be35b05b93fed55b463fc4776e446c1152fa5c6cb4563052",
+    "gemma-2": "fc3e14a0b216e622004db9b0cf754c7d33e4410d2ab63a28b762ef32607327ca",
+    "gemma-3": "d8ad71d8d13f18fa5311b89b08860ac0c8fefcbae03b9d631816d74c68a929a0",
+}
+STATIC_PINS = {
+    str(H): "2e9da820fe30ba9b2436fb600cf14a533b1c496b2fed48ac3649fffb9d2bc9ae",
+    str(OWNER): "19ae025add4f2f08705f33f0146f48cc9fa8e92bdb14a8383f46fb7d531e53bc",
+    str(PARENT_MANIFEST): "fd189cf276a1219ad627186d2dfb4a895c79768821f247a0b33d9abd8953d8c1",
+    str(DECISION): "50a48edce45c69e7f06e35566dcdbbaa93ed18d2c27368d2f14c3c52d759157b",
+    str(TEMPLATE): "ea8742fea2e187ab29cddc86d1f9dbbec9d0f4003c84c82bcc539d08988b5b60",
+    str(INVENTORY_SOURCE): "99a9cc25006a988d1d7cfe11b8f579ea0bbb857c4de34c39f21bf0769b5a12ce",
+}
+
+
+def main():
+    parser = argparse.ArgumentParser(description=__doc__)
+    for key in ("manifest", "spec", "verify"):
+        parser.add_argument("--" + key, type=Path, required=True)
+    args = parser.parse_args()
+    assert os.getuid() == 1003
+    assert all(p.is_absolute() for p in (args.manifest, args.spec, args.verify))
+    assert Path(__file__).resolve() == D / "prepare-source.py"
+    assert not (D / "preview-start.json").exists(), "One invocation only; retain any prior failure."
+    assert not (D / "preview-failure.json").exists()
+    sys.path.insert(0, str(B / "src"))
+    module = importlib.util.spec_from_file_location("guard", H)
+    g = importlib.util.module_from_spec(module)
+    module.loader.exec_module(g)
+
+    def save(name, value):
+        path = D / name
+        assert not path.exists()
+        g.save(path, value)
+
+    started = time.time()
+    stage = "input_validation"
+    lock_held = False
+    try:
+        assert all(g.sha(p) == h for p, h in STATIC_PINS.items())
+        proof, verification, spec = map(g.read, (args.manifest, args.verify, args.spec))
+        assert proof["checkpoint_path"] == str(CANDIDATE)
+        assert proof["spec_file"]["path"] == str(args.spec)
+        assert proof["spec_file"]["sha256"] == g.sha(args.spec)
+        assert proof["native_manifest"]["spec"] == spec
+        assert verification["verified"] is True
+        assert verification["tree_sha256"] == proof["control_tree_sha256"]
+        assert verification["no_shared_link_mutation"] is True
+        assert verification["private_original_byte_restoration"] is True
+        assert verification["shared_payload_bytes_read"] == 0
+        assert verification["fresh_full_model_hash"] is False
+        assert len(proof["all_checkpoint_files"]) == 9
+        for key in ("changed_elements", "changed_tensors", "delta_l2"):
+            assert verification[key] == proof[key]
+        parent = g.read(PARENT_MANIFEST)
+        assert parent["checkpoint_path"] == str(PARENT)
+        assert parent["control_tree_sha256"] == PARENT_TREE
+        logical = proof["logical_parent"]
+        assert logical["checkpoint_path"] == str(PARENT) and logical["tree_sha256"] == PARENT_TREE
+        assert g.sha(logical["proof"]["path"]) == logical["proof"]["sha256"]
+        parent_proof = g.read(logical["proof"]["path"])
+        assert parent_proof["checkpoint_path"] == str(PARENT)
+        assert parent_proof["control_tree_sha256"] == PARENT_TREE
+        assert g.inventory(PARENT) == parent["candidate_inventory_stat"]
+        assert g.inventory(CANDIDATE) == proof["candidate_inventory_stat"]
+        shared = parent["candidate_inventory_stat"]["shared.safetensors"]
+        assert shared["nlink"] == 17
+        assert proof["candidate_inventory_stat"]["shared.safetensors"] == shared
+        decision = g.read(DECISION)
+        assert decision["selected_next_parent"] == "F04"
+        assert decision["selected_tree_sha256"] == PARENT_TREE
+        plan = g.read(TEMPLATE)
+        for key in ("authorization_epoch", "authorization_reason"):
+            plan.pop(key, None)
+        plan.update(
+            approved_for_apply=False,
+            parent_gate="F04 is the selected complete parent; root approval of this exact bound F05 plan is required for apply.",
+        )
+        assert list(TARGETS) == plan["service_order"]
+        assert plan["owner_sha256"] == g.sha(OWNER) and plan["helper_sha256"] == g.sha(H)
+        assert all(g.sha(p) == h for p, h in plan["source_pins"].items())
+        input_pins = {str(p): g.sha(p) for p in (args.manifest, args.spec, args.verify)}
+        input_pins.update(STATIC_PINS)
+        input_pins[str(Path(__file__))] = g.sha(Path(__file__))
+        tree = ast.parse(INVENTORY_SOURCE.read_text())
+        namespace = {"g": g, "json": json}
+        definitions = [n for n in tree.body if isinstance(n, ast.FunctionDef) and n.name in {"safe", "inventory"}]
+        exec(compile(ast.Module(body=definitions, type_ignores=[]), str(INVENTORY_SOURCE), "exec"), namespace)
+        inventory = namespace["inventory"]
+        stage = "global_lock"
+        with (R / "candidate-evaluation.lock").open("a") as lock:
+            fcntl.flock(lock, fcntl.LOCK_EX | fcntl.LOCK_NB)
+            lock_held = True
+            stage = "live_metadata"
+            before, raw = inventory()
+            assert len(before) == 27 and set(TARGETS.values()) <= set(before)
+            for cid in TARGETS.values():
+                g.idle(raw[cid])
+                snapshot = g.snapshot(raw[cid])
+                assert snapshot["running"] and snapshot["health"] == "healthy"
+                assert snapshot["checkpoint_path"] == str(PARENT)
+                assert snapshot["tree"] == PARENT_TREE and snapshot["checkpoint_readonly"]
+                assert snapshot["image_id"] == "sha256:af9e746b913088cbf6c4464a31d6904a6b7e1d3ba62f0895362ddf13595f7abe"
+            protected = sorted(set(before) - set(TARGETS.values()))
+            assert len(protected) == 23
+            save("protected-before.json", before)
+            save("preview-start.json", {
+                "pid": os.getpid(), "epoch": started, "global_lock_held": True,
+                "input_pins": input_pins, "argv": sys.argv,
+                "source_pins": plan["source_pins"], "logical_parent": logical,
+                "parent_shared_stat": shared, "model_calls": 0, "serving_mutations": 0,
+            })
+            previews = {}
+            for service in plan["service_order"]:
+                stage = service + "_preview"
+                cmd = [plan["python"], str(H), "--control", plan["control"],
+                       "--service", service, "--candidate", str(CANDIDATE),
+                       "--freeze", str(args.manifest), "--baseline", str(D / "all-chat-before.json"),
+                       "--output", str(D / (service + "-preview")), "--timeout", "1200"]
+                save(service + "-preview-command.json", {"argv": cmd, "apply": False})
+                with (D / (service + "-preview.stdout")).open("x") as out, (D / (service + "-preview.stderr")).open("x") as err:
+                    result = subprocess.run(
+                        cmd, cwd=B, env=dict(os.environ, PYTHONPATH=str(B / "src"), PYTHONDONTWRITEBYTECODE="1"),
+                        stdout=out, stderr=err, timeout=90,
+                    )
+                save(service + "-preview-execution.json", {"returncode": result.returncode})
+                assert result.returncode == 0
+                path = D / (service + "-preview/receipt.json")
+                record = g.read(path)
+                assert record["status"] == "preview" and not record["apply_requested"]
+                assert record["before"]["id"] == TARGETS[service]
+                assert record["before"]["checkpoint_path"] == str(PARENT) and record["before"]["tree"] == PARENT_TREE
+                assert record["candidate_identity"]["tree_sha256"] == proof["control_tree_sha256"]
+                assert not record["compose_remove_orphans"]
+                previews[service] = {"path": str(path), "sha256": g.sha(path)}
+            stage = "postcheck"
+            assert inventory()[0] == before
+            assert g.inventory(PARENT) == parent["candidate_inventory_stat"]
+            assert g.inventory(CANDIDATE) == proof["candidate_inventory_stat"]
+            assert all(g.sha(p) == h for p, h in input_pins.items())
+            assert all(g.sha(p) == h for p, h in plan["source_pins"].items())
+            def ref(path):
+                return {"path": str(path), "sha256": g.sha(path)}
+            plan.update(
+                status="four_previews_passed_awaiting_root_apply", candidate=str(CANDIDATE),
+                freeze=ref(args.manifest), verification=ref(args.verify),
+                baseline=ref(D / "all-chat-before.json"), protected_before=ref(D / "protected-before.json"),
+                target_ids=TARGETS, protected_ids=protected, previews=previews,
+                output=str(D / "parallel-apply-v1"), materialization=ref(args.verify),
+                parent_decision=ref(DECISION), spec=ref(args.spec),
+                preparation_source=ref(Path(__file__)), parent_manifest=ref(PARENT_MANIFEST),
+            )
+            save("plan-bound-unapproved.json", plan)
+            save("four-preview-summary.json", {
+                "status": "all_four_previews_passed", "seconds": time.time() - started,
+                "previews": previews, "plan_sha256": g.sha(D / "plan-bound-unapproved.json"),
+                "tree": proof["control_tree_sha256"], "input_pins": input_pins,
+                "all27_unchanged": True, "protected_count": 23, "all9_stats_unchanged": True,
+                "parent_fullstat_unchanged": True, "shared_stat_unchanged": True, "shared_nlink": 17,
+                "model_calls": 0, "serving_mutations": 0, "payload_rehashed": False,
+                "approved_for_apply": False,
+            })
+            fcntl.flock(lock, fcntl.LOCK_UN)
+            lock_held = False
+        save("preview-lock-released.json", {"normal_release": True, "pid": os.getpid(), "epoch": time.time()})
+    except BaseException as error:
+        save("preview-failure.json", {
+            "status": "failed", "stage": stage, "exception_type": type(error).__name__,
+            "epoch": time.time(), "elapsed_seconds": time.time() - started,
+            "lock_was_acquired": lock_held, "model_calls": 0, "serving_mutations": 0,
+            "retry_performed": False,
+        })
+        raise
+    finally:
+        for path in D.rglob("*"):
+            if path.is_file() and path.suffix != ".lock" and path.name != "prepare-source.py":
+                target = PR / path.relative_to(D)
+                target.parent.mkdir(parents=True, exist_ok=True)
+                assert not target.exists()
+                shutil.copyfile(path, target)
+    print((D / "four-preview-summary.json").read_text())
+
+
+if __name__ == "__main__":
+    main()

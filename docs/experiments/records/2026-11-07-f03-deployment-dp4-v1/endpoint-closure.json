@@ -1,0 +1,110 @@
+{
+  "status": "all_four_F03_and_gateway_verified",
+  "gateway": {
+    "cid": "88943a0985ba97dfb17be6b5fb54040eba2570b70ce05126bd410162d3658ffb",
+    "endpoint": "http://172.26.0.9:8000/v1",
+    "model_ids": [
+      "gemma-4-31b",
+      "embeddinggemma-2"
+    ],
+    "healthy": true,
+    "unchanged_protected_service": true
+  },
+  "replicas": {
+    "gemma-0": {
+      "cid": "0169d434fd1fa863ec39661a3e4c6b947ac2bef977e6f596ede771c6921bd32b",
+      "endpoint": "http://172.26.0.4:8000/v1",
+      "models": [
+        "gemma-4-31b"
+      ],
+      "tree": "504d0914e8f7d2a4e51a0888e5692e2d1a158b82d3a77b600810a14bf7e33b63",
+      "checkpoint_mount": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/checkpoints/fresh-native-contract-f03",
+      "checkpoint_readonly": true,
+      "runtime_preserved": true,
+      "mtp_tokens": 4,
+      "tp_size": 2,
+      "native_runtime_flags_preserved": true,
+      "receipt_sha256": "7f1d73787efef5e8d6dd429f50e97bd9ab6b09f5ac2ff456ae1c7e1a5e87090b",
+      "seconds": 113.383131980896
+    },
+    "gemma-1": {
+      "cid": "d782bf8b23562bd19835279b1f8804910df882065d222e8e674cecafbb9b7d5e",
+      "endpoint": "http://172.26.0.5:8000/v1",
+      "models": [
+        "gemma-4-31b"
+      ],
+      "tree": "504d0914e8f7d2a4e51a0888e5692e2d1a158b82d3a77b600810a14bf7e33b63",
+      "checkpoint_mount": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/checkpoints/fresh-native-contract-f03",
+      "checkpoint_readonly": true,
+      "runtime_preserved": true,
+      "mtp_tokens": 4,
+      "tp_size": 2,
+      "native_runtime_flags_preserved": true,
+      "receipt_sha256": "cb44efcf706a396e584f10c297e2c873f87c36aacd01c650d74437f0478dff2f",
+      "seconds": 112.27835988998413
+    },
+    "gemma-2": {
+      "cid": "3acc0a02d713ae298e7979547db8fac1a14374826cd52fa7eb4453289ffe4072",
+      "endpoint": "http://172.26.0.6:8000/v1",
+      "models": [
+        "gemma-4-31b"
+      ],
+      "tree": "504d0914e8f7d2a4e51a0888e5692e2d1a158b82d3a77b600810a14bf7e33b63",
+      "checkpoint_mount": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/checkpoints/fresh-native-contract-f03",
+      "checkpoint_readonly": true,
+      "runtime_preserved": true,
+      "mtp_tokens": 4,
+      "tp_size": 2,
+      "native_runtime_flags_preserved": true,
+      "receipt_sha256": "53605fe7e78a160133b14154b34d0391b3cad3e6d30038b0b8f43cdb286f4879",
+      "seconds": 112.5819308757782
+    },
+    "gemma-3": {
+      "cid": "a7a781b8fa49e81f0a1cd638dbcc70f2d9c8310857e3b8c1ef53250eeafa4a02",
+      "endpoint": "http://172.26.0.8:8000/v1",
+      "models": [
+        "gemma-4-31b"
+      ],
+      "tree": "504d0914e8f7d2a4e51a0888e5692e2d1a158b82d3a77b600810a14bf7e33b63",
+      "checkpoint_mount": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/checkpoints/fresh-native-contract-f03",
+      "checkpoint_readonly": true,
+      "runtime_preserved": true,
+      "mtp_tokens": 4,
+      "tp_size": 2,
+      "native_runtime_flags_preserved": true,
+      "receipt_sha256": "4a4cdbc5a267c67be69baf9fb43f91c2b820f4a872700290685d5893daece559",
+      "seconds": 112.07419347763062
+    }
+  },
+  "logprob_checks": {
+    "gemma-0": {
+      "http_success": true,
+      "model": "gemma-4-31b",
+      "prompt_logprob_positions": 2
+    },
+    "gemma-1": {
+      "http_success": true,
+      "model": "gemma-4-31b",
+      "prompt_logprob_positions": 2
+    },
+    "gemma-2": {
+      "http_success": true,
+      "model": "gemma-4-31b",
+      "prompt_logprob_positions": 2
+    },
+    "gemma-3": {
+      "http_success": true,
+      "model": "gemma-4-31b",
+      "prompt_logprob_positions": 2
+    }
+  },
+  "chat_check": true,
+  "generation_requests": 5,
+  "official_evaluation_requests": 0,
+  "all_four_idle": true,
+  "protected_count": 23,
+  "protected_unchanged": true,
+  "closure_sha256": "fc5d5a52160572ca4c9673a20898a170852e611205240b3201dcc5fd43ecba96",
+  "served_record_sha256": "02b2e6d12aca5e0bd277fdedb93eaf9cb9386d51250c04a11d80f150154f69c5",
+  "created_epoch": 1794046890.2241726
+}

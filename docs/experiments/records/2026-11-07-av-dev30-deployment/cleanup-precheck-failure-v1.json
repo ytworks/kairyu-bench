@@ -1,0 +1,572 @@
+{
+  "status": "precheck_stopped_before_removal",
+  "script_sha256": "73c01304a48a30743307edb632798dbc4cffbfcf73d923efe4d2dbc38a095545",
+  "expected_container_count": 28,
+  "actual_container_count": 28,
+  "added": [],
+  "removed": [],
+  "differences": {
+    "37b84155d0d47c339a8a3f989cf69be74a80a9f7369829db41612a5a77fe481a": {
+      "mounts": {
+        "before": [
+          {
+            "type": "bind",
+            "source": "/mnt/nvme/kairyu/model-volumes/gemma-4-31b-8gpu/models/gemma-4-31b-it",
+            "target": "/checkpoint",
+            "read_only": true
+          },
+          {
+            "type": "bind",
+            "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/algorithm-completion-dependencies",
+            "target": "/observations",
+            "read_only": false
+          },
+          {
+            "type": "bind",
+            "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/whole-text-purpose-dependencies",
+            "target": "/guards",
+            "read_only": true
+          },
+          {
+            "type": "bind",
+            "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/programming-completion-dependencies",
+            "target": "/prior-programming",
+            "read_only": true
+          },
+          {
+            "type": "bind",
+            "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/runtime",
+            "target": "/runtime",
+            "read_only": true
+          }
+        ],
+        "after": [
+          {
+            "type": "bind",
+            "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/algorithm-completion-dependencies",
+            "target": "/observations",
+            "read_only": false
+          },
+          {
+            "type": "bind",
+            "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/whole-text-purpose-dependencies",
+            "target": "/guards",
+            "read_only": true
+          },
+          {
+            "type": "bind",
+            "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/programming-completion-dependencies",
+            "target": "/prior-programming",
+            "read_only": true
+          },
+          {
+            "type": "bind",
+            "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/runtime",
+            "target": "/runtime",
+            "read_only": true
+          },
+          {
+            "type": "bind",
+            "source": "/mnt/nvme/kairyu/model-volumes/gemma-4-31b-8gpu/models/gemma-4-31b-it",
+            "target": "/checkpoint",
+            "read_only": true
+          }
+        ]
+      }
+    },
+    "132833f603a6cbd1b6beed302590cbafd6d9e09bad879720f4c35f39cb806210": {
+      "mounts": {
+        "before": [
+          {
+            "type": "bind",
+            "source": "/mnt/nvme/kairyu/model-volumes/gemma-4-31b-8gpu/models/gemma-4-31b-it",
+            "target": "/checkpoint",
+            "read_only": true
+          },
+          {
+            "type": "bind",
+            "source": "/mnt/nvme/kairyu/model-volumes/gemma-4-31b-8gpu/compile-cache",
+            "target": "/root/.cache",
+            "read_only": false
+          },
+          {
+            "type": "bind",
+            "source": "/mnt/nvme/kairyu/model-volumes/gemma-4-31b-8gpu/models",
+            "target": "/models",
+            "read_only": true
+          }
+        ],
+        "after": [
+          {
+            "type": "bind",
+            "source": "/mnt/nvme/kairyu/model-volumes/gemma-4-31b-8gpu/models",
+            "target": "/models",
+            "read_only": true
+          },
+          {
+            "type": "bind",
+            "source": "/mnt/nvme/kairyu/model-volumes/gemma-4-31b-8gpu/models/gemma-4-31b-it",
+            "target": "/checkpoint",
+            "read_only": true
+          },
+          {
+            "type": "bind",
+            "source": "/mnt/nvme/kairyu/model-volumes/gemma-4-31b-8gpu/compile-cache",
+            "target": "/root/.cache",
+            "read_only": false
+          }
+        ]
+      }
+    },
+    "61a829c3aaf5c9af66499357d1f55b8f58ad19ef40cb887bbe63a0c4729c10f9": {
+      "mounts": {
+        "before": [
+          {
+            "type": "bind",
+            "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/expanded-synthetic-sensitivities",
+            "target": "/analysis",
+            "read_only": false
+          },
+          {
+            "type": "bind",
+            "source": "/mnt/nvme/kairyu/model-volumes/gemma-4-31b-8gpu/models/gemma-4-31b-it",
+            "target": "/checkpoint",
+            "read_only": true
+          },
+          {
+            "type": "bind",
+            "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/runtime/check_complementary_weight_sets_cpu.py",
+            "target": "/probe.py",
+            "read_only": true
+          }
+        ],
+        "after": [
+          {
+            "type": "bind",
+            "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/runtime/check_complementary_weight_sets_cpu.py",
+            "target": "/probe.py",
+            "read_only": true
+          },
+          {
+            "type": "bind",
+            "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/expanded-synthetic-sensitivities",
+            "target": "/analysis",
+            "read_only": false
+          },
+          {
+            "type": "bind",
+            "source": "/mnt/nvme/kairyu/model-volumes/gemma-4-31b-8gpu/models/gemma-4-31b-it",
+            "target": "/checkpoint",
+            "read_only": true
+          }
+        ]
+      }
+    },
+    "fbb725752d9e8990506968903bfcb5a406eb56f0bc6c839eb08199c0d05f54f3": {
+      "mounts": {
+        "before": [
+          {
+            "type": "bind",
+            "source": "/mnt/nvme/kairyu/model-volumes/gemma-4-31b-8gpu/models/gemma-4-31b-it",
+            "target": "/checkpoint",
+            "read_only": true
+          },
+          {
+            "type": "bind",
+            "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/runtime/compare_expanded_mechanisms_cpu.py",
+            "target": "/probe.py",
+            "read_only": true
+          },
+          {
+            "type": "bind",
+            "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/expanded-synthetic-sensitivities",
+            "target": "/analysis",
+            "read_only": false
+          },
+          {
+            "type": "bind",
+            "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/specs",
+            "target": "/candidate-specs",
+            "read_only": true
+          },
+          {
+            "type": "bind",
+            "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/ffn-candidate-specs",
+            "target": "/ffn",
+            "read_only": true
+          }
+        ],
+        "after": [
+          {
+            "type": "bind",
+            "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/runtime/compare_expanded_mechanisms_cpu.py",
+            "target": "/probe.py",
+            "read_only": true
+          },
+          {
+            "type": "bind",
+            "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/expanded-synthetic-sensitivities",
+            "target": "/analysis",
+            "read_only": false
+          },
+          {
+            "type": "bind",
+            "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/specs",
+            "target": "/candidate-specs",
+            "read_only": true
+          },
+          {
+            "type": "bind",
+            "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/ffn-candidate-specs",
+            "target": "/ffn",
+            "read_only": true
+          },
+          {
+            "type": "bind",
+            "source": "/mnt/nvme/kairyu/model-volumes/gemma-4-31b-8gpu/models/gemma-4-31b-it",
+            "target": "/checkpoint",
+            "read_only": true
+          }
+        ]
+      }
+    },
+    "897103115f63e39d3261f39bf449bfa9258121d270ae700f65c0321837eeec08": {
+      "mounts": {
+        "before": [
+          {
+            "type": "bind",
+            "source": "/mnt/nvme/kairyu/model-volumes/gemma-4-31b-8gpu/compile-cache",
+            "target": "/root/.cache",
+            "read_only": false
+          },
+          {
+            "type": "bind",
+            "source": "/mnt/nvme/kairyu/model-volumes/gemma-4-31b-8gpu/models",
+            "target": "/models",
+            "read_only": true
+          }
+        ],
+        "after": [
+          {
+            "type": "bind",
+            "source": "/mnt/nvme/kairyu/model-volumes/gemma-4-31b-8gpu/models",
+            "target": "/models",
+            "read_only": true
+          },
+          {
+            "type": "bind",
+            "source": "/mnt/nvme/kairyu/model-volumes/gemma-4-31b-8gpu/compile-cache",
+            "target": "/root/.cache",
+            "read_only": false
+          }
+        ]
+      }
+    },
+    "4ef033809802f99ae4859327cf7350e2dc4c7d657b226a7229914432e0dd0718": {
+      "mounts": {
+        "before": [
+          {
+            "type": "bind",
+            "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/runtime/compare_expanded_mechanisms_cpu.py",
+            "target": "/probe.py",
+            "read_only": true
+          },
+          {
+            "type": "bind",
+            "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/expanded-synthetic-sensitivities",
+            "target": "/analysis",
+            "read_only": false
+          },
+          {
+            "type": "bind",
+            "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/specs",
+            "target": "/candidate-specs",
+            "read_only": true
+          },
+          {
+            "type": "bind",
+            "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/ffn-candidate-specs",
+            "target": "/ffn",
+            "read_only": true
+          },
+          {
+            "type": "bind",
+            "source": "/mnt/nvme/kairyu/model-volumes/gemma-4-31b-8gpu/models/gemma-4-31b-it",
+            "target": "/checkpoint",
+            "read_only": true
+          }
+        ],
+        "after": [
+          {
+            "type": "bind",
+            "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/specs",
+            "target": "/candidate-specs",
+            "read_only": true
+          },
+          {
+            "type": "bind",
+            "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/ffn-candidate-specs",
+            "target": "/ffn",
+            "read_only": true
+          },
+          {
+            "type": "bind",
+            "source": "/mnt/nvme/kairyu/model-volumes/gemma-4-31b-8gpu/models/gemma-4-31b-it",
+            "target": "/checkpoint",
+            "read_only": true
+          },
+          {
+            "type": "bind",
+            "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/runtime/compare_expanded_mechanisms_cpu.py",
+            "target": "/probe.py",
+            "read_only": true
+          },
+          {
+            "type": "bind",
+            "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/expanded-synthetic-sensitivities",
+            "target": "/analysis",
+            "read_only": false
+          }
+        ]
+      }
+    },
+    "584418d20c2701e2339a6ce964332e905819c4c9454f0417d489452d9e988ee9": {
+      "mounts": {
+        "before": [
+          {
+            "type": "bind",
+            "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f02-live10-v1/capture",
+            "target": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f02-live10-v1/capture",
+            "read_only": false
+          },
+          {
+            "type": "bind",
+            "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f02-live10-v1/compile-cache/gemma-4-31b-8gpu-gemma-0-1",
+            "target": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f02-live10-v1/compile-cache/gemma-4-31b-8gpu-gemma-0-1",
+            "read_only": false
+          },
+          {
+            "type": "bind",
+            "source": "/mnt/nvme/kairyu/model-volumes/gemma-4-31b-8gpu/models",
+            "target": "/models",
+            "read_only": true
+          },
+          {
+            "type": "bind",
+            "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/checkpoints/fresh-code-joint-f02",
+            "target": "/checkpoint",
+            "read_only": true
+          },
+          {
+            "type": "bind",
+            "source": "/mnt/nvme/kairyu/model-volumes/gemma-4-31b-8gpu/compile-cache",
+            "target": "/root/.cache",
+            "read_only": false
+          },
+          {
+            "type": "bind",
+            "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/runtime/fresh-purpose-20261107-f02-live10-v1/observer-src",
+            "target": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/runtime/fresh-purpose-20261107-f02-live10-v1/observer-src",
+            "read_only": true
+          }
+        ],
+        "after": [
+          {
+            "type": "bind",
+            "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f02-live10-v1/compile-cache/gemma-4-31b-8gpu-gemma-0-1",
+            "target": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f02-live10-v1/compile-cache/gemma-4-31b-8gpu-gemma-0-1",
+            "read_only": false
+          },
+          {
+            "type": "bind",
+            "source": "/mnt/nvme/kairyu/model-volumes/gemma-4-31b-8gpu/models",
+            "target": "/models",
+            "read_only": true
+          },
+          {
+            "type": "bind",
+            "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/checkpoints/fresh-code-joint-f02",
+            "target": "/checkpoint",
+            "read_only": true
+          },
+          {
+            "type": "bind",
+            "source": "/mnt/nvme/kairyu/model-volumes/gemma-4-31b-8gpu/compile-cache",
+            "target": "/root/.cache",
+            "read_only": false
+          },
+          {
+            "type": "bind",
+            "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/runtime/fresh-purpose-20261107-f02-live10-v1/observer-src",
+            "target": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/runtime/fresh-purpose-20261107-f02-live10-v1/observer-src",
+            "read_only": true
+          },
+          {
+            "type": "bind",
+            "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f02-live10-v1/capture",
+            "target": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f02-live10-v1/capture",
+            "read_only": false
+          }
+        ]
+      }
+    },
+    "32517829133b9a4a852eed753ae50b274343733307d65b2c01fa10172d513892": {
+      "mounts": {
+        "before": [
+          {
+            "type": "bind",
+            "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/checkpoints/code90-current-ac-native-ad-v1",
+            "target": "/checkpoint",
+            "read_only": true
+          },
+          {
+            "type": "bind",
+            "source": "/mnt/nvme/kairyu/model-volumes/gemma-4-31b-8gpu/compile-cache",
+            "target": "/root/.cache",
+            "read_only": false
+          },
+          {
+            "type": "bind",
+            "source": "/mnt/nvme/kairyu/model-volumes/gemma-4-31b-8gpu/models",
+            "target": "/models",
+            "read_only": true
+          }
+        ],
+        "after": [
+          {
+            "type": "bind",
+            "source": "/mnt/nvme/kairyu/model-volumes/gemma-4-31b-8gpu/models",
+            "target": "/models",
+            "read_only": true
+          },
+          {
+            "type": "bind",
+            "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/checkpoints/code90-current-ac-native-ad-v1",
+            "target": "/checkpoint",
+            "read_only": true
+          },
+          {
+            "type": "bind",
+            "source": "/mnt/nvme/kairyu/model-volumes/gemma-4-31b-8gpu/compile-cache",
+            "target": "/root/.cache",
+            "read_only": false
+          }
+        ]
+      }
+    },
+    "149b564776c7bda50b4039b44b0cf52b1178272a481a4c4dee88de2f283ae334": {
+      "mounts": {
+        "before": [
+          {
+            "type": "bind",
+            "source": "/mnt/nvme/kairyu/docker/wsp/run",
+            "target": "/var/run",
+            "read_only": false
+          },
+          {
+            "type": "bind",
+            "source": "/home/y-takagi/kairyu-bench",
+            "target": "/home/y-takagi/kairyu-bench",
+            "read_only": false
+          },
+          {
+            "type": "bind",
+            "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/results",
+            "target": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/results",
+            "read_only": false
+          },
+          {
+            "type": "bind",
+            "source": "/mnt/nvme/kairyu/bench-cache/wsp",
+            "target": "/mnt/nvme/kairyu/bench-cache/wsp",
+            "read_only": false
+          },
+          {
+            "type": "bind",
+            "source": "/mnt/nvme/kairyu/docker/wsp/data",
+            "target": "/var/lib/docker",
+            "read_only": false
+          }
+        ],
+        "after": [
+          {
+            "type": "bind",
+            "source": "/mnt/nvme/kairyu/bench-cache/wsp",
+            "target": "/mnt/nvme/kairyu/bench-cache/wsp",
+            "read_only": false
+          },
+          {
+            "type": "bind",
+            "source": "/mnt/nvme/kairyu/docker/wsp/data",
+            "target": "/var/lib/docker",
+            "read_only": false
+          },
+          {
+            "type": "bind",
+            "source": "/mnt/nvme/kairyu/docker/wsp/run",
+            "target": "/var/run",
+            "read_only": false
+          },
+          {
+            "type": "bind",
+            "source": "/home/y-takagi/kairyu-bench",
+            "target": "/home/y-takagi/kairyu-bench",
+            "read_only": false
+          },
+          {
+            "type": "bind",
+            "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/results",
+            "target": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/results",
+            "read_only": false
+          }
+        ]
+      }
+    },
+    "ed9842852109333c564c5962ada840ea2794720ad613ebc0c8ef96591c816a33": {
+      "mounts": {
+        "before": [
+          {
+            "type": "bind",
+            "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/runtime",
+            "target": "/runtime",
+            "read_only": true
+          },
+          {
+            "type": "bind",
+            "source": "/mnt/nvme/kairyu/model-volumes/gemma-4-31b-8gpu/models/gemma-4-31b-it",
+            "target": "/checkpoint",
+            "read_only": true
+          },
+          {
+            "type": "bind",
+            "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/chat-purpose-dependencies",
+            "target": "/observations",
+            "read_only": false
+          }
+        ],
+        "after": [
+          {
+            "type": "bind",
+            "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/chat-purpose-dependencies",
+            "target": "/observations",
+            "read_only": false
+          },
+          {
+            "type": "bind",
+            "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/runtime",
+            "target": "/runtime",
+            "read_only": true
+          },
+          {
+            "type": "bind",
+            "source": "/mnt/nvme/kairyu/model-volumes/gemma-4-31b-8gpu/models/gemma-4-31b-it",
+            "target": "/checkpoint",
+            "read_only": true
+          }
+        ]
+      }
+    }
+  },
+  "recorded_epoch": 1794032494.652113,
+  "service_or_cleanup_mutations": 0
+}

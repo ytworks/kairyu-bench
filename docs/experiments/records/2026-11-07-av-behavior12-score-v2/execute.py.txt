@@ -1,0 +1,48 @@
+from pathlib import Path
+import hashlib,json,subprocess,sys,time
+R=Path('/mnt/nvme/kairyu/wsp/gemma4-coding-20261104')
+P=R/'analysis/fresh-purpose-20261107-av-behavior12-score-v2'
+def h(p):return hashlib.sha256(Path(p).read_bytes()).hexdigest()
+def save(p,d):p.write_text(json.dumps(d,ensure_ascii=False,indent=2,allow_nan=False)+'\n')
+assert h(P/'plan.json')=='71e7d6bcd3757131c9efb83aa2f351b7ca19eedd500072c5ba5a11f7ff48816c'
+plan=json.loads((P/'plan.json').read_text())
+def check():
+ for name,expected in plan['source_sha256'].items():assert h(Path(plan['runtime'])/name)==expected
+ for pin in [plan['cases'],plan['responses'],*plan['generation_evidence']]:assert h(pin['path'])==pin['sha256']
+ fmt='{"cid":{{json .Id}},"name":{{json .Name}},"image":{{json .Image}},"running":{{json .State.Running}},"status":{{json .State.Status}},"health":{{if index .State "Health"}}{{json (index (index .State "Health") "Status")}}{{else}}null{{end}}}'
+ prefix=['docker','--host','unix:///var/run/docker.sock']
+ rows=[json.loads(line) for line in subprocess.check_output(prefix+['inspect','--format',fmt,*[r['cid'] for r in plan['protected']]],text=True).splitlines()]
+ assert rows==plan['protected']
+ assert subprocess.check_output(prefix+['info','--format','{{.ID}} {{.DockerRootDir}}'],text=True).strip()==plan['daemon_id']+' '+plan['docker_root_dir']
+ assert subprocess.check_output(prefix+['image','inspect',plan['image_id'],'--format','{{.Id}}'],text=True).strip()==plan['image_id']
+ return {'epoch':time.time(),'protected':rows,'all_pins_match':True,'daemon_image_match':True}
+assert not (P/'evaluation').exists() and not (P/'execution-receipt.json').exists()
+receipt={'status':'preflight','operation_sha256':h(__file__),'plan_sha256':h(P/'plan.json'),'started_epoch':time.time()}
+save(P/'execution-receipt.json',receipt)
+before=check();save(P/'before.json',before)
+sys.path.insert(0,plan['runtime'])
+import behavior_offline as offline
+raw=[]
+class RecordingDocker(offline.sandbox.Docker):
+ def run(self,payload):
+  result=super().run(payload)
+  raw.append({'call_index':len(raw),'payload_sha256':offline.sandbox.sha(json.dumps(payload,sort_keys=True,allow_nan=False).encode()),'result':result})
+  save(P/'raw-worker-outputs.json',raw)
+  return result
+start=time.monotonic()
+try:
+ report=offline.main(plan['argv'],docker_factory=RecordingDocker)
+ receipt.update(status=report['status'],passed=report['passed'],failed=report['failed'],unknown=report['unknown'],
+                expected_cases=report['expected_cases'],docker_calls=report['docker_calls'],
+                report_sha256=h(P/'evaluation/report.json'))
+finally:
+ receipt.update(seconds=time.monotonic()-start,ended_epoch=time.time(),raw_worker_outputs=len(raw))
+ try:
+  after=check()
+  after['remaining_science_sandbox_containers']=subprocess.check_output(['docker','--host','unix:///var/run/docker.sock','ps','--all','--no-trunc','--filter','label=kairyu.science-sandbox','--format','{{.ID}}'],text=True).splitlines()
+  save(P/'after.json',after)
+  receipt['protected_unchanged']=after['protected']==before['protected']
+ except BaseException as error:
+  receipt.update(closure_error_type=type(error).__name__,protected_unchanged=False)
+ save(P/'execution-receipt.json',receipt)
+print(json.dumps(receipt))

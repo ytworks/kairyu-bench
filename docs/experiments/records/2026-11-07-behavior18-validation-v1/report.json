@@ -1,0 +1,4159 @@
+{
+  "schema_version": 1,
+  "status": "completed",
+  "mode": "validate-authored",
+  "split": null,
+  "inputs": [
+    {
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/runtime/fresh-purpose-20261107-behavior18-validation-v1/behavior_offline.py",
+      "sha256": "2d6d1abe77fd24da6905bd9a19a93b1e31b6e5e81bbf4fba7d356eea7956c88a",
+      "stat": {
+        "dev": 2306,
+        "ino": 182191319,
+        "size": 12248,
+        "mtime_ns": 1794039706577402966,
+        "ctime_ns": 1794039706577402966
+      }
+    },
+    {
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/runtime/fresh-purpose-20261107-behavior18-validation-v1/behavior_cases.py",
+      "sha256": "10ba3e480c8685933904060629b351758cf7b61362756179e55779435d01a310",
+      "stat": {
+        "dev": 2306,
+        "ino": 182191318,
+        "size": 22945,
+        "mtime_ns": 1794039706577402966,
+        "ctime_ns": 1794039706577402966
+      }
+    },
+    {
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/runtime/fresh-purpose-20261107-behavior18-validation-v1/science_sandbox.py",
+      "sha256": "4a19f0f5fc235f56d702d39dd9bc9e403eba98ffdeadabe4c6365b41566131a4",
+      "stat": {
+        "dev": 2306,
+        "ino": 182191320,
+        "size": 28466,
+        "mtime_ns": 1794039706577402966,
+        "ctime_ns": 1794039706577402966
+      }
+    },
+    {
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/runtime/fresh-purpose-20261107-behavior18-validation-v1/science_cases.py",
+      "sha256": "2c4cc6e75c92c41b98e737ca2c0a653e0f7a7675c6150a6ad33e3f954122a26b",
+      "stat": {
+        "dev": 2306,
+        "ino": 182191321,
+        "size": 35229,
+        "mtime_ns": 1794039706577402966,
+        "ctime_ns": 1794039706577402966
+      }
+    }
+  ],
+  "generation": null,
+  "target_ids": [
+    "behavior-A1",
+    "behavior-A2",
+    "behavior-A3",
+    "behavior-B1",
+    "behavior-B2",
+    "behavior-B3",
+    "behavior-C1",
+    "behavior-C2",
+    "behavior-C3",
+    "behavior-D1",
+    "behavior-D2",
+    "behavior-D3",
+    "behavior-E1",
+    "behavior-E2",
+    "behavior-E3",
+    "behavior-F1",
+    "behavior-F2",
+    "behavior-F3"
+  ],
+  "expected_cases": 18,
+  "responses_received": 0,
+  "results": [
+    {
+      "id": "behavior-A1",
+      "split": "train",
+      "correct": {
+        "id": "behavior-A1",
+        "split": "train",
+        "seed": 202611071,
+        "fixture_cases_planned": 16,
+        "status": "evaluated",
+        "passed": true,
+        "public_answer_sha256": "c6b2b9637dace391170e10f035944e79fa3062682100f925e2fff21274651bd8",
+        "contract_passed": true,
+        "executable_sha256": "c6b2b9637dace391170e10f035944e79fa3062682100f925e2fff21274651bd8",
+        "fixture_sha256": "901b0fb880b012133d754679e128b1808c28dc924ee5bdd08d01d8e9bc2a19cd",
+        "tests_passed": 16,
+        "tests_total": 16,
+        "failures": [],
+        "numeric_execution": true,
+        "trial_results": [
+          {
+            "trial": 0,
+            "suite": "fixed_boundary",
+            "passed": true
+          },
+          {
+            "trial": 1,
+            "suite": "fixed_boundary",
+            "passed": true
+          },
+          {
+            "trial": 2,
+            "suite": "fixed_boundary",
+            "passed": true
+          },
+          {
+            "trial": 3,
+            "suite": "fixed_boundary",
+            "passed": true
+          },
+          {
+            "trial": 4,
+            "suite": "fixed_boundary",
+            "passed": true
+          },
+          {
+            "trial": 5,
+            "suite": "fixed_boundary",
+            "passed": true
+          },
+          {
+            "trial": 6,
+            "suite": "fixed_boundary",
+            "passed": true
+          },
+          {
+            "trial": 7,
+            "suite": "fixed_boundary",
+            "passed": true
+          },
+          {
+            "trial": 8,
+            "suite": "seeded",
+            "passed": true
+          },
+          {
+            "trial": 9,
+            "suite": "seeded",
+            "passed": true
+          },
+          {
+            "trial": 10,
+            "suite": "seeded",
+            "passed": true
+          },
+          {
+            "trial": 11,
+            "suite": "seeded",
+            "passed": true
+          },
+          {
+            "trial": 12,
+            "suite": "seeded",
+            "passed": true
+          },
+          {
+            "trial": 13,
+            "suite": "seeded",
+            "passed": true
+          },
+          {
+            "trial": 14,
+            "suite": "seeded",
+            "passed": true
+          },
+          {
+            "trial": 15,
+            "suite": "seeded",
+            "passed": true
+          }
+        ],
+        "execution_seconds": 0.7236805730499327
+      },
+      "foil": {
+        "id": "behavior-A1",
+        "split": "train",
+        "seed": 202611071,
+        "fixture_cases_planned": 16,
+        "status": "evaluated",
+        "passed": false,
+        "public_answer_sha256": "8341b1a46f2a5d23f5c85d063decd5ae036ca49e50fb287dd784fef03d69e537",
+        "contract_passed": true,
+        "executable_sha256": "8341b1a46f2a5d23f5c85d063decd5ae036ca49e50fb287dd784fef03d69e537",
+        "fixture_sha256": "901b0fb880b012133d754679e128b1808c28dc924ee5bdd08d01d8e9bc2a19cd",
+        "tests_passed": 0,
+        "tests_total": 16,
+        "failures": [
+          {
+            "trial": 0,
+            "kind": "runtime",
+            "phase": "execution",
+            "exception_category": "ValueError"
+          },
+          {
+            "trial": 1,
+            "kind": "output_shape"
+          },
+          {
+            "trial": 2,
+            "kind": "output_shape"
+          },
+          {
+            "trial": 3,
+            "kind": "runtime",
+            "phase": "execution",
+            "exception_category": "ValueError"
+          },
+          {
+            "trial": 4,
+            "kind": "runtime",
+            "phase": "execution",
+            "exception_category": "ValueError"
+          },
+          {
+            "trial": 5,
+            "kind": "runtime",
+            "phase": "execution",
+            "exception_category": "ValueError"
+          },
+          {
+            "trial": 6,
+            "kind": "runtime",
+            "phase": "execution",
+            "exception_category": "ValueError"
+          },
+          {
+            "trial": 7,
+            "kind": "output_shape"
+          },
+          {
+            "trial": 8,
+            "kind": "runtime",
+            "phase": "execution",
+            "exception_category": "ValueError"
+          },
+          {
+            "trial": 9,
+            "kind": "output_shape"
+          },
+          {
+            "trial": 10,
+            "kind": "output_shape"
+          },
+          {
+            "trial": 11,
+            "kind": "runtime",
+            "phase": "execution",
+            "exception_category": "ValueError"
+          },
+          {
+            "trial": 12,
+            "kind": "runtime",
+            "phase": "execution",
+            "exception_category": "ValueError"
+          },
+          {
+            "trial": 13,
+            "kind": "runtime",
+            "phase": "execution",
+            "exception_category": "ValueError"
+          },
+          {
+            "trial": 14,
+            "kind": "runtime",
+            "phase": "execution",
+            "exception_category": "ValueError"
+          },
+          {
+            "trial": 15,
+            "kind": "output_shape"
+          }
+        ],
+        "numeric_execution": true,
+        "trial_results": [
+          {
+            "trial": 0,
+            "suite": "fixed_boundary",
+            "passed": false
+          },
+          {
+            "trial": 1,
+            "suite": "fixed_boundary",
+            "passed": false
+          },
+          {
+            "trial": 2,
+            "suite": "fixed_boundary",
+            "passed": false
+          },
+          {
+            "trial": 3,
+            "suite": "fixed_boundary",
+            "passed": false
+          },
+          {
+            "trial": 4,
+            "suite": "fixed_boundary",
+            "passed": false
+          },
+          {
+            "trial": 5,
+            "suite": "fixed_boundary",
+            "passed": false
+          },
+          {
+            "trial": 6,
+            "suite": "fixed_boundary",
+            "passed": false
+          },
+          {
+            "trial": 7,
+            "suite": "fixed_boundary",
+            "passed": false
+          },
+          {
+            "trial": 8,
+            "suite": "seeded",
+            "passed": false
+          },
+          {
+            "trial": 9,
+            "suite": "seeded",
+            "passed": false
+          },
+          {
+            "trial": 10,
+            "suite": "seeded",
+            "passed": false
+          },
+          {
+            "trial": 11,
+            "suite": "seeded",
+            "passed": false
+          },
+          {
+            "trial": 12,
+            "suite": "seeded",
+            "passed": false
+          },
+          {
+            "trial": 13,
+            "suite": "seeded",
+            "passed": false
+          },
+          {
+            "trial": 14,
+            "suite": "seeded",
+            "passed": false
+          },
+          {
+            "trial": 15,
+            "suite": "seeded",
+            "passed": false
+          }
+        ],
+        "execution_seconds": 0.736259080003947
+      },
+      "validation_passed": true,
+      "foil_fixed_witness_rejected": true
+    },
+    {
+      "id": "behavior-A2",
+      "split": "train",
+      "correct": {
+        "id": "behavior-A2",
+        "split": "train",
+        "seed": 202611071,
+        "fixture_cases_planned": 16,
+        "status": "evaluated",
+        "passed": true,
+        "public_answer_sha256": "dc175e63fb7e640ad3fdfde419e1d4e67b7a471a1d6f5dffe6df9bae1ce250d0",
+        "contract_passed": true,
+        "executable_sha256": "dc175e63fb7e640ad3fdfde419e1d4e67b7a471a1d6f5dffe6df9bae1ce250d0",
+        "fixture_sha256": "f6fe983b5a57d5594adf105eb442732e86dcf2c4f6ec0283612fdf7492bd5f6d",
+        "tests_passed": 16,
+        "tests_total": 16,
+        "failures": [],
+        "numeric_execution": true,
+        "trial_results": [
+          {
+            "trial": 0,
+            "suite": "fixed_boundary",
+            "passed": true
+          },
+          {
+            "trial": 1,
+            "suite": "fixed_boundary",
+            "passed": true
+          },
+          {
+            "trial": 2,
+            "suite": "fixed_boundary",
+            "passed": true
+          },
+          {
+            "trial": 3,
+            "suite": "fixed_boundary",
+            "passed": true
+          },
+          {
+            "trial": 4,
+            "suite": "fixed_boundary",
+            "passed": true
+          },
+          {
+            "trial": 5,
+            "suite": "fixed_boundary",
+            "passed": true
+          },
+          {
+            "trial": 6,
+            "suite": "fixed_boundary",
+            "passed": true
+          },
+          {
+            "trial": 7,
+            "suite": "fixed_boundary",
+            "passed": true
+          },
+          {
+            "trial": 8,
+            "suite": "seeded",
+            "passed": true
+          },
+          {
+            "trial": 9,
+            "suite": "seeded",
+            "passed": true
+          },
+          {
+            "trial": 10,
+            "suite": "seeded",
+            "passed": true
+          },
+          {
+            "trial": 11,
+            "suite": "seeded",
+            "passed": true
+          },
+          {
+            "trial": 12,
+            "suite": "seeded",
+            "passed": true
+          },
+          {
+            "trial": 13,
+            "suite": "seeded",
+            "passed": true
+          },
+          {
+            "trial": 14,
+            "suite": "seeded",
+            "passed": true
+          },
+          {
+            "trial": 15,
+            "suite": "seeded",
+            "passed": true
+          }
+        ],
+        "execution_seconds": 0.7344220709055662
+      },
+      "foil": {
+        "id": "behavior-A2",
+        "split": "train",
+        "seed": 202611071,
+        "fixture_cases_planned": 16,
+        "status": "evaluated",
+        "passed": false,
+        "public_answer_sha256": "45c50170e36edb064dad9cad3e6650a9406f46e09b5d7063cff81a21a63c1e0e",
+        "contract_passed": true,
+        "executable_sha256": "45c50170e36edb064dad9cad3e6650a9406f46e09b5d7063cff81a21a63c1e0e",
+        "fixture_sha256": "f6fe983b5a57d5594adf105eb442732e86dcf2c4f6ec0283612fdf7492bd5f6d",
+        "tests_passed": 0,
+        "tests_total": 16,
+        "failures": [
+          {
+            "trial": 0,
+            "kind": "numeric"
+          },
+          {
+            "trial": 1,
+            "kind": "runtime",
+            "phase": "execution",
+            "exception_category": "ValueError"
+          },
+          {
+            "trial": 2,
+            "kind": "runtime",
+            "phase": "execution",
+            "exception_category": "ValueError"
+          },
+          {
+            "trial": 3,
+            "kind": "runtime",
+            "phase": "execution",
+            "exception_category": "ValueError"
+          },
+          {
+            "trial": 4,
+            "kind": "numeric"
+          },
+          {
+            "trial": 5,
+            "kind": "runtime",
+            "phase": "execution",
+            "exception_category": "ValueError"
+          },
+          {
+            "trial": 6,
+            "kind": "runtime",
+            "phase": "execution",
+            "exception_category": "ValueError"
+          },
+          {
+            "trial": 7,
+            "kind": "runtime",
+            "phase": "execution",
+            "exception_category": "ValueError"
+          },
+          {
+            "trial": 8,
+            "kind": "numeric"
+          },
+          {
+            "trial": 9,
+            "kind": "runtime",
+            "phase": "execution",
+            "exception_category": "ValueError"
+          },
+          {
+            "trial": 10,
+            "kind": "runtime",
+            "phase": "execution",
+            "exception_category": "ValueError"
+          },
+          {
+            "trial": 11,
+            "kind": "runtime",
+            "phase": "execution",
+            "exception_category": "ValueError"
+          },
+          {
+            "trial": 12,
+            "kind": "numeric"
+          },
+          {
+            "trial": 13,
+            "kind": "runtime",
+            "phase": "execution",
+            "exception_category": "ValueError"
+          },
+          {
+            "trial": 14,
+            "kind": "runtime",
+            "phase": "execution",
+            "exception_category": "ValueError"
+          },
+          {
+            "trial": 15,
+            "kind": "runtime",
+            "phase": "execution",
+            "exception_category": "ValueError"
+          }
+        ],
+        "numeric_execution": true,
+        "trial_results": [
+          {
+            "trial": 0,
+            "suite": "fixed_boundary",
+            "passed": false
+          },
+          {
+            "trial": 1,
+            "suite": "fixed_boundary",
+            "passed": false
+          },
+          {
+            "trial": 2,
+            "suite": "fixed_boundary",
+            "passed": false
+          },
+          {
+            "trial": 3,
+            "suite": "fixed_boundary",
+            "passed": false
+          },
+          {
+            "trial": 4,
+            "suite": "fixed_boundary",
+            "passed": false
+          },
+          {
+            "trial": 5,
+            "suite": "fixed_boundary",
+            "passed": false
+          },
+          {
+            "trial": 6,
+            "suite": "fixed_boundary",
+            "passed": false
+          },
+          {
+            "trial": 7,
+            "suite": "fixed_boundary",
+            "passed": false
+          },
+          {
+            "trial": 8,
+            "suite": "seeded",
+            "passed": false
+          },
+          {
+            "trial": 9,
+            "suite": "seeded",
+            "passed": false
+          },
+          {
+            "trial": 10,
+            "suite": "seeded",
+            "passed": false
+          },
+          {
+            "trial": 11,
+            "suite": "seeded",
+            "passed": false
+          },
+          {
+            "trial": 12,
+            "suite": "seeded",
+            "passed": false
+          },
+          {
+            "trial": 13,
+            "suite": "seeded",
+            "passed": false
+          },
+          {
+            "trial": 14,
+            "suite": "seeded",
+            "passed": false
+          },
+          {
+            "trial": 15,
+            "suite": "seeded",
+            "passed": false
+          }
+        ],
+        "execution_seconds": 0.7349168460350484
+      },
+      "validation_passed": true,
+      "foil_fixed_witness_rejected": true
+    },
+    {
+      "id": "behavior-A3",
+      "split": "transfer",
+      "correct": {
+        "id": "behavior-A3",
+        "split": "transfer",
+        "seed": 202611072,
+        "fixture_cases_planned": 16,
+        "status": "evaluated",
+        "passed": true,
+        "public_answer_sha256": "29b3881c41aa3bff4598a02a640596fd6893446b41985bcc9d42d10c72f2f3d9",
+        "contract_passed": true,
+        "executable_sha256": "29b3881c41aa3bff4598a02a640596fd6893446b41985bcc9d42d10c72f2f3d9",
+        "fixture_sha256": "d709639423cdbc1cf87ebd67b4f749f017e84c37da3f30efc3993dc6f244005d",
+        "tests_passed": 16,
+        "tests_total": 16,
+        "failures": [],
+        "numeric_execution": true,
+        "trial_results": [
+          {
+            "trial": 0,
+            "suite": "fixed_boundary",
+            "passed": true
+          },
+          {
+            "trial": 1,
+            "suite": "fixed_boundary",
+            "passed": true
+          },
+          {
+            "trial": 2,
+            "suite": "fixed_boundary",
+            "passed": true
+          },
+          {
+            "trial": 3,
+            "suite": "fixed_boundary",
+            "passed": true
+          },
+          {
+            "trial": 4,
+            "suite": "fixed_boundary",
+            "passed": true
+          },
+          {
+            "trial": 5,
+            "suite": "fixed_boundary",
+            "passed": true
+          },
+          {
+            "trial": 6,
+            "suite": "fixed_boundary",
+            "passed": true
+          },
+          {
+            "trial": 7,
+            "suite": "fixed_boundary",
+            "passed": true
+          },
+          {
+            "trial": 8,
+            "suite": "seeded",
+            "passed": true
+          },
+          {
+            "trial": 9,
+            "suite": "seeded",
+            "passed": true
+          },
+          {
+            "trial": 10,
+            "suite": "seeded",
+            "passed": true
+          },
+          {
+            "trial": 11,
+            "suite": "seeded",
+            "passed": true
+          },
+          {
+            "trial": 12,
+            "suite": "seeded",
+            "passed": true
+          },
+          {
+            "trial": 13,
+            "suite": "seeded",
+            "passed": true
+          },
+          {
+            "trial": 14,
+            "suite": "seeded",
+            "passed": true
+          },
+          {
+            "trial": 15,
+            "suite": "seeded",
+            "passed": true
+          }
+        ],
+        "execution_seconds": 0.7536621270701289
+      },
+      "foil": {
+        "id": "behavior-A3",
+        "split": "transfer",
+        "seed": 202611072,
+        "fixture_cases_planned": 16,
+        "status": "evaluated",
+        "passed": false,
+        "public_answer_sha256": "f684f0aacb0323c365e43376cf0b8d0d9ec9f61d5a30cb9e781b25974ee6e83e",
+        "contract_passed": true,
+        "executable_sha256": "f684f0aacb0323c365e43376cf0b8d0d9ec9f61d5a30cb9e781b25974ee6e83e",
+        "fixture_sha256": "d709639423cdbc1cf87ebd67b4f749f017e84c37da3f30efc3993dc6f244005d",
+        "tests_passed": 0,
+        "tests_total": 16,
+        "failures": [
+          {
+            "trial": 0,
+            "kind": "output_shape"
+          },
+          {
+            "trial": 1,
+            "kind": "output_shape"
+          },
+          {
+            "trial": 2,
+            "kind": "output_shape"
+          },
+          {
+            "trial": 3,
+            "kind": "output_shape"
+          },
+          {
+            "trial": 4,
+            "kind": "output_shape"
+          },
+          {
+            "trial": 5,
+            "kind": "output_shape"
+          },
+          {
+            "trial": 6,
+            "kind": "output_shape"
+          },
+          {
+            "trial": 7,
+            "kind": "output_shape"
+          },
+          {
+            "trial": 8,
+            "kind": "output_shape"
+          },
+          {
+            "trial": 9,
+            "kind": "output_shape"
+          },
+          {
+            "trial": 10,
+            "kind": "output_shape"
+          },
+          {
+            "trial": 11,
+            "kind": "output_shape"
+          },
+          {
+            "trial": 12,
+            "kind": "output_shape"
+          },
+          {
+            "trial": 13,
+            "kind": "output_shape"
+          },
+          {
+            "trial": 14,
+            "kind": "output_shape"
+          },
+          {
+            "trial": 15,
+            "kind": "output_shape"
+          }
+        ],
+        "numeric_execution": true,
+        "trial_results": [
+          {
+            "trial": 0,
+            "suite": "fixed_boundary",
+            "passed": false
+          },
+          {
+            "trial": 1,
+            "suite": "fixed_boundary",
+            "passed": false
+          },
+          {
+            "trial": 2,
+            "suite": "fixed_boundary",
+            "passed": false
+          },
+          {
+            "trial": 3,
+            "suite": "fixed_boundary",
+            "passed": false
+          },
+          {
+            "trial": 4,
+            "suite": "fixed_boundary",
+            "passed": false
+          },
+          {
+            "trial": 5,
+            "suite": "fixed_boundary",
+            "passed": false
+          },
+          {
+            "trial": 6,
+            "suite": "fixed_boundary",
+            "passed": false
+          },
+          {
+            "trial": 7,
+            "suite": "fixed_boundary",
+            "passed": false
+          },
+          {
+            "trial": 8,
+            "suite": "seeded",
+            "passed": false
+          },
+          {
+            "trial": 9,
+            "suite": "seeded",
+            "passed": false
+          },
+          {
+            "trial": 10,
+            "suite": "seeded",
+            "passed": false
+          },
+          {
+            "trial": 11,
+            "suite": "seeded",
+            "passed": false
+          },
+          {
+            "trial": 12,
+            "suite": "seeded",
+            "passed": false
+          },
+          {
+            "trial": 13,
+            "suite": "seeded",
+            "passed": false
+          },
+          {
+            "trial": 14,
+            "suite": "seeded",
+            "passed": false
+          },
+          {
+            "trial": 15,
+            "suite": "seeded",
+            "passed": false
+          }
+        ],
+        "execution_seconds": 0.7434857810148969
+      },
+      "validation_passed": true,
+      "foil_fixed_witness_rejected": true
+    },
+    {
+      "id": "behavior-B1",
+      "split": "train",
+      "correct": {
+        "id": "behavior-B1",
+        "split": "train",
+        "seed": 202611071,
+        "fixture_cases_planned": 16,
+        "status": "evaluated",
+        "passed": true,
+        "public_answer_sha256": "c504ca67b01c40558070ddbc6ab947080030ce17ed2dbc6b5cd3ac898025e150",
+        "contract_passed": true,
+        "executable_sha256": "c504ca67b01c40558070ddbc6ab947080030ce17ed2dbc6b5cd3ac898025e150",
+        "fixture_sha256": "3d59ae84e03cbbe609ea10f40302090e1bb145e84c2ec205f8e2989db3f8a029",
+        "tests_passed": 16,
+        "tests_total": 16,
+        "failures": [],
+        "numeric_execution": true,
+        "trial_results": [
+          {
+            "trial": 0,
+            "suite": "fixed_boundary",
+            "passed": true
+          },
+          {
+            "trial": 1,
+            "suite": "fixed_boundary",
+            "passed": true
+          },
+          {
+            "trial": 2,
+            "suite": "fixed_boundary",
+            "passed": true
+          },
+          {
+            "trial": 3,
+            "suite": "fixed_boundary",
+            "passed": true
+          },
+          {
+            "trial": 4,
+            "suite": "fixed_boundary",
+            "passed": true
+          },
+          {
+            "trial": 5,
+            "suite": "fixed_boundary",
+            "passed": true
+          },
+          {
+            "trial": 6,
+            "suite": "fixed_boundary",
+            "passed": true
+          },
+          {
+            "trial": 7,
+            "suite": "fixed_boundary",
+            "passed": true
+          },
+          {
+            "trial": 8,
+            "suite": "seeded",
+            "passed": true
+          },
+          {
+            "trial": 9,
+            "suite": "seeded",
+            "passed": true
+          },
+          {
+            "trial": 10,
+            "suite": "seeded",
+            "passed": true
+          },
+          {
+            "trial": 11,
+            "suite": "seeded",
+            "passed": true
+          },
+          {
+            "trial": 12,
+            "suite": "seeded",
+            "passed": true
+          },
+          {
+            "trial": 13,
+            "suite": "seeded",
+            "passed": true
+          },
+          {
+            "trial": 14,
+            "suite": "seeded",
+            "passed": true
+          },
+          {
+            "trial": 15,
+            "suite": "seeded",
+            "passed": true
+          }
+        ],
+        "execution_seconds": 1.3372147009940818
+      },
+      "foil": {
+        "id": "behavior-B1",
+        "split": "train",
+        "seed": 202611071,
+        "fixture_cases_planned": 16,
+        "status": "evaluated",
+        "passed": false,
+        "public_answer_sha256": "77734e773c10ee545821b574eaa5671316890dc1899728a6247cd7cc3c175164",
+        "contract_passed": true,
+        "executable_sha256": "77734e773c10ee545821b574eaa5671316890dc1899728a6247cd7cc3c175164",
+        "fixture_sha256": "3d59ae84e03cbbe609ea10f40302090e1bb145e84c2ec205f8e2989db3f8a029",
+        "tests_passed": 8,
+        "tests_total": 16,
+        "failures": [
+          {
+            "trial": 0,
+            "kind": "output_shape"
+          },
+          {
+            "trial": 2,
+            "kind": "output_shape"
+          },
+          {
+            "trial": 4,
+            "kind": "output_shape"
+          },
+          {
+            "trial": 6,
+            "kind": "output_shape"
+          },
+          {
+            "trial": 8,
+            "kind": "output_shape"
+          },
+          {
+            "trial": 10,
+            "kind": "output_shape"
+          },
+          {
+            "trial": 12,
+            "kind": "output_shape"
+          },
+          {
+            "trial": 14,
+            "kind": "output_shape"
+          }
+        ],
+        "numeric_execution": true,
+        "trial_results": [
+          {
+            "trial": 0,
+            "suite": "fixed_boundary",
+            "passed": false
+          },
+          {
+            "trial": 1,
+            "suite": "fixed_boundary",
+            "passed": true
+          },
+          {
+            "trial": 2,
+            "suite": "fixed_boundary",
+            "passed": false
+          },
+          {
+            "trial": 3,
+            "suite": "fixed_boundary",
+            "passed": true
+          },
+          {
+            "trial": 4,
+            "suite": "fixed_boundary",
+            "passed": false
+          },
+          {
+            "trial": 5,
+            "suite": "fixed_boundary",
+            "passed": true
+          },
+          {
+            "trial": 6,
+            "suite": "fixed_boundary",
+            "passed": false
+          },
+          {
+            "trial": 7,
+            "suite": "fixed_boundary",
+            "passed": true
+          },
+          {
+            "trial": 8,
+            "suite": "seeded",
+            "passed": false
+          },
+          {
+            "trial": 9,
+            "suite": "seeded",
+            "passed": true
+          },
+          {
+            "trial": 10,
+            "suite": "seeded",
+            "passed": false
+          },
+          {
+            "trial": 11,
+            "suite": "seeded",
+            "passed": true
+          },
+          {
+            "trial": 12,
+            "suite": "seeded",
+            "passed": false
+          },
+          {
+            "trial": 13,
+            "suite": "seeded",
+            "passed": true
+          },
+          {
+            "trial": 14,
+            "suite": "seeded",
+            "passed": false
+          },
+          {
+            "trial": 15,
+            "suite": "seeded",
+            "passed": true
+          }
+        ],
+        "execution_seconds": 1.3252157520037144
+      },
+      "validation_passed": true,
+      "foil_fixed_witness_rejected": true
+    },
+    {
+      "id": "behavior-B2",
+      "split": "train",
+      "correct": {
+        "id": "behavior-B2",
+        "split": "train",
+        "seed": 202611071,
+        "fixture_cases_planned": 16,
+        "status": "evaluated",
+        "passed": false,
+        "public_answer_sha256": "9c9a62f3950988ac7372cadc2956dbc1178d5bc25ae08f224da1e9171337051a",
+        "contract_passed": true,
+        "executable_sha256": "9c9a62f3950988ac7372cadc2956dbc1178d5bc25ae08f224da1e9171337051a",
+        "fixture_sha256": "8c4c276e9012bdc9896867722349aa15b5787c4b2e8167e7372ad5611718fc2e",
+        "tests_passed": 14,
+        "tests_total": 16,
+        "failures": [
+          {
+            "trial": 2,
+            "kind": "output_shape"
+          },
+          {
+            "trial": 10,
+            "kind": "output_shape"
+          }
+        ],
+        "numeric_execution": true,
+        "trial_results": [
+          {
+            "trial": 0,
+            "suite": "fixed_boundary",
+            "passed": true
+          },
+          {
+            "trial": 1,
+            "suite": "fixed_boundary",
+            "passed": true
+          },
+          {
+            "trial": 2,
+            "suite": "fixed_boundary",
+            "passed": false
+          },
+          {
+            "trial": 3,
+            "suite": "fixed_boundary",
+            "passed": true
+          },
+          {
+            "trial": 4,
+            "suite": "fixed_boundary",
+            "passed": true
+          },
+          {
+            "trial": 5,
+            "suite": "fixed_boundary",
+            "passed": true
+          },
+          {
+            "trial": 6,
+            "suite": "fixed_boundary",
+            "passed": true
+          },
+          {
+            "trial": 7,
+            "suite": "fixed_boundary",
+            "passed": true
+          },
+          {
+            "trial": 8,
+            "suite": "seeded",
+            "passed": true
+          },
+          {
+            "trial": 9,
+            "suite": "seeded",
+            "passed": true
+          },
+          {
+            "trial": 10,
+            "suite": "seeded",
+            "passed": false
+          },
+          {
+            "trial": 11,
+            "suite": "seeded",
+            "passed": true
+          },
+          {
+            "trial": 12,
+            "suite": "seeded",
+            "passed": true
+          },
+          {
+            "trial": 13,
+            "suite": "seeded",
+            "passed": true
+          },
+          {
+            "trial": 14,
+            "suite": "seeded",
+            "passed": true
+          },
+          {
+            "trial": 15,
+            "suite": "seeded",
+            "passed": true
+          }
+        ],
+        "execution_seconds": 1.35254326404538
+      },
+      "foil": {
+        "id": "behavior-B2",
+        "split": "train",
+        "seed": 202611071,
+        "fixture_cases_planned": 16,
+        "status": "evaluated",
+        "passed": false,
+        "public_answer_sha256": "b17e74a90d0e45fe0a3a78d3592f7e337ebcdfc5e34bc8866b92bb8478008cbf",
+        "contract_passed": true,
+        "executable_sha256": "b17e74a90d0e45fe0a3a78d3592f7e337ebcdfc5e34bc8866b92bb8478008cbf",
+        "fixture_sha256": "8c4c276e9012bdc9896867722349aa15b5787c4b2e8167e7372ad5611718fc2e",
+        "tests_passed": 8,
+        "tests_total": 16,
+        "failures": [
+          {
+            "trial": 0,
+            "kind": "runtime",
+            "phase": "execution",
+            "exception_category": "ValueError"
+          },
+          {
+            "trial": 2,
+            "kind": "runtime",
+            "phase": "execution",
+            "exception_category": "ValueError"
+          },
+          {
+            "trial": 4,
+            "kind": "runtime",
+            "phase": "execution",
+            "exception_category": "ValueError"
+          },
+          {
+            "trial": 6,
+            "kind": "runtime",
+            "phase": "execution",
+            "exception_category": "ValueError"
+          },
+          {
+            "trial": 8,
+            "kind": "runtime",
+            "phase": "execution",
+            "exception_category": "ValueError"
+          },
+          {
+            "trial": 10,
+            "kind": "runtime",
+            "phase": "execution",
+            "exception_category": "ValueError"
+          },
+          {
+            "trial": 12,
+            "kind": "runtime",
+            "phase": "execution",
+            "exception_category": "ValueError"
+          },
+          {
+            "trial": 14,
+            "kind": "runtime",
+            "phase": "execution",
+            "exception_category": "ValueError"
+          }
+        ],
+        "numeric_execution": true,
+        "trial_results": [
+          {
+            "trial": 0,
+            "suite": "fixed_boundary",
+            "passed": false
+          },
+          {
+            "trial": 1,
+            "suite": "fixed_boundary",
+            "passed": true
+          },
+          {
+            "trial": 2,
+            "suite": "fixed_boundary",
+            "passed": false
+          },
+          {
+            "trial": 3,
+            "suite": "fixed_boundary",
+            "passed": true
+          },
+          {
+            "trial": 4,
+            "suite": "fixed_boundary",
+            "passed": false
+          },
+          {
+            "trial": 5,
+            "suite": "fixed_boundary",
+            "passed": true
+          },
+          {
+            "trial": 6,
+            "suite": "fixed_boundary",
+            "passed": false
+          },
+          {
+            "trial": 7,
+            "suite": "fixed_boundary",
+            "passed": true
+          },
+          {
+            "trial": 8,
+            "suite": "seeded",
+            "passed": false
+          },
+          {
+            "trial": 9,
+            "suite": "seeded",
+            "passed": true
+          },
+          {
+            "trial": 10,
+            "suite": "seeded",
+            "passed": false
+          },
+          {
+            "trial": 11,
+            "suite": "seeded",
+            "passed": true
+          },
+          {
+            "trial": 12,
+            "suite": "seeded",
+            "passed": false
+          },
+          {
+            "trial": 13,
+            "suite": "seeded",
+            "passed": true
+          },
+          {
+            "trial": 14,
+            "suite": "seeded",
+            "passed": false
+          },
+          {
+            "trial": 15,
+            "suite": "seeded",
+            "passed": true
+          }
+        ],
+        "execution_seconds": 1.3237120960839093
+      },
+      "validation_passed": false,
+      "foil_fixed_witness_rejected": true
+    },
+    {
+      "id": "behavior-B3",
+      "split": "transfer",
+      "correct": {
+        "id": "behavior-B3",
+        "split": "transfer",
+        "seed": 202611072,
+        "fixture_cases_planned": 16,
+        "status": "evaluated",
+        "passed": false,
+        "public_answer_sha256": "5de648ed119021a167443d5ec8c508617a1880f8f9673e00321c94b0b18fe175",
+        "contract_passed": true,
+        "executable_sha256": "5de648ed119021a167443d5ec8c508617a1880f8f9673e00321c94b0b18fe175",
+        "fixture_sha256": "543d49d5eda7b4d28f42948b53fe3e568bc45d75825ef281d0c28ad98c8e9669",
+        "tests_passed": 14,
+        "tests_total": 16,
+        "failures": [
+          {
+            "trial": 2,
+            "kind": "output_shape"
+          },
+          {
+            "trial": 10,
+            "kind": "output_shape"
+          }
+        ],
+        "numeric_execution": true,
+        "trial_results": [
+          {
+            "trial": 0,
+            "suite": "fixed_boundary",
+            "passed": true
+          },
+          {
+            "trial": 1,
+            "suite": "fixed_boundary",
+            "passed": true
+          },
+          {
+            "trial": 2,
+            "suite": "fixed_boundary",
+            "passed": false
+          },
+          {
+            "trial": 3,
+            "suite": "fixed_boundary",
+            "passed": true
+          },
+          {
+            "trial": 4,
+            "suite": "fixed_boundary",
+            "passed": true
+          },
+          {
+            "trial": 5,
+            "suite": "fixed_boundary",
+            "passed": true
+          },
+          {
+            "trial": 6,
+            "suite": "fixed_boundary",
+            "passed": true
+          },
+          {
+            "trial": 7,
+            "suite": "fixed_boundary",
+            "passed": true
+          },
+          {
+            "trial": 8,
+            "suite": "seeded",
+            "passed": true
+          },
+          {
+            "trial": 9,
+            "suite": "seeded",
+            "passed": true
+          },
+          {
+            "trial": 10,
+            "suite": "seeded",
+            "passed": false
+          },
+          {
+            "trial": 11,
+            "suite": "seeded",
+            "passed": true
+          },
+          {
+            "trial": 12,
+            "suite": "seeded",
+            "passed": true
+          },
+          {
+            "trial": 13,
+            "suite": "seeded",
+            "passed": true
+          },
+          {
+            "trial": 14,
+            "suite": "seeded",
+            "passed": true
+          },
+          {
+            "trial": 15,
+            "suite": "seeded",
+            "passed": true
+          }
+        ],
+        "execution_seconds": 1.3274600789882243
+      },
+      "foil": {
+        "id": "behavior-B3",
+        "split": "transfer",
+        "seed": 202611072,
+        "fixture_cases_planned": 16,
+        "status": "evaluated",
+        "passed": false,
+        "public_answer_sha256": "df6d591c170eb75ba537c8f390dccc40d27b4fb15dcb7fc493c08d8aee87952e",
+        "contract_passed": true,
+        "executable_sha256": "df6d591c170eb75ba537c8f390dccc40d27b4fb15dcb7fc493c08d8aee87952e",
+        "fixture_sha256": "543d49d5eda7b4d28f42948b53fe3e568bc45d75825ef281d0c28ad98c8e9669",
+        "tests_passed": 8,
+        "tests_total": 16,
+        "failures": [
+          {
+            "trial": 0,
+            "kind": "output_shape"
+          },
+          {
+            "trial": 2,
+            "kind": "output_shape"
+          },
+          {
+            "trial": 4,
+            "kind": "output_shape"
+          },
+          {
+            "trial": 6,
+            "kind": "output_shape"
+          },
+          {
+            "trial": 8,
+            "kind": "output_shape"
+          },
+          {
+            "trial": 10,
+            "kind": "output_shape"
+          },
+          {
+            "trial": 12,
+            "kind": "output_shape"
+          },
+          {
+            "trial": 14,
+            "kind": "output_shape"
+          }
+        ],
+        "numeric_execution": true,
+        "trial_results": [
+          {
+            "trial": 0,
+            "suite": "fixed_boundary",
+            "passed": false
+          },
+          {
+            "trial": 1,
+            "suite": "fixed_boundary",
+            "passed": true
+          },
+          {
+            "trial": 2,
+            "suite": "fixed_boundary",
+            "passed": false
+          },
+          {
+            "trial": 3,
+            "suite": "fixed_boundary",
+            "passed": true
+          },
+          {
+            "trial": 4,
+            "suite": "fixed_boundary",
+            "passed": false
+          },
+          {
+            "trial": 5,
+            "suite": "fixed_boundary",
+            "passed": true
+          },
+          {
+            "trial": 6,
+            "suite": "fixed_boundary",
+            "passed": false
+          },
+          {
+            "trial": 7,
+            "suite": "fixed_boundary",
+            "passed": true
+          },
+          {
+            "trial": 8,
+            "suite": "seeded",
+            "passed": false
+          },
+          {
+            "trial": 9,
+            "suite": "seeded",
+            "passed": true
+          },
+          {
+            "trial": 10,
+            "suite": "seeded",
+            "passed": false
+          },
+          {
+            "trial": 11,
+            "suite": "seeded",
+            "passed": true
+          },
+          {
+            "trial": 12,
+            "suite": "seeded",
+            "passed": false
+          },
+          {
+            "trial": 13,
+            "suite": "seeded",
+            "passed": true
+          },
+          {
+            "trial": 14,
+            "suite": "seeded",
+            "passed": false
+          },
+          {
+            "trial": 15,
+            "suite": "seeded",
+            "passed": true
+          }
+        ],
+        "execution_seconds": 1.3298721610335633
+      },
+      "validation_passed": false,
+      "foil_fixed_witness_rejected": true
+    },
+    {
+      "id": "behavior-C1",
+      "split": "train",
+      "correct": {
+        "id": "behavior-C1",
+        "split": "train",
+        "seed": 202611071,
+        "fixture_cases_planned": 16,
+        "status": "evaluated",
+        "passed": true,
+        "public_answer_sha256": "eca7a7415a6c14999ae92f527f2ccc8c8d63c2fc761cd047887102370d696f00",
+        "contract_passed": true,
+        "executable_sha256": "1808413ddccba7da4b8a8be741b4b01c944539aa433fefe1da7684a6a55e2c28",
+        "fixture_sha256": "f6aa801b31d06758f5e76ad4a3977b1d5f4056e21d8e7f5b94d35ac11f41ab4f",
+        "tests_passed": 16,
+        "tests_total": 16,
+        "failures": [],
+        "numeric_execution": true,
+        "trial_results": [
+          {
+            "trial": 0,
+            "suite": "fixed_boundary",
+            "passed": true
+          },
+          {
+            "trial": 1,
+            "suite": "fixed_boundary",
+            "passed": true
+          },
+          {
+            "trial": 2,
+            "suite": "fixed_boundary",
+            "passed": true
+          },
+          {
+            "trial": 3,
+            "suite": "fixed_boundary",
+            "passed": true
+          },
+          {
+            "trial": 4,
+            "suite": "fixed_boundary",
+            "passed": true
+          },
+          {
+            "trial": 5,
+            "suite": "fixed_boundary",
+            "passed": true
+          },
+          {
+            "trial": 6,
+            "suite": "fixed_boundary",
+            "passed": true
+          },
+          {
+            "trial": 7,
+            "suite": "fixed_boundary",
+            "passed": true
+          },
+          {
+            "trial": 8,
+            "suite": "seeded",
+            "passed": true
+          },
+          {
+            "trial": 9,
+            "suite": "seeded",
+            "passed": true
+          },
+          {
+            "trial": 10,
+            "suite": "seeded",
+            "passed": true
+          },
+          {
+            "trial": 11,
+            "suite": "seeded",
+            "passed": true
+          },
+          {
+            "trial": 12,
+            "suite": "seeded",
+            "passed": true
+          },
+          {
+            "trial": 13,
+            "suite": "seeded",
+            "passed": true
+          },
+          {
+            "trial": 14,
+            "suite": "seeded",
+            "passed": true
+          },
+          {
+            "trial": 15,
+            "suite": "seeded",
+            "passed": true
+          }
+        ],
+        "execution_seconds": 0.740025914972648
+      },
+      "foil": {
+        "id": "behavior-C1",
+        "split": "train",
+        "seed": 202611071,
+        "fixture_cases_planned": 16,
+        "status": "entrypoint_contract_error",
+        "passed": false,
+        "public_answer_sha256": "2aa5413fe970f32563ee1c70fb5cb7460d715c552ab761fbd984a52a7aebea1f",
+        "contract_passed": false,
+        "numeric_execution": false
+      },
+      "validation_passed": true,
+      "foil_fixed_witness_rejected": true
+    },
+    {
+      "id": "behavior-C2",
+      "split": "train",
+      "correct": {
+        "id": "behavior-C2",
+        "split": "train",
+        "seed": 202611071,
+        "fixture_cases_planned": 16,
+        "status": "evaluated",
+        "passed": true,
+        "public_answer_sha256": "5936f9f1c5531f81ce1318208e7eeb79ea842b1eb71d97c0ae82a69c7660a05c",
+        "contract_passed": true,
+        "executable_sha256": "8cdd58cccc1f75475acf2e768788f6d534cea3c6c830bb2c56ef3f16f35ec46a",
+        "fixture_sha256": "50ca80ccaf61d4223b85388d8628cce38b8fe2cdf6a26ec553ec062c8559a4ce",
+        "tests_passed": 16,
+        "tests_total": 16,
+        "failures": [],
+        "numeric_execution": true,
+        "trial_results": [
+          {
+            "trial": 0,
+            "suite": "fixed_boundary",
+            "passed": true
+          },
+          {
+            "trial": 1,
+            "suite": "fixed_boundary",
+            "passed": true
+          },
+          {
+            "trial": 2,
+            "suite": "fixed_boundary",
+            "passed": true
+          },
+          {
+            "trial": 3,
+            "suite": "fixed_boundary",
+            "passed": true
+          },
+          {
+            "trial": 4,
+            "suite": "fixed_boundary",
+            "passed": true
+          },
+          {
+            "trial": 5,
+            "suite": "fixed_boundary",
+            "passed": true
+          },
+          {
+            "trial": 6,
+            "suite": "fixed_boundary",
+            "passed": true
+          },
+          {
+            "trial": 7,
+            "suite": "fixed_boundary",
+            "passed": true
+          },
+          {
+            "trial": 8,
+            "suite": "seeded",
+            "passed": true
+          },
+          {
+            "trial": 9,
+            "suite": "seeded",
+            "passed": true
+          },
+          {
+            "trial": 10,
+            "suite": "seeded",
+            "passed": true
+          },
+          {
+            "trial": 11,
+            "suite": "seeded",
+            "passed": true
+          },
+          {
+            "trial": 12,
+            "suite": "seeded",
+            "passed": true
+          },
+          {
+            "trial": 13,
+            "suite": "seeded",
+            "passed": true
+          },
+          {
+            "trial": 14,
+            "suite": "seeded",
+            "passed": true
+          },
+          {
+            "trial": 15,
+            "suite": "seeded",
+            "passed": true
+          }
+        ],
+        "execution_seconds": 0.7321742589119822
+      },
+      "foil": {
+        "id": "behavior-C2",
+        "split": "train",
+        "seed": 202611071,
+        "fixture_cases_planned": 16,
+        "status": "entrypoint_contract_error",
+        "passed": false,
+        "public_answer_sha256": "94ea95892b41a1d0a04713126ec05f0ba38d1fbddaa26d615a022b1390df9b41",
+        "contract_passed": false,
+        "numeric_execution": false
+      },
+      "validation_passed": true,
+      "foil_fixed_witness_rejected": true
+    },
+    {
+      "id": "behavior-C3",
+      "split": "transfer",
+      "correct": {
+        "id": "behavior-C3",
+        "split": "transfer",
+        "seed": 202611072,
+        "fixture_cases_planned": 16,
+        "status": "evaluated",
+        "passed": true,
+        "public_answer_sha256": "381b645f336fefbde1c4a41a1bcc9f212defee43adf01c4926061e47af871682",
+        "contract_passed": true,
+        "executable_sha256": "27ab7300a15911df2ac7916677d026408518b33db3ffc97f8b2dc17eacb51dc8",
+        "fixture_sha256": "2020cce62303652742473efcadcb64b06d28c120a42be8b4c3b49a7e5ac3483e",
+        "tests_passed": 16,
+        "tests_total": 16,
+        "failures": [],
+        "numeric_execution": true,
+        "trial_results": [
+          {
+            "trial": 0,
+            "suite": "fixed_boundary",
+            "passed": true
+          },
+          {
+            "trial": 1,
+            "suite": "fixed_boundary",
+            "passed": true
+          },
+          {
+            "trial": 2,
+            "suite": "fixed_boundary",
+            "passed": true
+          },
+          {
+            "trial": 3,
+            "suite": "fixed_boundary",
+            "passed": true
+          },
+          {
+            "trial": 4,
+            "suite": "fixed_boundary",
+            "passed": true
+          },
+          {
+            "trial": 5,
+            "suite": "fixed_boundary",
+            "passed": true
+          },
+          {
+            "trial": 6,
+            "suite": "fixed_boundary",
+            "passed": true
+          },
+          {
+            "trial": 7,
+            "suite": "fixed_boundary",
+            "passed": true
+          },
+          {
+            "trial": 8,
+            "suite": "seeded",
+            "passed": true
+          },
+          {
+            "trial": 9,
+            "suite": "seeded",
+            "passed": true
+          },
+          {
+            "trial": 10,
+            "suite": "seeded",
+            "passed": true
+          },
+          {
+            "trial": 11,
+            "suite": "seeded",
+            "passed": true
+          },
+          {
+            "trial": 12,
+            "suite": "seeded",
+            "passed": true
+          },
+          {
+            "trial": 13,
+            "suite": "seeded",
+            "passed": true
+          },
+          {
+            "trial": 14,
+            "suite": "seeded",
+            "passed": true
+          },
+          {
+            "trial": 15,
+            "suite": "seeded",
+            "passed": true
+          }
+        ],
+        "execution_seconds": 0.7244220559950918
+      },
+      "foil": {
+        "id": "behavior-C3",
+        "split": "transfer",
+        "seed": 202611072,
+        "fixture_cases_planned": 16,
+        "status": "entrypoint_contract_error",
+        "passed": false,
+        "public_answer_sha256": "daac75621ef59fa557578bc528b97f68b5f8b9cc7c3ea7375879b763b6fd709b",
+        "contract_passed": false,
+        "numeric_execution": false
+      },
+      "validation_passed": true,
+      "foil_fixed_witness_rejected": true
+    },
+    {
+      "id": "behavior-D1",
+      "split": "train",
+      "correct": {
+        "id": "behavior-D1",
+        "split": "train",
+        "seed": 202611071,
+        "fixture_cases_planned": 16,
+        "status": "evaluated",
+        "passed": true,
+        "public_answer_sha256": "9fc20d39e5b6928fc260f29775c99065d006e983f810f4e01f8ff277abb8fb62",
+        "contract_passed": true,
+        "executable_sha256": "9fc20d39e5b6928fc260f29775c99065d006e983f810f4e01f8ff277abb8fb62",
+        "fixture_sha256": "0350a02a9d05aac5fc09b39545d9eea52df524d13a170d0bdd76370316d3b94f",
+        "tests_passed": 16,
+        "tests_total": 16,
+        "failures": [],
+        "numeric_execution": true,
+        "trial_results": [
+          {
+            "trial": 0,
+            "suite": "fixed_boundary",
+            "passed": true
+          },
+          {
+            "trial": 1,
+            "suite": "fixed_boundary",
+            "passed": true
+          },
+          {
+            "trial": 2,
+            "suite": "fixed_boundary",
+            "passed": true
+          },
+          {
+            "trial": 3,
+            "suite": "fixed_boundary",
+            "passed": true
+          },
+          {
+            "trial": 4,
+            "suite": "fixed_boundary",
+            "passed": true
+          },
+          {
+            "trial": 5,
+            "suite": "fixed_boundary",
+            "passed": true
+          },
+          {
+            "trial": 6,
+            "suite": "fixed_boundary",
+            "passed": true
+          },
+          {
+            "trial": 7,
+            "suite": "fixed_boundary",
+            "passed": true
+          },
+          {
+            "trial": 8,
+            "suite": "seeded",
+            "passed": true
+          },
+          {
+            "trial": 9,
+            "suite": "seeded",
+            "passed": true
+          },
+          {
+            "trial": 10,
+            "suite": "seeded",
+            "passed": true
+          },
+          {
+            "trial": 11,
+            "suite": "seeded",
+            "passed": true
+          },
+          {
+            "trial": 12,
+            "suite": "seeded",
+            "passed": true
+          },
+          {
+            "trial": 13,
+            "suite": "seeded",
+            "passed": true
+          },
+          {
+            "trial": 14,
+            "suite": "seeded",
+            "passed": true
+          },
+          {
+            "trial": 15,
+            "suite": "seeded",
+            "passed": true
+          }
+        ],
+        "execution_seconds": 0.736865850049071
+      },
+      "foil": {
+        "id": "behavior-D1",
+        "split": "train",
+        "seed": 202611071,
+        "fixture_cases_planned": 16,
+        "status": "evaluated",
+        "passed": false,
+        "public_answer_sha256": "0d06240c981c104cdd4f3c7dd292e322663dacce5b764c2dfd01464c367f62fe",
+        "contract_passed": true,
+        "executable_sha256": "0d06240c981c104cdd4f3c7dd292e322663dacce5b764c2dfd01464c367f62fe",
+        "fixture_sha256": "0350a02a9d05aac5fc09b39545d9eea52df524d13a170d0bdd76370316d3b94f",
+        "tests_passed": 10,
+        "tests_total": 16,
+        "failures": [
+          {
+            "trial": 0,
+            "kind": "numeric"
+          },
+          {
+            "trial": 3,
+            "kind": "numeric"
+          },
+          {
+            "trial": 5,
+            "kind": "numeric"
+          },
+          {
+            "trial": 7,
+            "kind": "numeric"
+          },
+          {
+            "trial": 11,
+            "kind": "numeric"
+          },
+          {
+            "trial": 13,
+            "kind": "numeric"
+          }
+        ],
+        "numeric_execution": true,
+        "trial_results": [
+          {
+            "trial": 0,
+            "suite": "fixed_boundary",
+            "passed": false
+          },
+          {
+            "trial": 1,
+            "suite": "fixed_boundary",
+            "passed": true
+          },
+          {
+            "trial": 2,
+            "suite": "fixed_boundary",
+            "passed": true
+          },
+          {
+            "trial": 3,
+            "suite": "fixed_boundary",
+            "passed": false
+          },
+          {
+            "trial": 4,
+            "suite": "fixed_boundary",
+            "passed": true
+          },
+          {
+            "trial": 5,
+            "suite": "fixed_boundary",
+            "passed": false
+          },
+          {
+            "trial": 6,
+            "suite": "fixed_boundary",
+            "passed": true
+          },
+          {
+            "trial": 7,
+            "suite": "fixed_boundary",
+            "passed": false
+          },
+          {
+            "trial": 8,
+            "suite": "seeded",
+            "passed": true
+          },
+          {
+            "trial": 9,
+            "suite": "seeded",
+            "passed": true
+          },
+          {
+            "trial": 10,
+            "suite": "seeded",
+            "passed": true
+          },
+          {
+            "trial": 11,
+            "suite": "seeded",
+            "passed": false
+          },
+          {
+            "trial": 12,
+            "suite": "seeded",
+            "passed": true
+          },
+          {
+            "trial": 13,
+            "suite": "seeded",
+            "passed": false
+          },
+          {
+            "trial": 14,
+            "suite": "seeded",
+            "passed": true
+          },
+          {
+            "trial": 15,
+            "suite": "seeded",
+            "passed": true
+          }
+        ],
+        "execution_seconds": 0.7428128239698708
+      },
+      "validation_passed": true,
+      "foil_fixed_witness_rejected": true
+    },
+    {
+      "id": "behavior-D2",
+      "split": "train",
+      "correct": {
+        "id": "behavior-D2",
+        "split": "train",
+        "seed": 202611071,
+        "fixture_cases_planned": 16,
+        "status": "evaluated",
+        "passed": true,
+        "public_answer_sha256": "2e2664670a1f9a15f4a84f7b37066a53a2eae6681a7b53a15c8f527c5c025ff0",
+        "contract_passed": true,
+        "executable_sha256": "2e2664670a1f9a15f4a84f7b37066a53a2eae6681a7b53a15c8f527c5c025ff0",
+        "fixture_sha256": "172cfe8de5bd45d24073a3e4d7fa792cd9b6e5aaaed4d4c015cdebd9902d9709",
+        "tests_passed": 16,
+        "tests_total": 16,
+        "failures": [],
+        "numeric_execution": true,
+        "trial_results": [
+          {
+            "trial": 0,
+            "suite": "fixed_boundary",
+            "passed": true
+          },
+          {
+            "trial": 1,
+            "suite": "fixed_boundary",
+            "passed": true
+          },
+          {
+            "trial": 2,
+            "suite": "fixed_boundary",
+            "passed": true
+          },
+          {
+            "trial": 3,
+            "suite": "fixed_boundary",
+            "passed": true
+          },
+          {
+            "trial": 4,
+            "suite": "fixed_boundary",
+            "passed": true
+          },
+          {
+            "trial": 5,
+            "suite": "fixed_boundary",
+            "passed": true
+          },
+          {
+            "trial": 6,
+            "suite": "fixed_boundary",
+            "passed": true
+          },
+          {
+            "trial": 7,
+            "suite": "fixed_boundary",
+            "passed": true
+          },
+          {
+            "trial": 8,
+            "suite": "seeded",
+            "passed": true
+          },
+          {
+            "trial": 9,
+            "suite": "seeded",
+            "passed": true
+          },
+          {
+            "trial": 10,
+            "suite": "seeded",
+            "passed": true
+          },
+          {
+            "trial": 11,
+            "suite": "seeded",
+            "passed": true
+          },
+          {
+            "trial": 12,
+            "suite": "seeded",
+            "passed": true
+          },
+          {
+            "trial": 13,
+            "suite": "seeded",
+            "passed": true
+          },
+          {
+            "trial": 14,
+            "suite": "seeded",
+            "passed": true
+          },
+          {
+            "trial": 15,
+            "suite": "seeded",
+            "passed": true
+          }
+        ],
+        "execution_seconds": 0.7595051010139287
+      },
+      "foil": {
+        "id": "behavior-D2",
+        "split": "train",
+        "seed": 202611071,
+        "fixture_cases_planned": 16,
+        "status": "evaluated",
+        "passed": false,
+        "public_answer_sha256": "f89b8541897d3ce4e963b6cfdaacc91dc602adca3256eb5f1b7f70702d4c204a",
+        "contract_passed": true,
+        "executable_sha256": "f89b8541897d3ce4e963b6cfdaacc91dc602adca3256eb5f1b7f70702d4c204a",
+        "fixture_sha256": "172cfe8de5bd45d24073a3e4d7fa792cd9b6e5aaaed4d4c015cdebd9902d9709",
+        "tests_passed": 6,
+        "tests_total": 16,
+        "failures": [
+          {
+            "trial": 0,
+            "kind": "numeric"
+          },
+          {
+            "trial": 3,
+            "kind": "numeric"
+          },
+          {
+            "trial": 4,
+            "kind": "numeric"
+          },
+          {
+            "trial": 5,
+            "kind": "numeric"
+          },
+          {
+            "trial": 6,
+            "kind": "numeric"
+          },
+          {
+            "trial": 8,
+            "kind": "numeric"
+          },
+          {
+            "trial": 11,
+            "kind": "numeric"
+          },
+          {
+            "trial": 12,
+            "kind": "numeric"
+          },
+          {
+            "trial": 13,
+            "kind": "numeric"
+          },
+          {
+            "trial": 14,
+            "kind": "numeric"
+          }
+        ],
+        "numeric_execution": true,
+        "trial_results": [
+          {
+            "trial": 0,
+            "suite": "fixed_boundary",
+            "passed": false
+          },
+          {
+            "trial": 1,
+            "suite": "fixed_boundary",
+            "passed": true
+          },
+          {
+            "trial": 2,
+            "suite": "fixed_boundary",
+            "passed": true
+          },
+          {
+            "trial": 3,
+            "suite": "fixed_boundary",
+            "passed": false
+          },
+          {
+            "trial": 4,
+            "suite": "fixed_boundary",
+            "passed": false
+          },
+          {
+            "trial": 5,
+            "suite": "fixed_boundary",
+            "passed": false
+          },
+          {
+            "trial": 6,
+            "suite": "fixed_boundary",
+            "passed": false
+          },
+          {
+            "trial": 7,
+            "suite": "fixed_boundary",
+            "passed": true
+          },
+          {
+            "trial": 8,
+            "suite": "seeded",
+            "passed": false
+          },
+          {
+            "trial": 9,
+            "suite": "seeded",
+            "passed": true
+          },
+          {
+            "trial": 10,
+            "suite": "seeded",
+            "passed": true
+          },
+          {
+            "trial": 11,
+            "suite": "seeded",
+            "passed": false
+          },
+          {
+            "trial": 12,
+            "suite": "seeded",
+            "passed": false
+          },
+          {
+            "trial": 13,
+            "suite": "seeded",
+            "passed": false
+          },
+          {
+            "trial": 14,
+            "suite": "seeded",
+            "passed": false
+          },
+          {
+            "trial": 15,
+            "suite": "seeded",
+            "passed": true
+          }
+        ],
+        "execution_seconds": 0.7430749069899321
+      },
+      "validation_passed": true,
+      "foil_fixed_witness_rejected": true
+    },
+    {
+      "id": "behavior-D3",
+      "split": "transfer",
+      "correct": {
+        "id": "behavior-D3",
+        "split": "transfer",
+        "seed": 202611072,
+        "fixture_cases_planned": 16,
+        "status": "evaluated",
+        "passed": true,
+        "public_answer_sha256": "80b38e87643ad35ec8fb5ddd41594c4e97ffbd2fae3411a59c33104dcaabc637",
+        "contract_passed": true,
+        "executable_sha256": "80b38e87643ad35ec8fb5ddd41594c4e97ffbd2fae3411a59c33104dcaabc637",
+        "fixture_sha256": "47d98e2be1b2b631f779f950a2dd5019bcd203a7fe69f9eac596b8bdb1a9cf50",
+        "tests_passed": 16,
+        "tests_total": 16,
+        "failures": [],
+        "numeric_execution": true,
+        "trial_results": [
+          {
+            "trial": 0,
+            "suite": "fixed_boundary",
+            "passed": true
+          },
+          {
+            "trial": 1,
+            "suite": "fixed_boundary",
+            "passed": true
+          },
+          {
+            "trial": 2,
+            "suite": "fixed_boundary",
+            "passed": true
+          },
+          {
+            "trial": 3,
+            "suite": "fixed_boundary",
+            "passed": true
+          },
+          {
+            "trial": 4,
+            "suite": "fixed_boundary",
+            "passed": true
+          },
+          {
+            "trial": 5,
+            "suite": "fixed_boundary",
+            "passed": true
+          },
+          {
+            "trial": 6,
+            "suite": "fixed_boundary",
+            "passed": true
+          },
+          {
+            "trial": 7,
+            "suite": "fixed_boundary",
+            "passed": true
+          },
+          {
+            "trial": 8,
+            "suite": "seeded",
+            "passed": true
+          },
+          {
+            "trial": 9,
+            "suite": "seeded",
+            "passed": true
+          },
+          {
+            "trial": 10,
+            "suite": "seeded",
+            "passed": true
+          },
+          {
+            "trial": 11,
+            "suite": "seeded",
+            "passed": true
+          },
+          {
+            "trial": 12,
+            "suite": "seeded",
+            "passed": true
+          },
+          {
+            "trial": 13,
+            "suite": "seeded",
+            "passed": true
+          },
+          {
+            "trial": 14,
+            "suite": "seeded",
+            "passed": true
+          },
+          {
+            "trial": 15,
+            "suite": "seeded",
+            "passed": true
+          }
+        ],
+        "execution_seconds": 0.7404431360773742
+      },
+      "foil": {
+        "id": "behavior-D3",
+        "split": "transfer",
+        "seed": 202611072,
+        "fixture_cases_planned": 16,
+        "status": "evaluated",
+        "passed": false,
+        "public_answer_sha256": "8539ce0724cdfdbf69095f63f78e7eca7c084fc61451a842fe38f320f63a1ee0",
+        "contract_passed": true,
+        "executable_sha256": "8539ce0724cdfdbf69095f63f78e7eca7c084fc61451a842fe38f320f63a1ee0",
+        "fixture_sha256": "47d98e2be1b2b631f779f950a2dd5019bcd203a7fe69f9eac596b8bdb1a9cf50",
+        "tests_passed": 4,
+        "tests_total": 16,
+        "failures": [
+          {
+            "trial": 0,
+            "kind": "numeric"
+          },
+          {
+            "trial": 3,
+            "kind": "numeric"
+          },
+          {
+            "trial": 4,
+            "kind": "numeric"
+          },
+          {
+            "trial": 5,
+            "kind": "numeric"
+          },
+          {
+            "trial": 6,
+            "kind": "numeric"
+          },
+          {
+            "trial": 7,
+            "kind": "numeric"
+          },
+          {
+            "trial": 8,
+            "kind": "numeric"
+          },
+          {
+            "trial": 11,
+            "kind": "numeric"
+          },
+          {
+            "trial": 12,
+            "kind": "numeric"
+          },
+          {
+            "trial": 13,
+            "kind": "numeric"
+          },
+          {
+            "trial": 14,
+            "kind": "numeric"
+          },
+          {
+            "trial": 15,
+            "kind": "numeric"
+          }
+        ],
+        "numeric_execution": true,
+        "trial_results": [
+          {
+            "trial": 0,
+            "suite": "fixed_boundary",
+            "passed": false
+          },
+          {
+            "trial": 1,
+            "suite": "fixed_boundary",
+            "passed": true
+          },
+          {
+            "trial": 2,
+            "suite": "fixed_boundary",
+            "passed": true
+          },
+          {
+            "trial": 3,
+            "suite": "fixed_boundary",
+            "passed": false
+          },
+          {
+            "trial": 4,
+            "suite": "fixed_boundary",
+            "passed": false
+          },
+          {
+            "trial": 5,
+            "suite": "fixed_boundary",
+            "passed": false
+          },
+          {
+            "trial": 6,
+            "suite": "fixed_boundary",
+            "passed": false
+          },
+          {
+            "trial": 7,
+            "suite": "fixed_boundary",
+            "passed": false
+          },
+          {
+            "trial": 8,
+            "suite": "seeded",
+            "passed": false
+          },
+          {
+            "trial": 9,
+            "suite": "seeded",
+            "passed": true
+          },
+          {
+            "trial": 10,
+            "suite": "seeded",
+            "passed": true
+          },
+          {
+            "trial": 11,
+            "suite": "seeded",
+            "passed": false
+          },
+          {
+            "trial": 12,
+            "suite": "seeded",
+            "passed": false
+          },
+          {
+            "trial": 13,
+            "suite": "seeded",
+            "passed": false
+          },
+          {
+            "trial": 14,
+            "suite": "seeded",
+            "passed": false
+          },
+          {
+            "trial": 15,
+            "suite": "seeded",
+            "passed": false
+          }
+        ],
+        "execution_seconds": 0.7171011890750378
+      },
+      "validation_passed": true,
+      "foil_fixed_witness_rejected": true
+    },
+    {
+      "id": "behavior-E1",
+      "split": "train",
+      "correct": {
+        "id": "behavior-E1",
+        "split": "train",
+        "seed": 202611071,
+        "fixture_cases_planned": 16,
+        "status": "evaluated",
+        "passed": true,
+        "public_answer_sha256": "8bde28fa4ada6b286b8a7b656585173541d22e0636681bc48b3288ca1d58495e",
+        "contract_passed": true,
+        "executable_sha256": "8bde28fa4ada6b286b8a7b656585173541d22e0636681bc48b3288ca1d58495e",
+        "fixture_sha256": "ee9a3097f2c3190e1e1d3a17d06a5ad76e38348ed784dbf9786345a87216cee4",
+        "tests_passed": 16,
+        "tests_total": 16,
+        "failures": [],
+        "numeric_execution": true,
+        "trial_results": [
+          {
+            "trial": 0,
+            "suite": "fixed_boundary",
+            "passed": true
+          },
+          {
+            "trial": 1,
+            "suite": "fixed_boundary",
+            "passed": true
+          },
+          {
+            "trial": 2,
+            "suite": "fixed_boundary",
+            "passed": true
+          },
+          {
+            "trial": 3,
+            "suite": "fixed_boundary",
+            "passed": true
+          },
+          {
+            "trial": 4,
+            "suite": "fixed_boundary",
+            "passed": true
+          },
+          {
+            "trial": 5,
+            "suite": "fixed_boundary",
+            "passed": true
+          },
+          {
+            "trial": 6,
+            "suite": "fixed_boundary",
+            "passed": true
+          },
+          {
+            "trial": 7,
+            "suite": "fixed_boundary",
+            "passed": true
+          },
+          {
+            "trial": 8,
+            "suite": "seeded",
+            "passed": true
+          },
+          {
+            "trial": 9,
+            "suite": "seeded",
+            "passed": true
+          },
+          {
+            "trial": 10,
+            "suite": "seeded",
+            "passed": true
+          },
+          {
+            "trial": 11,
+            "suite": "seeded",
+            "passed": true
+          },
+          {
+            "trial": 12,
+            "suite": "seeded",
+            "passed": true
+          },
+          {
+            "trial": 13,
+            "suite": "seeded",
+            "passed": true
+          },
+          {
+            "trial": 14,
+            "suite": "seeded",
+            "passed": true
+          },
+          {
+            "trial": 15,
+            "suite": "seeded",
+            "passed": true
+          }
+        ],
+        "execution_seconds": 0.7293341610347852
+      },
+      "foil": {
+        "id": "behavior-E1",
+        "split": "train",
+        "seed": 202611071,
+        "fixture_cases_planned": 16,
+        "status": "evaluated",
+        "passed": false,
+        "public_answer_sha256": "65a1b9ba76bf22fa0bb70e8e7ded195c54ef36235224d6f4aa6f3a3cdb7a350c",
+        "contract_passed": true,
+        "executable_sha256": "65a1b9ba76bf22fa0bb70e8e7ded195c54ef36235224d6f4aa6f3a3cdb7a350c",
+        "fixture_sha256": "ee9a3097f2c3190e1e1d3a17d06a5ad76e38348ed784dbf9786345a87216cee4",
+        "tests_passed": 11,
+        "tests_total": 16,
+        "failures": [
+          {
+            "trial": 0,
+            "kind": "numeric"
+          },
+          {
+            "trial": 2,
+            "kind": "numeric"
+          },
+          {
+            "trial": 6,
+            "kind": "numeric"
+          },
+          {
+            "trial": 8,
+            "kind": "numeric"
+          },
+          {
+            "trial": 14,
+            "kind": "numeric"
+          }
+        ],
+        "numeric_execution": true,
+        "trial_results": [
+          {
+            "trial": 0,
+            "suite": "fixed_boundary",
+            "passed": false
+          },
+          {
+            "trial": 1,
+            "suite": "fixed_boundary",
+            "passed": true
+          },
+          {
+            "trial": 2,
+            "suite": "fixed_boundary",
+            "passed": false
+          },
+          {
+            "trial": 3,
+            "suite": "fixed_boundary",
+            "passed": true
+          },
+          {
+            "trial": 4,
+            "suite": "fixed_boundary",
+            "passed": true
+          },
+          {
+            "trial": 5,
+            "suite": "fixed_boundary",
+            "passed": true
+          },
+          {
+            "trial": 6,
+            "suite": "fixed_boundary",
+            "passed": false
+          },
+          {
+            "trial": 7,
+            "suite": "fixed_boundary",
+            "passed": true
+          },
+          {
+            "trial": 8,
+            "suite": "seeded",
+            "passed": false
+          },
+          {
+            "trial": 9,
+            "suite": "seeded",
+            "passed": true
+          },
+          {
+            "trial": 10,
+            "suite": "seeded",
+            "passed": true
+          },
+          {
+            "trial": 11,
+            "suite": "seeded",
+            "passed": true
+          },
+          {
+            "trial": 12,
+            "suite": "seeded",
+            "passed": true
+          },
+          {
+            "trial": 13,
+            "suite": "seeded",
+            "passed": true
+          },
+          {
+            "trial": 14,
+            "suite": "seeded",
+            "passed": false
+          },
+          {
+            "trial": 15,
+            "suite": "seeded",
+            "passed": true
+          }
+        ],
+        "execution_seconds": 0.7197666480205953
+      },
+      "validation_passed": true,
+      "foil_fixed_witness_rejected": true
+    },
+    {
+      "id": "behavior-E2",
+      "split": "train",
+      "correct": {
+        "id": "behavior-E2",
+        "split": "train",
+        "seed": 202611071,
+        "fixture_cases_planned": 16,
+        "status": "evaluated",
+        "passed": false,
+        "public_answer_sha256": "ba67f903cc741bb3e3144d060e51f5fafe18a47d1f5507d161737249357b8417",
+        "contract_passed": true,
+        "executable_sha256": "ba67f903cc741bb3e3144d060e51f5fafe18a47d1f5507d161737249357b8417",
+        "fixture_sha256": "22f68ce545edc107a58ce64975a79bd897a51f8b4d66f10e1004009c72117af4",
+        "tests_passed": 14,
+        "tests_total": 16,
+        "failures": [
+          {
+            "trial": 1,
+            "kind": "output_shape"
+          },
+          {
+            "trial": 9,
+            "kind": "output_shape"
+          }
+        ],
+        "numeric_execution": true,
+        "trial_results": [
+          {
+            "trial": 0,
+            "suite": "fixed_boundary",
+            "passed": true
+          },
+          {
+            "trial": 1,
+            "suite": "fixed_boundary",
+            "passed": false
+          },
+          {
+            "trial": 2,
+            "suite": "fixed_boundary",
+            "passed": true
+          },
+          {
+            "trial": 3,
+            "suite": "fixed_boundary",
+            "passed": true
+          },
+          {
+            "trial": 4,
+            "suite": "fixed_boundary",
+            "passed": true
+          },
+          {
+            "trial": 5,
+            "suite": "fixed_boundary",
+            "passed": true
+          },
+          {
+            "trial": 6,
+            "suite": "fixed_boundary",
+            "passed": true
+          },
+          {
+            "trial": 7,
+            "suite": "fixed_boundary",
+            "passed": true
+          },
+          {
+            "trial": 8,
+            "suite": "seeded",
+            "passed": true
+          },
+          {
+            "trial": 9,
+            "suite": "seeded",
+            "passed": false
+          },
+          {
+            "trial": 10,
+            "suite": "seeded",
+            "passed": true
+          },
+          {
+            "trial": 11,
+            "suite": "seeded",
+            "passed": true
+          },
+          {
+            "trial": 12,
+            "suite": "seeded",
+            "passed": true
+          },
+          {
+            "trial": 13,
+            "suite": "seeded",
+            "passed": true
+          },
+          {
+            "trial": 14,
+            "suite": "seeded",
+            "passed": true
+          },
+          {
+            "trial": 15,
+            "suite": "seeded",
+            "passed": true
+          }
+        ],
+        "execution_seconds": 0.7439942950149998
+      },
+      "foil": {
+        "id": "behavior-E2",
+        "split": "train",
+        "seed": 202611071,
+        "fixture_cases_planned": 16,
+        "status": "evaluated",
+        "passed": false,
+        "public_answer_sha256": "aca1a2fb3340e41dce494942ea0c710c0284425cf80920d370821d0b5e7d836a",
+        "contract_passed": true,
+        "executable_sha256": "aca1a2fb3340e41dce494942ea0c710c0284425cf80920d370821d0b5e7d836a",
+        "fixture_sha256": "22f68ce545edc107a58ce64975a79bd897a51f8b4d66f10e1004009c72117af4",
+        "tests_passed": 4,
+        "tests_total": 16,
+        "failures": [
+          {
+            "trial": 0,
+            "kind": "numeric"
+          },
+          {
+            "trial": 1,
+            "kind": "output_shape"
+          },
+          {
+            "trial": 2,
+            "kind": "numeric"
+          },
+          {
+            "trial": 3,
+            "kind": "numeric"
+          },
+          {
+            "trial": 6,
+            "kind": "numeric"
+          },
+          {
+            "trial": 7,
+            "kind": "numeric"
+          },
+          {
+            "trial": 8,
+            "kind": "numeric"
+          },
+          {
+            "trial": 9,
+            "kind": "output_shape"
+          },
+          {
+            "trial": 10,
+            "kind": "numeric"
+          },
+          {
+            "trial": 11,
+            "kind": "numeric"
+          },
+          {
+            "trial": 14,
+            "kind": "numeric"
+          },
+          {
+            "trial": 15,
+            "kind": "numeric"
+          }
+        ],
+        "numeric_execution": true,
+        "trial_results": [
+          {
+            "trial": 0,
+            "suite": "fixed_boundary",
+            "passed": false
+          },
+          {
+            "trial": 1,
+            "suite": "fixed_boundary",
+            "passed": false
+          },
+          {
+            "trial": 2,
+            "suite": "fixed_boundary",
+            "passed": false
+          },
+          {
+            "trial": 3,
+            "suite": "fixed_boundary",
+            "passed": false
+          },
+          {
+            "trial": 4,
+            "suite": "fixed_boundary",
+            "passed": true
+          },
+          {
+            "trial": 5,
+            "suite": "fixed_boundary",
+            "passed": true
+          },
+          {
+            "trial": 6,
+            "suite": "fixed_boundary",
+            "passed": false
+          },
+          {
+            "trial": 7,
+            "suite": "fixed_boundary",
+            "passed": false
+          },
+          {
+            "trial": 8,
+            "suite": "seeded",
+            "passed": false
+          },
+          {
+            "trial": 9,
+            "suite": "seeded",
+            "passed": false
+          },
+          {
+            "trial": 10,
+            "suite": "seeded",
+            "passed": false
+          },
+          {
+            "trial": 11,
+            "suite": "seeded",
+            "passed": false
+          },
+          {
+            "trial": 12,
+            "suite": "seeded",
+            "passed": true
+          },
+          {
+            "trial": 13,
+            "suite": "seeded",
+            "passed": true
+          },
+          {
+            "trial": 14,
+            "suite": "seeded",
+            "passed": false
+          },
+          {
+            "trial": 15,
+            "suite": "seeded",
+            "passed": false
+          }
+        ],
+        "execution_seconds": 0.7390777349937707
+      },
+      "validation_passed": false,
+      "foil_fixed_witness_rejected": true
+    },
+    {
+      "id": "behavior-E3",
+      "split": "transfer",
+      "correct": {
+        "id": "behavior-E3",
+        "split": "transfer",
+        "seed": 202611072,
+        "fixture_cases_planned": 16,
+        "status": "evaluated",
+        "passed": true,
+        "public_answer_sha256": "e28c4d2a5202a27314810b1903a611aae45d0142984564f519d704c00367cb2e",
+        "contract_passed": true,
+        "executable_sha256": "e28c4d2a5202a27314810b1903a611aae45d0142984564f519d704c00367cb2e",
+        "fixture_sha256": "de518905ff3378bec0830128cf2ce76258f00b1a7f77deca594ebbee464cf58e",
+        "tests_passed": 16,
+        "tests_total": 16,
+        "failures": [],
+        "numeric_execution": true,
+        "trial_results": [
+          {
+            "trial": 0,
+            "suite": "fixed_boundary",
+            "passed": true
+          },
+          {
+            "trial": 1,
+            "suite": "fixed_boundary",
+            "passed": true
+          },
+          {
+            "trial": 2,
+            "suite": "fixed_boundary",
+            "passed": true
+          },
+          {
+            "trial": 3,
+            "suite": "fixed_boundary",
+            "passed": true
+          },
+          {
+            "trial": 4,
+            "suite": "fixed_boundary",
+            "passed": true
+          },
+          {
+            "trial": 5,
+            "suite": "fixed_boundary",
+            "passed": true
+          },
+          {
+            "trial": 6,
+            "suite": "fixed_boundary",
+            "passed": true
+          },
+          {
+            "trial": 7,
+            "suite": "fixed_boundary",
+            "passed": true
+          },
+          {
+            "trial": 8,
+            "suite": "seeded",
+            "passed": true
+          },
+          {
+            "trial": 9,
+            "suite": "seeded",
+            "passed": true
+          },
+          {
+            "trial": 10,
+            "suite": "seeded",
+            "passed": true
+          },
+          {
+            "trial": 11,
+            "suite": "seeded",
+            "passed": true
+          },
+          {
+            "trial": 12,
+            "suite": "seeded",
+            "passed": true
+          },
+          {
+            "trial": 13,
+            "suite": "seeded",
+            "passed": true
+          },
+          {
+            "trial": 14,
+            "suite": "seeded",
+            "passed": true
+          },
+          {
+            "trial": 15,
+            "suite": "seeded",
+            "passed": true
+          }
+        ],
+        "execution_seconds": 0.7057771009858698
+      },
+      "foil": {
+        "id": "behavior-E3",
+        "split": "transfer",
+        "seed": 202611072,
+        "fixture_cases_planned": 16,
+        "status": "evaluated",
+        "passed": false,
+        "public_answer_sha256": "232f6d2f41ba8599a2880649c6cb00a44e07dc646ad53dfb2cefcb2a31ed53ac",
+        "contract_passed": true,
+        "executable_sha256": "232f6d2f41ba8599a2880649c6cb00a44e07dc646ad53dfb2cefcb2a31ed53ac",
+        "fixture_sha256": "de518905ff3378bec0830128cf2ce76258f00b1a7f77deca594ebbee464cf58e",
+        "tests_passed": 6,
+        "tests_total": 16,
+        "failures": [
+          {
+            "trial": 0,
+            "kind": "runtime",
+            "phase": "execution",
+            "exception_category": "IndexError"
+          },
+          {
+            "trial": 2,
+            "kind": "runtime",
+            "phase": "execution",
+            "exception_category": "IndexError"
+          },
+          {
+            "trial": 3,
+            "kind": "numeric"
+          },
+          {
+            "trial": 6,
+            "kind": "runtime",
+            "phase": "execution",
+            "exception_category": "IndexError"
+          },
+          {
+            "trial": 7,
+            "kind": "numeric"
+          },
+          {
+            "trial": 8,
+            "kind": "numeric"
+          },
+          {
+            "trial": 10,
+            "kind": "runtime",
+            "phase": "execution",
+            "exception_category": "IndexError"
+          },
+          {
+            "trial": 11,
+            "kind": "numeric"
+          },
+          {
+            "trial": 14,
+            "kind": "runtime",
+            "phase": "execution",
+            "exception_category": "IndexError"
+          },
+          {
+            "trial": 15,
+            "kind": "numeric"
+          }
+        ],
+        "numeric_execution": true,
+        "trial_results": [
+          {
+            "trial": 0,
+            "suite": "fixed_boundary",
+            "passed": false
+          },
+          {
+            "trial": 1,
+            "suite": "fixed_boundary",
+            "passed": true
+          },
+          {
+            "trial": 2,
+            "suite": "fixed_boundary",
+            "passed": false
+          },
+          {
+            "trial": 3,
+            "suite": "fixed_boundary",
+            "passed": false
+          },
+          {
+            "trial": 4,
+            "suite": "fixed_boundary",
+            "passed": true
+          },
+          {
+            "trial": 5,
+            "suite": "fixed_boundary",
+            "passed": true
+          },
+          {
+            "trial": 6,
+            "suite": "fixed_boundary",
+            "passed": false
+          },
+          {
+            "trial": 7,
+            "suite": "fixed_boundary",
+            "passed": false
+          },
+          {
+            "trial": 8,
+            "suite": "seeded",
+            "passed": false
+          },
+          {
+            "trial": 9,
+            "suite": "seeded",
+            "passed": true
+          },
+          {
+            "trial": 10,
+            "suite": "seeded",
+            "passed": false
+          },
+          {
+            "trial": 11,
+            "suite": "seeded",
+            "passed": false
+          },
+          {
+            "trial": 12,
+            "suite": "seeded",
+            "passed": true
+          },
+          {
+            "trial": 13,
+            "suite": "seeded",
+            "passed": true
+          },
+          {
+            "trial": 14,
+            "suite": "seeded",
+            "passed": false
+          },
+          {
+            "trial": 15,
+            "suite": "seeded",
+            "passed": false
+          }
+        ],
+        "execution_seconds": 0.7260377139318734
+      },
+      "validation_passed": true,
+      "foil_fixed_witness_rejected": true
+    },
+    {
+      "id": "behavior-F1",
+      "split": "train",
+      "correct": {
+        "id": "behavior-F1",
+        "split": "train",
+        "seed": 202611071,
+        "fixture_cases_planned": 16,
+        "status": "evaluated",
+        "passed": true,
+        "public_answer_sha256": "85af8b1d9f45009043122bd2b9a6ba978a252326b36d4de7789faf705fdb4a08",
+        "contract_passed": true,
+        "executable_sha256": "85af8b1d9f45009043122bd2b9a6ba978a252326b36d4de7789faf705fdb4a08",
+        "fixture_sha256": "75873177553dac51b61e438d23bf187a5e9ea71c7cc9e3df30bc2b30378bb646",
+        "tests_passed": 16,
+        "tests_total": 16,
+        "failures": [],
+        "numeric_execution": true,
+        "trial_results": [
+          {
+            "trial": 0,
+            "suite": "fixed_boundary",
+            "passed": true
+          },
+          {
+            "trial": 1,
+            "suite": "fixed_boundary",
+            "passed": true
+          },
+          {
+            "trial": 2,
+            "suite": "fixed_boundary",
+            "passed": true
+          },
+          {
+            "trial": 3,
+            "suite": "fixed_boundary",
+            "passed": true
+          },
+          {
+            "trial": 4,
+            "suite": "fixed_boundary",
+            "passed": true
+          },
+          {
+            "trial": 5,
+            "suite": "fixed_boundary",
+            "passed": true
+          },
+          {
+            "trial": 6,
+            "suite": "fixed_boundary",
+            "passed": true
+          },
+          {
+            "trial": 7,
+            "suite": "fixed_boundary",
+            "passed": true
+          },
+          {
+            "trial": 8,
+            "suite": "seeded",
+            "passed": true
+          },
+          {
+            "trial": 9,
+            "suite": "seeded",
+            "passed": true
+          },
+          {
+            "trial": 10,
+            "suite": "seeded",
+            "passed": true
+          },
+          {
+            "trial": 11,
+            "suite": "seeded",
+            "passed": true
+          },
+          {
+            "trial": 12,
+            "suite": "seeded",
+            "passed": true
+          },
+          {
+            "trial": 13,
+            "suite": "seeded",
+            "passed": true
+          },
+          {
+            "trial": 14,
+            "suite": "seeded",
+            "passed": true
+          },
+          {
+            "trial": 15,
+            "suite": "seeded",
+            "passed": true
+          }
+        ],
+        "execution_seconds": 0.7422977550886571
+      },
+      "foil": {
+        "id": "behavior-F1",
+        "split": "train",
+        "seed": 202611071,
+        "fixture_cases_planned": 16,
+        "status": "evaluated",
+        "passed": false,
+        "public_answer_sha256": "d2eec4aef955be7fcc9bb0dcf447a83fcb8cba70968ec24ab37b8b87b6994be6",
+        "contract_passed": true,
+        "executable_sha256": "d2eec4aef955be7fcc9bb0dcf447a83fcb8cba70968ec24ab37b8b87b6994be6",
+        "fixture_sha256": "75873177553dac51b61e438d23bf187a5e9ea71c7cc9e3df30bc2b30378bb646",
+        "tests_passed": 14,
+        "tests_total": 16,
+        "failures": [
+          {
+            "trial": 0,
+            "kind": "numeric"
+          },
+          {
+            "trial": 4,
+            "kind": "numeric"
+          }
+        ],
+        "numeric_execution": true,
+        "trial_results": [
+          {
+            "trial": 0,
+            "suite": "fixed_boundary",
+            "passed": false
+          },
+          {
+            "trial": 1,
+            "suite": "fixed_boundary",
+            "passed": true
+          },
+          {
+            "trial": 2,
+            "suite": "fixed_boundary",
+            "passed": true
+          },
+          {
+            "trial": 3,
+            "suite": "fixed_boundary",
+            "passed": true
+          },
+          {
+            "trial": 4,
+            "suite": "fixed_boundary",
+            "passed": false
+          },
+          {
+            "trial": 5,
+            "suite": "fixed_boundary",
+            "passed": true
+          },
+          {
+            "trial": 6,
+            "suite": "fixed_boundary",
+            "passed": true
+          },
+          {
+            "trial": 7,
+            "suite": "fixed_boundary",
+            "passed": true
+          },
+          {
+            "trial": 8,
+            "suite": "seeded",
+            "passed": true
+          },
+          {
+            "trial": 9,
+            "suite": "seeded",
+            "passed": true
+          },
+          {
+            "trial": 10,
+            "suite": "seeded",
+            "passed": true
+          },
+          {
+            "trial": 11,
+            "suite": "seeded",
+            "passed": true
+          },
+          {
+            "trial": 12,
+            "suite": "seeded",
+            "passed": true
+          },
+          {
+            "trial": 13,
+            "suite": "seeded",
+            "passed": true
+          },
+          {
+            "trial": 14,
+            "suite": "seeded",
+            "passed": true
+          },
+          {
+            "trial": 15,
+            "suite": "seeded",
+            "passed": true
+          }
+        ],
+        "execution_seconds": 0.7281082490226254
+      },
+      "validation_passed": true,
+      "foil_fixed_witness_rejected": true
+    },
+    {
+      "id": "behavior-F2",
+      "split": "train",
+      "correct": {
+        "id": "behavior-F2",
+        "split": "train",
+        "seed": 202611071,
+        "fixture_cases_planned": 16,
+        "status": "evaluated",
+        "passed": true,
+        "public_answer_sha256": "d8e837f2dab1846ab96cdf2ff5b9520b084eba3e193dca7e5522f7e8d0e06879",
+        "contract_passed": true,
+        "executable_sha256": "d8e837f2dab1846ab96cdf2ff5b9520b084eba3e193dca7e5522f7e8d0e06879",
+        "fixture_sha256": "0f8a646d4cc97ece3da5a038a19db1d66fd5bceccbcceb552855e41c947f8224",
+        "tests_passed": 16,
+        "tests_total": 16,
+        "failures": [],
+        "numeric_execution": true,
+        "trial_results": [
+          {
+            "trial": 0,
+            "suite": "fixed_boundary",
+            "passed": true
+          },
+          {
+            "trial": 1,
+            "suite": "fixed_boundary",
+            "passed": true
+          },
+          {
+            "trial": 2,
+            "suite": "fixed_boundary",
+            "passed": true
+          },
+          {
+            "trial": 3,
+            "suite": "fixed_boundary",
+            "passed": true
+          },
+          {
+            "trial": 4,
+            "suite": "fixed_boundary",
+            "passed": true
+          },
+          {
+            "trial": 5,
+            "suite": "fixed_boundary",
+            "passed": true
+          },
+          {
+            "trial": 6,
+            "suite": "fixed_boundary",
+            "passed": true
+          },
+          {
+            "trial": 7,
+            "suite": "fixed_boundary",
+            "passed": true
+          },
+          {
+            "trial": 8,
+            "suite": "seeded",
+            "passed": true
+          },
+          {
+            "trial": 9,
+            "suite": "seeded",
+            "passed": true
+          },
+          {
+            "trial": 10,
+            "suite": "seeded",
+            "passed": true
+          },
+          {
+            "trial": 11,
+            "suite": "seeded",
+            "passed": true
+          },
+          {
+            "trial": 12,
+            "suite": "seeded",
+            "passed": true
+          },
+          {
+            "trial": 13,
+            "suite": "seeded",
+            "passed": true
+          },
+          {
+            "trial": 14,
+            "suite": "seeded",
+            "passed": true
+          },
+          {
+            "trial": 15,
+            "suite": "seeded",
+            "passed": true
+          }
+        ],
+        "execution_seconds": 0.7267543560592458
+      },
+      "foil": {
+        "id": "behavior-F2",
+        "split": "train",
+        "seed": 202611071,
+        "fixture_cases_planned": 16,
+        "status": "evaluated",
+        "passed": false,
+        "public_answer_sha256": "b8eb2acbb6f98db7a186e530834d1bcf9ca65270592797b50870222425f08670",
+        "contract_passed": true,
+        "executable_sha256": "b8eb2acbb6f98db7a186e530834d1bcf9ca65270592797b50870222425f08670",
+        "fixture_sha256": "0f8a646d4cc97ece3da5a038a19db1d66fd5bceccbcceb552855e41c947f8224",
+        "tests_passed": 14,
+        "tests_total": 16,
+        "failures": [
+          {
+            "trial": 0,
+            "kind": "numeric"
+          },
+          {
+            "trial": 11,
+            "kind": "numeric"
+          }
+        ],
+        "numeric_execution": true,
+        "trial_results": [
+          {
+            "trial": 0,
+            "suite": "fixed_boundary",
+            "passed": false
+          },
+          {
+            "trial": 1,
+            "suite": "fixed_boundary",
+            "passed": true
+          },
+          {
+            "trial": 2,
+            "suite": "fixed_boundary",
+            "passed": true
+          },
+          {
+            "trial": 3,
+            "suite": "fixed_boundary",
+            "passed": true
+          },
+          {
+            "trial": 4,
+            "suite": "fixed_boundary",
+            "passed": true
+          },
+          {
+            "trial": 5,
+            "suite": "fixed_boundary",
+            "passed": true
+          },
+          {
+            "trial": 6,
+            "suite": "fixed_boundary",
+            "passed": true
+          },
+          {
+            "trial": 7,
+            "suite": "fixed_boundary",
+            "passed": true
+          },
+          {
+            "trial": 8,
+            "suite": "seeded",
+            "passed": true
+          },
+          {
+            "trial": 9,
+            "suite": "seeded",
+            "passed": true
+          },
+          {
+            "trial": 10,
+            "suite": "seeded",
+            "passed": true
+          },
+          {
+            "trial": 11,
+            "suite": "seeded",
+            "passed": false
+          },
+          {
+            "trial": 12,
+            "suite": "seeded",
+            "passed": true
+          },
+          {
+            "trial": 13,
+            "suite": "seeded",
+            "passed": true
+          },
+          {
+            "trial": 14,
+            "suite": "seeded",
+            "passed": true
+          },
+          {
+            "trial": 15,
+            "suite": "seeded",
+            "passed": true
+          }
+        ],
+        "execution_seconds": 0.739942722953856
+      },
+      "validation_passed": true,
+      "foil_fixed_witness_rejected": true
+    },
+    {
+      "id": "behavior-F3",
+      "split": "transfer",
+      "correct": {
+        "id": "behavior-F3",
+        "split": "transfer",
+        "seed": 202611072,
+        "fixture_cases_planned": 16,
+        "status": "evaluated",
+        "passed": true,
+        "public_answer_sha256": "ca860625cce942674f14e4f1faa8309b8c39533032bffe09975606bf086efd06",
+        "contract_passed": true,
+        "executable_sha256": "ca860625cce942674f14e4f1faa8309b8c39533032bffe09975606bf086efd06",
+        "fixture_sha256": "fb8174401799bf7ca8d2826b174d4c19ec4233e66181d29e1ace72e606551cc4",
+        "tests_passed": 16,
+        "tests_total": 16,
+        "failures": [],
+        "numeric_execution": true,
+        "trial_results": [
+          {
+            "trial": 0,
+            "suite": "fixed_boundary",
+            "passed": true
+          },
+          {
+            "trial": 1,
+            "suite": "fixed_boundary",
+            "passed": true
+          },
+          {
+            "trial": 2,
+            "suite": "fixed_boundary",
+            "passed": true
+          },
+          {
+            "trial": 3,
+            "suite": "fixed_boundary",
+            "passed": true
+          },
+          {
+            "trial": 4,
+            "suite": "fixed_boundary",
+            "passed": true
+          },
+          {
+            "trial": 5,
+            "suite": "fixed_boundary",
+            "passed": true
+          },
+          {
+            "trial": 6,
+            "suite": "fixed_boundary",
+            "passed": true
+          },
+          {
+            "trial": 7,
+            "suite": "fixed_boundary",
+            "passed": true
+          },
+          {
+            "trial": 8,
+            "suite": "seeded",
+            "passed": true
+          },
+          {
+            "trial": 9,
+            "suite": "seeded",
+            "passed": true
+          },
+          {
+            "trial": 10,
+            "suite": "seeded",
+            "passed": true
+          },
+          {
+            "trial": 11,
+            "suite": "seeded",
+            "passed": true
+          },
+          {
+            "trial": 12,
+            "suite": "seeded",
+            "passed": true
+          },
+          {
+            "trial": 13,
+            "suite": "seeded",
+            "passed": true
+          },
+          {
+            "trial": 14,
+            "suite": "seeded",
+            "passed": true
+          },
+          {
+            "trial": 15,
+            "suite": "seeded",
+            "passed": true
+          }
+        ],
+        "execution_seconds": 0.7560774489538744
+      },
+      "foil": {
+        "id": "behavior-F3",
+        "split": "transfer",
+        "seed": 202611072,
+        "fixture_cases_planned": 16,
+        "status": "evaluated",
+        "passed": false,
+        "public_answer_sha256": "1993007518a5844b9834ccbeb80af01f57ae433163f0303b33649c4ee45f036a",
+        "contract_passed": true,
+        "executable_sha256": "1993007518a5844b9834ccbeb80af01f57ae433163f0303b33649c4ee45f036a",
+        "fixture_sha256": "fb8174401799bf7ca8d2826b174d4c19ec4233e66181d29e1ace72e606551cc4",
+        "tests_passed": 12,
+        "tests_total": 16,
+        "failures": [
+          {
+            "trial": 0,
+            "kind": "nonfinite"
+          },
+          {
+            "trial": 4,
+            "kind": "numeric"
+          },
+          {
+            "trial": 14,
+            "kind": "nonfinite"
+          },
+          {
+            "trial": 15,
+            "kind": "numeric"
+          }
+        ],
+        "numeric_execution": true,
+        "trial_results": [
+          {
+            "trial": 0,
+            "suite": "fixed_boundary",
+            "passed": false
+          },
+          {
+            "trial": 1,
+            "suite": "fixed_boundary",
+            "passed": true
+          },
+          {
+            "trial": 2,
+            "suite": "fixed_boundary",
+            "passed": true
+          },
+          {
+            "trial": 3,
+            "suite": "fixed_boundary",
+            "passed": true
+          },
+          {
+            "trial": 4,
+            "suite": "fixed_boundary",
+            "passed": false
+          },
+          {
+            "trial": 5,
+            "suite": "fixed_boundary",
+            "passed": true
+          },
+          {
+            "trial": 6,
+            "suite": "fixed_boundary",
+            "passed": true
+          },
+          {
+            "trial": 7,
+            "suite": "fixed_boundary",
+            "passed": true
+          },
+          {
+            "trial": 8,
+            "suite": "seeded",
+            "passed": true
+          },
+          {
+            "trial": 9,
+            "suite": "seeded",
+            "passed": true
+          },
+          {
+            "trial": 10,
+            "suite": "seeded",
+            "passed": true
+          },
+          {
+            "trial": 11,
+            "suite": "seeded",
+            "passed": true
+          },
+          {
+            "trial": 12,
+            "suite": "seeded",
+            "passed": true
+          },
+          {
+            "trial": 13,
+            "suite": "seeded",
+            "passed": true
+          },
+          {
+            "trial": 14,
+            "suite": "seeded",
+            "passed": false
+          },
+          {
+            "trial": 15,
+            "suite": "seeded",
+            "passed": false
+          }
+        ],
+        "execution_seconds": 0.7261387810576707
+      },
+      "validation_passed": true,
+      "foil_fixed_witness_rejected": true
+    }
+  ],
+  "docker_calls": 33,
+  "model_calls": 0,
+  "trials_per_numeric_execution": 16,
+  "fixed_boundary": 8,
+  "seeded": 8,
+  "train_seed": 202611071,
+  "transfer_seed": 202611072,
+  "sandbox": {
+    "socket": "/var/run/docker.sock",
+    "daemon_id": "3e518d2b-6972-43f8-b325-f7f33697a2d2",
+    "image": "sha256:c4ab50223f03fca17bf871e4d05f77001e76525a1c574b6c6ee7024db06cfdc2",
+    "seconds": 15,
+    "memory_mib": 512,
+    "cpus": 1,
+    "network": "none",
+    "user": "1003:1003",
+    "host_mounts": [],
+    "gpus": false
+  },
+  "scope": "Authored behavior calibration, not WSP. Initial generation train12 only.",
+  "token_count_measured": false,
+  "validation_passed": false
+}

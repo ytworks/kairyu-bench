@@ -1,0 +1,33 @@
+{
+  "cid": "fd4ec2eb9d7deba2ce3e790add6b50c0ee79a6390495320d8697873b32957bcf",
+  "image": "sha256:af9e746b913088cbf6c4464a31d6904a6b7e1d3ba62f0895362ddf13595f7abe",
+  "running": true,
+  "health": "healthy",
+  "runtime_flags_from_cmd": {
+    "--dtype": "bfloat16",
+    "--tensor-parallel-size": "2"
+  },
+  "safe_env_subset": {},
+  "source_hashes_rechecked": {
+    "/usr/local/lib/python3.12/dist-packages/transformers/models/gemma4/modeling_gemma4.py": "d42819dd9a2e5627da35a056e44b3c4c7b778e11c2067dcdd8312ee17ddc52f3",
+    "/usr/local/lib/python3.12/dist-packages/vllm/model_executor/models/gemma4.py": "e3922b9373db89b1aec00b06f4128448056f324e36c9ce7b81927bda04da3a33",
+    "/usr/local/lib/python3.12/dist-packages/vllm/model_executor/layers/layernorm.py": "45a29c6f8a78c6a76fb6abf4dbe68ff3ab21b73293cd0fe63d612322f098e0c6",
+    "/usr/local/lib/python3.12/dist-packages/vllm/model_executor/models/utils.py": "4b30956a7b5b16c27d82f785c83ec35cbf5115f300d7f292b869d2a91b26da4b",
+    "/usr/local/lib/python3.12/dist-packages/vllm/model_executor/model_loader/weight_utils.py": "d601523002f2f40a5467a7e68ad3c25625cda82bf5bdd888d6ef0ffcee5b1ec7",
+    "/usr/local/lib/python3.12/dist-packages/vllm/_custom_ops.py": "f7add10b87105ad21539625d7409c771b0228ea015f06a891468f3ba40bf6fa1",
+    "/usr/local/lib/python3.12/dist-packages/vllm/model_executor/custom_op.py": "caaa422b914d74a58c3d7a1653af76e2834f41cc2d4fbe65d10d4ad50dbb4d38",
+    "/usr/local/lib/python3.12/dist-packages/vllm/model_executor/models/gemma4_mm.py": "cb0ccbbe1b1b4563d84f7ebef9986a27d83b939a29eb01df29ab437e1efe68e3",
+    "/usr/local/lib/python3.12/dist-packages/vllm/ir/ops/layernorm.py": "b7621f663a97caf6908507b6cbe03adf23d0001a441d44af2b24c1ad0fc8bf57",
+    "/usr/local/lib/python3.12/dist-packages/vllm/model_executor/model_loader/default_loader.py": "995afc9196c02ca600094d73aec7f07e3fbff0d873f1952c64e98e325b3b857d",
+    "/usr/local/lib/python3.12/dist-packages/vllm/model_executor/model_loader/utils.py": "f81091610299bd1a18333a1d7cd3cce7bf35211e82ae8cb05ad381e79f15554f",
+    "/usr/local/lib/python3.12/dist-packages/vllm/model_executor/models/registry.py": "b0b2221e740dd40f7e9f7532b92cf764458fd188b77ff16859a4dc529e78154c",
+    "/usr/local/lib/python3.12/dist-packages/vllm/kernels/oink_ops.py": "1335e56cf452f6fe2b37d69534a24af45a21fba524e484e499788efc1df2c5ab",
+    "/usr/local/lib/python3.12/dist-packages/vllm/kernels/aiter_ops.py": "f8a5cc3e443c0930a9afb0abfc6c80a7f946af746b72cda22be3de0dc740f2dc",
+    "/usr/local/lib/python3.12/dist-packages/vllm/kernels/vllm_c.py": "ef37e71736807026f0b8ad187155b63f147984c03d287a78790ef8f8ed642ec1"
+  },
+  "all_source_unchanged": true,
+  "model_calls": 0,
+  "gpu_compute_calls": 0,
+  "service_mutations": 0,
+  "weight_payload_reads": 0
+}

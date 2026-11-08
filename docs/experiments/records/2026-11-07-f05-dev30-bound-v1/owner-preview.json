@@ -1,0 +1,23 @@
+{
+  "command": [
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/infra/weight-tools-ci/bin/python",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/worktrees/kairyu-bench-weight-tools/docs/experiments/scripts/fresh-av-dev30-20261107.py",
+    "--plan",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f05-dev30-dp4-v1/launch-plan-screen-pending.json"
+  ],
+  "returncode": 0,
+  "stdout": "{\"preview\": true, \"plan_sha256\": \"a9a862d5dfc33444f93a8d320faa552c60ee086bd9f828ab627ce1758cda8533\", \"approved\": false, \"items\": 2338, \"model_calls\": 0}\n",
+  "stderr": "",
+  "elapsed_seconds": 0.07182073593139648,
+  "plan": {
+    "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f05-dev30-dp4-v1/launch-plan-screen-pending.json",
+    "bytes": 14728,
+    "sha256": "a9a862d5dfc33444f93a8d320faa552c60ee086bd9f828ab627ce1758cda8533"
+  },
+  "owner": {
+    "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/worktrees/kairyu-bench-weight-tools/docs/experiments/scripts/fresh-av-dev30-20261107.py",
+    "bytes": 5922,
+    "sha256": "956af488fe54578c32c9baa856e9c32170dc49c1bbce2b1ba5db9af9ea1dd524"
+  },
+  "model_calls": 0
+}

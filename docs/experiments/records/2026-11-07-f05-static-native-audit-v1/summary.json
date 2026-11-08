@@ -1,0 +1,205 @@
+{
+  "audit_report_sha256": "4fe03834011c41512674fc5febd9238a65349f57bbd1d8d2b9dd5d9495afe468",
+  "derived_plan_sha256": "0981476fd24eea3c43a3aea87e3550aec8066f934830f4096afd51198405cfd1",
+  "derivation_proof_sha256": "f3cd6bb60780953aa515a5c20894b756495192ee3d6db46e232a954a985d79c2",
+  "static_audit_calls": 1,
+  "original_numeric_plan_exact_equal": true,
+  "original_report_source_pins_all_checked": true,
+  "all19_baseline_crosscheck": {
+    "external_report": {
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f04-native19-dependency-v2/report.json",
+      "sha256": "d1126f39833bc48709e9e5afee76262614335fe12de78210fec6007ee29ac6ea"
+    },
+    "all19_exact_baseline_equal": true,
+    "field_mapping": "all19_cases.correct-logprob -> case_rows.correct_logprob; margin unchanged",
+    "original_optional_probe_failure": "KeyError case_rows: external report uses all19_cases. No input/source mutation and no audit rerun.",
+    "AV_values_used": false
+  },
+  "eligible_scope": {
+    "coordinates": 1331456,
+    "changed": 26417,
+    "positive_delta": 13091,
+    "negative_delta": 13326,
+    "unchanged": 1305039,
+    "zero_source_coordinates": 0,
+    "source_l2": 70134.96613290488,
+    "actual_delta_l2": 52.29440538303777,
+    "relative_delta_l2": 0.0007456253031325419,
+    "max_absolute_delta": 8.0,
+    "max_relative_delta_on_nonzero_source": 0.013333333333333334,
+    "relative_delta_undefined_on_zero_source": 0,
+    "absolute_floor_active_coordinates": 1425,
+    "exceeds_relative_only_radius": 653,
+    "exceeds_declared_continuous_box": 653,
+    "maximum_box_excess": 1.5599999999999996,
+    "maximum_actual_to_box_ratio": 1.3333333333333333,
+    "sign_flips": 0
+  },
+  "whole_native_source_l2": 70134.96641044537,
+  "weighted_delta_l2_from_original_solver": 0.9366422579202413,
+  "all38_prediction_max_error": 0.0,
+  "met": 36,
+  "unmet": [
+    {
+      "objective": "margin",
+      "purpose": "A",
+      "fold": 0,
+      "minimum_delta": 0.35393271446228025,
+      "id": "behavior-A1",
+      "baseline": -0.2539327144622803,
+      "predicted_delta": 0.35382113466357623,
+      "predicted_after": 0.09988842020129596,
+      "required_after": 0.09999999999999998,
+      "shortfall": 0.00011157979870402013,
+      "met": false,
+      "delta_sign": "positive",
+      "solver_prediction": 0.35382113466357623,
+      "finite_response": null
+    },
+    {
+      "objective": "margin",
+      "purpose": "J",
+      "fold": 0,
+      "minimum_delta": 0.24493274688720704,
+      "id": "behavior-J1",
+      "baseline": -0.14493274688720703,
+      "predicted_delta": 0.24488091276907653,
+      "predicted_after": 0.0999481658818695,
+      "required_after": 0.1,
+      "shortfall": 5.183411813050598e-05,
+      "met": false,
+      "delta_sign": "positive",
+      "solver_prediction": 0.24488091276907653,
+      "finite_response": null
+    }
+  ],
+  "model_solver_Docker_operations": 0,
+  "artifacts": [
+    {
+      "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f05-native-contract-v1/audit-input-v1/audit-execution.json",
+      "path": "audit-input/audit-execution.json",
+      "raw_bytes": 1200,
+      "raw_sha256": "6e8b957e027be353759d4aa815edaf9b1745914c0066cbdc9244bf3a1b7e395e",
+      "stored_sha256": "6e8b957e027be353759d4aa815edaf9b1745914c0066cbdc9244bf3a1b7e395e"
+    },
+    {
+      "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f05-native-contract-v1/audit-input-v1/audit.stderr",
+      "path": "audit-input/audit.stderr",
+      "raw_bytes": 0,
+      "raw_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stored_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f05-native-contract-v1/audit-input-v1/audit.stdout",
+      "path": "audit-input/audit.stdout",
+      "raw_bytes": 830,
+      "raw_sha256": "71b6f4326977c6d572e0fd8ffdffb2a653e77f77e5af0db4a816fe7064eb3cc6",
+      "stored_sha256": "71b6f4326977c6d572e0fd8ffdffb2a653e77f77e5af0db4a816fe7064eb3cc6"
+    },
+    {
+      "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f05-native-contract-v1/audit-input-v1/baseline-crosscheck.json",
+      "path": "audit-input/baseline-crosscheck.json",
+      "raw_bytes": 543,
+      "raw_sha256": "c936792588fccf0a1336e199951f917bb8f1f071a23ef849431a988084165848",
+      "stored_sha256": "c936792588fccf0a1336e199951f917bb8f1f071a23ef849431a988084165848"
+    },
+    {
+      "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f05-native-contract-v1/audit-input-v1/dependency.json",
+      "path": "audit-input/dependency.json",
+      "raw_bytes": 4847,
+      "raw_sha256": "fb65f020e9753fea525de3b84474f98412550b83e45879f1df5228bfb3e6bc9a",
+      "stored_sha256": "fb65f020e9753fea525de3b84474f98412550b83e45879f1df5228bfb3e6bc9a"
+    },
+    {
+      "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f05-native-contract-v1/audit-input-v1/derivation-proof.json",
+      "path": "audit-input/derivation-proof.json",
+      "raw_bytes": 4837,
+      "raw_sha256": "f3cd6bb60780953aa515a5c20894b756495192ee3d6db46e232a954a985d79c2",
+      "stored_sha256": "f3cd6bb60780953aa515a5c20894b756495192ee3d6db46e232a954a985d79c2"
+    },
+    {
+      "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f05-native-contract-v1/audit-input-v1/parent-state.json",
+      "path": "audit-input/parent-state.json",
+      "raw_bytes": 2285,
+      "raw_sha256": "e1e9cbdf6010d720f3cdd98310b5acaa9e4a4daf5b5b4851d1c68076723f3ce3",
+      "stored_sha256": "e1e9cbdf6010d720f3cdd98310b5acaa9e4a4daf5b5b4851d1c68076723f3ce3"
+    },
+    {
+      "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f05-native-contract-v1/audit-input-v1/proposal/fresh-native-contract-f05.json",
+      "path": "audit-input/proposal/fresh-native-contract-f05.json.gz",
+      "raw_bytes": 904763,
+      "raw_sha256": "48e095d3de304767410ac0956e390ad6db4d211457683dabdc779a4f6bb48df3",
+      "stored_sha256": "557e84f3b9a2159f7fe62787f4bf7886149822d9015dd37f598a462c67e8dca0"
+    },
+    {
+      "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f05-native-contract-v1/audit-input-v1/proposal/report.json",
+      "path": "audit-input/proposal/report.json.gz",
+      "raw_bytes": 70462,
+      "raw_sha256": "4d2e57e4c92dff749e0da7b052cbadd435bc4486145ebda5d476c12cefdad793",
+      "stored_sha256": "4403b421ead47b1de0d1773badc79e32b4411c30312a3d5da03c5f37feb18c14"
+    },
+    {
+      "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f05-native-contract-v1/audit-input-v1/proposal-plan.json",
+      "path": "audit-input/proposal-plan.json",
+      "raw_bytes": 30795,
+      "raw_sha256": "0981476fd24eea3c43a3aea87e3550aec8066f934830f4096afd51198405cfd1",
+      "stored_sha256": "0981476fd24eea3c43a3aea87e3550aec8066f934830f4096afd51198405cfd1"
+    },
+    {
+      "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f05-native-contract-v1/audit-input-v1/solver-execution.json",
+      "path": "audit-input/solver-execution.json",
+      "raw_bytes": 761,
+      "raw_sha256": "42782c8742853a72c5708ce1062651b72316aeb8151bdce0d20b0a2f292907c8",
+      "stored_sha256": "42782c8742853a72c5708ce1062651b72316aeb8151bdce0d20b0a2f292907c8"
+    },
+    {
+      "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f05-native-contract-v1/static-native-audit-v1/report.json",
+      "path": "report.json.gz",
+      "raw_bytes": 1030492,
+      "raw_sha256": "4fe03834011c41512674fc5febd9238a65349f57bbd1d8d2b9dd5d9495afe468",
+      "stored_sha256": "0cff515865dd32236d2257cd1cbfafd6035a53779ce856bba10cfcfb4d1066b5"
+    },
+    {
+      "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f05-native-contract-v1/proposal-plan.json",
+      "path": "original/proposal-plan.json",
+      "raw_bytes": 30780,
+      "raw_sha256": "f0ca2df4c3a73bd1f032e9602aed42733afc2b9fa919324fc81feef648569ffa",
+      "stored_sha256": "f0ca2df4c3a73bd1f032e9602aed42733afc2b9fa919324fc81feef648569ffa"
+    },
+    {
+      "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f05-native-contract-v1/parent-state.json",
+      "path": "original/parent-state.json",
+      "raw_bytes": 1318,
+      "raw_sha256": "75596a03213dcde2eee5856c070b54b110aff2300d09b2c985022c805433acf1",
+      "stored_sha256": "75596a03213dcde2eee5856c070b54b110aff2300d09b2c985022c805433acf1"
+    },
+    {
+      "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f05-native-contract-v1/prepare-static-audit-v1.py.txt",
+      "path": "prepare-static-audit-v1.py.txt",
+      "raw_bytes": 5835,
+      "raw_sha256": "0b0bcde9ac17eb25442031863016dccd38381d3fbc2551f9b3dffa316f45c1fd",
+      "stored_sha256": "0b0bcde9ac17eb25442031863016dccd38381d3fbc2551f9b3dffa316f45c1fd"
+    },
+    {
+      "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/worktrees/kairyu-bench-weight-tools/scripts/experiments/gemma4-purpose/native_spec_audit.py",
+      "path": "native_spec_audit.py.txt",
+      "raw_bytes": 14143,
+      "raw_sha256": "38237dcf8706a64493c8bd041df614e0273ce9b550f151ce8650018b8e98dcbc",
+      "stored_sha256": "38237dcf8706a64493c8bd041df614e0273ce9b550f151ce8650018b8e98dcbc"
+    },
+    {
+      "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f05-native-contract-v1/materialization-v1/verify.stdout",
+      "path": "separate-saved-checkpoint-verify.json",
+      "raw_bytes": 615,
+      "raw_sha256": "1e9150f21a53af2e96d82c65297a9ce0dffb71d21ea59ea03d3d02a45ca4c427",
+      "stored_sha256": "1e9150f21a53af2e96d82c65297a9ce0dffb71d21ea59ea03d3d02a45ca4c427"
+    },
+    {
+      "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f05-native-contract-v1/package-static-audit-v1.py.txt",
+      "path": "package.py.txt",
+      "raw_bytes": 7220,
+      "raw_sha256": "764040691facc472dcae56b27f5e3c37309769bb95edbd0b5e9075ba1567dd52",
+      "stored_sha256": "764040691facc472dcae56b27f5e3c37309769bb95edbd0b5e9075ba1567dd52"
+    }
+  ]
+}

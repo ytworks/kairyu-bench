@@ -3,6 +3,8 @@
 重みを直接編集したモデルが「何を得て何を失ったか」を、どの編集手法にも同じ物差しで測る共通ベンチマークです。
 基準環境（Gemma 4 31B・8GPU）で **10分・30分・60分** に収まる3つのパターンがあり、どのパターンも14の能力すべてを測ります。
 
+重みとactivationの観測: [重み観測ガイド](wsp-weight-observation.md)。試行と運用上の限界: [Gemma 4重み編集実験記録](experiments/2026-11-04-gemma4-weight-editing.md)。
+
 計画とその理由: [`docs/superpowers/plans/2026-11-04-wsp-benchmark.md`](superpowers/plans/2026-11-04-wsp-benchmark.md)
 
 ## 原則
@@ -86,6 +88,8 @@ Kairyu の API は `prompt_logprobs` を上流 vLLM へ渡さないため、対�
 
 確定版の問題リストは、全パターン・両方の組で14能力すべてに問題があることを読み込み時に検査します（`freeze` も、足りなければ書き出さずに失敗します）。別の問題リストを `--manifest` で渡すときは、実行するパターンと組で14能力がそろっている必要があります。開発用の小さなリストは `--incomplete-manifest` を付けたときだけ使え、その回の総合スコアは出ません。
 
+個別の運用上の除外は、`wsp run ... --exclude-item terminal-bench:mteb-leaderboard` のように指定できます（複数なら繰り返し指定）。tier・split・`--only` で選ばれた項目だけを除外でき、範囲外のIDや全件除外はAPI接続前に拒否します。manifest本体とSHAは変えず、`run.json` の `excluded_item_ids` に記録します。除外項目は実行も採点もせず、0点にはしません。元runと問題集合が違う場合は、同じmanifestを使った `compare --partial` で共通の採点済み項目を比較し、除外理由と分母を併記してください。
+
 調整用（dev）は編集の比較・選択に、最終確認用（test）は最終報告だけに使ってください。test を見ながら編集を選ぶと、その結果は最終確認になりません。
 
 ### 結果
@@ -95,6 +99,16 @@ Kairyu の API は `prompt_logprobs` を上流 vLLM へ渡さないため、対�
 `compare` は同じ問題リスト（manifest の SHA-256）・パターン・組で、両方とも `completed`、かつ問題の集合が同じ2回だけを比べます。`--partial` を付けると、`--only` の回や未採点のある回でも、両方で採点できた問題だけで能力ごとの差を出します。その場合は能力ごとの欠けた問題数を表示し、14能力がそろわなければ総合の差は出しません。区間は出典ごとに問題を復元抽出する対応のあるブートストラップ（2,000回、固定シード）で、同じ入力からは同じ値が出ます。
 
 API の通信障害で採点できなかった項目は `unscored` として記録され、状態は `partial` になります（推測の0点にはしません）。
+
+SciCode の今後の実行では、`items.jsonl` の `detail.samples[].step_diagnostics` に、
+ステップ番号・正誤、終了コード、timeout、実行秒、既知の Python 例外class名、
+stdout/stderr のbyte数と SHA-256を保存します。例外classは stderr の末尾から
+固定allowlistで拾った手掛かりで、原因の確定ではありません。本文・メッセージ・
+コード・テストはこの診断に保存しません。通常終了のstreamは従来のtext captureを
+UTF-8へ再encodeした長さ/hash、timeoutで得たbytesはそのままで、違いを
+`representation` に記録します。得られなかったstream/終了コードはnullです。
+採点・300秒上限・実行内容は変えず、過去runの不足した診断を推測で補いません。
+
 
 ## 問題リストの作り方（校正）
 
@@ -156,3 +170,22 @@ Gemma 4 31B・8GPU（`gemma-4-31b-8gpu`）で、確定版の問題リストを�
 ## ロックの更新
 
 `scripts/locks/README.md` を参照してください。
+
+Reusable weight editing, observation, finite replay and evidence tools are indexed in the [WSP tool inventory](wsp-tool-inventory.md).
+
+
+## Measured runner image reuse
+
+The host wrapper normally builds the current checkout. For a paired experiment,
+`KAIRYU_BENCH_RUNNER_IMAGE_ID=sha256:<64 lowercase hex digits>` explicitly reuses
+that exact locally available Docker image without building or pulling. The
+wrapper rejects mutable tags, shortened IDs, missing images and identity
+mismatches before starting the runner. All normal arguments, result/capture/cache
+mounts and Docker options remain in force; `KAIRYU_BENCH_IMAGE` is the default
+build tag only when immutable reuse is absent.
+
+Record the actual container image ID (not a BuildKit config/progress digest),
+its source inventory, installed runtimes and canonical WSP configuration before
+reuse. The image ID does not freeze mounted cache environments, official source
+checkouts, serving weights or serving configuration; attest these separately.
+Keep every run in a new result directory and retain condition differences.

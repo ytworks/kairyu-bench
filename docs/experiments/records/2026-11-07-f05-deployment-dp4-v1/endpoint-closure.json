@@ -1,0 +1,110 @@
+{
+  "status": "all_four_F05_and_gateway_verified",
+  "gateway": {
+    "cid": "88943a0985ba97dfb17be6b5fb54040eba2570b70ce05126bd410162d3658ffb",
+    "endpoint": "http://172.26.0.9:8000/v1",
+    "model_ids": [
+      "gemma-4-31b",
+      "embeddinggemma-2"
+    ],
+    "healthy": true,
+    "unchanged_protected_service": true
+  },
+  "replicas": {
+    "gemma-0": {
+      "cid": "19a1344a05b79dbc5ac3f5f1c2540126847586226a002e042714158fe408b7aa",
+      "endpoint": "http://172.26.0.8:8000/v1",
+      "models": [
+        "gemma-4-31b"
+      ],
+      "tree": "fcc4681343c1a0c338157bee767df2024f37290469e55dbc417723717f4ac176",
+      "checkpoint_mount": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/checkpoints/fresh-native-contract-f05-faststore-v1/checkpoint",
+      "checkpoint_readonly": true,
+      "runtime_preserved": true,
+      "mtp_tokens": 4,
+      "tp_size": 2,
+      "native_runtime_flags_preserved": true,
+      "receipt_sha256": "027ade1ef7c742f51c89e02ca76cc020888ef7de87c1eeb94899815404cd062e",
+      "seconds": 123.18207716941833
+    },
+    "gemma-1": {
+      "cid": "c49e6eb95a1609b547e74fa32706ea36068f60bb95b5e23136b66a1e73bf6490",
+      "endpoint": "http://172.26.0.5:8000/v1",
+      "models": [
+        "gemma-4-31b"
+      ],
+      "tree": "fcc4681343c1a0c338157bee767df2024f37290469e55dbc417723717f4ac176",
+      "checkpoint_mount": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/checkpoints/fresh-native-contract-f05-faststore-v1/checkpoint",
+      "checkpoint_readonly": true,
+      "runtime_preserved": true,
+      "mtp_tokens": 4,
+      "tp_size": 2,
+      "native_runtime_flags_preserved": true,
+      "receipt_sha256": "8850be081e83df76e9fb4a7188820431c23888739dfec5c2166d450db9073dc8",
+      "seconds": 122.73506784439087
+    },
+    "gemma-2": {
+      "cid": "abb3b4d5103df28984f34e784c757fd26b093b48a426824d817b271c8cdbc1d0",
+      "endpoint": "http://172.26.0.6:8000/v1",
+      "models": [
+        "gemma-4-31b"
+      ],
+      "tree": "fcc4681343c1a0c338157bee767df2024f37290469e55dbc417723717f4ac176",
+      "checkpoint_mount": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/checkpoints/fresh-native-contract-f05-faststore-v1/checkpoint",
+      "checkpoint_readonly": true,
+      "runtime_preserved": true,
+      "mtp_tokens": 4,
+      "tp_size": 2,
+      "native_runtime_flags_preserved": true,
+      "receipt_sha256": "62fa3c9ea7cb428c9a4887bb899017d19ed8ca3ef34f3942ee49435d45fd53d8",
+      "seconds": 121.14757800102234
+    },
+    "gemma-3": {
+      "cid": "9ef25f4abd6e5bf027a50f3f147636f5e15def3d4bc4666006396c3671e0030e",
+      "endpoint": "http://172.26.0.4:8000/v1",
+      "models": [
+        "gemma-4-31b"
+      ],
+      "tree": "fcc4681343c1a0c338157bee767df2024f37290469e55dbc417723717f4ac176",
+      "checkpoint_mount": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/checkpoints/fresh-native-contract-f05-faststore-v1/checkpoint",
+      "checkpoint_readonly": true,
+      "runtime_preserved": true,
+      "mtp_tokens": 4,
+      "tp_size": 2,
+      "native_runtime_flags_preserved": true,
+      "receipt_sha256": "108f319c24106cc010edbb36a5cb02394f35873195f3570c6900232889483ed1",
+      "seconds": 120.23893189430237
+    }
+  },
+  "logprob_checks": {
+    "gemma-0": {
+      "http_success": true,
+      "model": "gemma-4-31b",
+      "prompt_logprob_positions": 2
+    },
+    "gemma-1": {
+      "http_success": true,
+      "model": "gemma-4-31b",
+      "prompt_logprob_positions": 2
+    },
+    "gemma-2": {
+      "http_success": true,
+      "model": "gemma-4-31b",
+      "prompt_logprob_positions": 2
+    },
+    "gemma-3": {
+      "http_success": true,
+      "model": "gemma-4-31b",
+      "prompt_logprob_positions": 2
+    }
+  },
+  "chat_check": true,
+  "generation_requests": 5,
+  "official_evaluation_requests": 0,
+  "all_four_idle": true,
+  "protected_count": 23,
+  "protected_unchanged": true,
+  "closure_sha256": "9cf7b84ce8e5f22923ad8184e4b680f75fb8261be5d04c76cbd4b9995346ed07",
+  "served_record_sha256": "53985c2d592b92391afbe15adf8ddfb3a101a3b38c9ea50af2cd609e89759e8c",
+  "created_epoch": 1794055660.2423604
+}

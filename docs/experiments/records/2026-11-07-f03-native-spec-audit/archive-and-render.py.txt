@@ -1,0 +1,107 @@
+from pathlib import Path
+import gzip
+import hashlib
+import json
+import shutil
+
+B = Path.cwd()
+R = B.parents[1]
+A = R / "analysis/fresh-purpose-20261107-f03-native-audit-v1"
+V = R / "analysis/fresh-purpose-20261107-f03-audit-validation-v1"
+P = R / "analysis/fresh-purpose-20261107-f03-native-v1"
+D = B / "docs/experiments/records/2026-11-07-f03-native-spec-audit"
+sha = lambda p: hashlib.sha256(p.read_bytes()).hexdigest()
+r = json.loads((A/"report.json").read_text())
+shutil.copyfile(A/"report.json", D/"report.json")
+for p in V.iterdir():
+ if p.is_file(): shutil.copyfile(p,D/p.name)
+for p in ["proposal-plan.json","preparation-receipt.json","solver-execution.json","parent-state.json"]:
+ shutil.copyfile(P/p,D/p)
+shutil.copyfile(P/"proposal/report.json",D/"solver-report.json")
+original_spec=P/"proposal/fresh-native-contract-f03.json"
+raw=original_spec.read_bytes()
+compressed=gzip.compress(raw,mtime=0)
+assert gzip.decompress(compressed)==raw
+(D/"fresh-native-contract-f03.json.gz").write_bytes(compressed)
+for p in ["scripts/experiments/gemma4-purpose/native_spec_audit.py","tests/test_gemma4_native_objectives.py"]:
+ shutil.copyfile(B/p,D/(Path(p).stem+"-final.py.txt"))
+summary = {
+ "status":"fixed_existing_spec_verified_not_materialized_or_finitely_measured_by_audit",
+ "report_sha256":sha(A/"report.json"), "plan_sha256":sha(P/"proposal-plan.json"),
+ "spec_sha256":sha(original_spec),"eligible_tensors":r["eligible_tensors"],
+ "changed_tensors":r["changed_tensors"],
+ "eligible_layer_count":len(r["eligible_layers"]),
+ "changed_layer_count":sum(v["changed"]>0 for k,v in r["layers"].items() if k!="global"),
+ "unchanged_eligible_tensor_count":sum(t["eligible"] and t["changed"]==0 for t in r["tensor_support"]),
+ "eligible_scope":r["eligible_scope"],"all24_rows":r["rows"],"all16_history":r["history"],
+ "history_per_constraint_vectors":None,"families":r["families"],"all_layers":r["layers"],
+ "numerical_model_response":None,"adoption":False,"audit_seconds":r["audit_seconds"],
+ "predicted_constraints_met":r["met_constraints"],"predicted_constraints_unmet":len(r["rows"])-r["met_constraints"],
+ "initial_focused_validation":"2 tests errored on module import; CLI audit succeeded on same source",
+ "initial_failure_cause":"test importlib loader did not expose sibling native_dependency module",
+ "repair":"Remove unnecessary recipe import; same 3-line require function inlined (AST identity checked); remove now-unused code pin",
+ "audit_rerun_after_import_cleanup":False,
+ "final_focused_validation":{"tests":2,"failures":0,"errors":0,"seconds":.011,"ruff":"passed"},
+ "source_before_sha256":sha(V/"native_spec_audit-before.py.txt"),
+ "source_after_sha256":sha(B/"scripts/experiments/gemma4-purpose/native_spec_audit.py"),
+ "model_calls":0,"solver_calls":0,"service_operations":0,"checkpoint_writes":0,
+}
+(D/"summary.json").write_text(json.dumps(summary,indent=2,allow_nan=False)+"\n")
+text="""# F03: independent BF16 native-spec audit (2026-11-07)
+
+The single fixed F03 spec was reconstructed once on CPU in **2.877 s**, without a new solve, rescaling, checkpoint write, service action or model call. Intended eligibility is **all 60 layers / 180 tensors / 645,180 coordinates**. Actual BF16 differences affect **59 layers / 112 tensors / 60,473 coordinates**; 68 eligible tensors are unchanged, including all eligible tensors in layer 59. All 421 observed native tensors are reported, including the 241 ineligible tensors with zero differences. Matrix payloads were not read or edited. This is a spec-value audit, **not a saved-candidate or finite-response claim**.
+
+The audit compared all **1,331,516 current native source words**, prior full attestation and current checkpoint stat continuity. No whole-model payload rehash was performed. Exact eligible-target F32/BF16 representation SHA matches the solver: @B@232fcba434c74422a29f2326538ba977edc4c9e79c8a5c182a0a5abffdd0c184@B@. Independent dot products reproduce all 24 saved predictions with maximum absolute disagreement **0**.
+
+## Actual differences and denominators
+
+Actual L2 is **0.0043893681725189855**. Its denominator is the complete selected-native source L2 **960.7201571980252**, giving relative L2 **4.56883114155e−6**. It is not divided by the full-native 70k norm or only changed cells. Positive/negative coordinate deltas are **29,982 / 30,491**; 584,707 eligible coordinates remain unchanged. No sign flips occurred.
+
+Maximum absolute difference is **0.00048828125**; maximum nonzero-source relative difference is **3.225806%**. The declared pre-round box is @B@max(.01*abs(source),1e-6)@B@: its absolute floor is active at 1,406 eligible coordinates. **16,754** actual BF16 differences exceed this continuous box, by up to **3.0517578125e−5**, with max actual-delta/box ratio **1.3333333333333333**. Relative-only 1% is exceeded at 17,711 coordinates. These are recorded rounding effects, not silently clamped or declared within 1%.
+
+| Native family | Eligible / changed tensors | Changed cells | Actual L2 | Full family source L2 | Relative L2 | Box-exceed cells |
+|---|---:|---:|---:|---:|---:|---:|
+"""
+for k,v in r["families"].items():
+ text += f"| {k} | {v['eligible_tensors']} / {v['changed_tensors']} | {v['changed']} | {v['actual_delta_l2']:.12g} | {v['source_l2']:.12g} | {v['relative_delta_l2']:.12g} | {v['exceeds_declared_continuous_box']} |\n"
+text += """
+All eight families, all 60 layers plus final norm and all 421 native tensor rows are in [report.json](records/2026-11-07-f03-native-spec-audit/report.json). Each row includes positive, negative and unchanged counts, full-source denominator, actual norm/maximum, floor and box-excess counts, and all 24 signed prediction contributions. Zero-difference families/tensors are retained; they do not indicate absent ability.
+
+## All 24 predictions, including unmet and nonpositive values
+
+The fixed solver completed with **22/24 predicted constraints met**; @B@predicted_constraints_satisfied=false@B@ remains unchanged. F2 LL is +0.0446587314292 versus +0.05 (shortfall 0.00534126857082). A1 margin changes by +0.267741950406 versus +0.280095477104 (shortfall 0.0123535266982): predicted final margin +0.00764647330180 is positive but below the frozen +0.02 target. No post-data threshold change is made.
+
+| Objective | Case | Baseline | Required delta | Predicted delta | Predicted after | Shortfall | Met |
+|---|---|---:|---:|---:|---:|---:|---|
+"""
+for row in r["rows"]:
+ text += f"| {row['objective']} | {row['id'].removeprefix('behavior-')} | {row['baseline']:.9g} | {row['minimum_delta']:.9g} | {row['predicted_delta']:+.9g} | {row['predicted_after']:.9g} | {row['shortfall']:.9g} | {'yes' if row['met'] else 'NO'} |\n"
+text += """
+All 12 LL predictions are positive. Margin has four positive and eight negative deltas; all are reported. Predicted objective changes are not measured behavior or official WSP scores. Numerical finite response remains unknown in this audit.
+
+## Original 16-round history
+
+The fixed solver chose round 16; there was no additional solve or amplitude/round search. The history records maximum shortfall, not all 24 individual historical residuals. Those missing vectors remain @B@null@B@; the audit did not reconstruct them by rerunning. The accumulated F64 proposal was also not saved, so its geometry is only the solver's reported record, not an independently reconstructed artifact.
+
+| Round | Maximum shortfall | Actual delta L2 | Changed cells | Dual iterations |
+|---:|---:|---:|---:|---:|
+"""
+for h in r["history"]:
+ text += f"| {h['round']} | {h['maximum_prediction_shortfall']:.12g} | {h['actual_delta_l2']:.12g} | {h['changed_elements']} | {h['dual']['iterations']} |\n"
+text += """
+The original rounding record reports continuous L2 0.00457984606549, relative rounding error 0.636836652781 and continuous/realized cosine 0.789322237389. The stored spec/realized norm/predictions were independently verified; the missing continuous vector was not.
+
+## Validation history and complete records
+
+Initial focused validation had **2 import errors**: the test loader could not resolve a sibling recipe import used only for a three-line assertion helper. The ordinary CLI audit nevertheless completed successfully on that original source. Both failures, exact pre-fix source and successful audit output are preserved. The unnecessary import was removed, using the AST-identical local helper; no numerical logic changed, and the already completed audit was not rerun. Final focused tests: **2 passed in 0.011 s**, Ruff passed. Full CI was not repeated.
+
+This helper is [native_spec_audit.py](../../scripts/experiments/gemma4-purpose/native_spec_audit.py). It adapts the existing F01 independent-word-check method; that tool and the existing roster summarizer require matrix samples and do not support this native-only input. Common solver/editor/sandbox sources were unchanged.
+
+[Complete records](records/2026-11-07-f03-native-spec-audit/) include the fixed plan, original solver report/history, lossless spec, all 421-row audit results, exact command, before/after source, failed/successful test logs and checksums. Source before: @B@SOURCE_BEFORE@B@; final source: @B@SOURCE_AFTER@B@. The result pins the source actually executed, with its exact snapshot preserved after the import cleanup. Audit report SHA: @B@REPORT_SHA@B@. No attempt or failure was overwritten.
+
+The box-excess counts were obtained **after** the parent's Opus-review prompt was frozen/sent; they are additional audit evidence, not information that the earlier prompt necessarily included.
+"""
+text=text.replace("SOURCE_BEFORE",summary["source_before_sha256"]).replace("SOURCE_AFTER",summary["source_after_sha256"]).replace("REPORT_SHA",summary["report_sha256"])
+(B/"docs/experiments/2026-11-07-f03-native-spec-audit.md").write_text(text.replace("@B@",chr(96)))
+(D/"SHA256SUMS").write_text("".join(sha(p)+"  "+p.name+"\n" for p in sorted(D.iterdir()) if p.is_file() and p.name!="SHA256SUMS"))
+print(json.dumps({k:summary[k] for k in ["report_sha256","spec_sha256","source_before_sha256","source_after_sha256"]},indent=2))

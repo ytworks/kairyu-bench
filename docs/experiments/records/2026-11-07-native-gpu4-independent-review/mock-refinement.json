@@ -1,0 +1,5 @@
+{
+  "first_before_after_mock": "failed restored assertion because mock ps ignored its exact name filter and falsely reported correct-logprob CID for margin",
+  "correction": "mock now respects requested container name; source owner unchanged",
+  "real_service_calls": 0
+}

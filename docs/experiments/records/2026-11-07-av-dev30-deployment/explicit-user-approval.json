@@ -1,0 +1,12 @@
+{
+  "status": "explicit_end_user_approval_received_after_automatic_review_rejection",
+  "question": "gemma-0〜3の4推論コンテナを順に再作成し、すべてAVの重みに切り替えることを承認してください。全問30・60分版と最終DeepSWEを8GPUで進めるため。切替中推論一時中断、他23維持",
+  "user_answer": "4推論コンテナのAVへの切替を承認する",
+  "scope": "Only gemma-0 through gemma-3 sequentially to the pinned AV checkpoint; preserve other 23 containers; stop after any failed target and retain target-only rollback.",
+  "freeze_sha256": "0fbf034b37613d20fde3f8a536852246a4207be8c65be0aa46a9f2a1d920f176",
+  "baseline_sha256": "615955c06b056fa07a6de8fb9f66fada9146be8ce8b2ff3de79fe1313e2c5f54",
+  "helper_sha256": "2e9da820fe30ba9b2436fb600cf14a533b1c496b2fed48ac3649fffb9d2bc9ae",
+  "prior_rejection_preserved": true,
+  "retry_basis": "New explicit end-user authorization relayed by parent; same intended operation, no bypass or scope expansion.",
+  "recorded_epoch": 1794033154.7851007
+}

@@ -1,0 +1,41 @@
+{
+  "source_sha256": {
+    "scripts/experiments/gemma4_lora/README.md": "58c8f9fc948f01b6c008dd4214d50e9727c083173ff3495770430d9978cdb6ab",
+    "scripts/experiments/gemma4_lora/dense_lora_recipe.py": "b0b26eada5baee8498ce4031c9718d9e0a75b3c1fb2fab774a252cc40e3c27db",
+    "scripts/experiments/gemma4_lora/dense_lora_native_recipe.py": "7f1871280ed7c8a9586c5eafe9c271e51ef081b563877cf6417d078037776fcf",
+    "scripts/experiments/gemma4_lora/module_lora_recipe.py": "ce1dcabe2710d92aaba068a6c4c114efa7a0030df67885b5de1272c49c28e21d",
+    "scripts/experiments/gemma4_lora/joint_module_recipe.py": "d258bac120f7a5d689463d8578b19671c8427c810e8c166c6f032a57871cc6d5",
+    "scripts/experiments/gemma4-purpose/native.py": "c9b294242d6e1c8c2786b1f4264dfcaf6d1c8927d576e815c53c96fca51ec108",
+    "src/kairyu_bench/wsp/weights/finite_replay.py": "71c424bffac775ba112e709632df0a37351a79c3121827be7c9844f321c7c4d3",
+    "docs/experiments/2026-11-07-authored-case-audit.md": "7a6fa0a55f1e4b1e853ad648011ba5ab25b6bcb989973023bd5d2c0947ce8840"
+  },
+  "read_only_search": {
+    "roots": [
+      "repository scripts and src",
+      "task runtime Python",
+      "task analysis Python excluding dependency vendor/snapshots"
+    ],
+    "patterns": [
+      "torch.optim",
+      "SFTTrainer",
+      "get_peft_model",
+      "LoraConfig",
+      "optimizer.step"
+    ],
+    "training_loop_matches": 0,
+    "scope_limit": "No assertion that unrelated software elsewhere lacks training functionality."
+  },
+  "existing_gpu_measurement": {
+    "summary_sha256": "eabb73cd9d978130dae53f6ac151dd9660fcb0862876f3063e8d6d91b167fccd",
+    "runtime": {
+      "torch": "2.14.0+cu130",
+      "transformers": "5.20.2",
+      "weight_dtype": "BF16",
+      "attention": "sdpa",
+      "gpu_peak_allocated_GiB": 62.25674533843994
+    }
+  },
+  "no_new_training_time_measurement": true,
+  "model_gpu_optimizer_candidate_calls": 0,
+  "followup_implementation_authorized": false
+}

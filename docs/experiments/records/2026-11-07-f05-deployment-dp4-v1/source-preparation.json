@@ -1,0 +1,22 @@
+{
+  "recorded_epoch": 1794054966.1148748,
+  "prepared_not_executed": true,
+  "model_calls": 0,
+  "service_mutations": 0,
+  "global_lock_attempts": 0,
+  "initial_ruff": {
+    "passed": false,
+    "code": "E731",
+    "line": 170
+  },
+  "source_before_sha256": "ef6b8dafa3f34ebce007c08090f63016fdfde2db7434032815b369d0f9981e27",
+  "source_sha256": "3a898414020dc83a8602255cd2c8573299aa4d5524aa144ddf6477e1da0a6416",
+  "syntax_compile_passed": true,
+  "argv_required": [
+    "--manifest",
+    "--spec",
+    "--verify"
+  ],
+  "target_checkpoint": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/checkpoints/fresh-native-contract-f05-faststore-v1/checkpoint",
+  "parent_checkpoint": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/checkpoints/fresh-native-relative-f04-faststore-v1/checkpoint"
+}

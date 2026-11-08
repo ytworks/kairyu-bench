@@ -1,0 +1,139 @@
+{
+  "scope": "pure CPU mock; no Docker/API/GPU/service invocation",
+  "reviewed_source_sha256": "c70af9c1e59bc41b31644812758dd07f572e6898e1a07aa1eabbe89c7f39550b",
+  "finding": "P1: collector inactivity checked before client wait, not again afterward",
+  "start_requested_with_late_collector_active": true,
+  "trace": [
+    [
+      "inspect",
+      "late-collector-fixture-correct-logprob",
+      false
+    ],
+    [
+      "ps",
+      "-aq",
+      "--no-trunc",
+      {
+        "late_collector_active": false
+      }
+    ],
+    [
+      "ps",
+      "-aq",
+      "--no-trunc",
+      "--filter",
+      "name=^/late-collector-fixture-correct-logprob$",
+      {
+        "late_collector_active": false
+      }
+    ],
+    [
+      "inspect",
+      "late-collector-fixture-correct-logprob",
+      false
+    ],
+    [
+      "ps",
+      "-aq",
+      "--no-trunc",
+      {
+        "late_collector_active": false
+      }
+    ],
+    [
+      "ps",
+      "-aq",
+      "--no-trunc",
+      "--filter",
+      "name=^/late-collector-fixture-correct-logprob$",
+      {
+        "late_collector_active": false
+      }
+    ],
+    [
+      "inspect",
+      "late-collector-fixture-margin",
+      false
+    ],
+    [
+      "ps",
+      "-aq",
+      "--no-trunc",
+      {
+        "late_collector_active": false
+      }
+    ],
+    [
+      "ps",
+      "-aq",
+      "--no-trunc",
+      "--filter",
+      "name=^/late-collector-fixture-margin$",
+      {
+        "late_collector_active": false
+      }
+    ],
+    [
+      "inspect",
+      "late-collector-fixture-margin",
+      false
+    ],
+    [
+      "ps",
+      "-aq",
+      "--no-trunc",
+      {
+        "late_collector_active": false
+      }
+    ],
+    [
+      "ps",
+      "-aq",
+      "--no-trunc",
+      "--filter",
+      "name=^/late-collector-fixture-margin$",
+      {
+        "late_collector_active": false
+      }
+    ],
+    [
+      "client-wait-returned",
+      "late_daemon_container_now_active"
+    ],
+    [
+      "start",
+      "fd4ec2eb9d7deba2ce3e790add6b50c0ee79a6390495320d8697873b32957bcf",
+      {
+        "late_collector_active": true
+      }
+    ]
+  ],
+  "status": {
+    "restored": true,
+    "protected_exact": true,
+    "collector_cleanup": [
+      {
+        "objective": "correct-logprob",
+        "cid": null,
+        "proven_inactive": true
+      },
+      {
+        "objective": "margin",
+        "cid": null,
+        "proven_inactive": true
+      }
+    ],
+    "after_queues": {
+      "queues": {
+        "running": [
+          0
+        ],
+        "waiting": [
+          0
+        ]
+      }
+    }
+  },
+  "interpretation": "Counterexample to cleanup ordering; not a reproduced real Docker race",
+  "prior_mock_setup_failure": "First attempted TemporaryDirectory under nonexistent infra/tmp; failed before mock; no service calls. Second mock needs no temp files."
+}

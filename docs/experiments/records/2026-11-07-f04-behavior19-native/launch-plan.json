@@ -1,0 +1,630 @@
+{
+  "schema_version": 2,
+  "status": "prepared",
+  "approved_for_execution": false,
+  "authorization": null,
+  "created_epoch": 1794054193.063117,
+  "python": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/infra/weight-tools-ci/bin/python",
+  "generator": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/worktrees/kairyu-bench-weight-tools/scripts/experiments/gemma4-purpose/science_generate.py",
+  "owner_sha256": "b3dd5f0a4c9f2eef8a04bde60ee2a07690ea2d6b939711010ec36af6f8ec0b9f",
+  "cwd": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/worktrees/kairyu-bench-weight-tools",
+  "global_lock": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/candidate-evaluation.lock",
+  "network": "gemma-4-31b-8gpu_default",
+  "gateway": {
+    "cid": "88943a0985ba97dfb17be6b5fb54040eba2570b70ce05126bd410162d3658ffb",
+    "endpoint": "http://172.26.0.9:8000/v1",
+    "model_ids": [
+      "gemma-4-31b",
+      "embeddinggemma-2"
+    ],
+    "image_id": "sha256:8e6c37a16eea6f7855b2142fb75555250b676cfc3a7c5c2d9a748bfd1175001b",
+    "healthy": true,
+    "unchanged_protected_service": true
+  },
+  "serving": {
+    "model": "gemma-4-31b",
+    "checkpoint": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/checkpoints/fresh-native-relative-f04-faststore-v1/checkpoint",
+    "tree_sha256": "7b9e9488e3cd4e0b6c5f61ae341e5eeccdf5bd31c46d1c8354950dbc29d0f924",
+    "replicas": 4,
+    "tp_size": 2,
+    "mtp_tokens": 4,
+    "dtype": "native BF16",
+    "ordinary_only": true,
+    "service_cids": {
+      "gemma-0": "dc117b29cb6f7ef23c8bab4ecb5d734114ebb828c3b569b2e2ba0843b7f962dd",
+      "gemma-1": "08037f93d105bc27be35b05b93fed55b463fc4776e446c1152fa5c6cb4563052",
+      "gemma-2": "fc3e14a0b216e622004db9b0cf754c7d33e4410d2ab63a28b762ef32607327ca",
+      "gemma-3": "d8ad71d8d13f18fa5311b89b08860ac0c8fefcbae03b9d631816d74c68a929a0"
+    },
+    "gateway": "gemma-4-31b-8gpu-kairyu-1",
+    "closures": [
+      {
+        "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f04-relative-v1/deployment-dp4-v1/gemma-0-closure-v1.json",
+        "bytes": 627,
+        "sha256": "9c8cb98b6ed22c6cafb80bffa792ce0d28230e1bda013b70f385416cf6f7f126"
+      },
+      {
+        "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f04-relative-v1/deployment-dp4-v1/gemma-1-closure-v1.json",
+        "bytes": 627,
+        "sha256": "5db50b29c8b3036bac1b437d170f33492b95a33e8e129d514e4b811778722e1c"
+      },
+      {
+        "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f04-relative-v1/deployment-dp4-v1/gemma-2-closure-v1.json",
+        "bytes": 627,
+        "sha256": "3c602f0541f14cdf63799577e0d1d2e13f5c7ff674b36c3834aa5a0df48304f4"
+      },
+      {
+        "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f04-relative-v1/deployment-dp4-v1/gemma-3-closure-v1.json",
+        "bytes": 626,
+        "sha256": "ae1630ca31c3691ef50d6ae459eec0cbf202c2721f67429917b6ea4d42e6e1d2"
+      }
+    ],
+    "four_replica_closure": {
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f04-relative-v1/deployment-dp4-v1/four-apply-closure.json",
+      "bytes": 4189,
+      "sha256": "91d0d6cfbcbf093c56b575633493e5a21ab15e89b986e8c7aeb579940e3c26bf"
+    }
+  },
+  "runtime_image": "sha256:af9e746b913088cbf6c4464a31d6904a6b7e1d3ba62f0895362ddf13595f7abe",
+  "checkpoint_files": [
+    {
+      "path": "chat_template.jinja",
+      "size": 18683,
+      "sha256": "ae53464bf3be25802b3a5b37def7fd89667067d7577049b3b2d74c4d8de4c6d4",
+      "stat": {
+        "device": 2306,
+        "inode": 182193236,
+        "mtime_ns": 1794050350349847250,
+        "ctime_ns": 1794050350349847250
+      }
+    },
+    {
+      "path": "config.json",
+      "size": 4621,
+      "sha256": "e967dd38bc5cfd38bd09a995a7bf4a754075df2b46aba68f7fbb5a791e6d8dd1",
+      "stat": {
+        "device": 2306,
+        "inode": 182193237,
+        "mtime_ns": 1794050350349847250,
+        "ctime_ns": 1794050350349847250
+      }
+    },
+    {
+      "path": "generation_config.json",
+      "size": 208,
+      "sha256": "d4226bbe3117d2d253ba4609720ba82c6c4ce4627a9a6ae05387c78983ac03de",
+      "stat": {
+        "device": 2306,
+        "inode": 182193238,
+        "mtime_ns": 1794050350350847215,
+        "ctime_ns": 1794050350350847215
+      }
+    },
+    {
+      "path": "model.safetensors.index.json",
+      "size": 103577,
+      "sha256": "2eeef6577e663781958c7e17a8809e5f5953ebe1fdb4bf4906cb7f943946bca3",
+      "stat": {
+        "device": 2306,
+        "inode": 182193239,
+        "mtime_ns": 1794050350350847215,
+        "ctime_ns": 1794050350350847215
+      }
+    },
+    {
+      "path": "native.safetensors",
+      "size": 2714560,
+      "sha256": "dde45065af919d9b463529f8f12f249266af2c256ffa9a0ef0b1b8a3ee3c572c",
+      "stat": {
+        "device": 2306,
+        "inode": 182193240,
+        "mtime_ns": 1794050350572839477,
+        "ctime_ns": 1794050350572839477
+      }
+    },
+    {
+      "path": "processor_config.json",
+      "size": 1689,
+      "sha256": "32bdf45d2ad4cc29a0822ddd157a182de76644f0419a6228d151495256e9813c",
+      "stat": {
+        "device": 2306,
+        "inode": 182193241,
+        "mtime_ns": 1794050350361846832,
+        "ctime_ns": 1794050350361846832
+      }
+    },
+    {
+      "path": "shared.safetensors",
+      "size": 62543620336,
+      "sha256": "d4690e5b5c1eea2099685025676b80409c9ba0636c869c523b8e9b88a4066432",
+      "stat": {
+        "device": 2306,
+        "inode": 182192842,
+        "mtime_ns": 1794050230365028683,
+        "ctime_ns": 1794050243644565979
+      }
+    },
+    {
+      "path": "tokenizer.json",
+      "size": 32169626,
+      "sha256": "cc8d3a0ce36466ccc1278bf987df5f71db1719b9ca6b4118264f45cb627bfe0f",
+      "stat": {
+        "device": 2306,
+        "inode": 182193242,
+        "mtime_ns": 1794050350405845298,
+        "ctime_ns": 1794050350405845298
+      }
+    },
+    {
+      "path": "tokenizer_config.json",
+      "size": 3082,
+      "sha256": "9f4fec4b1dc6ecddf8f4a92e9caea5971c0e67d81309f3f9066a2bee8c362633",
+      "stat": {
+        "device": 2306,
+        "inode": 182193243,
+        "mtime_ns": 1794050350569839582,
+        "ctime_ns": 1794050350569839582
+      }
+    }
+  ],
+  "services": [
+    {
+      "service": "gemma-0",
+      "cid": "dc117b29cb6f7ef23c8bab4ecb5d734114ebb828c3b569b2e2ba0843b7f962dd",
+      "image": "sha256:af9e746b913088cbf6c4464a31d6904a6b7e1d3ba62f0895362ddf13595f7abe",
+      "healthy": true,
+      "readonly_model_mount": {
+        "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/checkpoints/fresh-native-relative-f04-faststore-v1/checkpoint",
+        "destination": "/checkpoint",
+        "rw": false
+      },
+      "cmd_sha256": "4c78e59d954e7aba91f388288fda5b47edeea7b71739508a2ba672eb798d058f",
+      "selected_flags": [
+        {
+          "argument": "--tensor-parallel-size",
+          "value": "2"
+        },
+        {
+          "argument": "--speculative-config",
+          "value": "{\"model\":\"/models/gemma-4-31b-it-assistant\",\"num_speculative_tokens\":4}"
+        },
+        {
+          "argument": "--reasoning-parser",
+          "value": "gemma4"
+        },
+        {
+          "argument": "--default-chat-template-kwargs",
+          "value": "{\"enable_thinking\":true}"
+        },
+        {
+          "argument": "--dtype",
+          "value": "bfloat16"
+        }
+      ]
+    },
+    {
+      "service": "gemma-1",
+      "cid": "08037f93d105bc27be35b05b93fed55b463fc4776e446c1152fa5c6cb4563052",
+      "image": "sha256:af9e746b913088cbf6c4464a31d6904a6b7e1d3ba62f0895362ddf13595f7abe",
+      "healthy": true,
+      "readonly_model_mount": {
+        "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/checkpoints/fresh-native-relative-f04-faststore-v1/checkpoint",
+        "destination": "/checkpoint",
+        "rw": false
+      },
+      "cmd_sha256": "4c78e59d954e7aba91f388288fda5b47edeea7b71739508a2ba672eb798d058f",
+      "selected_flags": [
+        {
+          "argument": "--tensor-parallel-size",
+          "value": "2"
+        },
+        {
+          "argument": "--speculative-config",
+          "value": "{\"model\":\"/models/gemma-4-31b-it-assistant\",\"num_speculative_tokens\":4}"
+        },
+        {
+          "argument": "--reasoning-parser",
+          "value": "gemma4"
+        },
+        {
+          "argument": "--default-chat-template-kwargs",
+          "value": "{\"enable_thinking\":true}"
+        },
+        {
+          "argument": "--dtype",
+          "value": "bfloat16"
+        }
+      ]
+    },
+    {
+      "service": "gemma-2",
+      "cid": "fc3e14a0b216e622004db9b0cf754c7d33e4410d2ab63a28b762ef32607327ca",
+      "image": "sha256:af9e746b913088cbf6c4464a31d6904a6b7e1d3ba62f0895362ddf13595f7abe",
+      "healthy": true,
+      "readonly_model_mount": {
+        "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/checkpoints/fresh-native-relative-f04-faststore-v1/checkpoint",
+        "destination": "/checkpoint",
+        "rw": false
+      },
+      "cmd_sha256": "4c78e59d954e7aba91f388288fda5b47edeea7b71739508a2ba672eb798d058f",
+      "selected_flags": [
+        {
+          "argument": "--tensor-parallel-size",
+          "value": "2"
+        },
+        {
+          "argument": "--speculative-config",
+          "value": "{\"model\":\"/models/gemma-4-31b-it-assistant\",\"num_speculative_tokens\":4}"
+        },
+        {
+          "argument": "--reasoning-parser",
+          "value": "gemma4"
+        },
+        {
+          "argument": "--default-chat-template-kwargs",
+          "value": "{\"enable_thinking\":true}"
+        },
+        {
+          "argument": "--dtype",
+          "value": "bfloat16"
+        }
+      ]
+    },
+    {
+      "service": "gemma-3",
+      "cid": "d8ad71d8d13f18fa5311b89b08860ac0c8fefcbae03b9d631816d74c68a929a0",
+      "image": "sha256:af9e746b913088cbf6c4464a31d6904a6b7e1d3ba62f0895362ddf13595f7abe",
+      "healthy": true,
+      "readonly_model_mount": {
+        "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/checkpoints/fresh-native-relative-f04-faststore-v1/checkpoint",
+        "destination": "/checkpoint",
+        "rw": false
+      },
+      "cmd_sha256": "4c78e59d954e7aba91f388288fda5b47edeea7b71739508a2ba672eb798d058f",
+      "selected_flags": [
+        {
+          "argument": "--tensor-parallel-size",
+          "value": "2"
+        },
+        {
+          "argument": "--speculative-config",
+          "value": "{\"model\":\"/models/gemma-4-31b-it-assistant\",\"num_speculative_tokens\":4}"
+        },
+        {
+          "argument": "--reasoning-parser",
+          "value": "gemma4"
+        },
+        {
+          "argument": "--default-chat-template-kwargs",
+          "value": "{\"enable_thinking\":true}"
+        },
+        {
+          "argument": "--dtype",
+          "value": "bfloat16"
+        }
+      ]
+    }
+  ],
+  "protected_containers": [
+    {
+      "cid": "88943a0985ba97dfb17be6b5fb54040eba2570b70ce05126bd410162d3658ffb",
+      "name": "/gemma-4-31b-8gpu-kairyu-1",
+      "image": "sha256:8e6c37a16eea6f7855b2142fb75555250b676cfc3a7c5c2d9a748bfd1175001b",
+      "running": true,
+      "status": "running",
+      "health": "healthy"
+    },
+    {
+      "cid": "3257ee5ee6d0fa212bacd64de8b86152ab0be509e0a7d329838193559039dbda",
+      "name": "/kairyu-wsp-observe-20261106",
+      "image": "sha256:bb4076b5f7468285b297e77867843a190c337009a97d14cefefc0d6a719e68d4",
+      "running": true,
+      "status": "running",
+      "health": "healthy"
+    },
+    {
+      "cid": "dfbaee8005646b8369493c56f5daa89251880694970e135209b3416255e57d57",
+      "name": "/gemma-wsp-deepswe-dind-20261104",
+      "image": "sha256:aa3df78ecf320f5fafdce71c659f1629e96e9de0968305fe1de670e0ca9176ce",
+      "running": true,
+      "status": "running",
+      "health": null
+    },
+    {
+      "cid": "149b564776c7bda50b4039b44b0cf52b1178272a481a4c4dee88de2f283ae334",
+      "name": "/wsp-dind",
+      "image": "sha256:2a232a42256f70d78e3cc5d2b5d6b3276710a0de0596c145f627ecfae90282ac",
+      "running": true,
+      "status": "running",
+      "health": null
+    },
+    {
+      "cid": "5885c75f79f5396867db6b3518637ca5bcde342dd1fd20f88c89bf69ff42cdff",
+      "name": "/gemma4-wsp-cpu-chat-purpose-20261105",
+      "image": "sha256:af9e746b913088cbf6c4464a31d6904a6b7e1d3ba62f0895362ddf13595f7abe",
+      "running": false,
+      "status": "exited",
+      "health": null
+    },
+    {
+      "cid": "ed9842852109333c564c5962ada840ea2794720ad613ebc0c8ef96591c816a33",
+      "name": "/gemma4-wsp-cpu-chat-frame-preflight-failed-20261105",
+      "image": "sha256:af9e746b913088cbf6c4464a31d6904a6b7e1d3ba62f0895362ddf13595f7abe",
+      "running": false,
+      "status": "exited",
+      "health": null
+    },
+    {
+      "cid": "37b84155d0d47c339a8a3f989cf69be74a80a9f7369829db41612a5a77fe481a",
+      "name": "/gemma4-wsp-cpu-algorithm-completion-20261105",
+      "image": "sha256:af9e746b913088cbf6c4464a31d6904a6b7e1d3ba62f0895362ddf13595f7abe",
+      "running": false,
+      "status": "exited",
+      "health": null
+    },
+    {
+      "cid": "dbabe7158257d30d26b6f96d51eb17e4a0b6385fcf5d9d90c2182b22aed3d20b",
+      "name": "/gemma4-wsp-cpu-programming-completion-20261105",
+      "image": "sha256:af9e746b913088cbf6c4464a31d6904a6b7e1d3ba62f0895362ddf13595f7abe",
+      "running": false,
+      "status": "exited",
+      "health": null
+    },
+    {
+      "cid": "3d62fd16cb139033941f36930a226b197b4512f4d319bc0920ecc3ef0b62a87f",
+      "name": "/gemma4-wsp-cpu-joint-sets-20261105",
+      "image": "sha256:af9e746b913088cbf6c4464a31d6904a6b7e1d3ba62f0895362ddf13595f7abe",
+      "running": false,
+      "status": "exited",
+      "health": null
+    },
+    {
+      "cid": "c672bb052ad042282e2e2ec2e8b65edde8b6c50262bd6dab00da57314e4f8b1b",
+      "name": "/gemma4-wsp-cpu-whole-dependencies-20261105",
+      "image": "sha256:af9e746b913088cbf6c4464a31d6904a6b7e1d3ba62f0895362ddf13595f7abe",
+      "running": false,
+      "status": "exited",
+      "health": null
+    },
+    {
+      "cid": "374e969acaf78f336c638b5bff9ffdde04fd44f9075e45d2cfd54881b556b2c1",
+      "name": "/gemma4-wsp-cpu-broad-margins-20261105",
+      "image": "sha256:af9e746b913088cbf6c4464a31d6904a6b7e1d3ba62f0895362ddf13595f7abe",
+      "running": false,
+      "status": "exited",
+      "health": null
+    },
+    {
+      "cid": "61a829c3aaf5c9af66499357d1f55b8f58ad19ef40cb887bbe63a0c4729c10f9",
+      "name": "/gemma4-wsp-cpu-combinations-20261105",
+      "image": "sha256:af9e746b913088cbf6c4464a31d6904a6b7e1d3ba62f0895362ddf13595f7abe",
+      "running": false,
+      "status": "exited",
+      "health": null
+    },
+    {
+      "cid": "fbb725752d9e8990506968903bfcb5a406eb56f0bc6c839eb08199c0d05f54f3",
+      "name": "/gemma4-wsp-cpu-mechanisms-v2-20261105",
+      "image": "sha256:af9e746b913088cbf6c4464a31d6904a6b7e1d3ba62f0895362ddf13595f7abe",
+      "running": false,
+      "status": "exited",
+      "health": null
+    },
+    {
+      "cid": "4ef033809802f99ae4859327cf7350e2dc4c7d657b226a7229914432e0dd0718",
+      "name": "/gemma4-wsp-cpu-mechanisms-20261105",
+      "image": "sha256:af9e746b913088cbf6c4464a31d6904a6b7e1d3ba62f0895362ddf13595f7abe",
+      "running": false,
+      "status": "exited",
+      "health": null
+    },
+    {
+      "cid": "8c1e4b184886cd32d110fab4c4fda7369c445ae910f1e68b8ba4834811921d8d",
+      "name": "/gemma4-wsp-cpu-sparse-check-20261105",
+      "image": "sha256:af9e746b913088cbf6c4464a31d6904a6b7e1d3ba62f0895362ddf13595f7abe",
+      "running": false,
+      "status": "exited",
+      "health": null
+    },
+    {
+      "cid": "c81e36297abd0b0e23fd11ada341ac6845e4446fe34a5f9432de70cbdfa752cc",
+      "name": "/gemma4-wsp-cpu-norm-probe-20261105",
+      "image": "sha256:af9e746b913088cbf6c4464a31d6904a6b7e1d3ba62f0895362ddf13595f7abe",
+      "running": false,
+      "status": "exited",
+      "health": null
+    },
+    {
+      "cid": "0a32557db9cd0bd49fffefea34276c8515021858e3d0115e560ef835f616609a",
+      "name": "/gemma-wsp-deepswe-dind-20261104-pre-nvme-results-20261105",
+      "image": "sha256:aa3df78ecf320f5fafdce71c659f1629e96e9de0968305fe1de670e0ca9176ce",
+      "running": false,
+      "status": "exited",
+      "health": null
+    },
+    {
+      "cid": "ca0ce07ae660af1bb129a129aa538d23206e1d10c4db982ae692618dd852678d",
+      "name": "/wsp-dind-pre-nvme-results-20261105",
+      "image": "sha256:2a232a42256f70d78e3cc5d2b5d6b3276710a0de0596c145f627ecfae90282ac",
+      "running": false,
+      "status": "exited",
+      "health": null
+    },
+    {
+      "cid": "005b20d4f0adacdc438e2e90f44c9d21579f3d089b366bcfe8af8f0785bde8c3",
+      "name": "/gemma-4-31b-8gpu-chat-ui-1",
+      "image": "sha256:ef11a68f38457d831e23168486858c25b9d9c4399094c9e72c0d4d8767ac09de",
+      "running": true,
+      "status": "running",
+      "health": "healthy"
+    },
+    {
+      "cid": "b4302da3c2814fa2458ae7e4652b0041af34bd45d6872b86ecd40cfa06bf9985",
+      "name": "/gemma-4-31b-8gpu-embed-0-1",
+      "image": "sha256:af9e746b913088cbf6c4464a31d6904a6b7e1d3ba62f0895362ddf13595f7abe",
+      "running": true,
+      "status": "running",
+      "health": "healthy"
+    },
+    {
+      "cid": "897103115f63e39d3261f39bf449bfa9258121d270ae700f65c0321837eeec08",
+      "name": "/gemma-4-31b-8gpu-embed-1-1",
+      "image": "sha256:af9e746b913088cbf6c4464a31d6904a6b7e1d3ba62f0895362ddf13595f7abe",
+      "running": true,
+      "status": "running",
+      "health": "healthy"
+    },
+    {
+      "cid": "bcf8a575872a9ff05a85bfd8b46dbeec3cb9d8bef6a94aded4cb5a12c61bc976",
+      "name": "/gemma-4-31b-8gpu-docling-1",
+      "image": "sha256:6eda9c524992147c1b0b06a1a9be4894bd68b1f43c86d92c32f996c4c60d18a3",
+      "running": true,
+      "status": "running",
+      "health": "healthy"
+    },
+    {
+      "cid": "b0d4c3e871a7d2a44249318079920bd01f56cb7978b58a19f4245245f140afd6",
+      "name": "/kairyu-pg-groupc-ci-det",
+      "image": "sha256:f3bd19c606e442c3d7bdfa8002e03fe260a1023351e0ea4598032022b68dd6e3",
+      "running": true,
+      "status": "running",
+      "health": null
+    }
+  ],
+  "pins": [
+    {
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/infra/managed-python/cpython-3.12.13-linux-x86_64-gnu/bin/python3.12",
+      "sha256": "7d43f6e86a6c6dd12005ec77eb2055f1be3f1bb3adedf8afe0a87973fa7371ce",
+      "bytes": 30979368
+    },
+    {
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/worktrees/kairyu-bench-weight-tools/scripts/experiments/gemma4-purpose/science_generate.py",
+      "sha256": "df88767ebcd5a3138747a36fe7e0976dbb0c2ceb5b0f1eece74740818f0b7f89",
+      "bytes": 10011
+    },
+    {
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/worktrees/kairyu-bench-weight-tools/docs/experiments/scripts/fresh-av-behavior12-native-20261107.py",
+      "sha256": "b3dd5f0a4c9f2eef8a04bde60ee2a07690ea2d6b939711010ec36af6f8ec0b9f",
+      "bytes": 13279
+    },
+    {
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/worktrees/kairyu-bench-weight-tools/scripts/experiments/gemma4-purpose/behavior_frames.py",
+      "sha256": "21dc2ec9a0bccbef6d693e12a72f46921a21f392f3839a343f6104deaafe668f",
+      "bytes": 3174
+    },
+    {
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-behavior19-inputs-v1/train-cases.json",
+      "sha256": "74e1cd2000fda0abdc03f4454b18f4231b9891360af266391744e13976f199f1",
+      "bytes": 17423
+    },
+    {
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f04-behavior19-native-v1/frames/frame-evidence.json",
+      "sha256": "635946c2bf4da2be6399abd28272978dad18b7eff9a9b6537c9ea52d7b0f36ca",
+      "bytes": 9036
+    },
+    {
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f04-behavior19-native-v1/frames/train-frame-evidence.json",
+      "sha256": "e9aee3b1e3af5929b47fc3148b090785147d18c30e1ee706691320cc9810245b",
+      "bytes": 5562
+    },
+    {
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/checkpoints/fresh-native-relative-f04-faststore-v1/manifest.json",
+      "sha256": "fd189cf276a1219ad627186d2dfb4a895c79768821f247a0b33d9abd8953d8c1",
+      "bytes": 3488563
+    },
+    {
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f04-relative-v1/faststore-plan-v1/materialization-v1/verify.stdout",
+      "sha256": "a7237a2b82d68e64467c791c3781a86b8b216f584272ef5db77c956383c4b0cd",
+      "bytes": 613
+    },
+    {
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f04-behavior19-native-v1/prepare.py",
+      "sha256": "e48cf3a2cfc205a2bc96d509d1a608926e2c33a9a0a03379bf57a9bb2a560e79",
+      "bytes": 4416
+    }
+  ],
+  "cases": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-behavior19-inputs-v1/train-cases.json",
+  "ids": [
+    "behavior-A1",
+    "behavior-A2",
+    "behavior-B1",
+    "behavior-B2",
+    "behavior-C1",
+    "behavior-C2",
+    "behavior-D1",
+    "behavior-D2",
+    "behavior-E1",
+    "behavior-E2",
+    "behavior-F1",
+    "behavior-F2",
+    "behavior-G1",
+    "behavior-G2",
+    "behavior-H1",
+    "behavior-H2",
+    "behavior-I1",
+    "behavior-I2",
+    "behavior-J1"
+  ],
+  "frame_evidence": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f04-behavior19-native-v1/frames/frame-evidence.json",
+  "owner_output": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f04-behavior19-native-v1/owner",
+  "generation_output": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f04-behavior19-native-v1/generation",
+  "thinking_control": "server-default",
+  "transfer_policy": "old6/new3 untouched; no transfer model generation or gradient",
+  "sampling": {
+    "concurrency": 16,
+    "max_tokens": 32768,
+    "timeout_seconds": 1200,
+    "seed": 0,
+    "thinking_control": "server-default",
+    "default_enable_thinking_attested": true,
+    "temperature_override": null,
+    "top_p_override": null,
+    "retries": 0,
+    "attempts_per_case": 1
+  },
+  "source_git_head": "0c34a30829c3295b4d3d389934d143147c0b7812",
+  "scope": {
+    "known_authored_calibration": true,
+    "unseen_claim": false,
+    "wsp_score": false,
+    "model_requests_issued": 0,
+    "services_changed": false
+  },
+  "command": [
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/infra/weight-tools-ci/bin/python",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/worktrees/kairyu-bench-weight-tools/scripts/experiments/gemma4-purpose/science_generate.py",
+    "--cases",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-behavior19-inputs-v1/train-cases.json",
+    "--split",
+    "train",
+    "--endpoint",
+    "http://172.26.0.9:8000/v1",
+    "--model",
+    "gemma-4-31b",
+    "--checkpoint-sha256",
+    "7b9e9488e3cd4e0b6c5f61ae341e5eeccdf5bd31c46d1c8354950dbc29d0f924",
+    "--output",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f04-behavior19-native-v1/generation",
+    "--concurrency",
+    "16",
+    "--max-tokens",
+    "32768",
+    "--timeout",
+    "1200",
+    "--seed",
+    "0",
+    "--thinking-control",
+    "server-default"
+  ],
+  "candidate_identity": {
+    "manifest_path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/checkpoints/fresh-native-relative-f04-faststore-v1/manifest.json",
+    "manifest_sha256": "fd189cf276a1219ad627186d2dfb4a895c79768821f247a0b33d9abd8953d8c1",
+    "verification_receipt_path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f04-relative-v1/faststore-plan-v1/materialization-v1/verify.stdout",
+    "verification_receipt_sha256": "a7237a2b82d68e64467c791c3781a86b8b216f584272ef5db77c956383c4b0cd",
+    "checkpoint_path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/checkpoints/fresh-native-relative-f04-faststore-v1/checkpoint",
+    "spec_path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f04-relative-v1/proposal/fresh-native-relative-f04.json",
+    "spec_sha256": "52e293bdd36a4c09715c8c211e035562b1eeb26aabb6490e21d4b511f2a0987b",
+    "hash_contract": "all_checkpoint_files hashes from successful faststore manifest: freshly verified private files plus shared prior-fullhash and exact inode/full stat continuity; no fresh full model hash claim",
+    "extra_payload_hash_pass": false
+  }
+}

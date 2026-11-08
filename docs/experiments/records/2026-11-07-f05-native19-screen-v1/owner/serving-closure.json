@@ -1,0 +1,54 @@
+{
+  "epoch": 1794055734.6740792,
+  "services": [
+    {
+      "cid": "19a1344a05b79dbc5ac3f5f1c2540126847586226a002e042714158fe408b7aa",
+      "ip": "172.26.0.8",
+      "idle_counts": [
+        0.0,
+        0.0
+      ],
+      "model_ids": [
+        "gemma-4-31b"
+      ]
+    },
+    {
+      "cid": "c49e6eb95a1609b547e74fa32706ea36068f60bb95b5e23136b66a1e73bf6490",
+      "ip": "172.26.0.5",
+      "idle_counts": [
+        0.0,
+        0.0
+      ],
+      "model_ids": [
+        "gemma-4-31b"
+      ]
+    },
+    {
+      "cid": "abb3b4d5103df28984f34e784c757fd26b093b48a426824d817b271c8cdbc1d0",
+      "ip": "172.26.0.6",
+      "idle_counts": [
+        0.0,
+        0.0
+      ],
+      "model_ids": [
+        "gemma-4-31b"
+      ]
+    },
+    {
+      "cid": "9ef25f4abd6e5bf027a50f3f147636f5e15def3d4bc4666006396c3671e0030e",
+      "ip": "172.26.0.4",
+      "idle_counts": [
+        0.0,
+        0.0
+      ],
+      "model_ids": [
+        "gemma-4-31b"
+      ]
+    }
+  ],
+  "gateway_model_ids": [
+    "gemma-4-31b",
+    "embeddinggemma-2"
+  ],
+  "protected": 23
+}

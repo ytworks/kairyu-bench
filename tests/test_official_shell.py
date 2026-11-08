@@ -125,12 +125,18 @@ class OfficialShellSupportTest(unittest.TestCase):
             ),
             "codex": ("chat-capable", None, []),
         }
-        for agent, (
+        cases["terminus-observed"] = cases["terminus-2"]
+        for case, (
             expected_model,
             expected_kwarg,
             expected_agent_env,
         ) in cases.items():
-            with self.subTest(agent=agent), tempfile.TemporaryDirectory() as directory:
+            agent = "terminus-2" if case == "terminus-observed" else case
+            observed_agent = (
+                "kairyu_bench.wsp.sources.terminal_bench_observe:ObservedTerminus2"
+                if case == "terminus-observed" else agent
+            )
+            with self.subTest(agent=case), tempfile.TemporaryDirectory() as directory:
                 root = Path(directory)
                 cache = root / "cache"
                 run_dir = root / "run"
@@ -181,6 +187,7 @@ capture = {
     "args": args,
     "openai_base_url": os.environ.get("OPENAI_BASE_URL"),
     "anthropic_base_url": os.environ.get("ANTHROPIC_BASE_URL"),
+    "pythonpath": os.environ.get("PYTHONPATH"),
 }
 Path(os.environ["HARBOR_ARGS_PATH"]).write_text(json.dumps(capture))
 jobs = Path(args[args.index("--jobs-dir") + 1])
@@ -189,7 +196,7 @@ trial.mkdir(parents=True)
 (trial / "config.json").write_text("{}")
 (trial / "result.json").write_text(json.dumps({
     "task_name": "task-a",
-    "agent_info": {"name": agent, "version": "1.0"},
+    "agent_info": {"name": "terminus-2" if agent.endswith(":ObservedTerminus2") else agent, "version": "1.0"},
     "verifier_result": {"rewards": {"reward": 1}},
 }))
 """,
@@ -221,6 +228,9 @@ trial.mkdir(parents=True)
                 }
                 if agent == "terminus-2":
                     process_environment["KAIRYU_BENCH_TERMINAL_BENCH_MAX_TURNS"] = "250"
+                if case == "terminus-observed":
+                    process_environment["KAIRYU_BENCH_WSP_OBSERVE_CONFIG"] = str(root / "capture.json")
+                    process_environment.pop("PYTHONPATH", None)
                 subprocess.run(
                     [str(ROOT / "scripts/harnesses/terminal-bench.sh")],
                     cwd=ROOT,
@@ -230,7 +240,7 @@ trial.mkdir(parents=True)
 
                 capture = json.loads(capture_path.read_text(encoding="utf-8"))
                 arguments = capture["args"]
-                self.assertEqual(arguments[arguments.index("--agent") + 1], agent)
+                self.assertEqual(arguments[arguments.index("--agent") + 1], observed_agent)
                 self.assertEqual(
                     arguments[arguments.index("--model") + 1], expected_model
                 )
@@ -278,6 +288,8 @@ trial.mkdir(parents=True)
                 self.assertNotIn("super-secret", arguments)
                 self.assertEqual(capture["openai_base_url"], "https://example.test/v1")
                 self.assertEqual(capture["anthropic_base_url"], "https://example.test")
+                if case == "terminus-observed":
+                    self.assertIn(str(ROOT / "src"), capture["pythonpath"].split(os.pathsep))
                 self.assertEqual(
                     json.loads(result_path.read_text(encoding="utf-8"))["agent"], agent
                 )

@@ -1,0 +1,27 @@
+{
+  "source_sha256": {
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/worktrees/kairyu-bench-weight-tools/scripts/experiments/gemma4-purpose/native.py": "c9b294242d6e1c8c2786b1f4264dfcaf6d1c8927d576e815c53c96fca51ec108",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/worktrees/kairyu-bench-weight-tools/scripts/experiments/gemma4-purpose/recipe_common.py": "fddbca286f3423e5e4a0bb046663600967f2060d0e055558d1c8659fcd89f35e",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/worktrees/kairyu-bench-weight-tools/scripts/experiments/gemma4-purpose/objective_variants.py": "f1faa1993b0e138de1599e3057db7eb35fcdd375a43d4a8c85db526eaf6462a6",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/worktrees/kairyu-bench-weight-tools/scripts/experiments/gemma4-purpose/compose_purpose_collections.py": "7b71d44a1a201fceb1c986d01680e19897ca8d654e0244de92076d502ac58804",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/worktrees/kairyu-bench-weight-tools/scripts/experiments/gemma4-purpose/propose_native_objectives.py": "9633698b9eab5d1e9c5e49d399f897d9147ab37f32c3ecd4b61232e3dc5e2d83",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/worktrees/kairyu-bench-weight-tools/scripts/experiments/gemma4-purpose/joint.py": "6480e16c8f453b4a8f3914a502e1abd6ce31e21ef01759f258715baf557e703c",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/worktrees/kairyu-bench-weight-tools/src/kairyu_bench/wsp/weights/finite_replay.py": "71c424bffac775ba112e709632df0a37351a79c3121827be7c9844f321c7c4d3",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/worktrees/kairyu-bench-weight-tools/docs/experiments/scripts/fresh-av-native-gpu4-20261107.py": "39707865f4cc4851290d218d0f4cb6a3fa8768a940a124a9f0ea953ee0d2c5d7",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-behavior-followup9-v1/train-cases.json": "adc645385045ea8a0dc8da7ba70fe62743f426424e6e1021060aaab36a932ac4",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-behavior18-inputs-v1/train-cases.json": "b42990b0caac24ccc7843e40718c0c5e7ad61dd5baa131ed6852c126bf37f66d"
+  },
+  "mode": "read-only source and help",
+  "model_calls": 0,
+  "gpu_calls": 0,
+  "checkpoint_reads": "metadata/source only; no payloads",
+  "new_implementation": false,
+  "findings": {
+    "native_only_segment_merge_supported": false,
+    "composer_requires_both_native_and_matrix": true,
+    "native_collector_accepts_train18": true,
+    "existing_owner_hardcodes_AV_ABCDEF_12": true,
+    "old_F2_margin_is_zero_removal_contrast_not_off_by_one": true,
+    "F2_foil_change_requires_new_frame_and_objectives": true
+  }
+}

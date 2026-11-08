@@ -1,0 +1,59 @@
+{
+  "pid": 1593000,
+  "epoch": 1794056116.3879168,
+  "global_lock_held": true,
+  "input_pins": {
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/checkpoints/fresh-native-relative-f04-faststore-v1/manifest.json": "fd189cf276a1219ad627186d2dfb4a895c79768821f247a0b33d9abd8953d8c1",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f04-relative-v1/proposal/fresh-native-relative-f04.json": "52e293bdd36a4c09715c8c211e035562b1eeb26aabb6490e21d4b511f2a0987b",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f04-relative-v1/faststore-plan-v1/materialization-v1/verify.stdout": "a7237a2b82d68e64467c791c3781a86b8b216f584272ef5db77c956383c4b0cd",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f05-behavior19-native-v1/score-v1/gate.json": "77548bc4f71fcb74afafc3e964fd8a39293255e649e02373001a5ffdec3c1d2f",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/worktrees/kairyu-bench-weight-tools/docs/experiments/scripts/redeploy-replica.py": "2e9da820fe30ba9b2436fb600cf14a533b1c496b2fed48ac3649fffb9d2bc9ae",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/worktrees/kairyu-bench-weight-tools/docs/experiments/scripts/fresh-four-parallel-redeploy-20261107.py": "19ae025add4f2f08705f33f0146f48cc9fa8e92bdb14a8383f46fb7d531e53bc",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/checkpoints/fresh-native-contract-f05-faststore-v1/manifest.json": "09ea569a08f138efd438055d7149f0697dc1d6edd08332f2b6c7c09b1da7c24c",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/worktrees/kairyu-bench-weight-tools/docs/experiments/records/2026-11-07-f04-official-comparison/parent-selection.json": "50a48edce45c69e7f06e35566dcdbbaa93ed18d2c27368d2f14c3c52d759157b",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f05-native-contract-v1/deployment-dp4-v1/plan-root-approved.json": "ec377967cf4e93015dacd8396c84fa0dcb17e87ed59cc6aadc3ce4e7b441b719",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-av-dev30-deployment-plan-v1/remove-completed-observer-v2.py": "99a9cc25006a988d1d7cfe11b8f579ea0bbb857c4de34c39f21bf0769b5a12ce",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f05-rejected-f04-restore-v1/prepare-source.py": "08df35cf0cef597b46eced3515604196a936034709e89a683fd0c4b61a60d2fe"
+  },
+  "argv": [
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f05-rejected-f04-restore-v1/prepare-source.py",
+    "--manifest",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/checkpoints/fresh-native-relative-f04-faststore-v1/manifest.json",
+    "--spec",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f04-relative-v1/proposal/fresh-native-relative-f04.json",
+    "--verify",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f04-relative-v1/faststore-plan-v1/materialization-v1/verify.stdout"
+  ],
+  "source_pins": {
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/worktrees/kairyu-bench-weight-tools/docs/experiments/scripts/redeploy-replica.py": "2e9da820fe30ba9b2436fb600cf14a533b1c496b2fed48ac3649fffb9d2bc9ae",
+    "/home/y-takagi/kairyu/examples/gemma-4-31b-8gpu/control.py": "fc9a78bc232f9cc331926a0737e64f4b4fe14946574f4a02bc1aacb9a800b851",
+    "/home/y-takagi/kairyu/examples/gemma-4-31b-8gpu/compose.yaml": "fe49b81c153f68335ef46e07dc9f9910ee49ee066902e703d11d152c8809c5cb",
+    "/home/y-takagi/kairyu/examples/gemma-4-31b-8gpu/example.json": "99b1863206205abc92f5bde917c607cced03a220bd77323cf264eb781f4aedb7",
+    "/home/y-takagi/kairyu/examples/gemma-4-31b-8gpu/kairyu.yaml": "a28e232f27b89d1acc35e3f5871ccffafd8145211e4ffcb33cc0c6b514fa640d"
+  },
+  "logical_parent": {
+    "kind": "deployment_only_restore_rejected_candidate",
+    "current_checkpoint": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/checkpoints/fresh-native-contract-f05-faststore-v1/checkpoint",
+    "current_tree": "fcc4681343c1a0c338157bee767df2024f37290469e55dbc417723717f4ac176",
+    "restore_checkpoint": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/checkpoints/fresh-native-relative-f04-faststore-v1/checkpoint",
+    "restore_tree": "7b9e9488e3cd4e0b6c5f61ae341e5eeccdf5bd31c46d1c8354950dbc29d0f924",
+    "new_weight_edit": false,
+    "rejection_gate": {
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f05-behavior19-native-v1/score-v1/gate.json",
+      "sha256": "77548bc4f71fcb74afafc3e964fd8a39293255e649e02373001a5ffdec3c1d2f"
+    }
+  },
+  "parent_shared_stat": {
+    "device": 2306,
+    "inode": 182192842,
+    "size": 62543620336,
+    "mtime_ns": 1794050230365028683,
+    "ctime_ns": 1794050243644565979,
+    "nlink": 17,
+    "uid": 1003,
+    "gid": 1003,
+    "mode": 33060
+  },
+  "model_calls": 0,
+  "serving_mutations": 0
+}

@@ -1,0 +1,86 @@
+{
+  "status": "all_four_ordinary_restored_F04_healthy_verified",
+  "replicas": {
+    "gemma-0": {
+      "cid": "47207dd45c1819d875951e66728310171dc218dfc55b1221054f704c39eb3009",
+      "endpoint": "http://172.26.0.8:8000/v1",
+      "models": [
+        "gemma-4-31b"
+      ],
+      "tree": "7b9e9488e3cd4e0b6c5f61ae341e5eeccdf5bd31c46d1c8354950dbc29d0f924",
+      "checkpoint_mount": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/checkpoints/fresh-native-relative-f04-faststore-v1/checkpoint",
+      "checkpoint_readonly": true,
+      "runtime_preserved": true,
+      "mtp_tokens": 4,
+      "tp_size": 2,
+      "native_runtime_flags_preserved": true,
+      "receipt_sha256": "0ff494826b0d2b8c0316d7fa3637f76842d6e01b438d773208ae700ba90ba4b9",
+      "seconds": 122.54888892173767
+    },
+    "gemma-1": {
+      "cid": "d1a79f265949e31778ead91834e6a509d3c66af708dc3d7247eb716caa28cef3",
+      "endpoint": "http://172.26.0.6:8000/v1",
+      "models": [
+        "gemma-4-31b"
+      ],
+      "tree": "7b9e9488e3cd4e0b6c5f61ae341e5eeccdf5bd31c46d1c8354950dbc29d0f924",
+      "checkpoint_mount": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/checkpoints/fresh-native-relative-f04-faststore-v1/checkpoint",
+      "checkpoint_readonly": true,
+      "runtime_preserved": true,
+      "mtp_tokens": 4,
+      "tp_size": 2,
+      "native_runtime_flags_preserved": true,
+      "receipt_sha256": "9c4531dccf8625e8d0cf41c14249f722184a82cb04ce91bfd7834f836dbb0d51",
+      "seconds": 120.60865068435669
+    },
+    "gemma-2": {
+      "cid": "07e1b17e7c84d8d178703417bb341c3313653eca7122aba1ad7b3d6d893d5abb",
+      "endpoint": "http://172.26.0.5:8000/v1",
+      "models": [
+        "gemma-4-31b"
+      ],
+      "tree": "7b9e9488e3cd4e0b6c5f61ae341e5eeccdf5bd31c46d1c8354950dbc29d0f924",
+      "checkpoint_mount": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/checkpoints/fresh-native-relative-f04-faststore-v1/checkpoint",
+      "checkpoint_readonly": true,
+      "runtime_preserved": true,
+      "mtp_tokens": 4,
+      "tp_size": 2,
+      "native_runtime_flags_preserved": true,
+      "receipt_sha256": "e1cf4a18fcb52c7fa4474f3ef2acff46e58cbf6e2581361b0b0be22b1fad43c7",
+      "seconds": 120.15939569473267
+    },
+    "gemma-3": {
+      "cid": "41ae0d0831faf5d79939f16ad401da0da8fee0d2d453af12e4e4efd10480f45c",
+      "endpoint": "http://172.26.0.4:8000/v1",
+      "models": [
+        "gemma-4-31b"
+      ],
+      "tree": "7b9e9488e3cd4e0b6c5f61ae341e5eeccdf5bd31c46d1c8354950dbc29d0f924",
+      "checkpoint_mount": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/checkpoints/fresh-native-relative-f04-faststore-v1/checkpoint",
+      "checkpoint_readonly": true,
+      "runtime_preserved": true,
+      "mtp_tokens": 4,
+      "tp_size": 2,
+      "native_runtime_flags_preserved": true,
+      "receipt_sha256": "0ab568a66a0abf517c5dc5665046e40604716129f47afb88eedd15f125fa58eb",
+      "seconds": 122.57048201560974
+    }
+  },
+  "tree": "7b9e9488e3cd4e0b6c5f61ae341e5eeccdf5bd31c46d1c8354950dbc29d0f924",
+  "freeze_sha256": "fd189cf276a1219ad627186d2dfb4a895c79768821f247a0b33d9abd8953d8c1",
+  "source_pins": {
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/worktrees/kairyu-bench-weight-tools/docs/experiments/scripts/redeploy-replica.py": "2e9da820fe30ba9b2436fb600cf14a533b1c496b2fed48ac3649fffb9d2bc9ae",
+    "/home/y-takagi/kairyu/examples/gemma-4-31b-8gpu/control.py": "fc9a78bc232f9cc331926a0737e64f4b4fe14946574f4a02bc1aacb9a800b851",
+    "/home/y-takagi/kairyu/examples/gemma-4-31b-8gpu/compose.yaml": "fe49b81c153f68335ef46e07dc9f9910ee49ee066902e703d11d152c8809c5cb",
+    "/home/y-takagi/kairyu/examples/gemma-4-31b-8gpu/example.json": "99b1863206205abc92f5bde917c607cced03a220bd77323cf264eb781f4aedb7",
+    "/home/y-takagi/kairyu/examples/gemma-4-31b-8gpu/kairyu.yaml": "a28e232f27b89d1acc35e3f5871ccffafd8145211e4ffcb33cc0c6b514fa640d"
+  },
+  "protected_count": 23,
+  "protected_unchanged": true,
+  "container_count": 27,
+  "seconds": 123.53767085075378,
+  "parallel_owner_closure_sha256": "a76059bfa003dc15bd96b6d9c6c0182fc151392864b193677b1c8c1023eb53c0",
+  "model_generation_requests": 0,
+  "full_payload_rehashed": false,
+  "source_sha256": "7cbafc2f149d7d3d82e57527fe5092110ba58ece2ca818fa2d499f1184a096f3"
+}

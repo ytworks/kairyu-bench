@@ -1,0 +1,14 @@
+{
+  "epoch": 1794059174.271899,
+  "authorized_by": "root explicit exact-source/plan/archive approval",
+  "wrapper_sha256": "171773d155b60ebf9f826e487d56640d5e3dfe168377fdae7b00607d383fbe1d",
+  "plan_sha256": "40699df334e0ca70bc48de2f3c64371d098bdea4f7433ef05263277707711b05",
+  "engine_sha256": "435e01109887123db12519c100e304fa7bd4f5a71b772e6c96eedce1b130f894",
+  "archive_sha256": "d681aff1ee89697c9647ca0063c0be30441e56ce757864a5054aceaa23669d94",
+  "target_checkpoint": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/checkpoints/scalar-l41-minus4",
+  "target_count": 2,
+  "target_bytes": 62546338248,
+  "unknown_process_visibility_accepted": true,
+  "original_unapproved_plan_preserved": true,
+  "authorization_scope": "lossless reversible representation change only; preserve metadata/results/original/AV/F04/shared faststore and all27 services"
+}

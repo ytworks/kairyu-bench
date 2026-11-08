@@ -1,0 +1,160 @@
+{
+  "schema_version": 1,
+  "capture_id": "40048651e61c43d28fdb00568ec942e9",
+  "created_at": "2026-11-07T12:48:13.228161+00:00",
+  "observation_mode": "live",
+  "data_kind": "recorded",
+  "output_dir": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f05-dev30-dp4-v1/http-trace",
+  "checkpoint": {
+    "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/checkpoints/fresh-native-contract-f05-faststore-v1/checkpoint",
+    "files": [
+      {
+        "path": "chat_template.jinja",
+        "size": 18683,
+        "sha256": "ae53464bf3be25802b3a5b37def7fd89667067d7577049b3b2d74c4d8de4c6d4",
+        "stat": {
+          "device": 2306,
+          "inode": 182194441,
+          "mtime_ns": 1794054966057854315,
+          "ctime_ns": 1794054966057854315
+        }
+      },
+      {
+        "path": "config.json",
+        "size": 4621,
+        "sha256": "e967dd38bc5cfd38bd09a995a7bf4a754075df2b46aba68f7fbb5a791e6d8dd1",
+        "stat": {
+          "device": 2306,
+          "inode": 182194442,
+          "mtime_ns": 1794054966058854276,
+          "ctime_ns": 1794054966058854276
+        }
+      },
+      {
+        "path": "generation_config.json",
+        "size": 208,
+        "sha256": "d4226bbe3117d2d253ba4609720ba82c6c4ce4627a9a6ae05387c78983ac03de",
+        "stat": {
+          "device": 2306,
+          "inode": 182194443,
+          "mtime_ns": 1794054966058854276,
+          "ctime_ns": 1794054966058854276
+        }
+      },
+      {
+        "path": "model.safetensors.index.json",
+        "size": 103577,
+        "sha256": "2eeef6577e663781958c7e17a8809e5f5953ebe1fdb4bf4906cb7f943946bca3",
+        "stat": {
+          "device": 2306,
+          "inode": 182194444,
+          "mtime_ns": 1794054966058854276,
+          "ctime_ns": 1794054966058854276
+        }
+      },
+      {
+        "path": "native.safetensors",
+        "size": 2714560,
+        "sha256": "22443993b4fc965395d4b5ae0a7ee0291c0d1d6e1c8f892b35b89be8f3980cce",
+        "stat": {
+          "device": 2306,
+          "inode": 182194445,
+          "mtime_ns": 1794054966143850959,
+          "ctime_ns": 1794054966143850959
+        }
+      },
+      {
+        "path": "processor_config.json",
+        "size": 1689,
+        "sha256": "32bdf45d2ad4cc29a0822ddd157a182de76644f0419a6228d151495256e9813c",
+        "stat": {
+          "device": 2306,
+          "inode": 182194446,
+          "mtime_ns": 1794054966066853964,
+          "ctime_ns": 1794054966066853964
+        }
+      },
+      {
+        "path": "shared.safetensors",
+        "size": 62543620336,
+        "sha256": "d4690e5b5c1eea2099685025676b80409c9ba0636c869c523b8e9b88a4066432",
+        "stat": {
+          "device": 2306,
+          "inode": 182192842,
+          "mtime_ns": 1794050230365028683,
+          "ctime_ns": 1794050243644565979
+        }
+      },
+      {
+        "path": "tokenizer.json",
+        "size": 32169626,
+        "sha256": "cc8d3a0ce36466ccc1278bf987df5f71db1719b9ca6b4118264f45cb627bfe0f",
+        "stat": {
+          "device": 2306,
+          "inode": 182194447,
+          "mtime_ns": 1794054966111852207,
+          "ctime_ns": 1794054966111852207
+        }
+      },
+      {
+        "path": "tokenizer_config.json",
+        "size": 3082,
+        "sha256": "9f4fec4b1dc6ecddf8f4a92e9caea5971c0e67d81309f3f9066a2bee8c362633",
+        "stat": {
+          "device": 2306,
+          "inode": 182194450,
+          "mtime_ns": 1794054966130851466,
+          "ctime_ns": 1794054966130851466
+        }
+      }
+    ],
+    "sha256": "fcc4681343c1a0c338157bee767df2024f37290469e55dbc417723717f4ac176",
+    "hash_files": true,
+    "identity_level": "content_sha256",
+    "input_scope": "indexed_checkpoint",
+    "complete_model_claimed": false,
+    "configuration_names_considered": [
+      "config.json",
+      "generation_config.json",
+      "tokenizer_config.json",
+      "tokenizer.json",
+      "special_tokens_map.json",
+      "chat_template.jinja",
+      "processor_config.json",
+      "preprocessor_config.json",
+      "tokenizer.model",
+      "spiece.model",
+      "vocab.json",
+      "merges.txt",
+      "added_tokens.json"
+    ],
+    "scope": "all referenced shards, index, and recognized configuration/tokenizer files",
+    "source_stable": true
+  },
+  "runtime": {
+    "adapter": "vllm-0.33",
+    "model": "gemma-4-31b",
+    "tp_size": 2,
+    "replicas": 4,
+    "mtp_tokens": 4
+  },
+  "limits": {
+    "gpu_buffer_mib": 256,
+    "storage_bytes": 2147483648,
+    "prefill_positions": 32,
+    "decode_positions": 32
+  },
+  "sampling": {
+    "policy": "first_execution_of_first_unique_positions",
+    "prefill_policy": "first_execution_of_first_unique_positions",
+    "decode_policy": "first_execution_of_first_unique_positions",
+    "requested_offsets": null,
+    "offset_origin": "token_position_minus_prompt_length",
+    "missing_policy": "unobserved_requested_offsets_are_missing_not_zero",
+    "semantic_boundary": "thinking_code_boundary_not_measured",
+    "limits": {
+      "prefill": 32,
+      "decode": 32
+    }
+  }
+}

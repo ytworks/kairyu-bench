@@ -1,0 +1,36 @@
+{
+  "status": "prepared_unbound_no_preview_no_run",
+  "prior_plan_sha256": "5b36b98234658c63b460cbb6cba821812b177b7e49477cc1a2fcabb1cba6095a",
+  "unbound_plan_sha256": "552b508d9bd985dbb61544e5ebb46fb39c558b46048f8b2ac14f92ad38bcf21f",
+  "capture_template_sha256": "7a00255b7caf208c13b741c0aa9f78c4841547bd11661436c0ccf6f577cf2abf",
+  "command_value_differences": [
+    {
+      "index": 9,
+      "before": "504d0914e8f7d2a4e51a0888e5692e2d1a158b82d3a77b600810a14bf7e33b63",
+      "after": "PENDING_VERIFIED_F04_TREE"
+    },
+    {
+      "index": 11,
+      "before": "gemma4-fresh-f03-dev30-dp4-20261107-v1",
+      "after": "gemma4-fresh-f04-dev30-dp4-20261107-v1"
+    },
+    {
+      "index": 29,
+      "before": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f03-dev30-dp4-v1/http-trace/capture.json",
+      "after": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f04-dev30-dp4-v1/http-trace/capture.json"
+    }
+  ],
+  "environment8_exact": true,
+  "selection2338_exact": true,
+  "selected_items_sha256": "e65de5600f4e489e967260550a798398a4215955e5799d2a687a928a25ae442e",
+  "owner_source": {
+    "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/worktrees/kairyu-bench-weight-tools/docs/experiments/scripts/fresh-av-dev30-20261107.py",
+    "sha256": "956af488fe54578c32c9baa856e9c32170dc49c1bbce2b1ba5db9af9ea1dd524"
+  },
+  "new_owner_code": false,
+  "actual_capture_created": false,
+  "candidate_inspected_or_hashed": false,
+  "model_gpu_service_lock_operations": 0,
+  "parent_reruns": 0,
+  "extra_proxy_finite_transfer_runs": 0
+}

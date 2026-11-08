@@ -1,0 +1,24 @@
+import hashlib,importlib.util,json,subprocess,time
+from pathlib import Path
+R=Path('/mnt/nvme/kairyu/wsp/gemma4-coding-20261104');B=R/'worktrees/kairyu-bench-weight-tools';N=R/'analysis/fresh-purpose-20261107-f05-behavior19-native-v1';P=R/'analysis/fresh-purpose-20261107-f05-native-contract-v1';D=P/'deployment-dp4-v1'
+def sha(p):return hashlib.sha256(Path(p).read_bytes()).hexdigest()
+def save(p,v):
+ with Path(p).open('x') as f:json.dump(v,f,indent=2,allow_nan=False);f.write('\n')
+ep=json.loads((D/'endpoint-closure.json').read_text());assert ep['status']=='all_four_F05_and_gateway_verified' and ep['all_four_idle'] and ep['protected_unchanged']
+old=R/'analysis/fresh-purpose-20261107-f04-behavior19-native-v1/launch-plan-approved.json';plan=json.loads(old.read_text());bundle=R/'checkpoints/fresh-native-contract-f05-faststore-v1';mf=bundle/'manifest.json';m=json.loads(mf.read_text());assert sha(mf)=='09ea569a08f138efd438055d7149f0697dc1d6edd08332f2b6c7c09b1da7c24c'
+files=[]
+for row in m['all_checkpoint_files']:
+ s=(bundle/'checkpoint'/row['path']).stat();expected=m['candidate_inventory_stat'][row['path']];actual={'device':s.st_dev,'inode':s.st_ino,'size':s.st_size,'mtime_ns':s.st_mtime_ns,'ctime_ns':s.st_ctime_ns,'nlink':s.st_nlink,'uid':s.st_uid,'gid':s.st_gid,'mode':s.st_mode};assert actual==expected
+ files.append({**row,'stat':{k:actual[k] for k in ['device','inode','mtime_ns','ctime_ns']}})
+plan['serving']={'model':'gemma-4-31b','checkpoint':str(bundle/'checkpoint'),'tree_sha256':m['control_tree_sha256'],'replicas':4,'tp_size':2,'mtp_tokens':4,'dtype':'native BF16','ordinary_only':True,'service_cids':{k:v['cid'] for k,v in ep['replicas'].items()},'gateway':'gemma-4-31b-8gpu-kairyu-1','four_replica_closure':{'path':str(D/'four-apply-closure.json'),'sha256':sha(D/'four-apply-closure.json')}}
+assert plan['serving']['tree_sha256']=='fcc4681343c1a0c338157bee767df2024f37290469e55dbc417723717f4ac176'
+for row in plan['services']:
+ row['cid']=ep['replicas'][row['service']]['cid'];row['readonly_model_mount']['source']=str(bundle/'checkpoint')
+plan.update(status='root_authorized_candidate_only_screen',approved_for_execution=True,authorization='User directs improvement density; actualOpus55review recommends candidate-only19; gate fixed before firstcandidateforward; no parent repeat.',created_epoch=time.time(),checkpoint_files=files,generation_output=str(N/'generation'),owner_output=str(N/'owner'),candidate_identity={'manifest_path':str(mf),'manifest_sha256':sha(mf),'parent':'F04','screen_policy_sha256':sha(P/'candidate-native-screen-decision.json')},source_git_head=subprocess.check_output(['git','-C',str(B),'rev-parse','HEAD'],text=True).strip())
+owner=B/'docs/experiments/scripts/fresh-av-behavior12-native-20261107.py';s=importlib.util.spec_from_file_location('owner',owner);mod=importlib.util.module_from_spec(s);s.loader.exec_module(mod);assert plan['owner_sha256']==sha(owner)
+paths=[Path(plan['python']).resolve(),Path(plan['generator']),owner,Path(plan['cases']),Path(plan['frame_evidence']),mf,P/'materialization-v1/verify.stdout',P/'candidate-native-screen-decision.json',D/'endpoint-closure.json',Path(__file__)]
+plan['pins']=[{'path':str(p),'sha256':sha(p),'bytes':p.stat().st_size} for p in paths];plan['command']=mod.command(plan)
+p=N/'launch-plan-approved.json';save(p,plan);mod.check_plan(plan);save(N/'preflight.json',mod.preflight(plan));save(N/'preview.json',{'plan_sha256':sha(p),'model_calls':0,'reused_complete_frame':plan['frame_evidence'],'same_cases_sha256':sha(plan['cases']),'parent_generation_not_repeated':True})
+cmd=[str(R/'infra/weight-tools-ci/bin/python'),str(owner),'--plan',str(p),'--run','--approved-plan-sha256',sha(p)]
+with (N/'root-owner.log').open('x') as log:proc=subprocess.Popen(cmd,stdin=subprocess.DEVNULL,stdout=log,stderr=subprocess.STDOUT,start_new_session=True)
+save(N/'root-launch.json',{'pid':proc.pid,'epoch':time.time(),'command':cmd,'plan_sha256':sha(p),'expected':19,'candidate_only':True});print(json.dumps({'pid':proc.pid,'plan_sha256':sha(p),'expected':19,'parent_calls':0}))

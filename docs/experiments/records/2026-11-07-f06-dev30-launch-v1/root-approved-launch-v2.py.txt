@@ -1,0 +1,42 @@
+import hashlib
+import json
+from pathlib import Path
+import subprocess
+import time
+R=Path("/mnt/nvme/kairyu/wsp/gemma4-coding-20261104")
+N=R/"analysis/fresh-purpose-20261107-f06-dev30-dp4-v1"
+def sha(p):return hashlib.sha256(p.read_bytes()).hexdigest()
+def save(p,x):
+ with p.open("x") as f:json.dump(x,f,indent=2);f.write(chr(10))
+ assert json.loads(p.read_text())==x
+bound=N/"launch-plan-bound-v1.json"
+assert sha(bound)=="5d598bd7261719674ad85d89ddb30e50aff90f52b28eee740b0880acef01c8f9"
+p=json.loads(bound.read_text())
+preview=json.loads((N/"owner-preview-bound-v1.json").read_text())
+assert preview["returncode"]==0 and preview["plan"]["sha256"]==sha(bound)
+base=json.loads(Path(p["comparison"]["baseline_plan"]["path"]).read_text())
+for k in ["selection","environment_allowlist","limits","cache"]:assert p[k]==base[k],k
+for k in ["actual_runner_image_id","archive","baseline_runner_source_receipt","wrapper","critical_archived_files"]:assert p["source_identity"][k]==base["source_identity"][k],k
+for item in [p["source_identity"]["wrapper"],*p["source_identity"]["critical_archived_files"]]:
+ assert sha(Path(item["path"]))==item["sha256"]
+assert p["selection"]["items"]==2338 and p["selection"]["named_area_counts"]["code"]==90
+assert len(p["selection"]["named_area_counts"])==14 and p["selection"]["probe_count_without_official_area"]==96
+assert p["selection"]["only"] is None and p["selection"]["excluded_ids"]==[]
+assert p["comparison"]["baseline_reruns"]==0 and not p["comparison"]["F05_gate_inherited"]
+assert not (Path(p["cwd"])/p["run_id"]).exists()
+assert not (N/"http-trace/requests-client.jsonl").exists()
+owner=Path(p["owner_source"]["path"])
+assert sha(owner)==p["owner_source"]["sha256"]=="956af488fe54578c32c9baa856e9c32170dc49c1bbce2b1ba5db9af9ea1dd524"
+p.update(status="root_delegated_approved_for_one_full_dev30",approved_for_execution=True)
+p["handoff"]["root_authorized"]=True
+p["handoff"]["authorization"]="Root explicitly delegated approval and immediate launch after existing owner preview PASS and exact F04 conditions plus verified F06 save, actual Opus and all4 endpoint identity. One unchanged full2338 run; no baseline rerun."
+p["pending_deployment_bindings"]=[]
+p["launch_authorization"]={"recorded_epoch":time.time(),"scope":"one candidate-only canonical full dev30","delegating_agent":"/root","executing_agent":"/root/audit_results","source_sha256":sha(Path(__file__)),"bound_plan_sha256":sha(bound)}
+approved=N/"launch-plan-approved-v2.json";save(approved,p)
+argv=[str(R/"infra/weight-tools-ci/bin/python"),"-B",str(owner),"--plan",str(approved),"--run"]
+save(N/"root-approved-launch-receipt-v2.json",{"epoch":time.time(),"approved":True,"plan_path":str(approved),"plan_sha256":sha(approved),"source_sha256":sha(Path(__file__)),"owner_sha256":sha(owner),"conditions_equal_F04":True,"items":2338,"model_calls_before_launch":0,"baseline_calls":0,"authorization":p["handoff"]["authorization"]})
+with (N/"owner-process-v2.stdout").open("x") as out,(N/"owner-process-v2.stderr").open("x") as err:
+ process=subprocess.Popen(["bash","-c",'source "$1" >/dev/null 2>&1 || exit $?; shift; exec "$@"',"f06-owner","/home/y-takagi/.bashrc",*argv],stdin=subprocess.DEVNULL,stdout=out,stderr=err,start_new_session=True)
+record={"pid":process.pid,"epoch":time.time(),"plan_sha256":sha(approved),"owner_sha256":sha(owner),"argv_without_credentials":argv,"auth":"existing bashrc sourced silently; no credential values recorded","selected_items":2338,"baseline_runs_added":0,"approval_receipt_sha256":sha(N/"root-approved-launch-receipt-v2.json")}
+save(N/"root-launch-v2.json",record)
+print(json.dumps(record))

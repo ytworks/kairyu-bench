@@ -1,0 +1,16 @@
+{
+  "argv": [
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/infra/weight-tools-ci/bin/python",
+    "-B",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/worktrees/kairyu-bench-weight-tools/docs/experiments/scripts/fresh-four-parallel-redeploy-20261107.py",
+    "--plan",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f04-relative-v1/parallel-deploy-plan-v1/plan-unbound.json"
+  ],
+  "returncode": 0,
+  "seconds": 0.15348267555236816,
+  "source_sha256": "366a64e2825789847d1cf615beb8f8e1e21e2579c9d364fb1d72f39e4cd1bbf8",
+  "plan_sha256": "79e5acf150090a8e1aa5c5503a963640369b396ad2b7658e05c50be0943b9313",
+  "model_calls": 0,
+  "service_calls": 0,
+  "syntax_compile": true
+}

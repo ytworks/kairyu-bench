@@ -1,0 +1,32 @@
+{
+  "prepared_epoch": 1794048677.415205,
+  "source_pins": {
+    "analysis/fresh-purpose-20261107-f04-relative-v1/proposal-plan.json": "8e06264ec98ac6adf4a847603886e4377d61f0c4f1a7c96831fc5ceecd0dfacb",
+    "analysis/fresh-purpose-20261107-f04-relative-v1/proposal/report.json": "5457c0b09141ed92c54656d9e2e72f96caa83a9c4eb45cb5a4e66cf0e7a28d2a",
+    "analysis/fresh-purpose-20261107-f04-relative-v1/proposal/fresh-native-relative-f04.json": "52e293bdd36a4c09715c8c211e035562b1eeb26aabb6490e21d4b511f2a0987b",
+    "analysis/fresh-purpose-20261107-f04-relative-v1/completion.json": "4c9651e5945696ca21378f55fd9d1c1e3f4fad92ec7159bcced121ca80d7c487",
+    "worktrees/kairyu-bench-weight-tools/scripts/claude-method-review.py": "f6b720f10b13c78440745ef548a7930b4360fee888f33f5e2861c853b122f86b",
+    "analysis/fresh-purpose-20261107-f04-relative-v1/anonymous-opus55-prompt-v1.txt": "2e6d476755133c9084cd7a70f92c59725f3640e0adc6549e6e38d204e29a0535"
+  },
+  "preview_returncode": 0,
+  "command": [
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/infra/weight-tools-ci/bin/python",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/worktrees/kairyu-bench-weight-tools/scripts/claude-method-review.py",
+    "--prompt",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f04-relative-v1/anonymous-opus55-prompt-v1.txt",
+    "--output",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f04-relative-v1/opus55-review-v1",
+    "--model",
+    "claude-opus-5-5",
+    "--labels",
+    "A",
+    "--timeout-seconds",
+    "300",
+    "--max-budget-usd",
+    "2"
+  ],
+  "prompt_public_anonymous_reviewed": true,
+  "send_authorized_by_root": true,
+  "send_count": 0,
+  "parent_condition": "Do not materialize or evaluate if F03 becomes the highest comparable parent."
+}

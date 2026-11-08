@@ -1,0 +1,71 @@
+{
+  "status": "unapproved_archive_then_release_plan",
+  "approved_for_execution": false,
+  "candidate": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/checkpoints/scalar-l41-plus4",
+  "mandatory_base": "/mnt/nvme/kairyu/model-volumes/gemma-4-31b-8gpu/models/gemma-4-31b-it",
+  "archive": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-scalar-l41-plus4-lossless-v1",
+  "target_payloads": {
+    "model-00001-of-00002.safetensors": {
+      "device": 2306,
+      "inode": 181570977,
+      "size": 49784788364,
+      "mtime_ns": 1793800998623810408,
+      "ctime_ns": 1793800998623810408,
+      "mode": 33188,
+      "uid": 1003,
+      "gid": 1003,
+      "nlink": 1
+    },
+    "model-00002-of-00002.safetensors": {
+      "device": 2306,
+      "inode": 181570979,
+      "size": 12761549884,
+      "mtime_ns": 1793801006132558297,
+      "ctime_ns": 1793801006132558297,
+      "mode": 33188,
+      "uid": 1003,
+      "gid": 1003,
+      "nlink": 1
+    }
+  },
+  "source_pins": {
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/manifests/scalar-l41-plus4.json": "c541105f145c947c93c82368aaed111f9ec524917b00565408cc0bb1d4fef43e",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/specs/scalar-l41-plus4.json": "125878049cb6e1fa10629b5c9c64c21b93487d11b8eb02d2d3878b7e9b669c8e",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/worktrees/kairyu-bench-weight-tools/src/kairyu_bench/wsp/weights/editor.py": "0983580f41989c26e84c16c26924f2850dd4e5d3d12917bb9553d7feb92333d2",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/worktrees/kairyu-bench-weight-tools/src/kairyu_bench/wsp/weights/checkpoint.py": "898297c05e7179cdc4568d6f290b978073bcebafea804ac043b54030e8205bf9",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/worktrees/kairyu-bench-weight-tools/docs/experiments/scripts/fresh-f02-payload-release-20261107.py": "435e01109887123db12519c100e304fa7bd4f5a71b772e6c96eedce1b130f894"
+  },
+  "audit": {
+    "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-scalar-l41-plus4-release-plan-v1/read-only-audit.json",
+    "sha256": "83305731bda4021b5178bdde607fdac25b2c36d829f906e1d2216176d0c25bce"
+  },
+  "legacy_manifest_limitation": "No historical per-file hashes. Fresh existing editor.verify required before archive/release; preserve legacy_full_hashes_missing=true.",
+  "verify_command": [
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/infra/weight-tools-ci/bin/python",
+    "-m",
+    "kairyu_bench.wsp.weights.editor",
+    "verify",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/manifests/scalar-l41-plus4.json"
+  ],
+  "verify_environment": {
+    "PYTHONPATH": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/worktrees/kairyu-bench-weight-tools/src",
+    "PYTHONDONTWRITEBYTECODE": "1",
+    "OMP_NUM_THREADS": "1",
+    "OPENBLAS_NUM_THREADS": "1",
+    "MKL_NUM_THREADS": "1"
+  },
+  "verification": "All12 regular files; fresh baseSHA and candidateSHA plus candidate with one declared BF16 span restored must equal baseSHA. Existing _stream_hashes computes current/restored hashes in one candidate read. No 62GB physical duplicate required.",
+  "archive_scope": "Original spec/manifest bytes, fresh full verify, all10 nonweight files including metadata/docs, current source package, source/candidate fullSHA lists and stats, exact one-byte-pair patch, original experiment/provenance references.",
+  "reconstruction": "Archived existing editor create originalbase into fresh directory using exact spec; verify every reconstructed candidate file SHA. Archive depends on preserved original, not AV.",
+  "release_gates": [
+    "root exactplan approval",
+    "global evaluation flock",
+    "fresh full verification success/source and candidate stat continuity",
+    "archive checksum/inflate validation",
+    "zero visible process/mount refs; inaccessible PIDs remain explicit root decision",
+    "both payloads same exact private nlink1 inode/size",
+    "original/AV/faststore untouched"
+  ],
+  "durable_release": "Reuse existing F02 durable_json/nofollow dirfd/per-entry intent+unlink+released journal pattern with explicit scalar2 paths; current fixed F02 wrapper cannot be used unchanged because it assumes9 files/135archive entries.",
+  "after_release": "Keep all10 candidate nonweight files, spec, manifest, benchmark failures/results and ARCHIVED.json. Check available bytes and unchanged protected roots. No model/API/service calls."
+}

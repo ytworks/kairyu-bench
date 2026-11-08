@@ -1,0 +1,56 @@
+{
+  "commands": [
+    {
+      "command": [
+        "nice",
+        "-n",
+        "15",
+        "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/infra/weight-tools-ci/bin/ruff",
+        "check",
+        "--select",
+        "E401",
+        "--fix",
+        "docs/experiments/scripts/fresh-f03-deploy-preview-20261107.py",
+        "docs/experiments/scripts/fresh-f03-deploy-apply-20261107.py"
+      ],
+      "returncode": 0,
+      "stdout": "Found 2 errors (2 fixed, 0 remaining).\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "nice",
+        "-n",
+        "15",
+        "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/infra/weight-tools-ci/bin/ruff",
+        "format",
+        "docs/experiments/scripts/fresh-f03-deploy-preview-20261107.py",
+        "docs/experiments/scripts/fresh-f03-deploy-apply-20261107.py"
+      ],
+      "returncode": 0,
+      "stdout": "2 files reformatted\n",
+      "stderr": ""
+    }
+  ],
+  "sources": [
+    {
+      "path": "docs/experiments/scripts/fresh-f03-deploy-preview-20261107.py",
+      "before_sha256": "efdcc3c284fb5718cc410740d44ab47f68bc1c2d879f7965265e07081eabe555",
+      "after_sha256": "4c2d9221bd294fbed32f3c789e9fb6a90da1ee947228162945ad89f486a6760c",
+      "normalized_ast_equal": true,
+      "normalization": "Split multi-import nodes in existing order; remove only exact redundant globals()[same_name] aliases added immediately after pinned exec. All other AST nodes unchanged."
+    },
+    {
+      "path": "docs/experiments/scripts/fresh-f03-deploy-apply-20261107.py",
+      "before_sha256": "9e8f4933a40601a462ad27ab6e30e67f9f52109f260b40592d234d788acc55b7",
+      "after_sha256": "59348490aa6497095c8551989f3c3b004e053fc24fe8430b2fe7907286e5f27d",
+      "normalized_ast_equal": true,
+      "normalization": "Split multi-import nodes in existing order; remove only exact redundant globals()[same_name] aliases added immediately after pinned exec. All other AST nodes unchanged."
+    }
+  ],
+  "immutable_sources_count": 141,
+  "immutable_sources_unchanged": true,
+  "records_bytes_changed": 0,
+  "active_owner_sha256": "956af488fe54578c32c9baa856e9c32170dc49c1bbce2b1ba5db9af9ea1dd524",
+  "configuration": "Only docs/experiments/records/** excluded; default rule set and live src/tests/scripts scope unchanged."
+}

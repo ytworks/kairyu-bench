@@ -1,0 +1,12 @@
+{
+  "test_argv": [
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/infra/weight-tools-ci/bin/python",
+    "-m",
+    "unittest",
+    "test_gemma4_native_objectives",
+    "-v"
+  ],
+  "test_returncode": 1,
+  "ruff_returncode": 0,
+  "model_calls": 0
+}

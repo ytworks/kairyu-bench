@@ -1,0 +1,171 @@
+{
+  "status": "finished",
+  "pid": 39336,
+  "plan_sha256": "803c98ad8f57e1c491a8fcef9c5aeb83e0d8e8f44032d7448ba4c41a07cd7344",
+  "started_epoch": 1794026123.1336617,
+  "before": {
+    "metrics_sha256": "454a0c9dec6e500b03d4fb9170e12efc2640fbff1a01fc4c4c59ea628168d9c3",
+    "queues": {
+      "vllm:num_requests_running": [
+        0.0
+      ],
+      "vllm:num_requests_waiting": [
+        0.0
+      ]
+    }
+  },
+  "primary_owner_before_run": {
+    "pid": 4159166,
+    "uid": 1003,
+    "lock_identity": "09:02:181180584",
+    "lock_rows": [
+      [
+        "35:",
+        "FLOCK",
+        "ADVISORY",
+        "WRITE",
+        "4159166",
+        "09:02:181180584",
+        "0",
+        "EOF"
+      ]
+    ],
+    "observed_epoch": 1794026123.0835457
+  },
+  "stopped": true,
+  "restored": true,
+  "returncode": 0,
+  "protected_after": {
+    "gemma-4-31b-8gpu-gemma-0-1": {
+      "id": "21aaf4aed1096bd7205fb5369528d6c84d61672b01fc5ef36bfd57bbbbb690cd",
+      "image": "sha256:af9e746b913088cbf6c4464a31d6904a6b7e1d3ba62f0895362ddf13595f7abe",
+      "running": true,
+      "health": "healthy",
+      "started_at": "2026-11-07T04:15:21.19611959Z",
+      "config_sha256": "17984451bb2c70732f17c263c2e2922232044e080a40912988388a95b15fb549",
+      "host_config_sha256": "1dd93df1e766588e27d7e0a0e9634a75088be0006167cbc6cd65a7dc65a8dcba",
+      "cpuset": "0-15,64-79",
+      "devices": [
+        {
+          "Driver": "nvidia",
+          "Count": 0,
+          "DeviceIDs": [
+            "0",
+            "1"
+          ],
+          "Capabilities": [
+            [
+              "gpu"
+            ]
+          ],
+          "Options": null
+        }
+      ]
+    },
+    "gemma-4-31b-8gpu-gemma-1-1": {
+      "id": "32517829133b9a4a852eed753ae50b274343733307d65b2c01fa10172d513892",
+      "image": "sha256:af9e746b913088cbf6c4464a31d6904a6b7e1d3ba62f0895362ddf13595f7abe",
+      "running": true,
+      "health": "healthy",
+      "started_at": "2026-11-07T03:31:29.109391414Z",
+      "config_sha256": "2da946f21e6eb082728ac4c264e4fe6c3115bc7edfc11b36f47d268bbb192900",
+      "host_config_sha256": "1ca37c636127d41145d7f9b7b5e0310fc71d7fee1040ebb0a2597bb75653c8d4",
+      "cpuset": "16-31,80-95",
+      "devices": [
+        {
+          "Driver": "nvidia",
+          "Count": 0,
+          "DeviceIDs": [
+            "2",
+            "3"
+          ],
+          "Capabilities": [
+            [
+              "gpu"
+            ]
+          ],
+          "Options": null
+        }
+      ]
+    },
+    "gemma-4-31b-8gpu-gemma-2-1": {
+      "id": "132833f603a6cbd1b6beed302590cbafd6d9e09bad879720f4c35f39cb806210",
+      "image": "sha256:af9e746b913088cbf6c4464a31d6904a6b7e1d3ba62f0895362ddf13595f7abe",
+      "running": true,
+      "health": "healthy",
+      "started_at": "2026-11-07T03:31:29.419978923Z",
+      "config_sha256": "d84f0ee1d62c33130a2646f32d29b4bd7de61c0550aeb46c3f029ec1a2ed1f51",
+      "host_config_sha256": "d104e19337c026400f5abd1c7f99e7241045815239e6360491510d410a2ed5fc",
+      "cpuset": "32-47,96-111",
+      "devices": [
+        {
+          "Driver": "nvidia",
+          "Count": 0,
+          "DeviceIDs": [
+            "4",
+            "5"
+          ],
+          "Capabilities": [
+            [
+              "gpu"
+            ]
+          ],
+          "Options": null
+        }
+      ]
+    },
+    "gemma-4-31b-8gpu-embed-0-1": {
+      "id": "b4302da3c2814fa2458ae7e4652b0041af34bd45d6872b86ecd40cfa06bf9985",
+      "image": "sha256:af9e746b913088cbf6c4464a31d6904a6b7e1d3ba62f0895362ddf13595f7abe",
+      "running": true,
+      "health": "healthy",
+      "started_at": "2026-11-03T22:58:39.917321358Z",
+      "config_sha256": "f4535b4de6114f5db3049d4eda5f211907324d3cf5a8bc2f9c17e7b8f1f78dc4",
+      "host_config_sha256": "c76de161932061f0f19efdc92340a723b31283ee58176f9b520ab3ddb6f64790",
+      "cpuset": "0-15,64-79",
+      "devices": [
+        {
+          "Driver": "nvidia",
+          "Count": 0,
+          "DeviceIDs": [
+            "1"
+          ],
+          "Capabilities": [
+            [
+              "gpu"
+            ]
+          ],
+          "Options": null
+        }
+      ]
+    },
+    "gemma-4-31b-8gpu-embed-1-1": {
+      "id": "897103115f63e39d3261f39bf449bfa9258121d270ae700f65c0321837eeec08",
+      "image": "sha256:af9e746b913088cbf6c4464a31d6904a6b7e1d3ba62f0895362ddf13595f7abe",
+      "running": true,
+      "health": "healthy",
+      "started_at": "2026-11-03T22:58:39.916999785Z",
+      "config_sha256": "9ac074311550ac5edad3cf600b746cb2ce5307c638f23500bed71b09c1462c29",
+      "host_config_sha256": "52e979a281df89425cc2c3a81308d13f523876bb6ad57cae4929bbd4a98e3db2",
+      "cpuset": "48-63,112-127",
+      "devices": [
+        {
+          "Driver": "nvidia",
+          "Count": 0,
+          "DeviceIDs": [
+            "7"
+          ],
+          "Capabilities": [
+            [
+              "gpu"
+            ]
+          ],
+          "Options": null
+        }
+      ]
+    }
+  },
+  "protected_exact": true,
+  "protected_changes": {},
+  "elapsed_seconds": 197.772230386734
+}

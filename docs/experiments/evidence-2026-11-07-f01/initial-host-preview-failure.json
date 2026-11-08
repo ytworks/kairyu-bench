@@ -1,0 +1,9 @@
+{
+  "status": "rejected_before_gradients",
+  "error": "input changed or SHA mismatch: src/kairyu_bench/wsp/weights/finite_replay.py",
+  "expected_sha256": "e28f3ebeab3eea32a9685311fd3e937f2b1d9d827ec7cbced1ece57cbca29090",
+  "current_sha256": "71c424bffac775ba112e709632df0a37351a79c3121827be7c9844f321c7c4d3",
+  "plan_retained": "plan.json",
+  "model_calls": 0,
+  "solve_calls": 0
+}

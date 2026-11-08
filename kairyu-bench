@@ -2,6 +2,13 @@
 set -eu
 
 ROOT=$(CDPATH= cd -- "$(dirname -- "$0")" && pwd)
+# Weight observations run on the host CPU and read checkpoint files directly.
+# All benchmark commands continue through the Docker runner below.
+if [ "${1:-}" = wsp ] && { [ "${2:-}" = weights ] || [ "${2:-}" = observe ]; }; then
+    export PYTHONPATH="$ROOT/src${PYTHONPATH:+:$PYTHONPATH}"
+    exec "${KAIRYU_BENCH_PYTHON:-python3}" -m kairyu_bench "$@"
+fi
+
 IMAGE=${KAIRYU_BENCH_IMAGE:-kairyu-bench:local}
 RESULTS_DIR=$ROOT/results
 CACHE_DIR=${KAIRYU_BENCH_CACHE_DIR:-$ROOT/.cache}
@@ -10,6 +17,58 @@ DOCKER_SOCKET=${KAIRYU_BENCH_DOCKER_SOCKET:-/var/run/docker.sock}
 # working directory, so relative paths in arguments (manifests, result
 # directories to compare) read and write the host's files.
 CALLER_DIR=$(pwd -P)
+# An explicit results path can be outside both the checkout and calling
+# directory. Canonicalize the forwarded path and bind that exact host directory.
+# Rotate the original arguments once so quoting and argument order are retained.
+if [ "${1:-}" = run ] || { [ "${1:-}" = wsp ] && [ "${2:-}" = run ]; }; then
+    RESULTS_NEXT=0
+    argument_count=$#
+    while [ "$argument_count" -gt 0 ]; do
+        argument=$1
+        shift
+        argument_count=$((argument_count - 1))
+        if [ "$RESULTS_NEXT" = 1 ]; then
+            case "$argument" in
+                ""|--*) echo "kairyu-bench: --results-dir needs a path" >&2; exit 2 ;;
+            esac
+            results_path=$argument
+            RESULTS_NEXT=0
+        else
+            case "$argument" in
+                --results-dir) RESULTS_NEXT=1; set -- "$@" "$argument"; continue ;;
+                --results-dir=*) results_path=${argument#--results-dir=} ;;
+                *) set -- "$@" "$argument"; continue ;;
+            esac
+        fi
+        [ -n "$results_path" ] || { echo "kairyu-bench: --results-dir needs a path" >&2; exit 2; }
+        mkdir -p -- "$results_path"
+        RESULTS_DIR=$(CDPATH= cd -- "$results_path" && pwd -P)
+        case "$argument" in
+            --results-dir=*) set -- "$@" "--results-dir=$RESULTS_DIR" ;;
+            *) set -- "$@" "$RESULTS_DIR" ;;
+        esac
+    done
+    [ "$RESULTS_NEXT" = 0 ] || { echo "kairyu-bench: --results-dir needs a path" >&2; exit 2; }
+fi
+OBSERVE_DIR=
+OBSERVE_NEXT=0
+if [ "${1:-}" = wsp ] && [ "${2:-}" = run ]; then
+    for argument in "$@"; do
+        if [ "$OBSERVE_NEXT" = 1 ]; then
+            OBSERVE_DIR=$(CDPATH= cd -- "$(dirname -- "$argument")" && pwd -P)
+            OBSERVE_NEXT=0
+        else
+            case "$argument" in
+                --observe-config) OBSERVE_NEXT=1 ;;
+                --observe-config=*)
+                    config_path=${argument#--observe-config=}
+                    OBSERVE_DIR=$(CDPATH= cd -- "$(dirname -- "$config_path")" && pwd -P)
+                    ;;
+            esac
+        fi
+    done
+    [ "$OBSERVE_NEXT" = 0 ] || { echo "kairyu-bench: --observe-config needs a path" >&2; exit 2; }
+fi
 
 command -v docker >/dev/null 2>&1 || {
     echo "kairyu-bench: Docker is required" >&2
@@ -17,23 +76,53 @@ command -v docker >/dev/null 2>&1 || {
 }
 
 mkdir -p "$RESULTS_DIR" "$CACHE_DIR"
+RESULTS_MOUNT=$RESULTS_DIR
+if [ "$RESULTS_DIR" = "$CALLER_DIR" ] || [ "$RESULTS_DIR" = "$OBSERVE_DIR" ] || [ "$RESULTS_DIR" = "$CACHE_DIR" ]; then
+    RESULTS_MOUNT=
+fi
 [ -S "$DOCKER_SOCKET" ] || {
     echo "kairyu-bench: Docker socket not found: $DOCKER_SOCKET" >&2
     exit 2
 }
 
-docker build -t "$IMAGE" "$ROOT"
+# Explicit immutable reuse keeps a measured runner unchanged while experiment
+# recipes evolve. Default invocations still build the current checkout.
+PINNED_PULL_OPTION=
+if [ -n "${KAIRYU_BENCH_RUNNER_IMAGE_ID:-}" ]; then
+    pinned_image=$KAIRYU_BENCH_RUNNER_IMAGE_ID
+    case "$pinned_image" in
+        sha256:*) pinned_hex=${pinned_image#sha256:} ;;
+        *) echo "kairyu-bench: runner image must be a full sha256 image ID" >&2; exit 2 ;;
+    esac
+    case "$pinned_hex" in
+        *[!0-9a-f]*|"") echo "kairyu-bench: invalid runner image ID" >&2; exit 2 ;;
+    esac
+    [ "${#pinned_hex}" = 64 ] || {
+        echo "kairyu-bench: runner image ID needs 64 hexadecimal digits" >&2; exit 2
+    }
+    resolved_image=$(docker image inspect --format '{{.Id}}' "$pinned_image") || {
+        echo "kairyu-bench: pinned runner image is not available locally" >&2; exit 2
+    }
+    [ "$resolved_image" = "$pinned_image" ] || {
+        echo "kairyu-bench: resolved runner image differs from the requested ID" >&2; exit 2
+    }
+    IMAGE=$pinned_image
+    PINNED_PULL_OPTION=--pull=never
+else
+    docker build -t "$IMAGE" "$ROOT"
+fi
 
 # KAIRYU_BENCH_DOCKER_NETWORK joins the runner to a Docker network, e.g. a
 # served model's compose network so `wsp run --logprob-endpoint` reaches its
 # vLLM replicas directly.
-exec docker run --rm --privileged \
+exec docker run --rm --privileged $PINNED_PULL_OPTION \
     ${KAIRYU_BENCH_DOCKER_NETWORK:+--network "$KAIRYU_BENCH_DOCKER_NETWORK"} \
     --add-host host.docker.internal:host-gateway \
     -v "$DOCKER_SOCKET:/var/run/docker.sock" \
     -v "$CALLER_DIR:$CALLER_DIR" \
+    ${OBSERVE_DIR:+-v "$OBSERVE_DIR:$OBSERVE_DIR"} \
     -w "$CALLER_DIR" \
-    -v "$RESULTS_DIR:$RESULTS_DIR" \
+    ${RESULTS_MOUNT:+-v "$RESULTS_MOUNT:$RESULTS_MOUNT"} \
     -v "$CACHE_DIR:$CACHE_DIR" \
     -e "KAIRYU_BENCH_RESULTS_DIR=$RESULTS_DIR" \
     -e "KAIRYU_BENCH_CACHE_DIR=$CACHE_DIR" \

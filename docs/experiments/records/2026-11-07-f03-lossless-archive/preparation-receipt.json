@@ -1,0 +1,21 @@
+{
+  "status": "prepared_and_validated_no_payload_change",
+  "elapsed_seconds": 2.196185350418091,
+  "archive_path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f03-native-v1/lossless-archive-v1",
+  "archive_json_sha256": "00ef50f95b783c25da078e4274e142471d9bfceefb34d78042fba5d83eb9a4e0",
+  "archive_validation_sha256": "419f5477838de3db89d8b6b4d4e758c48e9bb935b9c76e03cb498e132ede3e52",
+  "archive_sha256sums_sha256": "374f40c074c4ea8c893d802217d31d1ef99987cb6d146016972790128aa3b520",
+  "archive_files_excluding_checksum": 132,
+  "archive_bytes": 37752648,
+  "exact_replanned_spans": 112,
+  "selected_coordinate_replan_seconds": 1.406839370727539,
+  "free_bytes_before": 69807161344,
+  "free_bytes_after": 69769011200,
+  "all18stats_unchanged": true,
+  "fresh_payload_fullhash_or_diff": false,
+  "physical_reconstruction": false,
+  "payloads_modified": false,
+  "model_gpu_service_lock_operations": 0,
+  "payload_release_authorized": false,
+  "operation_source_sha256": "2abde870d9d06075ed836536b449c8c5162cba921a0578d291e92687d38bdc0e"
+}

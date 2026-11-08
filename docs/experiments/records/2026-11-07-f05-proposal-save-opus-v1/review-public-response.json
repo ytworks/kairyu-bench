@@ -1,0 +1,46 @@
+{
+  "reviews": [
+    {
+      "label": "A",
+      "decision": "Conditionally defensible. Nothing in the text invalidates one complete canonical dev30 run of saved A against the existing parent result. The expected coding benefit is low. Before committing the full run, spend about one minute on A's first native forward over the 19 authored contracts, using a stop/go rule fixed in advance. This is A's own first execution, not a repeat of a baseline.",
+      "concerns": [
+        "Validity: A has had no candidate forward, execution test or serving load. Numeric cast and kernel equivalence between the native and serving frames is unmeasured. A load or generation fault should be found by a short native run, not partway through a 2338-item dev30.",
+        "Validity: comparability depends on A's dev30 completing with 0 unscored items and 0 API errors. The earlier partial trial had 1 unscored agent item and was correctly not adopted. A must meet the same standard before any ranking against the parent.",
+        "Low benefit, persistent native failure: the previous edit's predicted teacher-forced LL gains did not fix the same two contracts under free thinking. A's support is the same kind of proxy (forced empty thought, linear gradient-dot-delta), so the prior that A fixes A1, F2 or J1 natively is weak.",
+        "Low benefit, margin does not track execution: F2 has a positive margin (+.564) yet passes 4/16 fixtures. Cross-row margin cosine is .178. Margin gains are not expected execution gains.",
+        "Error-matched foil: J1 contrasts the actual k-1 vs 0-offset mistake, which is a real improvement in target validity. It is still one prompt, and it shares its prompt and correct program with F2.",
+        "Duplicate and padding sensitivity: F2 and J1 effectively count one task twice in the LL constraints. Their correctLL differs by -.0081 only because foil length changes padding (152 vs 148). The targets are therefore at most two independent behaviors, and the objective responds to frame artifacts.",
+        "Broader change: 26,417 elements across all 361 norm vectors and all 60 layers, versus the previous 429 elements. DeltaL2 is 52.29 vs 2.04. First-order predictions are less trustworthy at this step size, and off-target regression risk is higher. The previous partial trial lost 12.04 long-context points. The 16 successful rows only constrain LL at ≥-.01, not behavior in other domains.",
+        "BF16 realization: the realized delta has cosine .616 with the continuous solution and rounding-relative error .82. 653 coordinates exceed the box, by up to 1.33x radius, with a maximum absolute change of 8. The trust-region assumption is breached, so the realized direction is mostly not the solved direction, even though the CPU audit confirms the linear predictions exactly.",
+        "Missed bounds: A1 and J1 margin shortfalls of 1.1e-4 and 5.2e-5 are negligible relative to proxy-to-native error. They are correctly reported as unmet. They are not a validity blocker and do not justify re-solving.",
+        "Transfer: the 6 original and 3 new transfer tasks have not been generated. Apart from the 90 dev30 code items, there is no out-of-sample evidence. Passing the 19 rows would show fit, not transfer."
+      ],
+      "minimum_useful_next_action": "Serve saved A and run one native-thinking generation and execution pass over the same 19 rows under the parent's conditions (about 26s generation plus 15s execution). Fix this rule before looking at results: (a) if A fails to load, emits errors, or regresses any of the 16 passing rows, do not launch dev30 and record A as rejected at pre-gate; (b) if at least one of A1/F2/J1 passes with no regressions, run the full canonical dev30 exactly as proposed; (c) if 0/3 targets flip with no regressions, the targeted mechanism is unsupported, so run dev30 only if no better-supported candidate is queued. Read single-sample flips as weak in both directions."
+    }
+  ],
+  "sequence": [
+    "Record the stop/go rule and A's checkpoint identity before any A forward.",
+    "Run A's native 19-row generation and execution pass, which also tests serving load. Retain all outputs, failures and unknowns.",
+    "Apply the pre-fixed rule. Do not run another parent WSP or a parent-candidate-parent replay.",
+    "If the rule says go, run one complete canonical dev30 of A: all 2338 items, the identical runner, source, manifest and budgets, native BF16 thinking, TP2x4/MTP4, concurrency 256/32/4, with every failure and unknown retained.",
+    "Compare A's dev30 only if it is complete with 0 unscored items. Under the cumulative rule, adopt A only if code ≥ 72.9365 and overall > 76.9911, or a code gain justifies modest measured losses elsewhere. Otherwise the current parent stays.",
+    "Report per-domain deltas, especially long-context, given A's broad all-layer norm change. Report the A1/F2/J1-related code items descriptively, without causal attribution to the weights.",
+    "Leave final60/test, DeepSWE113x1 at 32 workers, the wiki and conditional publication for an adopted parent only."
+  ],
+  "evidence_limits": [
+    "All A-specific evidence consists of teacher-forced, forced-empty-thought, first-order gradient predictions. These are not finite measured changes and not capability scores.",
+    "The 19 rows are not 19 independent abilities. F2 and J1 are one prompt and one program, and the 3 failures are at most 2 behaviors.",
+    "A prior edit's proxy gains failed to transfer natively, so the proxy's predictive validity for this failure class is currently unsupported.",
+    "Failure-versus-success margin cosines (about -.064 to +.102) do not establish functional independence or weight localization.",
+    "Numerical fixture passing does not prove symbolic-library method requirements.",
+    "BF16 rounding plus box overruns mean that the realized update is only partly the optimized direction.",
+    "Tier10's 87.7778 is from a different cohort and is not a comparator. No partial run is ranked.",
+    "Nothing here supports a claim of code above 90, a capability improvement, or adoption."
+  ],
+  "fresh_reserve": [
+    "Final60/test stays unseen until a parent is adopted from complete dev30 evidence.",
+    "DeepSWE113x1 at 32 workers stays unrun for A unless A is adopted.",
+    "The 6 original and 3 new transfer tasks stay ungenerated and unused for tuning A. They are held as future out-of-sample checks and must not be added to the constraint set after seeing A's results.",
+    "No dev30 item may be used to re-select or rescale A after its dev30 result."
+  ]
+}

@@ -1,0 +1,88 @@
+{
+  "returncode": 0,
+  "elapsed_seconds": 15.449004650115967,
+  "plan_sha256": "dfb8263dbf2a1ea501831464b4d16e1deef98134ec58ce9ef90138da9c4d0d61",
+  "report_sha256": "eb1c46234cad2a60258c4d36ed6e2ff48325cb6820d674b5f1d6908a47d46b05",
+  "status": "completed",
+  "counts": {
+    "expected": 16,
+    "passed": 16,
+    "failed": 0,
+    "unknown": 0
+  },
+  "strata": {
+    "known_dtype_contract_issue": {
+      "expected": 3,
+      "passed": 3,
+      "failed": 0,
+      "unknown": 0
+    },
+    "other": {
+      "expected": 13,
+      "passed": 13,
+      "failed": 0,
+      "unknown": 0
+    }
+  },
+  "targets_received": 16,
+  "not_targeted": 56,
+  "source_input_continuity": [
+    {
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-av-helper16-offline-v1/source/helper_stage_offline.py",
+      "sha256_equal": true,
+      "stat_equal": true
+    },
+    {
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-av-helper16-offline-v1/source/helper_chain_cases.py",
+      "sha256_equal": true,
+      "stat_equal": true
+    },
+    {
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-av-helper16-offline-v1/source/long_helper_chain_cases.py",
+      "sha256_equal": true,
+      "stat_equal": true
+    },
+    {
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-av-helper16-offline-v1/source/science_sandbox.py",
+      "sha256_equal": true,
+      "stat_equal": true
+    },
+    {
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-av-helper16-offline-v1/source/science_generate.py",
+      "sha256_equal": true,
+      "stat_equal": true
+    },
+    {
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-av-helper16-offline-v1/source/science_cases.py",
+      "sha256_equal": true,
+      "stat_equal": true
+    },
+    {
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-authored120-generation-inputs-v1/inputs/uncataloged72-train-cases.json",
+      "sha256_equal": true,
+      "stat_equal": true
+    },
+    {
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-av-authored120-native-v2/generations/03-unsupported72/train-responses.json",
+      "sha256_equal": true,
+      "stat_equal": true
+    },
+    {
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-av-authored120-native-v2/generations/03-unsupported72/receipt.json",
+      "sha256_equal": true,
+      "stat_equal": true
+    },
+    {
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-authored120-generation-inputs-v1/validation.json",
+      "sha256_equal": true,
+      "stat_equal": true
+    }
+  ],
+  "owned_science_containers_after": [],
+  "protected27_exact": true,
+  "before_container_count": 27,
+  "after_container_count": 27,
+  "model_calls": 0,
+  "service_changes": false,
+  "attempts": 1
+}

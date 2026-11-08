@@ -1,0 +1,59 @@
+import json,time,hashlib,subprocess,uuid
+from pathlib import Path
+R=Path("/mnt/nvme/kairyu/wsp/gemma4-coding-20261104");B=R/"worktrees/kairyu-bench-weight-tools";N=R/"analysis/fresh-purpose-20261107-mbpp204-body-frames-v2"
+def sha(p):return hashlib.sha256(p.read_bytes()).hexdigest()
+def save(p,x):
+ with p.open("x") as f:json.dump(x,f,indent=2);f.write(chr(10))
+def call(args):return subprocess.check_output(["docker","--host","unix:///var/run/docker.sock",*args],text=True)
+def inventory():
+ ids=call(["ps","--all","--no-trunc","--format","{{.ID}}"]).split()
+ fmt='{"id":{{json .Id}},"name":{{json .Name}},"image":{{json .Image}},"running":{{json .State.Running}},"status":{{json .State.Status}}}'
+ return [json.loads(line) for line in call(["inspect","--format",fmt,*ids]).splitlines()] if ids else []
+assert call(["info","--format","{{.ID}}"]).strip()=="3e518d2b-6972-43f8-b325-f7f33697a2d2"
+assert call(["info","--format","{{.DockerRootDir}}"]).strip()=="/mnt/nvme/docker"
+pins=json.loads((N/"source-pins.json").read_text())
+for file,digest in pins["files"].items():assert sha(Path(file))==digest
+inputs=R/"analysis/fresh-purpose-20261107-mbpp-train-preparation-v1/filter-v1"
+assert sha(inputs/"train.jsonl")=="d501b58dd3860a5c1b666a9318f3f8f70c405d2369afce3aea13bd0f379223f6"
+prior=R/"analysis/fresh-purpose-20261107-mbpp255-frames-v1/all255-frames.json"
+assert sha(prior)=="bcf8ea1fe124966acf33ede016419b7ce88491351485f46933c28bb860221092"
+old=R/"analysis/fresh-purpose-20261107-mbpp255-trainer-frames-v1"
+args=json.loads((old/"launch-plan.json").read_text())["argv"]
+token=uuid.uuid4().hex
+name="kairyu-mbpp204-body-frames-"+token
+args[args.index("--name")+1]=name
+args[args.index("--label")+1]="kairyu.science-sandbox="+token
+oldscript=str(B/"docs/experiments/scripts/fresh-mbpp255-trainer-frames-20261107.py")
+newscript=str(B/"docs/experiments/scripts/fresh-mbpp204-body-frames-20261107.py")
+args=[x.replace(oldscript,newscript).replace("src="+str(old)+",dst=/out","src="+str(N)+",dst=/out") for x in args]
+image="sha256:af9e746b913088cbf6c4464a31d6904a6b7e1d3ba62f0895362ddf13595f7abe"
+i=args.index(image)
+args[i:i]=["--cpu-shares","128","--mount","type=bind,src="+str(N/"source")+",dst=/source,readonly"]
+assert call(["image","inspect","--format","{{.Id}}",image]).strip()==image
+before=inventory();save(N/"protected-before.json",before)
+save(N/"launch-plan.json",{"argv":args,"source_sha256":sha(Path(__file__)),"tokenizer_source_sha256":sha(Path(newscript)),"inputs_sha256":sha(inputs/"train.jsonl"),"prior_sha256":sha(prior),"GPU":False,"model_forwards":0,"WSP_overlap":"CPU tokenizer only; max2CPU/4GiB/CPUshares128; exact elapsed recorded, no assumed zero timing impact"})
+started=time.time();error=None;result=None
+try:
+ result=subprocess.run(["docker","--host","unix:///var/run/docker.sock",*args],stdin=subprocess.DEVNULL,capture_output=True,text=True,timeout=90)
+ (N/"stdout.txt").write_text(result.stdout);(N/"stderr.txt").write_text(result.stderr)
+except BaseException as exc:
+ error={"type":type(exc).__name__,"message":str(exc)}
+finally:
+ remaining=call(["ps","--all","--no-trunc","--filter","label=kairyu.science-sandbox="+token,"--format","{{.ID}}"]).split()
+ cleanup=[]
+ for cid in remaining:
+  identity=json.loads(call(["inspect","--format",'{"name":{{json .Name}},"image":{{json .Image}},"label":{{json (index .Config.Labels "kairyu.science-sandbox")}}',cid]))
+  assert identity=={"name":"/"+name,"image":image,"label":token}
+  cleanup.append(call(["rm","--force",cid]).strip())
+ after=inventory();save(N/"protected-after.json",after)
+ old_services={x["name"]:x for x in before if x["name"].startswith("/gemma-4-31b-8gpu-")}
+ new_services={x["name"]:x for x in after if x["name"].startswith("/gemma-4-31b-8gpu-")}
+ closure={"started_epoch":started,"finished_epoch":time.time(),"seconds":time.time()-started,
+          "returncode":None if result is None else result.returncode,"error":error,"owned_cleanup":cleanup,
+          "owned_remaining":call(["ps","--all","--filter","label=kairyu.science-sandbox="+token,"--format","{{.ID}}"]).split(),
+          "all_original_members_equal":sorted(before,key=lambda x:x["id"])==sorted(after,key=lambda x:x["id"]),
+          "gemma_services_equal":old_services==new_services,"model_forwards":0,"teacher_forwards":0,"gradient_calls":0}
+ save(N/"closure.json",closure)
+ print(json.dumps(closure))
+ assert not closure["owned_remaining"] and closure["gemma_services_equal"]
+assert error is None and result is not None and result.returncode==0

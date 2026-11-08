@@ -1,0 +1,2338 @@
+{
+  "status": "completed_matched_full_dev30_comparison",
+  "base_remeasured": false,
+  "base_run": "gemma4-fresh-av-dev30-dp4-20261107-v1",
+  "candidate_run": "gemma4-fresh-f04-dev30-dp4-20261107-v1",
+  "all_items": 2338,
+  "code_items": 90,
+  "code": {
+    "base": 0.7293650793650793,
+    "candidate": 0.7293650793650793,
+    "delta": 0.0,
+    "ci95": [
+      -0.04583333333333339,
+      0.04999999999999993
+    ],
+    "flips": {
+      "lost": 3,
+      "gained": 3,
+      "items": 90
+    },
+    "unpaired": 0
+  },
+  "overall": {
+    "delta": 0.0027102714128688365,
+    "ci95": [
+      -0.02403062989188831,
+      0.030309993836717508
+    ]
+  },
+  "areas": {
+    "knowledge": {
+      "base": 0.8555555555555555,
+      "candidate": 0.8555555555555555,
+      "delta": 0.0,
+      "ci95": [
+        -0.02777777777777779,
+        0.02777777777777779
+      ],
+      "flips": {
+        "lost": 3,
+        "gained": 3,
+        "items": 180
+      },
+      "unpaired": 0
+    },
+    "expert": {
+      "base": 0.8333333333333334,
+      "candidate": 0.875,
+      "delta": 0.04166666666666663,
+      "ci95": [
+        -0.04166666666666663,
+        0.125
+      ],
+      "flips": {
+        "lost": 1,
+        "gained": 3,
+        "items": 48
+      },
+      "unpaired": 0
+    },
+    "facts": {
+      "base": 0.7166666666666667,
+      "candidate": 0.7083333333333334,
+      "delta": -0.008333333333333304,
+      "ci95": [
+        -0.050000000000000044,
+        0.033333333333333326
+      ],
+      "flips": {
+        "lost": 4,
+        "gained": 3,
+        "items": 120
+      },
+      "unpaired": 0
+    },
+    "math": {
+      "base": 0.9125801282051282,
+      "candidate": 0.9025641025641026,
+      "delta": -0.010016025641025661,
+      "ci95": [
+        -0.034214743589743635,
+        0.01041666666666674
+      ],
+      "flips": {
+        "lost": 1,
+        "gained": 1,
+        "items": 135
+      },
+      "unpaired": 0
+    },
+    "code": {
+      "base": 0.7293650793650793,
+      "candidate": 0.7293650793650793,
+      "delta": 0.0,
+      "ci95": [
+        -0.04583333333333339,
+        0.04999999999999993
+      ],
+      "flips": {
+        "lost": 3,
+        "gained": 3,
+        "items": 90
+      },
+      "unpaired": 0
+    },
+    "instructions": {
+      "base": 0.8991666666666667,
+      "candidate": 0.905,
+      "delta": 0.005833333333333357,
+      "ci95": [
+        -0.030833333333333268,
+        0.04416666666666669
+      ],
+      "flips": {
+        "lost": 3,
+        "gained": 3,
+        "items": 170
+      },
+      "unpaired": 0
+    },
+    "tools": {
+      "base": 0.7916666666666666,
+      "candidate": 0.8,
+      "delta": 0.008333333333333415,
+      "ci95": [
+        -0.033333333333333326,
+        0.050000000000000044
+      ],
+      "flips": {
+        "lost": 3,
+        "gained": 4,
+        "items": 120
+      },
+      "unpaired": 0
+    },
+    "agents": {
+      "base": 0.5416666666666667,
+      "candidate": 0.5416666666666667,
+      "delta": 0.0,
+      "ci95": [
+        -0.37499999999999994,
+        0.375
+      ],
+      "flips": {
+        "lost": 1,
+        "gained": 1,
+        "items": 10
+      },
+      "unpaired": 0
+    },
+    "long-context": {
+      "base": 0.8483752437308083,
+      "candidate": 0.9060591212673542,
+      "delta": 0.05768387753654591,
+      "ci95": [
+        -0.022892964776582647,
+        0.14255936089613708
+      ],
+      "flips": {
+        "lost": 1,
+        "gained": 5,
+        "items": 50
+      },
+      "unpaired": 0
+    },
+    "reasoning": {
+      "base": 0.841304347826087,
+      "candidate": 0.7811594202898551,
+      "delta": -0.06014492753623191,
+      "ci95": [
+        -0.1202898550724637,
+        -0.010869565217391353
+      ],
+      "flips": {
+        "lost": 5,
+        "gained": 0,
+        "items": 76
+      },
+      "unpaired": 0
+    },
+    "commonsense": {
+      "base": 0.6166666666666667,
+      "candidate": 0.6177777777777778,
+      "delta": 0.0011111111111110628,
+      "ci95": [
+        -0.011111111111111072,
+        0.014444444444444371
+      ],
+      "flips": {
+        "lost": 16,
+        "gained": 17,
+        "items": 900
+      },
+      "unpaired": 0
+    },
+    "multilingual": {
+      "base": 0.7887205387205386,
+      "candidate": 0.7928451178451178,
+      "delta": 0.004124579124579197,
+      "ci95": [
+        -0.0213804713804715,
+        0.029629629629629672
+      ],
+      "flips": {
+        "lost": 3,
+        "gained": 4,
+        "items": 187
+      },
+      "unpaired": 0
+    },
+    "vision": {
+      "base": 0.7916666666666666,
+      "candidate": 0.7708333333333334,
+      "delta": -0.02083333333333326,
+      "ci95": [
+        -0.10416666666666663,
+        0.04166666666666674
+      ],
+      "flips": {
+        "lost": 2,
+        "gained": 1,
+        "items": 48
+      },
+      "unpaired": 0
+    },
+    "safety": {
+      "base": 0.5740740740740741,
+      "candidate": 0.5925925925925926,
+      "delta": 0.01851851851851849,
+      "ci95": [
+        0.0,
+        0.046296296296296335
+      ],
+      "flips": {
+        "lost": 0,
+        "gained": 2,
+        "items": 108
+      },
+      "unpaired": 0
+    }
+  },
+  "sources": {
+    "aime-2026": {
+      "items": 12,
+      "area": "math",
+      "base": 0.9375,
+      "candidate": 0.9166666666666666,
+      "delta": -0.02083333333333337,
+      "positive_raw_deltas": 1,
+      "negative_raw_deltas": 2,
+      "equal": 9,
+      "metric": "capability_score_higher_is_better"
+    },
+    "arc-challenge": {
+      "items": 300,
+      "area": "commonsense",
+      "base": 0.5666666666666667,
+      "candidate": 0.5766666666666667,
+      "delta": 0.010000000000000009,
+      "positive_raw_deltas": 6,
+      "negative_raw_deltas": 3,
+      "equal": 291,
+      "metric": "capability_score_higher_is_better"
+    },
+    "bbeh": {
+      "items": 46,
+      "area": "reasoning",
+      "base": 0.782608695652174,
+      "candidate": 0.6956521739130435,
+      "delta": -0.08695652173913049,
+      "positive_raw_deltas": 0,
+      "negative_raw_deltas": 4,
+      "equal": 42,
+      "metric": "capability_score_higher_is_better"
+    },
+    "bfcl": {
+      "items": 120,
+      "area": "tools",
+      "base": 0.7916666666666666,
+      "candidate": 0.8,
+      "delta": 0.008333333333333415,
+      "positive_raw_deltas": 4,
+      "negative_raw_deltas": 3,
+      "equal": 113,
+      "metric": "capability_score_higher_is_better"
+    },
+    "gpqa-diamond": {
+      "items": 48,
+      "area": "expert",
+      "base": 0.8333333333333334,
+      "candidate": 0.875,
+      "delta": 0.04166666666666663,
+      "positive_raw_deltas": 3,
+      "negative_raw_deltas": 1,
+      "equal": 44,
+      "metric": "capability_score_higher_is_better"
+    },
+    "gsm8k-platinum": {
+      "items": 50,
+      "area": "math",
+      "base": 1.0,
+      "candidate": 1.0,
+      "delta": 0.0,
+      "positive_raw_deltas": 0,
+      "negative_raw_deltas": 0,
+      "equal": 50,
+      "metric": "capability_score_higher_is_better"
+    },
+    "hellaswag": {
+      "items": 300,
+      "area": "commonsense",
+      "base": 0.61,
+      "candidate": 0.6,
+      "delta": -0.010000000000000009,
+      "positive_raw_deltas": 6,
+      "negative_raw_deltas": 9,
+      "equal": 285,
+      "metric": "capability_score_higher_is_better"
+    },
+    "hmmt-feb-2026": {
+      "items": 13,
+      "area": "math",
+      "base": 0.8461538461538461,
+      "candidate": 0.8269230769230769,
+      "delta": -0.019230769230769273,
+      "positive_raw_deltas": 0,
+      "negative_raw_deltas": 1,
+      "equal": 12,
+      "metric": "capability_score_higher_is_better"
+    },
+    "humaneval-plus": {
+      "items": 30,
+      "area": "code",
+      "base": 0.9666666666666667,
+      "candidate": 0.9666666666666667,
+      "delta": 0.0,
+      "positive_raw_deltas": 1,
+      "negative_raw_deltas": 1,
+      "equal": 28,
+      "metric": "capability_score_higher_is_better"
+    },
+    "ifbench": {
+      "items": 50,
+      "area": "instructions",
+      "base": 0.84,
+      "candidate": 0.86,
+      "delta": 0.020000000000000018,
+      "positive_raw_deltas": 2,
+      "negative_raw_deltas": 1,
+      "equal": 47,
+      "metric": "capability_score_higher_is_better"
+    },
+    "ifeval": {
+      "items": 120,
+      "area": "instructions",
+      "base": 0.9583333333333334,
+      "candidate": 0.95,
+      "delta": -0.008333333333333415,
+      "positive_raw_deltas": 1,
+      "negative_raw_deltas": 2,
+      "equal": 117,
+      "metric": "capability_score_higher_is_better"
+    },
+    "jamc-qa": {
+      "items": 72,
+      "area": "multilingual",
+      "base": 0.6388888888888888,
+      "candidate": 0.6527777777777778,
+      "delta": 0.01388888888888895,
+      "positive_raw_deltas": 3,
+      "negative_raw_deltas": 2,
+      "equal": 67,
+      "metric": "capability_score_higher_is_better"
+    },
+    "livecodebench": {
+      "items": 20,
+      "area": "code",
+      "base": 0.75,
+      "candidate": 0.75,
+      "delta": 0.0,
+      "positive_raw_deltas": 1,
+      "negative_raw_deltas": 1,
+      "equal": 18,
+      "metric": "capability_score_higher_is_better"
+    },
+    "longbench-v2": {
+      "items": 10,
+      "area": "long-context",
+      "base": 1.0,
+      "candidate": 1.0,
+      "delta": 0.0,
+      "positive_raw_deltas": 0,
+      "negative_raw_deltas": 0,
+      "equal": 10,
+      "metric": "capability_score_higher_is_better"
+    },
+    "math-500": {
+      "items": 60,
+      "area": "math",
+      "base": 0.8666666666666667,
+      "candidate": 0.8666666666666667,
+      "delta": 0.0,
+      "positive_raw_deltas": 1,
+      "negative_raw_deltas": 1,
+      "equal": 58,
+      "metric": "capability_score_higher_is_better"
+    },
+    "mbpp-plus": {
+      "items": 30,
+      "area": "code",
+      "base": 0.7666666666666667,
+      "candidate": 0.7666666666666667,
+      "delta": 0.0,
+      "positive_raw_deltas": 1,
+      "negative_raw_deltas": 1,
+      "equal": 28,
+      "metric": "capability_score_higher_is_better"
+    },
+    "mgsm": {
+      "items": 55,
+      "area": "multilingual",
+      "base": 0.9272727272727272,
+      "candidate": 0.9090909090909091,
+      "delta": -0.018181818181818188,
+      "positive_raw_deltas": 0,
+      "negative_raw_deltas": 1,
+      "equal": 54,
+      "metric": "capability_score_higher_is_better"
+    },
+    "mmlu-pro": {
+      "items": 180,
+      "area": "knowledge",
+      "base": 0.8555555555555555,
+      "candidate": 0.8555555555555555,
+      "delta": 0.0,
+      "positive_raw_deltas": 3,
+      "negative_raw_deltas": 3,
+      "equal": 174,
+      "metric": "capability_score_higher_is_better"
+    },
+    "mmlu-prox-ja": {
+      "items": 60,
+      "area": "multilingual",
+      "base": 0.8,
+      "candidate": 0.8166666666666667,
+      "delta": 0.016666666666666607,
+      "positive_raw_deltas": 1,
+      "negative_raw_deltas": 0,
+      "equal": 59,
+      "metric": "capability_score_higher_is_better"
+    },
+    "mmmu-pro": {
+      "items": 48,
+      "area": "vision",
+      "base": 0.7916666666666666,
+      "candidate": 0.7708333333333334,
+      "delta": -0.02083333333333326,
+      "positive_raw_deltas": 1,
+      "negative_raw_deltas": 2,
+      "equal": 45,
+      "metric": "capability_score_higher_is_better"
+    },
+    "mrcr-v2": {
+      "items": 16,
+      "area": "long-context",
+      "base": 0.6701257311924249,
+      "candidate": 0.7598440304687291,
+      "delta": 0.08971829927630415,
+      "positive_raw_deltas": 3,
+      "negative_raw_deltas": 2,
+      "equal": 11,
+      "metric": "capability_score_higher_is_better"
+    },
+    "musr": {
+      "items": 30,
+      "area": "reasoning",
+      "base": 0.9,
+      "candidate": 0.8666666666666667,
+      "delta": -0.033333333333333326,
+      "positive_raw_deltas": 0,
+      "negative_raw_deltas": 1,
+      "equal": 29,
+      "metric": "capability_score_higher_is_better"
+    },
+    "probe-code": {
+      "items": 40,
+      "area": null,
+      "base": 4.022500118458066,
+      "candidate": 3.959948847524708,
+      "delta": -0.06255127093335844,
+      "positive_raw_deltas": 15,
+      "negative_raw_deltas": 25,
+      "equal": 0,
+      "metric": "diagnostic_NLL_lower_is_better"
+    },
+    "probe-wikipedia-ja": {
+      "items": 40,
+      "area": null,
+      "base": 6.628099445956357,
+      "candidate": 6.604307689451583,
+      "delta": -0.02379175650477361,
+      "positive_raw_deltas": 21,
+      "negative_raw_deltas": 19,
+      "equal": 0,
+      "metric": "diagnostic_NLL_lower_is_better"
+    },
+    "probe-wikitext": {
+      "items": 16,
+      "area": null,
+      "base": 7.638729488031108,
+      "candidate": 7.615903794269796,
+      "delta": -0.022825693761311605,
+      "positive_raw_deltas": 7,
+      "negative_raw_deltas": 9,
+      "equal": 0,
+      "metric": "diagnostic_NLL_lower_is_better"
+    },
+    "ruler": {
+      "items": 24,
+      "area": "long-context",
+      "base": 0.875,
+      "candidate": 0.9583333333333334,
+      "delta": 0.08333333333333337,
+      "positive_raw_deltas": 2,
+      "negative_raw_deltas": 0,
+      "equal": 22,
+      "metric": "capability_score_higher_is_better"
+    },
+    "scicode": {
+      "items": 10,
+      "area": "code",
+      "base": 0.4341269841269841,
+      "candidate": 0.4341269841269841,
+      "delta": 0.0,
+      "positive_raw_deltas": 0,
+      "negative_raw_deltas": 0,
+      "equal": 10,
+      "metric": "capability_score_higher_is_better"
+    },
+    "swe-bench-pro": {
+      "items": 4,
+      "area": "agents",
+      "base": 0.25,
+      "candidate": 0.25,
+      "delta": 0.0,
+      "positive_raw_deltas": 1,
+      "negative_raw_deltas": 1,
+      "equal": 2,
+      "metric": "capability_score_higher_is_better"
+    },
+    "terminal-bench": {
+      "items": 6,
+      "area": "agents",
+      "base": 0.8333333333333334,
+      "candidate": 0.8333333333333334,
+      "delta": 0.0,
+      "positive_raw_deltas": 0,
+      "negative_raw_deltas": 0,
+      "equal": 6,
+      "metric": "capability_score_higher_is_better"
+    },
+    "triviaqa": {
+      "items": 120,
+      "area": "facts",
+      "base": 0.7166666666666667,
+      "candidate": 0.7083333333333334,
+      "delta": -0.008333333333333304,
+      "positive_raw_deltas": 3,
+      "negative_raw_deltas": 4,
+      "equal": 113,
+      "metric": "capability_score_higher_is_better"
+    },
+    "winogrande": {
+      "items": 300,
+      "area": "commonsense",
+      "base": 0.6733333333333333,
+      "candidate": 0.6766666666666666,
+      "delta": 0.0033333333333332993,
+      "positive_raw_deltas": 5,
+      "negative_raw_deltas": 4,
+      "equal": 291,
+      "metric": "capability_score_higher_is_better"
+    },
+    "xstest": {
+      "items": 108,
+      "area": "safety",
+      "base": 0.5740740740740741,
+      "candidate": 0.5925925925925926,
+      "delta": 0.01851851851851849,
+      "positive_raw_deltas": 2,
+      "negative_raw_deltas": 0,
+      "equal": 106,
+      "metric": "capability_score_higher_is_better"
+    }
+  },
+  "probes": {
+    "probe-code": {
+      "kl_per_token": 0.03397973700770359,
+      "top1_agreement": 0.973284200829111,
+      "nll_base": 3.189022870729704,
+      "nll_candidate": 3.1526194085400094,
+      "positions": 2171
+    },
+    "probe-wikipedia-ja": {
+      "kl_per_token": 0.1871440992199663,
+      "top1_agreement": 0.877880859375,
+      "nll_base": 6.628099445956371,
+      "nll_candidate": 6.604307689451597,
+      "positions": 20480
+    },
+    "probe-wikitext": {
+      "kl_per_token": 0.09551574420152026,
+      "top1_agreement": 0.8991459432303441,
+      "nll_base": 7.635053031016486,
+      "nll_candidate": 7.612091704175559,
+      "positions": 7962
+    }
+  },
+  "code_changed_items": [
+    {
+      "id": "humaneval-plus:HumanEval/151",
+      "source": "humaneval-plus",
+      "area": "code",
+      "kind": "chat",
+      "tier": 30,
+      "max_tokens": 32768,
+      "samples": 1,
+      "base_score": 1.0,
+      "candidate_score": 0.0,
+      "delta": -1.0,
+      "base_sample_scores": [
+        1.0
+      ],
+      "candidate_sample_scores": [
+        0.0
+      ],
+      "base_error": null,
+      "candidate_error": null,
+      "metric": "capability_score_higher_is_better",
+      "base_detail": {
+        "samples": [
+          {
+            "base": "pass",
+            "plus": "pass",
+            "passed": true
+          }
+        ]
+      },
+      "candidate_detail": {
+        "samples": [
+          {
+            "base": "pass",
+            "plus": "fail",
+            "passed": false
+          }
+        ]
+      },
+      "base_generation": [
+        {
+          "finish_reason": "stop",
+          "prompt_tokens": 202,
+          "completion_tokens": 1418
+        }
+      ],
+      "candidate_generation": [
+        {
+          "finish_reason": "stop",
+          "prompt_tokens": 202,
+          "completion_tokens": 1394
+        }
+      ]
+    },
+    {
+      "id": "humaneval-plus:HumanEval/152",
+      "source": "humaneval-plus",
+      "area": "code",
+      "kind": "chat",
+      "tier": 30,
+      "max_tokens": 32768,
+      "samples": 1,
+      "base_score": 0.0,
+      "candidate_score": 1.0,
+      "delta": 1.0,
+      "base_sample_scores": [
+        0.0
+      ],
+      "candidate_sample_scores": [
+        1.0
+      ],
+      "base_error": null,
+      "candidate_error": null,
+      "metric": "capability_score_higher_is_better",
+      "base_detail": {
+        "samples": [
+          {
+            "base": "fail",
+            "plus": "fail",
+            "passed": false
+          }
+        ]
+      },
+      "candidate_detail": {
+        "samples": [
+          {
+            "base": "pass",
+            "plus": "pass",
+            "passed": true
+          }
+        ]
+      },
+      "base_generation": [
+        {
+          "finish_reason": "stop",
+          "prompt_tokens": 289,
+          "completion_tokens": 1075
+        }
+      ],
+      "candidate_generation": [
+        {
+          "finish_reason": "stop",
+          "prompt_tokens": 289,
+          "completion_tokens": 1078
+        }
+      ]
+    },
+    {
+      "id": "livecodebench:3777",
+      "source": "livecodebench",
+      "area": "code",
+      "kind": "chat",
+      "tier": 30,
+      "max_tokens": 32768,
+      "samples": 1,
+      "base_score": 0.0,
+      "candidate_score": 1.0,
+      "delta": 1.0,
+      "base_sample_scores": [
+        0.0
+      ],
+      "candidate_sample_scores": [
+        1.0
+      ],
+      "base_error": null,
+      "candidate_error": null,
+      "metric": "capability_score_higher_is_better",
+      "base_detail": {
+        "samples": [
+          {
+            "passed": false
+          }
+        ]
+      },
+      "candidate_detail": {
+        "samples": [
+          {
+            "passed": true
+          }
+        ]
+      },
+      "base_generation": [
+        {
+          "finish_reason": "stop",
+          "prompt_tokens": 664,
+          "completion_tokens": 11254
+        }
+      ],
+      "candidate_generation": [
+        {
+          "finish_reason": "stop",
+          "prompt_tokens": 664,
+          "completion_tokens": 12420
+        }
+      ]
+    },
+    {
+      "id": "livecodebench:abc390_g",
+      "source": "livecodebench",
+      "area": "code",
+      "kind": "chat",
+      "tier": 30,
+      "max_tokens": 32768,
+      "samples": 1,
+      "base_score": 1.0,
+      "candidate_score": 0.0,
+      "delta": -1.0,
+      "base_sample_scores": [
+        1.0
+      ],
+      "candidate_sample_scores": [
+        0.0
+      ],
+      "base_error": null,
+      "candidate_error": null,
+      "metric": "capability_score_higher_is_better",
+      "base_detail": {
+        "samples": [
+          {
+            "passed": true
+          }
+        ]
+      },
+      "candidate_detail": {
+        "samples": [
+          {
+            "passed": false
+          }
+        ]
+      },
+      "base_generation": [
+        {
+          "finish_reason": "stop",
+          "prompt_tokens": 609,
+          "completion_tokens": 10487
+        }
+      ],
+      "candidate_generation": [
+        {
+          "finish_reason": "stop",
+          "prompt_tokens": 609,
+          "completion_tokens": 13032
+        }
+      ]
+    },
+    {
+      "id": "mbpp-plus:Mbpp/641",
+      "source": "mbpp-plus",
+      "area": "code",
+      "kind": "chat",
+      "tier": 30,
+      "max_tokens": 32768,
+      "samples": 1,
+      "base_score": 0.0,
+      "candidate_score": 1.0,
+      "delta": 1.0,
+      "base_sample_scores": [
+        0.0
+      ],
+      "candidate_sample_scores": [
+        1.0
+      ],
+      "base_error": null,
+      "candidate_error": null,
+      "metric": "capability_score_higher_is_better",
+      "base_detail": {
+        "samples": [
+          {
+            "base": "fail",
+            "plus": "fail",
+            "passed": false
+          }
+        ]
+      },
+      "candidate_detail": {
+        "samples": [
+          {
+            "base": "pass",
+            "plus": "pass",
+            "passed": true
+          }
+        ]
+      },
+      "base_generation": [
+        {
+          "finish_reason": "stop",
+          "prompt_tokens": 81,
+          "completion_tokens": 1136
+        }
+      ],
+      "candidate_generation": [
+        {
+          "finish_reason": "stop",
+          "prompt_tokens": 81,
+          "completion_tokens": 1078
+        }
+      ]
+    },
+    {
+      "id": "mbpp-plus:Mbpp/801",
+      "source": "mbpp-plus",
+      "area": "code",
+      "kind": "chat",
+      "tier": 10,
+      "max_tokens": 16384,
+      "samples": 1,
+      "base_score": 1.0,
+      "candidate_score": 0.0,
+      "delta": -1.0,
+      "base_sample_scores": [
+        1.0
+      ],
+      "candidate_sample_scores": [
+        0.0
+      ],
+      "base_error": null,
+      "candidate_error": null,
+      "metric": "capability_score_higher_is_better",
+      "base_detail": {
+        "samples": [
+          {
+            "base": "pass",
+            "plus": "pass",
+            "passed": true
+          }
+        ]
+      },
+      "candidate_detail": {
+        "samples": [
+          {
+            "base": "fail",
+            "plus": "fail",
+            "passed": false
+          }
+        ]
+      },
+      "base_generation": [
+        {
+          "finish_reason": "stop",
+          "prompt_tokens": 88,
+          "completion_tokens": 1129
+        }
+      ],
+      "candidate_generation": [
+        {
+          "finish_reason": "stop",
+          "prompt_tokens": 88,
+          "completion_tokens": 1413
+        }
+      ]
+    }
+  ],
+  "all_capability_items_changed": 101,
+  "capability_gained": 51,
+  "capability_lost": 50,
+  "timing": {
+    "base": {
+      "load_seconds": 111.2,
+      "generation_seconds": 2018.9,
+      "wall_seconds": 2018.9,
+      "source_finished_seconds": {
+        "aime-2026": 1277.5,
+        "arc-challenge": 958.7,
+        "bbeh": 1255.2,
+        "bfcl": 1340.0,
+        "gpqa-diamond": 1245.4,
+        "gsm8k-platinum": 1220.6,
+        "hellaswag": 1242.8,
+        "hmmt-feb-2026": 1064.8,
+        "humaneval-plus": 1216.7,
+        "ifbench": 1261.9,
+        "ifeval": 1305.9,
+        "jamc-qa": 1300.3,
+        "livecodebench": 1302.8,
+        "longbench-v2": 1262.3,
+        "math-500": 1099.0,
+        "mbpp-plus": 1193.0,
+        "mgsm": 1299.7,
+        "mmlu-pro": 1269.1,
+        "mmlu-prox-ja": 1289.7,
+        "mmmu-pro": 1274.4,
+        "mrcr-v2": 1231.1,
+        "musr": 1204.7,
+        "probe-code": 1240.6,
+        "probe-wikipedia-ja": 1244.1,
+        "probe-wikitext": 1244.6,
+        "ruler": 1861.0,
+        "scicode": 1377.8,
+        "swe-bench-pro": 1461.5,
+        "terminal-bench": 2018.8,
+        "triviaqa": 1433.7,
+        "winogrande": 1251.7,
+        "xstest": 1289.7
+      },
+      "target_minutes": 30,
+      "chat_api_calls": 1754,
+      "logprob_api_calls": 9193
+    },
+    "candidate": {
+      "load_seconds": 109.6,
+      "generation_seconds": 1940.2,
+      "wall_seconds": 1940.2,
+      "source_finished_seconds": {
+        "aime-2026": 1123.1,
+        "arc-challenge": 934.7,
+        "bbeh": 1297.9,
+        "bfcl": 1244.3,
+        "gpqa-diamond": 1254.4,
+        "gsm8k-platinum": 1210.8,
+        "hellaswag": 1206.4,
+        "hmmt-feb-2026": 1193.5,
+        "humaneval-plus": 1202.4,
+        "ifbench": 1193.0,
+        "ifeval": 1225.2,
+        "jamc-qa": 1236.5,
+        "livecodebench": 1045.7,
+        "longbench-v2": 1012.2,
+        "math-500": 1070.8,
+        "mbpp-plus": 1072.2,
+        "mgsm": 1194.6,
+        "mmlu-pro": 1240.4,
+        "mmlu-prox-ja": 1129.3,
+        "mmmu-pro": 1056.9,
+        "mrcr-v2": 1207.5,
+        "musr": 1169.6,
+        "probe-code": 1204.1,
+        "probe-wikipedia-ja": 1208.4,
+        "probe-wikitext": 1208.8,
+        "ruler": 1203.6,
+        "scicode": 1243.3,
+        "swe-bench-pro": 1449.9,
+        "terminal-bench": 1940.2,
+        "triviaqa": 1393.4,
+        "winogrande": 1212.2,
+        "xstest": 1223.4
+      },
+      "target_minutes": 30,
+      "chat_api_calls": 1750,
+      "logprob_api_calls": 9193
+    },
+    "note": "Both wall_seconds and generation_seconds start before data loading."
+  },
+  "http_trace": {
+    "base": {
+      "all_records": 4860,
+      "request_records": 4850,
+      "operations": {
+        "completions": 4850
+      },
+      "errors": 0,
+      "retry_attempts": 0,
+      "same_run_non_request_records": 10,
+      "other_run_records": 0,
+      "scope": "HTTP client traces only; no activation capture or server trace completeness claim"
+    },
+    "candidate": {
+      "all_records": 4856,
+      "request_records": 4846,
+      "operations": {
+        "completions": 4846
+      },
+      "errors": 0,
+      "retry_attempts": 0,
+      "same_run_non_request_records": 10,
+      "other_run_records": 0,
+      "scope": "HTTP client traces only; no activation capture or server trace completeness claim"
+    },
+    "nested_agent_retry_note": "WSP client counters do not cover every nested agent retry; do not infer nested retries are zero."
+  },
+  "agents": [
+    {
+      "id": "swe-bench-pro:instance_NodeBB__NodeBB-da0211b1a001d45d73b4c84c6417a4f1b0312575-vf2cf3cbd463b7ad942381f1c6d077626485a1e9e",
+      "base": {
+        "id": "swe-bench-pro:instance_NodeBB__NodeBB-da0211b1a001d45d73b4c84c6417a4f1b0312575-vf2cf3cbd463b7ad942381f1c6d077626485a1e9e",
+        "api_calls": 24,
+        "assistant_messages": 24,
+        "tool_messages": 23,
+        "announced_tool_calls": 24,
+        "recorded_actions": 24,
+        "exit_status": "Submitted",
+        "usage_records": 24,
+        "usage_scope": "Persisted assistant responses only; missing model-stat calls are not zero-filled.",
+        "usage_complete_relative_api_calls": true,
+        "input_tokens": 244085,
+        "output_tokens": 6655,
+        "score": 0.0,
+        "outcome_numeric": {},
+        "score_detail": {},
+        "official_samples": [
+          {
+            "reward": 0.0,
+            "seconds": 100.20319294929504,
+            "setup_seconds": null,
+            "exception": null,
+            "trial": null
+          }
+        ]
+      },
+      "candidate": {
+        "id": "swe-bench-pro:instance_NodeBB__NodeBB-da0211b1a001d45d73b4c84c6417a4f1b0312575-vf2cf3cbd463b7ad942381f1c6d077626485a1e9e",
+        "api_calls": 20,
+        "assistant_messages": 20,
+        "tool_messages": 19,
+        "announced_tool_calls": 20,
+        "recorded_actions": 20,
+        "exit_status": "Submitted",
+        "usage_records": 20,
+        "usage_scope": "Persisted assistant responses only; missing model-stat calls are not zero-filled.",
+        "usage_complete_relative_api_calls": true,
+        "input_tokens": 170553,
+        "output_tokens": 8125,
+        "score": 0.0,
+        "outcome_numeric": {},
+        "score_detail": {},
+        "official_samples": [
+          {
+            "reward": 0.0,
+            "seconds": 92.50303292274475,
+            "setup_seconds": null,
+            "exception": null,
+            "trial": null
+          }
+        ]
+      }
+    },
+    {
+      "id": "swe-bench-pro:instance_ansible__ansible-11c1777d56664b1acb56b387a1ad6aeadef1391d-v0f01c69f1e2528b935359cfe578530722bca2c59",
+      "base": {
+        "id": "swe-bench-pro:instance_ansible__ansible-11c1777d56664b1acb56b387a1ad6aeadef1391d-v0f01c69f1e2528b935359cfe578530722bca2c59",
+        "api_calls": 42,
+        "assistant_messages": 41,
+        "tool_messages": 40,
+        "announced_tool_calls": 41,
+        "recorded_actions": 41,
+        "exit_status": "Submitted",
+        "usage_records": 41,
+        "usage_scope": "Persisted assistant responses only; missing model-stat calls are not zero-filled.",
+        "usage_complete_relative_api_calls": false,
+        "input_tokens": 996159,
+        "output_tokens": 12651,
+        "score": 0.0,
+        "outcome_numeric": {},
+        "score_detail": {},
+        "official_samples": [
+          {
+            "reward": 0.0,
+            "seconds": 1222.4405856132507,
+            "setup_seconds": null,
+            "exception": null,
+            "trial": null
+          }
+        ]
+      },
+      "candidate": {
+        "id": "swe-bench-pro:instance_ansible__ansible-11c1777d56664b1acb56b387a1ad6aeadef1391d-v0f01c69f1e2528b935359cfe578530722bca2c59",
+        "api_calls": 32,
+        "assistant_messages": 32,
+        "tool_messages": 31,
+        "announced_tool_calls": 32,
+        "recorded_actions": 32,
+        "exit_status": "Submitted",
+        "usage_records": 32,
+        "usage_scope": "Persisted assistant responses only; missing model-stat calls are not zero-filled.",
+        "usage_complete_relative_api_calls": true,
+        "input_tokens": 587782,
+        "output_tokens": 12393,
+        "score": 0.0,
+        "outcome_numeric": {},
+        "score_detail": {},
+        "official_samples": [
+          {
+            "reward": 0.0,
+            "seconds": 1140.0139043331146,
+            "setup_seconds": null,
+            "exception": null,
+            "trial": null
+          }
+        ]
+      }
+    },
+    {
+      "id": "swe-bench-pro:instance_internetarchive__openlibrary-431442c92887a3aece3f8aa771dd029738a80eb1-v76304ecdb3a5954fcf13feb710e8c40fcf24b73c",
+      "base": {
+        "id": "swe-bench-pro:instance_internetarchive__openlibrary-431442c92887a3aece3f8aa771dd029738a80eb1-v76304ecdb3a5954fcf13feb710e8c40fcf24b73c",
+        "api_calls": 17,
+        "assistant_messages": 16,
+        "tool_messages": 15,
+        "announced_tool_calls": 16,
+        "recorded_actions": 16,
+        "exit_status": "Submitted",
+        "usage_records": 16,
+        "usage_scope": "Persisted assistant responses only; missing model-stat calls are not zero-filled.",
+        "usage_complete_relative_api_calls": false,
+        "input_tokens": 161739,
+        "output_tokens": 4119,
+        "score": 1.0,
+        "outcome_numeric": {},
+        "score_detail": {},
+        "official_samples": [
+          {
+            "reward": 1.0,
+            "seconds": 120.3825376033783,
+            "setup_seconds": null,
+            "exception": null,
+            "trial": null
+          }
+        ]
+      },
+      "candidate": {
+        "id": "swe-bench-pro:instance_internetarchive__openlibrary-431442c92887a3aece3f8aa771dd029738a80eb1-v76304ecdb3a5954fcf13feb710e8c40fcf24b73c",
+        "api_calls": 32,
+        "assistant_messages": 31,
+        "tool_messages": 30,
+        "announced_tool_calls": 31,
+        "recorded_actions": 31,
+        "exit_status": "Submitted",
+        "usage_records": 31,
+        "usage_scope": "Persisted assistant responses only; missing model-stat calls are not zero-filled.",
+        "usage_complete_relative_api_calls": false,
+        "input_tokens": 575400,
+        "output_tokens": 12338,
+        "score": 0.0,
+        "outcome_numeric": {},
+        "score_detail": {},
+        "official_samples": [
+          {
+            "reward": 0.0,
+            "seconds": 193.16299486160278,
+            "setup_seconds": null,
+            "exception": null,
+            "trial": null
+          }
+        ]
+      }
+    },
+    {
+      "id": "swe-bench-pro:instance_qutebrowser__qutebrowser-ed19d7f58b2664bb310c7cb6b52c5b9a06ea60b2-v059c6fdc75567943479b23ebca7c07b5e9a7f34c",
+      "base": {
+        "id": "swe-bench-pro:instance_qutebrowser__qutebrowser-ed19d7f58b2664bb310c7cb6b52c5b9a06ea60b2-v059c6fdc75567943479b23ebca7c07b5e9a7f34c",
+        "api_calls": 42,
+        "assistant_messages": 42,
+        "tool_messages": 41,
+        "announced_tool_calls": 42,
+        "recorded_actions": 42,
+        "exit_status": "Submitted",
+        "usage_records": 42,
+        "usage_scope": "Persisted assistant responses only; missing model-stat calls are not zero-filled.",
+        "usage_complete_relative_api_calls": true,
+        "input_tokens": 500195,
+        "output_tokens": 8364,
+        "score": 0.0,
+        "outcome_numeric": {},
+        "score_detail": {},
+        "official_samples": [
+          {
+            "reward": 0.0,
+            "seconds": 1144.5427594184875,
+            "setup_seconds": null,
+            "exception": null,
+            "trial": null
+          }
+        ]
+      },
+      "candidate": {
+        "id": "swe-bench-pro:instance_qutebrowser__qutebrowser-ed19d7f58b2664bb310c7cb6b52c5b9a06ea60b2-v059c6fdc75567943479b23ebca7c07b5e9a7f34c",
+        "api_calls": 45,
+        "assistant_messages": 44,
+        "tool_messages": 43,
+        "announced_tool_calls": 44,
+        "recorded_actions": 44,
+        "exit_status": "Submitted",
+        "usage_records": 44,
+        "usage_scope": "Persisted assistant responses only; missing model-stat calls are not zero-filled.",
+        "usage_complete_relative_api_calls": false,
+        "input_tokens": 690069,
+        "output_tokens": 7274,
+        "score": 1.0,
+        "outcome_numeric": {},
+        "score_detail": {},
+        "official_samples": [
+          {
+            "reward": 1.0,
+            "seconds": 1109.0982491970062,
+            "setup_seconds": null,
+            "exception": null,
+            "trial": null
+          }
+        ]
+      }
+    },
+    {
+      "id": "terminal-bench:bn-fit-modify",
+      "base": {
+        "id": "terminal-bench:bn-fit-modify",
+        "episodes": 10,
+        "trajectory_steps": 11,
+        "tool_calls": 18,
+        "input_tokens": 73676,
+        "output_tokens": 11150,
+        "exception_type": null,
+        "seconds": 172.238265,
+        "score": 1.0,
+        "outcome_numeric": {},
+        "score_detail": {},
+        "official_samples": [
+          {
+            "reward": 1.0,
+            "seconds": 172.238265,
+            "setup_seconds": 16.894961,
+            "exception": null,
+            "trial": "bn-fit-modify__g83f6Yg"
+          }
+        ]
+      },
+      "candidate": {
+        "id": "terminal-bench:bn-fit-modify",
+        "episodes": 12,
+        "trajectory_steps": 13,
+        "tool_calls": 16,
+        "input_tokens": 84289,
+        "output_tokens": 11597,
+        "exception_type": null,
+        "seconds": 176.632473,
+        "score": 1.0,
+        "outcome_numeric": {},
+        "score_detail": {},
+        "official_samples": [
+          {
+            "reward": 1.0,
+            "seconds": 176.632473,
+            "setup_seconds": 15.182822,
+            "exception": null,
+            "trial": "bn-fit-modify__8CzN67X"
+          }
+        ]
+      }
+    },
+    {
+      "id": "terminal-bench:cobol-modernization",
+      "base": {
+        "id": "terminal-bench:cobol-modernization",
+        "episodes": 6,
+        "trajectory_steps": 7,
+        "tool_calls": 35,
+        "input_tokens": 35362,
+        "output_tokens": 9217,
+        "exception_type": null,
+        "seconds": 430.891082,
+        "score": 1.0,
+        "outcome_numeric": {},
+        "score_detail": {},
+        "official_samples": [
+          {
+            "reward": 1.0,
+            "seconds": 430.891082,
+            "setup_seconds": 10.656649000000002,
+            "exception": null,
+            "trial": "cobol-modernization__MVBydwW"
+          }
+        ]
+      },
+      "candidate": {
+        "id": "terminal-bench:cobol-modernization",
+        "episodes": 7,
+        "trajectory_steps": 8,
+        "tool_calls": 31,
+        "input_tokens": 39790,
+        "output_tokens": 10673,
+        "exception_type": null,
+        "seconds": 877.041881,
+        "score": 1.0,
+        "outcome_numeric": {},
+        "score_detail": {},
+        "official_samples": [
+          {
+            "reward": 1.0,
+            "seconds": 877.041881,
+            "setup_seconds": 10.765832,
+            "exception": null,
+            "trial": "cobol-modernization__uDr8hey"
+          }
+        ]
+      }
+    },
+    {
+      "id": "terminal-bench:install-windows-3.11",
+      "base": {
+        "id": "terminal-bench:install-windows-3.11",
+        "episodes": 13,
+        "trajectory_steps": 14,
+        "tool_calls": 38,
+        "input_tokens": 67781,
+        "output_tokens": 9634,
+        "exception_type": null,
+        "seconds": 851.842509,
+        "score": 0.0,
+        "outcome_numeric": {},
+        "score_detail": {},
+        "official_samples": [
+          {
+            "reward": 0.0,
+            "seconds": 851.842509,
+            "setup_seconds": 17.725674,
+            "exception": null,
+            "trial": "install-windows-3.11__WvEDpWq"
+          }
+        ]
+      },
+      "candidate": {
+        "id": "terminal-bench:install-windows-3.11",
+        "episodes": 11,
+        "trajectory_steps": 12,
+        "tool_calls": 31,
+        "input_tokens": 74903,
+        "output_tokens": 6623,
+        "exception_type": null,
+        "seconds": 356.524945,
+        "score": 0.0,
+        "outcome_numeric": {},
+        "score_detail": {},
+        "official_samples": [
+          {
+            "reward": 0.0,
+            "seconds": 356.524945,
+            "setup_seconds": 17.867291,
+            "exception": null,
+            "trial": "install-windows-3.11__oVpx3Gi"
+          }
+        ]
+      }
+    },
+    {
+      "id": "terminal-bench:polyglot-c-py",
+      "base": {
+        "id": "terminal-bench:polyglot-c-py",
+        "episodes": 7,
+        "trajectory_steps": 8,
+        "tool_calls": 18,
+        "input_tokens": 30791,
+        "output_tokens": 43630,
+        "exception_type": null,
+        "seconds": 413.007932,
+        "score": 1.0,
+        "outcome_numeric": {},
+        "score_detail": {},
+        "official_samples": [
+          {
+            "reward": 1.0,
+            "seconds": 413.007932,
+            "setup_seconds": 20.341517,
+            "exception": null,
+            "trial": "polyglot-c-py__nYXPN99"
+          }
+        ]
+      },
+      "candidate": {
+        "id": "terminal-bench:polyglot-c-py",
+        "episodes": 6,
+        "trajectory_steps": 7,
+        "tool_calls": 18,
+        "input_tokens": 25614,
+        "output_tokens": 24346,
+        "exception_type": null,
+        "seconds": 250.205762,
+        "score": 1.0,
+        "outcome_numeric": {},
+        "score_detail": {},
+        "official_samples": [
+          {
+            "reward": 1.0,
+            "seconds": 250.205762,
+            "setup_seconds": 20.176237999999998,
+            "exception": null,
+            "trial": "polyglot-c-py__CabRy4B"
+          }
+        ]
+      }
+    },
+    {
+      "id": "terminal-bench:portfolio-optimization",
+      "base": {
+        "id": "terminal-bench:portfolio-optimization",
+        "episodes": 7,
+        "trajectory_steps": 8,
+        "tool_calls": 13,
+        "input_tokens": 38827,
+        "output_tokens": 6969,
+        "exception_type": null,
+        "seconds": 309.333799,
+        "score": 1.0,
+        "outcome_numeric": {},
+        "score_detail": {},
+        "official_samples": [
+          {
+            "reward": 1.0,
+            "seconds": 309.333799,
+            "setup_seconds": 10.465146,
+            "exception": null,
+            "trial": "portfolio-optimization__XAVDBcS"
+          }
+        ]
+      },
+      "candidate": {
+        "id": "terminal-bench:portfolio-optimization",
+        "episodes": 10,
+        "trajectory_steps": 11,
+        "tool_calls": 15,
+        "input_tokens": 57370,
+        "output_tokens": 6708,
+        "exception_type": null,
+        "seconds": 366.024279,
+        "score": 1.0,
+        "outcome_numeric": {},
+        "score_detail": {},
+        "official_samples": [
+          {
+            "reward": 1.0,
+            "seconds": 366.024279,
+            "setup_seconds": 10.926108,
+            "exception": null,
+            "trial": "portfolio-optimization__ZMjyoyK"
+          }
+        ]
+      }
+    },
+    {
+      "id": "terminal-bench:reshard-c4-data",
+      "base": {
+        "id": "terminal-bench:reshard-c4-data",
+        "episodes": 14,
+        "trajectory_steps": 15,
+        "tool_calls": 44,
+        "input_tokens": 179996,
+        "output_tokens": 29319,
+        "exception_type": null,
+        "seconds": 1416.781522,
+        "score": 1.0,
+        "outcome_numeric": {},
+        "score_detail": {},
+        "official_samples": [
+          {
+            "reward": 1.0,
+            "seconds": 1416.781522,
+            "setup_seconds": 11.008433,
+            "exception": null,
+            "trial": "reshard-c4-data__Z65RFgR"
+          }
+        ]
+      },
+      "candidate": {
+        "id": "terminal-bench:reshard-c4-data",
+        "episodes": 10,
+        "trajectory_steps": 11,
+        "tool_calls": 29,
+        "input_tokens": 95262,
+        "output_tokens": 16221,
+        "exception_type": null,
+        "seconds": 1277.25467,
+        "score": 1.0,
+        "outcome_numeric": {},
+        "score_detail": {},
+        "official_samples": [
+          {
+            "reward": 1.0,
+            "seconds": 1277.25467,
+            "setup_seconds": 10.966068,
+            "exception": null,
+            "trial": "reshard-c4-data__fmxDCh6"
+          }
+        ]
+      }
+    }
+  ],
+  "source_report": {
+    "base": {
+      "aime-2026": {
+        "area": "math",
+        "items": 12,
+        "scored": 12,
+        "score": 0.9375,
+        "truncated_rate": 0.0,
+        "empty_rate": 0.0,
+        "completion_tokens_mean": 7925.145833333333,
+        "completion_tokens": 380407,
+        "prompt_tokens": 8028
+      },
+      "arc-challenge": {
+        "area": "commonsense",
+        "items": 300,
+        "scored": 300,
+        "score": 0.5666666666666667,
+        "truncated_rate": null,
+        "empty_rate": null,
+        "completion_tokens_mean": null,
+        "completion_tokens": 0,
+        "prompt_tokens": 0
+      },
+      "bbeh": {
+        "area": "reasoning",
+        "items": 46,
+        "scored": 46,
+        "score": 0.782608695652174,
+        "truncated_rate": 0.0,
+        "empty_rate": 0.0,
+        "completion_tokens_mean": 8808.108695652174,
+        "completion_tokens": 405173,
+        "prompt_tokens": 56104
+      },
+      "bfcl": {
+        "area": "tools",
+        "items": 120,
+        "scored": 120,
+        "score": 0.7916666666666666,
+        "truncated_rate": 0.0,
+        "empty_rate": 0.0,
+        "completion_tokens_mean": 1245.4,
+        "completion_tokens": 149448,
+        "prompt_tokens": 1521377
+      },
+      "gpqa-diamond": {
+        "area": "expert",
+        "items": 48,
+        "scored": 48,
+        "score": 0.8333333333333334,
+        "truncated_rate": 0.0,
+        "empty_rate": 0.0,
+        "completion_tokens_mean": 5566.625,
+        "completion_tokens": 267198,
+        "prompt_tokens": 11950
+      },
+      "gsm8k-platinum": {
+        "area": "math",
+        "items": 50,
+        "scored": 50,
+        "score": 1.0,
+        "truncated_rate": 0.0,
+        "empty_rate": 0.0,
+        "completion_tokens_mean": 760.44,
+        "completion_tokens": 38022,
+        "prompt_tokens": 5349
+      },
+      "hellaswag": {
+        "area": "commonsense",
+        "items": 300,
+        "scored": 300,
+        "score": 0.61,
+        "truncated_rate": null,
+        "empty_rate": null,
+        "completion_tokens_mean": null,
+        "completion_tokens": 0,
+        "prompt_tokens": 0
+      },
+      "hmmt-feb-2026": {
+        "area": "math",
+        "items": 13,
+        "scored": 13,
+        "score": 0.8461538461538461,
+        "truncated_rate": 0.0,
+        "empty_rate": 0.0,
+        "completion_tokens_mean": 8261.134615384615,
+        "completion_tokens": 429579,
+        "prompt_tokens": 6092
+      },
+      "humaneval-plus": {
+        "area": "code",
+        "items": 30,
+        "scored": 30,
+        "score": 0.9666666666666667,
+        "truncated_rate": 0.0,
+        "empty_rate": 0.0,
+        "completion_tokens_mean": 1410.9333333333334,
+        "completion_tokens": 42328,
+        "prompt_tokens": 5374
+      },
+      "ifbench": {
+        "area": "instructions",
+        "items": 50,
+        "scored": 50,
+        "score": 0.84,
+        "truncated_rate": 0.0,
+        "empty_rate": 0.0,
+        "completion_tokens_mean": 2687.16,
+        "completion_tokens": 134358,
+        "prompt_tokens": 4058
+      },
+      "ifeval": {
+        "area": "instructions",
+        "items": 120,
+        "scored": 120,
+        "score": 0.9583333333333334,
+        "truncated_rate": 0.0,
+        "empty_rate": 0.0,
+        "completion_tokens_mean": 1568.025,
+        "completion_tokens": 188163,
+        "prompt_tokens": 7566
+      },
+      "jamc-qa": {
+        "area": "multilingual",
+        "items": 72,
+        "scored": 72,
+        "score": 0.6388888888888888,
+        "truncated_rate": 0.0,
+        "empty_rate": 0.0,
+        "completion_tokens_mean": 1528.6666666666667,
+        "completion_tokens": 110064,
+        "prompt_tokens": 7605
+      },
+      "livecodebench": {
+        "area": "code",
+        "items": 20,
+        "scored": 20,
+        "score": 0.75,
+        "truncated_rate": 0.0,
+        "empty_rate": 0.0,
+        "completion_tokens_mean": 6767.4,
+        "completion_tokens": 135348,
+        "prompt_tokens": 12686
+      },
+      "longbench-v2": {
+        "area": "long-context",
+        "items": 10,
+        "scored": 10,
+        "score": 1.0,
+        "truncated_rate": 0.0,
+        "empty_rate": 0.0,
+        "completion_tokens_mean": 2124.3,
+        "completion_tokens": 21243,
+        "prompt_tokens": 887398
+      },
+      "math-500": {
+        "area": "math",
+        "items": 60,
+        "scored": 60,
+        "score": 0.8666666666666667,
+        "truncated_rate": 0.0,
+        "empty_rate": 0.0,
+        "completion_tokens_mean": 2599.15,
+        "completion_tokens": 155949,
+        "prompt_tokens": 7942
+      },
+      "mbpp-plus": {
+        "area": "code",
+        "items": 30,
+        "scored": 30,
+        "score": 0.7666666666666667,
+        "truncated_rate": 0.0,
+        "empty_rate": 0.0,
+        "completion_tokens_mean": 1002.3,
+        "completion_tokens": 30069,
+        "prompt_tokens": 3236
+      },
+      "mgsm": {
+        "area": "multilingual",
+        "items": 55,
+        "scored": 55,
+        "score": 0.9272727272727272,
+        "truncated_rate": 0.0,
+        "empty_rate": 0.0,
+        "completion_tokens_mean": 951.6,
+        "completion_tokens": 52338,
+        "prompt_tokens": 7819
+      },
+      "mmlu-pro": {
+        "area": "knowledge",
+        "items": 180,
+        "scored": 180,
+        "score": 0.8555555555555555,
+        "truncated_rate": 0.0,
+        "empty_rate": 0.0,
+        "completion_tokens_mean": 3350.3722222222223,
+        "completion_tokens": 603067,
+        "prompt_tokens": 44731
+      },
+      "mmlu-prox-ja": {
+        "area": "multilingual",
+        "items": 60,
+        "scored": 60,
+        "score": 0.8,
+        "truncated_rate": 0.0,
+        "empty_rate": 0.0,
+        "completion_tokens_mean": 3165.266666666667,
+        "completion_tokens": 189916,
+        "prompt_tokens": 16932
+      },
+      "mmmu-pro": {
+        "area": "vision",
+        "items": 48,
+        "scored": 48,
+        "score": 0.7916666666666666,
+        "truncated_rate": 0.0,
+        "empty_rate": 0.0,
+        "completion_tokens_mean": 4070.3541666666665,
+        "completion_tokens": 195377,
+        "prompt_tokens": 20344
+      },
+      "mrcr-v2": {
+        "area": "long-context",
+        "items": 16,
+        "scored": 16,
+        "score": 0.6701257311924249,
+        "truncated_rate": 0.0,
+        "empty_rate": 0.0,
+        "completion_tokens_mean": 2139.4375,
+        "completion_tokens": 34231,
+        "prompt_tokens": 636245
+      },
+      "musr": {
+        "area": "reasoning",
+        "items": 30,
+        "scored": 30,
+        "score": 0.9,
+        "truncated_rate": 0.0,
+        "empty_rate": 0.0,
+        "completion_tokens_mean": 2479.4,
+        "completion_tokens": 74382,
+        "prompt_tokens": 34610
+      },
+      "probe-code": {
+        "area": null,
+        "items": 40,
+        "scored": 40,
+        "score": 4.022500118458066,
+        "truncated_rate": null,
+        "empty_rate": null,
+        "completion_tokens_mean": null,
+        "completion_tokens": 0,
+        "prompt_tokens": 0
+      },
+      "probe-wikipedia-ja": {
+        "area": null,
+        "items": 40,
+        "scored": 40,
+        "score": 6.628099445956357,
+        "truncated_rate": null,
+        "empty_rate": null,
+        "completion_tokens_mean": null,
+        "completion_tokens": 0,
+        "prompt_tokens": 0
+      },
+      "probe-wikitext": {
+        "area": null,
+        "items": 16,
+        "scored": 16,
+        "score": 7.638729488031108,
+        "truncated_rate": null,
+        "empty_rate": null,
+        "completion_tokens_mean": null,
+        "completion_tokens": 0,
+        "prompt_tokens": 0
+      },
+      "ruler": {
+        "area": "long-context",
+        "items": 24,
+        "scored": 24,
+        "score": 0.875,
+        "truncated_rate": 0.125,
+        "empty_rate": 0.125,
+        "completion_tokens_mean": 4160.583333333333,
+        "completion_tokens": 99854,
+        "prompt_tokens": 1945664
+      },
+      "scicode": {
+        "area": "code",
+        "items": 10,
+        "scored": 10,
+        "score": 0.4341269841269841,
+        "truncated_rate": 0.0,
+        "empty_rate": 0.0,
+        "completion_tokens_mean": 13537.4,
+        "completion_tokens": 135374,
+        "prompt_tokens": 74123
+      },
+      "swe-bench-pro": {
+        "area": "agents",
+        "items": 4,
+        "scored": 4,
+        "score": 0.25,
+        "truncated_rate": null,
+        "empty_rate": null,
+        "completion_tokens_mean": null,
+        "completion_tokens": 0,
+        "prompt_tokens": 0
+      },
+      "terminal-bench": {
+        "area": "agents",
+        "items": 6,
+        "scored": 6,
+        "score": 0.8333333333333334,
+        "truncated_rate": null,
+        "empty_rate": null,
+        "completion_tokens_mean": null,
+        "completion_tokens": 0,
+        "prompt_tokens": 0
+      },
+      "triviaqa": {
+        "area": "facts",
+        "items": 120,
+        "scored": 120,
+        "score": 0.7166666666666667,
+        "truncated_rate": 0.008333333333333333,
+        "empty_rate": 0.008333333333333333,
+        "completion_tokens_mean": 844.1666666666666,
+        "completion_tokens": 101300,
+        "prompt_tokens": 7542
+      },
+      "winogrande": {
+        "area": "commonsense",
+        "items": 300,
+        "scored": 300,
+        "score": 0.6733333333333333,
+        "truncated_rate": null,
+        "empty_rate": null,
+        "completion_tokens_mean": null,
+        "completion_tokens": 0,
+        "prompt_tokens": 0
+      },
+      "xstest": {
+        "area": "safety",
+        "items": 108,
+        "scored": 108,
+        "score": 0.5740740740740741,
+        "truncated_rate": 0.0,
+        "empty_rate": 0.0,
+        "completion_tokens_mean": 1119.2592592592594,
+        "completion_tokens": 120880,
+        "prompt_tokens": 2839
+      }
+    },
+    "candidate": {
+      "aime-2026": {
+        "area": "math",
+        "items": 12,
+        "scored": 12,
+        "score": 0.9166666666666666,
+        "truncated_rate": 0.0,
+        "empty_rate": 0.0,
+        "completion_tokens_mean": 7659.041666666667,
+        "completion_tokens": 367634,
+        "prompt_tokens": 8028
+      },
+      "arc-challenge": {
+        "area": "commonsense",
+        "items": 300,
+        "scored": 300,
+        "score": 0.5766666666666667,
+        "truncated_rate": null,
+        "empty_rate": null,
+        "completion_tokens_mean": null,
+        "completion_tokens": 0,
+        "prompt_tokens": 0
+      },
+      "bbeh": {
+        "area": "reasoning",
+        "items": 46,
+        "scored": 46,
+        "score": 0.6956521739130435,
+        "truncated_rate": 0.0,
+        "empty_rate": 0.0,
+        "completion_tokens_mean": 9004.54347826087,
+        "completion_tokens": 414209,
+        "prompt_tokens": 56104
+      },
+      "bfcl": {
+        "area": "tools",
+        "items": 120,
+        "scored": 120,
+        "score": 0.8,
+        "truncated_rate": 0.0,
+        "empty_rate": 0.0,
+        "completion_tokens_mean": 1194.075,
+        "completion_tokens": 143289,
+        "prompt_tokens": 1491430
+      },
+      "gpqa-diamond": {
+        "area": "expert",
+        "items": 48,
+        "scored": 48,
+        "score": 0.875,
+        "truncated_rate": 0.0,
+        "empty_rate": 0.0,
+        "completion_tokens_mean": 5754.020833333333,
+        "completion_tokens": 276193,
+        "prompt_tokens": 11950
+      },
+      "gsm8k-platinum": {
+        "area": "math",
+        "items": 50,
+        "scored": 50,
+        "score": 1.0,
+        "truncated_rate": 0.0,
+        "empty_rate": 0.0,
+        "completion_tokens_mean": 765.02,
+        "completion_tokens": 38251,
+        "prompt_tokens": 5349
+      },
+      "hellaswag": {
+        "area": "commonsense",
+        "items": 300,
+        "scored": 300,
+        "score": 0.6,
+        "truncated_rate": null,
+        "empty_rate": null,
+        "completion_tokens_mean": null,
+        "completion_tokens": 0,
+        "prompt_tokens": 0
+      },
+      "hmmt-feb-2026": {
+        "area": "math",
+        "items": 13,
+        "scored": 13,
+        "score": 0.8269230769230769,
+        "truncated_rate": 0.0,
+        "empty_rate": 0.0,
+        "completion_tokens_mean": 8288.25,
+        "completion_tokens": 430989,
+        "prompt_tokens": 6092
+      },
+      "humaneval-plus": {
+        "area": "code",
+        "items": 30,
+        "scored": 30,
+        "score": 0.9666666666666667,
+        "truncated_rate": 0.0,
+        "empty_rate": 0.0,
+        "completion_tokens_mean": 1434.2,
+        "completion_tokens": 43026,
+        "prompt_tokens": 5374
+      },
+      "ifbench": {
+        "area": "instructions",
+        "items": 50,
+        "scored": 50,
+        "score": 0.86,
+        "truncated_rate": 0.0,
+        "empty_rate": 0.0,
+        "completion_tokens_mean": 2665.78,
+        "completion_tokens": 133289,
+        "prompt_tokens": 4058
+      },
+      "ifeval": {
+        "area": "instructions",
+        "items": 120,
+        "scored": 120,
+        "score": 0.95,
+        "truncated_rate": 0.0,
+        "empty_rate": 0.0,
+        "completion_tokens_mean": 1537.1333333333334,
+        "completion_tokens": 184456,
+        "prompt_tokens": 7566
+      },
+      "jamc-qa": {
+        "area": "multilingual",
+        "items": 72,
+        "scored": 72,
+        "score": 0.6527777777777778,
+        "truncated_rate": 0.0,
+        "empty_rate": 0.0,
+        "completion_tokens_mean": 1378.3472222222222,
+        "completion_tokens": 99241,
+        "prompt_tokens": 7605
+      },
+      "livecodebench": {
+        "area": "code",
+        "items": 20,
+        "scored": 20,
+        "score": 0.75,
+        "truncated_rate": 0.0,
+        "empty_rate": 0.0,
+        "completion_tokens_mean": 6884.55,
+        "completion_tokens": 137691,
+        "prompt_tokens": 12686
+      },
+      "longbench-v2": {
+        "area": "long-context",
+        "items": 10,
+        "scored": 10,
+        "score": 1.0,
+        "truncated_rate": 0.0,
+        "empty_rate": 0.0,
+        "completion_tokens_mean": 2268.5,
+        "completion_tokens": 22685,
+        "prompt_tokens": 887398
+      },
+      "math-500": {
+        "area": "math",
+        "items": 60,
+        "scored": 60,
+        "score": 0.8666666666666667,
+        "truncated_rate": 0.0,
+        "empty_rate": 0.0,
+        "completion_tokens_mean": 2729.6666666666665,
+        "completion_tokens": 163780,
+        "prompt_tokens": 7942
+      },
+      "mbpp-plus": {
+        "area": "code",
+        "items": 30,
+        "scored": 30,
+        "score": 0.7666666666666667,
+        "truncated_rate": 0.0,
+        "empty_rate": 0.0,
+        "completion_tokens_mean": 1001.4,
+        "completion_tokens": 30042,
+        "prompt_tokens": 3236
+      },
+      "mgsm": {
+        "area": "multilingual",
+        "items": 55,
+        "scored": 55,
+        "score": 0.9090909090909091,
+        "truncated_rate": 0.0,
+        "empty_rate": 0.0,
+        "completion_tokens_mean": 903.5454545454545,
+        "completion_tokens": 49695,
+        "prompt_tokens": 7819
+      },
+      "mmlu-pro": {
+        "area": "knowledge",
+        "items": 180,
+        "scored": 180,
+        "score": 0.8555555555555555,
+        "truncated_rate": 0.0,
+        "empty_rate": 0.0,
+        "completion_tokens_mean": 3198.733333333333,
+        "completion_tokens": 575772,
+        "prompt_tokens": 44731
+      },
+      "mmlu-prox-ja": {
+        "area": "multilingual",
+        "items": 60,
+        "scored": 60,
+        "score": 0.8166666666666667,
+        "truncated_rate": 0.0,
+        "empty_rate": 0.0,
+        "completion_tokens_mean": 3012.883333333333,
+        "completion_tokens": 180773,
+        "prompt_tokens": 16932
+      },
+      "mmmu-pro": {
+        "area": "vision",
+        "items": 48,
+        "scored": 48,
+        "score": 0.7708333333333334,
+        "truncated_rate": 0.0,
+        "empty_rate": 0.0,
+        "completion_tokens_mean": 3855.1041666666665,
+        "completion_tokens": 185045,
+        "prompt_tokens": 20344
+      },
+      "mrcr-v2": {
+        "area": "long-context",
+        "items": 16,
+        "scored": 16,
+        "score": 0.7598440304687291,
+        "truncated_rate": 0.0,
+        "empty_rate": 0.0,
+        "completion_tokens_mean": 2186.6875,
+        "completion_tokens": 34987,
+        "prompt_tokens": 636245
+      },
+      "musr": {
+        "area": "reasoning",
+        "items": 30,
+        "scored": 30,
+        "score": 0.8666666666666667,
+        "truncated_rate": 0.0,
+        "empty_rate": 0.0,
+        "completion_tokens_mean": 2375.9,
+        "completion_tokens": 71277,
+        "prompt_tokens": 34610
+      },
+      "probe-code": {
+        "area": null,
+        "items": 40,
+        "scored": 40,
+        "score": 3.959948847524708,
+        "truncated_rate": null,
+        "empty_rate": null,
+        "completion_tokens_mean": null,
+        "completion_tokens": 0,
+        "prompt_tokens": 0
+      },
+      "probe-wikipedia-ja": {
+        "area": null,
+        "items": 40,
+        "scored": 40,
+        "score": 6.604307689451583,
+        "truncated_rate": null,
+        "empty_rate": null,
+        "completion_tokens_mean": null,
+        "completion_tokens": 0,
+        "prompt_tokens": 0
+      },
+      "probe-wikitext": {
+        "area": null,
+        "items": 16,
+        "scored": 16,
+        "score": 7.615903794269796,
+        "truncated_rate": null,
+        "empty_rate": null,
+        "completion_tokens_mean": null,
+        "completion_tokens": 0,
+        "prompt_tokens": 0
+      },
+      "ruler": {
+        "area": "long-context",
+        "items": 24,
+        "scored": 24,
+        "score": 0.9583333333333334,
+        "truncated_rate": 0.041666666666666664,
+        "empty_rate": 0.041666666666666664,
+        "completion_tokens_mean": 2248.1666666666665,
+        "completion_tokens": 53956,
+        "prompt_tokens": 1945664
+      },
+      "scicode": {
+        "area": "code",
+        "items": 10,
+        "scored": 10,
+        "score": 0.4341269841269841,
+        "truncated_rate": 0.0,
+        "empty_rate": 0.0,
+        "completion_tokens_mean": 13035.3,
+        "completion_tokens": 130353,
+        "prompt_tokens": 73023
+      },
+      "swe-bench-pro": {
+        "area": "agents",
+        "items": 4,
+        "scored": 4,
+        "score": 0.25,
+        "truncated_rate": null,
+        "empty_rate": null,
+        "completion_tokens_mean": null,
+        "completion_tokens": 0,
+        "prompt_tokens": 0
+      },
+      "terminal-bench": {
+        "area": "agents",
+        "items": 6,
+        "scored": 6,
+        "score": 0.8333333333333334,
+        "truncated_rate": null,
+        "empty_rate": null,
+        "completion_tokens_mean": null,
+        "completion_tokens": 0,
+        "prompt_tokens": 0
+      },
+      "triviaqa": {
+        "area": "facts",
+        "items": 120,
+        "scored": 120,
+        "score": 0.7083333333333334,
+        "truncated_rate": 0.008333333333333333,
+        "empty_rate": 0.008333333333333333,
+        "completion_tokens_mean": 925.1416666666667,
+        "completion_tokens": 111017,
+        "prompt_tokens": 7542
+      },
+      "winogrande": {
+        "area": "commonsense",
+        "items": 300,
+        "scored": 300,
+        "score": 0.6766666666666666,
+        "truncated_rate": null,
+        "empty_rate": null,
+        "completion_tokens_mean": null,
+        "completion_tokens": 0,
+        "prompt_tokens": 0
+      },
+      "xstest": {
+        "area": "safety",
+        "items": 108,
+        "scored": 108,
+        "score": 0.5925925925925926,
+        "truncated_rate": 0.0,
+        "empty_rate": 0.0,
+        "completion_tokens_mean": 1131.3055555555557,
+        "completion_tokens": 122181,
+        "prompt_tokens": 2839
+      }
+    }
+  },
+  "runtime": {
+    "base": {
+      "image": "sha256:f91bdcf997af6d7b194bec229812fd018277158f6795de7d91e58448936e7ad8",
+      "checkpoint_tree": "5d056eb03f954db80313a85167153c875fe5e436e4f97c281a3f55202d9b3eaf",
+      "topology": {
+        "tp": 2,
+        "replicas": 4,
+        "mtp_tokens": 4
+      },
+      "concurrency": {
+        "chat": 256,
+        "logprob": 32,
+        "agent": 4
+      },
+      "actual_runner_cid": "d62b640afc61b49683868590d09a6f0cc45b1d48e2f18c6947478d0224410ff6",
+      "http_client_trace_only": true,
+      "comparison_limit": "New dev30 baseline; no same-condition candidate pair; tier10 and historical original results are different conditions."
+    },
+    "candidate": {
+      "image": "sha256:f91bdcf997af6d7b194bec229812fd018277158f6795de7d91e58448936e7ad8",
+      "checkpoint_tree": "7b9e9488e3cd4e0b6c5f61ae341e5eeccdf5bd31c46d1c8354950dbc29d0f924",
+      "topology": {
+        "tp": 2,
+        "replicas": 4,
+        "mtp_tokens": 4
+      },
+      "concurrency": {
+        "chat": 256,
+        "logprob": 32,
+        "agent": 4
+      },
+      "actual_runner_cid": "d991fa638c9d7446e39500879dbca381b2d3835dd24ba7a2a9a0181474eab469",
+      "http_client_trace_only": true,
+      "comparison_limit": "Single completed dev30 run audit; paired comparison and matching conditions are checked separately."
+    }
+  },
+  "errors": {
+    "base": {
+      "item_issues": [],
+      "unexpected_items": [],
+      "unexpected_responses": [],
+      "actual_item_record_count": 2338,
+      "actual_response_record_count": 2338,
+      "run_status": "completed",
+      "run_unscored": [],
+      "report_unscored": [],
+      "missing_areas": [],
+      "strict_complete_audit_error": null,
+      "report_exact_rebuild_equal": true,
+      "verified_complete": true,
+      "full_score_ranking_permitted": true
+    },
+    "candidate": {
+      "item_issues": [],
+      "unexpected_items": [],
+      "unexpected_responses": [],
+      "actual_item_record_count": 2338,
+      "actual_response_record_count": 2338,
+      "run_status": "completed",
+      "run_unscored": [],
+      "report_unscored": [],
+      "missing_areas": [],
+      "strict_complete_audit_error": null,
+      "report_exact_rebuild_equal": true,
+      "verified_complete": true,
+      "full_score_ranking_permitted": true
+    }
+  },
+  "input_sha256": {
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-av-dev30-dp4-v1/independent-audit-v2/summary.json": "9d4af6e386b580dd9bf411f882bb14ad49a95292b3543f89d10436b89bd1ba31",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-av-dev30-dp4-v1/independent-audit-v2/all-2338-numeric-items.json": "efc1b26f132501a0bd08f75ce27abc2bd92073d32b9f5c559e40cffddd4bbcd2",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f04-dev30-dp4-v1/official-comparison-v1/candidate-audit/summary.json": "49afd259123718a859143b8ca6ad5de8b5142efa81772a250e8db272c7085077",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f04-dev30-dp4-v1/official-comparison-v1/comparison.json": "6b6e0ece540013cf9fc2a19c5c2b945659937f5f058a7c56a893581119885a4b",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/worktrees/kairyu-bench-weight-tools/docs/experiments/records/2026-11-07-f04-official-comparison/collect-completed.py.txt": "665f16449e1e02c35dc9b540bccc564a6e2c066f71ff0b5dbc88630dd9cf7f20"
+  },
+  "adoption": "Not assigned by this collation; all-domain tradeoffs and the user's objective require the root decision."
+}

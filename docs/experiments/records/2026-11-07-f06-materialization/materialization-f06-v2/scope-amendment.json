@@ -1,0 +1,13 @@
+{
+  "original_prepared_plan_sha256": "bd64971b3b834e098d7e392072ac6dfdcc92a1e059200c1a9f723b5a28e642d8",
+  "operator": "root explicit execution delegation",
+  "scope": "CPU-only private new F06 create/verify, concurrent with GPU owner's normal restoration",
+  "reason": "All64 immutable exports required; source F04 read-only, all target copies private; no shared-link mutation; GPU restore reads independently.",
+  "original_global_lock_and_restoration_wait_superseded_for_this_CPU_job_only": true,
+  "global_lock_acquired": false,
+  "model_calls": 0,
+  "services_changed": false,
+  "source_sha256": "268846113b61be960e4c7a0ac497f641b6d97cf2139143e7c1fbb1bbc8b7b51c",
+  "pid": 1713652,
+  "epoch": 1794058611.631346
+}

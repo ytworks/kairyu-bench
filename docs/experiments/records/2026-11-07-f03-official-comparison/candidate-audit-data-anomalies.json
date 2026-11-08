@@ -1,0 +1,31 @@
+{
+  "item_issues": [
+    {
+      "id": "terminal-bench:polyglot-c-py",
+      "issues": [
+        "unknown_or_invalid_score",
+        "item_error_present",
+        "response_error_or_missing_outcome"
+      ]
+    }
+  ],
+  "unexpected_items": [],
+  "unexpected_responses": [],
+  "actual_item_record_count": 2338,
+  "actual_response_record_count": 2338,
+  "run_status": "partial",
+  "run_unscored": [
+    "terminal-bench:polyglot-c-py"
+  ],
+  "report_unscored": [
+    "terminal-bench:polyglot-c-py"
+  ],
+  "missing_areas": [],
+  "strict_complete_audit_error": {
+    "type": "AssertionError",
+    "message": ""
+  },
+  "report_exact_rebuild_equal": true,
+  "verified_complete": false,
+  "full_score_ranking_permitted": false
+}

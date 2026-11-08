@@ -1,0 +1,174 @@
+{
+  "status": "completed",
+  "results": [
+    {
+      "id": "behavior-A1",
+      "status": "evaluated",
+      "passed": false,
+      "tests_passed": 0,
+      "numeric_execution": true,
+      "method_requirement_checked": null
+    },
+    {
+      "id": "behavior-A2",
+      "status": "evaluated",
+      "passed": true,
+      "tests_passed": 16,
+      "numeric_execution": true,
+      "method_requirement_checked": null
+    },
+    {
+      "id": "behavior-B1",
+      "status": "evaluated",
+      "passed": true,
+      "tests_passed": 16,
+      "numeric_execution": true,
+      "method_requirement_checked": false
+    },
+    {
+      "id": "behavior-B2",
+      "status": "evaluated",
+      "passed": true,
+      "tests_passed": 16,
+      "numeric_execution": true,
+      "method_requirement_checked": false
+    },
+    {
+      "id": "behavior-C1",
+      "status": "evaluated",
+      "passed": true,
+      "tests_passed": 16,
+      "numeric_execution": true,
+      "method_requirement_checked": null
+    },
+    {
+      "id": "behavior-C2",
+      "status": "evaluated",
+      "passed": true,
+      "tests_passed": 16,
+      "numeric_execution": true,
+      "method_requirement_checked": null
+    },
+    {
+      "id": "behavior-D1",
+      "status": "evaluated",
+      "passed": true,
+      "tests_passed": 16,
+      "numeric_execution": true,
+      "method_requirement_checked": null
+    },
+    {
+      "id": "behavior-D2",
+      "status": "evaluated",
+      "passed": true,
+      "tests_passed": 16,
+      "numeric_execution": true,
+      "method_requirement_checked": null
+    },
+    {
+      "id": "behavior-E1",
+      "status": "evaluated",
+      "passed": true,
+      "tests_passed": 16,
+      "numeric_execution": true,
+      "method_requirement_checked": null
+    },
+    {
+      "id": "behavior-E2",
+      "status": "evaluated",
+      "passed": true,
+      "tests_passed": 16,
+      "numeric_execution": true,
+      "method_requirement_checked": null
+    },
+    {
+      "id": "behavior-F1",
+      "status": "evaluated",
+      "passed": true,
+      "tests_passed": 16,
+      "numeric_execution": true,
+      "method_requirement_checked": null
+    },
+    {
+      "id": "behavior-F2",
+      "status": "evaluated",
+      "passed": false,
+      "tests_passed": 4,
+      "numeric_execution": true,
+      "method_requirement_checked": null
+    },
+    {
+      "id": "behavior-G1",
+      "status": "evaluated",
+      "passed": true,
+      "tests_passed": 16,
+      "numeric_execution": true,
+      "method_requirement_checked": null
+    },
+    {
+      "id": "behavior-G2",
+      "status": "evaluated",
+      "passed": true,
+      "tests_passed": 16,
+      "numeric_execution": true,
+      "method_requirement_checked": null
+    },
+    {
+      "id": "behavior-H1",
+      "status": "evaluated",
+      "passed": true,
+      "tests_passed": 16,
+      "numeric_execution": true,
+      "method_requirement_checked": null
+    },
+    {
+      "id": "behavior-H2",
+      "status": "evaluated",
+      "passed": true,
+      "tests_passed": 16,
+      "numeric_execution": true,
+      "method_requirement_checked": null
+    },
+    {
+      "id": "behavior-I1",
+      "status": "evaluated",
+      "passed": true,
+      "tests_passed": 16,
+      "numeric_execution": true,
+      "method_requirement_checked": null
+    },
+    {
+      "id": "behavior-I2",
+      "status": "evaluated",
+      "passed": true,
+      "tests_passed": 16,
+      "numeric_execution": true,
+      "method_requirement_checked": null
+    },
+    {
+      "id": "behavior-J1",
+      "status": "evaluated",
+      "passed": false,
+      "tests_passed": 4,
+      "numeric_execution": true,
+      "method_requirement_checked": null
+    }
+  ],
+  "passed": 16,
+  "failed": 3,
+  "unknown": 0,
+  "completed": 19,
+  "planned_cases": 19,
+  "fixture_passed": 264,
+  "fixture_planned": 304,
+  "numeric_executions": 19,
+  "docker_calls": 19,
+  "model_calls": 0,
+  "elapsed_seconds": 15.267587661743164,
+  "all_cpu_finished": true,
+  "protected_missing_after": [],
+  "report_sha256": "1599a3c564aa9fe019087618f9373a4d65d268ab2c11d7fb56859dab70cd9c82",
+  "input_sha256": "74e1cd2000fda0abdc03f4454b18f4231b9891360af266391744e13976f199f1",
+  "response_sha256": "4105a5c87f9c54a4fa552a31927ce1bf8e330a5831a3a78d23cb0b1802cbc07f",
+  "official_score_claim": false
+}

@@ -1,0 +1,178 @@
+{
+  "schema_version": 1,
+  "split": "train",
+  "scope": "known authored calibration; transport partition only; not WSP or unseen evaluation",
+  "source_cases_sha256": "bd6fcba70e93b1870ee882f6e92893b93490ad4099af7a9a290ba3d324d68951",
+  "partition": "advanced-v2",
+  "source_purpose_fold_layout_preserved": true,
+  "cases": {
+    "science_advanced_state": [
+      [
+        {
+          "id": "science-advanced-reset-running-stats",
+          "family": "advanced-reset-running-stats",
+          "split": "train",
+          "gradient_allowed": true,
+          "prompt": "Write a NumPy-only Python function solve(x, reset). Scan x left to right. Before adding x[i], reset the running sum and count if reset[i] is true. Return per-prefix [mean,count], shape (len(x),2). Return a float64 ndarray with the specified shape. Do not mutate any input. Inputs satisfy the stated conditions. Include the complete function and NumPy import; no prose is needed.",
+          "correct": "import numpy as np\n\ndef solve(x, reset):\n    s = 0.0; n = 0\n    out = []\n    for v, flag in zip(x, reset):\n        if flag: s = 0.0; n = 0\n        s += float(v); n += 1\n        out.append([s/n, n])\n    return np.array(out, dtype=np.float64)\n",
+          "foil": "import numpy as np\n\ndef solve(x, reset):\n    s = 0.0; n = 0\n    out = []\n    for v, flag in zip(x, reset):\n        if False: s = 0.0; n = 0\n        s += float(v); n += 1\n        out.append([s/n, n])\n    return np.array(out, dtype=np.float64)\n"
+        },
+        {
+          "id": "science-advanced-capped-reservoir-chain",
+          "family": "advanced-capped-reservoir-chain",
+          "split": "train",
+          "gradient_allowed": true,
+          "prompt": "Write a NumPy-only Python function solve(initial, inflow, demand, capacity). At each time, add nonnegative inflow to stock, spill excess above positive capacity, then deliver min(demand,stock). Initial is in [0,capacity]. Return [remaining stock, delivered, spilled] per time, shape (len(inflow),3). Return a float64 ndarray with the specified shape. Do not mutate any input. Inputs satisfy the stated conditions. Include the complete function and NumPy import; no prose is needed.",
+          "correct": "import numpy as np\n\ndef solve(initial, inflow, demand, capacity):\n    stock = float(initial)\n    out = []\n    for inc, req in zip(inflow, demand):\n        total = stock + inc\n        spill = max(0.0, total-capacity)\n        stock = min(total, capacity)\n        used = min(req, stock)\n        stock -= used\n        out.append([stock, used, spill])\n    return np.array(out, dtype=np.float64)\n",
+          "foil": "import numpy as np\n\ndef solve(initial, inflow, demand, capacity):\n    stock = float(initial)\n    out = []\n    for inc, req in zip(inflow, demand):\n        total = stock + inc\n        spill = max(0.0, total-capacity)\n        stock = total\n        used = min(req, stock)\n        stock -= used\n        out.append([stock, used, spill])\n    return np.array(out, dtype=np.float64)\n"
+        }
+      ],
+      [
+        {
+          "id": "science-advanced-affine-state-history",
+          "family": "advanced-affine-state-history",
+          "split": "train",
+          "gradient_allowed": true,
+          "prompt": "Write a NumPy-only Python function solve(a, x, forcing). Starting from vector x, apply x_new=a@x+forcing[t] at each time. Return all states including the initial one, shape (len(forcing)+1,len(x)). Return a float64 ndarray with the specified shape. Do not mutate any input. Inputs satisfy the stated conditions. Include the complete function and NumPy import; no prose is needed.",
+          "correct": "import numpy as np\n\ndef solve(a, x, forcing):\n    state = np.array(x, dtype=np.float64, copy=True)\n    out = [state.copy()]\n    for u in forcing:\n        state = a @ state + u\n        out.append(state.copy())\n    return np.array(out, dtype=np.float64)\n",
+          "foil": "import numpy as np\n\ndef solve(a, x, forcing):\n    state = np.array(x, dtype=np.float64, copy=True)\n    out = [state.copy()]\n    for u in forcing:\n        state = a @ x + u\n        out.append(state.copy())\n    return np.array(out, dtype=np.float64)\n"
+        },
+        {
+          "id": "science-advanced-projected-gradient-chain",
+          "family": "advanced-projected-gradient-chain",
+          "split": "train",
+          "gradient_allowed": true,
+          "prompt": "Write a NumPy-only Python function solve(a, b, x, rate, steps). Repeat steps times: g=a@x-b, clip g to Euclidean norm at most 1, then set x=max(0,x-rate*g) componentwise. Return the final vector, shape x.shape. Return a float64 ndarray with the specified shape. Do not mutate any input. Inputs satisfy the stated conditions. Include the complete function and NumPy import; no prose is needed.",
+          "correct": "import numpy as np\n\ndef solve(a, b, x, rate, steps):\n    y = np.array(x, dtype=np.float64, copy=True)\n    for _ in range(steps):\n        g = a @ y-b\n        g = g/max(1.0, float(np.linalg.norm(g)))\n        y = np.maximum(0.0, y-rate*g)\n    return y\n",
+          "foil": "import numpy as np\n\ndef solve(a, b, x, rate, steps):\n    y = np.array(x, dtype=np.float64, copy=True)\n    for _ in range(steps):\n        g = a @ y-b\n        g = g/max(1.0, float(np.abs(g).sum()))\n        y = np.maximum(0.0, y-rate*g)\n    return y\n"
+        }
+      ]
+    ],
+    "science_advanced_counting": [
+      [
+        {
+          "id": "science-advanced-merge-event-multiplicity",
+          "family": "advanced-merge-event-multiplicity",
+          "split": "train",
+          "gradient_allowed": true,
+          "prompt": "Write a NumPy-only Python function solve(left, right, k). left and right are sorted nonempty event-time vectors. Return their first k merged events in ascending order, retaining every duplicate, shape (k,). 0<k<=len(left)+len(right). Return a float64 ndarray with the specified shape. Do not mutate any input. Inputs satisfy the stated conditions. Include the complete function and NumPy import; no prose is needed.",
+          "correct": "import numpy as np\n\ndef solve(left, right, k):\n    i = 0; j = 0; out = []\n    while len(out) < k:\n        if j == len(right) or (i < len(left) and left[i] <= right[j]):\n            out.append(left[i]); i += 1\n        else:\n            out.append(right[j]); j += 1\n    return np.array(out, dtype=np.float64)\n",
+          "foil": "import numpy as np\n\ndef solve(left, right, k):\n    i = 0; j = 0; out = []\n    while len(out) < k:\n        if j == len(right) or (i < len(left) and left[i] <= right[j]):\n            out.append(left[i]); i += 1\n        else:\n            out.append(right[j]); j += 1\n    return np.unique(out).astype(np.float64)\n"
+        },
+        {
+          "id": "science-advanced-budget-prefix-cardinality",
+          "family": "advanced-budget-prefix-cardinality",
+          "split": "train",
+          "gradient_allowed": true,
+          "prompt": "Write a NumPy-only Python function solve(cost, budget). cost is a possibly unsorted 1D vector of nonnegative costs. First sort all costs ascending. For each nonnegative budget, buy the longest prefix of that sorted vector whose sum is <=budget. Zero-price entries count. Return counts, shape budget.shape. Return a float64 ndarray with the specified shape. Do not mutate any input. Inputs satisfy the stated conditions. Include the complete function and NumPy import; no prose is needed.",
+          "correct": "import numpy as np\n\ndef solve(cost, budget):\n    total = np.cumsum(np.sort(np.asarray(cost, dtype=np.float64)))\n    return np.searchsorted(total, budget, side='right').astype(np.float64)\n",
+          "foil": "import numpy as np\n\ndef solve(cost, budget):\n    total = np.cumsum(np.sort(np.asarray(cost, dtype=np.float64)))\n    return np.searchsorted(total, budget, side='left').astype(np.float64)\n"
+        }
+      ],
+      [
+        {
+          "id": "science-advanced-lexicographic-pair-ranking",
+          "family": "advanced-lexicographic-pair-ranking",
+          "split": "train",
+          "gradient_allowed": true,
+          "prompt": "Write a NumPy-only Python function solve(left, right, k). List all pairs of entries, cost=left[i]+right[j]. Return the smallest k rows [cost,i,j], sorted by cost then i then j; retain equal costs. Shape (k,3), 0<k<=len(left)*len(right). Return a float64 ndarray with the specified shape. Do not mutate any input. Inputs satisfy the stated conditions. Include the complete function and NumPy import; no prose is needed.",
+          "correct": "import numpy as np\n\ndef solve(left, right, k):\n    i, j = np.indices((len(left), len(right)))\n    cost = (np.asarray(left)[:,None]+np.asarray(right)[None,:]).ravel()\n    i = i.ravel(); j = j.ravel()\n    order = np.lexsort((j,i,cost))[:k]\n    return np.column_stack((cost[order],i[order],j[order])).astype(np.float64)\n",
+          "foil": "import numpy as np\n\ndef solve(left, right, k):\n    i, j = np.indices((len(left), len(right)))\n    cost = (np.asarray(left)[:,None]+np.asarray(right)[None,:]).ravel()\n    i = i.ravel(); j = j.ravel()\n    order = np.lexsort((i,j,cost))[:k]\n    return np.column_stack((cost[order],i[order],j[order])).astype(np.float64)\n"
+        },
+        {
+          "id": "science-advanced-weighted-lattice-cardinality",
+          "family": "advanced-weighted-lattice-cardinality",
+          "split": "train",
+          "gradient_allowed": true,
+          "prompt": "Write a NumPy-only Python function solve(radii). For each nonnegative integer r, count integer pairs (i,j) satisfying |i|+2*|j|<=r, including zero and boundary points. Return radii.shape. Return a float64 ndarray with the specified shape. Do not mutate any input. Inputs satisfy the stated conditions. Include the complete function and NumPy import; no prose is needed.",
+          "correct": "import numpy as np\n\ndef solve(radii):\n    out = []\n    for r in radii:\n        count = 0\n        for j in range(-int(r)//2-1, int(r)//2+2):\n            width = int(r)-2*abs(j)\n            if width >= 0: count += 2*width+1\n        out.append(count)\n    return np.array(out, dtype=np.float64)\n",
+          "foil": "import numpy as np\n\ndef solve(radii):\n    out = []\n    for r in radii:\n        count = 0\n        for j in range(-int(r)//2-1, int(r)//2+2):\n            width = int(r)-2*abs(j)\n            if width > 0: count += 2*width+1\n        out.append(count)\n    return np.array(out, dtype=np.float64)\n"
+        }
+      ]
+    ],
+    "science_advanced_simulation": [
+      [
+        {
+          "id": "science-advanced-gaussian-pair-energy-force",
+          "family": "advanced-gaussian-pair-energy-force",
+          "split": "train",
+          "gradient_allowed": true,
+          "prompt": "Write a NumPy-only Python function solve(position, scale). For scalar particle coordinates and positive scale, pair energy is exp(-((x_i-x_j)/scale)^2). Sum energy over i<j and compute force=-dE/dx on every particle. Return [total energy,forces...], shape (len(position)+1,). Return a float64 ndarray with the specified shape. Do not mutate any input. Inputs satisfy the stated conditions. Include the complete function and NumPy import; no prose is needed.",
+          "correct": "import numpy as np\n\ndef solve(position, scale):\n    x = np.asarray(position, dtype=np.float64)\n    d = x[:,None]-x[None,:]\n    e = np.exp(-(d/scale)**2)\n    energy = np.triu(e,1).sum()\n    force = (2*d*e/(scale*scale)).sum(axis=1)\n    return np.concatenate(([energy],force))\n",
+          "foil": "import numpy as np\n\ndef solve(position, scale):\n    x = np.asarray(position, dtype=np.float64)\n    d = x[:,None]-x[None,:]\n    e = np.exp(-(d/scale)**2)\n    energy = np.triu(e,1).sum()\n    force = (-2*d*e/(scale*scale)).sum(axis=1)\n    return np.concatenate(([energy],force))\n"
+        },
+        {
+          "id": "science-advanced-reflecting-wall-flight",
+          "family": "advanced-reflecting-wall-flight",
+          "split": "train",
+          "gradient_allowed": true,
+          "prompt": "Write a NumPy-only Python function solve(x, v, dt, length). Particles drift inside [0,length] with elastic wall reflections and may cross multiple walls. Fold z=x+dt*v by period 2*length. At exact walls use the direction of the interval immediately to its right in z. Return final position and velocity, shape (2,len(x)). Return a float64 ndarray with the specified shape. Do not mutate any input. Inputs satisfy the stated conditions. Include the complete function and NumPy import; no prose is needed.",
+          "correct": "import numpy as np\n\ndef solve(x, v, dt, length):\n    z = np.asarray(x,dtype=np.float64)+dt*np.asarray(v,dtype=np.float64)\n    u = np.mod(z,2*length)\n    p = np.where(u<length,u,2*length-u)\n    sign = np.where(u<length,1.0,-1.0)\n    return np.stack((p,sign*v))\n",
+          "foil": "import numpy as np\n\ndef solve(x, v, dt, length):\n    z = np.asarray(x,dtype=np.float64)+dt*np.asarray(v,dtype=np.float64)\n    u = np.mod(z,2*length)\n    p = np.where(u<length,u,length-u)\n    sign = np.where(u<length,1.0,-1.0)\n    return np.stack((p,sign*v))\n"
+        }
+      ],
+      [
+        {
+          "id": "science-advanced-periodic-kick-drift",
+          "family": "advanced-periodic-kick-drift",
+          "split": "train",
+          "gradient_allowed": true,
+          "prompt": "Write a NumPy-only Python function solve(x, v, stiffness, dt, steps). On a periodic ring of unit masses, repeat: f=k*(roll(x,1)-2*x+roll(x,-1)); v+=dt*f; x+=dt*v. Return final x then v as two rows, shape (2,len(x)). Return a float64 ndarray with the specified shape. Do not mutate any input. Inputs satisfy the stated conditions. Include the complete function and NumPy import; no prose is needed.",
+          "correct": "import numpy as np\n\ndef solve(x, v, stiffness, dt, steps):\n    x = np.array(x, dtype=np.float64, copy=True)\n    v = np.array(v, dtype=np.float64, copy=True)\n    for _ in range(steps):\n        f = stiffness*(np.roll(x,1)-2*x+np.roll(x,-1))\n        v += dt*f\n        x += dt*v\n    return np.stack((x,v))\n",
+          "foil": "import numpy as np\n\ndef solve(x, v, stiffness, dt, steps):\n    x = np.array(x, dtype=np.float64, copy=True)\n    v = np.array(v, dtype=np.float64, copy=True)\n    for _ in range(steps):\n        f = stiffness*(np.roll(x,1)-2*x+np.roll(x,-1))\n        x += dt*v\n        v += dt*f\n    return np.stack((x,v))\n"
+        },
+        {
+          "id": "science-advanced-inelastic-two-body",
+          "family": "advanced-inelastic-two-body",
+          "split": "train",
+          "gradient_allowed": true,
+          "prompt": "Write a NumPy-only Python function solve(mass, velocity, restitution). Two positive masses in one dimension collide. Preserve total momentum and set relative final velocity v1'-v2'=-restitution*(v1-v2), with e in [0,1]. Return [v1',v2',lost kinetic energy], shape (3,). Return a float64 ndarray with the specified shape. Do not mutate any input. Inputs satisfy the stated conditions. Include the complete function and NumPy import; no prose is needed.",
+          "correct": "import numpy as np\n\ndef solve(mass, velocity, restitution):\n    m = np.asarray(mass,dtype=np.float64)\n    v = np.asarray(velocity,dtype=np.float64)\n    center = np.dot(m,v)/m.sum()\n    rel = -restitution*(v[0]-v[1])\n    out = center+np.array([m[1],-m[0]])*rel/m.sum()\n    lost = np.dot(m,v*v-out*out)/2\n    return np.concatenate((out,[lost]))\n",
+          "foil": "import numpy as np\n\ndef solve(mass, velocity, restitution):\n    m = np.asarray(mass,dtype=np.float64)\n    v = np.asarray(velocity,dtype=np.float64)\n    center = np.dot(m,v)/m.sum()\n    rel = restitution*(v[0]-v[1])\n    out = center+np.array([m[1],-m[0]])*rel/m.sum()\n    lost = np.dot(m,v*v-out*out)/2\n    return np.concatenate((out,[lost]))\n"
+        }
+      ]
+    ],
+    "science_advanced_probability": [
+      [
+        {
+          "id": "science-advanced-injected-metropolis-chain",
+          "family": "advanced-injected-metropolis-chain",
+          "split": "train",
+          "gradient_allowed": true,
+          "prompt": "Write a NumPy-only Python function solve(initial, proposals, uniforms). Energy is x*x/2. At each step use the supplied proposed state y and u in (0,1). Accept iff log(u)<min(0,E(x)-E(y)). Rejected states persist. Return all states including initial and final acceptance fraction, shape (len(proposals)+2,). Return a float64 ndarray with the specified shape. Do not mutate any input. Inputs satisfy the stated conditions. Include the complete function and NumPy import; no prose is needed.",
+          "correct": "import numpy as np\n\ndef solve(initial, proposals, uniforms):\n    x = float(initial); states = [x]; accepted = 0\n    for y,u in zip(proposals,uniforms):\n        if np.log(u)<min(0.0,(x*x-y*y)/2):\n            x = float(y); accepted += 1\n        states.append(x)\n    return np.array(states+[accepted/len(proposals)],dtype=np.float64)\n",
+          "foil": "import numpy as np\n\ndef solve(initial, proposals, uniforms):\n    x = float(initial); states = [x]; accepted = 0\n    for y,u in zip(proposals,uniforms):\n        if np.log(u)<min(0.0,(y*y-x*x)/2):\n            x = float(y); accepted += 1\n        states.append(x)\n    return np.array(states+[accepted/len(proposals)],dtype=np.float64)\n"
+        },
+        {
+          "id": "science-advanced-piecewise-linear-density-cdf",
+          "family": "advanced-piecewise-linear-density-cdf",
+          "split": "train",
+          "gradient_allowed": true,
+          "prompt": "Write a NumPy-only Python function solve(knots, density, query). Increasing knots carry positive density values, linear between knots. For queries within the closed knot range, integrate from the first knot and divide by total integral. Return normalized CDF, shape query.shape. Return a float64 ndarray with the specified shape. Do not mutate any input. Inputs satisfy the stated conditions. Include the complete function and NumPy import; no prose is needed.",
+          "correct": "import numpy as np\n\ndef solve(knots, density, query):\n    t = np.asarray(knots,dtype=np.float64); y = np.asarray(density,dtype=np.float64)\n    area = np.diff(t)*(y[:-1]+y[1:])/2\n    prefix = np.r_[0.0,np.cumsum(area)]\n    i = np.clip(np.searchsorted(t,query,side='right')-1,0,len(t)-2)\n    h = query-t[i]; slope = (y[i+1]-y[i])/(t[i+1]-t[i])\n    return (prefix[i]+y[i]*h+slope*h*h/2)/prefix[-1]\n",
+          "foil": "import numpy as np\n\ndef solve(knots, density, query):\n    t = np.asarray(knots,dtype=np.float64); y = np.asarray(density,dtype=np.float64)\n    area = np.diff(t)*(y[:-1]+y[1:])/2\n    prefix = np.r_[0.0,np.cumsum(area)]\n    i = np.clip(np.searchsorted(t,query,side='right')-1,0,len(t)-2)\n    h = query-t[i]; slope = (y[i+1]-y[i])/(t[i+1]-t[i])\n    return (prefix[i]+y[i]*h+slope*h*h)/prefix[-1]\n"
+        }
+      ],
+      [
+        {
+          "id": "science-advanced-categorical-without-replacement",
+          "family": "advanced-categorical-without-replacement",
+          "split": "train",
+          "gradient_allowed": true,
+          "prompt": "Write a NumPy-only Python function solve(weights, uniforms). Positive weights define ordered categories. For each u in [0,1), choose the first cumulative remaining weight strictly greater than u*total, then zero that category's weight. Return indices, shape uniforms.shape. Number of draws is at most number of categories. Return a float64 ndarray with the specified shape. Do not mutate any input. Inputs satisfy the stated conditions. Include the complete function and NumPy import; no prose is needed.",
+          "correct": "import numpy as np\n\ndef solve(weights, uniforms):\n    w = np.array(weights,dtype=np.float64,copy=True)\n    out = []\n    for u in uniforms:\n        i = np.searchsorted(np.cumsum(w),u*w.sum(),side='right')\n        out.append(i); w[i] = 0.0\n    return np.array(out,dtype=np.float64)\n",
+          "foil": "import numpy as np\n\ndef solve(weights, uniforms):\n    w = np.array(weights,dtype=np.float64,copy=True)\n    out = []\n    for u in uniforms:\n        i = np.searchsorted(np.cumsum(w),u*w.sum(),side='left')\n        out.append(i); w[i] = 0.0\n    return np.array(out,dtype=np.float64)\n"
+        },
+        {
+          "id": "science-advanced-log-survival-event-masses",
+          "family": "advanced-log-survival-event-masses",
+          "split": "train",
+          "gradient_allowed": true,
+          "prompt": "Write a NumPy-only Python function solve(hazards). Each hazard h is in (0,1) conditional on surviving earlier steps. Return unconditional event masses at every step followed by surviving all steps, shape (len(hazards)+1,). Accumulate survival in log space. Return a float64 ndarray with the specified shape. Do not mutate any input. Inputs satisfy the stated conditions. Include the complete function and NumPy import; no prose is needed.",
+          "correct": "import numpy as np\n\ndef solve(hazards):\n    h = np.asarray(hazards,dtype=np.float64)\n    logs = np.r_[0.0,np.cumsum(np.log1p(-h))]\n    return np.r_[np.exp(logs[:-1])*h,np.exp(logs[-1])]\n",
+          "foil": "import numpy as np\n\ndef solve(hazards):\n    h = np.asarray(hazards,dtype=np.float64)\n    logs = np.r_[0.0,np.cumsum(np.log1p(-h))]\n    return np.r_[np.exp(logs[1:])*h,np.exp(logs[-1])]\n"
+        }
+      ]
+    ]
+  }
+}

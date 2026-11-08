@@ -1,0 +1,33 @@
+{
+  "status": "passed",
+  "existing_editor_summary": {
+    "changed_elements": 60473,
+    "changed_tensors": 112,
+    "delta_l2": 0.0043893681725189855
+  },
+  "exact_replanned_spans": 112,
+  "exact_replan_fields": [
+    "tensor",
+    "shard",
+    "offset",
+    "size",
+    "dtype",
+    "shape",
+    "before_hex",
+    "after_hex",
+    "selected_indices",
+    "changed_indices",
+    "changed_count"
+  ],
+  "replan_seconds": 1.406839370727539,
+  "source_files": 89,
+  "materializer_core_source_pins_matched": 5,
+  "base_and_candidate_stat_continuity_files": 18,
+  "gzip_original_bytes_verified": 2,
+  "metadata_hashes_verified": 7,
+  "original_saved_fullverify_passed": true,
+  "payload_fullhash_here": false,
+  "full_diff_here": false,
+  "physical_reconstruction_here": false,
+  "payloads_unchanged": true
+}

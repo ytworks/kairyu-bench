@@ -1,0 +1,1213 @@
+{
+  "schema_version": 1,
+  "status": "local_proposals",
+  "methods": [
+    {
+      "history": [
+        {
+          "round": 1,
+          "maximum_prediction_shortfall": 0.1716474485397339,
+          "weighted_delta_l2": 0.0471755693920978,
+          "actual_delta_l2": 0.646774134857636,
+          "changed_elements": 67,
+          "dual": {
+            "iterations": 5,
+            "dual_residual": 4.2940304090244297e-13,
+            "continuous_max_scaled_shortfall": 4.290228240865704e-13
+          }
+        },
+        {
+          "round": 2,
+          "maximum_prediction_shortfall": 0.07608274042606356,
+          "weighted_delta_l2": 0.08131070446414886,
+          "actual_delta_l2": 0.9579414243569825,
+          "changed_elements": 204,
+          "dual": {
+            "iterations": 4,
+            "dual_residual": 3.7674901393058846e-11,
+            "continuous_max_scaled_shortfall": 3.767565020033844e-11
+          }
+        },
+        {
+          "round": 3,
+          "maximum_prediction_shortfall": 0.0406139460206032,
+          "weighted_delta_l2": 0.09650090057093752,
+          "actual_delta_l2": 1.5117191048555179,
+          "changed_elements": 298,
+          "dual": {
+            "iterations": 4,
+            "dual_residual": 4.236853923256234e-13,
+            "continuous_max_scaled_shortfall": 4.2365348163890864e-13
+          }
+        },
+        {
+          "round": 4,
+          "maximum_prediction_shortfall": 0.025886264145374316,
+          "weighted_delta_l2": 0.10466903497866534,
+          "actual_delta_l2": 1.9690341593015517,
+          "changed_elements": 348,
+          "dual": {
+            "iterations": 4,
+            "dual_residual": 2.2697295432028142e-13,
+            "continuous_max_scaled_shortfall": 2.2700423806183374e-13
+          }
+        },
+        {
+          "round": 5,
+          "maximum_prediction_shortfall": 0.016713183820247668,
+          "weighted_delta_l2": 0.10964464211090572,
+          "actual_delta_l2": 1.993311561162031,
+          "changed_elements": 384,
+          "dual": {
+            "iterations": 3,
+            "dual_residual": 1.571722344287374e-10,
+            "continuous_max_scaled_shortfall": 1.5717226919851794e-10
+          }
+        },
+        {
+          "round": 6,
+          "maximum_prediction_shortfall": 0.008376371562480944,
+          "weighted_delta_l2": 0.11297164115392754,
+          "actual_delta_l2": 2.0037377864824757,
+          "changed_elements": 404,
+          "dual": {
+            "iterations": 3,
+            "dual_residual": 1.0061756375995268e-10,
+            "continuous_max_scaled_shortfall": 1.0061751269259107e-10
+          }
+        },
+        {
+          "round": 7,
+          "maximum_prediction_shortfall": 0.0032954928278923212,
+          "weighted_delta_l2": 0.11506597653680917,
+          "actual_delta_l2": 2.0125675669872543,
+          "changed_elements": 419,
+          "dual": {
+            "iterations": 3,
+            "dual_residual": 5.0411896011792745e-11,
+            "continuous_max_scaled_shortfall": 5.0411884600019496e-11
+          }
+        },
+        {
+          "round": 8,
+          "maximum_prediction_shortfall": 0.0016390797495842158,
+          "weighted_delta_l2": 0.115672310584735,
+          "actual_delta_l2": 2.016464782953088,
+          "changed_elements": 422,
+          "dual": {
+            "iterations": 3,
+            "dual_residual": 1.974938111269295e-11,
+            "continuous_max_scaled_shortfall": 1.9749379674761557e-11
+          }
+        },
+        {
+          "round": 9,
+          "maximum_prediction_shortfall": 0.0,
+          "weighted_delta_l2": 0.11679167722809664,
+          "actual_delta_l2": 2.035779114517941,
+          "changed_elements": 429,
+          "dual": {
+            "iterations": 3,
+            "dual_residual": 9.828532275156163e-12,
+            "continuous_max_scaled_shortfall": 9.828528856727688e-12
+          }
+        }
+      ],
+      "chosen_round": 9,
+      "rounding": {
+        "changed_elements": 429,
+        "realized_l2": 2.035779114517941,
+        "continuous_l2": 6.845504511771174,
+        "rounding_relative_l2": 0.9780311635315723,
+        "cosine_realized_to_continuous": 0.2217554967190713,
+        "stored_f32_sha256": "6d60e6ad9c30201cfbef0a9c79c861d08f13f7d30fda6b6708967b45ad39ad26",
+        "rounding": "original BF16 base + F64 combined delta -> F32 -> BF16 ties-to-even once",
+        "model_response_measured": false
+      },
+      "prediction": [
+        0.1259291002061218,
+        0.051445282995700836,
+        0.0032529905438423157,
+        0.0018428540788590908,
+        0.014419794431887567,
+        0.010512267239391804,
+        0.015275779645889997,
+        0.015073961112648249,
+        0.01231802487745881,
+        0.021639908431097865,
+        0.027923241956159472,
+        0.050216078758239746,
+        0.28153569251298904,
+        -0.02498505637049675,
+        -0.009074365982087329,
+        -0.0035428935661911964,
+        -0.003692706988658756,
+        -0.0010196399089181796,
+        -0.0010066370014101267,
+        0.0017418584902770817,
+        0.003895109402947128,
+        -0.0014253644621931016,
+        -0.003792396979406476,
+        -0.003931544255465269
+      ],
+      "minimum_delta": [
+        0.05,
+        0.0,
+        -0.02,
+        -0.02,
+        -0.02,
+        -0.02,
+        -0.02,
+        -0.02,
+        -0.02,
+        -0.02,
+        0.0,
+        0.05,
+        0.28009547710418703,
+        -0.05,
+        -0.05,
+        -0.05,
+        -0.05,
+        -0.05,
+        -0.05,
+        -0.05,
+        -0.05,
+        -0.05,
+        -0.05,
+        -0.1
+      ],
+      "predicted_constraints_satisfied": true,
+      "weighted_delta_l2": 0.11679167722809664,
+      "actual_delta_l2": 2.035779114517941,
+      "radius_scope": "continuous F64 proposal before F32/BF16 rounding; realized values may exceed the continuous box",
+      "model_response_measured": false,
+      "adopted": false,
+      "id": "fresh-native-relative-f04",
+      "constraints": [
+        {
+          "objective": "correct-logprob",
+          "purpose": "A",
+          "fold": 0,
+          "minimum_delta": 0.05
+        },
+        {
+          "objective": "correct-logprob",
+          "purpose": "A",
+          "fold": 1,
+          "minimum_delta": 0.0
+        },
+        {
+          "objective": "correct-logprob",
+          "purpose": "B",
+          "fold": 0,
+          "minimum_delta": -0.02
+        },
+        {
+          "objective": "correct-logprob",
+          "purpose": "B",
+          "fold": 1,
+          "minimum_delta": -0.02
+        },
+        {
+          "objective": "correct-logprob",
+          "purpose": "C",
+          "fold": 0,
+          "minimum_delta": -0.02
+        },
+        {
+          "objective": "correct-logprob",
+          "purpose": "C",
+          "fold": 1,
+          "minimum_delta": -0.02
+        },
+        {
+          "objective": "correct-logprob",
+          "purpose": "D",
+          "fold": 0,
+          "minimum_delta": -0.02
+        },
+        {
+          "objective": "correct-logprob",
+          "purpose": "D",
+          "fold": 1,
+          "minimum_delta": -0.02
+        },
+        {
+          "objective": "correct-logprob",
+          "purpose": "E",
+          "fold": 0,
+          "minimum_delta": -0.02
+        },
+        {
+          "objective": "correct-logprob",
+          "purpose": "E",
+          "fold": 1,
+          "minimum_delta": -0.02
+        },
+        {
+          "objective": "correct-logprob",
+          "purpose": "F",
+          "fold": 0,
+          "minimum_delta": 0.0
+        },
+        {
+          "objective": "correct-logprob",
+          "purpose": "F",
+          "fold": 1,
+          "minimum_delta": 0.05
+        },
+        {
+          "objective": "margin",
+          "purpose": "A",
+          "fold": 0,
+          "minimum_delta": 0.28009547710418703
+        },
+        {
+          "objective": "margin",
+          "purpose": "A",
+          "fold": 1,
+          "minimum_delta": -0.05
+        },
+        {
+          "objective": "margin",
+          "purpose": "B",
+          "fold": 0,
+          "minimum_delta": -0.05
+        },
+        {
+          "objective": "margin",
+          "purpose": "B",
+          "fold": 1,
+          "minimum_delta": -0.05
+        },
+        {
+          "objective": "margin",
+          "purpose": "C",
+          "fold": 0,
+          "minimum_delta": -0.05
+        },
+        {
+          "objective": "margin",
+          "purpose": "C",
+          "fold": 1,
+          "minimum_delta": -0.05
+        },
+        {
+          "objective": "margin",
+          "purpose": "D",
+          "fold": 0,
+          "minimum_delta": -0.05
+        },
+        {
+          "objective": "margin",
+          "purpose": "D",
+          "fold": 1,
+          "minimum_delta": -0.05
+        },
+        {
+          "objective": "margin",
+          "purpose": "E",
+          "fold": 0,
+          "minimum_delta": -0.05
+        },
+        {
+          "objective": "margin",
+          "purpose": "E",
+          "fold": 1,
+          "minimum_delta": -0.05
+        },
+        {
+          "objective": "margin",
+          "purpose": "F",
+          "fold": 0,
+          "minimum_delta": -0.05
+        },
+        {
+          "objective": "margin",
+          "purpose": "F",
+          "fold": 1,
+          "minimum_delta": -0.1
+        }
+      ],
+      "cost_metric": {
+        "type": "relative",
+        "floor": 0.0001
+      },
+      "changed_elements": 429,
+      "changed_tensors": 140,
+      "native_scope": {
+        "observed_columns": 1331516,
+        "eligible_columns": 1331456,
+        "eligible_tensors": [
+          "model.language_model.layers.0.input_layernorm.weight",
+          "model.language_model.layers.0.post_attention_layernorm.weight",
+          "model.language_model.layers.0.post_feedforward_layernorm.weight",
+          "model.language_model.layers.0.pre_feedforward_layernorm.weight",
+          "model.language_model.layers.0.self_attn.k_norm.weight",
+          "model.language_model.layers.0.self_attn.q_norm.weight",
+          "model.language_model.layers.1.input_layernorm.weight",
+          "model.language_model.layers.1.post_attention_layernorm.weight",
+          "model.language_model.layers.1.post_feedforward_layernorm.weight",
+          "model.language_model.layers.1.pre_feedforward_layernorm.weight",
+          "model.language_model.layers.1.self_attn.k_norm.weight",
+          "model.language_model.layers.1.self_attn.q_norm.weight",
+          "model.language_model.layers.10.input_layernorm.weight",
+          "model.language_model.layers.10.post_attention_layernorm.weight",
+          "model.language_model.layers.10.post_feedforward_layernorm.weight",
+          "model.language_model.layers.10.pre_feedforward_layernorm.weight",
+          "model.language_model.layers.10.self_attn.k_norm.weight",
+          "model.language_model.layers.10.self_attn.q_norm.weight",
+          "model.language_model.layers.11.input_layernorm.weight",
+          "model.language_model.layers.11.post_attention_layernorm.weight",
+          "model.language_model.layers.11.post_feedforward_layernorm.weight",
+          "model.language_model.layers.11.pre_feedforward_layernorm.weight",
+          "model.language_model.layers.11.self_attn.k_norm.weight",
+          "model.language_model.layers.11.self_attn.q_norm.weight",
+          "model.language_model.layers.12.input_layernorm.weight",
+          "model.language_model.layers.12.post_attention_layernorm.weight",
+          "model.language_model.layers.12.post_feedforward_layernorm.weight",
+          "model.language_model.layers.12.pre_feedforward_layernorm.weight",
+          "model.language_model.layers.12.self_attn.k_norm.weight",
+          "model.language_model.layers.12.self_attn.q_norm.weight",
+          "model.language_model.layers.13.input_layernorm.weight",
+          "model.language_model.layers.13.post_attention_layernorm.weight",
+          "model.language_model.layers.13.post_feedforward_layernorm.weight",
+          "model.language_model.layers.13.pre_feedforward_layernorm.weight",
+          "model.language_model.layers.13.self_attn.k_norm.weight",
+          "model.language_model.layers.13.self_attn.q_norm.weight",
+          "model.language_model.layers.14.input_layernorm.weight",
+          "model.language_model.layers.14.post_attention_layernorm.weight",
+          "model.language_model.layers.14.post_feedforward_layernorm.weight",
+          "model.language_model.layers.14.pre_feedforward_layernorm.weight",
+          "model.language_model.layers.14.self_attn.k_norm.weight",
+          "model.language_model.layers.14.self_attn.q_norm.weight",
+          "model.language_model.layers.15.input_layernorm.weight",
+          "model.language_model.layers.15.post_attention_layernorm.weight",
+          "model.language_model.layers.15.post_feedforward_layernorm.weight",
+          "model.language_model.layers.15.pre_feedforward_layernorm.weight",
+          "model.language_model.layers.15.self_attn.k_norm.weight",
+          "model.language_model.layers.15.self_attn.q_norm.weight",
+          "model.language_model.layers.16.input_layernorm.weight",
+          "model.language_model.layers.16.post_attention_layernorm.weight",
+          "model.language_model.layers.16.post_feedforward_layernorm.weight",
+          "model.language_model.layers.16.pre_feedforward_layernorm.weight",
+          "model.language_model.layers.16.self_attn.k_norm.weight",
+          "model.language_model.layers.16.self_attn.q_norm.weight",
+          "model.language_model.layers.17.input_layernorm.weight",
+          "model.language_model.layers.17.post_attention_layernorm.weight",
+          "model.language_model.layers.17.post_feedforward_layernorm.weight",
+          "model.language_model.layers.17.pre_feedforward_layernorm.weight",
+          "model.language_model.layers.17.self_attn.k_norm.weight",
+          "model.language_model.layers.17.self_attn.q_norm.weight",
+          "model.language_model.layers.18.input_layernorm.weight",
+          "model.language_model.layers.18.post_attention_layernorm.weight",
+          "model.language_model.layers.18.post_feedforward_layernorm.weight",
+          "model.language_model.layers.18.pre_feedforward_layernorm.weight",
+          "model.language_model.layers.18.self_attn.k_norm.weight",
+          "model.language_model.layers.18.self_attn.q_norm.weight",
+          "model.language_model.layers.19.input_layernorm.weight",
+          "model.language_model.layers.19.post_attention_layernorm.weight",
+          "model.language_model.layers.19.post_feedforward_layernorm.weight",
+          "model.language_model.layers.19.pre_feedforward_layernorm.weight",
+          "model.language_model.layers.19.self_attn.k_norm.weight",
+          "model.language_model.layers.19.self_attn.q_norm.weight",
+          "model.language_model.layers.2.input_layernorm.weight",
+          "model.language_model.layers.2.post_attention_layernorm.weight",
+          "model.language_model.layers.2.post_feedforward_layernorm.weight",
+          "model.language_model.layers.2.pre_feedforward_layernorm.weight",
+          "model.language_model.layers.2.self_attn.k_norm.weight",
+          "model.language_model.layers.2.self_attn.q_norm.weight",
+          "model.language_model.layers.20.input_layernorm.weight",
+          "model.language_model.layers.20.post_attention_layernorm.weight",
+          "model.language_model.layers.20.post_feedforward_layernorm.weight",
+          "model.language_model.layers.20.pre_feedforward_layernorm.weight",
+          "model.language_model.layers.20.self_attn.k_norm.weight",
+          "model.language_model.layers.20.self_attn.q_norm.weight",
+          "model.language_model.layers.21.input_layernorm.weight",
+          "model.language_model.layers.21.post_attention_layernorm.weight",
+          "model.language_model.layers.21.post_feedforward_layernorm.weight",
+          "model.language_model.layers.21.pre_feedforward_layernorm.weight",
+          "model.language_model.layers.21.self_attn.k_norm.weight",
+          "model.language_model.layers.21.self_attn.q_norm.weight",
+          "model.language_model.layers.22.input_layernorm.weight",
+          "model.language_model.layers.22.post_attention_layernorm.weight",
+          "model.language_model.layers.22.post_feedforward_layernorm.weight",
+          "model.language_model.layers.22.pre_feedforward_layernorm.weight",
+          "model.language_model.layers.22.self_attn.k_norm.weight",
+          "model.language_model.layers.22.self_attn.q_norm.weight",
+          "model.language_model.layers.23.input_layernorm.weight",
+          "model.language_model.layers.23.post_attention_layernorm.weight",
+          "model.language_model.layers.23.post_feedforward_layernorm.weight",
+          "model.language_model.layers.23.pre_feedforward_layernorm.weight",
+          "model.language_model.layers.23.self_attn.k_norm.weight",
+          "model.language_model.layers.23.self_attn.q_norm.weight",
+          "model.language_model.layers.24.input_layernorm.weight",
+          "model.language_model.layers.24.post_attention_layernorm.weight",
+          "model.language_model.layers.24.post_feedforward_layernorm.weight",
+          "model.language_model.layers.24.pre_feedforward_layernorm.weight",
+          "model.language_model.layers.24.self_attn.k_norm.weight",
+          "model.language_model.layers.24.self_attn.q_norm.weight",
+          "model.language_model.layers.25.input_layernorm.weight",
+          "model.language_model.layers.25.post_attention_layernorm.weight",
+          "model.language_model.layers.25.post_feedforward_layernorm.weight",
+          "model.language_model.layers.25.pre_feedforward_layernorm.weight",
+          "model.language_model.layers.25.self_attn.k_norm.weight",
+          "model.language_model.layers.25.self_attn.q_norm.weight",
+          "model.language_model.layers.26.input_layernorm.weight",
+          "model.language_model.layers.26.post_attention_layernorm.weight",
+          "model.language_model.layers.26.post_feedforward_layernorm.weight",
+          "model.language_model.layers.26.pre_feedforward_layernorm.weight",
+          "model.language_model.layers.26.self_attn.k_norm.weight",
+          "model.language_model.layers.26.self_attn.q_norm.weight",
+          "model.language_model.layers.27.input_layernorm.weight",
+          "model.language_model.layers.27.post_attention_layernorm.weight",
+          "model.language_model.layers.27.post_feedforward_layernorm.weight",
+          "model.language_model.layers.27.pre_feedforward_layernorm.weight",
+          "model.language_model.layers.27.self_attn.k_norm.weight",
+          "model.language_model.layers.27.self_attn.q_norm.weight",
+          "model.language_model.layers.28.input_layernorm.weight",
+          "model.language_model.layers.28.post_attention_layernorm.weight",
+          "model.language_model.layers.28.post_feedforward_layernorm.weight",
+          "model.language_model.layers.28.pre_feedforward_layernorm.weight",
+          "model.language_model.layers.28.self_attn.k_norm.weight",
+          "model.language_model.layers.28.self_attn.q_norm.weight",
+          "model.language_model.layers.29.input_layernorm.weight",
+          "model.language_model.layers.29.post_attention_layernorm.weight",
+          "model.language_model.layers.29.post_feedforward_layernorm.weight",
+          "model.language_model.layers.29.pre_feedforward_layernorm.weight",
+          "model.language_model.layers.29.self_attn.k_norm.weight",
+          "model.language_model.layers.29.self_attn.q_norm.weight",
+          "model.language_model.layers.3.input_layernorm.weight",
+          "model.language_model.layers.3.post_attention_layernorm.weight",
+          "model.language_model.layers.3.post_feedforward_layernorm.weight",
+          "model.language_model.layers.3.pre_feedforward_layernorm.weight",
+          "model.language_model.layers.3.self_attn.k_norm.weight",
+          "model.language_model.layers.3.self_attn.q_norm.weight",
+          "model.language_model.layers.30.input_layernorm.weight",
+          "model.language_model.layers.30.post_attention_layernorm.weight",
+          "model.language_model.layers.30.post_feedforward_layernorm.weight",
+          "model.language_model.layers.30.pre_feedforward_layernorm.weight",
+          "model.language_model.layers.30.self_attn.k_norm.weight",
+          "model.language_model.layers.30.self_attn.q_norm.weight",
+          "model.language_model.layers.31.input_layernorm.weight",
+          "model.language_model.layers.31.post_attention_layernorm.weight",
+          "model.language_model.layers.31.post_feedforward_layernorm.weight",
+          "model.language_model.layers.31.pre_feedforward_layernorm.weight",
+          "model.language_model.layers.31.self_attn.k_norm.weight",
+          "model.language_model.layers.31.self_attn.q_norm.weight",
+          "model.language_model.layers.32.input_layernorm.weight",
+          "model.language_model.layers.32.post_attention_layernorm.weight",
+          "model.language_model.layers.32.post_feedforward_layernorm.weight",
+          "model.language_model.layers.32.pre_feedforward_layernorm.weight",
+          "model.language_model.layers.32.self_attn.k_norm.weight",
+          "model.language_model.layers.32.self_attn.q_norm.weight",
+          "model.language_model.layers.33.input_layernorm.weight",
+          "model.language_model.layers.33.post_attention_layernorm.weight",
+          "model.language_model.layers.33.post_feedforward_layernorm.weight",
+          "model.language_model.layers.33.pre_feedforward_layernorm.weight",
+          "model.language_model.layers.33.self_attn.k_norm.weight",
+          "model.language_model.layers.33.self_attn.q_norm.weight",
+          "model.language_model.layers.34.input_layernorm.weight",
+          "model.language_model.layers.34.post_attention_layernorm.weight",
+          "model.language_model.layers.34.post_feedforward_layernorm.weight",
+          "model.language_model.layers.34.pre_feedforward_layernorm.weight",
+          "model.language_model.layers.34.self_attn.k_norm.weight",
+          "model.language_model.layers.34.self_attn.q_norm.weight",
+          "model.language_model.layers.35.input_layernorm.weight",
+          "model.language_model.layers.35.post_attention_layernorm.weight",
+          "model.language_model.layers.35.post_feedforward_layernorm.weight",
+          "model.language_model.layers.35.pre_feedforward_layernorm.weight",
+          "model.language_model.layers.35.self_attn.k_norm.weight",
+          "model.language_model.layers.35.self_attn.q_norm.weight",
+          "model.language_model.layers.36.input_layernorm.weight",
+          "model.language_model.layers.36.post_attention_layernorm.weight",
+          "model.language_model.layers.36.post_feedforward_layernorm.weight",
+          "model.language_model.layers.36.pre_feedforward_layernorm.weight",
+          "model.language_model.layers.36.self_attn.k_norm.weight",
+          "model.language_model.layers.36.self_attn.q_norm.weight",
+          "model.language_model.layers.37.input_layernorm.weight",
+          "model.language_model.layers.37.post_attention_layernorm.weight",
+          "model.language_model.layers.37.post_feedforward_layernorm.weight",
+          "model.language_model.layers.37.pre_feedforward_layernorm.weight",
+          "model.language_model.layers.37.self_attn.k_norm.weight",
+          "model.language_model.layers.37.self_attn.q_norm.weight",
+          "model.language_model.layers.38.input_layernorm.weight",
+          "model.language_model.layers.38.post_attention_layernorm.weight",
+          "model.language_model.layers.38.post_feedforward_layernorm.weight",
+          "model.language_model.layers.38.pre_feedforward_layernorm.weight",
+          "model.language_model.layers.38.self_attn.k_norm.weight",
+          "model.language_model.layers.38.self_attn.q_norm.weight",
+          "model.language_model.layers.39.input_layernorm.weight",
+          "model.language_model.layers.39.post_attention_layernorm.weight",
+          "model.language_model.layers.39.post_feedforward_layernorm.weight",
+          "model.language_model.layers.39.pre_feedforward_layernorm.weight",
+          "model.language_model.layers.39.self_attn.k_norm.weight",
+          "model.language_model.layers.39.self_attn.q_norm.weight",
+          "model.language_model.layers.4.input_layernorm.weight",
+          "model.language_model.layers.4.post_attention_layernorm.weight",
+          "model.language_model.layers.4.post_feedforward_layernorm.weight",
+          "model.language_model.layers.4.pre_feedforward_layernorm.weight",
+          "model.language_model.layers.4.self_attn.k_norm.weight",
+          "model.language_model.layers.4.self_attn.q_norm.weight",
+          "model.language_model.layers.40.input_layernorm.weight",
+          "model.language_model.layers.40.post_attention_layernorm.weight",
+          "model.language_model.layers.40.post_feedforward_layernorm.weight",
+          "model.language_model.layers.40.pre_feedforward_layernorm.weight",
+          "model.language_model.layers.40.self_attn.k_norm.weight",
+          "model.language_model.layers.40.self_attn.q_norm.weight",
+          "model.language_model.layers.41.input_layernorm.weight",
+          "model.language_model.layers.41.post_attention_layernorm.weight",
+          "model.language_model.layers.41.post_feedforward_layernorm.weight",
+          "model.language_model.layers.41.pre_feedforward_layernorm.weight",
+          "model.language_model.layers.41.self_attn.k_norm.weight",
+          "model.language_model.layers.41.self_attn.q_norm.weight",
+          "model.language_model.layers.42.input_layernorm.weight",
+          "model.language_model.layers.42.post_attention_layernorm.weight",
+          "model.language_model.layers.42.post_feedforward_layernorm.weight",
+          "model.language_model.layers.42.pre_feedforward_layernorm.weight",
+          "model.language_model.layers.42.self_attn.k_norm.weight",
+          "model.language_model.layers.42.self_attn.q_norm.weight",
+          "model.language_model.layers.43.input_layernorm.weight",
+          "model.language_model.layers.43.post_attention_layernorm.weight",
+          "model.language_model.layers.43.post_feedforward_layernorm.weight",
+          "model.language_model.layers.43.pre_feedforward_layernorm.weight",
+          "model.language_model.layers.43.self_attn.k_norm.weight",
+          "model.language_model.layers.43.self_attn.q_norm.weight",
+          "model.language_model.layers.44.input_layernorm.weight",
+          "model.language_model.layers.44.post_attention_layernorm.weight",
+          "model.language_model.layers.44.post_feedforward_layernorm.weight",
+          "model.language_model.layers.44.pre_feedforward_layernorm.weight",
+          "model.language_model.layers.44.self_attn.k_norm.weight",
+          "model.language_model.layers.44.self_attn.q_norm.weight",
+          "model.language_model.layers.45.input_layernorm.weight",
+          "model.language_model.layers.45.post_attention_layernorm.weight",
+          "model.language_model.layers.45.post_feedforward_layernorm.weight",
+          "model.language_model.layers.45.pre_feedforward_layernorm.weight",
+          "model.language_model.layers.45.self_attn.k_norm.weight",
+          "model.language_model.layers.45.self_attn.q_norm.weight",
+          "model.language_model.layers.46.input_layernorm.weight",
+          "model.language_model.layers.46.post_attention_layernorm.weight",
+          "model.language_model.layers.46.post_feedforward_layernorm.weight",
+          "model.language_model.layers.46.pre_feedforward_layernorm.weight",
+          "model.language_model.layers.46.self_attn.k_norm.weight",
+          "model.language_model.layers.46.self_attn.q_norm.weight",
+          "model.language_model.layers.47.input_layernorm.weight",
+          "model.language_model.layers.47.post_attention_layernorm.weight",
+          "model.language_model.layers.47.post_feedforward_layernorm.weight",
+          "model.language_model.layers.47.pre_feedforward_layernorm.weight",
+          "model.language_model.layers.47.self_attn.k_norm.weight",
+          "model.language_model.layers.47.self_attn.q_norm.weight",
+          "model.language_model.layers.48.input_layernorm.weight",
+          "model.language_model.layers.48.post_attention_layernorm.weight",
+          "model.language_model.layers.48.post_feedforward_layernorm.weight",
+          "model.language_model.layers.48.pre_feedforward_layernorm.weight",
+          "model.language_model.layers.48.self_attn.k_norm.weight",
+          "model.language_model.layers.48.self_attn.q_norm.weight",
+          "model.language_model.layers.49.input_layernorm.weight",
+          "model.language_model.layers.49.post_attention_layernorm.weight",
+          "model.language_model.layers.49.post_feedforward_layernorm.weight",
+          "model.language_model.layers.49.pre_feedforward_layernorm.weight",
+          "model.language_model.layers.49.self_attn.k_norm.weight",
+          "model.language_model.layers.49.self_attn.q_norm.weight",
+          "model.language_model.layers.5.input_layernorm.weight",
+          "model.language_model.layers.5.post_attention_layernorm.weight",
+          "model.language_model.layers.5.post_feedforward_layernorm.weight",
+          "model.language_model.layers.5.pre_feedforward_layernorm.weight",
+          "model.language_model.layers.5.self_attn.k_norm.weight",
+          "model.language_model.layers.5.self_attn.q_norm.weight",
+          "model.language_model.layers.50.input_layernorm.weight",
+          "model.language_model.layers.50.post_attention_layernorm.weight",
+          "model.language_model.layers.50.post_feedforward_layernorm.weight",
+          "model.language_model.layers.50.pre_feedforward_layernorm.weight",
+          "model.language_model.layers.50.self_attn.k_norm.weight",
+          "model.language_model.layers.50.self_attn.q_norm.weight",
+          "model.language_model.layers.51.input_layernorm.weight",
+          "model.language_model.layers.51.post_attention_layernorm.weight",
+          "model.language_model.layers.51.post_feedforward_layernorm.weight",
+          "model.language_model.layers.51.pre_feedforward_layernorm.weight",
+          "model.language_model.layers.51.self_attn.k_norm.weight",
+          "model.language_model.layers.51.self_attn.q_norm.weight",
+          "model.language_model.layers.52.input_layernorm.weight",
+          "model.language_model.layers.52.post_attention_layernorm.weight",
+          "model.language_model.layers.52.post_feedforward_layernorm.weight",
+          "model.language_model.layers.52.pre_feedforward_layernorm.weight",
+          "model.language_model.layers.52.self_attn.k_norm.weight",
+          "model.language_model.layers.52.self_attn.q_norm.weight",
+          "model.language_model.layers.53.input_layernorm.weight",
+          "model.language_model.layers.53.post_attention_layernorm.weight",
+          "model.language_model.layers.53.post_feedforward_layernorm.weight",
+          "model.language_model.layers.53.pre_feedforward_layernorm.weight",
+          "model.language_model.layers.53.self_attn.k_norm.weight",
+          "model.language_model.layers.53.self_attn.q_norm.weight",
+          "model.language_model.layers.54.input_layernorm.weight",
+          "model.language_model.layers.54.post_attention_layernorm.weight",
+          "model.language_model.layers.54.post_feedforward_layernorm.weight",
+          "model.language_model.layers.54.pre_feedforward_layernorm.weight",
+          "model.language_model.layers.54.self_attn.k_norm.weight",
+          "model.language_model.layers.54.self_attn.q_norm.weight",
+          "model.language_model.layers.55.input_layernorm.weight",
+          "model.language_model.layers.55.post_attention_layernorm.weight",
+          "model.language_model.layers.55.post_feedforward_layernorm.weight",
+          "model.language_model.layers.55.pre_feedforward_layernorm.weight",
+          "model.language_model.layers.55.self_attn.k_norm.weight",
+          "model.language_model.layers.55.self_attn.q_norm.weight",
+          "model.language_model.layers.56.input_layernorm.weight",
+          "model.language_model.layers.56.post_attention_layernorm.weight",
+          "model.language_model.layers.56.post_feedforward_layernorm.weight",
+          "model.language_model.layers.56.pre_feedforward_layernorm.weight",
+          "model.language_model.layers.56.self_attn.k_norm.weight",
+          "model.language_model.layers.56.self_attn.q_norm.weight",
+          "model.language_model.layers.57.input_layernorm.weight",
+          "model.language_model.layers.57.post_attention_layernorm.weight",
+          "model.language_model.layers.57.post_feedforward_layernorm.weight",
+          "model.language_model.layers.57.pre_feedforward_layernorm.weight",
+          "model.language_model.layers.57.self_attn.k_norm.weight",
+          "model.language_model.layers.57.self_attn.q_norm.weight",
+          "model.language_model.layers.58.input_layernorm.weight",
+          "model.language_model.layers.58.post_attention_layernorm.weight",
+          "model.language_model.layers.58.post_feedforward_layernorm.weight",
+          "model.language_model.layers.58.pre_feedforward_layernorm.weight",
+          "model.language_model.layers.58.self_attn.k_norm.weight",
+          "model.language_model.layers.58.self_attn.q_norm.weight",
+          "model.language_model.layers.59.input_layernorm.weight",
+          "model.language_model.layers.59.post_attention_layernorm.weight",
+          "model.language_model.layers.59.post_feedforward_layernorm.weight",
+          "model.language_model.layers.59.pre_feedforward_layernorm.weight",
+          "model.language_model.layers.59.self_attn.k_norm.weight",
+          "model.language_model.layers.59.self_attn.q_norm.weight",
+          "model.language_model.layers.6.input_layernorm.weight",
+          "model.language_model.layers.6.post_attention_layernorm.weight",
+          "model.language_model.layers.6.post_feedforward_layernorm.weight",
+          "model.language_model.layers.6.pre_feedforward_layernorm.weight",
+          "model.language_model.layers.6.self_attn.k_norm.weight",
+          "model.language_model.layers.6.self_attn.q_norm.weight",
+          "model.language_model.layers.7.input_layernorm.weight",
+          "model.language_model.layers.7.post_attention_layernorm.weight",
+          "model.language_model.layers.7.post_feedforward_layernorm.weight",
+          "model.language_model.layers.7.pre_feedforward_layernorm.weight",
+          "model.language_model.layers.7.self_attn.k_norm.weight",
+          "model.language_model.layers.7.self_attn.q_norm.weight",
+          "model.language_model.layers.8.input_layernorm.weight",
+          "model.language_model.layers.8.post_attention_layernorm.weight",
+          "model.language_model.layers.8.post_feedforward_layernorm.weight",
+          "model.language_model.layers.8.pre_feedforward_layernorm.weight",
+          "model.language_model.layers.8.self_attn.k_norm.weight",
+          "model.language_model.layers.8.self_attn.q_norm.weight",
+          "model.language_model.layers.9.input_layernorm.weight",
+          "model.language_model.layers.9.post_attention_layernorm.weight",
+          "model.language_model.layers.9.post_feedforward_layernorm.weight",
+          "model.language_model.layers.9.pre_feedforward_layernorm.weight",
+          "model.language_model.layers.9.self_attn.k_norm.weight",
+          "model.language_model.layers.9.self_attn.q_norm.weight",
+          "model.language_model.norm.weight"
+        ]
+      },
+      "represented_source_l2": 70134.96434594429,
+      "norm_scope": "all selected native tensors; not the whole model",
+      "spec_emitted": true
+    }
+  ],
+  "source_checkpoint": {
+    "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/checkpoints/code90-current-ad-helper-av-v1",
+    "tree_sha256": "5d056eb03f954db80313a85167153c875fe5e436e4f97c281a3f55202d9b3eaf",
+    "attestation": {
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-av-dev30-dp4-v1/http-trace/capture.json",
+      "sha256": "8e4b57eacaeca88260281c4d39a0f347b55ed0a7f1cabcac3ff0507d1e6d9e74"
+    }
+  },
+  "parent_state": {
+    "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f04-relative-v1/parent-state.json",
+    "sha256": "983a4c51bbd5059879a678f7cd7081a31c3d1fe78c0583891750b12faa16d15b"
+  },
+  "observed_blocks": [
+    "native"
+  ],
+  "native_parameters": "observed",
+  "source_sha256": {
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f04-relative-v1/proposal-plan.json": "8e06264ec98ac6adf4a847603886e4377d61f0c4f1a7c96831fc5ceecd0dfacb",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-av-dev30-dp4-v1/http-trace/capture.json": "8e4b57eacaeca88260281c4d39a0f347b55ed0a7f1cabcac3ff0507d1e6d9e74",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f04-relative-v1/parent-state.json": "983a4c51bbd5059879a678f7cd7081a31c3d1fe78c0583891750b12faa16d15b",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-behavior18-inputs-v1/train-cases.json": "b42990b0caac24ccc7843e40718c0c5e7ad61dd5baa131ed6852c126bf37f66d",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-av-behavior12-native-gpu4-v2/work/correct-logprob/summary.json": "eabb73cd9d978130dae53f6ac151dd9660fcb0862876f3063e8d6d91b167fccd",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-av-behavior12-native-gpu4-v2/work/correct-logprob/provenance.json": "25754ae2274d420471f322dd25774e6c94d3b226251a4a469002e236683abeb7",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-av-behavior12-native-gpu4-v2/work/correct-logprob/coverage.json": "88be0e2cd3cbef6fcf85a7dfd5fee307f30db071ed5cb4561320e412738ef4e7",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-av-behavior12-native-gpu4-v2/work/correct-logprob/frame-evidence.json": "21ae203f395c51f7d973436b42cfeab19f9d72b1c2db18e8c0faa4613fa26f2d",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-av-behavior12-native-gpu4-v2/work/margin/summary.json": "e9ca36ef7c67a17c25ac849e67a4a3ee027eeba49c1422b602c04d501ec0bc25",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-av-behavior12-native-gpu4-v2/work/margin/provenance.json": "f35cf7b1849eba5e63f79cb8b9ab2fcd4f04573eceda3e832500a29f3fa59c47",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-av-behavior12-native-gpu4-v2/work/margin/coverage.json": "88be0e2cd3cbef6fcf85a7dfd5fee307f30db071ed5cb4561320e412738ef4e7",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-av-behavior12-native-gpu4-v2/work/margin/frame-evidence.json": "21ae203f395c51f7d973436b42cfeab19f9d72b1c2db18e8c0faa4613fa26f2d",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/worktrees/kairyu-bench-weight-tools/scripts/experiments/gemma4-purpose/propose_native_objectives.py": "9633698b9eab5d1e9c5e49d399f897d9147ab37f32c3ecd4b61232e3dc5e2d83",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/worktrees/kairyu-bench-weight-tools/scripts/experiments/gemma4-purpose/joint.py": "6480e16c8f453b4a8f3914a502e1abd6ce31e21ef01759f258715baf557e703c",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/worktrees/kairyu-bench-weight-tools/scripts/experiments/gemma4-purpose/recipe_common.py": "fddbca286f3423e5e4a0bb046663600967f2060d0e055558d1c8659fcd89f35e",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/worktrees/kairyu-bench-weight-tools/src/kairyu_bench/wsp/weights/finite_response.py": "2f4b474089290d66a291d61eea176743d2502303943c6fded5b4331ebbff77af",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/worktrees/kairyu-bench-weight-tools/src/kairyu_bench/wsp/weights/finite_replay.py": "71c424bffac775ba112e709632df0a37351a79c3121827be7c9844f321c7c4d3",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/worktrees/kairyu-bench-weight-tools/src/kairyu_bench/wsp/weights/checkpoint.py": "898297c05e7179cdc4568d6f290b978073bcebafea804ac043b54030e8205bf9",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-av-behavior12-native-gpu4-v2/work/correct-logprob/source-native-values.npz": "81a10d044bd0776e5a7997e68b7cae65b2f7b2af000873ac0be2fa2385763bac",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-av-behavior12-native-gpu4-v2/work/correct-logprob/gradient-A-0.npz": "372ffb38135b8cbb940fd4b56a9cdf23927d45bfc21a10646f24f1677a51ef06",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-av-behavior12-native-gpu4-v2/work/correct-logprob/gradient-A-1.npz": "0ba6e5eb2ff502a20e720775d00d8f6b126b7077c3af0512f274c19c61de85f5",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-av-behavior12-native-gpu4-v2/work/correct-logprob/gradient-B-0.npz": "826d7675b4246b9683824da7156b962047ac5f611dbb48124e855f82f07e3201",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-av-behavior12-native-gpu4-v2/work/correct-logprob/gradient-B-1.npz": "9b7e5c680283cfb8b4e48bd582ade01f827cd51dd1398264865659ca20815b6d",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-av-behavior12-native-gpu4-v2/work/correct-logprob/gradient-C-0.npz": "ba4da32a1e67f84dc351911d30dbe29f23edfe4db035855e7875d7067501e7e8",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-av-behavior12-native-gpu4-v2/work/correct-logprob/gradient-C-1.npz": "aea9b5ddd443844ede7f75901d74db4868767dc824bf79630739222efca4d811",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-av-behavior12-native-gpu4-v2/work/correct-logprob/gradient-D-0.npz": "14250e45d56db4a2a779ab00c9804b0881597a682ffbfcc1d8b86fbfdd32cecf",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-av-behavior12-native-gpu4-v2/work/correct-logprob/gradient-D-1.npz": "33361fe260160a0e960cffaf1de0f33aca415c5ce0f70569ad3b892da3633c69",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-av-behavior12-native-gpu4-v2/work/correct-logprob/gradient-E-0.npz": "196d1e309bb1834fe7b4353800a8e6fbbbe1f9d1827ad07d27f55aecafc9645f",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-av-behavior12-native-gpu4-v2/work/correct-logprob/gradient-E-1.npz": "4717dc55f4763171f570c585b7f11c14693a73ddbf24475f37604f4f7faf1b41",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-av-behavior12-native-gpu4-v2/work/correct-logprob/gradient-F-0.npz": "b4edcf66840ad0b650facaec5442ec7d3593b058c8afa4a1044fdd0cb2168aff",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-av-behavior12-native-gpu4-v2/work/correct-logprob/gradient-F-1.npz": "711cee7922a79f2aeff3f0fbd08cdcbbddfa38b143b330c3aeed2a3889f03c05",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-av-behavior12-native-gpu4-v2/work/margin/source-native-values.npz": "81a10d044bd0776e5a7997e68b7cae65b2f7b2af000873ac0be2fa2385763bac",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-av-behavior12-native-gpu4-v2/work/margin/gradient-A-0.npz": "8443ebaf42b1a5126cdcc3cebb24052292b8507764ac1184e585bebd054fae6c",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-av-behavior12-native-gpu4-v2/work/margin/gradient-A-1.npz": "0b74f88977148590925673a1ea3656035a63f41ef3395eccc79d7f6063fbcf14",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-av-behavior12-native-gpu4-v2/work/margin/gradient-B-0.npz": "3128ee4e518edd3213133b0fe592fa6950fb706132158cb8b3e03b6731cc4d81",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-av-behavior12-native-gpu4-v2/work/margin/gradient-B-1.npz": "cc17f1964cc47c2e0048862e0a1e410e726a42dbe19fff593abf1662881808a0",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-av-behavior12-native-gpu4-v2/work/margin/gradient-C-0.npz": "f491f0ea7661dd02f8d3b33f9e4c4d426a3cd4bc7436fb2ac1985abcc8006cdb",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-av-behavior12-native-gpu4-v2/work/margin/gradient-C-1.npz": "f00f6450720b00ac550681f28761a81e65069cfae1690333863d8cfcddf49dd6",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-av-behavior12-native-gpu4-v2/work/margin/gradient-D-0.npz": "dd74dd6be90d6f5ea420894a8f2209f4061a007ca003bc4c7e9660472ffd18c2",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-av-behavior12-native-gpu4-v2/work/margin/gradient-D-1.npz": "e9baf8a1a011c15300a3a28d338336a85dc2e95a7f5ab909b0a3062eb0da8c9f",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-av-behavior12-native-gpu4-v2/work/margin/gradient-E-0.npz": "99942b1242b467e41f8a0ad34ae7068031636feb857082a62d7b2f2fb7a7f1fd",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-av-behavior12-native-gpu4-v2/work/margin/gradient-E-1.npz": "a793af69d0deb27b2faaef7911c8543f96fc0312ef4d864ee7ff5302198fc0b9",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-av-behavior12-native-gpu4-v2/work/margin/gradient-F-0.npz": "f90dddb9e3b390b1d1763a0ebe04c422261325e60a401431c2a62286bfc5b7c7",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-av-behavior12-native-gpu4-v2/work/margin/gradient-F-1.npz": "7f603347f10f8241a084f2c41517a79aacb207b708f9cadfd8b1bb3786e64b04"
+  },
+  "source_stat": {
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f04-relative-v1/proposal-plan.json": [
+      2306,
+      182192863,
+      28815,
+      1794048104763398185,
+      1794048104763398185
+    ],
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-av-dev30-dp4-v1/http-trace/capture.json": [
+      2306,
+      182190191,
+      5009,
+      1794032814979837389,
+      1794032814979837389
+    ],
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f04-relative-v1/parent-state.json": [
+      2306,
+      182192862,
+      3008,
+      1794048104763398185,
+      1794048104763398185
+    ],
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-behavior18-inputs-v1/train-cases.json": [
+      2306,
+      182191377,
+      10872,
+      1794040053511576605,
+      1794040053511576605
+    ],
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-av-behavior12-native-gpu4-v2/work/correct-logprob/summary.json": [
+      2306,
+      182191875,
+      118197,
+      1794041307569592217,
+      1794041307569592217
+    ],
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-av-behavior12-native-gpu4-v2/work/correct-logprob/provenance.json": [
+      2306,
+      182191857,
+      8049,
+      1794041258398275359,
+      1794041258398275359
+    ],
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-av-behavior12-native-gpu4-v2/work/correct-logprob/coverage.json": [
+      2306,
+      182191861,
+      76654,
+      1794041278227596508,
+      1794041278227596508
+    ],
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-av-behavior12-native-gpu4-v2/work/correct-logprob/frame-evidence.json": [
+      2306,
+      182191860,
+      3709,
+      1794041278175598288,
+      1794041278175598288
+    ],
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-av-behavior12-native-gpu4-v2/work/margin/summary.json": [
+      2306,
+      182191904,
+      118857,
+      1794041376758225075,
+      1794041376758225075
+    ],
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-av-behavior12-native-gpu4-v2/work/margin/provenance.json": [
+      2306,
+      182191883,
+      8020,
+      1794041310553490102,
+      1794041310553490102
+    ],
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-av-behavior12-native-gpu4-v2/work/margin/coverage.json": [
+      2306,
+      182191885,
+      76654,
+      1794041329378845916,
+      1794041329379845882
+    ],
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-av-behavior12-native-gpu4-v2/work/margin/frame-evidence.json": [
+      2306,
+      182191884,
+      3709,
+      1794041329322847832,
+      1794041329322847832
+    ],
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/worktrees/kairyu-bench-weight-tools/scripts/experiments/gemma4-purpose/propose_native_objectives.py": [
+      2306,
+      181423255,
+      39565,
+      1794017864260907708,
+      1794017864260907708
+    ],
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/worktrees/kairyu-bench-weight-tools/scripts/experiments/gemma4-purpose/joint.py": [
+      2306,
+      181412536,
+      16402,
+      1794017873698584835,
+      1794017873698584835
+    ],
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/worktrees/kairyu-bench-weight-tools/scripts/experiments/gemma4-purpose/recipe_common.py": [
+      2306,
+      181412485,
+      17709,
+      1794014581645503954,
+      1794014581645503954
+    ],
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/worktrees/kairyu-bench-weight-tools/src/kairyu_bench/wsp/weights/finite_response.py": [
+      2306,
+      181299790,
+      17320,
+      1793896811898534843,
+      1793896811898534843
+    ],
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/worktrees/kairyu-bench-weight-tools/src/kairyu_bench/wsp/weights/finite_replay.py": [
+      2306,
+      181312581,
+      42890,
+      1794017934613500754,
+      1794017934613500754
+    ],
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/worktrees/kairyu-bench-weight-tools/src/kairyu_bench/wsp/weights/checkpoint.py": [
+      2306,
+      181280332,
+      18153,
+      1793900927263767869,
+      1793900927263767869
+    ],
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-av-behavior12-native-gpu4-v2/work/correct-logprob/source-native-values.npz": [
+      2306,
+      182191862,
+      2029628,
+      1794041278627582816,
+      1794041278627582816
+    ],
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-av-behavior12-native-gpu4-v2/work/correct-logprob/gradient-A-0.npz": [
+      2306,
+      182191866,
+      2948083,
+      1794041292811097325,
+      1794041292811097325
+    ],
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-av-behavior12-native-gpu4-v2/work/correct-logprob/gradient-A-1.npz": [
+      2306,
+      182191869,
+      2948089,
+      1794041298830891290,
+      1794041298830891290
+    ],
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-av-behavior12-native-gpu4-v2/work/correct-logprob/gradient-B-0.npz": [
+      2306,
+      182191868,
+      2945360,
+      1794041296995954092,
+      1794041296995954092
+    ],
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-av-behavior12-native-gpu4-v2/work/correct-logprob/gradient-B-1.npz": [
+      2306,
+      182191865,
+      2946045,
+      1794041288321251002,
+      1794041288321251002
+    ],
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-av-behavior12-native-gpu4-v2/work/correct-logprob/gradient-C-0.npz": [
+      2306,
+      182191871,
+      2947240,
+      1794041302401769078,
+      1794041302401769078
+    ],
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-av-behavior12-native-gpu4-v2/work/correct-logprob/gradient-C-1.npz": [
+      2306,
+      182191864,
+      2946314,
+      1794041290621172280,
+      1794041290621172280
+    ],
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-av-behavior12-native-gpu4-v2/work/correct-logprob/gradient-D-0.npz": [
+      2306,
+      182191870,
+      2946458,
+      1794041300653828900,
+      1794041300653828900
+    ],
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-av-behavior12-native-gpu4-v2/work/correct-logprob/gradient-D-1.npz": [
+      2306,
+      182191867,
+      2947355,
+      1794041294880026512,
+      1794041294880026512
+    ],
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-av-behavior12-native-gpu4-v2/work/correct-logprob/gradient-E-0.npz": [
+      2306,
+      182191863,
+      2947798,
+      1794041285876334689,
+      1794041285876334689
+    ],
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-av-behavior12-native-gpu4-v2/work/correct-logprob/gradient-E-1.npz": [
+      2306,
+      182191872,
+      2946301,
+      1794041304091711241,
+      1794041304091711241
+    ],
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-av-behavior12-native-gpu4-v2/work/correct-logprob/gradient-F-0.npz": [
+      2306,
+      182191874,
+      2945925,
+      1794041307548592936,
+      1794041307548592936
+    ],
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-av-behavior12-native-gpu4-v2/work/correct-logprob/gradient-F-1.npz": [
+      2306,
+      182191873,
+      2947432,
+      1794041305873650257,
+      1794041305873650257
+    ],
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-av-behavior12-native-gpu4-v2/work/margin/source-native-values.npz": [
+      2306,
+      182191886,
+      2029628,
+      1794041329896828193,
+      1794041329896828193
+    ],
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-av-behavior12-native-gpu4-v2/work/margin/gradient-A-0.npz": [
+      2306,
+      182191894,
+      3295958,
+      1794041351383093079,
+      1794041351383093079
+    ],
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-av-behavior12-native-gpu4-v2/work/margin/gradient-A-1.npz": [
+      2306,
+      182191897,
+      3374619,
+      1794041361998729930,
+      1794041361998729930
+    ],
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-av-behavior12-native-gpu4-v2/work/margin/gradient-B-0.npz": [
+      2306,
+      182191896,
+      3337907,
+      1794041358692843018,
+      1794041358692843018
+    ],
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-av-behavior12-native-gpu4-v2/work/margin/gradient-B-1.npz": [
+      2306,
+      182191893,
+      3090967,
+      1794041343872350031,
+      1794041343872350031
+    ],
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-av-behavior12-native-gpu4-v2/work/margin/gradient-C-0.npz": [
+      2306,
+      182191899,
+      3286486,
+      1794041368098521277,
+      1794041368098521277
+    ],
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-av-behavior12-native-gpu4-v2/work/margin/gradient-C-1.npz": [
+      2306,
+      182191888,
+      3416833,
+      1794041347617221912,
+      1794041347617221912
+    ],
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-av-behavior12-native-gpu4-v2/work/margin/gradient-D-0.npz": [
+      2306,
+      182191898,
+      3149879,
+      1794041365146622250,
+      1794041365146622250
+    ],
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-av-behavior12-native-gpu4-v2/work/margin/gradient-D-1.npz": [
+      2306,
+      182191895,
+      3289571,
+      1794041354970970338,
+      1794041354970970338
+    ],
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-av-behavior12-native-gpu4-v2/work/margin/gradient-E-0.npz": [
+      2306,
+      182191887,
+      3365490,
+      1794041339633495054,
+      1794041339633495054
+    ],
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-av-behavior12-native-gpu4-v2/work/margin/gradient-E-1.npz": [
+      2306,
+      182191900,
+      3200597,
+      1794041371007421777,
+      1794041371007421777
+    ],
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-av-behavior12-native-gpu4-v2/work/margin/gradient-F-0.npz": [
+      2306,
+      182191903,
+      3452378,
+      1794041376737225793,
+      1794041376737225793
+    ],
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-av-behavior12-native-gpu4-v2/work/margin/gradient-F-1.npz": [
+      2306,
+      182191901,
+      3244468,
+      1794041373931321766,
+      1794041373931321766
+    ]
+  },
+  "labels": [
+    [
+      "correct-logprob",
+      "A",
+      0
+    ],
+    [
+      "correct-logprob",
+      "A",
+      1
+    ],
+    [
+      "correct-logprob",
+      "B",
+      0
+    ],
+    [
+      "correct-logprob",
+      "B",
+      1
+    ],
+    [
+      "correct-logprob",
+      "C",
+      0
+    ],
+    [
+      "correct-logprob",
+      "C",
+      1
+    ],
+    [
+      "correct-logprob",
+      "D",
+      0
+    ],
+    [
+      "correct-logprob",
+      "D",
+      1
+    ],
+    [
+      "correct-logprob",
+      "E",
+      0
+    ],
+    [
+      "correct-logprob",
+      "E",
+      1
+    ],
+    [
+      "correct-logprob",
+      "F",
+      0
+    ],
+    [
+      "correct-logprob",
+      "F",
+      1
+    ],
+    [
+      "margin",
+      "A",
+      0
+    ],
+    [
+      "margin",
+      "A",
+      1
+    ],
+    [
+      "margin",
+      "B",
+      0
+    ],
+    [
+      "margin",
+      "B",
+      1
+    ],
+    [
+      "margin",
+      "C",
+      0
+    ],
+    [
+      "margin",
+      "C",
+      1
+    ],
+    [
+      "margin",
+      "D",
+      0
+    ],
+    [
+      "margin",
+      "D",
+      1
+    ],
+    [
+      "margin",
+      "E",
+      0
+    ],
+    [
+      "margin",
+      "E",
+      1
+    ],
+    [
+      "margin",
+      "F",
+      0
+    ],
+    [
+      "margin",
+      "F",
+      1
+    ]
+  ],
+  "seconds": 10.985932182054967,
+  "fresh_checkpoint_payload_hash": false,
+  "model_calls": 0,
+  "adopted": false,
+  "limits": [
+    "Local BF16 predictions are not measured response or capability.",
+    "Explicit loss bounds are search inputs, not an adoption rule.",
+    "Forced empty thought under ON differs from free-thinking generation."
+  ]
+}

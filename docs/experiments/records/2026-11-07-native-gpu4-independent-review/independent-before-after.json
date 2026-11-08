@@ -1,0 +1,472 @@
+{
+  "scope": "pure CPU mock, no Docker/GPU/API/service calls",
+  "outcomes": [
+    {
+      "source": "owner-before.py.txt",
+      "source_sha256": "c70af9c1e59bc41b31644812758dd07f572e6898e1a07aa1eabbe89c7f39550b",
+      "trace": [
+        [
+          "inspect",
+          "late-collector-fixture-correct-logprob",
+          {
+            "created": false,
+            "active": false,
+            "client_done": false
+          }
+        ],
+        [
+          "ps",
+          "-aq",
+          "--no-trunc",
+          {
+            "created": false,
+            "active": false,
+            "client_done": false
+          }
+        ],
+        [
+          "ps",
+          "-aq",
+          "--no-trunc",
+          "--filter",
+          "name=^/late-collector-fixture-correct-logprob$",
+          {
+            "created": false,
+            "active": false,
+            "client_done": false
+          }
+        ],
+        [
+          "inspect",
+          "late-collector-fixture-correct-logprob",
+          {
+            "created": false,
+            "active": false,
+            "client_done": false
+          }
+        ],
+        [
+          "ps",
+          "-aq",
+          "--no-trunc",
+          {
+            "created": false,
+            "active": false,
+            "client_done": false
+          }
+        ],
+        [
+          "ps",
+          "-aq",
+          "--no-trunc",
+          "--filter",
+          "name=^/late-collector-fixture-correct-logprob$",
+          {
+            "created": false,
+            "active": false,
+            "client_done": false
+          }
+        ],
+        [
+          "inspect",
+          "late-collector-fixture-margin",
+          {
+            "created": false,
+            "active": false,
+            "client_done": false
+          }
+        ],
+        [
+          "ps",
+          "-aq",
+          "--no-trunc",
+          {
+            "created": false,
+            "active": false,
+            "client_done": false
+          }
+        ],
+        [
+          "ps",
+          "-aq",
+          "--no-trunc",
+          "--filter",
+          "name=^/late-collector-fixture-margin$",
+          {
+            "created": false,
+            "active": false,
+            "client_done": false
+          }
+        ],
+        [
+          "inspect",
+          "late-collector-fixture-margin",
+          {
+            "created": false,
+            "active": false,
+            "client_done": false
+          }
+        ],
+        [
+          "ps",
+          "-aq",
+          "--no-trunc",
+          {
+            "created": false,
+            "active": false,
+            "client_done": false
+          }
+        ],
+        [
+          "ps",
+          "-aq",
+          "--no-trunc",
+          "--filter",
+          "name=^/late-collector-fixture-margin$",
+          {
+            "created": false,
+            "active": false,
+            "client_done": false
+          }
+        ],
+        [
+          "client_exit_and_late_create"
+        ],
+        [
+          "start",
+          "fd4ec2eb9d7deba2ce3e790add6b50c0ee79a6390495320d8697873b32957bcf",
+          {
+            "created": true,
+            "active": true,
+            "client_done": true
+          }
+        ]
+      ],
+      "start_with_active_collector": true,
+      "restored": true,
+      "status": {
+        "restored": true,
+        "protected_exact": true,
+        "collector_cleanup": [
+          {
+            "objective": "correct-logprob",
+            "cid": null,
+            "proven_inactive": true
+          },
+          {
+            "objective": "margin",
+            "cid": null,
+            "proven_inactive": true
+          }
+        ],
+        "after_queues": {
+          "queues": {
+            "running": [
+              0
+            ],
+            "waiting": [
+              0
+            ]
+          }
+        }
+      }
+    },
+    {
+      "source": "owner-after.py.txt",
+      "source_sha256": "9a8d9255312a97ae2762ec97c34c9701ac5d64dcb0dc273e01f8d7f6700b7183",
+      "trace": [
+        [
+          "inspect",
+          "late-collector-fixture-correct-logprob",
+          {
+            "created": false,
+            "active": false,
+            "client_done": false
+          }
+        ],
+        [
+          "ps",
+          "-aq",
+          "--no-trunc",
+          {
+            "created": false,
+            "active": false,
+            "client_done": false
+          }
+        ],
+        [
+          "ps",
+          "-aq",
+          "--no-trunc",
+          "--filter",
+          "name=^/late-collector-fixture-correct-logprob$",
+          {
+            "created": false,
+            "active": false,
+            "client_done": false
+          }
+        ],
+        [
+          "inspect",
+          "late-collector-fixture-correct-logprob",
+          {
+            "created": false,
+            "active": false,
+            "client_done": false
+          }
+        ],
+        [
+          "ps",
+          "-aq",
+          "--no-trunc",
+          {
+            "created": false,
+            "active": false,
+            "client_done": false
+          }
+        ],
+        [
+          "ps",
+          "-aq",
+          "--no-trunc",
+          "--filter",
+          "name=^/late-collector-fixture-correct-logprob$",
+          {
+            "created": false,
+            "active": false,
+            "client_done": false
+          }
+        ],
+        [
+          "inspect",
+          "late-collector-fixture-margin",
+          {
+            "created": false,
+            "active": false,
+            "client_done": false
+          }
+        ],
+        [
+          "ps",
+          "-aq",
+          "--no-trunc",
+          {
+            "created": false,
+            "active": false,
+            "client_done": false
+          }
+        ],
+        [
+          "ps",
+          "-aq",
+          "--no-trunc",
+          "--filter",
+          "name=^/late-collector-fixture-margin$",
+          {
+            "created": false,
+            "active": false,
+            "client_done": false
+          }
+        ],
+        [
+          "inspect",
+          "late-collector-fixture-margin",
+          {
+            "created": false,
+            "active": false,
+            "client_done": false
+          }
+        ],
+        [
+          "ps",
+          "-aq",
+          "--no-trunc",
+          {
+            "created": false,
+            "active": false,
+            "client_done": false
+          }
+        ],
+        [
+          "ps",
+          "-aq",
+          "--no-trunc",
+          "--filter",
+          "name=^/late-collector-fixture-margin$",
+          {
+            "created": false,
+            "active": false,
+            "client_done": false
+          }
+        ],
+        [
+          "client_exit_and_late_create"
+        ],
+        [
+          "inspect",
+          "late-owned-cid",
+          {
+            "created": true,
+            "active": true,
+            "client_done": true
+          }
+        ],
+        [
+          "stop",
+          "--time",
+          "30",
+          "late-owned-cid",
+          {
+            "created": true,
+            "active": true,
+            "client_done": true
+          }
+        ],
+        [
+          "inspect",
+          "late-owned-cid",
+          {
+            "created": true,
+            "active": true,
+            "client_done": true
+          }
+        ],
+        [
+          "kill",
+          "late-owned-cid",
+          {
+            "created": true,
+            "active": true,
+            "client_done": true
+          }
+        ],
+        [
+          "inspect",
+          "late-owned-cid",
+          {
+            "created": true,
+            "active": false,
+            "client_done": true
+          }
+        ],
+        [
+          "inspect",
+          "late-collector-fixture-margin",
+          {
+            "created": true,
+            "active": false,
+            "client_done": true
+          }
+        ],
+        [
+          "ps",
+          "-aq",
+          "--no-trunc",
+          {
+            "created": true,
+            "active": false,
+            "client_done": true
+          }
+        ],
+        [
+          "ps",
+          "-aq",
+          "--no-trunc",
+          "--filter",
+          "name=^/late-collector-fixture-margin$",
+          {
+            "created": true,
+            "active": false,
+            "client_done": true
+          }
+        ],
+        [
+          "inspect",
+          "late-collector-fixture-margin",
+          {
+            "created": true,
+            "active": false,
+            "client_done": true
+          }
+        ],
+        [
+          "ps",
+          "-aq",
+          "--no-trunc",
+          {
+            "created": true,
+            "active": false,
+            "client_done": true
+          }
+        ],
+        [
+          "ps",
+          "-aq",
+          "--no-trunc",
+          "--filter",
+          "name=^/late-collector-fixture-margin$",
+          {
+            "created": true,
+            "active": false,
+            "client_done": true
+          }
+        ],
+        [
+          "start",
+          "fd4ec2eb9d7deba2ce3e790add6b50c0ee79a6390495320d8697873b32957bcf",
+          {
+            "created": true,
+            "active": false,
+            "client_done": true
+          }
+        ]
+      ],
+      "start_with_active_collector": false,
+      "restored": true,
+      "status": {
+        "restored": true,
+        "protected_exact": true,
+        "collector_cleanup": [
+          {
+            "objective": "correct-logprob",
+            "cid": null,
+            "phase": "before_client_wait",
+            "proven_inactive": true
+          },
+          {
+            "objective": "margin",
+            "cid": null,
+            "phase": "before_client_wait",
+            "proven_inactive": true
+          },
+          {
+            "objective": "correct-logprob",
+            "cid": "late-owned-cid",
+            "phase": "after_client_wait",
+            "owned_kill": true,
+            "proven_inactive": true
+          },
+          {
+            "objective": "margin",
+            "cid": null,
+            "phase": "after_client_wait",
+            "proven_inactive": true
+          }
+        ],
+        "collector_client_finished": true,
+        "after_queues": {
+          "queues": {
+            "running": [
+              0
+            ],
+            "waiting": [
+              0
+            ]
+          }
+        }
+      }
+    }
+  ],
+  "finding_closed": true,
+  "real_service_calls": 0
+}

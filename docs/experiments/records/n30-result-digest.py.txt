@@ -1,0 +1,60 @@
+from pathlib import Path
+import ast
+import hashlib
+import json
+import shutil
+from collections import Counter
+
+repo=Path('/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/worktrees/kairyu-bench-weight-tools')
+study=Path('/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-av-dev30-dp4-v1')
+out=study/'independent-audit-v2'
+ev=repo/'docs/experiments/evidence-2026-11-07-n30'
+ev.mkdir(exist_ok=False)
+for name in ('all-2338-numeric-items.json','code-90-items.json','summary.json','data-anomalies.json','contract-reader-command.json'):
+    shutil.copyfile(out/name,ev/name)
+shutil.copyfile(study/'independent-audit-v1/summary.json',ev/'audit-v1-summary.json')
+shutil.copyfile(study/'independent-audit-v1/executed-source.py',ev/'audit-v1-source.py.txt')
+summary=json.loads((out/'summary.json').read_text())
+rows=json.loads((out/'code-90-items.json').read_text())
+steps=[dict(problem=x['id'],**z) for x in rows if x['source']=='scicode' for sample in x['detail']['samples'] for z in sample['step_diagnostics']]
+def save(name,value):
+    (ev/name).write_text(json.dumps(value,ensure_ascii=False,indent=2)+'\n')
+save('scicode-39-step-numeric.json',steps)
+contracts=json.loads((out/'public-contracts.json').read_text())
+compact={'read_scope':'public prompts, generated public code, exact EvalPlus sanitize; no canonical solutions or official test answers read',
+         'source_public_contracts_sha256':hashlib.sha256((out/'public-contracts.json').read_bytes()).hexdigest(),
+         'evalplus':[],'livecodebench':[],'scicode':[]}
+for x in contracts['evalplus']:
+    tree=ast.parse(x['sanitized_code'])
+    names=[n.name for n in tree.body if isinstance(n,ast.FunctionDef)]
+    compact['evalplus'].append({'id':x['id'],'entry_point':x['entry_point'],'top_level_functions':names,
+                               'entry_point_defined':x['entry_point'] in names,'sanitized_sha256':x['sanitized_sha256'],
+                               'public_prompt_sha256':hashlib.sha256(x['prompt'].encode()).hexdigest()})
+for x in contracts['livecodebench']:
+    compact['livecodebench'].append({'id':x['id'],'title':x['title'],
+                                    'public_prompt_sha256':hashlib.sha256(x['prompt'].encode()).hexdigest(),
+                                    'generated_public_answer_sha256':hashlib.sha256(x['generated_public_answer'].encode()).hexdigest()})
+for x in contracts['scicode']:
+    compact['scicode'].append({'id':x['id'],'steps':[
+        {'step':s['step'],'function_header_first_line':s['public_contract']['function_header'].splitlines()[0],
+         'public_contract_sha256':hashlib.sha256(json.dumps(s['public_contract'],sort_keys=True).encode()).hexdigest(),
+         'new_top_level_function_names':s['new_function_names'],'direct_named_calls_to_prior_helpers':s['calls_to_prior_helpers'],
+         'generated_file_sha256':s['code_sha256']} for s in x['steps']]})
+compact['static_call_graph_limit']='Direct Name calls in newly introduced top-level functions only; excludes methods, callbacks, aliases, dynamic calls, and redefinitions; no causal failure attribution.'
+save('public-contract-map.json',compact)
+metrics={'scicode_steps':len(steps),'passed_steps':sum(x['passed'] for x in steps),
+         'failed_exception_hints':dict(Counter(x['exception_class'] for x in steps if not x['passed'])),
+         'step_timeouts':sum(x['timed_out'] for x in steps),
+         'code_finish_reasons':dict(Counter(y['finish_reason'] for x in rows for y in x['generation'])),
+         'source_report_input_tokens':sum(x['prompt_tokens'] for x in summary['source_report'].values()),
+         'source_report_output_tokens':sum(x['completion_tokens'] for x in summary['source_report'].values()),
+         'terminal_agent_input_tokens':sum(x['input_tokens'] for x in summary['agents'] if x['id'].startswith('terminal')),
+         'terminal_agent_output_tokens':sum(x['output_tokens'] for x in summary['agents'] if x['id'].startswith('terminal')),
+         'swe_persisted_input_tokens':sum(x['input_tokens'] for x in summary['agents'] if x['id'].startswith('swe')),
+         'swe_persisted_output_tokens':sum(x['output_tokens'] for x in summary['agents'] if x['id'].startswith('swe')),
+         'swe_model_api_calls':sum(x['api_calls'] for x in summary['agents'] if x['id'].startswith('swe')),
+         'swe_persisted_assistant_messages':sum(x['assistant_messages'] for x in summary['agents'] if x['id'].startswith('swe')),
+         'only_scicode_perfect_ceiling':(29/30+23/30+15/20+1)/4,
+         'only_other_three_perfect_ceiling':(3+summary['run']['sources']['scicode']['score'])/4}
+save('derived-metrics.json',metrics)
+print(json.dumps(metrics,ensure_ascii=False))

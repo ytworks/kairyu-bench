@@ -1,0 +1,12 @@
+{
+  "returncode": 0,
+  "seconds": 0.08221247303299606,
+  "command": [
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/infra/weight-tools-ci/bin/python",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/worktrees/kairyu-bench-weight-tools/docs/experiments/scripts/fresh-av-native-gpu4-20261107.py",
+    "--plan",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f04-native19-gpu4-prepare-v1/root-plan-ready.json"
+  ],
+  "plan_sha256": "b500a9c18479b467a7c11d368b35bcbf0b89fecd0e9eaef5d8e5a5e127cffcf8",
+  "model_calls": 0
+}

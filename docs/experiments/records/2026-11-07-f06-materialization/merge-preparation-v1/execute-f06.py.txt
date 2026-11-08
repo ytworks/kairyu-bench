@@ -1,0 +1,150 @@
+"""One authorized CPU-only F04->F06 dense merge; no GPU/serving/global-lock action."""
+from pathlib import Path
+import hashlib
+import json
+import os
+import shutil
+import subprocess
+import time
+
+R = Path("/mnt/nvme/kairyu/wsp/gemma4-coding-20261104")
+N = R/"analysis/fresh-purpose-20261107-f04-mbpp-lora-training-v1"
+B = R/"worktrees/kairyu-bench-weight-tools"
+PLAN = N/"merge-preparation-v1/prepared-plan.json"
+O = N/"materialization-f06-v1"
+EXPECTED = "54d7696929c5157bfb8798cda40891b6089f58c99d4071428593b6bd66ea04b0"
+
+def sha(path):
+    h = hashlib.sha256()
+    with Path(path).open("rb") as stream:
+        for block in iter(lambda: stream.read(16 << 20), b""):
+            h.update(block)
+    return h.hexdigest()
+
+def save(name, value):
+    with (O/name).open("x") as stream:
+        json.dump(value, stream, indent=2, allow_nan=False)
+        stream.write("\n")
+
+def stat_files(root):
+    return {str(p.relative_to(root)): {
+        "device": p.stat().st_dev, "inode": p.stat().st_ino, "size": p.stat().st_size,
+        "mtime_ns": p.stat().st_mtime_ns, "ctime_ns": p.stat().st_ctime_ns,
+        "nlink": p.stat().st_nlink
+    } for p in sorted(root.rglob("*")) if p.is_file()}
+
+assert sha(PLAN) == EXPECTED
+plan = json.loads(PLAN.read_text())
+O.mkdir()
+started = time.monotonic()
+save("scope-amendment.json", {
+    "original_prepared_plan_sha256": EXPECTED, "operator": "root explicit execution delegation",
+    "scope": "CPU-only private new F06 create/verify, concurrent with GPU owner's normal restoration",
+    "reason": "All64 immutable exports required; source F04 read-only, all target copies private; no shared-link mutation; GPU restore reads independently.",
+    "original_global_lock_and_restoration_wait_superseded_for_this_CPU_job_only": True,
+    "global_lock_acquired": False, "model_calls": 0, "services_changed": False,
+    "source_sha256": sha(__file__), "pid": os.getpid(), "epoch": time.time()})
+summary_path = N/"work/train-lora/summary.json"
+parse_waits, runs = 0, []
+try:
+    while True:
+        if summary_path.exists():
+            try:
+                summary = json.loads(summary_path.read_text())
+                break
+            except json.JSONDecodeError:
+                parse_waits += 1
+        if time.monotonic()-started > 1800:
+            raise TimeoutError("no completed training summary before bounded wait")
+        time.sleep(2)
+    for key, value in {"status": "completed", "completed_steps": 64, "model_forwards": 256,
+                       "forward_attempts": 256, "base_unchanged": True,
+                       "target_tensors": 410, "holdout_gradient_ids": [], "error": None}.items():
+        if summary.get(key) != value:
+            raise ValueError("trainer completion guard: "+key)
+    for path, digest in summary["source_sha256"].items():
+        if sha(path) != digest:
+            raise ValueError("training source/input changed: "+path)
+    if sha(N/"trainer-plan.json") != summary["trainer_plan_sha256"]:
+        raise ValueError("trainer plan mismatch")
+    work = N/"work/train-lora"
+    steps = [json.loads(line) for line in (work/"steps.jsonl").read_text().splitlines()]
+    micro = [json.loads(line) for line in (work/"microbatches.jsonl").read_text().splitlines()]
+    if [row["step"] for row in steps] != list(range(1, 65)) or len(micro) != 256:
+        raise ValueError("complete training history required")
+    if any(len(row["modules"]) != 410 or any(item["calls"] != 4 for item in row["modules"].values()) for row in steps):
+        raise ValueError("projection execution coverage")
+    final = Path(plan["final_export"])
+    receipt_path = final/"training-receipt.json"
+    receipt = json.loads(receipt_path.read_text())
+    spec_path = final/"merge-spec.json"
+    spec = json.loads(spec_path.read_text())
+    if (receipt["steps"] != 64 or receipt["modules"] != 410 or receipt["rank"] != 8
+            or receipt["alpha"] != 8 or receipt["dtype"] != "F32" or not receipt["base_unchanged"]
+            or spec["local_training"]["sha256"] != sha(receipt_path)
+            or receipt["step_log_sha256"] != sha(work/"steps.jsonl")
+            or receipt["adapter_sha256"] != sha(final/"adapter_model.safetensors")
+            or receipt["config_sha256"] != sha(final/"adapter_config.json")
+            or receipt["parent_tree_sha256"] != plan["parent_tree_sha256"]):
+        raise ValueError("final immutable adapter identity")
+    for path, digest in plan["source_sha256"].items():
+        if sha(path) != digest:
+            raise ValueError("merge source/kernel pin changed")
+    source, dest = Path(plan["parent_path"]), Path(plan["candidate_path"])
+    manifest = Path(plan["external_manifest_path"])
+    if dest.parent.exists() or dest.parent.is_symlink() or dest.exists() or manifest.exists():
+        raise ValueError("all F06 paths must be new")
+    before = stat_files(source)
+    needed = sum(item["size"] for item in before.values()) + 5*2**30 + 64*2**20
+    free = shutil.disk_usage(source).free
+    if free < needed:
+        raise ValueError(f"NVMe reserve: free={free}, required={needed}")
+    save("preflight.json", {
+        "training_summary_sha256": sha(summary_path), "trainer_plan_sha256": summary["trainer_plan_sha256"],
+        "final_spec_sha256": sha(spec_path), "final_receipt_sha256": sha(receipt_path),
+        "adapter_sha256": receipt["adapter_sha256"], "free_bytes": free, "required_free_bytes": needed,
+        "source_before_stat": before, "wait_seconds": time.monotonic()-started,
+        "transient_summary_parse_waits": parse_waits, "all_targets_absent": True})
+    dest.parent.mkdir()  # Exclusive owned parent, never mkdir -p/reuse.
+    env = os.environ.copy()
+    env.update(plan["environment"])
+    for phase, key in (("preview", "preview_argv"), ("create", "create_argv"), ("verify", "verify_argv")):
+        if sha(PLAN) != EXPECTED or json.loads(spec_path.read_text()) != spec:
+            raise ValueError("prepared plan changed")
+        for path, digest in plan["source_sha256"].items():
+            if sha(path) != digest:
+                raise ValueError("merge source/kernel changed before stage")
+        cmd = plan["low_priority_prefix"] + plan[key]
+        stage_start = time.monotonic()
+        with (O/(phase+".stdout")).open("x") as out, (O/(phase+".stderr")).open("x") as err:
+            proc = subprocess.run(cmd, cwd=B, env=env, stdout=out, stderr=err)
+        entry = {"phase": phase, "command": cmd, "returncode": proc.returncode,
+                 "seconds": time.monotonic()-stage_start,
+                 "stdout_sha256": sha(O/(phase+".stdout")), "stderr_sha256": sha(O/(phase+".stderr"))}
+        runs.append(entry)
+        save(phase+"-execution.json", entry)
+        print(json.dumps(entry), flush=True)
+        if proc.returncode:
+            raise RuntimeError(phase+" failed; no automatic retry")
+        if phase == "create":
+            value = json.loads(manifest.read_text())
+            compact = {key: value[key] for key in ("changed_elements", "changed_byte_elements", "changed_tensors",
+                                                  "delta_l2", "source_tree_sha256", "candidate_tree_sha256")}
+            compact.update(manifest_path=str(manifest), manifest_sha256=sha(manifest),
+                           create_seconds=entry["seconds"], verify_status="running_next")
+            save("create-manifest-summary.json", compact)
+            print(json.dumps({"CREATE_COMPLETED": compact}), flush=True)
+    after = stat_files(source)
+    if before != after:
+        raise ValueError("parent stat changed; verification retained")
+    save("completion.json", {
+        "status": "completed", "runs": runs, "seconds_including_wait": time.monotonic()-started,
+        "source_unchanged_stat": True, "manifest_sha256": sha(manifest),
+        "free_after_bytes": shutil.disk_usage(source).free, "global_lock_acquired": False,
+        "GPU_or_service_operations": 0, "verify_stdout_sha256": sha(O/"verify.stdout")})
+    print(json.dumps({"status": "completed", "receipt": str(O/"completion.json")}), flush=True)
+except BaseException as exc:
+    save("failure.json", {"class": type(exc).__name__, "message": str(exc), "runs": runs,
+                         "seconds_including_wait": time.monotonic()-started,
+                         "model_calls": 0, "retry": 0})
+    raise

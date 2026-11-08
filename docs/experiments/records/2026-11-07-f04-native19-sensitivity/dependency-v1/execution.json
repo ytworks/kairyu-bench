@@ -1,0 +1,20 @@
+{
+  "argv": [
+    "nice",
+    "-n",
+    "15",
+    "ionice",
+    "-c",
+    "3",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/infra/weight-tools-ci/bin/python",
+    "-B",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f04-native19-dependency-v1/analyze.py"
+  ],
+  "started_epoch": 1794054899.88557,
+  "seconds": 0.1220099925994873,
+  "returncode": 1,
+  "threads": 1,
+  "model_calls": 0,
+  "solver_calls": 0,
+  "source_sha256": "3a921cc215362f66e5a0a6aa3d25644ce41a24f79600600ef4e0006543b7c8a0"
+}

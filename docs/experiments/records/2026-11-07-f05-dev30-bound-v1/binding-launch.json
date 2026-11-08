@@ -1,0 +1,15 @@
+{
+  "argv": [
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/infra/weight-tools-ci/bin/python",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f05-dev30-dp4-v1/bind-and-preview.py",
+    "--plan-sha256",
+    "ec377967cf4e93015dacd8396c84fa0dcb17e87ed59cc6aadc3ce4e7b441b719",
+    "--owner-pid",
+    "1547860",
+    "--closure-sha256",
+    "336e50b435e33332b8aba42562d7dddb7c3d899b5cf37d2528d5dfe59bf61bf3"
+  ],
+  "epoch": 1794055692.8731928,
+  "source_sha256": "9832682bc2f61ad8b024b31161e7d0733d72658204f4233e78e3feba398ec5ab",
+  "scope": "Binding and read-only preview only; no WSP run"
+}

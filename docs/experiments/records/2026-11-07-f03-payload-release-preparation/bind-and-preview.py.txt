@@ -1,0 +1,38 @@
+"""Bind the fixed F03 release preview to completed F04 evidence. No unlink."""
+from pathlib import Path
+import hashlib,importlib.util,json,subprocess,time
+R=Path('/mnt/nvme/kairyu/wsp/gemma4-coding-20261104');B=R/'worktrees/kairyu-bench-weight-tools'
+P3=R/'analysis/fresh-purpose-20261107-f03-native-v1';O=P3/'lossless-release-plan-v1'
+P4=R/'analysis/fresh-purpose-20261107-f04-relative-v1';D4=P4/'deployment-dp4-v1'
+sha=lambda p:hashlib.sha256(p.read_bytes()).hexdigest()
+def pin(p,h=None):
+ d=sha(p)
+ if h is not None:assert d==h
+ return {'path':str(p),'sha256':d}
+p=json.loads((O/'plan-unbound.json').read_text())
+pins={'four_replica_closure':pin(D4/'four-apply-closure.json','91d0d6cfbcbf093c56b575633493e5a21ab15e89b986e8c7aeb579940e3c26bf'),'endpoint_closure':pin(D4/'endpoint-closure.json','44c5fd4e3a725353eca32fb56278000886cc9ca92bd03013f64fea0c6dc36727'),'normal_global_release':pin(D4/'global-lock-released.json','ed8a921b735573190cafd162c38f524f0c6c9afe6f0fa58219e66bd4842886c9'),'candidate_manifest':pin(R/'checkpoints/fresh-native-relative-f04-faststore-v1/manifest.json','fd189cf276a1219ad627186d2dfb4a895c79768821f247a0b33d9abd8953d8c1'),'candidate_verify':pin(P4/'faststore-plan-v1/materialization-v1/verify.stdout','a7237a2b82d68e64467c791c3781a86b8b216f584272ef5db77c956383c4b0cd')}
+known=['9c8cb98b6ed22c6cafb80bffa792ce0d28230e1bda013b70f385416cf6f7f126','5db50b29c8b3036bac1b437d170f33492b95a33e8e129d514e4b811778722e1c','3c602f0541f14cdf63799577e0d1d2e13f5c7ff674b36c3834aa5a0df48304f4','ae1630ca31c3691ef50d6ae459eec0cbf202c2721f67429917b6ea4d42e6e1d2']
+individual=[pin(D4/f'gemma-{i}-closure-v1.json',h) for i,h in enumerate(known)]
+full=json.loads((D4/'four-apply-closure.json').read_text());end=json.loads((D4/'endpoint-closure.json').read_text());release=json.loads((D4/'global-lock-released.json').read_text())
+assert full['protected_unchanged'] and full['container_count']==27 and full['protected_count']==23
+assert end['all_four_idle'] and end['protected_unchanged'] and release['status']=='normal_release'
+cids={name:row['cid'] for name,row in full['replicas'].items()}
+helper=B/'docs/experiments/scripts/fresh-f02-payload-release-20261107.py';assert sha(helper)==p['helper_sha256']
+spec=importlib.util.spec_from_file_location('f03_release_snapshot',helper);m=importlib.util.module_from_spec(spec);spec.loader.exec_module(m);m.CANDIDATE=Path(p['candidate'])
+containers=m.mounts();assert len(containers)==27
+protected=sorted(row['cid'] for row in containers if row['cid'] not in cids.values());assert len(protected)==23
+baseline=O/'read-only-audit.json';assert not baseline.exists()
+baseline.write_text(json.dumps({'containers':containers,'created_epoch':time.time(),'all_mounts_no_F03_intersection':True,'model_service_mutations':0},indent=2)+chr(10))
+p.update(status='ready_for_exact_preview',read_only_audit=pin(baseline),bound_epoch=time.time(),authorization='Root authorized final binding and preview only. Apply still requires explicit final plan/helper/wrapper approval.')
+p['f04_serving'].update(pins,tree_sha256=full['tree'],service_cids=cids,closures=individual,protected_cids=protected)
+assert sha(B/'docs/experiments/scripts/fresh-f03-payload-release-20261107.py')==p['wrapper_sha256']
+final=O/'plan-ready.json';assert not final.exists();final.write_text(json.dumps(p,indent=2)+chr(10))
+command=[str(R/'infra/weight-tools-ci/bin/python'),str(B/'docs/experiments/scripts/fresh-f03-payload-release-20261107.py'),'--plan',str(final),'--plan-sha256',sha(final),'--expected-wrapper-sha256',p['wrapper_sha256'],'--output',str(P3/'lossless-release-preview-v1')]
+(O/'preview-command.json').write_text(json.dumps(command,indent=2)+chr(10))
+start=time.time()
+with (O/'preview.stdout').open('x') as out,(O/'preview.stderr').open('x') as err:r=subprocess.run(command,cwd=B,stdout=out,stderr=err)
+(O/'preview-execution.json').write_text(json.dumps({'returncode':r.returncode,'seconds':time.time()-start,'model_calls':0,'service_mutations':0,'apply':False},indent=2)+chr(10))
+receipt=P3/'lossless-release-preview-v1/receipt.json'
+s=json.loads(receipt.read_text()) if receipt.exists() else {}
+print(json.dumps({'plan_path':str(final),'plan_sha256':sha(final),'baseline_sha256':sha(baseline),'command':command,'preview_returncode':r.returncode,'preview_status':s.get('status'),'preview_seconds':s.get('elapsed_seconds'),'preview_receipt_sha256':sha(receipt) if receipt.exists() else None,'released':len(s.get('released',[])),'error':s.get('error_message')},indent=2))
+assert r.returncode==0 and s['status']=='preview_passed_no_checkpoint_changes'

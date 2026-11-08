@@ -1,0 +1,11 @@
+{
+  "status": "passed",
+  "returncode": 0,
+  "seconds": 0.03449606895446777,
+  "changed_file": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/worktrees/kairyu-bench-weight-tools/docs/experiments/scripts/fresh-purpose-cpu-validation-r14-20261107.py",
+  "before_sha256": "b9a5834457ff1d5475eda4d3a6b2fdde90c5565cdceaa01cdb9e27a03bdef9e1",
+  "after_sha256": "d131c7f4300889ce6136dd1bf40b5843b685686bbb6ed79a57605d380b25fedf",
+  "ast_identical": true,
+  "fix": "format-only five semicolon lines in reused one-off validation driver",
+  "unittest_repeated": false
+}

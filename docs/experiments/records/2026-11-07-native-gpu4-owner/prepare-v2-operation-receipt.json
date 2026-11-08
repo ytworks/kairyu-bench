@@ -1,0 +1,14 @@
+{
+  "argv": [
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/infra/weight-tools-ci/bin/python",
+    "-B",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/worktrees/kairyu-bench-weight-tools/docs/experiments/records/2026-11-07-native-gpu4-owner/prepare-v2.py"
+  ],
+  "source_sha256": "3ecfbc1caca2c4b3d8b1b80b9874a0891a7a59f38e359a2b88df2e9424c06627",
+  "returncode": 0,
+  "stdout": "{\"plan\": {\"path\": \"/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-av-behavior12-native-gpu4-v2/plan.json\", \"sha256\": \"8edba22f5aa38ec5eebf443a3b4b2eab2794b23c9968fcd0c09d13d003f20316\"}, \"identity\": {\"path\": \"/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-av-behavior12-native-gpu4-v2/native-behavior-result-identity.json\", \"sha256\": \"463e9ff5cf4f8183527bc1080f1fab36a5214a63891345cc07f254d2ee9ff099\"}, \"owner_preview\": {\"path\": \"/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-av-behavior12-native-gpu4-v2/owner-full-preview.json\", \"sha256\": \"d6f2d62c6f10527c387ac47ae3464290f200c83a2b8636f382e96a673a4cec27\"}, \"execution\": {\"passed\": 10, \"failed\": 2, \"unknown\": 0, \"evaluated_cases\": 12, \"tests_passed\": 164, \"tests_total\": 192, \"seconds\": 10.30094879202079}}\n",
+  "stderr": "",
+  "seconds": 3.2144569689407945,
+  "model_calls": 0,
+  "service_changes": 0
+}

@@ -1,0 +1,20 @@
+{
+  "status": "normal_keeper_release_verified",
+  "recorded_epoch": 1794034063.7427187,
+  "keeper_pid": 319432,
+  "session_id": 47281,
+  "exit_code": 0,
+  "release_message": "global_lock_released_on_stdin",
+  "method": "one newline to dedicated keeper stdin",
+  "old_pid_absent": true,
+  "old_flock_absent": true,
+  "lock_identity": "09:02:181180584",
+  "current_lock_lines": [],
+  "approved_next_plan_path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-av-dev30-dp4-v1/launch-plan-approved.json",
+  "approved_next_plan_sha256": "bdd8d4ab62d7a2b31aa697e8cf0554858fb931a216a6612a971f824e1532a5e7",
+  "next_owner_expected_source_sha256": "956af488fe54578c32c9baa856e9c32170dc49c1bbce2b1ba5db9af9ea1dd524",
+  "four_closure_sha256": "671fc7f0b4f7853631e7dff05e5cb9d76c4d9b95b66927d32fa0393ed2ed82ee",
+  "endpoint_closure_sha256": "32d3850eba9b4c0d10c19d7229e526f68929620d946f2f88cf8aacbfe90c4e65",
+  "service_mutations_after_release": 0,
+  "next_owner_must_acquire_nonblocking_and_recheck": true
+}

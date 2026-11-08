@@ -1,0 +1,47 @@
+{
+  "copied_epoch": 1794057636.844849,
+  "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-pr33-body-update-f05-v7",
+  "files": [
+    {
+      "file": "body.md",
+      "sha256": "58fe5525d2895ccd71a71efa5416774c4e63f8ceb51c6147eb0b82601d22157a",
+      "bytes": 10231
+    },
+    {
+      "file": "patch-receipt.json",
+      "sha256": "d1ed6b8955669daf778c554fbbf2dc5d03199e54f0ef6000c2ff2169b2d9297f",
+      "bytes": 294
+    },
+    {
+      "file": "preparation.json",
+      "sha256": "9a83cb5920c1031dee3f183814be3593fbadc75d84481d2dd6e99d78d391e050",
+      "bytes": 269
+    },
+    {
+      "file": "previous-body.md",
+      "sha256": "985f5a875101ede053280e5a1b0610c123e34885214a15db2e2e655c60155793",
+      "bytes": 8135
+    },
+    {
+      "file": "update.json",
+      "sha256": "2be2f0bef409d8c4551e9244579b6c873795ab64e57973550ccaca3b67e62ab1",
+      "bytes": 10299
+    }
+  ],
+  "body_sha256": "58fe5525d2895ccd71a71efa5416774c4e63f8ceb51c6147eb0b82601d22157a",
+  "update_body_exact": true,
+  "receipt": {
+    "epoch": 1794056754.4524348,
+    "body_sha256": "58fe5525d2895ccd71a71efa5416774c4e63f8ceb51c6147eb0b82601d22157a",
+    "previous_sha256": "985f5a875101ede053280e5a1b0610c123e34885214a15db2e2e655c60155793",
+    "returned_equal": true,
+    "url": "https://github.com/ytworks/kairyu-bench/pull/33"
+  },
+  "preparation": {
+    "epoch": 1794056752.492601,
+    "previous_sha256": "985f5a875101ede053280e5a1b0610c123e34885214a15db2e2e655c60155793",
+    "body_sha256": "58fe5525d2895ccd71a71efa5416774c4e63f8ceb51c6147eb0b82601d22157a",
+    "current_head": "c5f8a35ca13feb6eed438955b1067953ee743a1f"
+  },
+  "external_api_calls_by_this_copy": 0
+}

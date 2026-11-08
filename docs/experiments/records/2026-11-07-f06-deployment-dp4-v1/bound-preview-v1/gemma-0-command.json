@@ -1,0 +1,22 @@
+{
+  "argv": [
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/infra/weight-tools-ci/bin/python",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/worktrees/kairyu-bench-weight-tools/docs/experiments/scripts/redeploy-replica.py",
+    "--control",
+    "/home/y-takagi/kairyu/examples/gemma-4-31b-8gpu/control.py",
+    "--service",
+    "gemma-0",
+    "--candidate",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/checkpoints/fresh-lora-mbpp-f06-v1/checkpoint",
+    "--freeze",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f06-lora-deployment-plan-v1/bound-preview-v1/f06-freeze.json",
+    "--baseline",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f06-lora-deployment-plan-v1/bound-preview-v1/all-chat-before.json",
+    "--output",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f06-lora-deployment-plan-v1/bound-preview-v1/gemma-0-preview",
+    "--timeout",
+    "1200"
+  ],
+  "returncode": 0,
+  "seconds": 0.8660006523132324
+}

@@ -1,0 +1,140 @@
+{
+  "snapshot_epoch": 1794062392.3285682,
+  "trace_prefix_sha256": "9650419215206ddb3f858e53324409d890894f5bfd69e88d25a5f230249a90e9",
+  "trace_prefix_bytes": 3042596,
+  "responses_prefix_sha256": "acfe1929a0414f7e7fc53b38183e95bd7b44173f3f8d4ecd0b478bb31d9e763a",
+  "attempt_rows": [
+    {
+      "schema_version": 1,
+      "capture_id": "56f05db0be5e4b9798f500947fd50c36",
+      "run_id": "gemma4-fresh-f06-dev30-dp4-20261107-v1",
+      "request_scope": "request",
+      "item_id": "mrcr-v2:1940",
+      "trace_id": "b41c119fa9954842939db3c45391283d",
+      "call_id": "8091f5982efc4234a2638d46a1c0c192",
+      "attempt_index": 0,
+      "operation": "completions",
+      "input_sha256": "3a4fd0d59d0a179b3e5bdf551ffd1099dbaa7f620fb76acab2c1a6cf7c1a7169",
+      "seed": 1230051363,
+      "started_at_unix": 1794060195.8705256,
+      "seconds": 1800.6013327380642,
+      "error": "HTTP 502"
+    },
+    {
+      "schema_version": 1,
+      "capture_id": "56f05db0be5e4b9798f500947fd50c36",
+      "run_id": "gemma4-fresh-f06-dev30-dp4-20261107-v1",
+      "request_scope": "request",
+      "item_id": "longbench-v2:66ebd0ea5a08c7b9b35dff57",
+      "trace_id": "e67edd3a3b4a44b8ab7120140c30c6d3",
+      "call_id": "6fa0b495c956473fa44ba4bfb0eb4d6c",
+      "attempt_index": 0,
+      "operation": "completions",
+      "input_sha256": "34051c85f9a661c59aeb46b6408b83c98fcabc188673dd3172df46eab3ce1059",
+      "seed": 1558704197,
+      "started_at_unix": 1794060200.3153913,
+      "seconds": 1800.0411346700275,
+      "error": "HTTP 502"
+    },
+    {
+      "schema_version": 1,
+      "capture_id": "56f05db0be5e4b9798f500947fd50c36",
+      "run_id": "gemma4-fresh-f06-dev30-dp4-20261107-v1",
+      "request_scope": "request",
+      "item_id": "mrcr-v2:1940",
+      "trace_id": "d2442ed556b546aeb963f22321f8a74f",
+      "call_id": "8091f5982efc4234a2638d46a1c0c192",
+      "attempt_index": 1,
+      "operation": "completions",
+      "input_sha256": "3a4fd0d59d0a179b3e5bdf551ffd1099dbaa7f620fb76acab2c1a6cf7c1a7169",
+      "seed": 1230051363,
+      "started_at_unix": 1794061998.474519,
+      "seconds": 108.83709503302816,
+      "error": null,
+      "response_id": "chatcmpl-38c79d42c55e457e",
+      "usage": {
+        "prompt_tokens": 50603,
+        "completion_tokens": 10997,
+        "total_tokens": 61600,
+        "prompt_tokens_details": null
+      }
+    },
+    {
+      "schema_version": 1,
+      "capture_id": "56f05db0be5e4b9798f500947fd50c36",
+      "run_id": "gemma4-fresh-f06-dev30-dp4-20261107-v1",
+      "request_scope": "request",
+      "item_id": "mmlu-pro:1843",
+      "trace_id": "7bfbd59daa1f43d0ab73bcd61304180e",
+      "call_id": "061ef5c7433c40db91836972b041a365",
+      "attempt_index": 0,
+      "operation": "completions",
+      "input_sha256": "3fa3e6d9442630b31eaccd17f6b4b88766d74886e12d88e3fe12f9d8d56a81ed",
+      "seed": 1803208020,
+      "started_at_unix": 1794060311.2635636,
+      "seconds": 1800.020206705085,
+      "error": "HTTP 502"
+    },
+    {
+      "schema_version": 1,
+      "capture_id": "56f05db0be5e4b9798f500947fd50c36",
+      "run_id": "gemma4-fresh-f06-dev30-dp4-20261107-v1",
+      "request_scope": "request",
+      "item_id": "mmlu-pro:1843",
+      "trace_id": "3390d28b333a44cd85b30d4b7b6c20ad",
+      "call_id": "061ef5c7433c40db91836972b041a365",
+      "attempt_index": 1,
+      "operation": "completions",
+      "input_sha256": "3fa3e6d9442630b31eaccd17f6b4b88766d74886e12d88e3fe12f9d8d56a81ed",
+      "seed": 1803208020,
+      "started_at_unix": 1794062113.2845309,
+      "seconds": 23.48408186994493,
+      "error": null,
+      "response_id": "chatcmpl-7de534ff4d8d4525",
+      "usage": {
+        "prompt_tokens": 298,
+        "completion_tokens": 2107,
+        "total_tokens": 2405,
+        "prompt_tokens_details": null
+      }
+    }
+  ],
+  "response_status": [
+    {
+      "id": "longbench-v2:66ebd0ea5a08c7b9b35dff57",
+      "response_record_present": false,
+      "response_error": null,
+      "samples": []
+    },
+    {
+      "id": "mmlu-pro:1843",
+      "response_record_present": true,
+      "response_error": null,
+      "samples": [
+        {
+          "finish_reason": "stop",
+          "prompt_tokens": 298,
+          "completion_tokens": 2107,
+          "seconds": 1825.505407872959
+        }
+      ]
+    },
+    {
+      "id": "mrcr-v2:1940",
+      "response_record_present": true,
+      "response_error": null,
+      "samples": [
+        {
+          "finish_reason": "stop",
+          "prompt_tokens": 50603,
+          "completion_tokens": 10997,
+          "seconds": 1911.4409647450084
+        }
+      ]
+    }
+  ],
+  "bn_fit_error_id_match": false,
+  "interpretation": "HTTP502 at approximately1800seconds; underlying exception not present in client trace; response absence is pending not failure.",
+  "model_requests": 0,
+  "rescore": 0
+}

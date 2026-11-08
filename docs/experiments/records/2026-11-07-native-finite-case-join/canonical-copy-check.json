@@ -1,0 +1,40 @@
+{
+  "all_equal": true,
+  "rows": [
+    {
+      "label": "base",
+      "pr_path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/worktrees/kairyu-bench-weight-tools/docs/experiments/evidence-2026-11-07-f02/finite-v2-replay-base.json",
+      "canonical_path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f02/finite-gpu6-v2/work/replay/base.json",
+      "sha256": "b5a1bee3b4ff11fddd275a7d736bc0d2bdb66869b5120db2b0b9084b161e8383",
+      "equal": true
+    },
+    {
+      "label": "candidate",
+      "pr_path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/worktrees/kairyu-bench-weight-tools/docs/experiments/evidence-2026-11-07-f02/finite-v2-replay-fresh-code-joint-f02.json",
+      "canonical_path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f02/finite-gpu6-v2/work/replay/fresh-code-joint-f02.json",
+      "sha256": "bc2c68faed61dd331be188c39fdff9103cb4d6c78cc8e8d4791ad129d0c95c96",
+      "equal": true
+    },
+    {
+      "label": "restored",
+      "pr_path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/worktrees/kairyu-bench-weight-tools/docs/experiments/evidence-2026-11-07-f02/finite-v2-replay-restored_base.json",
+      "canonical_path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f02/finite-gpu6-v2/work/replay/restored_base.json",
+      "sha256": "c8d658d87f44310f26704bc5b894a82412b6662d28e1184343a1062af8b73c3c",
+      "equal": true
+    },
+    {
+      "label": "summary.json",
+      "pr_path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/worktrees/kairyu-bench-weight-tools/docs/experiments/records/2026-11-07-authored48-execution-v2/summary.json",
+      "canonical_path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-av-authored48-execution-plan-v2/summary.json",
+      "sha256": "5adaf4f7a7c223bbbaf936df898683c035fa9aadf5e25542cb8eff03fa8c93da",
+      "equal": true
+    },
+    {
+      "label": "all120-fixed48-stage.json",
+      "pr_path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/worktrees/kairyu-bench-weight-tools/docs/experiments/records/2026-11-07-authored48-execution-v2/all120-fixed48-stage.json",
+      "canonical_path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-av-authored48-execution-plan-v2/all120-fixed48-stage.json",
+      "sha256": "d2914c02075ebf8f63fd4f4c3b86f5dd8bbe143491dc9157db1bcecb82e6e160",
+      "equal": true
+    }
+  ]
+}

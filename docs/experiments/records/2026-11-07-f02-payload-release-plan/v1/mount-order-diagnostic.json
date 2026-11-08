@@ -1,0 +1,77 @@
+{
+  "scope": "fresh comparison only, original after snapshot was not saved",
+  "order_differences": [
+    {
+      "cid": "3257ee5ee6d0fa212bacd64de8b86152ab0be509e0a7d329838193559039dbda",
+      "name": "/kairyu-wsp-observe-20261106",
+      "same_complete_mount_records_when_sorted": true,
+      "before_count": 4,
+      "after_count": 4
+    },
+    {
+      "cid": "149b564776c7bda50b4039b44b0cf52b1178272a481a4c4dee88de2f283ae334",
+      "name": "/wsp-dind",
+      "same_complete_mount_records_when_sorted": true,
+      "before_count": 5,
+      "after_count": 5
+    },
+    {
+      "cid": "5885c75f79f5396867db6b3518637ca5bcde342dd1fd20f88c89bf69ff42cdff",
+      "name": "/gemma4-wsp-cpu-chat-purpose-20261105",
+      "same_complete_mount_records_when_sorted": true,
+      "before_count": 3,
+      "after_count": 3
+    },
+    {
+      "cid": "ed9842852109333c564c5962ada840ea2794720ad613ebc0c8ef96591c816a33",
+      "name": "/gemma4-wsp-cpu-chat-frame-preflight-failed-20261105",
+      "same_complete_mount_records_when_sorted": true,
+      "before_count": 3,
+      "after_count": 3
+    },
+    {
+      "cid": "37b84155d0d47c339a8a3f989cf69be74a80a9f7369829db41612a5a77fe481a",
+      "name": "/gemma4-wsp-cpu-algorithm-completion-20261105",
+      "same_complete_mount_records_when_sorted": true,
+      "before_count": 5,
+      "after_count": 5
+    },
+    {
+      "cid": "c672bb052ad042282e2e2ec2e8b65edde8b6c50262bd6dab00da57314e4f8b1b",
+      "name": "/gemma4-wsp-cpu-whole-dependencies-20261105",
+      "same_complete_mount_records_when_sorted": true,
+      "before_count": 3,
+      "after_count": 3
+    },
+    {
+      "cid": "374e969acaf78f336c638b5bff9ffdde04fd44f9075e45d2cfd54881b556b2c1",
+      "name": "/gemma4-wsp-cpu-broad-margins-20261105",
+      "same_complete_mount_records_when_sorted": true,
+      "before_count": 3,
+      "after_count": 3
+    },
+    {
+      "cid": "fbb725752d9e8990506968903bfcb5a406eb56f0bc6c839eb08199c0d05f54f3",
+      "name": "/gemma4-wsp-cpu-mechanisms-v2-20261105",
+      "same_complete_mount_records_when_sorted": true,
+      "before_count": 5,
+      "after_count": 5
+    },
+    {
+      "cid": "4ef033809802f99ae4859327cf7350e2dc4c7d657b226a7229914432e0dd0718",
+      "name": "/gemma4-wsp-cpu-mechanisms-20261105",
+      "same_complete_mount_records_when_sorted": true,
+      "before_count": 5,
+      "after_count": 5
+    },
+    {
+      "cid": "ca0ce07ae660af1bb129a129aa538d23206e1d10c4db982ae692618dd852678d",
+      "name": "/wsp-dind-pre-nvme-results-20261105",
+      "same_complete_mount_records_when_sorted": true,
+      "before_count": 4,
+      "after_count": 4
+    }
+  ],
+  "prior_audit_mutations": 0,
+  "plan": "normalize only ordering, retain all mount fields and before/after snapshots"
+}

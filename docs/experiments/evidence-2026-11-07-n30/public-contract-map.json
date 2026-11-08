@@ -1,0 +1,621 @@
+{
+  "read_scope": "public prompts, generated public code, exact EvalPlus sanitize; no canonical solutions or official test answers read",
+  "source_public_contracts_sha256": "51eda8cfaadbd2531492eecaf9351314bea26b8bd2d7a874e5845e636a910346",
+  "evalplus": [
+    {
+      "id": "humaneval-plus:HumanEval/152",
+      "entry_point": "compare",
+      "top_level_functions": [
+        "compare"
+      ],
+      "entry_point_defined": true,
+      "sanitized_sha256": "e0516306c5bee1a3ea252fba96cdb2ef07d19bbc299051139912927c2399790b",
+      "public_prompt_sha256": "b9449a0c09f62a6c759895e7539a750fab0bbf8c41f40c6ce7b077d4786e989f"
+    },
+    {
+      "id": "mbpp-plus:Mbpp/410",
+      "entry_point": "min_val",
+      "top_level_functions": [
+        "min_val"
+      ],
+      "entry_point_defined": true,
+      "sanitized_sha256": "be6d4e8336ccc01053603a828772cb6f1e5ea8b34ea6e7e08517d6e63eca157f",
+      "public_prompt_sha256": "517c446ea8d4931b92d67a93599a01fa424604f701ec3af3632dae61ae47c2f9"
+    },
+    {
+      "id": "mbpp-plus:Mbpp/576",
+      "entry_point": "is_Sub_Array",
+      "top_level_functions": [
+        "is_Sub_Array"
+      ],
+      "entry_point_defined": true,
+      "sanitized_sha256": "dd4c9797d11edbd2c9fead9561fcca8ef8d7d6167ecbb66a54b23eff45e528d4",
+      "public_prompt_sha256": "62aa3b5b1e93675437933b5d728e2f99072917ce95313d1df444071767eaf20a"
+    },
+    {
+      "id": "mbpp-plus:Mbpp/641",
+      "entry_point": "is_nonagonal",
+      "top_level_functions": [
+        "nonagonal_number"
+      ],
+      "entry_point_defined": false,
+      "sanitized_sha256": "d52041e012ade0494d860547910eae6ce451b1235e3779e24804f4e143624400",
+      "public_prompt_sha256": "47549618ba76a416b5b4330aa81580db9d916ca04635c0421e105a6dad5784c1"
+    },
+    {
+      "id": "mbpp-plus:Mbpp/129",
+      "entry_point": "magic_square_test",
+      "top_level_functions": [
+        "magic_square_test"
+      ],
+      "entry_point_defined": true,
+      "sanitized_sha256": "20d6a1b09099e13d81a34cfce77b3493dcea24661084681e25825a6dd340af70",
+      "public_prompt_sha256": "0299d8bb11197c0ac38e2e79b0c87a4c25a99cf0a1d446f7a9818d2ec35e6cce"
+    },
+    {
+      "id": "mbpp-plus:Mbpp/103",
+      "entry_point": "eulerian_num",
+      "top_level_functions": [
+        "eulerian_num"
+      ],
+      "entry_point_defined": true,
+      "sanitized_sha256": "a1fcc066209cabf53e0f04853087cc2ab1e157c5a2716ebaf4cbdfce203cc0c6",
+      "public_prompt_sha256": "638b87643e69fe30b83a3dffa1062e57189b5621e60bd563be38109e28497d50"
+    },
+    {
+      "id": "mbpp-plus:Mbpp/639",
+      "entry_point": "sample_nam",
+      "top_level_functions": [
+        "sample_nam"
+      ],
+      "entry_point_defined": true,
+      "sanitized_sha256": "bfe6533dc58536d13e285a4d005cd73f17306a525281bf4bd21d4a7716dcbd61",
+      "public_prompt_sha256": "d51a38d4e8980613099ac7c453dffcfe02314866f888ddd2c66f804f32615167"
+    },
+    {
+      "id": "mbpp-plus:Mbpp/126",
+      "entry_point": "sum",
+      "top_level_functions": [],
+      "entry_point_defined": false,
+      "sanitized_sha256": "085ea91d7cfeb4f5695793f882c7463cbfdf7be9f98e6c5133847a245bbea366",
+      "public_prompt_sha256": "191d5470a01410d35d86bd62ee319a4157494fe78451661a5d698285b461bfa3"
+    }
+  ],
+  "livecodebench": [
+    {
+      "id": "livecodebench:abc392_d",
+      "title": "Doubles",
+      "public_prompt_sha256": "8d786c150cfb6b27fc2bf5f8b5d02990316449b6048bdc357ba2d6fad2ef0a3a",
+      "generated_public_answer_sha256": "d3b8de8df07329064879c331e63adf29c71bc96e64f51b0ac198934f8e1dc5a9"
+    },
+    {
+      "id": "livecodebench:arc190_c",
+      "title": "Basic Grid Problem with Updates",
+      "public_prompt_sha256": "450e11f7df3218790fc8dff5079643c763f5db4dfe8a606acc9198274e320836",
+      "generated_public_answer_sha256": "6dcf30d232a8a45b3fb2ba967972467603240f7622403d9ae820265e30fd8d5e"
+    },
+    {
+      "id": "livecodebench:arc191_c",
+      "title": "A^n",
+      "public_prompt_sha256": "2427e7c9afcfa42ee50b98ad0e6eb13cd15b50ce9789d1b3948c971b4dee357a",
+      "generated_public_answer_sha256": "5adf99dbe6421c5d120178be179ed39ea102316309b19b03b3ec56fed8245a89"
+    },
+    {
+      "id": "livecodebench:arc196_a",
+      "title": "Adjacent Delete",
+      "public_prompt_sha256": "e9cc4bbf4fe63b605523a4365cd74c30228f61cf95b2c3cdeb074b9739149d66",
+      "generated_public_answer_sha256": "035e23a4728457443b1b3fe0602a859a2dfa334981bcd16861c40240cc3c7556"
+    },
+    {
+      "id": "livecodebench:3777",
+      "title": "maximum-product-of-subsequences-with-an-alternating-sum-equal-to-k",
+      "public_prompt_sha256": "4d8c32072c472b5342fa8f32f05e0c3f2a3a2db6ec621c2763122cae40647c94",
+      "generated_public_answer_sha256": "c55d112c326f224d68ac9e0f6f308cf0cd0ae4eca3bf10af487861ea003444f5"
+    }
+  ],
+  "scicode": [
+    {
+      "id": "scicode:9",
+      "steps": [
+        {
+          "step": "9.1",
+          "function_header_first_line": "def WJ(A, b, eps, x_true, x0, omega):",
+          "public_contract_sha256": "8228be4feb99037ab42b63c3aa73faed6fd8934ce340f7a37d9ecfed5e6a801f",
+          "new_top_level_function_names": [
+            "WJ"
+          ],
+          "direct_named_calls_to_prior_helpers": [],
+          "generated_file_sha256": "87bdce98dfff797c23b094648d20188e967d012ceb4f5100f534a4daccb30356"
+        }
+      ]
+    },
+    {
+      "id": "scicode:14",
+      "steps": [
+        {
+          "step": "14.1",
+          "function_header_first_line": "def harmonic_mannella_leapfrog(x0, v0, t0, steps, taup, omega0, vrms):",
+          "public_contract_sha256": "c9743273564181e73f81edfca818753522d511ca59cc2561be6f0603ac98ad62",
+          "new_top_level_function_names": [
+            "harmonic_mannella_leapfrog"
+          ],
+          "direct_named_calls_to_prior_helpers": [],
+          "generated_file_sha256": "261913bcf390292f25e16106901f4424575d58f330dd76dcd5aa8756364d4c0c"
+        },
+        {
+          "step": "14.2",
+          "function_header_first_line": "def calculate_msd(t0, steps, taup, omega0, vrms, Navg):",
+          "public_contract_sha256": "07ddc413a99c9d139b3cbc693f52437a988d56522f417d13a3102445708b1e5d",
+          "new_top_level_function_names": [
+            "calculate_msd"
+          ],
+          "direct_named_calls_to_prior_helpers": [],
+          "generated_file_sha256": "6b918da451dd7a5dd71dc361a77584a2954c97c7c96caf4d55d8e626f9f9b199"
+        }
+      ]
+    },
+    {
+      "id": "scicode:17",
+      "steps": [
+        {
+          "step": "17.1",
+          "function_header_first_line": "def init_eji_array(energy, energy_vertices):",
+          "public_contract_sha256": "2bae7b8e4ff82a32ff9da5fb700e29303ee62c6d52e716c0818fe8ef89e95bbe",
+          "new_top_level_function_names": [
+            "init_eji_array"
+          ],
+          "direct_named_calls_to_prior_helpers": [],
+          "generated_file_sha256": "e615d6c4da7819e9656c376eb8cb00db4a4e44936773242eb11a429beb8993c8"
+        },
+        {
+          "step": "17.2",
+          "function_header_first_line": "def integrate_DOS(energy, energy_vertices):",
+          "public_contract_sha256": "9042ab509e52775c7e03240ea3d3c976aaebf1d02a1ad25bfeffbf200df18d95",
+          "new_top_level_function_names": [
+            "integrate_DOS"
+          ],
+          "direct_named_calls_to_prior_helpers": [],
+          "generated_file_sha256": "6482636504ba0db7acd3c24ed7ef7ab02676f19f9bc28c0d1bf8eb6ee6f77a29"
+        }
+      ]
+    },
+    {
+      "id": "scicode:18",
+      "steps": [
+        {
+          "step": "18.1",
+          "function_header_first_line": "def Bspline(xi, i, p, Xi):",
+          "public_contract_sha256": "c8c57667a9e98b7895fab75a0524e32c784c3865c725d54904e9c28dd61fa044",
+          "new_top_level_function_names": [
+            "Bspline"
+          ],
+          "direct_named_calls_to_prior_helpers": [],
+          "generated_file_sha256": "fcfdec4a2790b752eeb0c5b5199877a338b891c98e2e0565c47901df47a0a880"
+        },
+        {
+          "step": "18.2",
+          "function_header_first_line": "def NURBS_2D(xi_1, xi_2, i_1, i_2, p_1, p_2, n_1, n_2, Xi_1, Xi_2, w):",
+          "public_contract_sha256": "ca62131d2fc86e5fd83cc61ec322615a07d52e5b6547ed82a97528c62320298c",
+          "new_top_level_function_names": [
+            "NURBS_2D"
+          ],
+          "direct_named_calls_to_prior_helpers": [],
+          "generated_file_sha256": "d7adf105dba625e1612974751cc8e63a95c007df4ab8ef021673117ce21f272a"
+        }
+      ]
+    },
+    {
+      "id": "scicode:35",
+      "steps": [
+        {
+          "step": "35.1",
+          "function_header_first_line": "def ground_state_wavelength(L, mr):",
+          "public_contract_sha256": "b9591116e52d5d2414e0252303ede0a5e15b4aeb9cc3ff00a96a178da2325513",
+          "new_top_level_function_names": [
+            "ground_state_wavelength"
+          ],
+          "direct_named_calls_to_prior_helpers": [],
+          "generated_file_sha256": "26ec1bbd652c7aef78a5f7d4ea019c1578dd72325efca04eec619212bd3a2962"
+        },
+        {
+          "step": "35.2",
+          "function_header_first_line": "def generate_quadratic_combinations(x, y, z, N):",
+          "public_contract_sha256": "b648fc48b26982d7870f9b507f913945cdadedd31116e8c22e074a0f7f6c0671",
+          "new_top_level_function_names": [
+            "generate_quadratic_combinations"
+          ],
+          "direct_named_calls_to_prior_helpers": [],
+          "generated_file_sha256": "905bce17c5fbe411f763310fc968e4aec607d06b688a373078cb4c238fcddd6f"
+        },
+        {
+          "step": "35.3",
+          "function_header_first_line": "def absorption(mr, a, b, c, N):",
+          "public_contract_sha256": "43d40d9d5b41c9472b8e0b7cf0b820d866affd75fc19c09377ef7a39fa2e2de8",
+          "new_top_level_function_names": [
+            "absorption"
+          ],
+          "direct_named_calls_to_prior_helpers": [],
+          "generated_file_sha256": "03f0a84f8f3ac2d05d2b22766fc9d6036700fbc406db717a8ad76775d88910ab"
+        }
+      ]
+    },
+    {
+      "id": "scicode:45",
+      "steps": [
+        {
+          "step": "45.1",
+          "function_header_first_line": "def init_grid(Nt, Nx, Ny, x_split, T1, alpha1, T2, alpha2):",
+          "public_contract_sha256": "c07de733ff9f7ab052ad01be8bdbb717f9c741b6cc527ea747639b18b9e268a0",
+          "new_top_level_function_names": [
+            "init_grid"
+          ],
+          "direct_named_calls_to_prior_helpers": [],
+          "generated_file_sha256": "4d84bc5ad4dee89bdec20360e79349f7edc574789e2c62ce6b531678e43284fe"
+        },
+        {
+          "step": "45.2",
+          "function_header_first_line": "def add_dirichlet_bc(grid, time_index, bc=np.array([])):",
+          "public_contract_sha256": "dd094e1637d317d65b52cae7e4122de639389de53a0a34a34822f7bac7b18c0d",
+          "new_top_level_function_names": [
+            "add_dirichlet_bc"
+          ],
+          "direct_named_calls_to_prior_helpers": [],
+          "generated_file_sha256": "62be6f9ac2b85c552ffd9178b193d51ceb18db9f0e9e38066c34add23b6c4801"
+        },
+        {
+          "step": "45.3",
+          "function_header_first_line": "def add_neumann_bc(grid, time_index, bc=np.array([])):",
+          "public_contract_sha256": "51fea312e70eea77d1890049c221523404f9b950c95e321d015a5416908757f9",
+          "new_top_level_function_names": [
+            "add_neumann_bc"
+          ],
+          "direct_named_calls_to_prior_helpers": [],
+          "generated_file_sha256": "f76d46c3640fed461a8ad2ae034dff8c17a7aa648b2e57d14f5c7bd42ada6133"
+        },
+        {
+          "step": "45.4",
+          "function_header_first_line": "def heat_equation(Nt, Nx, Ny, x_split, T1, alpha1, T2, alpha2, bc_dirichlet, bc_neumann):",
+          "public_contract_sha256": "151108d901953258167eedeca03b95a775650013770b174235031da752aaa3e1",
+          "new_top_level_function_names": [
+            "heat_equation"
+          ],
+          "direct_named_calls_to_prior_helpers": [],
+          "generated_file_sha256": "7b4c341126915df181f0e999b7b82ea943d5d3ff2d5e49dccedce41b5a3bed78"
+        }
+      ]
+    },
+    {
+      "id": "scicode:46",
+      "steps": [
+        {
+          "step": "46.1",
+          "function_header_first_line": "class Slater:",
+          "public_contract_sha256": "9ac2a55a673f37c60431075b537969845f84d3e9d82f419a74f631f05846ff6d",
+          "new_top_level_function_names": [],
+          "direct_named_calls_to_prior_helpers": [],
+          "generated_file_sha256": "bdaa8fa23232069978db6ac91d6e9b1895744a396971b1971dc9cac886dedc26"
+        },
+        {
+          "step": "46.2",
+          "function_header_first_line": "class Hamiltonian:",
+          "public_contract_sha256": "267a30aa0a30920a7880bd455467bc222d3e9d9b052e3c673929aad3c9b9f38a",
+          "new_top_level_function_names": [],
+          "direct_named_calls_to_prior_helpers": [],
+          "generated_file_sha256": "db1030b606a5a59a9d4d8eeccfab4c0d9f5ab922dcb526d1f15a1d5ec513f38a"
+        },
+        {
+          "step": "46.3",
+          "function_header_first_line": "def metropolis(configs, wf, tau, nsteps):",
+          "public_contract_sha256": "5841b7b91d15ade007ea88817566217e326cff62e8f3dba87aaac100bf457ea1",
+          "new_top_level_function_names": [
+            "metropolis"
+          ],
+          "direct_named_calls_to_prior_helpers": [],
+          "generated_file_sha256": "5d8400e72f1aa3113998d7ecdcf08768bc33a23a3e27a70a58bc9696358e099f"
+        },
+        {
+          "step": "46.4",
+          "function_header_first_line": "def calc_energy(configs, nsteps, tau, alpha, Z):",
+          "public_contract_sha256": "8f9ec6fb1d8425903aa66c587119831745c6441b0980aafb9e79496a8f7029aa",
+          "new_top_level_function_names": [
+            "calc_energy"
+          ],
+          "direct_named_calls_to_prior_helpers": [
+            {
+              "function": "metropolis",
+              "prior_step": "46.3"
+            }
+          ],
+          "generated_file_sha256": "3512a758e015c3c3043c3cf6ce1d1d1455beb275eb88f73615294f2a90348352"
+        }
+      ]
+    },
+    {
+      "id": "scicode:58",
+      "steps": [
+        {
+          "step": "58.1",
+          "function_header_first_line": "def eos_press_from_rho(rho, eos_Gamma, eos_kappa):",
+          "public_contract_sha256": "b893b836a609a555ea35b016ad03d7ac4554e95f624b7c4b61bc8702315ec6c2",
+          "new_top_level_function_names": [
+            "eos_press_from_rho"
+          ],
+          "direct_named_calls_to_prior_helpers": [],
+          "generated_file_sha256": "52eb11f1725dd3acf5a6111ed44f906a89937a564085d86e21f8f692ef214578"
+        },
+        {
+          "step": "58.2",
+          "function_header_first_line": "def eos_rho_from_press(press, eos_Gamma, eos_kappa):",
+          "public_contract_sha256": "3cddd94c2913884d18e4fd8a76fc7fe8438a70efff91f4536674a4700809a07c",
+          "new_top_level_function_names": [
+            "eos_rho_from_press"
+          ],
+          "direct_named_calls_to_prior_helpers": [],
+          "generated_file_sha256": "c433a4236671629b6f12eadf7018e6e9d28826f9a04206673144980cc33d59e8"
+        },
+        {
+          "step": "58.3",
+          "function_header_first_line": "def eos_eps_from_press(press, eos_Gamma, eos_kappa):",
+          "public_contract_sha256": "cc89bca504dffd4c36b9f78e1845c9c1a169fb0c6515f00f6eeeaa1ae28d5f5c",
+          "new_top_level_function_names": [
+            "eos_eps_from_press"
+          ],
+          "direct_named_calls_to_prior_helpers": [],
+          "generated_file_sha256": "4c424535e31799202888aefc3e526e1afe7c6240dafc99cbac1a5dbe866bc536"
+        },
+        {
+          "step": "58.4",
+          "function_header_first_line": "def tov_RHS(data, r, eos_Gamma, eos_kappa):",
+          "public_contract_sha256": "b2b581b67c24206f7d66be58def3a7d729aa8a3d6b2b1ba73166e7437d6f7837",
+          "new_top_level_function_names": [
+            "tov_RHS"
+          ],
+          "direct_named_calls_to_prior_helpers": [
+            {
+              "function": "eos_eps_from_press",
+              "prior_step": "58.3"
+            },
+            {
+              "function": "eos_rho_from_press",
+              "prior_step": "58.2"
+            }
+          ],
+          "generated_file_sha256": "38356738b9081c202453d3b2870f608025cea8ccca2dd985b07cae557d0a2e42"
+        },
+        {
+          "step": "58.5",
+          "function_header_first_line": "def tov(rhoc, eos_Gamma, eos_kappa, npoints, rmax):",
+          "public_contract_sha256": "e09c978166c929c9e4f57f7fea49ed37cff5c8121893c55752a9f96a75a2e7d6",
+          "new_top_level_function_names": [
+            "tov"
+          ],
+          "direct_named_calls_to_prior_helpers": [
+            {
+              "function": "eos_press_from_rho",
+              "prior_step": "58.1"
+            }
+          ],
+          "generated_file_sha256": "91109d8d1827164a20e188db9bb3bf77987ab79ed645be5843e033d71f98a175"
+        }
+      ]
+    },
+    {
+      "id": "scicode:80",
+      "steps": [
+        {
+          "step": "80.1",
+          "function_header_first_line": "def dist(r1, r2, L):",
+          "public_contract_sha256": "caf179ea911116a8a37706071db8b417c58fb090bce7a9d7216dbe5bb28825b0",
+          "new_top_level_function_names": [
+            "dist"
+          ],
+          "direct_named_calls_to_prior_helpers": [],
+          "generated_file_sha256": "faa92477a25b41cf447ee613719d3204cc7dd114fae482718950c2f7267f15f2"
+        },
+        {
+          "step": "80.2",
+          "function_header_first_line": "def E_ij(r, sigma, epsilon, rc):",
+          "public_contract_sha256": "fc7337303137867f9734ebcff4f10e290b465ade9b4e1fc7957167d39156406b",
+          "new_top_level_function_names": [
+            "E_ij"
+          ],
+          "direct_named_calls_to_prior_helpers": [],
+          "generated_file_sha256": "83d10cb8e7d04b0ca173169536e4f0e51e0fff2bb8c1cce4cca815b23313e5b1"
+        },
+        {
+          "step": "80.3",
+          "function_header_first_line": "def E_pot(xyz, L, sigma, epsilon, rc):",
+          "public_contract_sha256": "2d682aa620b216846892b1395f260f4a70e8176c03e4e68feaa3ea458d44f4b1",
+          "new_top_level_function_names": [
+            "E_pot"
+          ],
+          "direct_named_calls_to_prior_helpers": [
+            {
+              "function": "E_ij",
+              "prior_step": "80.2"
+            },
+            {
+              "function": "dist",
+              "prior_step": "80.1"
+            }
+          ],
+          "generated_file_sha256": "c61f46614c5728d1551f0b45fe76bc4c8d8c4bc1c98e9e8c99c3c854afc70332"
+        },
+        {
+          "step": "80.4",
+          "function_header_first_line": "def f_ij(r, sigma, epsilon, rc):",
+          "public_contract_sha256": "8fd6fed65d265d5388c862f97592f16dab2bb313ad847a91e408512eefb192db",
+          "new_top_level_function_names": [
+            "f_ij"
+          ],
+          "direct_named_calls_to_prior_helpers": [],
+          "generated_file_sha256": "cfb25f3347a547e7732d09bf7979d0387900e60f08c21b567a682a17ef61e2cc"
+        },
+        {
+          "step": "80.5",
+          "function_header_first_line": "def forces(N, xyz, L, sigma, epsilon, rc):",
+          "public_contract_sha256": "9e1b8cb21ed78d5dd8ce464e7d5093d5b00182f9b6265aefc26645421361643e",
+          "new_top_level_function_names": [
+            "forces"
+          ],
+          "direct_named_calls_to_prior_helpers": [],
+          "generated_file_sha256": "1db52cb05f511fdcc658dde0db4eb61513bc580c12a67459462eebb4ec4ac86b"
+        },
+        {
+          "step": "80.6",
+          "function_header_first_line": "def velocity_verlet(N, sigma, epsilon, positions, velocities, dt, m, L, rc):",
+          "public_contract_sha256": "48733da2142b036dc187adbceec4bb29c4d2095f434fac09609e7db845098d4e",
+          "new_top_level_function_names": [
+            "velocity_verlet"
+          ],
+          "direct_named_calls_to_prior_helpers": [
+            {
+              "function": "forces",
+              "prior_step": "80.5"
+            }
+          ],
+          "generated_file_sha256": "e72509a7923327a026a2beb7db4e9dbc9bd8c04e06d8771438e5ef8c73dcc772"
+        },
+        {
+          "step": "80.7",
+          "function_header_first_line": "def MD_NVT(N, init_positions, init_velocities, L, sigma, epsilon, rc, m, dt, num_steps, T, nu):",
+          "public_contract_sha256": "d16e39c6a0a4cbc467d8ecb1fc6b0a25fdc22107cccb27403afecc197114517e",
+          "new_top_level_function_names": [
+            "MD_NVT"
+          ],
+          "direct_named_calls_to_prior_helpers": [
+            {
+              "function": "E_pot",
+              "prior_step": "80.3"
+            },
+            {
+              "function": "velocity_verlet",
+              "prior_step": "80.6"
+            }
+          ],
+          "generated_file_sha256": "d02c2a63eaab22f1a3a63e072c05f3a41b5f136a7bb6cbff191de4359a7862f6"
+        }
+      ]
+    },
+    {
+      "id": "scicode:72",
+      "steps": [
+        {
+          "step": "72.1",
+          "function_header_first_line": "def neighbor_list(site, N):",
+          "public_contract_sha256": "cb96a1f3a71833ef14ee977ea28c69ebc2b740139a31616dda7c4e33d7fa8eea",
+          "new_top_level_function_names": [
+            "neighbor_list"
+          ],
+          "direct_named_calls_to_prior_helpers": [],
+          "generated_file_sha256": "7a35f3a5fafb9f658f791957253912a2cbfa0d54737e8f470ab5433862ccb667"
+        },
+        {
+          "step": "72.2",
+          "function_header_first_line": "def energy_site(i, j, lattice):",
+          "public_contract_sha256": "0a344e7c68d4b93928fb02044d2abd86a0f6f87ec67c5371b5aa26277cfa899d",
+          "new_top_level_function_names": [
+            "energy_site"
+          ],
+          "direct_named_calls_to_prior_helpers": [
+            {
+              "function": "neighbor_list",
+              "prior_step": "72.1"
+            }
+          ],
+          "generated_file_sha256": "a70cd86c117b8562ae1ae9a7139cbeb4b9a6afdd3a99ec04e6402990defde2e3"
+        },
+        {
+          "step": "72.3",
+          "function_header_first_line": "def energy(lattice):",
+          "public_contract_sha256": "21a39ced8197c8f60ca11c3795c0bb39f8de1cea918d171f8c388292230e1660",
+          "new_top_level_function_names": [
+            "energy"
+          ],
+          "direct_named_calls_to_prior_helpers": [],
+          "generated_file_sha256": "6c3cad0818c62e8035311be9cd04b1d360695fb0410be6a1ec4ccc42a1860eec"
+        },
+        {
+          "step": "72.4",
+          "function_header_first_line": "def magnetization(spins):",
+          "public_contract_sha256": "e5d60f30fdebf601f526de30d44c61829ab0f2f0c50dd3e1bbae5d0b6487d81c",
+          "new_top_level_function_names": [
+            "magnetization"
+          ],
+          "direct_named_calls_to_prior_helpers": [],
+          "generated_file_sha256": "84c8382cacb67ec42ef220f307ef2b65f085f630a17365fa123c8e88a9c11e7f"
+        },
+        {
+          "step": "72.5",
+          "function_header_first_line": "def get_flip_probability_magnetization(lattice, i, j, beta):",
+          "public_contract_sha256": "f3c89718382c6cff92be90cf7de9f4e6f5c6b04a8148ef27b7aa5f5b25e84d2e",
+          "new_top_level_function_names": [
+            "get_flip_probability_magnetization"
+          ],
+          "direct_named_calls_to_prior_helpers": [],
+          "generated_file_sha256": "4ea3b2382ceb36e1735d22efb18e61582b4f4687634d4d55f4a8458c2e5ee312"
+        },
+        {
+          "step": "72.6",
+          "function_header_first_line": "def flip(spins, beta):",
+          "public_contract_sha256": "a7703fdda44dcbf8e7b642236e136771e0c4320f5bc1bee0a4fcb83b47a528e5",
+          "new_top_level_function_names": [
+            "flip"
+          ],
+          "direct_named_calls_to_prior_helpers": [
+            {
+              "function": "get_flip_probability_magnetization",
+              "prior_step": "72.5"
+            }
+          ],
+          "generated_file_sha256": "a034e10f52547050339504d5c6c1ff4af8b56f9e78f50002165f964398d5b804"
+        },
+        {
+          "step": "72.7",
+          "function_header_first_line": "def run(T, N, nsweeps):",
+          "public_contract_sha256": "32fde435475c07ada5c7b8963780886d45e16b01bed413834f8389bf65d1705c",
+          "new_top_level_function_names": [
+            "run"
+          ],
+          "direct_named_calls_to_prior_helpers": [
+            {
+              "function": "flip",
+              "prior_step": "72.6"
+            },
+            {
+              "function": "magnetization",
+              "prior_step": "72.4"
+            }
+          ],
+          "generated_file_sha256": "1cb8c06cdbb91837f0a09d500a9a1aabf86fcd63b31e9c49cd73d405cf53a676"
+        },
+        {
+          "step": "72.8",
+          "function_header_first_line": "def scan_T(Ts, N, nsweeps):",
+          "public_contract_sha256": "abe68de0a173db3b70f4ca829b321704896091d9c36e6d2fe394b91f2ac65321",
+          "new_top_level_function_names": [
+            "scan_T"
+          ],
+          "direct_named_calls_to_prior_helpers": [
+            {
+              "function": "run",
+              "prior_step": "72.7"
+            }
+          ],
+          "generated_file_sha256": "316912a23ae400c3949f6d9a1ba1a38b2935303d3e267f725c213e5d40f3e6d8"
+        },
+        {
+          "step": "72.9",
+          "function_header_first_line": "def calc_transition(T_list, mag2_list):",
+          "public_contract_sha256": "d0bac5b65f10a50343caeaed38966732f7480c4fc60304d892908ea464e8e24b",
+          "new_top_level_function_names": [
+            "calc_transition"
+          ],
+          "direct_named_calls_to_prior_helpers": [],
+          "generated_file_sha256": "e4792f59df836b1f08112057e00dde7c82c054e0d070e02dad604389d82cfe7f"
+        }
+      ]
+    }
+  ],
+  "static_call_graph_limit": "Direct Name calls in newly introduced top-level functions only; excludes methods, callbacks, aliases, dynamic calls, and redefinitions; no causal failure attribution."
+}

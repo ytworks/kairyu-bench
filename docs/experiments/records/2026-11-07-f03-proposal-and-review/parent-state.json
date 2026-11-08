@@ -1,0 +1,24 @@
+{
+  "checkpoint_tree_sha256": "5d056eb03f954db80313a85167153c875fe5e436e4f97c281a3f55202d9b3eaf",
+  "native_measurement_closure": {
+    "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-av-behavior12-native-gpu4-v2/measurement-closure.json",
+    "sha256": "e889b331d80e724c4313cda5f9cec672d3f1752364e268e4c9b415d12eb897c3"
+  },
+  "native_behavior_result": {
+    "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-av-behavior12-native-gpu4-v2/native-behavior-result-identity.json",
+    "sha256": "463e9ff5cf4f8183527bc1080f1fab36a5214a63891345cc07f254d2ee9ff099"
+  },
+  "dependency": {
+    "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-native-dependency-v2/report.json",
+    "sha256": "271ee1afef4afd855c3aa6d589891bef6ad2b144b9499df9646039894835fad7"
+  },
+  "comparison_status": "AV retained: F02 complete matched WSP10 ties code87.777778 with all26 code outcomes unchanged; AV N30 code72.936508 is a separate cohort.",
+  "hypothesis": "Jointly adjust all60 layers' post-attention/post-FFW direct RMSNorm scales plus whole-layer scalar. These three structural controls are distinct; raw-unit gradient energy is descriptive, not ability attribution.",
+  "restrictions": [
+    "No transfer generation/gradient used",
+    "No benchmark answer used as training target",
+    "One fixed proposal; no post-outcome rescaling",
+    "All24 constraints and existing full WSP cohorts retained",
+    "Local predicted gain is not native generation or WSP gain"
+  ]
+}

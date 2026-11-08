@@ -1,0 +1,10 @@
+{
+  "epoch": 1794035809.823708,
+  "stage": "command -v claude",
+  "returncode": 1,
+  "stdout_bytes": 0,
+  "stderr_bytes": 0,
+  "review_script_started": false,
+  "external_dispatches": 0,
+  "reason": "claude not on noninteractive PATH; no review output directory created"
+}

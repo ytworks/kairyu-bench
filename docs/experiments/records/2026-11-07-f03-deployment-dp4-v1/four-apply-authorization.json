@@ -1,0 +1,78 @@
+{
+  "status": "root_authorized_F03_four_sequential_applies",
+  "pinned_inputs": {
+    "f03-freeze.json": "8d82ac6cc2091ad06f07faf256bce3b6e548283292c4960231ff3633a51648d0",
+    "switch-plan.json": "a651b155f83adae232b9d5eb51a9739176ae6604d7ac7051fc013b3c2f05ec97",
+    "four-preview-summary.json": "5549a726cc6b3206f55377f00c943782a15bb4b4c48d3442cb9631d7a2e49165",
+    "all-chat-before.json": "3cca79043916a18bd6118bd64222cd230291019825edaf8eb74d0a701239ced7"
+  },
+  "source_pins": {
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/worktrees/kairyu-bench-weight-tools/docs/experiments/scripts/redeploy-replica.py": "2e9da820fe30ba9b2436fb600cf14a533b1c496b2fed48ac3649fffb9d2bc9ae",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/worktrees/kairyu-bench-weight-tools/kairyu-bench": "56b53b7d72d75efcb2bef24643322f73625eba5c08a645c2f847768e558b6176",
+    "/home/y-takagi/kairyu/examples/gemma-4-31b-8gpu/control.py": "fc9a78bc232f9cc331926a0737e64f4b4fe14946574f4a02bc1aacb9a800b851",
+    "/home/y-takagi/kairyu/examples/gemma-4-31b-8gpu/compose.yaml": "fe49b81c153f68335ef46e07dc9f9910ee49ee066902e703d11d152c8809c5cb",
+    "/home/y-takagi/kairyu/examples/gemma-4-31b-8gpu/example.json": "99b1863206205abc92f5bde917c607cced03a220bd77323cf264eb781f4aedb7",
+    "/home/y-takagi/kairyu/examples/gemma-4-31b-8gpu/kairyu.yaml": "a28e232f27b89d1acc35e3f5871ccffafd8145211e4ffcb33cc0c6b514fa640d",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/worktrees/kairyu-bench-weight-tools/docs/experiments/scripts/fresh-f03-deploy-preview-20261107.py": "efdcc3c284fb5718cc410740d44ab47f68bc1c2d879f7965265e07081eabe555",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-av-dev30-deployment-plan-v1/remove-completed-observer-v2.py": "99a9cc25006a988d1d7cfe11b8f579ea0bbb857c4de34c39f21bf0769b5a12ce"
+  },
+  "service_order": [
+    "gemma-0",
+    "gemma-1",
+    "gemma-2",
+    "gemma-3"
+  ],
+  "compose_membership": {
+    "gemma-0": {
+      "project": "gemma-4-31b-8gpu",
+      "service": "gemma-0",
+      "container_ids": [
+        "baf23e529c4e217801633d0c62b04801e3991b24f6267274104f9d3e355e62c3"
+      ],
+      "includes_stopped": true
+    },
+    "gemma-1": {
+      "project": "gemma-4-31b-8gpu",
+      "service": "gemma-1",
+      "container_ids": [
+        "ce1a67f4ec204a90e486092534e3f700f3abf2fbc9f1e68f87668009104ee00d"
+      ],
+      "includes_stopped": true
+    },
+    "gemma-2": {
+      "project": "gemma-4-31b-8gpu",
+      "service": "gemma-2",
+      "container_ids": [
+        "fd4ec2eb9d7deba2ce3e790add6b50c0ee79a6390495320d8697873b32957bcf"
+      ],
+      "includes_stopped": true
+    },
+    "gemma-3": {
+      "project": "gemma-4-31b-8gpu",
+      "service": "gemma-3",
+      "container_ids": [
+        "e8ec9f3bbfca4baa44b16590ee771a96bba1e1328a60ff0c904995f2675a31b5"
+      ],
+      "includes_stopped": true
+    }
+  },
+  "owner": {
+    "owner": {
+      "pid": 1046427,
+      "uid": 1003,
+      "started_epoch": 1794046434.3991792,
+      "release": "After all-four and endpoint closure; process exit also releases"
+    },
+    "lock_identity": "09:02:181180584",
+    "proc_locks_line": "21: FLOCK  ADVISORY  WRITE 1046427 09:02:181180584 0 EOF"
+  },
+  "protected_count": 23,
+  "helper_timeout_seconds": 1200,
+  "outer_timeout_including_rollback_seconds": 2460,
+  "progress_review_deadline_epoch": 1794047034.3991792,
+  "keeper_auto_release_deadline": null,
+  "keeper_termination": "Explicit stdin release only after all-four closure and root-approved next-owner handoff; SSH EOF also ends keeper.",
+  "no_new_service_after_failure": true,
+  "source_sha256": "9e8f4933a40601a462ad27ab6e30e67f9f52109f260b40592d234d788acc55b7",
+  "started_epoch": 1794046434.3991792
+}

@@ -1,0 +1,16 @@
+usage: propose_native_objectives.py [-h] --plan PLAN --output OUTPUT [--run]
+                                    [--write-spec]
+                                    [--maximum-seconds MAXIMUM_SECONDS]
+
+Couple two matched native objectives; preview is metadata-only, never a model
+call.
+
+options:
+  -h, --help            show this help message and exit
+  --plan PLAN
+  --output OUTPUT
+  --run                 run the bounded CPU solver; default metadata-only
+                        preview
+  --write-spec          with --run, publish exact BF16 specs in the explicitly
+                        selected plan scope
+  --maximum-seconds MAXIMUM_SECONDS

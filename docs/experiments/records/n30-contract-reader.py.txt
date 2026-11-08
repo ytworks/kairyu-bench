@@ -1,0 +1,46 @@
+
+from pathlib import Path
+import json,hashlib,ast,subprocess
+from datasets import Dataset,concatenate_datasets
+cache=Path("/mnt/nvme/kairyu/bench-cache/wsp")
+items=[json.loads(x) for x in Path("/input/items.jsonl").read_text().splitlines()]
+wanted={x["id"]:x for x in items if x["area"]=="code" and (x["score"]<1 or x["source"]=="scicode")}
+result={"evalplus":[],"livecodebench":[],"scicode":[]}
+tasks=json.loads((cache/"wsp/evalplus-0.3.1-tasks.json").read_text())
+for key,row in wanted.items():
+ if row["source"] in ("humaneval-plus","mbpp-plus"):
+  group="humaneval" if row["source"]=="humaneval-plus" else "mbpp"
+  task=tasks[group][key.split(":",1)[1]]
+  answer=row["outcome"]["samples"][0]["content"]
+  code=subprocess.check_output([str(cache/"venvs/v2-wsp-evalplus-0491c36f4ce75057/bin/python"),"-c",
+      "import json,sys;from evalplus.sanitize import sanitize;d=json.load(sys.stdin);print(sanitize(d['content'],d['entry_point']))"],
+      input=json.dumps({"content":answer,"entry_point":task["entry_point"]}),text=True)
+  result["evalplus"].append({"id":key,"prompt":task["prompt"],"entry_point":task["entry_point"],
+                           "sanitized_code":code,"sanitized_sha256":hashlib.sha256(code.encode()).hexdigest()})
+roots=cache/"hf/wsp/datasets/json/default-2f463d1ca8a3a8fa/0.0.0/2752a09ea3d59feeb3ad5ea2af11086f41ecd725fd528c98a89d75f546aba397"
+data=concatenate_datasets([Dataset.from_file(str(p)) for p in sorted(roots.glob("*.arrow"))])
+for row in data:
+ key="livecodebench:"+str(row["question_id"])
+ if key in wanted:
+  result["livecodebench"].append({"id":key,"title":row["question_title"],"prompt":row["question_content"],
+                                  "generated_public_answer":wanted[key]["outcome"]["samples"][0]["content"]})
+roots=cache/"hf/wsp/datasets/SciCode1___sci_code/default/0.0.0/4510f6a6aa27c43fad7b43da2c59602a86e88480"
+data=concatenate_datasets([Dataset.from_file(str(p)) for p in sorted(roots.glob("*-test*.arrow"))])
+for row in data:
+ key="scicode:"+str(row["problem_id"])
+ if key not in wanted:continue
+ steps=[];introduced={}
+ sample=wanted[key]["outcome"]["samples"][0]
+ for step in row["sub_steps"]:
+  number=step["step_number"];code=sample["files"][number]
+  tree=ast.parse(code)
+  definitions=[n for n in tree.body if isinstance(n,(ast.FunctionDef,ast.AsyncFunctionDef))]
+  new=[n for n in definitions if n.name not in introduced]
+  calls=sorted({n.func.id for f in new for n in ast.walk(f) if isinstance(n,ast.Call) and isinstance(n.func,ast.Name)})
+  edges=[{"function":name,"prior_step":introduced[name]} for name in calls if name in introduced]
+  for f in new:introduced[f.name]=number
+  steps.append({"step":number,"public_contract":{k:step[k] for k in ("step_description_prompt","function_header","return_line")},
+                "new_function_names":[n.name for n in new],"calls_to_prior_helpers":edges,
+                "generated_code":code,"code_sha256":hashlib.sha256(code.encode()).hexdigest()})
+ result["scicode"].append({"id":key,"required_dependencies":row["required_dependencies"],"steps":steps})
+print(json.dumps(result))

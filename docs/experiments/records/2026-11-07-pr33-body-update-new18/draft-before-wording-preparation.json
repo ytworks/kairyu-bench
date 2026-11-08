@@ -1,0 +1,22 @@
+{
+  "prepared_epoch": 1794041440.3400755,
+  "existing_pr_body_sha256": "696f6188ccfe324e6645c521112ea1a0073f616db1c6f82be58ef0a5af1e9d3b",
+  "proposed_body_sha256": "402de7791290a1d58eff07850423850e8e82e9fe3cbc728180e36e3792013db8",
+  "update_json_sha256": "9b9dab4c31df739d84194a4af11b1107e387644de93b0c4205535e21e89c265d",
+  "old_body_bytes": 13476,
+  "new_body_bytes": 16814,
+  "preserved_original_content_except_historical_r6_label": true,
+  "source_sha256": {
+    "docs/experiments/2026-11-07-av-behavior12-score-results.md": "2d1aa88c8d42c32381ed6f97adb8619b4a14ee842a1f944e6cc96c11c9c67c2e",
+    "docs/experiments/2026-11-07-behavior18-implementation.md": "2bd02ca5689c7a1a51e012777bd9637397f9c1e561b008830fd409504181c11d",
+    "docs/experiments/2026-11-07-cpu-validation-r7.md": "4310a3e1d5d4dc5d2982f1eb53e0b1c6d6ffdf200c68ea28a94218da5193de0f",
+    "docs/experiments/records/2026-11-07-native-gpu4-owner/cpu-validation-v5.json": "3ff2ca345fa4dcf1b7a0995da5495cdb741f41b7c8af5bba741fbe1f1fa84b56"
+  },
+  "head": "b928ace83402873b8c3bf823c9753a29d07b4ee8",
+  "ci_conclusion": "success",
+  "gpu_status_at_preparation": "running; no completion notice received",
+  "patch_sent": false,
+  "commit_or_push": false,
+  "tests_restarted": false,
+  "setup_failure": "First tool string had JavaScript parse error on Markdown backtick; no execution; fixed quoting only"
+}

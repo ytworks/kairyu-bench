@@ -33,7 +33,7 @@ class DeepSWETest(unittest.TestCase):
         self.assertIsNone(settings.api_timeout_seconds)
         for key, value in (
             ("WORKERS", "0"),
-            ("WORKERS", "17"),
+            ("WORKERS", "33"),
             ("WORKERS", "1.5"),
             ("WORKERS", ""),
             ("ATTEMPTS", "2"),

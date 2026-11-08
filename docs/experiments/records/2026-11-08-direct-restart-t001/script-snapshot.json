@@ -1,0 +1,34 @@
+{
+  "schema_version": 1,
+  "captured_at": "2026-11-07T17:10:48.274477+00:00",
+  "scope": "unchanged trial-specific nonlearning reproduction evidence; not generic tools",
+  "source_modified": false,
+  "secret_review": "read source; no literal credentials, answers or serialized environment; Docker inspect retained in memory and only whitelisted identity fields written",
+  "files": [
+    {
+      "path": "verify-rounded-proposal.py",
+      "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/restart-direct-20261108/trial-001-final-branches/verify-rounded-proposal.py",
+      "bytes": 2690,
+      "sha256": "c1cd947fca57a582987d22d4c340e512512d508dbaa00cb3e8f2516922bd4d4a",
+      "sharing": {
+        "kind": "hardlink",
+        "device": 2306,
+        "inode": 182976598,
+        "account_once": true
+      }
+    },
+    {
+      "path": "create-and-verify.py",
+      "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/restart-direct-20261108/trial-001-final-branches/create-and-verify.py",
+      "bytes": 6502,
+      "sha256": "67dd11251ff2ca21cea938d65bfb1fefb2b291b7c4fafcb64ce474d05e5ff199",
+      "sharing": {
+        "kind": "hardlink",
+        "device": 2306,
+        "inode": 182976630,
+        "account_once": true
+      }
+    }
+  ],
+  "storage": "Exact unchanged scripts share source inodes; neither alias is to be edited."
+}

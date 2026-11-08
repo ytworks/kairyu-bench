@@ -1,0 +1,10 @@
+test_explicit_plan_requires_matching_owner_and_legacy_default_is_preserved (test_n30_audit_evidence.N30EvidenceTests.test_explicit_plan_requires_matching_owner_and_legacy_default_is_preserved) ... ok
+test_missing_duplicate_and_unexpected_records_are_all_retained (test_n30_audit_evidence.N30EvidenceTests.test_missing_duplicate_and_unexpected_records_are_all_retained) ... ok
+test_nonfinite_evidence_is_serializable_without_zero_imputation (test_n30_audit_evidence.N30EvidenceTests.test_nonfinite_evidence_is_serializable_without_zero_imputation) ... ok
+test_real_zero_is_scored_and_null_error_is_unknown (test_n30_audit_evidence.N30EvidenceTests.test_real_zero_is_scored_and_null_error_is_unknown) ... ok
+test_versioned_owner_plan_ignores_invalid_old_original (test_n30_audit_evidence.N30EvidenceTests.test_versioned_owner_plan_ignores_invalid_old_original) ... ok
+
+----------------------------------------------------------------------
+Ran 5 tests in 0.054s
+
+OK

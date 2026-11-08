@@ -1,0 +1,95 @@
+{
+  "shutdown": {
+    "last_timed_client_finished_epoch": 1794031724.844392,
+    "last_timed_client_item": "bbeh:sarc_triples:141",
+    "client_records_without_timestamps": 2,
+    "worker_status": {
+      "gemma-0-tp1": {
+        "closed": false,
+        "status_mtime_epoch": 1794031727.4489336,
+        "last_completed_epoch": 1794031711.4332721,
+        "pending_bytes": 0,
+        "depth": 0,
+        "close_timeout": false,
+        "records_written": 3479400
+      },
+      "gemma-0-tp0": {
+        "closed": false,
+        "status_mtime_epoch": 1794031727.4489336,
+        "last_completed_epoch": 1794031711.43555,
+        "pending_bytes": 0,
+        "depth": 0,
+        "close_timeout": false,
+        "records_written": 3598563
+      }
+    },
+    "drained_receipt_mtime_epoch": 1794031727.5049317,
+    "closed_receipt_mtime_epoch": 1794031838.8021543,
+    "shutdown_start_utc": "2026-11-07T06:08:47.612846769Z",
+    "container_finished_utc": "2026-11-07T06:08:48.865998065Z",
+    "source_close_hooks": [
+      "CaptureWorker.shutdown -> _capture_close",
+      "atexit -> _capture_close"
+    ],
+    "logs_show": "mode=abort timeout=0s; force killing EngineCore and both TP workers",
+    "interpretation": "Force-kill path can prevent shutdown/atexit close acknowledgement; AV counterpart stdout/stderr was not preserved, so the between-run difference cannot be proven from paired logs.",
+    "flags_changed": false,
+    "global_lock_rows_at_check": [],
+    "recorded_epoch": 1794032251.8087244
+  },
+  "logs": {
+    "recorded_epoch": 1794031961.7295432,
+    "original_cid": "e275b7bcc331d6bcdd82a1729c0ec0cc7a80e581a008bd273d0b1aa953e82c02",
+    "original_healthy": true,
+    "observer_cid": "584418d20c2701e2339a6ce964332e905819c4c9454f0417d489452d9e988ee9",
+    "observer_name": "/gemma-4-31b-8gpu-gemma-0-1-observer-retired-7ab8d99d7d78",
+    "observer_state": "exited",
+    "compose_labels": {
+      "com.docker.compose.container-number": "1",
+      "com.docker.compose.oneoff": "False",
+      "com.docker.compose.project": "gemma-4-31b-8gpu",
+      "com.docker.compose.service": "gemma-0"
+    },
+    "closed_worker_count": 0,
+    "worker_count": 2,
+    "writer_close_acknowledged": false,
+    "worker_status_unmodified": true,
+    "files": {
+      "stdout.log": {
+        "input_bytes": 127924,
+        "saved_bytes": 127924,
+        "redactions": 0,
+        "sha256": "68cb8b7be02800b9885f7d1f3c51d0a0dd0eeda46e3142a2680cf4a8459f2d7c"
+      },
+      "stderr.log": {
+        "input_bytes": 22641,
+        "saved_bytes": 22641,
+        "redactions": 0,
+        "sha256": "ecf325945bf606da2c40bc928b2a04bb7f27fa5150eebb78adab66666a38ee20"
+      }
+    },
+    "credential_values_or_env_dump_saved": false,
+    "method": "docker logs --timestamps; no --details; known environment/command secret values and credential-shaped fields redacted in memory before write",
+    "output_permissions": "directory0700/files0600",
+    "service_or_container_mutation": false,
+    "source_sha256": "fe7e0bd32d56276f397bf6ba175ae4c9532eed57c75525f9282e5d3546957897"
+  },
+  "artifact_hashes": {
+    "merged.json": {
+      "sha256": "a56a03136c7da8b1bcd0b25720885a82ac030802397477c4637c8ae2e83ebdf4",
+      "bytes": 2862310628
+    },
+    "code-capture-audit.json": {
+      "sha256": "b47de1e83b4451fd4beed2219e7a4f899b97c6431e212ec5b922211c6a651188",
+      "bytes": 5838213
+    },
+    "shutdown-audit.json": {
+      "sha256": "c73b57e6b8cbe1829b8a543ca4698954ca45bd22cef87d4d2b70accfc21bb4c5",
+      "bytes": 1415
+    },
+    "retired-observer-logs/receipt.json": {
+      "sha256": "c24190ff4bfb16bb0c3ef0547c265d28fa4927e09c3a9af775a59a8118453f00",
+      "bytes": 1472
+    }
+  }
+}

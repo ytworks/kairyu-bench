@@ -1,0 +1,14 @@
+{
+  "pid": 1547860,
+  "epoch": 1794055467.0041435,
+  "plan_sha256": "ec377967cf4e93015dacd8396c84fa0dcb17e87ed59cc6aadc3ce4e7b441b719",
+  "command": [
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/infra/weight-tools-ci/bin/python",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/worktrees/kairyu-bench-weight-tools/docs/experiments/scripts/fresh-four-parallel-redeploy-20261107.py",
+    "--plan",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f05-native-contract-v1/deployment-dp4-v1/plan-root-approved.json",
+    "--apply",
+    "--approved-plan-sha256",
+    "ec377967cf4e93015dacd8396c84fa0dcb17e87ed59cc6aadc3ce4e7b441b719"
+  ]
+}

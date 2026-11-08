@@ -1,0 +1,9 @@
+# Derived only from the frozen metadata pair table.
+import json
+rows = json.load(open("all-matched-node-pairs.json"))
+leaf = [r for r in rows if r["base"]["role"] == r["candidate"]["role"] == "leaf"]
+result = {}
+for key, subset in (("all", leaf), ("code", [r for r in leaf if r["area"] == "code"]), ("noncode", [r for r in leaf if r["area"] != "code"])):
+    known = [r for r in subset if r["base"]["code_first_appearance"] is not None and r["candidate"]["code_first_appearance"] is not None]
+    result[key] = dict(code_first_both_observed_pairs=len(known), base_code_first=sum(r["base"]["code_first_appearance"] for r in known), candidate_code_first=sum(r["candidate"]["code_first_appearance"] for r in known), base_empty_reasoning=sum(r["base"]["reasoning_characters"] == 0 for r in subset), candidate_empty_reasoning=sum(r["candidate"]["reasoning_characters"] == 0 for r in subset))
+print(json.dumps(result, indent=2))

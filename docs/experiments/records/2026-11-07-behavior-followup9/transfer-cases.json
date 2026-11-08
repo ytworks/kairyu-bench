@@ -1,0 +1,27 @@
+{
+  "split": "transfer",
+  "gradient_allowed": false,
+  "cases": [
+    {
+      "id": "behavior-G3",
+      "split": "transfer",
+      "prompt": "Write Python solve(maps, allowed, start). maps is(T,n) integers in[0,n), allowed is(T+1,n) booleans, n>=1; start is in[0,n). Begin at start, then state=maps[t,state] each stage. Return(1,) containing1 iff allowed[0,start] and allowed[t+1,state] hold at EVERY stage, else0. T=0 is allowed. Return a float64 ndarray with the specified shape; do not mutate inputs. Include required imports and the complete final function, no prose.",
+      "correct": "import numpy as np\n\ndef solve(maps, allowed, start):\n    state=int(start)\n    ok=bool(allowed[0,state])\n    for t in range(len(maps)):\n        state=int(maps[t,state])\n        ok=ok and bool(allowed[t+1,state])\n    return np.array([ok],dtype=float)\n",
+      "foil": "import numpy as np\n\ndef solve(maps, allowed, start):\n    state=int(start)\n    ok=bool(allowed[0,state])\n    for t in range(len(maps)):\n        state=int(maps[t,state])\n        ok=bool(allowed[t+1,state])\n    return np.array([ok],dtype=float)\n"
+    },
+    {
+      "id": "behavior-H3",
+      "split": "transfer",
+      "prompt": "Write Python solve(times, values). times and values are equal-length 1D real arrays, n>=2, times strictly increasing. For every adjacent interval compute its secant slope. Return(1,) containing the sum of ABSOLUTE interval slopes (not sample-point derivatives and not weighted by duration). Return a float64 ndarray with the specified shape; do not mutate inputs. Include required imports and the complete final function, no prose.",
+      "correct": "import numpy as np\n\ndef solve(times, values):\n    slopes=np.diff(values)/np.diff(times)\n    return np.array([np.abs(slopes).sum()],dtype=float)\n",
+      "foil": "import numpy as np\n\ndef solve(times, values):\n    slopes=np.gradient(values,times)\n    return np.array([np.abs(slopes).sum()],dtype=float)\n"
+    },
+    {
+      "id": "behavior-I3",
+      "split": "transfer",
+      "prompt": "Write Python solve(labels, minimum). labels is a 1D integer array with values0..9, possibly empty; minimum is integer>=1. Return(1,) containing the unique most frequent label ONLY when its frequency is at least minimum. Empty, tied-highest or insufficient frequency returns sentinel -77. Return a float64 ndarray with the specified shape; do not mutate inputs. Include required imports and the complete final function, no prose.",
+      "correct": "import numpy as np\n\ndef solve(labels, minimum):\n    u,c=np.unique(labels,return_counts=True)\n    if len(u)==0:\n        return np.array([-77.0])\n    max_count=int(c.max())\n    w=u[c==max_count]\n    return np.array([w[0] if len(w)==1 and max_count>=minimum else -77],dtype=float)\n",
+      "foil": "import numpy as np\n\ndef solve(labels, minimum):\n    u,c=np.unique(labels,return_counts=True)\n    if len(u)==0:\n        return np.array([-77.0])\n    max_count=int(c.max())\n    w=u[c==max_count]\n    return np.array([w[0] if len(w)==1 and max_count>minimum else -77],dtype=float)\n"
+    }
+  ]
+}

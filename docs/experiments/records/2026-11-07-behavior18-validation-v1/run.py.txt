@@ -1,0 +1,53 @@
+from pathlib import Path
+import hashlib,json,os,subprocess,time
+R=Path('/mnt/nvme/kairyu/wsp/gemma4-coding-20261104')
+B=R/'worktrees/kairyu-bench-weight-tools'
+P=R/'analysis/fresh-purpose-20261107-behavior18-validation-v1'
+S=R/'runtime/fresh-purpose-20261107-behavior18-validation-v1'
+image='sha256:c4ab50223f03fca17bf871e4d05f77001e76525a1c574b6c6ee7024db06cfdc2'
+daemon='3e518d2b-6972-43f8-b325-f7f33697a2d2'
+python='/mnt/nvme/kairyu/dev-logs/wsp/venv-scicode/bin/python'
+def h(p):return hashlib.sha256(Path(p).read_bytes()).hexdigest()
+def save(p,d):p.write_text(json.dumps(d,ensure_ascii=False,indent=2)+'\n')
+assert not P.exists() and not S.exists()
+P.mkdir();S.mkdir()
+receipt={'status':'preparing','epoch':time.time(),'operation_sha256':h(__file__),'source':{}}
+save(P/'receipt.json',receipt)
+t=time.monotonic()
+try:
+ for name in ['behavior_cases.py','behavior_offline.py','science_sandbox.py','science_cases.py']:
+  source=B/'scripts/experiments/gemma4-purpose'/name
+  target=S/name;target.write_bytes(source.read_bytes());target.chmod(0o444)
+  receipt['source'][name]={'source_path':str(source),'runtime_path':str(target),'sha256':h(target)}
+ prefix=['docker','--host','unix:///var/run/docker.sock']
+ identity=subprocess.check_output(prefix+['info','--format','{{.ID}} {{.DockerRootDir}}'],text=True).strip()
+ assert identity==daemon+' /mnt/nvme/docker'
+ assert subprocess.check_output(prefix+['image','inspect',image,'--format','{{.Id}}'],text=True).strip()==image
+ receipt['docker']={'daemon_id':daemon,'root':'/mnt/nvme/docker','image_id':image}
+ base=[python,str(S/'behavior_offline.py'),'--mode','validate-authored','--docker-socket','/var/run/docker.sock','--daemon-id',daemon,'--image',image]
+ env=os.environ.copy();env['PYTHONDONTWRITEBYTECODE']='1'
+ for mode in ['preview','execute']:
+  command=base+['--output',str(P/mode)]+(['--run'] if mode=='execute' else [])
+  receipt[mode]={'command':command,'started_epoch':time.time()}
+  save(P/'receipt.json',receipt)
+  begin=time.monotonic()
+  with (P/(mode+'.log')).open('w') as f:
+   process=subprocess.run(command,env=env,stdout=f,stderr=subprocess.STDOUT)
+  receipt[mode].update(returncode=process.returncode,seconds=time.monotonic()-begin)
+  save(P/'receipt.json',receipt)
+  assert process.returncode==0
+  result=json.loads((P/mode/'report.json').read_text())
+  if mode=='preview':
+   assert result['status']=='preview' and not result['results'] and result['docker_calls']==0
+  else:
+   receipt['validation_passed']=result['validation_passed']
+   assert result['status']=='completed'
+ for src in receipt['source'].values():assert h(src['runtime_path'])==src['sha256']
+ receipt['status']='completed'
+ print(json.dumps({'status':receipt['status'],'validation_passed':receipt.get('validation_passed'),'seconds':time.monotonic()-t}))
+except BaseException as e:
+ receipt.update(status='failed',error_type=type(e).__name__)
+ raise
+finally:
+ receipt.update(seconds=time.monotonic()-t,ended_epoch=time.time())
+ save(P/'receipt.json',receipt)

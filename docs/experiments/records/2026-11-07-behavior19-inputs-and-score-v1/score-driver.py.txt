@@ -1,0 +1,51 @@
+"""One authorized full19 offline numerical score; no model requests or host execution."""
+import hashlib,json,pathlib,subprocess,sys,time
+R=pathlib.Path('/mnt/nvme/kairyu/wsp/gemma4-coding-20261104');B=R/'worktrees/kairyu-bench-weight-tools';S=B/'scripts/experiments/gemma4-purpose'
+sys.path[:0]=[str(S),str(B/'src')]
+import behavior_cases as original
+import behavior_followup_cases as cases
+import behavior_offline as offline
+import science_sandbox as sandbox
+N=R/'analysis/fresh-purpose-20261107-f04-behavior19-native-v1';I=R/'analysis/fresh-purpose-20261107-behavior19-inputs-v1'
+O=N/'score-v1'
+def sha(p):return hashlib.sha256(p.read_bytes()).hexdigest()
+def save(name,data):
+ with (O/name).open('x') as f:json.dump(data,f,indent=2,allow_nan=False);f.write(chr(10))
+def running():return sorted(subprocess.check_output(['docker','ps','--no-trunc','--format','{{.ID}}'],text=True).split())
+assert json.loads((N/'owner/normal-lock-release.json').read_text())['released'] is True
+assert json.loads((N/'owner/owner-closure.json').read_text())['child_finished'] is True
+casepath=I/'train-cases.json';responsepath=N/'generation/train-responses.json'
+assert sha(casepath)=='74e1cd2000fda0abdc03f4454b18f4231b9891360af266391744e13976f199f1'
+assert sha(responsepath)=='4105a5c87f9c54a4fa552a31927ce1bf8e330a5831a3a78d23cb0b1802cbc07f'
+assert json.loads(casepath.read_text())==cases.training_payload()
+doc=json.loads(responsepath.read_text());assert doc['schema_version']==1 and doc['split']=='train' and doc['cases_sha256']==sha(casepath)
+selected=cases.training_catalog();ids=['behavior-'+c.name for c in selected]
+assert len(ids)==len(set(ids))==19
+answers,generation=sandbox.read_public_answers(doc,set(ids));assert len(answers)==19
+paths=[pathlib.Path(__file__),casepath,responsepath,N/'owner/normal-lock-release.json',pathlib.Path(cases.__file__),pathlib.Path(original.__file__),pathlib.Path(offline.__file__),pathlib.Path(sandbox.__file__),pathlib.Path(sandbox.science_cases.__file__)]
+pins=[sandbox.capture(p,16*1024*1024)[1] for p in paths]
+O.mkdir()
+plan={'schema_version':1,'status':'approved_complete19_cpu_score_once','inputs':pins,'target_ids':ids,'case_count':19,'trials_per_case':16,'generation':generation,'model_calls':0,'repeat':1,'image':'sha256:c4ab50223f03fca17bf871e4d05f77001e76525a1c574b6c6ee7024db06cfdc2','daemon_id':'3e518d2b-6972-43f8-b325-f7f33697a2d2','socket':'/var/run/docker.sock','seconds':15,'memory_mib':512,'cpus':1,'host_mounts':[],'network':'none','gpus':False,'expected_values_passed_to_worker':False,'method_requirement_not_proved':['behavior-B1','behavior-B2']}
+save('plan.json',plan)
+docker=sandbox.Docker(pathlib.Path(plan['socket']),plan['daemon_id'],plan['image'],seconds=15,memory_mib=512,cpus=1);docker.check_image()
+offline.cases=cases
+report={'schema_version':1,'status':'running','split':'train','expected_cases':19,'responses_received':19,'target_ids':ids,'inputs':pins,'generation':generation,'results':[],'raw_worker_outputs':[],'docker_calls':0,'model_calls':0,'started_epoch':time.time(),'protected_running_before':running()}
+def run(payload):
+ result=docker.run(payload);report['raw_worker_outputs'].append({'call_index':report['docker_calls'],'payload_sha256':sandbox.sha(json.dumps(payload,sort_keys=True,allow_nan=False).encode()),'result':result});report['docker_calls']+=1;return result
+try:
+ for case in selected:
+  sandbox.continuity(pins)
+  row=offline.score(case,answers['behavior-'+case.name],run);report['results'].append(row)
+  print(json.dumps({'id':row['id'],'passed':row['passed'],'status':row['status'],'tests_passed':row.get('tests_passed'),'completed':len(report['results'])}),flush=True)
+ sandbox.continuity(pins)
+ report['status']='completed'
+except BaseException as error:
+ report['status']='failed';report['error_type']=type(error).__name__;raise
+finally:
+ report['elapsed_seconds']=time.time()-report['started_epoch'];report['protected_running_after']=running();report['protected_missing_after']=sorted(set(report['protected_running_before'])-set(report['protected_running_after']))
+ report['owned_docker_lifecycle']='existing Docker.run removes only its own labeled container before return'
+ save('report.json',report)
+assert len(report['results'])==19 and not report['protected_missing_after']
+summary={'status':'completed','results':[{k:r.get(k) for k in ['id','status','passed','tests_passed','numeric_execution','method_requirement_checked']} for r in report['results']],'passed':sum(r['passed'] is True for r in report['results']),'failed':sum(r['passed'] is False for r in report['results']),'unknown':sum(r['passed'] is None for r in report['results']),'completed':19,'planned_cases':19,'fixture_passed':sum(r.get('tests_passed',0) for r in report['results']),'fixture_planned':304,'numeric_executions':sum(r.get('numeric_execution') is True for r in report['results']),'docker_calls':report['docker_calls'],'model_calls':0,'elapsed_seconds':report['elapsed_seconds'],'all_cpu_finished':True,'protected_missing_after':report['protected_missing_after'],'report_sha256':sha(O/'report.json'),'input_sha256':sha(casepath),'response_sha256':sha(responsepath),'official_score_claim':False}
+save('summary.json',summary)
+print(json.dumps(summary),flush=True)

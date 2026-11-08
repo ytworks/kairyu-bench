@@ -1,0 +1,24 @@
+{
+  "argv": [
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/infra/weight-tools-ci/bin/python",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/worktrees/kairyu-bench-weight-tools/docs/experiments/scripts/fresh-av-dev30-20261107.py",
+    "--plan",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f06-dev30-dp4-v1/launch-plan-unbound.json"
+  ],
+  "returncode": 1,
+  "stdout": "",
+  "stderr": "Traceback (most recent call last):\n  File \"/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/worktrees/kairyu-bench-weight-tools/docs/experiments/scripts/fresh-av-dev30-20261107.py\", line 98, in <module>\n    raise SystemExit(main())\n                     ^^^^^^\n  File \"/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/worktrees/kairyu-bench-weight-tools/docs/experiments/scripts/fresh-av-dev30-20261107.py\", line 42, in main\n    assert sha(config_path) == plan[\"http_trace\"][\"config\"][\"sha256\"]\n           ^^^^^^^^^^^^^^^^\n  File \"/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/worktrees/kairyu-bench-weight-tools/docs/experiments/scripts/fresh-av-dev30-20261107.py\", line 17, in sha\n    return hashlib.sha256(path.read_bytes()).hexdigest()\n                          ^^^^^^^^^^^^^^^^^\n  File \"/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/infra/managed-python/cpython-3.12.13-linux-x86_64-gnu/lib/python3.12/pathlib.py\", line 1019, in read_bytes\n    with self.open(mode='rb') as f:\n         ^^^^^^^^^^^^^^^^^^^^\n  File \"/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/infra/managed-python/cpython-3.12.13-linux-x86_64-gnu/lib/python3.12/pathlib.py\", line 1013, in open\n    return io.open(self, mode, buffering, encoding, errors, newline)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nFileNotFoundError: [Errno 2] No such file or directory: '/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f06-dev30-dp4-v1/http-trace/capture.json'\n",
+  "seconds": 0.07762980461120605,
+  "plan": {
+    "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f06-dev30-dp4-v1/launch-plan-unbound.json",
+    "bytes": 13354,
+    "sha256": "01ab079d90de2b86944eefa88ebd0c13829241d08b2feb5eebc72e2f1c5c46b8"
+  },
+  "owner": {
+    "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/worktrees/kairyu-bench-weight-tools/docs/experiments/scripts/fresh-av-dev30-20261107.py",
+    "bytes": 5922,
+    "sha256": "956af488fe54578c32c9baa856e9c32170dc49c1bbce2b1ba5db9af9ea1dd524"
+  },
+  "model_calls": 0,
+  "GPU_service_operations": 0
+}

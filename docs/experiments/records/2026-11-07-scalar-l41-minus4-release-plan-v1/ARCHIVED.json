@@ -1,0 +1,109 @@
+{
+  "archive": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-scalar-l41-minus4-lossless-v1",
+  "archive_checksum_list_sha256": "cc8c5ddb5549854a326a7f51b5a3a5564e8c23b81e57f86273257d89e1d4b86b",
+  "kind": "lossless_dependent_archive",
+  "mandatory_base": "/mnt/nvme/kairyu/model-volumes/gemma-4-31b-8gpu/models/gemma-4-31b-it",
+  "not_a_saved_model": true,
+  "operation_sha256": "435e01109887123db12519c100e304fa7bd4f5a71b772e6c96eedce1b130f894",
+  "original_nine_files": [
+    {
+      "candidate_sha256": "e673fe773afc0807cf25534cefac2e9c4c81673fc450fb1fe501624fb807532c",
+      "path": ".eval_results/mmmu_pro.yaml",
+      "source_sha256": "e673fe773afc0807cf25534cefac2e9c4c81673fc450fb1fe501624fb807532c"
+    },
+    {
+      "candidate_sha256": "aa4fc74fe06acc698271341dee76eca26c6672a1f4b2840dedbf37f1b4fe27a4",
+      "path": ".gitattributes",
+      "source_sha256": "aa4fc74fe06acc698271341dee76eca26c6672a1f4b2840dedbf37f1b4fe27a4"
+    },
+    {
+      "candidate_sha256": "e209f5c435b1e66055bd6d7c29185103ae8d2027a03a96b359335154f206b82b",
+      "path": "README.md",
+      "source_sha256": "e209f5c435b1e66055bd6d7c29185103ae8d2027a03a96b359335154f206b82b"
+    },
+    {
+      "candidate_sha256": "ae53464bf3be25802b3a5b37def7fd89667067d7577049b3b2d74c4d8de4c6d4",
+      "path": "chat_template.jinja",
+      "source_sha256": "ae53464bf3be25802b3a5b37def7fd89667067d7577049b3b2d74c4d8de4c6d4"
+    },
+    {
+      "candidate_sha256": "e967dd38bc5cfd38bd09a995a7bf4a754075df2b46aba68f7fbb5a791e6d8dd1",
+      "path": "config.json",
+      "source_sha256": "e967dd38bc5cfd38bd09a995a7bf4a754075df2b46aba68f7fbb5a791e6d8dd1"
+    },
+    {
+      "candidate_sha256": "d4226bbe3117d2d253ba4609720ba82c6c4ce4627a9a6ae05387c78983ac03de",
+      "path": "generation_config.json",
+      "source_sha256": "d4226bbe3117d2d253ba4609720ba82c6c4ce4627a9a6ae05387c78983ac03de"
+    },
+    {
+      "candidate_sha256": "eeef8791537bc04f110967c513149e037d2a9ae97d49add7291ebfa62806bbfa",
+      "path": "model-00001-of-00002.safetensors",
+      "source_sha256": "eeef8791537bc04f110967c513149e037d2a9ae97d49add7291ebfa62806bbfa"
+    },
+    {
+      "candidate_sha256": "a3ffbcf0fa999836daa46556dc4b7b777de1988c3222314001922bd63255bfc1",
+      "path": "model-00002-of-00002.safetensors",
+      "source_sha256": "018912220f559f7025d60333e0996183cd538aa77ad6f4988a89ce47be681f10"
+    },
+    {
+      "candidate_sha256": "d4aff3b976d69c123a29d1c085d7ba4de1ac3f4ca1726a7f81e1b11462a64ea2",
+      "path": "model.safetensors.index.json",
+      "source_sha256": "d4aff3b976d69c123a29d1c085d7ba4de1ac3f4ca1726a7f81e1b11462a64ea2"
+    },
+    {
+      "candidate_sha256": "32bdf45d2ad4cc29a0822ddd157a182de76644f0419a6228d151495256e9813c",
+      "path": "processor_config.json",
+      "source_sha256": "32bdf45d2ad4cc29a0822ddd157a182de76644f0419a6228d151495256e9813c"
+    },
+    {
+      "candidate_sha256": "cc8d3a0ce36466ccc1278bf987df5f71db1719b9ca6b4118264f45cb627bfe0f",
+      "path": "tokenizer.json",
+      "source_sha256": "cc8d3a0ce36466ccc1278bf987df5f71db1719b9ca6b4118264f45cb627bfe0f"
+    },
+    {
+      "candidate_sha256": "9f4fec4b1dc6ecddf8f4a92e9caea5971c0e67d81309f3f9066a2bee8c362633",
+      "path": "tokenizer_config.json",
+      "source_sha256": "9f4fec4b1dc6ecddf8f4a92e9caea5971c0e67d81309f3f9066a2bee8c362633"
+    }
+  ],
+  "plan_sha256": "40699df334e0ca70bc48de2f3c64371d098bdea4f7433ef05263277707711b05",
+  "receipts": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-scalar-l41-minus4-release-plan-v1/release-apply-v1",
+  "reconstruction_instructions": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-scalar-l41-minus4-lossless-v1/README.md",
+  "released": [
+    {
+      "bytes": 49784788364,
+      "current_stat": {
+        "ctime_ns": 1793800946809548012,
+        "device": 2306,
+        "gid": 1003,
+        "inode": 181570962,
+        "mode": 33188,
+        "mtime_ns": 1793800946809548012,
+        "nlink": 1,
+        "size": 49784788364,
+        "uid": 1003
+      },
+      "historical_full_sha256": "eeef8791537bc04f110967c513149e037d2a9ae97d49add7291ebfa62806bbfa",
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/checkpoints/scalar-l41-minus4/model-00001-of-00002.safetensors"
+    },
+    {
+      "bytes": 12761549884,
+      "current_stat": {
+        "ctime_ns": 1793800955060271575,
+        "device": 2306,
+        "gid": 1003,
+        "inode": 181570963,
+        "mode": 33188,
+        "mtime_ns": 1793800955060271575,
+        "nlink": 1,
+        "size": 12761549884,
+        "uid": 1003
+      },
+      "historical_full_sha256": "a3ffbcf0fa999836daa46556dc4b7b777de1988c3222314001922bd63255bfc1",
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/checkpoints/scalar-l41-minus4/model-00002-of-00002.safetensors"
+    }
+  ],
+  "schema_version": 1,
+  "state": "archived_losslessly"
+}

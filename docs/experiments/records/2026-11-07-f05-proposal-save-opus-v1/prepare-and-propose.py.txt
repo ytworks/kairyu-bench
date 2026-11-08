@@ -1,0 +1,35 @@
+import hashlib,json,os,subprocess,time
+from pathlib import Path
+R=Path('/mnt/nvme/kairyu/wsp/gemma4-coding-20261104');B=R/'worktrees/kairyu-bench-weight-tools';P=R/'analysis/fresh-purpose-20261107-f05-native-contract-v1';G=R/'analysis/fresh-purpose-20261107-f04-native19-gpu4-v1';GP=R/'analysis/fresh-purpose-20261107-f04-native19-gpu4-prepare-v1';PY=R/'infra/weight-tools-ci/bin/python'
+def sha(p):return hashlib.sha256(Path(p).read_bytes()).hexdigest()
+def pin(p):return {'path':str(p),'sha256':sha(p)}
+def save(p,d):
+ with Path(p).open('x') as f:json.dump(d,f,indent=2,allow_nan=False);f.write('\n')
+start=time.time();save(P/'proposal-owner-start.json',{'epoch':start,'pid':os.getpid(),'scope':'one CPU proposal after complete GPU restoration','policy':pin(P/'pre-observation-policy.json'),'source':pin(__file__)})
+while not (G/'completion.json').exists():
+ if time.time()-start>1200:raise TimeoutError('GPU owner completion not observed; no solver')
+ time.sleep(2)
+completion=json.loads((G/'completion.json').read_text());assert completion['status']=='completed' and completion['restored'] and completion['protected_exact']
+policy=json.loads((P/'pre-observation-policy.json').read_text());gp=json.loads((GP/'root-plan-approved.json').read_text());old=json.loads((R/'analysis/fresh-purpose-20261107-f04-relative-v1/proposal-plan.json').read_text())
+assert gp['checkpoint_tree_sha256']==policy['parent_tree_sha256']
+state={'checkpoint_tree_sha256':policy['parent_tree_sha256'],'native_measurement_closure':pin(G/'completion.json'),'native_behavior_result':gp['native_behavior_result'],'comparison_status':'F04 complete same-condition code tie with AV; higher overall breaks tie; F04 selected parent, code improvement not claimed. No new WSP baseline run.','policy':pin(P/'pre-observation-policy.json'),'restrictions':['All19 both objectives retained; all38 constraints','No transfer or benchmark answers used as training target','One fixed CPU proposal; all rounds/shortfalls retained; no automatic rescale','Predicted LL/margin changes are not WSP scores']}
+save(P/'parent-state.json',state)
+plan={'schema_version':1,'kind':'native_coupled_objectives_v1','checkpoint':{'path':gp['checkpoint'],'tree_sha256':gp['checkpoint_tree_sha256'],'attestation':gp['attestation']},'cases':gp['cases'],'parent_state':pin(P/'parent-state.json'),'native_tensors':old['native_tensors'],'collections':{o:str(G/'work'/o) for o in ['correct-logprob','margin']},'candidates':[]}
+labels=gp['native_cohort']['rows'];ms=json.loads((G/'work/margin/summary.json').read_text());margin={(x['purpose'],x['fold']):x['margins'][0]['margin'] for x in ms['folds']};c=policy['constraints'];constraints=[]
+for objective in ['correct-logprob','margin']:
+ for row in labels:
+  if objective=='correct-logprob': minimum=c['correct_logprob_failure_minimum_delta'] if row['id'] in c['correct_logprob_failure_ids'] else c['correct_logprob_success_minimum_delta']
+  elif row['id'] in c['margin_target_ids']:minimum=max(c['margin_target_minimum_delta'],c['margin_target_final_floor']-margin[(row['purpose'],row['fold'])])
+  else:minimum=c['other_margin_minimum_delta']
+  constraints.append({'objective':objective,'purpose':row['purpose'],'fold':row['fold'],'minimum_delta':minimum})
+plan['candidates']=[{'id':policy['model'],'cost_metric':policy['cost_metric'],'rounding':policy['rounding'],'constraints':constraints}]
+save(P/'proposal-plan.json',plan)
+cmd=[str(PY),str(B/'scripts/experiments/gemma4-purpose/propose_native_objectives.py'),'--plan',str(P/'proposal-plan.json'),'--output',str(P/'proposal'),'--maximum-seconds','120']
+env=os.environ.copy();env.update(PYTHONPATH=str(B/'src'),OPENBLAS_NUM_THREADS='1',OMP_NUM_THREADS='1',MKL_NUM_THREADS='1',PYTHONDONTWRITEBYTECODE='1');runs=[]
+for name,extra in [('preview',[]),('solve',['--run','--write-spec'])]:
+ t=time.monotonic();command=['nice','-n','15','ionice','-c','3',*cmd,*extra]
+ with (P/(name+'.stdout')).open('x') as out,(P/(name+'.stderr')).open('x') as err:rc=subprocess.run(command,cwd=B,env=env,stdout=out,stderr=err).returncode
+ entry={'phase':name,'command':command,'returncode':rc,'elapsed_seconds':time.monotonic()-t,'model_calls':0};save(P/(name+'-execution.json'),entry);runs.append(entry)
+ if rc:raise RuntimeError(name+' failed; no retry')
+save(P/'completion.json',{'status':'completed','elapsed_seconds_including_wait':time.time()-start,'runs':runs,'plan':pin(P/'proposal-plan.json'),'report':pin(P/'proposal/report.json'),'spec':pin(P/'proposal'/ (policy['model']+'.json')),'model_calls':0,'checkpoint_created':False})
+print(json.dumps({'status':'completed','proposal':str(P/'proposal'),'model_calls':0}))

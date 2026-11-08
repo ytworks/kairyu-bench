@@ -1,0 +1,397 @@
+{
+  "completed_epoch": 1794053049.4502618,
+  "unittest": {
+    "run": 571,
+    "passed": 514,
+    "skipped": 57,
+    "errors": 0,
+    "failures": 0,
+    "reported_seconds": 47.111,
+    "wall_seconds": 47.57080817222595
+  },
+  "checks": [
+    {
+      "name": "ruff",
+      "command": [
+        "nice",
+        "-n",
+        "15",
+        "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/infra/weight-tools-ci/bin/ruff",
+        "check",
+        "."
+      ],
+      "returncode": 0,
+      "elapsed_seconds": 0.0355067253112793,
+      "stdout_sha256": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "mypy",
+      "command": [
+        "nice",
+        "-n",
+        "15",
+        "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/infra/weight-tools-ci/bin/mypy",
+        "--ignore-missing-imports",
+        "src"
+      ],
+      "returncode": 0,
+      "elapsed_seconds": 0.19693207740783691,
+      "stdout_sha256": "4ef32b02733c640ba275e5de2c0f630d3ea2a6293bb124ad0dc2173d46e40541",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "unittest",
+      "command": [
+        "nice",
+        "-n",
+        "15",
+        "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/infra/weight-tools-ci/bin/python",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests",
+        "-v"
+      ],
+      "returncode": 0,
+      "elapsed_seconds": 47.57080817222595,
+      "stdout_sha256": "549873d32fd7b17b391611ce20c553e8fdcc661ddbf8cef07aca674b8a6015dc",
+      "stderr_sha256": "cf6514e150589181a91326014684f82fb02ba393f4cd12d7e2ead26bbefd8899"
+    }
+  ],
+  "sources_unchanged": true,
+  "live_source_count": 278,
+  "original_immutable_sources_unchanged": 141,
+  "active_owner_sha256": "956af488fe54578c32c9baa856e9c32170dc49c1bbce2b1ba5db9af9ea1dd524",
+  "raw_records_preserved": true,
+  "initial_root_ruff_errors": 290,
+  "initial_root_unittest_mypy": "not_started",
+  "first_repair_suite": {
+    "run": 571,
+    "error_records": 20,
+    "skipped": 57,
+    "passed_count": "not inferred from subtest error entries"
+  },
+  "first_suite_environment_failures": "long AF_UNIX paths and missing venv PATH prefix",
+  "fixture_repair": "summary-declared gradient filename replaces stale hardcoded filename in one test",
+  "records": [
+    {
+      "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-cpu-validation-r9/ast-equivalence-check.json",
+      "artifact": "attempt-v1/ast-equivalence-check.json",
+      "raw_bytes": 406,
+      "raw_sha256": "47802470d82700141014e40558d102cc92ef14c1e642bc4507bb65c556eb6a2c",
+      "stored_bytes": 406,
+      "stored_sha256": "47802470d82700141014e40558d102cc92ef14c1e642bc4507bb65c556eb6a2c"
+    },
+    {
+      "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-cpu-validation-r9/ast-equivalence-check.py.txt",
+      "artifact": "attempt-v1/ast-equivalence-check.py.txt",
+      "raw_bytes": 2014,
+      "raw_sha256": "83305c5dfeff92fb6ce5ac28fde57cea7d8d84afdf40565aba90d401d278ed17",
+      "stored_bytes": 2014,
+      "stored_sha256": "83305c5dfeff92fb6ce5ac28fde57cea7d8d84afdf40565aba90d401d278ed17"
+    },
+    {
+      "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-cpu-validation-r9/ci-sources-after.json",
+      "artifact": "attempt-v1/ci-sources-after.json",
+      "raw_bytes": 32504,
+      "raw_sha256": "3c4df337fb8085760adf02b83361b079729dca5bd376f8d3ac0c61c4fd52d12d",
+      "stored_bytes": 32504,
+      "stored_sha256": "3c4df337fb8085760adf02b83361b079729dca5bd376f8d3ac0c61c4fd52d12d"
+    },
+    {
+      "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-cpu-validation-r9/ci-sources-before.json",
+      "artifact": "attempt-v1/ci-sources-before.json",
+      "raw_bytes": 32504,
+      "raw_sha256": "3c4df337fb8085760adf02b83361b079729dca5bd376f8d3ac0c61c4fd52d12d",
+      "stored_bytes": 32504,
+      "stored_sha256": "3c4df337fb8085760adf02b83361b079729dca5bd376f8d3ac0c61c4fd52d12d"
+    },
+    {
+      "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-cpu-validation-r9/completion.json",
+      "artifact": "attempt-v1/completion.json",
+      "raw_bytes": 1914,
+      "raw_sha256": "2dd966e54ddb3e0ec9faeb277cbfa9118234786a3350d833400d31ff68014d9b",
+      "stored_bytes": 1914,
+      "stored_sha256": "2dd966e54ddb3e0ec9faeb277cbfa9118234786a3350d833400d31ff68014d9b"
+    },
+    {
+      "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-cpu-validation-r9/dependency-fixture-focused.json",
+      "artifact": "attempt-v1/dependency-fixture-focused.json",
+      "raw_bytes": 771,
+      "raw_sha256": "122dafd22140dfa717ce1525ebb2fdaf2c93c194affb88df3648430900ff9159",
+      "stored_bytes": 771,
+      "stored_sha256": "122dafd22140dfa717ce1525ebb2fdaf2c93c194affb88df3648430900ff9159"
+    },
+    {
+      "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-cpu-validation-r9/dependency-fixture-focused.stderr",
+      "artifact": "attempt-v1/dependency-fixture-focused.stderr",
+      "raw_bytes": 262,
+      "raw_sha256": "11e1ac1fa60280afe4ea73a48c24607723de40f6d4508ae2d47af1acfd3d6b3e",
+      "stored_bytes": 262,
+      "stored_sha256": "11e1ac1fa60280afe4ea73a48c24607723de40f6d4508ae2d47af1acfd3d6b3e"
+    },
+    {
+      "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-cpu-validation-r9/dependency-fixture-focused.stdout",
+      "artifact": "attempt-v1/dependency-fixture-focused.stdout",
+      "raw_bytes": 980,
+      "raw_sha256": "8311451d432c01b78054b4bf3851ff9d507e477866d3909521d899a5129689ad",
+      "stored_bytes": 980,
+      "stored_sha256": "8311451d432c01b78054b4bf3851ff9d507e477866d3909521d899a5129689ad"
+    },
+    {
+      "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-cpu-validation-r9/immutable-sources-before.json",
+      "artifact": "attempt-v1/immutable-sources-before.json",
+      "raw_bytes": 16976,
+      "raw_sha256": "02b139f7ca7c33d0dadc99b5f4403df9c93a12103f84abdcf7a0b9fe3708ba0d",
+      "stored_bytes": 16976,
+      "stored_sha256": "02b139f7ca7c33d0dadc99b5f4403df9c93a12103f84abdcf7a0b9fe3708ba0d"
+    },
+    {
+      "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-cpu-validation-r9/initial-classification.json",
+      "artifact": "attempt-v1/initial-classification.json",
+      "raw_bytes": 1855,
+      "raw_sha256": "308c76d501a2a729e56c8221cd086c648e9951ec08e3f1565a56e89523237bf4",
+      "stored_bytes": 1855,
+      "stored_sha256": "308c76d501a2a729e56c8221cd086c648e9951ec08e3f1565a56e89523237bf4"
+    },
+    {
+      "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-cpu-validation-r9/initial-ruff.json",
+      "artifact": "attempt-v1/initial-ruff.json.gz",
+      "raw_bytes": 158374,
+      "raw_sha256": "91ac75b17427690fe91a3755b0b2f3242faeb399d7b761dc9824006872171379",
+      "stored_bytes": 5444,
+      "stored_sha256": "08c97bfd0420b2d8e2a8ae6f2b7ef3c58513aefac29b06f6b2ef624f46716e2d"
+    },
+    {
+      "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-cpu-validation-r9/initial-ruff.stderr",
+      "artifact": "attempt-v1/initial-ruff.stderr",
+      "raw_bytes": 0,
+      "raw_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stored_bytes": 0,
+      "stored_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-cpu-validation-r9/mypy.stderr",
+      "artifact": "attempt-v1/mypy.stderr",
+      "raw_bytes": 0,
+      "raw_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stored_bytes": 0,
+      "stored_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-cpu-validation-r9/mypy.stdout",
+      "artifact": "attempt-v1/mypy.stdout",
+      "raw_bytes": 44,
+      "raw_sha256": "4ef32b02733c640ba275e5de2c0f630d3ea2a6293bb124ad0dc2173d46e40541",
+      "stored_bytes": 44,
+      "stored_sha256": "4ef32b02733c640ba275e5de2c0f630d3ea2a6293bb124ad0dc2173d46e40541"
+    },
+    {
+      "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-cpu-validation-r9/package-records.py.txt",
+      "artifact": "attempt-v1/package-records.py.txt",
+      "raw_bytes": 7111,
+      "raw_sha256": "5ca86a4794553542220a1d7fef4a3e82e56f6ad7f846c2046854ec607415c8ad",
+      "stored_bytes": 7111,
+      "stored_sha256": "5ca86a4794553542220a1d7fef4a3e82e56f6ad7f846c2046854ec607415c8ad"
+    },
+    {
+      "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-cpu-validation-r9/progress.json",
+      "artifact": "attempt-v1/progress.json",
+      "raw_bytes": 1415,
+      "raw_sha256": "4da933680839174dd21408852d85a5ef8d62fdd791686f60ac4a78cf4febcee5",
+      "stored_bytes": 1415,
+      "stored_sha256": "4da933680839174dd21408852d85a5ef8d62fdd791686f60ac4a78cf4febcee5"
+    },
+    {
+      "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-cpu-validation-r9/protected-source-before.json",
+      "artifact": "attempt-v1/protected-source-before.json",
+      "raw_bytes": 128,
+      "raw_sha256": "39924b99305da997759676dd73957d861d13a0b01dd2256cdf9e5ed43d600d5c",
+      "stored_bytes": 128,
+      "stored_sha256": "39924b99305da997759676dd73957d861d13a0b01dd2256cdf9e5ed43d600d5c"
+    },
+    {
+      "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-cpu-validation-r9/repair.json",
+      "artifact": "attempt-v1/repair.json",
+      "raw_bytes": 2269,
+      "raw_sha256": "0de9982b5cf549f2a2788ede91d58c6de61186aa184e7cf64b311a04fc502323",
+      "stored_bytes": 2269,
+      "stored_sha256": "0de9982b5cf549f2a2788ede91d58c6de61186aa184e7cf64b311a04fc502323"
+    },
+    {
+      "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-cpu-validation-r9/ruff.stderr",
+      "artifact": "attempt-v1/ruff.stderr",
+      "raw_bytes": 0,
+      "raw_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stored_bytes": 0,
+      "stored_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-cpu-validation-r9/ruff.stdout",
+      "artifact": "attempt-v1/ruff.stdout",
+      "raw_bytes": 19,
+      "raw_sha256": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18",
+      "stored_bytes": 19,
+      "stored_sha256": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18"
+    },
+    {
+      "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-cpu-validation-r9/run-validation.py.txt",
+      "artifact": "attempt-v1/run-validation.py.txt",
+      "raw_bytes": 2394,
+      "raw_sha256": "7449dae4c4de06735ea823583a9c92a9547d8d7ab09ce8a298465a95e58d48fe",
+      "stored_bytes": 2394,
+      "stored_sha256": "7449dae4c4de06735ea823583a9c92a9547d8d7ab09ce8a298465a95e58d48fe"
+    },
+    {
+      "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-cpu-validation-r9/short-tmp-attempt.json",
+      "artifact": "attempt-v1/short-tmp-attempt.json",
+      "raw_bytes": 216,
+      "raw_sha256": "00c706bd752dec6e284c692a41b44a601008ec225fc1d6381a3e6b6dd930db9c",
+      "stored_bytes": 216,
+      "stored_sha256": "00c706bd752dec6e284c692a41b44a601008ec225fc1d6381a3e6b6dd930db9c"
+    },
+    {
+      "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-cpu-validation-r9/unittest.stderr",
+      "artifact": "attempt-v1/unittest.stderr.gz",
+      "raw_bytes": 113792,
+      "raw_sha256": "b1781aee4e7f7c32a9983c4023c6a1a37722701859cf53ef973bd42424401834",
+      "stored_bytes": 19141,
+      "stored_sha256": "c701b9f984500f3bcb661794015fdc4280b3a4a15a41d326aa0f693be8c07e19"
+    },
+    {
+      "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-cpu-validation-r9/unittest.stdout",
+      "artifact": "attempt-v1/unittest.stdout",
+      "raw_bytes": 5292,
+      "raw_sha256": "3668f670c9036c75e0f3119b76a597f9723d19491ece52d2add6907fa905bf9a",
+      "stored_bytes": 5292,
+      "stored_sha256": "3668f670c9036c75e0f3119b76a597f9723d19491ece52d2add6907fa905bf9a"
+    },
+    {
+      "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-cpu-validation-r9/attempt-v2/ci-sources-after.json",
+      "artifact": "attempt-v2/ci-sources-after.json",
+      "raw_bytes": 32504,
+      "raw_sha256": "720b51ee4f1bfd7dacd2fa3d48ec3bcdcb22137d5eb0abde53ed5d08f6219135",
+      "stored_bytes": 32504,
+      "stored_sha256": "720b51ee4f1bfd7dacd2fa3d48ec3bcdcb22137d5eb0abde53ed5d08f6219135"
+    },
+    {
+      "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-cpu-validation-r9/attempt-v2/ci-sources-before.json",
+      "artifact": "attempt-v2/ci-sources-before.json",
+      "raw_bytes": 32504,
+      "raw_sha256": "720b51ee4f1bfd7dacd2fa3d48ec3bcdcb22137d5eb0abde53ed5d08f6219135",
+      "stored_bytes": 32504,
+      "stored_sha256": "720b51ee4f1bfd7dacd2fa3d48ec3bcdcb22137d5eb0abde53ed5d08f6219135"
+    },
+    {
+      "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-cpu-validation-r9/attempt-v2/completion.json",
+      "artifact": "attempt-v2/completion.json",
+      "raw_bytes": 1957,
+      "raw_sha256": "1fef90ff9e040faf50432e34ce1a1fe200db6480d643309c1f022b1496df4ca6",
+      "stored_bytes": 1957,
+      "stored_sha256": "1fef90ff9e040faf50432e34ce1a1fe200db6480d643309c1f022b1496df4ca6"
+    },
+    {
+      "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-cpu-validation-r9/attempt-v2/mypy.stderr",
+      "artifact": "attempt-v2/mypy.stderr",
+      "raw_bytes": 0,
+      "raw_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stored_bytes": 0,
+      "stored_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-cpu-validation-r9/attempt-v2/mypy.stdout",
+      "artifact": "attempt-v2/mypy.stdout",
+      "raw_bytes": 44,
+      "raw_sha256": "4ef32b02733c640ba275e5de2c0f630d3ea2a6293bb124ad0dc2173d46e40541",
+      "stored_bytes": 44,
+      "stored_sha256": "4ef32b02733c640ba275e5de2c0f630d3ea2a6293bb124ad0dc2173d46e40541"
+    },
+    {
+      "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-cpu-validation-r9/attempt-v2/progress.json",
+      "artifact": "attempt-v2/progress.json",
+      "raw_bytes": 1414,
+      "raw_sha256": "46f278652e14e6eda78ef231f11df290ecfc31abb34c47e7930ea74a81b1852c",
+      "stored_bytes": 1414,
+      "stored_sha256": "46f278652e14e6eda78ef231f11df290ecfc31abb34c47e7930ea74a81b1852c"
+    },
+    {
+      "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-cpu-validation-r9/attempt-v2/ruff.stderr",
+      "artifact": "attempt-v2/ruff.stderr",
+      "raw_bytes": 0,
+      "raw_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stored_bytes": 0,
+      "stored_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-cpu-validation-r9/attempt-v2/ruff.stdout",
+      "artifact": "attempt-v2/ruff.stdout",
+      "raw_bytes": 19,
+      "raw_sha256": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18",
+      "stored_bytes": 19,
+      "stored_sha256": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18"
+    },
+    {
+      "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-cpu-validation-r9/attempt-v2/run-validation.py.txt",
+      "artifact": "attempt-v2/run-validation.py.txt",
+      "raw_bytes": 2536,
+      "raw_sha256": "01504dbb51188a7af4095b85c986d3f5beaa336c122fa9e148b935c0fffb9b8c",
+      "stored_bytes": 2536,
+      "stored_sha256": "01504dbb51188a7af4095b85c986d3f5beaa336c122fa9e148b935c0fffb9b8c"
+    },
+    {
+      "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-cpu-validation-r9/attempt-v2/unittest.stderr",
+      "artifact": "attempt-v2/unittest.stderr.gz",
+      "raw_bytes": 97388,
+      "raw_sha256": "cf6514e150589181a91326014684f82fb02ba393f4cd12d7e2ead26bbefd8899",
+      "stored_bytes": 17215,
+      "stored_sha256": "54c01ff4aee4320398b36b680c01841a6d9bcbfa3789990fa15429cccaaf6254"
+    },
+    {
+      "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-cpu-validation-r9/attempt-v2/unittest.stdout",
+      "artifact": "attempt-v2/unittest.stdout",
+      "raw_bytes": 6066,
+      "raw_sha256": "549873d32fd7b17b391611ce20c553e8fdcc661ddbf8cef07aca674b8a6015dc",
+      "stored_bytes": 6066,
+      "stored_sha256": "549873d32fd7b17b391611ce20c553e8fdcc661ddbf8cef07aca674b8a6015dc"
+    },
+    {
+      "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-cpu-validation-r9/before/docs/experiments/scripts/fresh-f03-deploy-apply-20261107.py",
+      "artifact": "before/docs/experiments/scripts/fresh-f03-deploy-apply-20261107.py.txt",
+      "raw_bytes": 12749,
+      "raw_sha256": "9e8f4933a40601a462ad27ab6e30e67f9f52109f260b40592d234d788acc55b7",
+      "stored_bytes": 12749,
+      "stored_sha256": "9e8f4933a40601a462ad27ab6e30e67f9f52109f260b40592d234d788acc55b7"
+    },
+    {
+      "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-cpu-validation-r9/before/docs/experiments/scripts/fresh-f03-deploy-preview-20261107.py",
+      "artifact": "before/docs/experiments/scripts/fresh-f03-deploy-preview-20261107.py.txt",
+      "raw_bytes": 7395,
+      "raw_sha256": "efdcc3c284fb5718cc410740d44ab47f68bc1c2d879f7965265e07081eabe555",
+      "stored_bytes": 7395,
+      "stored_sha256": "efdcc3c284fb5718cc410740d44ab47f68bc1c2d879f7965265e07081eabe555"
+    },
+    {
+      "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-cpu-validation-r9/before/pyproject.toml",
+      "artifact": "before/pyproject.toml",
+      "raw_bytes": 523,
+      "raw_sha256": "a3617a0e6c971135fd5d5114e57863d791694919f4dbe6dad1153ac02812038d",
+      "stored_bytes": 523,
+      "stored_sha256": "a3617a0e6c971135fd5d5114e57863d791694919f4dbe6dad1153ac02812038d"
+    },
+    {
+      "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-cpu-validation-r9/before/tests/test_dependency_set_plans.py",
+      "artifact": "before/tests/test_dependency_set_plans.py.txt",
+      "raw_bytes": 13566,
+      "raw_sha256": "c11704bd4ffb2fcdccc7688e2ebd876ed5ca072618cc8df0d8fc3d3ae34a8219",
+      "stored_bytes": 13566,
+      "stored_sha256": "c11704bd4ffb2fcdccc7688e2ebd876ed5ca072618cc8df0d8fc3d3ae34a8219"
+    }
+  ],
+  "patch": {
+    "raw_sha256": "eb8675c85a4d77b3055d41e3b108a3f4127f61c6a2ebd56ef22c1b54930e3090",
+    "stored_sha256": "2423e6d1bdfc38c6491200005602359c1e9d3ee6342b0be4d9e42bd63a077615"
+  },
+  "GPU_model_service_operations": 0
+}

@@ -1,0 +1,16 @@
+{
+  "action": "verify",
+  "command": [
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/infra/weight-tools-ci/bin/python",
+    "-m",
+    "kairyu_bench.wsp.weights.editor",
+    "verify",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f02/materialization/edit-manifest.json"
+  ],
+  "returncode": 0,
+  "seconds": 174.63091336900834,
+  "stdout_sha256": "8641b3256351f658f5f448d3dbef9d3c058fc13e6241df6ec8c3d433d7f8d8b9",
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "freeze_envelope_sha256": "344993b8b1b2e3622c581d363d2a4ccdfc28b914e7d22e8c51151f43a8fcdfc3",
+  "amendment_sha256": "1b6df2b79abb7d4db023651df632509a49d0b35e816c40c6d342d3884691a1ae"
+}

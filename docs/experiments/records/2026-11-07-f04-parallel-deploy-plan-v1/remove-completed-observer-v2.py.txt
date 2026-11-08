@@ -1,0 +1,111 @@
+"""Preserve completed F02 observer evidence and remove only its authorized stopped CID."""
+from pathlib import Path
+import hashlib, importlib.util, json, os, subprocess, time
+
+R=Path("/mnt/nvme/kairyu/wsp/gemma4-coding-20261104")
+B=R/"worktrees/kairyu-bench-weight-tools"
+D=R/"analysis/fresh-purpose-20261107-av-dev30-deployment-plan-v1"
+N2=R/"analysis/fresh-purpose-20261107-f02-live10-v1"
+CID="584418d20c2701e2339a6ce964332e905819c4c9454f0417d489452d9e988ee9"
+H=B/"docs/experiments/scripts/redeploy-replica.py"
+spec=importlib.util.spec_from_file_location("guard",H)
+g=importlib.util.module_from_spec(spec);spec.loader.exec_module(g)
+def save(name,value):
+    p=D/name
+    assert not p.exists()
+    g.save(p,value)
+def lock_evidence():
+    owner=g.read(D/"global-keeper.json")
+    s=(R/"candidate-evaluation.lock").stat()
+    key=f"{os.major(s.st_dev):02x}:{os.minor(s.st_dev):02x}:{s.st_ino}"
+    rows=[x for x in Path("/proc/locks").read_text().splitlines() if key in x.split()]
+    assert len(rows)==1 and rows[0].split()[4]==str(owner["pid"])
+    assert "FLOCK  ADVISORY  WRITE" in rows[0] and owner["uid"]==os.getuid()
+    return dict(owner=owner,lock_identity=key,proc_locks_line=rows[0])
+def safe(c):
+    cfg=c["Config"]; lab=cfg.get("Labels")or{}
+    env=dict(x.split("=",1)for x in cfg.get("Env")or[]if"="in x)
+    return dict(id=c["Id"],name=c["Name"],created=c["Created"],image_id=c["Image"],
+      command_sha256=g.digest(dict(entrypoint=cfg.get("Entrypoint"),cmd=cfg.get("Cmd"))),
+      environment_sha256=g.digest(env),config_sha256=g.digest(cfg),hostconfig_sha256=g.digest(c["HostConfig"]),
+      state={k:c["State"].get(k)for k in ["Status","Running","Paused","Restarting","Dead","Pid","ExitCode","StartedAt","FinishedAt"]},
+      health=c["State"].get("Health",{}).get("Status"),
+      labels={k:v for k,v in lab.items()if k.startswith("com.docker.compose.")or k.startswith("kairyu.")or k.startswith("kairyu_bench.")},
+      mounts=sorted([dict(type=m["Type"],source=m["Source"],target=m["Destination"],read_only=not m["RW"])for m in c["Mounts"]],key=lambda m:m["target"]),
+      network={k:dict(ip=v.get("IPAddress"),aliases=v.get("Aliases"))for k,v in c["NetworkSettings"]["Networks"].items()})
+def inventory():
+    ids=g.command(["docker","ps","-aq","--no-trunc"]).splitlines()
+    values=json.loads(g.command(["docker","inspect",*ids]))
+    return {c["Id"]:safe(c)for c in values}, {c["Id"]:c for c in values}
+started=time.time()
+assert os.getuid()!=0
+assert g.sha(D/"av-freeze.json")=="0fbf034b37613d20fde3f8a536852246a4207be8c65be0aa46a9f2a1d920f176"
+assert g.sha(D/"switch-plan.json")=="e28b20876d90fb8cca386d49a9d1c9602d582898678d5996d15cd058fe5c47b3"
+initial=g.read(D/"initial-readonly-state.json");plan=g.read(D/"switch-plan.json")
+# Docker inspect Mounts ordering is not stable; preserve every mount and sort by target.
+failure=g.read(D/"cleanup-precheck-failure-v1.json")
+assert failure["added"]==failure["removed"]==[]
+assert all(set(v)=={"mounts"} and sorted(v["mounts"]["before"],key=lambda m:m["target"])==sorted(v["mounts"]["after"],key=lambda m:m["target"])for v in failure["differences"].values())
+for record in initial["containers"].values():record["mounts"]=sorted(record["mounts"],key=lambda m:m["target"])
+assert all(g.sha(p)==v for p,v in initial["source_pins"].items())
+lock=lock_evidence()
+assert not Path("/proc/211879").exists()
+assert g.read(N2/"execution.json")["status"]=="completed"
+before,raw=inventory()
+assert len(before)==28 and before==initial["containers"]
+assert plan["duplicate_retired_ids"]==[CID]
+assert len(plan["protected_container_ids"])==23
+c=raw[CID]
+assert c["State"]["Status"]=="exited" and not c["State"]["Running"] and c["State"]["Pid"]==0
+assert c["State"]["ExitCode"]==0 and not c["State"]["OOMKilled"]
+assert before[CID]["labels"]["com.docker.compose.project"]=="gemma-4-31b-8gpu"
+assert before[CID]["labels"]["com.docker.compose.service"]=="gemma-0"
+escrow=N2/"retired-observer-logs"
+assert g.sha(escrow/"receipt.json")=="c24190ff4bfb16bb0c3ef0547c265d28fa4927e09c3a9af775a59a8118453f00"
+receipt=g.read(escrow/"receipt.json")
+assert receipt["observer_cid"]==CID and receipt["closed_worker_count"]==0
+logs=subprocess.run(["docker","logs","--timestamps",CID],capture_output=True,check=True)
+for name,data in [("stdout.log",logs.stdout),("stderr.log",logs.stderr)]:
+    row=receipt["files"][name]
+    assert row["redactions"]==0
+    assert g.sha(escrow/name)==row["sha256"]==hashlib.sha256(data).hexdigest()
+    assert len(data)==row["input_bytes"]==row["saved_bytes"]
+diff=g.command(["docker","diff",CID])
+save("retired-filesystem-diff.json",dict(command=["docker","diff",CID],lines=diff.splitlines(),
+ interpretation="Runtime driver/cache/lock/temp paths and host bind mount points; capture, acceptance, status, source and compile-cache paths are host binds; no checkpoint or trial payload deletion authorized."))
+for m in c["Mounts"]:
+    if m["Type"]=="bind":
+        assert Path(m["Source"]).exists()
+for target in plan["target_ids"].values():
+    g.idle(raw[target])
+freeze=g.read(D/"av-freeze.json")
+assert g.inventory(Path(freeze["checkpoint_path"]))==freeze["candidate_inventory_stat"]
+save("retired-safe-metadata.json",before[CID])
+save("cleanup-before.json",before)
+command=["docker","rm",CID]
+save("cleanup-prechecks.json",dict(status="passed",command=command,authorized_exact_cid=CID,
+    nonforce=True,remove_volumes=False,orphan_removal=False,
+    lock=lock,source_sha256=g.sha(Path(__file__)),retired_metadata_sha256=g.sha(D/"retired-safe-metadata.json"),
+    logs_receipt_sha256=g.sha(escrow/"receipt.json"),log_hashes={n:v["sha256"]for n,v in receipt["files"].items()},
+    protected_count=23,protected_unchanged=True,other_three_chat_unchanged=True,
+    ordinary_gemma0_exact_healthy=True,writer_close_acknowledgements=0,writer_count=2,
+    capture_limitations_preserved=True,full_payload_rehashed=False,started_epoch=started))
+assert inventory()[0]==before
+lock_evidence()
+output=g.command(command).strip()
+assert output==CID
+after,_=inventory()
+assert set(after)==set(before)-{CID}
+assert all(after[k]==v for k,v in before.items()if k!=CID)
+spec2=importlib.util.spec_from_file_location("control","/home/y-takagi/kairyu/examples/gemma-4-31b-8gpu/control.py")
+control=importlib.util.module_from_spec(spec2);spec2.loader.exec_module(control)
+members={s:g.compose_scope(control,s,cid)for s,cid in plan["target_ids"].items()}
+assert g.inventory(Path(freeze["checkpoint_path"]))==freeze["candidate_inventory_stat"]
+save("cleanup-after.json",after)
+save("cleanup-completion.json",dict(status="only_authorized_stopped_observer_removed",removed_cid=CID,
+ command=command,remaining_containers=len(after),protected_count=23,all_survivors_unchanged=True,
+ compose_membership=members,writer_closed_flags_unchanged=True,
+ clarification="Original false close acknowledgements retained in original capture; no capture status edited.",
+ lock=lock_evidence(),seconds=time.time()-started,finished_epoch=time.time(),
+ source_sha256=g.sha(Path(__file__)),before_sha256=g.sha(D/"cleanup-before.json"),after_sha256=g.sha(D/"cleanup-after.json")))
+print(json.dumps(dict(status="cleanup_completed",removed=CID,containers=len(after),protected_unchanged=23,seconds=time.time()-started,receipt_sha256=g.sha(D/"cleanup-completion.json"))))

@@ -1,0 +1,14 @@
+{
+  "source_sha256": {
+    "src/kairyu_bench/wsp/weights/finite_replay.py": "71c424bffac775ba112e709632df0a37351a79c3121827be7c9844f321c7c4d3",
+    "docs/experiments/scripts/fresh-f01-finite.py": "2326fe223b9b7b49d7876ad11b3c66731d21e97bbb7da4460c43bf6c9774c75e",
+    "docs/experiments/scripts/replay-ad-authored-finite.py": "d1f965914df677c710cd23ab0dd8e40b132a5d3cf6c13128a8eef2ce0037dbcc",
+    "docs/experiments/scripts/fresh-av-native-gpu4-20261107.py": "9a8d9255312a97ae2762ec97c34c9701ac5d64dcb0dc273e01f8d7f6700b7183"
+  },
+  "help_command": "python -B -m kairyu_bench.wsp.weights.finite_replay --help",
+  "help_returncode": 0,
+  "model_calls": 0,
+  "docker_calls": 0,
+  "service_changes": 0,
+  "implementation_changes": 0
+}

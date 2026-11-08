@@ -1,0 +1,22 @@
+{
+  "schema_version": 1,
+  "cases": 18,
+  "split": {
+    "train": {
+      "sha256": "b42990b0caac24ccc7843e40718c0c5e7ad61dd5baa131ed6852c126bf37f66d",
+      "cases": 12
+    },
+    "transfer": {
+      "sha256": "4951c70a686ebcd7135919c48d4038c6aa6d359abc018730aee73c1afe9f4b55",
+      "cases": 6
+    }
+  },
+  "train_seed": 202611071,
+  "transfer_seed": 202611072,
+  "trials": 16,
+  "token_count_measured": false,
+  "max_tokens_required": 1024,
+  "initial_generation_split": "train",
+  "transfer_policy": "AV and frozen candidate once each after candidate spec/amplitude freeze; no optimization input",
+  "source_sha256": "10ba3e480c8685933904060629b351758cf7b61362756179e55779435d01a310"
+}

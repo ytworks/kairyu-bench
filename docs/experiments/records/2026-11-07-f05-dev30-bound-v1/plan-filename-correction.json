@@ -1,0 +1,14 @@
+{
+  "epoch": 1794055518.2259707,
+  "reason": "Root created exact approved plan as plan-root-approved.json; reference-name only correction before first execution",
+  "source_before": {
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/worktrees/kairyu-bench-weight-tools/docs/experiments/scripts/fresh-f05-endpoint-closure-20261107.py": "cb0434d633e77bd191c8405054de5ded583c34af91c8f0d3f55e1abe004a9803",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f05-dev30-dp4-v1/bind-and-preview.py": "9b37499d3dba8e0474e8bcf781ca84bec294582e9103406903f75ddd8304b98a"
+  },
+  "source_after": {
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/worktrees/kairyu-bench-weight-tools/docs/experiments/scripts/fresh-f05-endpoint-closure-20261107.py": "8ee58d4a172504835a94af394ac598d735bf8aef8200a67c64532940ee324f7d",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f05-dev30-dp4-v1/bind-and-preview.py": "e64775cfed5a6f241373e086101ea7993cc8410d74422d297dda0859d54cbb91"
+  },
+  "model_calls": 0,
+  "service_mutations": 0
+}

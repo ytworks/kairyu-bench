@@ -1,0 +1,45 @@
+from pathlib import Path
+from collections import defaultdict
+import hashlib
+import json
+import math
+
+D = Path("docs/experiments/records/2026-11-07-f03-native-spec-audit")
+r = json.loads((D/"report.json").read_text())
+groups=defaultdict(list)
+for t in r["tensor_support"]:groups[t["layer"]].append(t)
+rows=[]
+for layer in sorted(groups,key=lambda k: 9999 if k=="global" else int(k)):
+ ts=groups[layer]
+ selected=[t for t in ts if t["eligible"]]
+ selected_l2=math.sqrt(sum(t["source_l2"]**2 for t in selected))
+ full_l2=math.sqrt(sum(t["source_l2"]**2 for t in ts))
+ delta_l2=math.sqrt(sum(t["actual_delta_l2"]**2 for t in ts))
+ rows.append({"layer":layer,"eligible_tensors":len(selected),"eligible_coordinates":sum(t["coordinates"] for t in selected),
+              "changed_tensors":sum(t["changed"]>0 for t in ts),"changed_coordinates":sum(t["changed"] for t in ts),
+              "all_native_source_l2":full_l2,"eligible_source_l2":selected_l2,
+              "actual_delta_l2":delta_l2,"relative_to_eligible_source_l2":delta_l2/selected_l2 if selected_l2 else None,
+              "relative_to_all_native_source_l2":delta_l2/full_l2 if full_l2 else None,
+              "box_exceeded_coordinates":sum(t["exceeds_declared_continuous_box"] for t in ts)})
+assert math.isclose(math.sqrt(sum(v["eligible_source_l2"]**2 for v in rows)),r["eligible_scope"]["source_l2"],rel_tol=1e-12)
+assert math.isclose(math.sqrt(sum(v["actual_delta_l2"]**2 for v in rows)),r["eligible_scope"]["actual_delta_l2"],rel_tol=1e-12)
+p=D/"layer-selected-denominators.json"
+with p.open("x") as f:json.dump({"input_report_sha256":hashlib.sha256((D/"report.json").read_bytes()).hexdigest(),
+ "method":"Exact sum of squared tensor norms; selected scope includes all eligible coordinates, not only changed coordinates",
+ "rows":rows,"model_calls":0,"solver_calls":0},f,indent=2);f.write("\n")
+doc=Path("docs/experiments/2026-11-07-f03-native-spec-audit.md")
+with doc.open("a") as f:
+ f.write("\n## All layers with selected-scope denominators\n\n")
+ f.write("The original report's layer denominator covers all native weights in that layer and is explicitly labeled. "
+         "The [additional selected-denominator table](records/2026-11-07-f03-native-spec-audit/layer-selected-denominators.json) "
+         "also uses only the three eligible families, retaining every eligible coordinate. This avoids hiding a local change "
+         "behind large ineligible input/pre-FF norms. It is computed from the preserved per-tensor norms without rerunning "
+         "the audit or reading gradients. Both full-native and selected denominators remain available; final norm has no eligible "
+         "coordinates and its selected-relative value is unknown/null, not zero.\n\n")
+ f.write("| Layer | Changed tensors / eligible | Changed cells | Actual L2 | Eligible source L2 | Relative to eligible | Box-exceed cells |\n|---|---:|---:|---:|---:|---:|---:|\n")
+ for v in rows:
+  ratio="null" if v["relative_to_eligible_source_l2"] is None else f'{v["relative_to_eligible_source_l2"]:.9g}'
+  f.write(f'| {v["layer"]} | {v["changed_tensors"]} / {v["eligible_tensors"]} | {v["changed_coordinates"]} | {v["actual_delta_l2"]:.9g} | {v["eligible_source_l2"]:.9g} | {ratio} | {v["box_exceeded_coordinates"]} |\n')
+(D/"SHA256SUMS").write_text("".join(hashlib.sha256(p.read_bytes()).hexdigest()+"  "+p.name+"\n"
+ for p in sorted(D.iterdir()) if p.is_file() and p.name!="SHA256SUMS"))
+print("selected denominator rows",len(rows),"aggregate matched")

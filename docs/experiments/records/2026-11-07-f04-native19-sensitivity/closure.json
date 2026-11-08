@@ -1,0 +1,32 @@
+{
+  "epoch": 1794055067.4377499,
+  "completion_sha256": "b92b26603c4040139ed3043e45c3f740173a8664d148045434fecf5ba71864d3",
+  "analysis_report_sha256": "d1126f39833bc48709e9e5afee76262614335fe12de78210fec6007ee29ac6ea",
+  "same_cid": "fc3e14a0b216e622004db9b0cf754c7d33e4410d2ab63a28b762ef32607327ca",
+  "owner_pid_absent": true,
+  "owner_flock_rows": [],
+  "target_state": "fc3e14a0b216e622004db9b0cf754c7d33e4410d2ab63a28b762ef32607327ca running healthy",
+  "native_npz_retention": "All 38 gradients and both complete source-native-values files retained at original NVMe paths; all hashes are in dependency-v2/report.json.gz. No 118MB raw gradient duplication in Git.",
+  "model_measurement_failure_count": 0,
+  "analysis_attempts": [
+    {
+      "version": 1,
+      "returncode": 1,
+      "seconds": 0.1220099925994873,
+      "reason": "collector frozen source has no joint.py; failed before reading gradients"
+    },
+    {
+      "version": 2,
+      "returncode": 0,
+      "process_seconds": 3.788271427154541,
+      "aggregation_seconds": 3.627959728240967
+    }
+  ],
+  "monitor_readout_failure": {
+    "type": "KeyError",
+    "cause": "monitor tried slicing frames mapping as list",
+    "effect": "read-only output formatter; no service or measurement change",
+    "corrected_by": "display explicit selected keys"
+  },
+  "source_unchanged_sha256": "56dca4ce4b1508084664a9e8ce9e9a2bb3b7f528d840fb35fb352c07e92f0bd9"
+}

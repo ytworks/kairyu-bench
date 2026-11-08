@@ -1,0 +1,7 @@
+{
+  "status": "preflight_failed",
+  "phase": "read_only_protected_inspect",
+  "fixture_executions": 0,
+  "model_calls": 0,
+  "reason": "Docker inspect strict Go template .State.Health failed for containers without a Health key. Use index to read optional key, preserving null and exact expected snapshot."
+}

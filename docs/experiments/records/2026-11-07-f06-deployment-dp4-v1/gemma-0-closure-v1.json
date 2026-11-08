@@ -1,0 +1,16 @@
+{
+  "cid": "1ffc862fe747b8f4e6134c72fb7bb322cd6acd7e3fdd012cc1d9614d09932273",
+  "endpoint": "http://172.26.0.8:8000/v1",
+  "models": [
+    "gemma-4-31b"
+  ],
+  "tree": "0fc0ef29346c4d8a06bea8570dee96d8e0ba7038fee0d5aded8db57852474ec5",
+  "checkpoint_mount": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/checkpoints/fresh-lora-mbpp-f06-v1/checkpoint",
+  "checkpoint_readonly": true,
+  "runtime_preserved": true,
+  "mtp_tokens": 4,
+  "tp_size": 2,
+  "native_runtime_flags_preserved": true,
+  "receipt_sha256": "e89a07302ee935c6e1600439ca751b96aef4fac54b3f352938fc2ad8eda1658c",
+  "seconds": 122.91918730735779
+}

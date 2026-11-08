@@ -1,0 +1,48 @@
+
+import json,hashlib,subprocess,os
+from pathlib import Path
+from datasets import Dataset,concatenate_datasets
+from kairyu_bench.wsp.manifest import load_manifest
+import pyarrow.parquet as pq
+c=Path("/mnt/nvme/kairyu/bench-cache/wsp")
+items=load_manifest().select(30,"dev")
+def digest(p):return hashlib.sha256(p.read_bytes()).hexdigest()
+def arrow(root,split):
+ files=sorted(root.rglob("*-"+split+"*.arrow"))
+ assert files, str(root)
+ return concatenate_datasets([Dataset.from_file(str(p)) for p in files]),files
+result={}
+lcb=c/"hf/wsp/hub/datasets--livecodebench--code_generation_lite/snapshots/0fe84c3912ea0c4d4a78037083943e8f0c4dd505"
+files=[lcb/"test5.jsonl",lcb/"test6.jsonl"]
+ids=set()
+for p in files:
+ for line in p.read_text().splitlines():
+  if line.strip():ids.add("livecodebench:"+str(json.loads(line)["question_id"]))
+selected=[x.id for x in items if x.source=="livecodebench"]
+result["livecodebench"]={"selected":len(selected),"missing":[x for x in selected if x not in ids],"files":[{"path":str(p),"size":p.stat().st_size,"sha256":digest(p)} for p in files],"method":"pinned local JSONL IDs; no online adapter execution"}
+p=c/"hf/wsp/hub/datasets--wikimedia--wikipedia/snapshots/b04c8d1ceb2f5cd4588862100d08de323dccfbaa/20231101.ja/train-00014-of-00015.parquet"
+table=pq.read_table(p,columns=["id","text"])
+ids={"probe-wikipedia-ja:"+str(row["id"]) for row in table.to_pylist() if len(row["text"])>=1500}
+selected=[x.id for x in items if x.source=="probe-wikipedia-ja"]
+result["probe-wikipedia-ja"]={"selected":len(selected),"missing":[x for x in selected if x not in ids],"file":{"path":str(p),"size":p.stat().st_size,"sha256":digest(p)},"method":"pinned local Parquet IDs plus same >=1500 character filter"}
+rows,files=arrow(c/"hf/wsp/datasets/openai___mrcr/default/0.0.0/f4c69fae7cf81f7ca26b9fee34b392a50f6b8a1d","train")
+selected=[x.id for x in items if x.source=="mrcr-v2"]
+result["mrcr-v2"]={"selected":len(selected),"row_checks":[{"id":x,"in_range":int(x.split(":")[1])<len(rows),"n_needles":rows[int(x.split(":")[1])]["n_needles"]} for x in selected],"files":[str(p) for p in files],"method":"cached pinned Arrow raw index/n_needles only; tokenizer/bin not rerun"}
+rows,files=arrow(c/"hf/swe-bench-pro-7ab5114912baf22bb098818e604c02fe7ad2c11f/datasets/ScaleAI___swe-bench_pro/default/0.0.0/7ab5114912baf22bb098818e604c02fe7ad2c11f","test")
+ids=set(rows["instance_id"])
+selected=[x.id.split(":",1)[1] for x in items if x.source=="swe-bench-pro"]
+result["swe_harness_dataset"]={"selected":len(selected),"missing":[x for x in selected if x not in ids],"rows":len(rows),"files":[str(p) for p in files]}
+rows,files=arrow(c/"hf/wsp/datasets/SciCode1___sci_code/default/0.0.0/4510f6a6aa27c43fad7b43da2c59602a86e88480","test")
+selected={x.id.split(":")[1] for x in items if x.source=="scicode"}
+jobs=[]
+for row in rows:
+ if str(row["problem_id"]) in selected:
+  for i,step in enumerate(row["sub_steps"]):
+   if (str(row["problem_id"]),i) in {("13",5),("62",0),("76",2)}:continue
+   jobs.append({"step":str(row["problem_id"])+"."+str(i+1),"tests":len(step["test_cases"])})
+program="import json,sys\nfrom scicode.parse.parse import process_hdf5_to_tuple\njobs=json.loads(sys.stdin.read())\nfor j in jobs: process_hdf5_to_tuple(j['step'],j['tests'],sys.argv[1])\nprint(json.dumps({'all_targets_readable':True,'steps':len(jobs),'tests':sum(j['tests'] for j in jobs)}))"
+env=dict(os.environ,PYTHONPATH=str(c/"sources/scicode-e3158ea011d4235245a547460d3688d7ccbf9900/src"))
+py=c/"venvs/v2-wsp-scicode-1270160aa561a511/bin/python"
+r=subprocess.run([str(py),"-c",program,str(c/"wsp/scicode-test_data.h5")],input=json.dumps(jobs),text=True,capture_output=True,env=env,check=False)
+result["scicode_targets"]={"returncode":r.returncode,"jobs":jobs,"result":r.stdout,"error":r.stderr}
+print(json.dumps(result))

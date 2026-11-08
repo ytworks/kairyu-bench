@@ -1,0 +1,50 @@
+{
+  "cid": "fbc4309e21b5e7a972ba979e2fd4e74cfc60e9e29d33ddc9dc9d888239ea1e67",
+  "image": "sha256:af9e746b913088cbf6c4464a31d6904a6b7e1d3ba62f0895362ddf13595f7abe",
+  "user": "1003:1003",
+  "host_config": {
+    "NetworkMode": "none",
+    "Runtime": "runc",
+    "ReadonlyRootfs": true,
+    "DeviceRequests": null,
+    "Devices": [],
+    "Privileged": false,
+    "CapDrop": [
+      "ALL"
+    ],
+    "SecurityOpt": [
+      "no-new-privileges"
+    ],
+    "Memory": 4294967296,
+    "NanoCpus": 2000000000,
+    "CpuShares": 128,
+    "PidsLimit": 128
+  },
+  "mounts": [
+    {
+      "Source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/worktrees/kairyu-bench-weight-tools/docs/experiments/scripts/fresh-behavior18-frames-20261107.py",
+      "Destination": "/audit.py",
+      "RW": false
+    },
+    {
+      "Source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-behavior18-frame-v1",
+      "Destination": "/out",
+      "RW": true
+    },
+    {
+      "Source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/worktrees/kairyu-bench-weight-tools/src",
+      "Destination": "/source",
+      "RW": false
+    },
+    {
+      "Source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/checkpoints/code90-current-ad-helper-av-v1",
+      "Destination": "/checkpoint",
+      "RW": false
+    },
+    {
+      "Source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-behavior18-inputs-v1",
+      "Destination": "/inputs",
+      "RW": false
+    }
+  ]
+}

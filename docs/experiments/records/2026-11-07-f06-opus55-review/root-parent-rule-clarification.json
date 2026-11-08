@@ -1,0 +1,11 @@
+{
+  "schema_version": 1,
+  "recorded_epoch": 1794061451.2628987,
+  "candidate_results_status": "full_run_running_no_official_report",
+  "prior_decision_sha256": "0bb1c680e96f368306c91a371ec5a51b5819966cddc77f438ed5e3b946063e82",
+  "clarification": "Follow the user instruction to edit the highest scored model under the same completed evaluation conditions. Coding is the stated primary objective.",
+  "next_edit_base": "Whichever completed comparable model has the highest official equal-source code score; exact coding tie uses official overall score. Never use a partial result for this choice.",
+  "mixed_tradeoff": "If F06 achieves a higher complete code score but loses substantially elsewhere, preserve that coding gain by editing F06 next to repair the losses. Do not revert the editing base to a lower coding score merely to simplify the method. This does not mean those losses are accepted as a finished model.",
+  "teacher_is_not_edit_base": "A separately declared frozen teacher checkpoint may preserve an earlier mode/behavior while only the highest-code editing base receives new weights. Both identities and all new training/model calls must be recorded. No baseline WSP rerun.",
+  "final_acceptance": "Full other-domain losses still require explicit assessment and correction when the complete tradeoff is not beneficial; final60/test and DeepSWE gates remain. No publication or90-point claim without measured support."
+}

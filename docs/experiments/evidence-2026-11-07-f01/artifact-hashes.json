@@ -1,0 +1,47 @@
+{
+  "candidate-spec.json.gz": {
+    "sha256": "73229ea77077a93062b4da8f53da9aa8c4ee046a9e5c554677579e0ff37c55fa",
+    "bytes": 1972899,
+    "uncompressed_sha256": "12f4e111a9d31539c6e2d3a94e8270c34b4dbc8a1c4f145fcdcf21ef936eb9d5"
+  },
+  "geometry.json": {
+    "sha256": "885779fc51392146ff77834675024d185e498efb867f3292c4304e237964df25",
+    "bytes": 2473285
+  },
+  "independent-postcheck.json": {
+    "sha256": "6ef65454bb90a89d499144f1a3f74a61491e09e7f6c36314ff7a9c7f69781e9b",
+    "bytes": 116627
+  },
+  "initial-host-preview-failure.json": {
+    "sha256": "e2a0f24f545f9da130cd5f9a5b3c4cc8cc4ce85975dea602bb4f4b2b8248070c",
+    "bytes": 383
+  },
+  "namespace-device-failure.json": {
+    "sha256": "c5c41d93135e544243b9d22a0f2607f84e452815dd8dfbde2dcc438d02a31576",
+    "bytes": 15849
+  },
+  "namespace-prepare.json": {
+    "sha256": "859b91293f39ade03c16d573197a9448b60a97e59594970efd003758c28a6941",
+    "bytes": 15953
+  },
+  "namespace-preview.json": {
+    "sha256": "37aa1041d15987938491b2f5a0d10d128cfe5da093b35da11cf087150dd10d5f",
+    "bytes": 15620
+  },
+  "namespace-solve.json": {
+    "sha256": "3ebb1c82cbc8baf9d32bca8b1be918c5c3853944a5e92717ac37bdf2d18a603d",
+    "bytes": 15514
+  },
+  "plan.json": {
+    "sha256": "8f1a525f78663f151099335c8599431a7e07589b647ce259ab0246189040e9d2",
+    "bytes": 13444
+  },
+  "preparation.json": {
+    "sha256": "2ca28bdec4856f440bd63a0fd0f67344770c9d9ac14687dc264e7aec8c3eea56",
+    "bytes": 26290
+  },
+  "solver-report.json": {
+    "sha256": "bd239b5e0a0c45ff05ddc044effc13c2632250ca0ad81ace5f9b35759a40bc99",
+    "bytes": 257130
+  }
+}

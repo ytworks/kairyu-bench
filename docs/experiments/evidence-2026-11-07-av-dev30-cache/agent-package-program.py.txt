@@ -1,0 +1,13 @@
+
+import json,hashlib
+from pathlib import Path
+from email.parser import Parser
+c=Path("/mnt/nvme/kairyu/bench-cache/wsp")
+result={}
+for p in (c/"venvs").iterdir():
+ if not p.name.startswith(("v2-harbor-","v2-swebench-pro-")):continue
+ versions={}
+ for m in p.glob("lib/python*/site-packages/*.dist-info/METADATA"):
+  f=Parser().parsestr(m.read_text());versions[f["Name"]]=f["Version"]
+ result[p.name]={"count":len(versions),"versions":versions,"ready_marker":(p/".kairyu-bench-ready").read_text().splitlines()}
+print(json.dumps(result))

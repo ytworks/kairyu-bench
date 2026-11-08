@@ -1,0 +1,46 @@
+{
+  "jobs": [
+    {
+      "name": "focused-tests",
+      "command": [
+        "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/infra/weight-tools-ci/bin/python",
+        "-B",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests",
+        "-p",
+        "test_n30_audit_evidence.py",
+        "-v"
+      ],
+      "returncode": 0,
+      "seconds": 0.11925601959228516
+    },
+    {
+      "name": "ruff",
+      "command": [
+        "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/infra/weight-tools-ci/bin/ruff",
+        "check",
+        "docs/experiments/scripts/fresh-n30-complete-audit.py",
+        "tests/test_n30_audit_evidence.py"
+      ],
+      "returncode": 0,
+      "seconds": 0.029967308044433594
+    },
+    {
+      "name": "help",
+      "command": [
+        "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/infra/weight-tools-ci/bin/python",
+        "-B",
+        "docs/experiments/scripts/fresh-n30-complete-audit.py",
+        "--help"
+      ],
+      "returncode": 0,
+      "seconds": 0.08022856712341309
+    }
+  ],
+  "model_calls": 0,
+  "benchmark_audits_run": 0,
+  "source_sha256": "e471c64712fdd70f37439f80bb86137889287c823b99b6ff945ee90eec1e75b1"
+}

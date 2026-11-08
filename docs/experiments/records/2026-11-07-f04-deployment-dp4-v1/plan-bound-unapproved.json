@@ -1,0 +1,98 @@
+{
+  "status": "four_previews_passed_awaiting_root_apply",
+  "approved_for_apply": false,
+  "service_order": [
+    "gemma-0",
+    "gemma-1",
+    "gemma-2",
+    "gemma-3"
+  ],
+  "python": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/infra/weight-tools-ci/bin/python",
+  "control": "/home/y-takagi/kairyu/examples/gemma-4-31b-8gpu/control.py",
+  "helper_sha256": "2e9da820fe30ba9b2436fb600cf14a533b1c496b2fed48ac3649fffb9d2bc9ae",
+  "owner_sha256": "19ae025add4f2f08705f33f0146f48cc9fa8e92bdb14a8383f46fb7d531e53bc",
+  "source_pins": {
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/worktrees/kairyu-bench-weight-tools/docs/experiments/scripts/redeploy-replica.py": "2e9da820fe30ba9b2436fb600cf14a533b1c496b2fed48ac3649fffb9d2bc9ae",
+    "/home/y-takagi/kairyu/examples/gemma-4-31b-8gpu/control.py": "fc9a78bc232f9cc331926a0737e64f4b4fe14946574f4a02bc1aacb9a800b851",
+    "/home/y-takagi/kairyu/examples/gemma-4-31b-8gpu/compose.yaml": "fe49b81c153f68335ef46e07dc9f9910ee49ee066902e703d11d152c8809c5cb",
+    "/home/y-takagi/kairyu/examples/gemma-4-31b-8gpu/example.json": "99b1863206205abc92f5bde917c607cced03a220bd77323cf264eb781f4aedb7",
+    "/home/y-takagi/kairyu/examples/gemma-4-31b-8gpu/kairyu.yaml": "a28e232f27b89d1acc35e3f5871ccffafd8145211e4ffcb33cc0c6b514fa640d"
+  },
+  "candidate": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/checkpoints/fresh-native-relative-f04-faststore-v1/checkpoint",
+  "freeze": {
+    "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/checkpoints/fresh-native-relative-f04-faststore-v1/manifest.json",
+    "sha256": "fd189cf276a1219ad627186d2dfb4a895c79768821f247a0b33d9abd8953d8c1"
+  },
+  "verification": {
+    "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f04-relative-v1/faststore-plan-v1/materialization-v1/verify.stdout",
+    "sha256": "a7237a2b82d68e64467c791c3781a86b8b216f584272ef5db77c956383c4b0cd"
+  },
+  "baseline": {
+    "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f04-relative-v1/deployment-dp4-v1/all-chat-before.json",
+    "sha256": "2df0a1708e741eaa627db969bf5697b767ab672c8f8a2dc0e216f932c99c19e1"
+  },
+  "protected_before": {
+    "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f04-relative-v1/deployment-dp4-v1/protected-before.json",
+    "sha256": "0705ef9b1262383cf987ca97a2cbfac68ce884eb578d1156f55edb405b2bd8c6"
+  },
+  "target_ids": {
+    "gemma-0": "0169d434fd1fa863ec39661a3e4c6b947ac2bef977e6f596ede771c6921bd32b",
+    "gemma-1": "d782bf8b23562bd19835279b1f8804910df882065d222e8e674cecafbb9b7d5e",
+    "gemma-2": "3acc0a02d713ae298e7979547db8fac1a14374826cd52fa7eb4453289ffe4072",
+    "gemma-3": "a7a781b8fa49e81f0a1cd638dbcc70f2d9c8310857e3b8c1ef53250eeafa4a02"
+  },
+  "protected_ids": [
+    "005b20d4f0adacdc438e2e90f44c9d21579f3d089b366bcfe8af8f0785bde8c3",
+    "0a32557db9cd0bd49fffefea34276c8515021858e3d0115e560ef835f616609a",
+    "149b564776c7bda50b4039b44b0cf52b1178272a481a4c4dee88de2f283ae334",
+    "3257ee5ee6d0fa212bacd64de8b86152ab0be509e0a7d329838193559039dbda",
+    "374e969acaf78f336c638b5bff9ffdde04fd44f9075e45d2cfd54881b556b2c1",
+    "37b84155d0d47c339a8a3f989cf69be74a80a9f7369829db41612a5a77fe481a",
+    "3d62fd16cb139033941f36930a226b197b4512f4d319bc0920ecc3ef0b62a87f",
+    "4ef033809802f99ae4859327cf7350e2dc4c7d657b226a7229914432e0dd0718",
+    "5885c75f79f5396867db6b3518637ca5bcde342dd1fd20f88c89bf69ff42cdff",
+    "61a829c3aaf5c9af66499357d1f55b8f58ad19ef40cb887bbe63a0c4729c10f9",
+    "88943a0985ba97dfb17be6b5fb54040eba2570b70ce05126bd410162d3658ffb",
+    "897103115f63e39d3261f39bf449bfa9258121d270ae700f65c0321837eeec08",
+    "8c1e4b184886cd32d110fab4c4fda7369c445ae910f1e68b8ba4834811921d8d",
+    "b0d4c3e871a7d2a44249318079920bd01f56cb7978b58a19f4245245f140afd6",
+    "b4302da3c2814fa2458ae7e4652b0041af34bd45d6872b86ecd40cfa06bf9985",
+    "bcf8a575872a9ff05a85bfd8b46dbeec3cb9d8bef6a94aded4cb5a12c61bc976",
+    "c672bb052ad042282e2e2ec2e8b65edde8b6c50262bd6dab00da57314e4f8b1b",
+    "c81e36297abd0b0e23fd11ada341ac6845e4446fe34a5f9432de70cbdfa752cc",
+    "ca0ce07ae660af1bb129a129aa538d23206e1d10c4db982ae692618dd852678d",
+    "dbabe7158257d30d26b6f96d51eb17e4a0b6385fcf5d9d90c2182b22aed3d20b",
+    "dfbaee8005646b8369493c56f5daa89251880694970e135209b3416255e57d57",
+    "ed9842852109333c564c5962ada840ea2794720ad613ebc0c8ef96591c816a33",
+    "fbb725752d9e8990506968903bfcb5a406eb56f0bc6c839eb08199c0d05f54f3"
+  ],
+  "previews": {
+    "gemma-0": {
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f04-relative-v1/deployment-dp4-v1/gemma-0-preview/receipt.json",
+      "sha256": "8a734b85fec8842b17bdfde1d75e2cebc0a3b0e9cdf2f0cc10b42603a5ee325f"
+    },
+    "gemma-1": {
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f04-relative-v1/deployment-dp4-v1/gemma-1-preview/receipt.json",
+      "sha256": "ffddf0e68e44b0f1e3160f971696b033aa5ef506341ba2fb6d73d531093d810c"
+    },
+    "gemma-2": {
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f04-relative-v1/deployment-dp4-v1/gemma-2-preview/receipt.json",
+      "sha256": "11ff8198dcdd9a9b21dac880ad1aac0e42a908c0fe3ac96ef326cee4b8c41aa7"
+    },
+    "gemma-3": {
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f04-relative-v1/deployment-dp4-v1/gemma-3-preview/receipt.json",
+      "sha256": "dc905a0f607e13537ae326ef5900292c3bbe6e6c69fbcd1d47fa997dc2737de6"
+    }
+  },
+  "output": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f04-relative-v1/deployment-dp4-v1/parallel-apply-v1",
+  "parent_gate": "If F03 becomes highest, this AV-derived F04 cannot be materialized/evaluated; parent_changed. No apply until root approves exact fully bound plan.",
+  "endpoint_checks_and_served_record": "After successful closure only, parent performs minimum endpoint checks and atomic served-record update before WSP handoff.",
+  "materialization": {
+    "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f04-relative-v1/faststore-plan-v1/materialization-v1/complete.json",
+    "sha256": "d2933023af323c4402269284c1dfe258ee20c254c8f9c9b612dffb391010ccdd"
+  },
+  "parent_decision": {
+    "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f04-relative-v1/faststore-plan-v1/parent-decision.json",
+    "sha256": "105ac95ccf7581ab6c36f7f2f0c1c4aaaa228c9c54a7a1349776695fc62d40f4"
+  }
+}

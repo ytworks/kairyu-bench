@@ -1,0 +1,27 @@
+{
+  "epoch": 1794049638.7702038,
+  "since": "2026-11-07T10:59:00Z",
+  "targets": {
+    "gemma-1": {
+      "returncode": 0,
+      "events": []
+    },
+    "gemma-3": {
+      "returncode": 0,
+      "events": []
+    },
+    "gateway": {
+      "returncode": 0,
+      "events": [
+        {
+          "timestamp": "2026-11-07T11:05:19.210852604Z",
+          "exception_types": [],
+          "keywords": [
+            "disconnected"
+          ],
+          "request_ids": []
+        }
+      ]
+    }
+  }
+}

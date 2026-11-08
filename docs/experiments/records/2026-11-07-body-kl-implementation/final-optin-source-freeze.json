@@ -1,0 +1,80 @@
+{
+  "source_sha256": {
+    "scripts/experiments/gemma4-purpose/train_lora.py": "c9406e597d015ec4f3cf1d626b0208d26fd6de7d673c6efca580af7001756374",
+    "scripts/experiments/gemma4-purpose/train_lora_body_kl.py": "290365237443e0138079e106452c88dcf64779e0dc6834447f29e92666c90ef8",
+    "docs/experiments/scripts/fresh-av-native-gpu4-20261107.py": "8d48cd69f9fe4109dec8fe190dde665483b24c6edb92e59dde4118859de6b2da",
+    "tests/test_gemma4_lora_training.py": "ad358a64a7dd93d6367710125092e77e1a2781853fcaae0cadb1ec54c2d9685f",
+    "tests/test_gemma4_native_owner.py": "874eb615d1a15af797e7c7cf00591ad508cd59d2b6bdf576c96e28f1788b7fc8"
+  },
+  "checks": [
+    {
+      "label": "final-optin-ruff",
+      "argv": [
+        "nice",
+        "-n",
+        "15",
+        "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/infra/weight-tools-ci/bin/ruff",
+        "check",
+        "scripts/experiments/gemma4-purpose/train_lora.py",
+        "scripts/experiments/gemma4-purpose/train_lora_body_kl.py",
+        "docs/experiments/scripts/fresh-av-native-gpu4-20261107.py",
+        "tests/test_gemma4_lora_training.py",
+        "tests/test_gemma4_native_owner.py"
+      ],
+      "returncode": 0,
+      "seconds": 0.033005243982188404,
+      "stdout_sha256": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "label": "final-optin-owner-tests",
+      "argv": [
+        "nice",
+        "-n",
+        "15",
+        "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/infra/weight-tools-ci/bin/python",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests",
+        "-p",
+        "test_gemma4_native_owner.py",
+        "-v"
+      ],
+      "returncode": 0,
+      "seconds": 0.6288493130123243,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "368dcf0e64838435764ce06ff650db27f178c3b0602f3c5c4852141a9592c7c9"
+    },
+    {
+      "label": "final-optin-trainer-tests",
+      "argv": [
+        "nice",
+        "-n",
+        "15",
+        "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/infra/weight-tools-ci/bin/python",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests",
+        "-p",
+        "test_gemma4_lora_training.py",
+        "-v"
+      ],
+      "returncode": 0,
+      "seconds": 0.1940078369807452,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "19efafe55dfe4b826bce0be76cf0f3941a18c88f70449b76c8007e496e299441"
+    }
+  ],
+  "model_calls": 0,
+  "gpu_calls": 0,
+  "service_changes": 0,
+  "tests": "owner28pass; trainer4pass3Torchskip; prior real Torch7pass retained",
+  "tokenizer_v2": {
+    "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-mbpp204-body-frames-v2/body-frame-proof.json",
+    "sha256": "8ba8242f00d839ffa17250ba8eb091190c01e726cfed302c88a5382dc60b3d25"
+  }
+}

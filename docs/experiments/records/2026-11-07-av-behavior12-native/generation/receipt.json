@@ -1,0 +1,31 @@
+{
+  "status": "completed",
+  "cases": 12,
+  "endpoint": "http://172.26.0.9:8000/v1",
+  "case_path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-behavior18-inputs-v1/train-cases.json",
+  "case_stat": {
+    "dev": 2306,
+    "ino": 182191377,
+    "size": 10872,
+    "mtime_ns": 1794040053511576605,
+    "ctime_ns": 1794040053511576605
+  },
+  "cases_sha256": "b42990b0caac24ccc7843e40718c0c5e7ad61dd5baa131ed6852c126bf37f66d",
+  "source_sha256": "df88767ebcd5a3138747a36fe7e0976dbb0c2ceb5b0f1eece74740818f0b7f89",
+  "source_stat": {
+    "dev": 2306,
+    "ino": 181419428,
+    "size": 10011,
+    "mtime_ns": 1794037321477455946,
+    "ctime_ns": 1794037321477455946
+  },
+  "checkpoint_identity": "caller-supplied; establish serving identity separately",
+  "concurrency": 16,
+  "thinking_control": "server-default",
+  "timeout_seconds": 1200.0,
+  "retries": 0,
+  "hidden_reasoning_saved": false,
+  "answer_execution": false,
+  "received": 12,
+  "errors": 0
+}

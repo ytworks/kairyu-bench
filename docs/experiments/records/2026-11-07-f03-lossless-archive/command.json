@@ -1,0 +1,28 @@
+{
+  "cwd": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/worktrees/kairyu-bench-weight-tools",
+  "argv": [
+    "ionice",
+    "-c",
+    "3",
+    "nice",
+    "-n",
+    "15",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/infra/weight-tools-ci/bin/python",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/worktrees/kairyu-bench-weight-tools/docs/experiments/records/2026-11-07-f03-lossless-archive/prepare.py.txt"
+  ],
+  "environment": {
+    "CUDA_VISIBLE_DEVICES": "",
+    "PYTHONDONTWRITEBYTECODE": "1",
+    "OPENBLAS_NUM_THREADS": "1",
+    "OMP_NUM_THREADS": "1",
+    "MKL_NUM_THREADS": "1",
+    "TMPDIR": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f03-native-v1/lossless-archive-preparation-v1/tmp"
+  },
+  "output_directory_created_fresh": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f03-native-v1/lossless-archive-preparation-v1",
+  "elapsed_seconds": 2.196185350418091,
+  "exit_code": 0,
+  "attempts": 1,
+  "failures": 0,
+  "full_payload_hash_or_diff": false,
+  "model_gpu_service_lock_operations": 0
+}

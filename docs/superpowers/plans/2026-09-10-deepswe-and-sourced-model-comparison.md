@@ -85,7 +85,7 @@ KAIRYU_BENCH_DEEPSWE_ATTEMPTS=4 \
 
 | 環境変数 | 既定 | 契約 |
 | --- | --- | --- |
-| `KAIRYU_BENCH_DEEPSWE_WORKERS` | `4` | 整数1〜16、全反復を合わせた並列上限 |
+| `KAIRYU_BENCH_DEEPSWE_WORKERS` | `4` | 整数1〜32、全反復を合わせた並列上限 |
 | `KAIRYU_BENCH_DEEPSWE_ATTEMPTS` | `1` | `1` または `4`。最終比較は4 |
 | `KAIRYU_BENCH_DEEPSWE_RETRIES` | `3` | 整数0〜16、明示した一時的 infrastructure error の再試行上限 |
 | `KAIRYU_BENCH_DEEPSWE_REASONING_EFFORT` | 未設定 | 指定時だけ送信。未設定は `server_default` と結果へ記録し、暗黙に high 等へ読み替えない |

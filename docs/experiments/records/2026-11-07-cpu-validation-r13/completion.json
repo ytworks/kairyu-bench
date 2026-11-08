@@ -1,0 +1,87 @@
+{
+  "started_epoch": 1794060097.8326964,
+  "elapsed_seconds": 48.04178977012634,
+  "results": [
+    {
+      "name": "unittest",
+      "command": [
+        "nice",
+        "-n",
+        "15",
+        "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/infra/weight-tools-ci/bin/python",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests",
+        "-v"
+      ],
+      "returncode": 0,
+      "elapsed_seconds": 47.5908100605011,
+      "stdout_sha256": "f3b824fa92f35f0aacb6278ee84a05fd2fadfba29fcff4a4966819bdd0c9a86a",
+      "stderr_sha256": "59424faa463f8dbd16cc612e0b1869ba7a0a01f723289cf668cba59dc577a523"
+    },
+    {
+      "name": "ruff",
+      "command": [
+        "nice",
+        "-n",
+        "15",
+        "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/infra/weight-tools-ci/bin/ruff",
+        "check",
+        "."
+      ],
+      "returncode": 0,
+      "elapsed_seconds": 0.03427577018737793,
+      "stdout_sha256": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "mypy",
+      "command": [
+        "nice",
+        "-n",
+        "15",
+        "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/infra/weight-tools-ci/bin/mypy",
+        "--ignore-missing-imports",
+        "src"
+      ],
+      "returncode": 0,
+      "elapsed_seconds": 0.23811101913452148,
+      "stdout_sha256": "4ef32b02733c640ba275e5de2c0f630d3ea2a6293bb124ad0dc2173d46e40541",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "data",
+      "command": [
+        "nice",
+        "-n",
+        "15",
+        "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/infra/weight-tools-ci/bin/python",
+        "scripts/update_model_comparison.py",
+        "--check"
+      ],
+      "returncode": 0,
+      "elapsed_seconds": 0.04306650161743164,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "tracked_shell",
+      "returncode": 0,
+      "elapsed_seconds": 0.0743107795715332,
+      "count": 31
+    }
+  ],
+  "source_count_before": 590,
+  "source_count_after": 590,
+  "sources_unchanged": true,
+  "source_changes": [],
+  "explicit_pins_unchanged": true,
+  "success": true,
+  "full_suite_repetitions": 1,
+  "model_GPU_service_operations": 0,
+  "TMPDIR": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/infra/tmp/r13",
+  "PATH_prefix": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/infra/weight-tools-ci/bin",
+  "runtime_cache_find_not_repeated": true
+}

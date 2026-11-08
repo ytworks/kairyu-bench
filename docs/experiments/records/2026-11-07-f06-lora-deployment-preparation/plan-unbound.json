@@ -1,0 +1,64 @@
+{
+  "status": "unbound_wait_for_total64_exact_restore_saved_F06_verify_Opus_root",
+  "approved_for_apply": false,
+  "service_order": [
+    "gemma-0",
+    "gemma-1",
+    "gemma-2",
+    "gemma-3"
+  ],
+  "python": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/infra/weight-tools-ci/bin/python",
+  "control": "/home/y-takagi/kairyu/examples/gemma-4-31b-8gpu/control.py",
+  "helper_sha256": "2e9da820fe30ba9b2436fb600cf14a533b1c496b2fed48ac3649fffb9d2bc9ae",
+  "owner_sha256": "19ae025add4f2f08705f33f0146f48cc9fa8e92bdb14a8383f46fb7d531e53bc",
+  "source_pins": {
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/worktrees/kairyu-bench-weight-tools/docs/experiments/scripts/redeploy-replica.py": "2e9da820fe30ba9b2436fb600cf14a533b1c496b2fed48ac3649fffb9d2bc9ae",
+    "/home/y-takagi/kairyu/examples/gemma-4-31b-8gpu/control.py": "fc9a78bc232f9cc331926a0737e64f4b4fe14946574f4a02bc1aacb9a800b851",
+    "/home/y-takagi/kairyu/examples/gemma-4-31b-8gpu/compose.yaml": "fe49b81c153f68335ef46e07dc9f9910ee49ee066902e703d11d152c8809c5cb",
+    "/home/y-takagi/kairyu/examples/gemma-4-31b-8gpu/example.json": "99b1863206205abc92f5bde917c607cced03a220bd77323cf264eb781f4aedb7",
+    "/home/y-takagi/kairyu/examples/gemma-4-31b-8gpu/kairyu.yaml": "a28e232f27b89d1acc35e3f5871ccffafd8145211e4ffcb33cc0c6b514fa640d"
+  },
+  "candidate": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/checkpoints/fresh-lora-mbpp-f06-v1/checkpoint",
+  "freeze": {
+    "path": null,
+    "sha256": null
+  },
+  "verification": {
+    "path": null,
+    "sha256": null
+  },
+  "baseline": {
+    "path": null,
+    "sha256": null
+  },
+  "protected_before": {
+    "path": null,
+    "sha256": null
+  },
+  "target_ids": {},
+  "protected_ids": [],
+  "previews": {},
+  "output": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f06-lora-deployment-plan-v1/parallel-apply-v1",
+  "parent_gate": "F04 is current highest completed parent. No parent re-evaluation. Root approval after all64 training, exact sameCID restoration, saved candidate verification, Opus review, fresh27snapshot and four existing guarded previews.",
+  "endpoint_checks_and_served_record": "After all4 candidate closure: existing minimum chat1/logprob4 and atomic serving record, then unchanged full2338 WSP30 with candidate-specific identity only",
+  "expected_previous_cids": {
+    "gemma-0": "47207dd45c1819d875951e66728310171dc218dfc55b1221054f704c39eb3009",
+    "gemma-1": "d1a79f265949e31778ead91834e6a509d3c66af708dc3d7247eb716caa28cef3",
+    "gemma-2": "07e1b17e7c84d8d178703417bb341c3313653eca7122aba1ad7b3d6d893d5abb",
+    "gemma-3": "41ae0d0831faf5d79939f16ad401da0da8fee0d2d453af12e4e4efd10480f45c"
+  },
+  "current_parent_restoration_proof": {
+    "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f05-rejected-f04-restore-v1/restoration-completion.json",
+    "sha256": "c4e3333397a71782293d80972a51e24a8b4874f0322a00980a93d386d809d196"
+  },
+  "required_fresh_binding": [
+    "all64 training summary/export",
+    "current gemma2 StartedAt after training restore",
+    "candidate freeze plus full verification and current stats",
+    "27current members/23protected/4healthy idle",
+    "shared baseline and four existing helper previews",
+    "Opus receipt",
+    "exact root approval"
+  ],
+  "rollback": "Existing parallel owner joins every child and rolls all four back to the single common baseline on any failure; no mixed benchmark"
+}

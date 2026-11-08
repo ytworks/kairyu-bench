@@ -1,0 +1,60 @@
+{
+  "kind": "static_review_only_no_candidate_plan",
+  "solver_calls": 0,
+  "gradient_payload_reads": 0,
+  "model_calls": 0,
+  "service_operations": 0,
+  "checkpoint_edits": 0,
+  "dependency_report": {
+    "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-native-dependency-v2/report.json",
+    "sha256": "271ee1afef4afd855c3aa6d589891bef6ad2b144b9499df9646039894835fad7"
+  },
+  "reviewed_source_sha256": {
+    "scripts/experiments/gemma4-purpose/propose_native_objectives.py": "9633698b9eab5d1e9c5e49d399f897d9147ab37f32c3ecd4b61232e3dc5e2d83",
+    "scripts/experiments/gemma4-purpose/joint.py": "6480e16c8f453b4a8f3914a502e1abd6ce31e21ef01759f258715baf557e703c",
+    "src/kairyu_bench/wsp/weights/finite_response.py": "2f4b474089290d66a291d61eea176743d2502303943c6fded5b4331ebbff77af"
+  },
+  "proposed_scope_coordinates": 645180,
+  "selected_source_l2": 960.7201571980261,
+  "all24_selected_gradient_energy_fraction": [
+    0.9851737294006314,
+    0.9857503392155526,
+    0.9838968776012922,
+    0.9693234774486766,
+    0.9948227122674842,
+    0.9882324801711677,
+    0.9901217442816758,
+    0.9892256941362955,
+    0.9901826540961011,
+    0.9914154180418943,
+    0.9935246701298834,
+    0.9924703595004817,
+    0.9805803082363349,
+    0.9751599606203614,
+    0.9822549024475669,
+    0.9861192092435805,
+    0.9920470293468616,
+    0.984037786196955,
+    0.9899919812552183,
+    0.9866153274568499,
+    0.9753761474252107,
+    0.993084104991667,
+    0.9937048617187217,
+    0.9904518709402165
+  ],
+  "a1_margin_absolute_target_0_02_requires_delta": 0.28009547710418703,
+  "post_attention_min_abs_source": 2.956390380859375e-05,
+  "absolute_1e_6_floor_relative_to_that_minimum": 0.03382503225806451,
+  "margin_minus_0_05_can_cross_zero": [
+    {
+      "id": "behavior-B2",
+      "baseline": 0.0453791618347168,
+      "lower_after_delta": -0.004620838165283206
+    },
+    {
+      "id": "behavior-E1",
+      "baseline": 0.04002022743225098,
+      "lower_after_delta": -0.009979772567749026
+    }
+  ]
+}

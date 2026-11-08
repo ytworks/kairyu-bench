@@ -1,0 +1,20 @@
+{
+  "status": "cpu_proposal_completed_not_materialized",
+  "seconds": 11.650826454162598,
+  "solver_seconds": 10.985932182054967,
+  "plan_sha256": "8e06264ec98ac6adf4a847603886e4377d61f0c4f1a7c96831fc5ceecd0dfacb",
+  "report_sha256": "5457c0b09141ed92c54656d9e2e72f96caa83a9c4eb45cb5a4e66cf0e7a28d2a",
+  "changed_elements": 429,
+  "changed_tensors": 140,
+  "actual_delta_l2": 2.035779114517941,
+  "weighted_delta_l2": 0.11679167722809664,
+  "predicted_constraints_satisfied": true,
+  "model_calls": 0,
+  "checkpoint_created": false,
+  "F03_final_state": "running",
+  "parent_gate": {
+    "required_before_materialization_or_evaluation": true,
+    "if_F03_becomes_highest": "Do not materialize or evaluate this AV-based F04; record unscored_reason=parent_changed and redesign from new best parent.",
+    "automatic_rank_or_parent_update": false
+  }
+}

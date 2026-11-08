@@ -1,0 +1,30 @@
+{
+  "pid": 1568395,
+  "command": [
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/infra/weight-tools-ci/bin/python",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/worktrees/kairyu-bench-weight-tools/scripts/experiments/gemma4-purpose/science_generate.py",
+    "--cases",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-behavior19-inputs-v1/train-cases.json",
+    "--split",
+    "train",
+    "--endpoint",
+    "http://172.26.0.9:8000/v1",
+    "--model",
+    "gemma-4-31b",
+    "--checkpoint-sha256",
+    "fcc4681343c1a0c338157bee767df2024f37290469e55dbc417723717f4ac176",
+    "--output",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f05-behavior19-native-v1/generation",
+    "--concurrency",
+    "16",
+    "--max-tokens",
+    "32768",
+    "--timeout",
+    "1200",
+    "--seed",
+    "0",
+    "--thinking-control",
+    "server-default",
+    "--run"
+  ]
+}

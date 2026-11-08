@@ -1,0 +1,64 @@
+{
+  "status": "passed",
+  "source_pins": {
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/worktrees/kairyu-bench-weight-tools/docs/experiments/scripts/redeploy-replica.py": "2e9da820fe30ba9b2436fb600cf14a533b1c496b2fed48ac3649fffb9d2bc9ae",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/worktrees/kairyu-bench-weight-tools/kairyu-bench": "56b53b7d72d75efcb2bef24643322f73625eba5c08a645c2f847768e558b6176",
+    "/home/y-takagi/kairyu/examples/gemma-4-31b-8gpu/control.py": "fc9a78bc232f9cc331926a0737e64f4b4fe14946574f4a02bc1aacb9a800b851",
+    "/home/y-takagi/kairyu/examples/gemma-4-31b-8gpu/compose.yaml": "fe49b81c153f68335ef46e07dc9f9910ee49ee066902e703d11d152c8809c5cb",
+    "/home/y-takagi/kairyu/examples/gemma-4-31b-8gpu/example.json": "99b1863206205abc92f5bde917c607cced03a220bd77323cf264eb781f4aedb7",
+    "/home/y-takagi/kairyu/examples/gemma-4-31b-8gpu/kairyu.yaml": "a28e232f27b89d1acc35e3f5871ccffafd8145211e4ffcb33cc0c6b514fa640d"
+  },
+  "pinned_inputs": {
+    "av-freeze.json": "0fbf034b37613d20fde3f8a536852246a4207be8c65be0aa46a9f2a1d920f176",
+    "switch-plan.json": "e28b20876d90fb8cca386d49a9d1c9602d582898678d5996d15cd058fe5c47b3",
+    "cleanup-completion.json": "2e20687df668012383253872716df35f006bb505b6e811908fc9001fa8535c7a"
+  },
+  "compose_membership": {
+    "gemma-0": {
+      "project": "gemma-4-31b-8gpu",
+      "service": "gemma-0",
+      "container_ids": [
+        "e275b7bcc331d6bcdd82a1729c0ec0cc7a80e581a008bd273d0b1aa953e82c02"
+      ],
+      "includes_stopped": true
+    },
+    "gemma-1": {
+      "project": "gemma-4-31b-8gpu",
+      "service": "gemma-1",
+      "container_ids": [
+        "32517829133b9a4a852eed753ae50b274343733307d65b2c01fa10172d513892"
+      ],
+      "includes_stopped": true
+    },
+    "gemma-2": {
+      "project": "gemma-4-31b-8gpu",
+      "service": "gemma-2",
+      "container_ids": [
+        "132833f603a6cbd1b6beed302590cbafd6d9e09bad879720f4c35f39cb806210"
+      ],
+      "includes_stopped": true
+    },
+    "gemma-3": {
+      "project": "gemma-4-31b-8gpu",
+      "service": "gemma-3",
+      "container_ids": [
+        "64f27c717165a4e4ea37abec691b5871f87fdfc8ddcd8dd2ecddfd832e5df550"
+      ],
+      "includes_stopped": true
+    }
+  },
+  "owner": {
+    "owner": {
+      "status": "global_lock_held",
+      "pid": 319432,
+      "uid": 1003,
+      "started_epoch": 1794032371.296285
+    },
+    "lock_identity": "09:02:181180584",
+    "proc_locks_line": "35: FLOCK  ADVISORY  WRITE 319432 09:02:181180584 0 EOF"
+  },
+  "protected_count": 23,
+  "all_27_unchanged": true,
+  "source_sha256": "2c3be39f675b3ec3d2cf4c3913ba7a03aeefb5814b7fa0ae3fe9e61fff488947",
+  "started_epoch": 1794032587.155125
+}

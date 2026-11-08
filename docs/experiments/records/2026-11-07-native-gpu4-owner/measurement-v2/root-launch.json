@@ -1,0 +1,15 @@
+{
+  "epoch": 1794041252.860403,
+  "owner_sha256": "9a8d9255312a97ae2762ec97c34c9701ac5d64dcb0dc273e01f8d7f6700b7183",
+  "input_plan_sha256": "8edba22f5aa38ec5eebf443a3b4b2eab2794b23c9968fcd0c09d13d003f20316",
+  "approved_plan_sha256": "5783f8bce04355bcc57d8c2648659e92c9c107c71de9d01c20b0e39dde6fa732",
+  "expected_cases": 12,
+  "objectives": [
+    "correct-logprob",
+    "margin"
+  ],
+  "checkpoint_edits": 0,
+  "transfer_cases": 0,
+  "target_cid": "fd4ec2eb9d7deba2ce3e790add6b50c0ee79a6390495320d8697873b32957bcf",
+  "source_pins": 79
+}

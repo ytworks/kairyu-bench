@@ -1,0 +1,77 @@
+{
+  "epoch": 1794039179.1342251,
+  "source_pins": [
+    {
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/worktrees/kairyu-bench-weight-tools/scripts/experiments/gemma4-purpose/native.py",
+      "sha256": "c9b294242d6e1c8c2786b1f4264dfcaf6d1c8927d576e815c53c96fca51ec108",
+      "bytes": 17930
+    },
+    {
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/worktrees/kairyu-bench-weight-tools/scripts/experiments/gemma4-purpose/matrix_full_units.py",
+      "sha256": "c25805880b862cf814b2294fdb396850650a34288934aab4c949facf67ef8b24",
+      "bytes": 22018
+    },
+    {
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/worktrees/kairyu-bench-weight-tools/scripts/experiments/gemma4-purpose/recipe_common.py",
+      "sha256": "fddbca286f3423e5e4a0bb046663600967f2060d0e055558d1c8659fcd89f35e",
+      "bytes": 17709
+    },
+    {
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/worktrees/kairyu-bench-weight-tools/scripts/experiments/gemma4-purpose/propose_native_objectives.py",
+      "sha256": "9633698b9eab5d1e9c5e49d399f897d9147ab37f32c3ecd4b61232e3dc5e2d83",
+      "bytes": 39565
+    },
+    {
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/worktrees/kairyu-bench-weight-tools/scripts/experiments/gemma4-purpose/objective_variants.py",
+      "sha256": "f1faa1993b0e138de1599e3057db7eb35fcdd375a43d4a8c85db526eaf6462a6",
+      "bytes": 6128
+    },
+    {
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/worktrees/kairyu-bench-weight-tools/scripts/experiments/gemma4-purpose/README.md",
+      "sha256": "b0098c3632485e217ab7b0e0073ebd274d97eaaf3cb820c3321754a191f399a8",
+      "bytes": 40028
+    },
+    {
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/worktrees/kairyu-bench-weight-tools/docs/wsp-native-coupled-objectives.md",
+      "sha256": "930bae5c0f51bdc9ba50afbc8ab8caca9753e0c9ca86cffef22faa90a1399e6d",
+      "bytes": 13757
+    }
+  ],
+  "help_checks": [
+    {
+      "command": [
+        "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/infra/weight-tools-ci/bin/python",
+        "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/worktrees/kairyu-bench-weight-tools/scripts/experiments/gemma4-purpose/native.py",
+        "--help"
+      ],
+      "returncode": 0,
+      "stdout": "usage: native.py [-h] --checkpoint CHECKPOINT --cases CASES --output OUTPUT\n                 [--checkpoint-attestation CHECKPOINT_ATTESTATION]\n                 [--attestation-sha256 ATTESTATION_SHA256]\n                 [--device {cpu,cuda:0}] [--threads THREADS] [--seed SEED]\n                 [--max-cases-per-microbatch MAX_CASES_PER_MICROBATCH]\n                 [--reference-tolerance REFERENCE_TOLERANCE] [--run]\n                 [--gpu-exclusive-approved] [--max-frame-tokens {1024,2048}]\n                 [--text-attention-backend {eager,sdpa}]\n                 [--execution-order {original,longest_frame_first}]\n                 [--cuda-memory-cap-gib CUDA_MEMORY_CAP_GIB]\n                 [--mode {raw-next-token,chat-public-answer}]\n                 [--objective {margin,correct-logprob}]\n                 [--answer-batching {paired,serial}] [--virtual]\n                 [--saved-activation-storage {device,cpu-fp32}]\n\nCollect Gemma 4 native gain and optional virtual-block purpose derivatives.\n\noptions:\n  -h, --help            show this help message and exit\n  --checkpoint CHECKPOINT\n  --cases CASES\n  --output OUTPUT\n  --checkpoint-attestation CHECKPOINT_ATTESTATION\n  --attestation-sha256 ATTESTATION_SHA256\n  --device {cpu,cuda:0}\n  --threads THREADS\n  --seed SEED\n  --max-cases-per-microbatch MAX_CASES_PER_MICROBATCH\n                        split each existing pack into at most this many\n                        correct/foil pairs\n  --reference-tolerance REFERENCE_TOLERANCE\n  --run                 otherwise validate inputs and print a preview only\n  --gpu-exclusive-approved\n  --max-frame-tokens {1024,2048}\n                        opt-in complete prefix+answer limit; reject oversize,\n                        never truncate\n  --text-attention-backend {eager,sdpa}\n  --execution-order {original,longest_frame_first}\n  --cuda-memory-cap-gib CUDA_MEMORY_CAP_GIB\n                        optional CUDA caching-allocator limit, not total\n                        device memory\n  --mode {raw-next-token,chat-public-answer}\n  --objective {margin,correct-logprob}\n                        explicit loss; correct-logprob requires chat-public-\n                        answer and keeps good+foil batch layout\n  --answer-batching {paired,serial}\n                        serial uses one answer graph at a time; chat native-\n                        only, unchanged full tokens and pack padding\n  --virtual             also differentiate explicit O-head and MLP-down-column\n                        unit gains\n  --saved-activation-storage {device,cpu-fp32}\n                        opt-in blocking CPU storage of nonleaf CUDA FP32 saved\n                        activations; serial native-only\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/infra/weight-tools-ci/bin/python",
+        "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/worktrees/kairyu-bench-weight-tools/scripts/experiments/gemma4-purpose/matrix_full_units.py",
+        "--help"
+      ],
+      "returncode": 0,
+      "stdout": "usage: matrix_full_units.py [-h] --checkpoint CHECKPOINT --cases CASES\n                            --output OUTPUT\n                            [--checkpoint-attestation CHECKPOINT_ATTESTATION]\n                            [--attestation-sha256 ATTESTATION_SHA256]\n                            [--device {cpu,cuda:0}] [--threads THREADS]\n                            [--seed SEED]\n                            [--max-cases-per-microbatch MAX_CASES_PER_MICROBATCH]\n                            [--reference-tolerance REFERENCE_TOLERANCE]\n                            [--run] [--gpu-exclusive-approved]\n                            [--max-frame-tokens {1024,2048}]\n                            [--text-attention-backend {eager,sdpa}]\n                            [--execution-order {original,longest_frame_first}]\n                            [--cuda-memory-cap-gib CUDA_MEMORY_CAP_GIB]\n                            [--mode {raw-next-token,chat-public-answer}]\n                            [--objective {correct-logprob,margin}]\n                            [--answer-batching {serial}] --unit-support\n                            UNIT_SUPPORT --unit-support-sha256\n                            UNIT_SUPPORT_SHA256\n\nObserve fixed complete MLP unit rows/columns with unchanged sampled attention\ncells.\n\noptions:\n  -h, --help            show this help message and exit\n  --checkpoint CHECKPOINT\n  --cases CASES\n  --output OUTPUT\n  --checkpoint-attestation CHECKPOINT_ATTESTATION\n  --attestation-sha256 ATTESTATION_SHA256\n  --device {cpu,cuda:0}\n  --threads THREADS\n  --seed SEED\n  --max-cases-per-microbatch MAX_CASES_PER_MICROBATCH\n                        split each existing pack into at most this many\n                        correct/foil pairs\n  --reference-tolerance REFERENCE_TOLERANCE\n  --run                 otherwise validate inputs and print a preview only\n  --gpu-exclusive-approved\n  --max-frame-tokens {1024,2048}\n                        opt-in complete prefix+answer limit; reject oversize,\n                        never truncate\n  --text-attention-backend {eager,sdpa}\n  --execution-order {original,longest_frame_first}\n  --cuda-memory-cap-gib CUDA_MEMORY_CAP_GIB\n                        optional CUDA caching-allocator limit, not total\n                        device memory\n  --mode {raw-next-token,chat-public-answer}\n  --objective {correct-logprob,margin}\n  --answer-batching {serial}\n  --unit-support UNIT_SUPPORT\n  --unit-support-sha256 UNIT_SUPPORT_SHA256\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/infra/weight-tools-ci/bin/python",
+        "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/worktrees/kairyu-bench-weight-tools/scripts/experiments/gemma4-purpose/propose_native_objectives.py",
+        "--help"
+      ],
+      "returncode": 0,
+      "stdout": "usage: propose_native_objectives.py [-h] --plan PLAN --output OUTPUT [--run]\n                                    [--write-spec]\n                                    [--maximum-seconds MAXIMUM_SECONDS]\n\nCouple two matched native objectives; preview is metadata-only, never a model\ncall.\n\noptions:\n  -h, --help            show this help message and exit\n  --plan PLAN\n  --output OUTPUT\n  --run                 run the bounded CPU solver; default metadata-only\n                        preview\n  --write-spec          with --run, publish exact BF16 specs in the explicitly\n                        selected plan scope\n  --maximum-seconds MAXIMUM_SECONDS\n",
+      "stderr": ""
+    }
+  ],
+  "model_loads": 0,
+  "model_calls": 0,
+  "gpu_operations": 0,
+  "service_operations": 0,
+  "candidate_created": false
+}

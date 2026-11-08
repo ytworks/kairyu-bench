@@ -11,7 +11,7 @@ Linux / x86_64、Docker Composeを推奨します。113タスクの定義を検�
 
 | 環境変数 | 既定 | 設定範囲・意味 |
 | --- | --- | --- |
-| `KAIRYU_BENCH_DEEPSWE_WORKERS` | 4 | 1–16。1反復内の同時問題数、完了した枠に即補充 |
+| `KAIRYU_BENCH_DEEPSWE_WORKERS` | 4 | 1–32。1反復内の同時問題数、完了した枠に即補充 |
 | `KAIRYU_BENCH_DEEPSWE_ATTEMPTS` | 1 | 1または4。4の場合は同じ113問を4反復、並列数は合計workers以内 |
 | `KAIRYU_BENCH_DEEPSWE_RETRIES` | 3 | 0–16。一時的API・環境エラーのPier再試行上限。mini自身のAPI retryも適用 |
 | `KAIRYU_BENCH_DEEPSWE_REASONING_EFFORT` | 未指定 | none/minimal/low/medium/high/xhigh/max。未指定はAPI既定 |

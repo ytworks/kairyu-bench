@@ -1,0 +1,67 @@
+from pathlib import Path
+import hashlib,json,os,subprocess,time
+R=Path('/mnt/nvme/kairyu/wsp/gemma4-coding-20261104')
+P=R/'analysis/fresh-purpose-20261107-av-behavior12-score-v2'
+N=R/'analysis/fresh-purpose-20261107-av-behavior12-native-v1'
+I=R/'analysis/fresh-purpose-20261107-behavior18-inputs-v1'
+S=R/'runtime/fresh-purpose-20261107-behavior18-validation-v4'
+PYTHON='/mnt/nvme/kairyu/dev-logs/wsp/venv-scicode/bin/python'
+IMAGE='sha256:c4ab50223f03fca17bf871e4d05f77001e76525a1c574b6c6ee7024db06cfdc2'
+DAEMON='3e518d2b-6972-43f8-b325-f7f33697a2d2'
+def h(p):return hashlib.sha256(Path(p).read_bytes()).hexdigest()
+def pin(p):return {'path':str(p),'sha256':h(p),'bytes':p.stat().st_size}
+def save(p,d):p.write_text(json.dumps(d,ensure_ascii=False,indent=2)+'\n')
+def protected(expected):
+ fmt='{"cid":{{json .Id}},"name":{{json .Name}},"image":{{json .Image}},"running":{{json .State.Running}},"status":{{json .State.Status}},"health":{{if index .State "Health"}}{{json (index (index .State "Health") "Status")}}{{else}}null{{end}}}'
+ out=subprocess.check_output(['docker','--host','unix:///var/run/docker.sock','inspect','--format',fmt,*[x['cid'] for x in expected]],text=True)
+ rows=[json.loads(line) for line in out.splitlines()]
+ assert rows==expected
+ return rows
+assert not P.exists();P.mkdir()
+receipt={'status':'preparing','epoch':time.time(),'operation':pin(Path(__file__))}
+save(P/'preparation.json',receipt)
+try:
+ complete=json.loads((N/'owner/generation-complete.json').read_text())
+ closure=json.loads((N/'owner/owner-closure.json').read_text())
+ release=json.loads((N/'owner/normal-lock-release.json').read_text())
+ assert complete['returncode']==0 and complete['expected']==complete['received']==12 and not complete['missing_ids']
+ assert closure['child_finished'] and not closure['stop_requests'] and not closure['services_changed'] and release['released']
+ response=N/'generation/train-responses.json';case=I/'train-cases.json'
+ assert h(response)==complete['responses_sha256']=='5ea0e169922048a2e5bf649ceb6b1add7bb81db5ee19bcf48c620cb00f3de3db'
+ assert h(case)=='b42990b0caac24ccc7843e40718c0c5e7ad61dd5baa131ed6852c126bf37f66d'
+ source={'behavior_cases.py':'10ba3e480c8685933904060629b351758cf7b61362756179e55779435d01a310',
+         'behavior_offline.py':'30715a30e02c7fab8ec4e1ffad28e57c4925b16fb45048680d6f5735bd3af9e5',
+         'science_sandbox.py':'4a65378e493fb2f109afdaf0d98b5b93dc067d6d3f48d2a4cf17017f1aadcb78',
+         'science_cases.py':'2c4cc6e75c92c41b98e737ca2c0a653e0f7a7675c6150a6ad33e3f954122a26b'}
+ for name,sha in source.items():assert h(S/name)==sha
+ gp=json.loads((N/'root-approved-launch-plan.json').read_text())
+ snapshot=protected(gp['protected_containers'])
+ identity=subprocess.check_output(['docker','--host','unix:///var/run/docker.sock','info','--format','{{.ID}} {{.DockerRootDir}}'],text=True).strip()
+ assert identity==DAEMON+' /mnt/nvme/docker'
+ assert subprocess.check_output(['docker','--host','unix:///var/run/docker.sock','image','inspect',IMAGE,'--format','{{.Id}}'],text=True).strip()==IMAGE
+ base=['--mode','score','--split','train','--cases',str(case),'--cases-sha256',h(case),
+       '--responses',str(response),'--responses-sha256',h(response),'--docker-socket','/var/run/docker.sock',
+       '--daemon-id',DAEMON,'--image',IMAGE]
+ cmd=[PYTHON,str(S/'behavior_offline.py'),*base,'--output',str(P/'preview')]
+ env=os.environ.copy();env['PYTHONDONTWRITEBYTECODE']='1'
+ t=time.monotonic()
+ with (P/'preview.log').open('w') as f:proc=subprocess.run(cmd,stdout=f,stderr=subprocess.STDOUT,env=env)
+ assert proc.returncode==0
+ preview=json.loads((P/'preview/report.json').read_text())
+ assert preview['status']=='preview' and preview['expected_cases']==12 and preview['responses_received']==12 and not preview['results']
+ plan={'schema_version':1,'created_epoch':time.time(),'approved_for_execution':True,
+       'authorization':'Root conditional instruction: normal generation closure + fixed pins + fresh plan/preview + daemon/image/protected match permits one fixed train12 CPU scoring.',
+       'split':'train','cases':pin(case),'responses':pin(response),'runtime':str(S),'python':PYTHON,
+       'source_sha256':source,'protected':snapshot,'daemon_id':DAEMON,'image_id':IMAGE,'docker_root_dir':'/mnt/nvme/docker',
+       'generation_evidence':[pin(N/name) for name in ['owner/generation-complete.json','owner/owner-closure.json','owner/normal-lock-release.json','owner/serving-closure.json','root-approved-launch-plan.json']],
+       'argv':base+['--output',str(P/'evaluation'),'--run'],
+       'preview':{'command':cmd,'returncode':proc.returncode,'seconds':time.monotonic()-t,'report':pin(P/'preview/report.json')},
+       'raw_worker_capture':'recording Docker subclass delegates unchanged super().run and saves returned protocol; no generated host execution',
+       'limits':{'cases':12,'trials_per_case':16,'seconds_per_case':15,'cpus':1,'memory_mib':512,'user':'1003:1003','network':'none','gpus':False,'host_mounts':[]},
+       'new_model_calls':0,'retry':0,'transfer_scoring':False}
+ save(P/'plan.json',plan)
+ receipt.update(status='complete',plan=pin(P/'plan.json'))
+ save(P/'preparation.json',receipt)
+ print(json.dumps({'plan':receipt['plan'],'preview_passed':True,'protected':len(snapshot)}))
+except BaseException as e:
+ receipt.update(status='failed',error_type=type(e).__name__);save(P/'preparation.json',receipt);raise

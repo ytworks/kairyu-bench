@@ -1,0 +1,1652 @@
+{
+  "apply": true,
+  "archive_checks": [
+    {
+      "path": "BASE-SHA256SUMS",
+      "sha256": "514758a2ced99c93a8b2aca931413a982aef362accfd373176e75c7225b5c105"
+    },
+    {
+      "path": "CANDIDATE-SHA256SUMS",
+      "sha256": "f8433c6bb7948a1a12659c11bcca69f8239ea613409f98e6ca5bce1e5cc5ab81"
+    },
+    {
+      "path": "README.md",
+      "sha256": "53f8a8fd318ffbe1a478ec5c9f5abc454be6b8a90fdb8e8df6519c6360fa83e1"
+    },
+    {
+      "path": "approved-scope-plan.json",
+      "sha256": "a05e488a2bdd6f88b31dc51f8a654676e41a9857d756e74d332f1102141873ac"
+    },
+    {
+      "path": "archive-validation.json",
+      "sha256": "d2df08c59474d41b1131fefea1e293292f8af594d247c7e49fff5acc4e3f92fa"
+    },
+    {
+      "path": "archive.json",
+      "sha256": "d681aff1ee89697c9647ca0063c0be30441e56ce757864a5054aceaa23669d94"
+    },
+    {
+      "path": "fresh-verify.json",
+      "sha256": "290a6b04c05a37c8dc8f588ea789b0fc383d85c2e51b1095292bc344bf3d1c87"
+    },
+    {
+      "path": "metadata/.eval_results/mmmu_pro.yaml",
+      "sha256": "e673fe773afc0807cf25534cefac2e9c4c81673fc450fb1fe501624fb807532c"
+    },
+    {
+      "path": "metadata/.gitattributes",
+      "sha256": "aa4fc74fe06acc698271341dee76eca26c6672a1f4b2840dedbf37f1b4fe27a4"
+    },
+    {
+      "path": "metadata/README.md",
+      "sha256": "e209f5c435b1e66055bd6d7c29185103ae8d2027a03a96b359335154f206b82b"
+    },
+    {
+      "path": "metadata/chat_template.jinja",
+      "sha256": "ae53464bf3be25802b3a5b37def7fd89667067d7577049b3b2d74c4d8de4c6d4"
+    },
+    {
+      "path": "metadata/config.json",
+      "sha256": "e967dd38bc5cfd38bd09a995a7bf4a754075df2b46aba68f7fbb5a791e6d8dd1"
+    },
+    {
+      "path": "metadata/generation_config.json",
+      "sha256": "d4226bbe3117d2d253ba4609720ba82c6c4ce4627a9a6ae05387c78983ac03de"
+    },
+    {
+      "path": "metadata/model.safetensors.index.json",
+      "sha256": "d4aff3b976d69c123a29d1c085d7ba4de1ac3f4ca1726a7f81e1b11462a64ea2"
+    },
+    {
+      "path": "metadata/processor_config.json",
+      "sha256": "32bdf45d2ad4cc29a0822ddd157a182de76644f0419a6228d151495256e9813c"
+    },
+    {
+      "path": "metadata/tokenizer.json",
+      "sha256": "cc8d3a0ce36466ccc1278bf987df5f71db1719b9ca6b4118264f45cb627bfe0f"
+    },
+    {
+      "path": "metadata/tokenizer_config.json",
+      "sha256": "9f4fec4b1dc6ecddf8f4a92e9caea5971c0e67d81309f3f9066a2bee8c362633"
+    },
+    {
+      "path": "original-manifest.json.gz",
+      "sha256": "c51103be0f08bba69615cf184c9b756b8d7ae5c585f25ccd2ae55a86e909d439"
+    },
+    {
+      "path": "prearchive-readonly-audit.json",
+      "sha256": "620e3da2ed7a2775af05a437960a026c505e275decb8cb0bee82b22637036d53"
+    },
+    {
+      "path": "preparation-source.py.txt",
+      "sha256": "ff3e09abbb18168634fe4f2f8939453924eb0f103c4a74ef7a5573a5b61c52b4"
+    },
+    {
+      "path": "source/kairyu_bench/__init__.py",
+      "sha256": "adb3e3c453270cc36bdfe5b78fb4b3543eeb8b1bc8de356847e8580086be0709"
+    },
+    {
+      "path": "source/kairyu_bench/__main__.py",
+      "sha256": "53c3bc3ff7afa01b08c74fdf30e51a57f1b6ce7d730bfa2d9af9b108fbd42804"
+    },
+    {
+      "path": "source/kairyu_bench/adapter_context.py",
+      "sha256": "59e89313bb4b45df025a9856c9bc16f2648a84cb879ad85ed98f63433d0ecdbe"
+    },
+    {
+      "path": "source/kairyu_bench/artifacts.py",
+      "sha256": "b30a66967d435dc2e03a4e780e88591e8586c3b95355bbb163cc0b54d457d6ca"
+    },
+    {
+      "path": "source/kairyu_bench/benchmarks.py",
+      "sha256": "fa551e044a9e7f43ca18eec853b99512830606a389feccab4c79d69e9dabfa95"
+    },
+    {
+      "path": "source/kairyu_bench/cli.py",
+      "sha256": "dd679d0f8cb7f6bfdf9e48a25e040bb6d336e6222038ad6de36f381de64cf32a"
+    },
+    {
+      "path": "source/kairyu_bench/data/benchmarks.json",
+      "sha256": "681f9a2b756a08779a699edf621daa277c338163048a63876cce9453d8719cd1"
+    },
+    {
+      "path": "source/kairyu_bench/data/deepswe-agent-lock.json",
+      "sha256": "4cb499a6388e1cc6f1b14eb0124725014ac4b8e0a10db5390accae990a44566e"
+    },
+    {
+      "path": "source/kairyu_bench/data/deepswe-deepseek-harness-lock.json",
+      "sha256": "c9ccf58f98962f9e10998e6d46b0764f9dff858073f1dfc0c501a13a9040400f"
+    },
+    {
+      "path": "source/kairyu_bench/data/deepswe-deepseek-harness.patch.json",
+      "sha256": "073b0e626da5c12cd8a0ead8f8a8ca4961d1b763021108244918563dc1651344"
+    },
+    {
+      "path": "source/kairyu_bench/data/public_results.json",
+      "sha256": "a3249e298f00a10ad4c6ef223c784616b41a94cfb23742392f0878388c37d771"
+    },
+    {
+      "path": "source/kairyu_bench/data/terminal-bench-4.json",
+      "sha256": "963ba8e2cc36954953f23bc286eb3687b5b384f2328bb17382ab8ea520170111"
+    },
+    {
+      "path": "source/kairyu_bench/data/wsp/agent-candidates.json",
+      "sha256": "a5e7e75e6db8f6cb79935f1f91110ab3311613ef1e470400488f12a02fdd0a63"
+    },
+    {
+      "path": "source/kairyu_bench/data/wsp/manifest.json",
+      "sha256": "a3a0b60e0872a38c6b1abf7e97d7fe729fabf9e25cd3f09a3da9544b9ca39b5b"
+    },
+    {
+      "path": "source/kairyu_bench/data/wsp/targets.json",
+      "sha256": "02a44469d4b1e14175648543c76b3c73d3b936b55f9b946cdebcb7ef153b225a"
+    },
+    {
+      "path": "source/kairyu_bench/deepswe.py",
+      "sha256": "8c28ed9b6ceef268cb4863a9f69210d75d8778a3804a586e5c46a3e9c8406406"
+    },
+    {
+      "path": "source/kairyu_bench/deepswe_dsh.py",
+      "sha256": "5b1f4b59c1ec85924508948be0f5e451ebddc5499d4e5d587d9491035c1396be"
+    },
+    {
+      "path": "source/kairyu_bench/deepswe_dsh_runner.py",
+      "sha256": "bbe7073fe525ede0d06618a028d5b7f192e655e6f5c396eaf42a883249334992"
+    },
+    {
+      "path": "source/kairyu_bench/deepswe_runtime.py",
+      "sha256": "a3ebcf772fba4c2aabe365c5346120df3c57367714129dc81f2092c15c868ca3"
+    },
+    {
+      "path": "source/kairyu_bench/direct.py",
+      "sha256": "7105d15cb6d07d3924ca4f05cdf1ce7eff0d1ffe448cbdecb616f3fc35379aa8"
+    },
+    {
+      "path": "source/kairyu_bench/harness_config.py",
+      "sha256": "5416032ec738d8cfd774da7d78e81308727c518d13557673e9ca020aeb11a416"
+    },
+    {
+      "path": "source/kairyu_bench/harness_data.py",
+      "sha256": "dc0546ff96c9355c88c11087aa95c4e497270492ab17fbe94174e60c5fe84d57"
+    },
+    {
+      "path": "source/kairyu_bench/inspect_summary.py",
+      "sha256": "16b21eefdb064e5d1f12b17281084437491aa3c1e029ffc5d901bffa2b9a6a0c"
+    },
+    {
+      "path": "source/kairyu_bench/manifest.py",
+      "sha256": "eaa526757736a83afddd0e1b4298e70f53642129d312d3425acc6c44e97772a4"
+    },
+    {
+      "path": "source/kairyu_bench/official.py",
+      "sha256": "5d7f12e2cf833bd509cf65dbb4619095de2ae936df1a0dfad86b6bdfe6439612"
+    },
+    {
+      "path": "source/kairyu_bench/public_results.py",
+      "sha256": "3771ef066f18dd098ceacf99abfac97bcc6a60c8e600e560e7b657f2c3e8c14d"
+    },
+    {
+      "path": "source/kairyu_bench/reporting.py",
+      "sha256": "213994cc5596affc5a8a93fde75f52d290f8ac49bdc510b29b1ecae0b979c3e6"
+    },
+    {
+      "path": "source/kairyu_bench/results.py",
+      "sha256": "d51922e9ae70f757ee976943cabf72ca280b9e41c41953ad81d63b93ba6f790a"
+    },
+    {
+      "path": "source/kairyu_bench/runner.py",
+      "sha256": "750e95de9865bfb0a29fb75c828ee3281c7fff2f6271544ea6fc45b46f0e57c1"
+    },
+    {
+      "path": "source/kairyu_bench/selection.py",
+      "sha256": "d9d95b6be7b3d6648deaa0b7103d902a6fe717ef6c2b96a520f8b37e587e6f31"
+    },
+    {
+      "path": "source/kairyu_bench/swebench_pro.py",
+      "sha256": "9c5b2615a5c99e699c9cee88c348630a4bef221e43c500be1bad5cad35829df0"
+    },
+    {
+      "path": "source/kairyu_bench/target.py",
+      "sha256": "b44a5d515105b7d1ead8378b3627a12e893106d63533fda8ea517d2b741fca7d"
+    },
+    {
+      "path": "source/kairyu_bench/terminal_bench4.py",
+      "sha256": "93c88cf502a417a9c3fff962ece2256da29b4fb00832c9dadd3d9f7c4aac3b99"
+    },
+    {
+      "path": "source/kairyu_bench/terminal_bench4_accounting.py",
+      "sha256": "fcf4b2b1496253dee73509ed3edfa25d8395805e314ff1c9dccbe98463cc304f"
+    },
+    {
+      "path": "source/kairyu_bench/terminal_bench4_cli.py",
+      "sha256": "37c843e6ce926de92e7de8a9afbd66cc677574d78a61d38e176ddf3437cf7833"
+    },
+    {
+      "path": "source/kairyu_bench/terminal_bench4_plugin.py",
+      "sha256": "c34dcde7247d5903affc643e91a9cb9240540f0a9b31c7430d79d88080a16776"
+    },
+    {
+      "path": "source/kairyu_bench/wsp/__init__.py",
+      "sha256": "066441d666206cec6fe79218c4b94f84b75481769261f88d8092a28bfc2f1927"
+    },
+    {
+      "path": "source/kairyu_bench/wsp/catalog.py",
+      "sha256": "8f250f3180bc0e16876980d681836cd74f4c275b978fa23721e3ee5b0c50a0a7"
+    },
+    {
+      "path": "source/kairyu_bench/wsp/cli.py",
+      "sha256": "406b07cb9bed06bd3b814292329cd67d0acf89fcaf5fddca8858cc865bbed090"
+    },
+    {
+      "path": "source/kairyu_bench/wsp/client.py",
+      "sha256": "3a99ddd6c19697bee533ba3e87d3d13170ba5299571b523b773cd72e60cc7b2c"
+    },
+    {
+      "path": "source/kairyu_bench/wsp/manifest.py",
+      "sha256": "d41c24bec59f7e84bd0065fae400d2c1209bdc7384d277ab82eff3c91debbfe3"
+    },
+    {
+      "path": "source/kairyu_bench/wsp/observe/__init__.py",
+      "sha256": "a42b91d537a800b48f8b4e8b99f74e862ab2f4b8b3a394706ee6b348c1b2b9fe"
+    },
+    {
+      "path": "source/kairyu_bench/wsp/observe/budget.py",
+      "sha256": "edb3bb7554e4b5228c8768a8a8932bbe5237df1b4f7ba4b2bed26d676f468b1a"
+    },
+    {
+      "path": "source/kairyu_bench/wsp/observe/cli.py",
+      "sha256": "3bfbb7e6dd2fe0e89fbd2b2211e1688a9e56daa704bde6575f8e229e51042b9f"
+    },
+    {
+      "path": "source/kairyu_bench/wsp/observe/collector.py",
+      "sha256": "fcb8bbe3f964d47ac2f57e89804c82132b14b9434813fff0a607316bc04fb7d7"
+    },
+    {
+      "path": "source/kairyu_bench/wsp/observe/collector_io.py",
+      "sha256": "85668993159e0788089627b27360918e4761176edea0e35c7b504408be3473f8"
+    },
+    {
+      "path": "source/kairyu_bench/wsp/observe/core.py",
+      "sha256": "363fc7e33bcb22b20d846171892366fa067bdb7f3062cd35e4b8e616dba2849d"
+    },
+    {
+      "path": "source/kairyu_bench/wsp/observe/gpu_kernel.py",
+      "sha256": "622b4ab43a0e83446bbe375a1e604896eb0ed7090c85bdc4c625f6d5a88196fa"
+    },
+    {
+      "path": "source/kairyu_bench/wsp/observe/middleware.py",
+      "sha256": "d5e7e1cf05c5a6081c1cd8185f04a2ecc4a0373f59a9331a0719f588eedf11b6"
+    },
+    {
+      "path": "source/kairyu_bench/wsp/observe/report.py",
+      "sha256": "eb3f44c74034a2087d78a8941823ef5e7f3a82ec1be5d8f566dc01d462258258"
+    },
+    {
+      "path": "source/kairyu_bench/wsp/observe/tracing.py",
+      "sha256": "02b21d991f2d3be7a4f5bd648857e9a887bf1fd7dd7984245b5244ed96ee27b4"
+    },
+    {
+      "path": "source/kairyu_bench/wsp/observe/vllm_worker.py",
+      "sha256": "03c86d216e1177fb879d5314bb43b83cf5a934651be70fa3d6ef8d245cb2fd0d"
+    },
+    {
+      "path": "source/kairyu_bench/wsp/report.py",
+      "sha256": "f708cab18226874ac26d2b9fce642db811fcdbe985f2420eeda40920e2575784"
+    },
+    {
+      "path": "source/kairyu_bench/wsp/run.py",
+      "sha256": "9272730f132a72002cc38f7c3c47690893f8288652364c1b644e0cf27bf04ce2"
+    },
+    {
+      "path": "source/kairyu_bench/wsp/scorers/__init__.py",
+      "sha256": "2145b19f2e3bb058c3261903dad4ca4bb525bfa0ab66e28006c0eee7a8c52616"
+    },
+    {
+      "path": "source/kairyu_bench/wsp/scorers/evalplus_score.py",
+      "sha256": "142c57786f1658d28c3d3927115c1ebb574ac2e5d2f7e54772c704db31b56291"
+    },
+    {
+      "path": "source/kairyu_bench/wsp/scorers/livecodebench_score.py",
+      "sha256": "45ea6a0f27150a148904f1b3a145f51fe2ac9953874e4c7fc7e5e1feda550f60"
+    },
+    {
+      "path": "source/kairyu_bench/wsp/scorers/scicode_score.py",
+      "sha256": "623c459292e33fb406cbeef5aae446657644faef9913af4bb149addbacd0641c"
+    },
+    {
+      "path": "source/kairyu_bench/wsp/select.py",
+      "sha256": "6e3de893d9bd8e0bbb60daa2e75fe3f4e11124dade6daa1e841ab25f1d8f7ed4"
+    },
+    {
+      "path": "source/kairyu_bench/wsp/sources/__init__.py",
+      "sha256": "92a8db31d765d06a8f3c111bf42618fa8f49b8db0b7d2915d0eea0ef6b8ccc4a"
+    },
+    {
+      "path": "source/kairyu_bench/wsp/sources/agents.py",
+      "sha256": "c84d8d2a2ea879ab65d72f535b9108db111909aa1b474c0060275610deb4379d"
+    },
+    {
+      "path": "source/kairyu_bench/wsp/sources/choice.py",
+      "sha256": "bc85beadf73b38368ba43b297ce7a39420d8fdf1621da1c38cca43a4233375b6"
+    },
+    {
+      "path": "source/kairyu_bench/wsp/sources/code.py",
+      "sha256": "523ab727598a80f06f49d7118ad6cfb4206fdae9c1135a63d64b87b3ed5a31c6"
+    },
+    {
+      "path": "source/kairyu_bench/wsp/sources/instructions.py",
+      "sha256": "560366c343de22d23a379dc64ec1101a6d8cbfc4598e8c55dabe41db420b8e25"
+    },
+    {
+      "path": "source/kairyu_bench/wsp/sources/logprob.py",
+      "sha256": "fafc8d0c6b1623621301f2515b1c393948ffbed3fbe5ecfa86571bac1ef6fe89"
+    },
+    {
+      "path": "source/kairyu_bench/wsp/sources/long_context.py",
+      "sha256": "1078a7a05a5d645f1da4c870c0b5c50053fd392826614484552944048963bbb5"
+    },
+    {
+      "path": "source/kairyu_bench/wsp/sources/mathematics.py",
+      "sha256": "8d911891ac7cea5af1b910e03e38866c9c9dfaf471b7c6b7775d4f194a558826"
+    },
+    {
+      "path": "source/kairyu_bench/wsp/sources/terminal_bench_observe.py",
+      "sha256": "79754d3568828424eff5c1adaabf03d7fdd0491ca30e7257322610319c3c46e0"
+    },
+    {
+      "path": "source/kairyu_bench/wsp/sources/text.py",
+      "sha256": "d997d902f42b09abe8252d5b8575fa3e365334f2c21ccdff1f2f80e8da37092d"
+    },
+    {
+      "path": "source/kairyu_bench/wsp/sources/tools.py",
+      "sha256": "79832fe172a2eb10ce11ba759a9ad5127ac759802f0e336afe8c05a0d702ed67"
+    },
+    {
+      "path": "source/kairyu_bench/wsp/sources/vision.py",
+      "sha256": "be03da1f6ea0706e59292f06920272bb73105b54b2404cc5af495d1145b5a58a"
+    },
+    {
+      "path": "source/kairyu_bench/wsp/weights/__init__.py",
+      "sha256": "84407e8a57e31b915d5ba936a309457422b3b6c347fde2056f1dd492ad511cca"
+    },
+    {
+      "path": "source/kairyu_bench/wsp/weights/checkpoint.py",
+      "sha256": "898297c05e7179cdc4568d6f290b978073bcebafea804ac043b54030e8205bf9"
+    },
+    {
+      "path": "source/kairyu_bench/wsp/weights/cli.py",
+      "sha256": "4193ee3863ac8d96ead9ba167ac572619d280ed9277f5729df970361cb882b26"
+    },
+    {
+      "path": "source/kairyu_bench/wsp/weights/composition.py",
+      "sha256": "7ce2bc057ad3974d8c4d8509be0c193dbb7fd6b42cd523e1c9df5619bf7f84b7"
+    },
+    {
+      "path": "source/kairyu_bench/wsp/weights/editor.py",
+      "sha256": "0983580f41989c26e84c16c26924f2850dd4e5d3d12917bb9553d7feb92333d2"
+    },
+    {
+      "path": "source/kairyu_bench/wsp/weights/finite_replay.py",
+      "sha256": "71c424bffac775ba112e709632df0a37351a79c3121827be7c9844f321c7c4d3"
+    },
+    {
+      "path": "source/kairyu_bench/wsp/weights/finite_response.py",
+      "sha256": "2f4b474089290d66a291d61eea176743d2502303943c6fded5b4331ebbff77af"
+    },
+    {
+      "path": "source/kairyu_bench/wsp/weights/matrix.py",
+      "sha256": "002761474fd4bba4bce089b23eb6fcf701ab7c40b39b819a272a39dfdbac97e9"
+    },
+    {
+      "path": "source/kairyu_bench/wsp/weights/native_faststore.py",
+      "sha256": "445cc73783bd6bd61890b107bb76ddca1e388a9bf84b630125a01486389578cd"
+    },
+    {
+      "path": "source/kairyu_bench/wsp/weights/receipts.py",
+      "sha256": "b7299c8c89ad07e2f7df6cacfac39adabb4c98e6407da2585d6649dc26b37f27"
+    },
+    {
+      "path": "source/kairyu_bench/wsp/weights/shard_pool.py",
+      "sha256": "f45d073c9950579753c74143dbc9cdc89abfdc6b0d2e4c694c91807d9b4cbc2f"
+    },
+    {
+      "path": "source/kairyu_bench/wsp/weights/statistics.py",
+      "sha256": "7c021ac29e0e6bdbcb5a0bc150a598eeef7c9d1a39baf3931525d849ca0370f0"
+    },
+    {
+      "path": "source/kairyu_bench.egg-info/PKG-INFO",
+      "sha256": "8904ec6a38718cfd38bb1217c2052bd900632eea0dbac131ca4b8123acc5bb55"
+    },
+    {
+      "path": "source/kairyu_bench.egg-info/SOURCES.txt",
+      "sha256": "7b6268086d178376dff53b1a4fac7c9ac43a05de92ec5f44816174bbf36417d1"
+    },
+    {
+      "path": "source/kairyu_bench.egg-info/dependency_links.txt",
+      "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "path": "source/kairyu_bench.egg-info/entry_points.txt",
+      "sha256": "c6e0513e8b281cf97f5f8bd717f0d8eef53dfb69675d3258103433e0d0492039"
+    },
+    {
+      "path": "source/kairyu_bench.egg-info/requires.txt",
+      "sha256": "d2c5effc67ef1b2e051e977b239d9f3cea385540f3226e0c305e0ffe6b084baf"
+    },
+    {
+      "path": "source/kairyu_bench.egg-info/top_level.txt",
+      "sha256": "f69399162838fbddc82250581eca8ee4f5c881e33b10f4b9a131b9801b913279"
+    },
+    {
+      "path": "spec.json.gz",
+      "sha256": "afe4ab4e8b14ebaaf029b4b06d44ab1e07d1817af56821ae977f38b53d646762"
+    }
+  ],
+  "base_stat": {
+    ".eval_results/mmmu_pro.yaml": {
+      "ctime_ns": 1793718022773510504,
+      "device": 2306,
+      "gid": 0,
+      "inode": 181176111,
+      "mode": 33188,
+      "mtime_ns": 1793718022773510504,
+      "nlink": 1,
+      "size": 182,
+      "uid": 0
+    },
+    ".gitattributes": {
+      "ctime_ns": 1793718022726512112,
+      "device": 2306,
+      "gid": 0,
+      "inode": 181176109,
+      "mode": 33188,
+      "mtime_ns": 1793718022726512112,
+      "nlink": 1,
+      "size": 1708,
+      "uid": 0
+    },
+    "README.md": {
+      "ctime_ns": 1793718022733511873,
+      "device": 2306,
+      "gid": 0,
+      "inode": 181176110,
+      "mode": 33188,
+      "mtime_ns": 1793718022732511907,
+      "nlink": 1,
+      "size": 27963,
+      "uid": 0
+    },
+    "chat_template.jinja": {
+      "ctime_ns": 1793718022686513480,
+      "device": 2306,
+      "gid": 0,
+      "inode": 181176107,
+      "mode": 33188,
+      "mtime_ns": 1793718022685513514,
+      "nlink": 1,
+      "size": 18683,
+      "uid": 0
+    },
+    "config.json": {
+      "ctime_ns": 1793718022717512420,
+      "device": 2306,
+      "gid": 0,
+      "inode": 181176108,
+      "mode": 33188,
+      "mtime_ns": 1793718022717512420,
+      "nlink": 1,
+      "size": 4621,
+      "uid": 0
+    },
+    "generation_config.json": {
+      "ctime_ns": 1793718022761510915,
+      "device": 2306,
+      "gid": 0,
+      "inode": 181176112,
+      "mode": 33188,
+      "mtime_ns": 1793718022761510915,
+      "nlink": 1,
+      "size": 208,
+      "uid": 0
+    },
+    "model-00001-of-00002.safetensors": {
+      "ctime_ns": 1793718102417787962,
+      "device": 2306,
+      "gid": 0,
+      "inode": 181176101,
+      "mode": 33188,
+      "mtime_ns": 1793718096477990897,
+      "nlink": 1,
+      "size": 49784788364,
+      "uid": 0
+    },
+    "model-00002-of-00002.safetensors": {
+      "ctime_ns": 1793718047148676921,
+      "device": 2306,
+      "gid": 0,
+      "inode": 181176102,
+      "mode": 33188,
+      "mtime_ns": 1793718043716794265,
+      "nlink": 1,
+      "size": 12761549884,
+      "uid": 0
+    },
+    "model.safetensors.index.json": {
+      "ctime_ns": 1793718023192496174,
+      "device": 2306,
+      "gid": 0,
+      "inode": 181176124,
+      "mode": 33188,
+      "mtime_ns": 1793718023192496174,
+      "nlink": 1,
+      "size": 120246,
+      "uid": 0
+    },
+    "processor_config.json": {
+      "ctime_ns": 1793718023241494498,
+      "device": 2306,
+      "gid": 0,
+      "inode": 181176125,
+      "mode": 33188,
+      "mtime_ns": 1793718023240494532,
+      "nlink": 1,
+      "size": 1689,
+      "uid": 0
+    },
+    "tokenizer.json": {
+      "ctime_ns": 1793718029569278071,
+      "device": 2306,
+      "gid": 0,
+      "inode": 181176119,
+      "mode": 33188,
+      "mtime_ns": 1793718029370284877,
+      "nlink": 1,
+      "size": 32169626,
+      "uid": 0
+    },
+    "tokenizer_config.json": {
+      "ctime_ns": 1793718023250494190,
+      "device": 2306,
+      "gid": 0,
+      "inode": 181176126,
+      "mode": 33188,
+      "mtime_ns": 1793718023249494224,
+      "nlink": 1,
+      "size": 3082,
+      "uid": 0
+    }
+  },
+  "candidate_stat": {
+    ".eval_results/mmmu_pro.yaml": {
+      "ctime_ns": 1793800904354968822,
+      "device": 2306,
+      "gid": 1003,
+      "inode": 181570956,
+      "mode": 33188,
+      "mtime_ns": 1793718022773510504,
+      "nlink": 1,
+      "size": 182,
+      "uid": 1003
+    },
+    ".gitattributes": {
+      "ctime_ns": 1793800904354968822,
+      "device": 2306,
+      "gid": 1003,
+      "inode": 181570957,
+      "mode": 33188,
+      "mtime_ns": 1793718022726512112,
+      "nlink": 1,
+      "size": 1708,
+      "uid": 1003
+    },
+    "README.md": {
+      "ctime_ns": 1793800904354968822,
+      "device": 2306,
+      "gid": 1003,
+      "inode": 181570958,
+      "mode": 33188,
+      "mtime_ns": 1793718022732511907,
+      "nlink": 1,
+      "size": 27963,
+      "uid": 1003
+    },
+    "chat_template.jinja": {
+      "ctime_ns": 1793800904354968822,
+      "device": 2306,
+      "gid": 1003,
+      "inode": 181570959,
+      "mode": 33188,
+      "mtime_ns": 1793718022685513514,
+      "nlink": 1,
+      "size": 18683,
+      "uid": 1003
+    },
+    "config.json": {
+      "ctime_ns": 1793800904355968789,
+      "device": 2306,
+      "gid": 1003,
+      "inode": 181570960,
+      "mode": 33188,
+      "mtime_ns": 1793718022717512420,
+      "nlink": 1,
+      "size": 4621,
+      "uid": 1003
+    },
+    "generation_config.json": {
+      "ctime_ns": 1793800904355968789,
+      "device": 2306,
+      "gid": 1003,
+      "inode": 181570961,
+      "mode": 33188,
+      "mtime_ns": 1793718022761510915,
+      "nlink": 1,
+      "size": 208,
+      "uid": 1003
+    },
+    "model-00001-of-00002.safetensors": {
+      "ctime_ns": 1793800946809548012,
+      "device": 2306,
+      "gid": 1003,
+      "inode": 181570962,
+      "mode": 33188,
+      "mtime_ns": 1793800946809548012,
+      "nlink": 1,
+      "size": 49784788364,
+      "uid": 1003
+    },
+    "model-00002-of-00002.safetensors": {
+      "ctime_ns": 1793800955060271575,
+      "device": 2306,
+      "gid": 1003,
+      "inode": 181570963,
+      "mode": 33188,
+      "mtime_ns": 1793800955060271575,
+      "nlink": 1,
+      "size": 12761549884,
+      "uid": 1003
+    },
+    "model.safetensors.index.json": {
+      "ctime_ns": 1793800955039272278,
+      "device": 2306,
+      "gid": 1003,
+      "inode": 181570964,
+      "mode": 33188,
+      "mtime_ns": 1793718023192496174,
+      "nlink": 1,
+      "size": 120246,
+      "uid": 1003
+    },
+    "processor_config.json": {
+      "ctime_ns": 1793800955039272278,
+      "device": 2306,
+      "gid": 1003,
+      "inode": 181570965,
+      "mode": 33188,
+      "mtime_ns": 1793718023240494532,
+      "nlink": 1,
+      "size": 1689,
+      "uid": 1003
+    },
+    "tokenizer.json": {
+      "ctime_ns": 1793800955060271575,
+      "device": 2306,
+      "gid": 1003,
+      "inode": 181570966,
+      "mode": 33188,
+      "mtime_ns": 1793718029370284877,
+      "nlink": 1,
+      "size": 32169626,
+      "uid": 1003
+    },
+    "tokenizer_config.json": {
+      "ctime_ns": 1793800955060271575,
+      "device": 2306,
+      "gid": 1003,
+      "inode": 181570967,
+      "mode": 33188,
+      "mtime_ns": 1793718023249494224,
+      "nlink": 1,
+      "size": 3082,
+      "uid": 1003
+    }
+  },
+  "free_bytes_before": 6403391488,
+  "fresh_payload_hash": false,
+  "global_lock_acquired": true,
+  "global_lock_stat": {
+    "ctime_ns": 1793844261043624533,
+    "device": 2306,
+    "gid": 1003,
+    "inode": 181180584,
+    "mode": 33204,
+    "mtime_ns": 1793844261043624533,
+    "nlink": 1,
+    "size": 0,
+    "uid": 1003
+  },
+  "model_calls": 0,
+  "operation_sha256": "435e01109887123db12519c100e304fa7bd4f5a71b772e6c96eedce1b130f894",
+  "physical_reconstruction": false,
+  "pid": 1736166,
+  "plan_sha256": "40699df334e0ca70bc48de2f3c64371d098bdea4f7433ef05263277707711b05",
+  "protected_containers": [
+    {
+      "cid": "005b20d4f0adacdc438e2e90f44c9d21579f3d089b366bcfe8af8f0785bde8c3",
+      "health": "healthy",
+      "image": "sha256:ef11a68f38457d831e23168486858c25b9d9c4399094c9e72c0d4d8767ac09de",
+      "mounts": [
+        {
+          "Destination": "/app/backend/data",
+          "RW": true,
+          "Source": "/mnt/nvme/kairyu/model-volumes/gemma-4-31b-8gpu/webui-data",
+          "Type": "bind",
+          "candidate_overlap": false
+        }
+      ],
+      "name": "/gemma-4-31b-8gpu-chat-ui-1",
+      "running": true,
+      "status": "running"
+    },
+    {
+      "cid": "07e1b17e7c84d8d178703417bb341c3313653eca7122aba1ad7b3d6d893d5abb",
+      "health": "healthy",
+      "image": "sha256:af9e746b913088cbf6c4464a31d6904a6b7e1d3ba62f0895362ddf13595f7abe",
+      "mounts": [
+        {
+          "Destination": "/checkpoint",
+          "RW": false,
+          "Source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/checkpoints/fresh-native-relative-f04-faststore-v1/checkpoint",
+          "Type": "bind",
+          "candidate_overlap": false
+        },
+        {
+          "Destination": "/models",
+          "RW": false,
+          "Source": "/mnt/nvme/kairyu/model-volumes/gemma-4-31b-8gpu/models",
+          "Type": "bind",
+          "candidate_overlap": false
+        },
+        {
+          "Destination": "/root/.cache",
+          "RW": true,
+          "Source": "/mnt/nvme/kairyu/model-volumes/gemma-4-31b-8gpu/compile-cache",
+          "Type": "bind",
+          "candidate_overlap": false
+        }
+      ],
+      "name": "/gemma-4-31b-8gpu-gemma-2-1",
+      "running": true,
+      "status": "running"
+    },
+    {
+      "cid": "0a32557db9cd0bd49fffefea34276c8515021858e3d0115e560ef835f616609a",
+      "health": null,
+      "image": "sha256:aa3df78ecf320f5fafdce71c659f1629e96e9de0968305fe1de670e0ca9176ce",
+      "mounts": [
+        {
+          "Destination": "/home/y-takagi/kairyu-bench/results",
+          "RW": true,
+          "Source": "/home/y-takagi/kairyu-bench/results",
+          "Type": "bind",
+          "candidate_overlap": false
+        },
+        {
+          "Destination": "/mnt/nvme/kairyu/bench-cache/gemma-wsp-coding-20261104",
+          "RW": true,
+          "Source": "/mnt/nvme/kairyu/bench-cache/gemma-wsp-coding-20261104",
+          "Type": "bind",
+          "candidate_overlap": false
+        },
+        {
+          "Destination": "/var/lib/docker",
+          "RW": true,
+          "Source": "/mnt/nvme/kairyu/docker/gemma-wsp-coding-20261104/data",
+          "Type": "bind",
+          "candidate_overlap": false
+        },
+        {
+          "Destination": "/var/run",
+          "RW": true,
+          "Source": "/mnt/nvme/kairyu/docker/gemma-wsp-coding-20261104/run",
+          "Type": "bind",
+          "candidate_overlap": false
+        }
+      ],
+      "name": "/gemma-wsp-deepswe-dind-20261104-pre-nvme-results-20261105",
+      "running": false,
+      "status": "exited"
+    },
+    {
+      "cid": "149b564776c7bda50b4039b44b0cf52b1178272a481a4c4dee88de2f283ae334",
+      "health": null,
+      "image": "sha256:2a232a42256f70d78e3cc5d2b5d6b3276710a0de0596c145f627ecfae90282ac",
+      "mounts": [
+        {
+          "Destination": "/home/y-takagi/kairyu-bench",
+          "RW": true,
+          "Source": "/home/y-takagi/kairyu-bench",
+          "Type": "bind",
+          "candidate_overlap": false
+        },
+        {
+          "Destination": "/mnt/nvme/kairyu/bench-cache/wsp",
+          "RW": true,
+          "Source": "/mnt/nvme/kairyu/bench-cache/wsp",
+          "Type": "bind",
+          "candidate_overlap": false
+        },
+        {
+          "Destination": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/results",
+          "RW": true,
+          "Source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/results",
+          "Type": "bind",
+          "candidate_overlap": false
+        },
+        {
+          "Destination": "/var/lib/docker",
+          "RW": true,
+          "Source": "/mnt/nvme/kairyu/docker/wsp/data",
+          "Type": "bind",
+          "candidate_overlap": false
+        },
+        {
+          "Destination": "/var/run",
+          "RW": true,
+          "Source": "/mnt/nvme/kairyu/docker/wsp/run",
+          "Type": "bind",
+          "candidate_overlap": false
+        }
+      ],
+      "name": "/wsp-dind",
+      "running": true,
+      "status": "running"
+    },
+    {
+      "cid": "3257ee5ee6d0fa212bacd64de8b86152ab0be509e0a7d329838193559039dbda",
+      "health": "healthy",
+      "image": "sha256:bb4076b5f7468285b297e77867843a190c337009a97d14cefefc0d6a719e68d4",
+      "mounts": [
+        {
+          "Destination": "/app/kairyu",
+          "RW": false,
+          "Source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/runtime/resume-20261106/trace-gateway/source-package",
+          "Type": "bind",
+          "candidate_overlap": false
+        },
+        {
+          "Destination": "/etc/kairyu/kairyu.yaml",
+          "RW": false,
+          "Source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/runtime/resume-20261106/trace-gateway/kairyu.yaml",
+          "Type": "bind",
+          "candidate_overlap": false
+        },
+        {
+          "Destination": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/runtime/resume-20261106/trace-gateway/cache",
+          "RW": true,
+          "Source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/runtime/resume-20261106/trace-gateway/cache",
+          "Type": "bind",
+          "candidate_overlap": false
+        },
+        {
+          "Destination": "/var/lib/kairyu/placement",
+          "RW": true,
+          "Source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/runtime/resume-20261106/trace-gateway/placement",
+          "Type": "bind",
+          "candidate_overlap": false
+        }
+      ],
+      "name": "/kairyu-wsp-observe-20261106",
+      "running": true,
+      "status": "running"
+    },
+    {
+      "cid": "374e969acaf78f336c638b5bff9ffdde04fd44f9075e45d2cfd54881b556b2c1",
+      "health": null,
+      "image": "sha256:af9e746b913088cbf6c4464a31d6904a6b7e1d3ba62f0895362ddf13595f7abe",
+      "mounts": [
+        {
+          "Destination": "/checkpoint",
+          "RW": false,
+          "Source": "/mnt/nvme/kairyu/model-volumes/gemma-4-31b-8gpu/models/gemma-4-31b-it",
+          "Type": "bind",
+          "candidate_overlap": false
+        },
+        {
+          "Destination": "/observations",
+          "RW": true,
+          "Source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/expanded-broad-sensitivities",
+          "Type": "bind",
+          "candidate_overlap": false
+        },
+        {
+          "Destination": "/probe.py",
+          "RW": false,
+          "Source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/runtime/observe_broad_norm_sensitivities.py",
+          "Type": "bind",
+          "candidate_overlap": false
+        }
+      ],
+      "name": "/gemma4-wsp-cpu-broad-margins-20261105",
+      "running": false,
+      "status": "exited"
+    },
+    {
+      "cid": "37b84155d0d47c339a8a3f989cf69be74a80a9f7369829db41612a5a77fe481a",
+      "health": null,
+      "image": "sha256:af9e746b913088cbf6c4464a31d6904a6b7e1d3ba62f0895362ddf13595f7abe",
+      "mounts": [
+        {
+          "Destination": "/checkpoint",
+          "RW": false,
+          "Source": "/mnt/nvme/kairyu/model-volumes/gemma-4-31b-8gpu/models/gemma-4-31b-it",
+          "Type": "bind",
+          "candidate_overlap": false
+        },
+        {
+          "Destination": "/guards",
+          "RW": false,
+          "Source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/whole-text-purpose-dependencies",
+          "Type": "bind",
+          "candidate_overlap": false
+        },
+        {
+          "Destination": "/observations",
+          "RW": true,
+          "Source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/algorithm-completion-dependencies",
+          "Type": "bind",
+          "candidate_overlap": false
+        },
+        {
+          "Destination": "/prior-programming",
+          "RW": false,
+          "Source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/programming-completion-dependencies",
+          "Type": "bind",
+          "candidate_overlap": false
+        },
+        {
+          "Destination": "/runtime",
+          "RW": false,
+          "Source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/runtime",
+          "Type": "bind",
+          "candidate_overlap": false
+        }
+      ],
+      "name": "/gemma4-wsp-cpu-algorithm-completion-20261105",
+      "running": false,
+      "status": "exited"
+    },
+    {
+      "cid": "3d62fd16cb139033941f36930a226b197b4512f4d319bc0920ecc3ef0b62a87f",
+      "health": null,
+      "image": "sha256:af9e746b913088cbf6c4464a31d6904a6b7e1d3ba62f0895362ddf13595f7abe",
+      "mounts": [
+        {
+          "Destination": "/analysis",
+          "RW": true,
+          "Source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/whole-text-purpose-dependencies",
+          "Type": "bind",
+          "candidate_overlap": false
+        },
+        {
+          "Destination": "/checkpoint",
+          "RW": false,
+          "Source": "/mnt/nvme/kairyu/model-volumes/gemma-4-31b-8gpu/models/gemma-4-31b-it",
+          "Type": "bind",
+          "candidate_overlap": false
+        },
+        {
+          "Destination": "/probe.py",
+          "RW": false,
+          "Source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/runtime/check_joint_purpose_programs_cpu.py",
+          "Type": "bind",
+          "candidate_overlap": false
+        }
+      ],
+      "name": "/gemma4-wsp-cpu-joint-sets-20261105",
+      "running": false,
+      "status": "exited"
+    },
+    {
+      "cid": "41ae0d0831faf5d79939f16ad401da0da8fee0d2d453af12e4e4efd10480f45c",
+      "health": "healthy",
+      "image": "sha256:af9e746b913088cbf6c4464a31d6904a6b7e1d3ba62f0895362ddf13595f7abe",
+      "mounts": [
+        {
+          "Destination": "/checkpoint",
+          "RW": false,
+          "Source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/checkpoints/fresh-native-relative-f04-faststore-v1/checkpoint",
+          "Type": "bind",
+          "candidate_overlap": false
+        },
+        {
+          "Destination": "/models",
+          "RW": false,
+          "Source": "/mnt/nvme/kairyu/model-volumes/gemma-4-31b-8gpu/models",
+          "Type": "bind",
+          "candidate_overlap": false
+        },
+        {
+          "Destination": "/root/.cache",
+          "RW": true,
+          "Source": "/mnt/nvme/kairyu/model-volumes/gemma-4-31b-8gpu/compile-cache",
+          "Type": "bind",
+          "candidate_overlap": false
+        }
+      ],
+      "name": "/gemma-4-31b-8gpu-gemma-3-1",
+      "running": true,
+      "status": "running"
+    },
+    {
+      "cid": "47207dd45c1819d875951e66728310171dc218dfc55b1221054f704c39eb3009",
+      "health": "healthy",
+      "image": "sha256:af9e746b913088cbf6c4464a31d6904a6b7e1d3ba62f0895362ddf13595f7abe",
+      "mounts": [
+        {
+          "Destination": "/checkpoint",
+          "RW": false,
+          "Source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/checkpoints/fresh-native-relative-f04-faststore-v1/checkpoint",
+          "Type": "bind",
+          "candidate_overlap": false
+        },
+        {
+          "Destination": "/models",
+          "RW": false,
+          "Source": "/mnt/nvme/kairyu/model-volumes/gemma-4-31b-8gpu/models",
+          "Type": "bind",
+          "candidate_overlap": false
+        },
+        {
+          "Destination": "/root/.cache",
+          "RW": true,
+          "Source": "/mnt/nvme/kairyu/model-volumes/gemma-4-31b-8gpu/compile-cache",
+          "Type": "bind",
+          "candidate_overlap": false
+        }
+      ],
+      "name": "/gemma-4-31b-8gpu-gemma-0-1",
+      "running": true,
+      "status": "running"
+    },
+    {
+      "cid": "4ef033809802f99ae4859327cf7350e2dc4c7d657b226a7229914432e0dd0718",
+      "health": null,
+      "image": "sha256:af9e746b913088cbf6c4464a31d6904a6b7e1d3ba62f0895362ddf13595f7abe",
+      "mounts": [
+        {
+          "Destination": "/analysis",
+          "RW": true,
+          "Source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/expanded-synthetic-sensitivities",
+          "Type": "bind",
+          "candidate_overlap": false
+        },
+        {
+          "Destination": "/candidate-specs",
+          "RW": false,
+          "Source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/specs",
+          "Type": "bind",
+          "candidate_overlap": false
+        },
+        {
+          "Destination": "/checkpoint",
+          "RW": false,
+          "Source": "/mnt/nvme/kairyu/model-volumes/gemma-4-31b-8gpu/models/gemma-4-31b-it",
+          "Type": "bind",
+          "candidate_overlap": false
+        },
+        {
+          "Destination": "/ffn",
+          "RW": false,
+          "Source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/ffn-candidate-specs",
+          "Type": "bind",
+          "candidate_overlap": false
+        },
+        {
+          "Destination": "/probe.py",
+          "RW": false,
+          "Source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/runtime/compare_expanded_mechanisms_cpu.py",
+          "Type": "bind",
+          "candidate_overlap": false
+        }
+      ],
+      "name": "/gemma4-wsp-cpu-mechanisms-20261105",
+      "running": false,
+      "status": "exited"
+    },
+    {
+      "cid": "5885c75f79f5396867db6b3518637ca5bcde342dd1fd20f88c89bf69ff42cdff",
+      "health": null,
+      "image": "sha256:af9e746b913088cbf6c4464a31d6904a6b7e1d3ba62f0895362ddf13595f7abe",
+      "mounts": [
+        {
+          "Destination": "/checkpoint",
+          "RW": false,
+          "Source": "/mnt/nvme/kairyu/model-volumes/gemma-4-31b-8gpu/models/gemma-4-31b-it",
+          "Type": "bind",
+          "candidate_overlap": false
+        },
+        {
+          "Destination": "/observations",
+          "RW": true,
+          "Source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/chat-purpose-dependencies",
+          "Type": "bind",
+          "candidate_overlap": false
+        },
+        {
+          "Destination": "/runtime",
+          "RW": false,
+          "Source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/runtime",
+          "Type": "bind",
+          "candidate_overlap": false
+        }
+      ],
+      "name": "/gemma4-wsp-cpu-chat-purpose-20261105",
+      "running": false,
+      "status": "exited"
+    },
+    {
+      "cid": "61a829c3aaf5c9af66499357d1f55b8f58ad19ef40cb887bbe63a0c4729c10f9",
+      "health": null,
+      "image": "sha256:af9e746b913088cbf6c4464a31d6904a6b7e1d3ba62f0895362ddf13595f7abe",
+      "mounts": [
+        {
+          "Destination": "/analysis",
+          "RW": true,
+          "Source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/expanded-synthetic-sensitivities",
+          "Type": "bind",
+          "candidate_overlap": false
+        },
+        {
+          "Destination": "/checkpoint",
+          "RW": false,
+          "Source": "/mnt/nvme/kairyu/model-volumes/gemma-4-31b-8gpu/models/gemma-4-31b-it",
+          "Type": "bind",
+          "candidate_overlap": false
+        },
+        {
+          "Destination": "/probe.py",
+          "RW": false,
+          "Source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/runtime/check_complementary_weight_sets_cpu.py",
+          "Type": "bind",
+          "candidate_overlap": false
+        }
+      ],
+      "name": "/gemma4-wsp-cpu-combinations-20261105",
+      "running": false,
+      "status": "exited"
+    },
+    {
+      "cid": "88943a0985ba97dfb17be6b5fb54040eba2570b70ce05126bd410162d3658ffb",
+      "health": "healthy",
+      "image": "sha256:8e6c37a16eea6f7855b2142fb75555250b676cfc3a7c5c2d9a748bfd1175001b",
+      "mounts": [
+        {
+          "Destination": "/etc/kairyu/kairyu.yaml",
+          "RW": false,
+          "Source": "/home/y-takagi/kairyu/examples/gemma-4-31b-8gpu/kairyu.yaml",
+          "Type": "bind",
+          "candidate_overlap": false
+        },
+        {
+          "Destination": "/var/lib/kairyu/placement",
+          "RW": true,
+          "Source": "/mnt/nvme/kairyu/model-volumes/gemma-4-31b-8gpu/placement-log",
+          "Type": "bind",
+          "candidate_overlap": false
+        }
+      ],
+      "name": "/gemma-4-31b-8gpu-kairyu-1",
+      "running": true,
+      "status": "running"
+    },
+    {
+      "cid": "897103115f63e39d3261f39bf449bfa9258121d270ae700f65c0321837eeec08",
+      "health": "healthy",
+      "image": "sha256:af9e746b913088cbf6c4464a31d6904a6b7e1d3ba62f0895362ddf13595f7abe",
+      "mounts": [
+        {
+          "Destination": "/models",
+          "RW": false,
+          "Source": "/mnt/nvme/kairyu/model-volumes/gemma-4-31b-8gpu/models",
+          "Type": "bind",
+          "candidate_overlap": false
+        },
+        {
+          "Destination": "/root/.cache",
+          "RW": true,
+          "Source": "/mnt/nvme/kairyu/model-volumes/gemma-4-31b-8gpu/compile-cache",
+          "Type": "bind",
+          "candidate_overlap": false
+        }
+      ],
+      "name": "/gemma-4-31b-8gpu-embed-1-1",
+      "running": true,
+      "status": "running"
+    },
+    {
+      "cid": "8c1e4b184886cd32d110fab4c4fda7369c445ae910f1e68b8ba4834811921d8d",
+      "health": null,
+      "image": "sha256:af9e746b913088cbf6c4464a31d6904a6b7e1d3ba62f0895362ddf13595f7abe",
+      "mounts": [
+        {
+          "Destination": "/analysis",
+          "RW": true,
+          "Source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/expanded-synthetic-sensitivities",
+          "Type": "bind",
+          "candidate_overlap": false
+        },
+        {
+          "Destination": "/checkpoint",
+          "RW": false,
+          "Source": "/mnt/nvme/kairyu/model-volumes/gemma-4-31b-8gpu/models/gemma-4-31b-it",
+          "Type": "bind",
+          "candidate_overlap": false
+        },
+        {
+          "Destination": "/probe.py",
+          "RW": false,
+          "Source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/runtime/check_sparse_margin_directions.py",
+          "Type": "bind",
+          "candidate_overlap": false
+        }
+      ],
+      "name": "/gemma4-wsp-cpu-sparse-check-20261105",
+      "running": false,
+      "status": "exited"
+    },
+    {
+      "cid": "b0d4c3e871a7d2a44249318079920bd01f56cb7978b58a19f4245245f140afd6",
+      "health": null,
+      "image": "sha256:f3bd19c606e442c3d7bdfa8002e03fe260a1023351e0ea4598032022b68dd6e3",
+      "mounts": [
+        {
+          "Destination": "/var/lib/postgresql/data",
+          "RW": true,
+          "Source": "/mnt/nvme/docker/volumes/4d94bb3ff4d748e5d7d416ca2d547bf4b3a409f86ab6a09f398bf4e4097e3aae/_data",
+          "Type": "volume",
+          "candidate_overlap": false
+        }
+      ],
+      "name": "/kairyu-pg-groupc-ci-det",
+      "running": true,
+      "status": "running"
+    },
+    {
+      "cid": "b4302da3c2814fa2458ae7e4652b0041af34bd45d6872b86ecd40cfa06bf9985",
+      "health": "healthy",
+      "image": "sha256:af9e746b913088cbf6c4464a31d6904a6b7e1d3ba62f0895362ddf13595f7abe",
+      "mounts": [
+        {
+          "Destination": "/models",
+          "RW": false,
+          "Source": "/mnt/nvme/kairyu/model-volumes/gemma-4-31b-8gpu/models",
+          "Type": "bind",
+          "candidate_overlap": false
+        },
+        {
+          "Destination": "/root/.cache",
+          "RW": true,
+          "Source": "/mnt/nvme/kairyu/model-volumes/gemma-4-31b-8gpu/compile-cache",
+          "Type": "bind",
+          "candidate_overlap": false
+        }
+      ],
+      "name": "/gemma-4-31b-8gpu-embed-0-1",
+      "running": true,
+      "status": "running"
+    },
+    {
+      "cid": "bcf8a575872a9ff05a85bfd8b46dbeec3cb9d8bef6a94aded4cb5a12c61bc976",
+      "health": "healthy",
+      "image": "sha256:6eda9c524992147c1b0b06a1a9be4894bd68b1f43c86d92c32f996c4c60d18a3",
+      "mounts": [],
+      "name": "/gemma-4-31b-8gpu-docling-1",
+      "running": true,
+      "status": "running"
+    },
+    {
+      "cid": "c672bb052ad042282e2e2ec2e8b65edde8b6c50262bd6dab00da57314e4f8b1b",
+      "health": null,
+      "image": "sha256:af9e746b913088cbf6c4464a31d6904a6b7e1d3ba62f0895362ddf13595f7abe",
+      "mounts": [
+        {
+          "Destination": "/checkpoint",
+          "RW": false,
+          "Source": "/mnt/nvme/kairyu/model-volumes/gemma-4-31b-8gpu/models/gemma-4-31b-it",
+          "Type": "bind",
+          "candidate_overlap": false
+        },
+        {
+          "Destination": "/observations",
+          "RW": true,
+          "Source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/whole-text-purpose-dependencies",
+          "Type": "bind",
+          "candidate_overlap": false
+        },
+        {
+          "Destination": "/probe.py",
+          "RW": false,
+          "Source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/runtime/observe_whole_text_dependencies.py",
+          "Type": "bind",
+          "candidate_overlap": false
+        }
+      ],
+      "name": "/gemma4-wsp-cpu-whole-dependencies-20261105",
+      "running": false,
+      "status": "exited"
+    },
+    {
+      "cid": "c81e36297abd0b0e23fd11ada341ac6845e4446fe34a5f9432de70cbdfa752cc",
+      "health": null,
+      "image": "sha256:af9e746b913088cbf6c4464a31d6904a6b7e1d3ba62f0895362ddf13595f7abe",
+      "mounts": [
+        {
+          "Destination": "/checkpoint",
+          "RW": false,
+          "Source": "/mnt/nvme/kairyu/model-volumes/gemma-4-31b-8gpu/models/gemma-4-31b-it",
+          "Type": "bind",
+          "candidate_overlap": false
+        },
+        {
+          "Destination": "/observations",
+          "RW": true,
+          "Source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/expanded-synthetic-sensitivities",
+          "Type": "bind",
+          "candidate_overlap": false
+        },
+        {
+          "Destination": "/probe.py",
+          "RW": false,
+          "Source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/runtime/observe_norm_sensitivities.py",
+          "Type": "bind",
+          "candidate_overlap": false
+        }
+      ],
+      "name": "/gemma4-wsp-cpu-norm-probe-20261105",
+      "running": false,
+      "status": "exited"
+    },
+    {
+      "cid": "ca0ce07ae660af1bb129a129aa538d23206e1d10c4db982ae692618dd852678d",
+      "health": null,
+      "image": "sha256:2a232a42256f70d78e3cc5d2b5d6b3276710a0de0596c145f627ecfae90282ac",
+      "mounts": [
+        {
+          "Destination": "/home/y-takagi/kairyu-bench",
+          "RW": true,
+          "Source": "/home/y-takagi/kairyu-bench",
+          "Type": "bind",
+          "candidate_overlap": false
+        },
+        {
+          "Destination": "/mnt/nvme/kairyu/bench-cache/wsp",
+          "RW": true,
+          "Source": "/mnt/nvme/kairyu/bench-cache/wsp",
+          "Type": "bind",
+          "candidate_overlap": false
+        },
+        {
+          "Destination": "/var/lib/docker",
+          "RW": true,
+          "Source": "/mnt/nvme/kairyu/docker/wsp/data",
+          "Type": "bind",
+          "candidate_overlap": false
+        },
+        {
+          "Destination": "/var/run",
+          "RW": true,
+          "Source": "/mnt/nvme/kairyu/docker/wsp/run",
+          "Type": "bind",
+          "candidate_overlap": false
+        }
+      ],
+      "name": "/wsp-dind-pre-nvme-results-20261105",
+      "running": false,
+      "status": "exited"
+    },
+    {
+      "cid": "d1a79f265949e31778ead91834e6a509d3c66af708dc3d7247eb716caa28cef3",
+      "health": "healthy",
+      "image": "sha256:af9e746b913088cbf6c4464a31d6904a6b7e1d3ba62f0895362ddf13595f7abe",
+      "mounts": [
+        {
+          "Destination": "/checkpoint",
+          "RW": false,
+          "Source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/checkpoints/fresh-native-relative-f04-faststore-v1/checkpoint",
+          "Type": "bind",
+          "candidate_overlap": false
+        },
+        {
+          "Destination": "/models",
+          "RW": false,
+          "Source": "/mnt/nvme/kairyu/model-volumes/gemma-4-31b-8gpu/models",
+          "Type": "bind",
+          "candidate_overlap": false
+        },
+        {
+          "Destination": "/root/.cache",
+          "RW": true,
+          "Source": "/mnt/nvme/kairyu/model-volumes/gemma-4-31b-8gpu/compile-cache",
+          "Type": "bind",
+          "candidate_overlap": false
+        }
+      ],
+      "name": "/gemma-4-31b-8gpu-gemma-1-1",
+      "running": true,
+      "status": "running"
+    },
+    {
+      "cid": "dbabe7158257d30d26b6f96d51eb17e4a0b6385fcf5d9d90c2182b22aed3d20b",
+      "health": null,
+      "image": "sha256:af9e746b913088cbf6c4464a31d6904a6b7e1d3ba62f0895362ddf13595f7abe",
+      "mounts": [
+        {
+          "Destination": "/checkpoint",
+          "RW": false,
+          "Source": "/mnt/nvme/kairyu/model-volumes/gemma-4-31b-8gpu/models/gemma-4-31b-it",
+          "Type": "bind",
+          "candidate_overlap": false
+        },
+        {
+          "Destination": "/guards",
+          "RW": false,
+          "Source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/whole-text-purpose-dependencies",
+          "Type": "bind",
+          "candidate_overlap": false
+        },
+        {
+          "Destination": "/observations",
+          "RW": true,
+          "Source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/programming-completion-dependencies",
+          "Type": "bind",
+          "candidate_overlap": false
+        },
+        {
+          "Destination": "/runtime",
+          "RW": false,
+          "Source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/runtime",
+          "Type": "bind",
+          "candidate_overlap": false
+        }
+      ],
+      "name": "/gemma4-wsp-cpu-programming-completion-20261105",
+      "running": false,
+      "status": "exited"
+    },
+    {
+      "cid": "dfbaee8005646b8369493c56f5daa89251880694970e135209b3416255e57d57",
+      "health": null,
+      "image": "sha256:aa3df78ecf320f5fafdce71c659f1629e96e9de0968305fe1de670e0ca9176ce",
+      "mounts": [
+        {
+          "Destination": "/home/y-takagi/kairyu-bench/results",
+          "RW": true,
+          "Source": "/home/y-takagi/kairyu-bench/results",
+          "Type": "bind",
+          "candidate_overlap": false
+        },
+        {
+          "Destination": "/mnt/nvme/kairyu/bench-cache/gemma-wsp-coding-20261104",
+          "RW": true,
+          "Source": "/mnt/nvme/kairyu/bench-cache/gemma-wsp-coding-20261104",
+          "Type": "bind",
+          "candidate_overlap": false
+        },
+        {
+          "Destination": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/results",
+          "RW": true,
+          "Source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/results",
+          "Type": "bind",
+          "candidate_overlap": false
+        },
+        {
+          "Destination": "/var/lib/docker",
+          "RW": true,
+          "Source": "/mnt/nvme/kairyu/docker/gemma-wsp-coding-20261104/data",
+          "Type": "bind",
+          "candidate_overlap": false
+        },
+        {
+          "Destination": "/var/run",
+          "RW": true,
+          "Source": "/mnt/nvme/kairyu/docker/gemma-wsp-coding-20261104/run",
+          "Type": "bind",
+          "candidate_overlap": false
+        }
+      ],
+      "name": "/gemma-wsp-deepswe-dind-20261104",
+      "running": true,
+      "status": "running"
+    },
+    {
+      "cid": "ed9842852109333c564c5962ada840ea2794720ad613ebc0c8ef96591c816a33",
+      "health": null,
+      "image": "sha256:af9e746b913088cbf6c4464a31d6904a6b7e1d3ba62f0895362ddf13595f7abe",
+      "mounts": [
+        {
+          "Destination": "/checkpoint",
+          "RW": false,
+          "Source": "/mnt/nvme/kairyu/model-volumes/gemma-4-31b-8gpu/models/gemma-4-31b-it",
+          "Type": "bind",
+          "candidate_overlap": false
+        },
+        {
+          "Destination": "/observations",
+          "RW": true,
+          "Source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/chat-purpose-dependencies",
+          "Type": "bind",
+          "candidate_overlap": false
+        },
+        {
+          "Destination": "/runtime",
+          "RW": false,
+          "Source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/runtime",
+          "Type": "bind",
+          "candidate_overlap": false
+        }
+      ],
+      "name": "/gemma4-wsp-cpu-chat-frame-preflight-failed-20261105",
+      "running": false,
+      "status": "exited"
+    },
+    {
+      "cid": "fbb725752d9e8990506968903bfcb5a406eb56f0bc6c839eb08199c0d05f54f3",
+      "health": null,
+      "image": "sha256:af9e746b913088cbf6c4464a31d6904a6b7e1d3ba62f0895362ddf13595f7abe",
+      "mounts": [
+        {
+          "Destination": "/analysis",
+          "RW": true,
+          "Source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/expanded-synthetic-sensitivities",
+          "Type": "bind",
+          "candidate_overlap": false
+        },
+        {
+          "Destination": "/candidate-specs",
+          "RW": false,
+          "Source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/specs",
+          "Type": "bind",
+          "candidate_overlap": false
+        },
+        {
+          "Destination": "/checkpoint",
+          "RW": false,
+          "Source": "/mnt/nvme/kairyu/model-volumes/gemma-4-31b-8gpu/models/gemma-4-31b-it",
+          "Type": "bind",
+          "candidate_overlap": false
+        },
+        {
+          "Destination": "/ffn",
+          "RW": false,
+          "Source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/ffn-candidate-specs",
+          "Type": "bind",
+          "candidate_overlap": false
+        },
+        {
+          "Destination": "/probe.py",
+          "RW": false,
+          "Source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/runtime/compare_expanded_mechanisms_cpu.py",
+          "Type": "bind",
+          "candidate_overlap": false
+        }
+      ],
+      "name": "/gemma4-wsp-cpu-mechanisms-v2-20261105",
+      "running": false,
+      "status": "exited"
+    }
+  ],
+  "reference_visibility": {
+    "inaccessible_is_unknown_not_zero": true,
+    "inaccessible_or_disappeared": [
+      1713650,
+      1736163,
+      2707330,
+      2707331,
+      2707447,
+      3336969
+    ],
+    "matches": [],
+    "other_uid_processes_not_inspected": true,
+    "processes_checked": 23,
+    "root_accepted_fixed_candidate_scope": true
+  },
+  "released": [],
+  "service_operations": 0,
+  "started_epoch": 1794059174.3395634,
+  "status": "precheck",
+  "targets": [
+    {
+      "bytes": 49784788364,
+      "current_stat": {
+        "ctime_ns": 1793800946809548012,
+        "device": 2306,
+        "gid": 1003,
+        "inode": 181570962,
+        "mode": 33188,
+        "mtime_ns": 1793800946809548012,
+        "nlink": 1,
+        "size": 49784788364,
+        "uid": 1003
+      },
+      "historical_full_sha256": "eeef8791537bc04f110967c513149e037d2a9ae97d49add7291ebfa62806bbfa",
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/checkpoints/scalar-l41-minus4/model-00001-of-00002.safetensors"
+    },
+    {
+      "bytes": 12761549884,
+      "current_stat": {
+        "ctime_ns": 1793800955060271575,
+        "device": 2306,
+        "gid": 1003,
+        "inode": 181570963,
+        "mode": 33188,
+        "mtime_ns": 1793800955060271575,
+        "nlink": 1,
+        "size": 12761549884,
+        "uid": 1003
+      },
+      "historical_full_sha256": "a3ffbcf0fa999836daa46556dc4b7b777de1988c3222314001922bd63255bfc1",
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/checkpoints/scalar-l41-minus4/model-00002-of-00002.safetensors"
+    }
+  ],
+  "total_logical_bytes": 62546338248
+}

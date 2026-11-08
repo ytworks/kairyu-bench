@@ -1,0 +1,34 @@
+{
+  "epoch": 1794050001.4722185,
+  "approved_host_pid": 1083709,
+  "approved_runner_cid": "b947da714bf08c131db8971e36e16f5155a5de5303161ad8898bd48cff4eaa01",
+  "signals_sent": 0,
+  "reason": "Parent authorized ending this F03 attempt as incomplete after a 1200s disconnect and prolonged regeneration. No complete-run ranking or adoption.",
+  "host_root_or_sudo_used": false,
+  "argv_sha256": "f985746ca14ec580bcebfd60545e169104368dd43f727b58604e3faeecb83be3",
+  "starttime": "69562253",
+  "ppid": 1083647,
+  "namespace_pids": [
+    1083709,
+    602
+  ],
+  "signal": "SIGTERM",
+  "target_container_pid": 602,
+  "method": "docker exec in this existing root-owned runner; no host root or sudo",
+  "running_container_ids": [
+    "b947da714bf08c131db8971e36e16f5155a5de5303161ad8898bd48cff4eaa01",
+    "a7a781b8fa49e81f0a1cd638dbcc70f2d9c8310857e3b8c1ef53250eeafa4a02",
+    "3acc0a02d713ae298e7979547db8fac1a14374826cd52fa7eb4453289ffe4072",
+    "d782bf8b23562bd19835279b1f8804910df882065d222e8e674cecafbb9b7d5e",
+    "0169d434fd1fa863ec39661a3e4c6b947ac2bef977e6f596ede771c6921bd32b",
+    "88943a0985ba97dfb17be6b5fb54040eba2570b70ce05126bd410162d3658ffb",
+    "3257ee5ee6d0fa212bacd64de8b86152ab0be509e0a7d329838193559039dbda",
+    "dfbaee8005646b8369493c56f5daa89251880694970e135209b3416255e57d57",
+    "149b564776c7bda50b4039b44b0cf52b1178272a481a4c4dee88de2f283ae334",
+    "005b20d4f0adacdc438e2e90f44c9d21579f3d089b366bcfe8af8f0785bde8c3",
+    "b4302da3c2814fa2458ae7e4652b0041af34bd45d6872b86ecd40cfa06bf9985",
+    "897103115f63e39d3261f39bf449bfa9258121d270ae700f65c0321837eeec08",
+    "bcf8a575872a9ff05a85bfd8b46dbeec3cb9d8bef6a94aded4cb5a12c61bc976",
+    "b0d4c3e871a7d2a44249318079920bd01f56cb7978b58a19f4245245f140afd6"
+  ]
+}

@@ -1,0 +1,53 @@
+{
+  "status": "review_completed_proposal_not_adopted",
+  "decision_epoch": 1794048922.0090842,
+  "review_receipt_sha256": "7e70efa578e43149b42006c0c3e9e05c5fdf7968f33d76d1978c27d583fa7c3a",
+  "response_sha256": "8fcece530133a8bffc8ddb56bcdfc7686bb4e90af262721cef1a5944bb8df29c",
+  "dispositions": [
+    {
+      "point": "Conditional canonical diagnostic, no gain/adoption now",
+      "disposition": "accepted",
+      "reason": "Only a CPU proposal exists; all benchmark items, missing/error outcomes and prior parent evidence remain explicit."
+    },
+    {
+      "point": "Parent gate after the currently running candidate fully completes",
+      "disposition": "accepted",
+      "reason": "If a new comparable best parent emerges, the AV-derived proposal is not materialized/evaluated; record parent_changed and redesign."
+    },
+    {
+      "point": "Saved BF16 and served checkpoint identity, comparison/loss rule and full conditions fixed",
+      "disposition": "accepted as preconditions, not executed by this review",
+      "reason": "Use existing editor verification and serving identity/closure machinery."
+    },
+    {
+      "point": "Additional baseline/finite measurements",
+      "disposition": "not added",
+      "reason": "User cancelled these; reviewer does not make them mandatory."
+    },
+    {
+      "point": "Spec-only ulp/box, text-overlap checks and optional kernel analysis",
+      "disposition": "suggestions recorded, not executed or new gates invented here",
+      "reason": "No additional solver/candidate/model request is authorized by this review."
+    },
+    {
+      "point": "No adoption from dev30 alone",
+      "disposition": "accepted for final capability/publication claims, not a change to editing-parent policy",
+      "reason": "The user requires the highest completed comparable model to be the next editing parent. Final held-out/DeepSWE/publication confirmation remains distinct."
+    },
+    {
+      "point": "ULP counts, constraint ease, expected low gain and mechanism plausibility",
+      "disposition": "reviewer interpretation, not new measured facts",
+      "reason": "Only the submitted report/spec numbers were verified here; the reviewer did not inspect tensors or run code."
+    }
+  ],
+  "local_model_gpu_service_calls": 0,
+  "external_review_dispatches": 1,
+  "external_review_retries": 0,
+  "checkpoint_created_here": false,
+  "F03_outcome_used": false,
+  "documentation_dispatch_failure": {
+    "type": "JavaScript SyntaxError from literal Markdown backticks",
+    "reached_SSH": false,
+    "extra_external_calls": 0
+  }
+}

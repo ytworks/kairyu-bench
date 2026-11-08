@@ -1,0 +1,124 @@
+"""Immutable trainer-frame helper validation; CPU tokenizer only."""
+
+import hashlib
+import json
+import time
+from pathlib import Path
+from transformers import AutoTokenizer
+
+FRAME_PROTOCOL = "gemma4-sft-standard-on-answer-eos-v1"
+
+
+def prepare_training_frames(tokenizer, rows):
+    """Exact official ON dialog; no invented reasoning, padding or truncation."""
+    frames, evidence = [], []
+    for row in rows:
+        user = {"role": "user", "content": row["text"]}
+        prefix = tokenizer.apply_chat_template(
+            [user], tokenize=False, enable_thinking=True, add_generation_prompt=True
+        )
+        full = tokenizer.apply_chat_template(
+            [user, {"role": "assistant", "content": row["code"]}],
+            tokenize=False,
+            enable_thinking=True,
+            add_generation_prompt=False,
+        )
+        pids = tokenizer.encode(prefix, add_special_tokens=False)
+        ids = tokenizer.encode(full, add_special_tokens=False)
+        if not pids or ids[: len(pids)] != pids or len(ids) <= len(pids):
+            raise ValueError("official prefix/answer token boundary mismatch")
+        if "<|channel>thought\n<channel|>" in prefix or not prefix.endswith(
+            "<|turn>model\n"
+        ):
+            raise ValueError("SFT must not force an empty thought")
+        # Gemma4 ends this dialog with <turn|> + newline, not global <eos> id 1.
+        terminator = "<turn|>\n"
+        terminator_ids = tokenizer.encode(terminator, add_special_tokens=False)
+        if (
+            not terminator_ids
+            or not full.endswith(terminator)
+            or ids[-len(terminator_ids) :] != terminator_ids
+        ):
+            raise ValueError("official assistant turn terminator mismatch")
+        frames.append({"id": row["task_id"], "ids": ids, "prefix_tokens": len(pids)})
+        evidence.append(
+            {
+                "id": row["task_id"],
+                "prefix_tokens": len(pids),
+                "answer_eos_tokens": len(ids) - len(pids),
+                "complete_tokens": len(ids),
+                "prefix_sha256": hashlib.sha256(prefix.encode()).hexdigest(),
+                "full_sha256": hashlib.sha256(full.encode()).hexdigest(),
+                "token_ids_sha256": hashlib.sha256(
+                    json.dumps(ids).encode()
+                ).hexdigest(),
+                "eligible": len(ids) <= 1024,
+            }
+        )
+    return frames, {
+        "schema_version": 1,
+        "frame_protocol": FRAME_PROTOCOL,
+        "template_sha256": hashlib.sha256(
+            str(tokenizer.chat_template).encode()
+        ).hexdigest(),
+        "enable_thinking": True,
+        "forced_empty_thought": False,
+        "padding": False,
+        "loss": "mean answer and official turn-terminator tokens; prompt masked; each example equally weighted",
+        "official_terminator": "<turn|>\n",
+        "manual_global_eos_added": False,
+        "maximum_tokens": 1024,
+        "truncation": False,
+        "rows": evidence,
+        "ineligible_ids": [row["id"] for row in evidence if not row["eligible"]],
+    }
+
+
+started = time.monotonic()
+assert not list(Path("/dev").glob("nvidia*"))
+tokenizer = AutoTokenizer.from_pretrained(
+    "/checkpoint", local_files_only=True, trust_remote_code=False
+)
+train = [json.loads(x) for x in Path("/inputs/train.jsonl").read_text().splitlines()]
+holdout = [
+    json.loads(x) for x in Path("/inputs/holdout.jsonl").read_text().splitlines()
+]
+prior = json.loads(Path("/prior/all255-frames.json").read_text())
+all_frames, all_proof = prepare_training_frames(tokenizer, train + holdout)
+train_frames, train_proof = prepare_training_frames(tokenizer, train)
+assert len(all_frames) == 255 and len(train_frames) == 204
+for frame, row in zip(all_frames, prior, strict=True):
+    assert frame["id"] == row["task_id"]
+    assert frame["ids"] == row["full_ids"]
+    assert frame["prefix_tokens"] == row["prefix_tokens"]
+assert train_frames == all_frames[:204]
+assert train_proof["ineligible_ids"] == all_proof["ineligible_ids"] == []
+assert not set(x["task_id"] for x in train) & set(x["task_id"] for x in holdout)
+
+
+def save(name, value):
+    with (Path("/out") / name).open("x") as f:
+        json.dump(value, f, indent=2)
+        f.write("\n")
+
+
+save("trainer-all255-frame-proof.json", all_proof)
+save("trainer-train204-frame-proof.json", train_proof)
+summary = {
+    "status": "passed",
+    "all255_exact_token_rows_match_independent_evidence": True,
+    "train204_exact_subset": True,
+    "holdout_overlap": 0,
+    "maximum_full_tokens": max(len(x["ids"]) for x in all_frames),
+    "maximum_train_tokens": max(len(x["ids"]) for x in train_frames),
+    "all255_global_eos1_count": sum(
+        x["ids"].count(tokenizer.eos_token_id) for x in all_frames
+    ),
+    "official_terminator_ids": tokenizer.encode("<turn|>\n", add_special_tokens=False),
+    "manual_eos_added": False,
+    "model_forwards": 0,
+    "gradient_calls": 0,
+    "elapsed_seconds": time.monotonic() - started,
+}
+save("helper-comparison.json", summary)
+print(json.dumps(summary))

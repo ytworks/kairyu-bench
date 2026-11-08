@@ -1,0 +1,37 @@
+{
+  "data.log": {
+    "raw_bytes": 0,
+    "raw_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "gzip_bytes": 20,
+    "gzip_sha256": "9ceffb7310338057cfe71a4ae1e2c98d2c485d81cdef906532a801f457a38d64",
+    "roundtrip_exact": true
+  },
+  "mypy.log": {
+    "raw_bytes": 44,
+    "raw_sha256": "4ef32b02733c640ba275e5de2c0f630d3ea2a6293bb124ad0dc2173d46e40541",
+    "gzip_bytes": 64,
+    "gzip_sha256": "601057427b9381778c285cf1b0e9aafa210de58b9c7439e2bf44398cda86a744",
+    "roundtrip_exact": true
+  },
+  "ruff.log": {
+    "raw_bytes": 19,
+    "raw_sha256": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18",
+    "gzip_bytes": 39,
+    "gzip_sha256": "f3af4d142827f5aad2eb0c72d556d325488a57fb6219aac10afeb51085667d53",
+    "roundtrip_exact": true
+  },
+  "shell.log": {
+    "raw_bytes": 7187,
+    "raw_sha256": "baa056f083371df166e785de97b21605ce6c2795b41afe0fdf5d4250b550df30",
+    "gzip_bytes": 561,
+    "gzip_sha256": "5e7b5f749fcd8c43e0a755c12494ffbc5a9bdc27f269f90789d27f8e4b384fb1",
+    "roundtrip_exact": true
+  },
+  "unittest.log": {
+    "raw_bytes": 100043,
+    "raw_sha256": "4177226a71f3f4e63e20f81246f3bf7123115bc42a05fb30fde185ea00578d9a",
+    "gzip_bytes": 18359,
+    "gzip_sha256": "01587d25c1bc1e9090e6b2c0e650f1639379d0505745a653e936757fce475eb2",
+    "roundtrip_exact": true
+  }
+}

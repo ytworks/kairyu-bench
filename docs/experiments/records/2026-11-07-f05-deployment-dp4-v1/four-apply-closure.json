@@ -1,0 +1,86 @@
+{
+  "status": "all_four_ordinary_F05_healthy_verified",
+  "replicas": {
+    "gemma-0": {
+      "cid": "19a1344a05b79dbc5ac3f5f1c2540126847586226a002e042714158fe408b7aa",
+      "endpoint": "http://172.26.0.8:8000/v1",
+      "models": [
+        "gemma-4-31b"
+      ],
+      "tree": "fcc4681343c1a0c338157bee767df2024f37290469e55dbc417723717f4ac176",
+      "checkpoint_mount": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/checkpoints/fresh-native-contract-f05-faststore-v1/checkpoint",
+      "checkpoint_readonly": true,
+      "runtime_preserved": true,
+      "mtp_tokens": 4,
+      "tp_size": 2,
+      "native_runtime_flags_preserved": true,
+      "receipt_sha256": "027ade1ef7c742f51c89e02ca76cc020888ef7de87c1eeb94899815404cd062e",
+      "seconds": 123.18207716941833
+    },
+    "gemma-1": {
+      "cid": "c49e6eb95a1609b547e74fa32706ea36068f60bb95b5e23136b66a1e73bf6490",
+      "endpoint": "http://172.26.0.5:8000/v1",
+      "models": [
+        "gemma-4-31b"
+      ],
+      "tree": "fcc4681343c1a0c338157bee767df2024f37290469e55dbc417723717f4ac176",
+      "checkpoint_mount": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/checkpoints/fresh-native-contract-f05-faststore-v1/checkpoint",
+      "checkpoint_readonly": true,
+      "runtime_preserved": true,
+      "mtp_tokens": 4,
+      "tp_size": 2,
+      "native_runtime_flags_preserved": true,
+      "receipt_sha256": "8850be081e83df76e9fb4a7188820431c23888739dfec5c2166d450db9073dc8",
+      "seconds": 122.73506784439087
+    },
+    "gemma-2": {
+      "cid": "abb3b4d5103df28984f34e784c757fd26b093b48a426824d817b271c8cdbc1d0",
+      "endpoint": "http://172.26.0.6:8000/v1",
+      "models": [
+        "gemma-4-31b"
+      ],
+      "tree": "fcc4681343c1a0c338157bee767df2024f37290469e55dbc417723717f4ac176",
+      "checkpoint_mount": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/checkpoints/fresh-native-contract-f05-faststore-v1/checkpoint",
+      "checkpoint_readonly": true,
+      "runtime_preserved": true,
+      "mtp_tokens": 4,
+      "tp_size": 2,
+      "native_runtime_flags_preserved": true,
+      "receipt_sha256": "62fa3c9ea7cb428c9a4887bb899017d19ed8ca3ef34f3942ee49435d45fd53d8",
+      "seconds": 121.14757800102234
+    },
+    "gemma-3": {
+      "cid": "9ef25f4abd6e5bf027a50f3f147636f5e15def3d4bc4666006396c3671e0030e",
+      "endpoint": "http://172.26.0.4:8000/v1",
+      "models": [
+        "gemma-4-31b"
+      ],
+      "tree": "fcc4681343c1a0c338157bee767df2024f37290469e55dbc417723717f4ac176",
+      "checkpoint_mount": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/checkpoints/fresh-native-contract-f05-faststore-v1/checkpoint",
+      "checkpoint_readonly": true,
+      "runtime_preserved": true,
+      "mtp_tokens": 4,
+      "tp_size": 2,
+      "native_runtime_flags_preserved": true,
+      "receipt_sha256": "108f319c24106cc010edbb36a5cb02394f35873195f3570c6900232889483ed1",
+      "seconds": 120.23893189430237
+    }
+  },
+  "tree": "fcc4681343c1a0c338157bee767df2024f37290469e55dbc417723717f4ac176",
+  "freeze_sha256": "09ea569a08f138efd438055d7149f0697dc1d6edd08332f2b6c7c09b1da7c24c",
+  "source_pins": {
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/worktrees/kairyu-bench-weight-tools/docs/experiments/scripts/redeploy-replica.py": "2e9da820fe30ba9b2436fb600cf14a533b1c496b2fed48ac3649fffb9d2bc9ae",
+    "/home/y-takagi/kairyu/examples/gemma-4-31b-8gpu/control.py": "fc9a78bc232f9cc331926a0737e64f4b4fe14946574f4a02bc1aacb9a800b851",
+    "/home/y-takagi/kairyu/examples/gemma-4-31b-8gpu/compose.yaml": "fe49b81c153f68335ef46e07dc9f9910ee49ee066902e703d11d152c8809c5cb",
+    "/home/y-takagi/kairyu/examples/gemma-4-31b-8gpu/example.json": "99b1863206205abc92f5bde917c607cced03a220bd77323cf264eb781f4aedb7",
+    "/home/y-takagi/kairyu/examples/gemma-4-31b-8gpu/kairyu.yaml": "a28e232f27b89d1acc35e3f5871ccffafd8145211e4ffcb33cc0c6b514fa640d"
+  },
+  "protected_count": 23,
+  "protected_unchanged": true,
+  "container_count": 27,
+  "seconds": 124.16857719421387,
+  "parallel_owner_closure_sha256": "336e50b435e33332b8aba42562d7dddb7c3d899b5cf37d2528d5dfe59bf61bf3",
+  "model_generation_requests": 0,
+  "full_payload_rehashed": false,
+  "source_sha256": "8ee58d4a172504835a94af394ac598d735bf8aef8200a67c64532940ee324f7d"
+}

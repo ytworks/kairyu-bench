@@ -1,0 +1,34 @@
+from pathlib import Path
+import json,hashlib,subprocess,time
+R=Path('/mnt/nvme/kairyu/wsp/gemma4-coding-20261104')
+N=R/'analysis/fresh-purpose-20261107-f05-behavior19-native-v1'
+P=R/'analysis/fresh-purpose-20261107-f05-native-contract-v1'
+O=N/'score-v1'
+B=R/'analysis/fresh-purpose-20261107-f04-behavior19-native-v1/score-v1/report.json'
+sha=lambda p:hashlib.sha256(p.read_bytes()).hexdigest()
+policyfile=P/'candidate-native-screen-decision.json'
+policy=json.loads(policyfile.read_text())
+launch=json.loads((N/'score-launch.json').read_text())
+assert sha(policyfile)==launch['fixed_policy_sha256']
+assert sha(B)==policy['gate']['parent_report_sha256']==launch['parent_report_sha256']
+base=json.loads(B.read_text());report=json.loads((O/'report.json').read_text());summary=json.loads((O/'summary.json').read_text())
+gen=json.loads((N/'owner/generation-complete.json').read_text())
+assert sha(N/'generation/train-responses.json')==gen['responses_sha256']==launch['response_sha256']
+assert report['status']=='completed' and len(report['results'])==19
+before={x['id']:x for x in base['results']};after={x['id']:x for x in report['results']}
+assert set(before)==set(after) and len(after)==19
+targets=policy['gate']['target_ids'];assert targets==['behavior-A1','behavior-F2','behavior-J1']
+guards=[k for k,x in before.items() if x['passed'] is True];assert len(guards)==16
+regressions=[k for k in guards if after[k]['passed'] is not True]
+target_gains=[k for k in targets if after[k]['passed'] is True]
+assert sum(x['tests_passed'] for x in before.values())==264
+passed=sum(x['passed'] is True for x in after.values());unknown=sum(x['passed'] is None for x in after.values())
+fixtures=sum(x.get('tests_passed',0) for x in after.values())
+checks={'at_least_one_target_full_pass':len(target_gains)>=1,'no_more_than_one_guard_regression':len(regressions)<=1,'at_least_16_full_pass':passed>=16,'at_least_264_fixtures':fixtures>=264,'all_19_generated':gen['expected']==gen['received']==19 and gen['missing_ids']==[],'zero_API_error':gen['errors']==0,'zero_empty':gen['empty']==0,'zero_truncation':gen['length_finished']==0,'all_19_scored_zero_unknown':len(after)==19 and unknown==0}
+assert policy['candidate_tree_sha256']==json.loads((N/'generation/train-responses.json').read_text())['generation']['checkpoint_sha256']
+owned=subprocess.check_output(['docker','ps','-a','--no-trunc','--filter','label=kairyu.science-sandbox','--format','{{.ID}}'],text=True).split()
+running=sorted(subprocess.check_output(['docker','ps','--no-trunc','--format','{{.ID}}'],text=True).split())
+assert not owned and running==report['protected_running_before']==report['protected_running_after']
+gate={'schema_version':1,'epoch':time.time(),'decision':'GO_FULL_CANONICAL_DEV30' if all(checks.values()) else 'REJECT_AT_NATIVE_SCREEN_OFFICIALLY_UNSCORED','go':all(checks.values()),'checks':checks,'policy_sha256':sha(policyfile),'policy_created_epoch':policy['created_epoch'],'generation_started_epoch':json.loads((N/'owner/start.json').read_text()).get('epoch'),'candidate_tree_sha256':policy['candidate_tree_sha256'],'report_sha256':sha(O/'report.json'),'parent_report_sha256':sha(B),'responses_sha256':sha(N/'generation/train-responses.json'),'passed':passed,'failed':19-passed-unknown,'unknown':unknown,'fixture_passed':fixtures,'fixture_planned':304,'parent_passed':16,'parent_fixture_passed':264,'fixture_delta':fixtures-264,'guards':16,'guard_regressions':regressions,'target_full_passes':target_gains,'targets':[{'id':k,'parent_passed':before[k]['passed'],'candidate_passed':after[k]['passed'],'parent_fixture_passed':before[k]['tests_passed'],'candidate_fixture_passed':after[k]['tests_passed']} for k in targets],'all_cases':[{'id':k,'passed':after[k]['passed'],'tests_passed':after[k].get('tests_passed'),'status':after[k]['status']} for k in before],'score_seconds':report['elapsed_seconds'],'docker_calls':report['docker_calls'],'owned_sandbox_containers_remaining':owned,'protected_running_exact':True,'running_containers':len(running),'model_calls_by_score':0,'official_score_claim':False,'qualification':'known calibration screen; F2/J1 duplicate prompt; no independent-transfer or general-capability claim','source_sha256':sha(Path(__file__))}
+with (O/'gate.json').open('x') as f:json.dump(gate,f,indent=2,allow_nan=False);f.write('\n')
+print(json.dumps(gate))

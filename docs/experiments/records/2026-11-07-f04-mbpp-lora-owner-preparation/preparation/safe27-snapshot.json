@@ -1,0 +1,406 @@
+{
+  "epoch": 1794057025.4704845,
+  "snapshot_helper_sha256": "2326fe223b9b7b49d7876ad11b3c66731d21e97bbb7da4460c43bf6c9774c75e",
+  "container_count": 27,
+  "temporary_sandbox_ids": [],
+  "target": {
+    "id": "07e1b17e7c84d8d178703417bb341c3313653eca7122aba1ad7b3d6d893d5abb",
+    "image": "sha256:af9e746b913088cbf6c4464a31d6904a6b7e1d3ba62f0895362ddf13595f7abe",
+    "running": true,
+    "health": "healthy",
+    "started_at": "2026-11-07T12:56:21.517580608Z",
+    "config_sha256": "7964d15530a946ef01d78f86fc1ac87a9c7131922d60326ee558dbc12825fbe2",
+    "host_config_sha256": "3f534833b1f266cb71bffff6797e6f89fcbda7ca109ba282fd3442b183b2d1fa",
+    "cpuset": "32-47,96-111",
+    "devices": [
+      {
+        "Driver": "nvidia",
+        "Count": 0,
+        "DeviceIDs": [
+          "4",
+          "5"
+        ],
+        "Capabilities": [
+          [
+            "gpu"
+          ]
+        ],
+        "Options": null
+      }
+    ]
+  },
+  "protected": {
+    "gemma-4-31b-8gpu-gemma-3-1": {
+      "id": "41ae0d0831faf5d79939f16ad401da0da8fee0d2d453af12e4e4efd10480f45c",
+      "image": "sha256:af9e746b913088cbf6c4464a31d6904a6b7e1d3ba62f0895362ddf13595f7abe",
+      "running": true,
+      "health": "healthy",
+      "started_at": "2026-11-07T12:56:23.433588615Z",
+      "config_sha256": "0c3f0d43cb92c651c29e0863ae902b80e5fdbcb4e2e10c0ccd3778a68c2f9243",
+      "host_config_sha256": "1da35d54bb54578c2e442e3a8315e8ed53b08e04be31f80429f7f64df5aaa093",
+      "cpuset": "48-63,112-127",
+      "devices": [
+        {
+          "Driver": "nvidia",
+          "Count": 0,
+          "DeviceIDs": [
+            "6",
+            "7"
+          ],
+          "Capabilities": [
+            [
+              "gpu"
+            ]
+          ],
+          "Options": null
+        }
+      ]
+    },
+    "gemma-4-31b-8gpu-gemma-0-1": {
+      "id": "47207dd45c1819d875951e66728310171dc218dfc55b1221054f704c39eb3009",
+      "image": "sha256:af9e746b913088cbf6c4464a31d6904a6b7e1d3ba62f0895362ddf13595f7abe",
+      "running": true,
+      "health": "healthy",
+      "started_at": "2026-11-07T12:56:23.885177843Z",
+      "config_sha256": "eadda2847c8c3b55e0966e75e2e51304526ac0a4decade2adb655c7149bbe056",
+      "host_config_sha256": "48d18e154d4d6abd9185ff343d1d0bc50a40a27a363e027962f6102f0f993a71",
+      "cpuset": "0-15,64-79",
+      "devices": [
+        {
+          "Driver": "nvidia",
+          "Count": 0,
+          "DeviceIDs": [
+            "0",
+            "1"
+          ],
+          "Capabilities": [
+            [
+              "gpu"
+            ]
+          ],
+          "Options": null
+        }
+      ]
+    },
+    "gemma-4-31b-8gpu-gemma-1-1": {
+      "id": "d1a79f265949e31778ead91834e6a509d3c66af708dc3d7247eb716caa28cef3",
+      "image": "sha256:af9e746b913088cbf6c4464a31d6904a6b7e1d3ba62f0895362ddf13595f7abe",
+      "running": true,
+      "health": "healthy",
+      "started_at": "2026-11-07T12:56:21.980124779Z",
+      "config_sha256": "be1337c96ddb6f047ce89e619b801b4978a9b61e731f396bab489c12d1393995",
+      "host_config_sha256": "98db72d62cc2325f4ffcc7edc0f2e39ed4578b05247a37d08b5194a53fe81f18",
+      "cpuset": "16-31,80-95",
+      "devices": [
+        {
+          "Driver": "nvidia",
+          "Count": 0,
+          "DeviceIDs": [
+            "2",
+            "3"
+          ],
+          "Capabilities": [
+            [
+              "gpu"
+            ]
+          ],
+          "Options": null
+        }
+      ]
+    },
+    "gemma-4-31b-8gpu-kairyu-1": {
+      "id": "88943a0985ba97dfb17be6b5fb54040eba2570b70ce05126bd410162d3658ffb",
+      "image": "sha256:8e6c37a16eea6f7855b2142fb75555250b676cfc3a7c5c2d9a748bfd1175001b",
+      "running": true,
+      "health": "healthy",
+      "started_at": "2026-11-05T20:07:43.224868471Z",
+      "config_sha256": "7fb40a1ab9477ab237b290be0341c75d6bb06f4b050124c175f4a0edb5af9d64",
+      "host_config_sha256": "a348f6084a5b2df6962be5d6a9693e129b9ba0ac9f4aeca1b80cba6ce41e312f",
+      "cpuset": "",
+      "devices": null
+    },
+    "kairyu-wsp-observe-20261106": {
+      "id": "3257ee5ee6d0fa212bacd64de8b86152ab0be509e0a7d329838193559039dbda",
+      "image": "sha256:bb4076b5f7468285b297e77867843a190c337009a97d14cefefc0d6a719e68d4",
+      "running": true,
+      "health": "healthy",
+      "started_at": "2026-11-05T15:47:52.494093056Z",
+      "config_sha256": "7e252475bec5ddabe9cb52c1009266699445cd123093bf95d39158d654e3ea7d",
+      "host_config_sha256": "d78512396caf0671605b6c0d0a6ca0768ce0e4276e303d948241f84bb01f4a57",
+      "cpuset": "",
+      "devices": null
+    },
+    "gemma-wsp-deepswe-dind-20261104": {
+      "id": "dfbaee8005646b8369493c56f5daa89251880694970e135209b3416255e57d57",
+      "image": "sha256:aa3df78ecf320f5fafdce71c659f1629e96e9de0968305fe1de670e0ca9176ce",
+      "running": true,
+      "health": null,
+      "started_at": "2026-11-05T10:10:33.118418845Z",
+      "config_sha256": "d2430dd1f8800e1dfc9f3d4b2087bc9e34c48889f622d744d261508632b81649",
+      "host_config_sha256": "ba874b72dced3734039e053f844da62d23bc348844e89bea625fdc194adc11d1",
+      "cpuset": "",
+      "devices": null
+    },
+    "wsp-dind": {
+      "id": "149b564776c7bda50b4039b44b0cf52b1178272a481a4c4dee88de2f283ae334",
+      "image": "sha256:2a232a42256f70d78e3cc5d2b5d6b3276710a0de0596c145f627ecfae90282ac",
+      "running": true,
+      "health": null,
+      "started_at": "2026-11-05T10:10:05.855435269Z",
+      "config_sha256": "2b8cd4bae6e47443c406e808bb746df3c2d9946cb31a4027de0a4ae444106d92",
+      "host_config_sha256": "2fcf104574f03daa39174b84473eba3191b044b08d64e5676632bc934450369f",
+      "cpuset": "",
+      "devices": null
+    },
+    "gemma4-wsp-cpu-chat-purpose-20261105": {
+      "id": "5885c75f79f5396867db6b3518637ca5bcde342dd1fd20f88c89bf69ff42cdff",
+      "image": "sha256:af9e746b913088cbf6c4464a31d6904a6b7e1d3ba62f0895362ddf13595f7abe",
+      "running": false,
+      "health": null,
+      "started_at": "2026-11-05T04:02:12.939224455Z",
+      "config_sha256": "d0be38d51d242b49907d648413900a31805cea4caee17c7c5c6415705de5239e",
+      "host_config_sha256": "98bb0240a4540d20ea10e9150d1fdd590010679fc5838bff1bec2226a3a0d32b",
+      "cpuset": "",
+      "devices": null
+    },
+    "gemma4-wsp-cpu-chat-frame-preflight-failed-20261105": {
+      "id": "ed9842852109333c564c5962ada840ea2794720ad613ebc0c8ef96591c816a33",
+      "image": "sha256:af9e746b913088cbf6c4464a31d6904a6b7e1d3ba62f0895362ddf13595f7abe",
+      "running": false,
+      "health": null,
+      "started_at": "2026-11-05T04:00:05.200182725Z",
+      "config_sha256": "748868d4d21bc7a1937ca5b0989413705d60c5a178b321b283859179e9425632",
+      "host_config_sha256": "98bb0240a4540d20ea10e9150d1fdd590010679fc5838bff1bec2226a3a0d32b",
+      "cpuset": "",
+      "devices": null
+    },
+    "gemma4-wsp-cpu-algorithm-completion-20261105": {
+      "id": "37b84155d0d47c339a8a3f989cf69be74a80a9f7369829db41612a5a77fe481a",
+      "image": "sha256:af9e746b913088cbf6c4464a31d6904a6b7e1d3ba62f0895362ddf13595f7abe",
+      "running": false,
+      "health": null,
+      "started_at": "2026-11-05T03:32:52.37831908Z",
+      "config_sha256": "1be9d22355bd0dca4ef8c3c5e12e6414806fb1bb5a2e1f5323c2d68595b8fd8f",
+      "host_config_sha256": "47ea370b279f7d2af317127b11b76e9e59ecc531f45baf8a8434dc66bba22a41",
+      "cpuset": "",
+      "devices": null
+    },
+    "gemma4-wsp-cpu-programming-completion-20261105": {
+      "id": "dbabe7158257d30d26b6f96d51eb17e4a0b6385fcf5d9d90c2182b22aed3d20b",
+      "image": "sha256:af9e746b913088cbf6c4464a31d6904a6b7e1d3ba62f0895362ddf13595f7abe",
+      "running": false,
+      "health": null,
+      "started_at": "2026-11-05T03:02:35.40303063Z",
+      "config_sha256": "17735595f16e92b1bb8b36fc32e84460571e62fd40e6342779f01e2a7dd9855a",
+      "host_config_sha256": "165a35aa5ee867624eeb0f5a8d59179ac11abd7ec9bedc207c573da74ba0b63e",
+      "cpuset": "",
+      "devices": null
+    },
+    "gemma4-wsp-cpu-joint-sets-20261105": {
+      "id": "3d62fd16cb139033941f36930a226b197b4512f4d319bc0920ecc3ef0b62a87f",
+      "image": "sha256:af9e746b913088cbf6c4464a31d6904a6b7e1d3ba62f0895362ddf13595f7abe",
+      "running": false,
+      "health": null,
+      "started_at": "2026-11-05T02:49:52.406805149Z",
+      "config_sha256": "d7cd460534ad42069e9ae496d5547cac99fcf0ae587b6caa7da4e453f668bd01",
+      "host_config_sha256": "25e994178ddc18606777f84a8e1b4fa60f24446d6f2a30b8aeef2a7a546adadd",
+      "cpuset": "",
+      "devices": null
+    },
+    "gemma4-wsp-cpu-whole-dependencies-20261105": {
+      "id": "c672bb052ad042282e2e2ec2e8b65edde8b6c50262bd6dab00da57314e4f8b1b",
+      "image": "sha256:af9e746b913088cbf6c4464a31d6904a6b7e1d3ba62f0895362ddf13595f7abe",
+      "running": false,
+      "health": null,
+      "started_at": "2026-11-05T02:44:03.330717057Z",
+      "config_sha256": "1b3ade0c4da2cc4f886a19ea3b074bb8ebd0ca6aa68867fa38d32de8af1ffa76",
+      "host_config_sha256": "fd0d9543a3a3f2c34ae90851e896312a4af6e3bec74eab08547a65f30555305b",
+      "cpuset": "",
+      "devices": null
+    },
+    "gemma4-wsp-cpu-broad-margins-20261105": {
+      "id": "374e969acaf78f336c638b5bff9ffdde04fd44f9075e45d2cfd54881b556b2c1",
+      "image": "sha256:af9e746b913088cbf6c4464a31d6904a6b7e1d3ba62f0895362ddf13595f7abe",
+      "running": false,
+      "health": null,
+      "started_at": "2026-11-05T02:38:27.11916247Z",
+      "config_sha256": "01f7194ce0f6c54a4d5dbedbb7a2f3acdd2f335ad7170a8ebf8e9514d97647d2",
+      "host_config_sha256": "4ee9b5568f6a392a8901d84f5769a2f0d2391ddc6731aa1cba254e9aad2ffd23",
+      "cpuset": "",
+      "devices": null
+    },
+    "gemma4-wsp-cpu-combinations-20261105": {
+      "id": "61a829c3aaf5c9af66499357d1f55b8f58ad19ef40cb887bbe63a0c4729c10f9",
+      "image": "sha256:af9e746b913088cbf6c4464a31d6904a6b7e1d3ba62f0895362ddf13595f7abe",
+      "running": false,
+      "health": null,
+      "started_at": "2026-11-05T02:37:13.392608729Z",
+      "config_sha256": "78f02f1386a24c11c62e00a00996aefc4d37f19f3ce18f70f75f3f6a4748fedb",
+      "host_config_sha256": "ac03958b641ebd97fa3e05184682ead5cf30aaec3c5038fed8e7b42346f07dee",
+      "cpuset": "",
+      "devices": null
+    },
+    "gemma4-wsp-cpu-mechanisms-v2-20261105": {
+      "id": "fbb725752d9e8990506968903bfcb5a406eb56f0bc6c839eb08199c0d05f54f3",
+      "image": "sha256:af9e746b913088cbf6c4464a31d6904a6b7e1d3ba62f0895362ddf13595f7abe",
+      "running": false,
+      "health": null,
+      "started_at": "2026-11-05T02:30:31.302727283Z",
+      "config_sha256": "3d6944a40581132245bebe2342d50acf84f2ad3665549d480f1bd8d11ff8df94",
+      "host_config_sha256": "657ed86fa8e88c1f222bbf69ba70f32a6cd040ca6f181564974615e2a1d3f78f",
+      "cpuset": "",
+      "devices": null
+    },
+    "gemma4-wsp-cpu-mechanisms-20261105": {
+      "id": "4ef033809802f99ae4859327cf7350e2dc4c7d657b226a7229914432e0dd0718",
+      "image": "sha256:af9e746b913088cbf6c4464a31d6904a6b7e1d3ba62f0895362ddf13595f7abe",
+      "running": false,
+      "health": null,
+      "started_at": "2026-11-05T02:29:44.470012962Z",
+      "config_sha256": "5e2afe1c2a91f265c169eb4911faa2c82b1d3e4d338ec1c02049ca99195f2eee",
+      "host_config_sha256": "657ed86fa8e88c1f222bbf69ba70f32a6cd040ca6f181564974615e2a1d3f78f",
+      "cpuset": "",
+      "devices": null
+    },
+    "gemma4-wsp-cpu-sparse-check-20261105": {
+      "id": "8c1e4b184886cd32d110fab4c4fda7369c445ae910f1e68b8ba4834811921d8d",
+      "image": "sha256:af9e746b913088cbf6c4464a31d6904a6b7e1d3ba62f0895362ddf13595f7abe",
+      "running": false,
+      "health": null,
+      "started_at": "2026-11-05T02:23:32.450094051Z",
+      "config_sha256": "efcbf1ce410fe5436ea2687a5502b2c474502c208c35a8d74868e0e80ea6a2c6",
+      "host_config_sha256": "78f918be89f8cc463ad218732af44ed9f74c300c31ea2fd5199823c188e2e5f3",
+      "cpuset": "",
+      "devices": null
+    },
+    "gemma4-wsp-cpu-norm-probe-20261105": {
+      "id": "c81e36297abd0b0e23fd11ada341ac6845e4446fe34a5f9432de70cbdfa752cc",
+      "image": "sha256:af9e746b913088cbf6c4464a31d6904a6b7e1d3ba62f0895362ddf13595f7abe",
+      "running": false,
+      "health": null,
+      "started_at": "2026-11-05T02:16:45.617898707Z",
+      "config_sha256": "3309491fa001cdd7ecd5bc610298d33afcfeca4332eb65dcd86bc0956edf83d1",
+      "host_config_sha256": "98382ab38095c17570d3ee04d3979bb382217dc63f68e904ce660a89c41a03fd",
+      "cpuset": "",
+      "devices": null
+    },
+    "gemma-wsp-deepswe-dind-20261104-pre-nvme-results-20261105": {
+      "id": "0a32557db9cd0bd49fffefea34276c8515021858e3d0115e560ef835f616609a",
+      "image": "sha256:aa3df78ecf320f5fafdce71c659f1629e96e9de0968305fe1de670e0ca9176ce",
+      "running": false,
+      "health": null,
+      "started_at": "2026-11-04T12:52:32.349444072Z",
+      "config_sha256": "d2430dd1f8800e1dfc9f3d4b2087bc9e34c48889f622d744d261508632b81649",
+      "host_config_sha256": "71f18825610046dd0a7a880f4cc7630908891263fb3dcd00308f398e7f00d55c",
+      "cpuset": "",
+      "devices": null
+    },
+    "wsp-dind-pre-nvme-results-20261105": {
+      "id": "ca0ce07ae660af1bb129a129aa538d23206e1d10c4db982ae692618dd852678d",
+      "image": "sha256:2a232a42256f70d78e3cc5d2b5d6b3276710a0de0596c145f627ecfae90282ac",
+      "running": false,
+      "health": null,
+      "started_at": "2026-11-04T02:28:56.269812859Z",
+      "config_sha256": "2b8cd4bae6e47443c406e808bb746df3c2d9946cb31a4027de0a4ae444106d92",
+      "host_config_sha256": "1af15dddf69dc6a0012f9c63add57d8fcd612b12bf04066d64365ffcf1765da4",
+      "cpuset": "",
+      "devices": null
+    },
+    "gemma-4-31b-8gpu-chat-ui-1": {
+      "id": "005b20d4f0adacdc438e2e90f44c9d21579f3d089b366bcfe8af8f0785bde8c3",
+      "image": "sha256:ef11a68f38457d831e23168486858c25b9d9c4399094c9e72c0d4d8767ac09de",
+      "running": true,
+      "health": "healthy",
+      "started_at": "2026-11-03T23:00:44.605013437Z",
+      "config_sha256": "3981beaa4b8714eaf791a9f108748ae132a0cf65f192bd091fa647a3df71a8a4",
+      "host_config_sha256": "f44847d7c1a1d7a64b9524c212d8fb46244cd12cf488a979c3b42d3f98c412e2",
+      "cpuset": "",
+      "devices": null
+    },
+    "gemma-4-31b-8gpu-embed-0-1": {
+      "id": "b4302da3c2814fa2458ae7e4652b0041af34bd45d6872b86ecd40cfa06bf9985",
+      "image": "sha256:af9e746b913088cbf6c4464a31d6904a6b7e1d3ba62f0895362ddf13595f7abe",
+      "running": true,
+      "health": "healthy",
+      "started_at": "2026-11-03T22:58:39.917321358Z",
+      "config_sha256": "f4535b4de6114f5db3049d4eda5f211907324d3cf5a8bc2f9c17e7b8f1f78dc4",
+      "host_config_sha256": "c76de161932061f0f19efdc92340a723b31283ee58176f9b520ab3ddb6f64790",
+      "cpuset": "0-15,64-79",
+      "devices": [
+        {
+          "Driver": "nvidia",
+          "Count": 0,
+          "DeviceIDs": [
+            "1"
+          ],
+          "Capabilities": [
+            [
+              "gpu"
+            ]
+          ],
+          "Options": null
+        }
+      ]
+    },
+    "gemma-4-31b-8gpu-embed-1-1": {
+      "id": "897103115f63e39d3261f39bf449bfa9258121d270ae700f65c0321837eeec08",
+      "image": "sha256:af9e746b913088cbf6c4464a31d6904a6b7e1d3ba62f0895362ddf13595f7abe",
+      "running": true,
+      "health": "healthy",
+      "started_at": "2026-11-03T22:58:39.916999785Z",
+      "config_sha256": "9ac074311550ac5edad3cf600b746cb2ce5307c638f23500bed71b09c1462c29",
+      "host_config_sha256": "52e979a281df89425cc2c3a81308d13f523876bb6ad57cae4929bbd4a98e3db2",
+      "cpuset": "48-63,112-127",
+      "devices": [
+        {
+          "Driver": "nvidia",
+          "Count": 0,
+          "DeviceIDs": [
+            "7"
+          ],
+          "Capabilities": [
+            [
+              "gpu"
+            ]
+          ],
+          "Options": null
+        }
+      ]
+    },
+    "gemma-4-31b-8gpu-docling-1": {
+      "id": "bcf8a575872a9ff05a85bfd8b46dbeec3cb9d8bef6a94aded4cb5a12c61bc976",
+      "image": "sha256:6eda9c524992147c1b0b06a1a9be4894bd68b1f43c86d92c32f996c4c60d18a3",
+      "running": true,
+      "health": "healthy",
+      "started_at": "2026-11-03T22:58:39.916549752Z",
+      "config_sha256": "75fae43c5d9afddd066e62ee02b4037921c80f5c92c99c52a7363161ed0771e7",
+      "host_config_sha256": "10ec79efe3280681316ef446a96a6f91df93bf289d3edc244f69b0573b47078c",
+      "cpuset": "",
+      "devices": null
+    },
+    "kairyu-pg-groupc-ci-det": {
+      "id": "b0d4c3e871a7d2a44249318079920bd01f56cb7978b58a19f4245245f140afd6",
+      "image": "sha256:f3bd19c606e442c3d7bdfa8002e03fe260a1023351e0ea4598032022b68dd6e3",
+      "running": true,
+      "health": null,
+      "started_at": "2026-11-03T13:58:12.711823908Z",
+      "config_sha256": "0a7b54150adde5126b6a2a144d940226f65844b6cf035357aa796f1a1c2524aa",
+      "host_config_sha256": "eb607b80adc166062ff6efb6f1b871c00e42970ef6b54c42bf4a6382d7ca9266",
+      "cpuset": "",
+      "devices": null
+    }
+  },
+  "target_metrics": {
+    "metrics_sha256": "c5ec9d99dc35018a626f9a6893c0963e587fbe09da04ccd187ec0b2192513064",
+    "queues": {
+      "vllm:num_requests_running": [
+        0.0
+      ],
+      "vllm:num_requests_waiting": [
+        0.0
+      ]
+    }
+  },
+  "new_containers": 0,
+  "service_mutations": 0
+}

@@ -1,0 +1,24 @@
+{
+  "minimum_ratio": {
+    "tensor": "model.language_model.layers.4.mlp.down_proj.weight",
+    "saved_to_intended_norm_ratio": 0.6889501842073321,
+    "saved_delta_l2": 0.05842124711459147,
+    "intended_continuous_delta_l2": 0.08479749110134532
+  },
+  "maximum_ratio": {
+    "tensor": "model.language_model.layers.58.self_attn.o_proj.weight",
+    "saved_to_intended_norm_ratio": 1.0273005979585996,
+    "saved_delta_l2": 0.24401834836370553,
+    "intended_continuous_delta_l2": 0.23753354066823928
+  },
+  "family_ratios": {
+    "down_proj": 0.9541704589223644,
+    "gate_proj": 0.9567210073580483,
+    "k_proj": 0.9548696140955528,
+    "o_proj": 0.9860736705253691,
+    "q_proj": 0.9556124679241531,
+    "up_proj": 0.9657288714985931,
+    "v_proj": 0.9851745339031794
+  },
+  "limitations": "ratios do not bound direction cosine; intended FP64 Gram vs saved BF16 delta, not exact FP32 block GEMM norm"
+}

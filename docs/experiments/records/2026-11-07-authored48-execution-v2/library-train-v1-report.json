@@ -1,0 +1,401 @@
+{
+  "schema_version": 1,
+  "status": "completed",
+  "split": "train",
+  "catalog": "library-train-v1",
+  "generation": {
+    "model_id": "gemma-4-31b",
+    "checkpoint_sha256": "5d056eb03f954db80313a85167153c875fe5e436e4f97c281a3f55202d9b3eaf",
+    "frame": "live-server-default-public-answer",
+    "enable_thinking": null,
+    "thinking_control": "server-default",
+    "reasoning_saved": false,
+    "sampling": "server_official_generation_config",
+    "temperature": null,
+    "max_tokens": 32768,
+    "seed": 0
+  },
+  "inputs": [
+    {
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-authored120-generation-inputs-v1/inputs/library-train-v1-cases.json",
+      "sha256": "d3059d4d1c073ba372d103ace9760398341a1add1133e70e306cfefab94db6fc",
+      "stat": {
+        "dev": 2306,
+        "ino": 182190632,
+        "size": 21503,
+        "mtime_ns": 1794036576798790193,
+        "ctime_ns": 1794036576798790193
+      }
+    },
+    {
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-av-authored120-native-v2/generations/02-library-train-v1/train-responses.json",
+      "sha256": "f6ba82973281fb0cd21f6b4b1f3a3fb910ca5deb1fb3a2f5cebce78d2b7900c8",
+      "stat": {
+        "dev": 2306,
+        "ino": 182191130,
+        "size": 16228,
+        "mtime_ns": 1794037772675852815,
+        "ctime_ns": 1794037772676852781
+      }
+    },
+    {
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/runtime/fresh-purpose-20261107-av-authored48-execution-v2/science_sandbox.py",
+      "sha256": "cf26e77e90d5789422ad2ebd3ac43599ee0a2ebc781b7a1c0c8ae834953a817e",
+      "stat": {
+        "dev": 2306,
+        "ino": 182191148,
+        "size": 28206,
+        "mtime_ns": 1794037954005658481,
+        "ctime_ns": 1794037954005658481
+      }
+    },
+    {
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/runtime/fresh-purpose-20261107-av-authored48-execution-v2/science_cases.py",
+      "sha256": "2c4cc6e75c92c41b98e737ca2c0a653e0f7a7675c6150a6ad33e3f954122a26b",
+      "stat": {
+        "dev": 2306,
+        "ino": 182191149,
+        "size": 35229,
+        "mtime_ns": 1794037954009658344,
+        "ctime_ns": 1794037954009658344
+      }
+    },
+    {
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/runtime/fresh-purpose-20261107-av-authored48-execution-v2/library_train_cases.py",
+      "sha256": "7371327bb781ce6dc0d0df379208ae9704210626bc7b9e184b01a764fcc3628a",
+      "stat": {
+        "dev": 2306,
+        "ino": 182191151,
+        "size": 31458,
+        "mtime_ns": 1794037954016658106,
+        "ctime_ns": 1794037954017658072
+      }
+    }
+  ],
+  "seed": 20261107,
+  "trials": 8,
+  "expected_cases": 16,
+  "responses_received": 16,
+  "sandbox": {
+    "image": "sha256:c4ab50223f03fca17bf871e4d05f77001e76525a1c574b6c6ee7024db06cfdc2",
+    "daemon_id": "3e518d2b-6972-43f8-b325-f7f33697a2d2",
+    "socket": "/var/run/docker.sock",
+    "seconds": 15.0,
+    "memory_mib": 512,
+    "cpus": 1.0,
+    "network": "none",
+    "user": "1003:1003",
+    "read_only": true,
+    "host_mounts": [],
+    "gpus": false,
+    "output_limit_bytes": 1048576
+  },
+  "results": [
+    {
+      "request_id": "chatcmpl-b9c9083d70734b80",
+      "finish_reason": "stop",
+      "usage": {
+        "input_tokens": 116,
+        "output_tokens": 2110
+      },
+      "seconds": 17.517515833955258,
+      "id": "science-library-sparse-solve-fixed-boundary",
+      "status": "evaluated",
+      "passed": true,
+      "public_answer_sha256": "33a2237a057f4932d82d0a2b54ee11cdbb948e56ac10063b8c9b9a8dbb391a3c",
+      "code_sha256": "9f5b459cb1fc0e0f434a0e1db828fe12def2ab0da935fd02c76eb82c3a538976",
+      "tests_passed": 8,
+      "tests_total": 8,
+      "failures": [],
+      "execution_seconds": 1.200948670040816
+    },
+    {
+      "request_id": "chatcmpl-1db0616a915549e0",
+      "finish_reason": "stop",
+      "usage": {
+        "input_tokens": 105,
+        "output_tokens": 2275
+      },
+      "seconds": 16.36696735501755,
+      "id": "science-library-sparse-solve-banded-factor",
+      "status": "evaluated",
+      "passed": true,
+      "public_answer_sha256": "adfbb66e760c2f5c2dd0a23929361422e4c832fb0153058edfa460a5ee4de51b",
+      "code_sha256": "e3627f5f38ac9b0a84212dc3a9efd489b402396715e601a6bcda285e8675832c",
+      "tests_passed": 8,
+      "tests_total": 8,
+      "failures": [],
+      "execution_seconds": 0.7752130320295691
+    },
+    {
+      "request_id": "chatcmpl-5c5ef9f806484b8d",
+      "finish_reason": "stop",
+      "usage": {
+        "input_tokens": 129,
+        "output_tokens": 1395
+      },
+      "seconds": 11.758006991934963,
+      "id": "science-library-residual-jacobian-decay-fit",
+      "status": "evaluated",
+      "passed": true,
+      "public_answer_sha256": "3a269ed2bfb6b86692922e0fdf4eca1f291b7bd42c8ca3f643273e3adbf770eb",
+      "code_sha256": "04e594165311735bb82a1a830bff344d2c3078031c252a9550d2cc8bd4a584fc",
+      "tests_passed": 8,
+      "tests_total": 8,
+      "failures": [],
+      "execution_seconds": 1.511424701078795
+    },
+    {
+      "request_id": "chatcmpl-84800f144a2544d6",
+      "finish_reason": "stop",
+      "usage": {
+        "input_tokens": 98,
+        "output_tokens": 1020
+      },
+      "seconds": 8.299079024000093,
+      "id": "science-library-residual-jacobian-weighted-affine",
+      "status": "evaluated",
+      "passed": true,
+      "public_answer_sha256": "842a44ebb360a0f3d49ebc6b04ced0084daea5f35356ea42d1c7e9c636032637",
+      "code_sha256": "43c299e75e8fc69ff9266af99350acdaa9cdc880a13f81dc7d80e0e1f8ab751a",
+      "tests_passed": 8,
+      "tests_total": 8,
+      "failures": [],
+      "execution_seconds": 1.46903882001061
+    },
+    {
+      "request_id": "chatcmpl-202f12c278114c03",
+      "finish_reason": "stop",
+      "usage": {
+        "input_tokens": 110,
+        "output_tokens": 552
+      },
+      "seconds": 4.03328546998091,
+      "id": "science-library-root-contract-implicit-sensitivity",
+      "status": "evaluated",
+      "passed": true,
+      "public_answer_sha256": "75df533e40e7942f441ec1599b28becc139fbff4f2f82e989207cbb89aeaa572",
+      "code_sha256": "94a82151acf85b31a5332dcbbb77f33201b77f47dd43fb77dd2d688b0ec15796",
+      "tests_passed": 8,
+      "tests_total": 8,
+      "failures": [],
+      "execution_seconds": 1.468026670976542
+    },
+    {
+      "request_id": "chatcmpl-39c28f47c7cf4d98",
+      "finish_reason": "stop",
+      "usage": {
+        "input_tokens": 102,
+        "output_tokens": 980
+      },
+      "seconds": 7.89749192702584,
+      "id": "science-library-root-contract-log-coordinate",
+      "status": "evaluated",
+      "passed": true,
+      "public_answer_sha256": "34df3277ebee2a99570a1e671b0d21a1baacdb04cbb3344bb83dc7138213aff8",
+      "code_sha256": "a2603f5e02db9d84d7f4def1fb5aff21ffdf039592246b27f50c490498b23451",
+      "tests_passed": 8,
+      "tests_total": 8,
+      "failures": [],
+      "execution_seconds": 1.4977043269900605
+    },
+    {
+      "request_id": "chatcmpl-82240020acd4459a",
+      "finish_reason": "stop",
+      "usage": {
+        "input_tokens": 100,
+        "output_tokens": 1546
+      },
+      "seconds": 13.371594956028275,
+      "id": "science-library-quadrature-callback-piecewise-moments",
+      "status": "evaluated",
+      "passed": true,
+      "public_answer_sha256": "c0203b16a85cd56aa744d25480851c12ca814490faad501cf45a46b4788dd22c",
+      "code_sha256": "ac3e797595b44c967b2575b1377d749dffa74fb5777b0a7a110317e336198b62",
+      "tests_passed": 8,
+      "tests_total": 8,
+      "failures": [],
+      "execution_seconds": 1.5337408640189096
+    },
+    {
+      "request_id": "chatcmpl-be527802299f4522",
+      "finish_reason": "stop",
+      "usage": {
+        "input_tokens": 111,
+        "output_tokens": 1332
+      },
+      "seconds": 9.944414986064658,
+      "id": "science-library-quadrature-callback-domain-transform",
+      "status": "evaluated",
+      "passed": true,
+      "public_answer_sha256": "c310b69f34c585d87b4200238e73c960b37b3e96f54f158d6cb7f369e227d2d9",
+      "code_sha256": "eff971d49893ae56eef84e97f91864ff1d9c23e3126067ad5e5b8b4ce16c1176",
+      "tests_passed": 8,
+      "tests_total": 8,
+      "failures": [],
+      "execution_seconds": 1.5616512970300391
+    },
+    {
+      "request_id": "chatcmpl-28360e8b5b914b12",
+      "finish_reason": "stop",
+      "usage": {
+        "input_tokens": 115,
+        "output_tokens": 1413
+      },
+      "seconds": 12.15111477591563,
+      "id": "science-library-symbolic-numeric-variable-order",
+      "status": "evaluated",
+      "passed": false,
+      "public_answer_sha256": "331659208ad83713ca43524004096e06ebb1ce126b366e4f53520c1a760033dc",
+      "code_sha256": "e49786624fc6934d1966b32c5ab0b8c3114e753e07e87860c77366c2e9f2af8d",
+      "tests_passed": 7,
+      "tests_total": 8,
+      "failures": [
+        {
+          "trial": 0,
+          "kind": "runtime",
+          "phase": "execution",
+          "exception_category": "ValueError"
+        }
+      ],
+      "execution_seconds": 1.3331554249161854
+    },
+    {
+      "request_id": "chatcmpl-d27a027021b641bd",
+      "finish_reason": "stop",
+      "usage": {
+        "input_tokens": 113,
+        "output_tokens": 1670
+      },
+      "seconds": 12.369187562027946,
+      "id": "science-library-symbolic-numeric-chain-coordinates",
+      "status": "evaluated",
+      "passed": true,
+      "public_answer_sha256": "29ecb46626677db0ad8e358b36038aef25ef8cf0f3cb10b9427da74d89c03ca3",
+      "code_sha256": "a0698607c282a551fb66b45da0364a1689d085a6aac7bffb74e09ca581bd98d6",
+      "tests_passed": 8,
+      "tests_total": 8,
+      "failures": [],
+      "execution_seconds": 1.3398735540686175
+    },
+    {
+      "request_id": "chatcmpl-a3ada698196b4eb2",
+      "finish_reason": "stop",
+      "usage": {
+        "input_tokens": 90,
+        "output_tokens": 472
+      },
+      "seconds": 3.839734148932621,
+      "id": "science-library-spectral-contract-linear-convolution",
+      "status": "evaluated",
+      "passed": true,
+      "public_answer_sha256": "99db0415e1b525ae2cdf7a88d93b10ead5eb565f1a531f11ce80f9b2f96f15e9",
+      "code_sha256": "13c0c2db7c8c5366ba57e494b4dadb6bb7acac9bb3836981d37eb38afb43993f",
+      "tests_passed": 8,
+      "tests_total": 8,
+      "failures": [],
+      "execution_seconds": 1.2466816829983145
+    },
+    {
+      "request_id": "chatcmpl-39cc8f8e039e48ec",
+      "finish_reason": "stop",
+      "usage": {
+        "input_tokens": 110,
+        "output_tokens": 1087
+      },
+      "seconds": 8.931865982012823,
+      "id": "science-library-spectral-contract-periodic-correlation",
+      "status": "evaluated",
+      "passed": true,
+      "public_answer_sha256": "ac7a001bb6d8614021242195893a3c434eaf31b11d217a901ec03a54c3ccc9e0",
+      "code_sha256": "98b36d40b27758d72199f9a1a5bb51f1ae9a1982ed72876e6b848192376ccbc7",
+      "tests_passed": 8,
+      "tests_total": 8,
+      "failures": [],
+      "execution_seconds": 1.2447335040196776
+    },
+    {
+      "request_id": "chatcmpl-f6173975dfea4306",
+      "finish_reason": "stop",
+      "usage": {
+        "input_tokens": 97,
+        "output_tokens": 997
+      },
+      "seconds": 8.266314547974616,
+      "id": "science-library-optimizer-feasibility-simplex-equality",
+      "status": "evaluated",
+      "passed": true,
+      "public_answer_sha256": "7e0ddc8ab9a0396a0fa965a522de764d8ee6140edf3853adba334d544add9b76",
+      "code_sha256": "200477faa49492974bc1495019036272140445a775f73f6784ed8e818c594310",
+      "tests_passed": 8,
+      "tests_total": 8,
+      "failures": [],
+      "execution_seconds": 1.5148048690753058
+    },
+    {
+      "request_id": "chatcmpl-9ef9f06fa9d74585",
+      "finish_reason": "stop",
+      "usage": {
+        "input_tokens": 102,
+        "output_tokens": 1429
+      },
+      "seconds": 11.825368613004684,
+      "id": "science-library-optimizer-feasibility-weighted-hyperplane",
+      "status": "evaluated",
+      "passed": true,
+      "public_answer_sha256": "687c638eaa7fb755326824d3ef818ef375f4fe2fbfcc5182c0b8dabac322cb89",
+      "code_sha256": "cd4f484b21e81639ce767323a5e778125457b2560932c2296a78a6c7ab6685fc",
+      "tests_passed": 8,
+      "tests_total": 8,
+      "failures": [],
+      "execution_seconds": 1.5245944040361792
+    },
+    {
+      "request_id": "chatcmpl-0669171ee0b04093",
+      "finish_reason": "stop",
+      "usage": {
+        "input_tokens": 95,
+        "output_tokens": 712
+      },
+      "seconds": 5.733841447974555,
+      "id": "science-library-distribution-interface-batched-logdensity",
+      "status": "evaluated",
+      "passed": true,
+      "public_answer_sha256": "cc92762dbae452b25b2e8f750f8783b89fd7286a4540f4cbf67bcf685235a2eb",
+      "code_sha256": "69dbd2a8190f5437fba25f8c94c4d4d48b4e21bb49fadf58be8fe19d3a0a3f71",
+      "tests_passed": 8,
+      "tests_total": 8,
+      "failures": [],
+      "execution_seconds": 2.3069122049491853
+    },
+    {
+      "request_id": "chatcmpl-91e6c1a85ff84ba9",
+      "finish_reason": "stop",
+      "usage": {
+        "input_tokens": 98,
+        "output_tokens": 1103
+      },
+      "seconds": 8.593116624979302,
+      "id": "science-library-distribution-interface-lognormal-moments",
+      "status": "evaluated",
+      "passed": true,
+      "public_answer_sha256": "67164393240445c23c4771753d09637944b45b7610fe7c08449c2092e4982e16",
+      "code_sha256": "ca535b84daa6f457633d4656672c1ec3f57b4b8be039033fd3ec8fc9fb067d01",
+      "tests_passed": 8,
+      "tests_total": 8,
+      "failures": [],
+      "execution_seconds": 2.225113172084093
+    }
+  ],
+  "scope": "Authored calibration execution, not WSP score.",
+  "limits": [
+    "Only plain Python or one whole-answer Python fence is accepted; this differs from WSP extraction.",
+    "Finite randomized tests do not prove correctness for all inputs.",
+    "Docker is process isolation, not a formal hostile-code security boundary.",
+    "Input mutation is checked inside the container; hostile protocol forgery is not ruled out.",
+    "Transfer results must not be used as gradient input; repeated selection makes them known."
+  ],
+  "passed": 15,
+  "failed": 1,
+  "unknown": 0
+}

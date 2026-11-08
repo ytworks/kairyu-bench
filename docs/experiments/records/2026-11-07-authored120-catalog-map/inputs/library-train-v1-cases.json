@@ -1,0 +1,200 @@
+{
+  "schema_version": 1,
+  "split": "train",
+  "scope": "known authored calibration; transport partition only; not WSP or unseen evaluation",
+  "source_cases_sha256": "bd6fcba70e93b1870ee882f6e92893b93490ad4099af7a9a290ba3d324d68951",
+  "partition": "library-train-v1",
+  "source_purpose_fold_layout_preserved": true,
+  "cases": {
+    "science_numerics": [
+      [
+        {
+          "id": "science-library-sparse-solve-fixed-boundary",
+          "family": "library-sparse-solve",
+          "variant": "fixed-boundary",
+          "split": "train",
+          "gradient_allowed": true,
+          "prompt": "Write Python solve(rows, cols, values, n, b, fixed, prescribed). COO entries define a symmetric positive-definite n by n matrix, with duplicates summed. fixed contains unique valid indices, a nonempty proper subset. Set x[fixed]=prescribed and solve A@x=b at free indices only. Return shape(n,). Inputs satisfy the stated conditions. Return a float64 ndarray; do not mutate inputs. Include required imports and complete function, no prose.",
+          "correct": "import numpy as np\nfrom scipy.sparse import coo_matrix\nfrom scipy.sparse.linalg import spsolve\n\ndef solve(rows, cols, values, n, b, fixed, prescribed):\n    a = coo_matrix((values, (rows, cols)), shape=(n,n)).tocsr()\n    x = np.zeros(n); x[fixed] = prescribed\n    free = np.setdiff1d(np.arange(n), fixed)\n    rhs = b[free] - a[free][:,fixed] @ prescribed\n    x[free] = spsolve(a[free][:,free], rhs)\n    return x\n",
+          "foil": "import numpy as np\nfrom scipy.sparse import coo_matrix\nfrom scipy.sparse.linalg import spsolve\n\ndef solve(rows, cols, values, n, b, fixed, prescribed):\n    a = coo_matrix((values, (rows, cols)), shape=(n,n)).tocsr()\n    x = np.zeros(n); x[fixed] = prescribed\n    free = np.setdiff1d(np.arange(n), fixed)\n    rhs = b[free]\n    x[free] = spsolve(a[free][:,free], rhs)\n    return x\n"
+        },
+        {
+          "id": "science-library-spectral-contract-linear-convolution",
+          "family": "library-spectral-contract",
+          "variant": "linear-convolution",
+          "split": "train",
+          "gradient_allowed": true,
+          "prompt": "Write Python solve(x, kernel). Use scipy.fft real transforms and sufficient zero padding for full linear convolution of two nonempty real vectors. Return len(x)+len(kernel)-1 entries, no circular wraparound. Inputs satisfy the stated conditions. Return a float64 ndarray; do not mutate inputs. Include required imports and complete function, no prose.",
+          "correct": "import numpy as np\nfrom scipy.fft import rfft, irfft, next_fast_len\n\ndef solve(x, kernel):\n    size = len(x)+len(kernel)-1\n    nfft = next_fast_len(size)\n    spectrum = rfft(x,nfft)*rfft(kernel,nfft)\n    return irfft(spectrum,nfft)[:size].astype(np.float64)\n",
+          "foil": "import numpy as np\nfrom scipy.fft import rfft, irfft, next_fast_len\n\ndef solve(x, kernel):\n    size = len(x)+len(kernel)-1\n    nfft = next_fast_len(size)\n    spectrum = rfft(x,nfft)*np.conj(rfft(kernel,nfft))\n    return irfft(spectrum,nfft)[:size].astype(np.float64)\n"
+        }
+      ],
+      [
+        {
+          "id": "science-library-sparse-solve-banded-factor",
+          "family": "library-sparse-solve",
+          "variant": "banded-factor",
+          "split": "train",
+          "gradient_allowed": true,
+          "prompt": "Write Python solve(lower, diagonal, upper, b). lower and upper have length n-1 and describe the sub/super diagonals of a strictly diagonally-dominant tridiagonal matrix. b has shape(n,k). Factor once and solve all columns. Return shape(n,k). Inputs satisfy the stated conditions. Return a float64 ndarray; do not mutate inputs. Include required imports and complete function, no prose.",
+          "correct": "import numpy as np\nfrom scipy.sparse import diags\nfrom scipy.sparse.linalg import factorized\n\ndef solve(lower, diagonal, upper, b):\n    a = diags([lower, diagonal, upper], [-1,0,1], format='csc')\n    solve_column = factorized(a)\n    return np.column_stack([solve_column(b[:,j]) for j in range(b.shape[1])]).astype(np.float64)\n",
+          "foil": "import numpy as np\nfrom scipy.sparse import diags\nfrom scipy.sparse.linalg import factorized\n\ndef solve(lower, diagonal, upper, b):\n    a = diags([upper, diagonal, lower], [-1,0,1], format='csc')\n    solve_column = factorized(a)\n    return np.column_stack([solve_column(b[:,j]) for j in range(b.shape[1])]).astype(np.float64)\n"
+        },
+        {
+          "id": "science-library-spectral-contract-periodic-correlation",
+          "family": "library-spectral-contract",
+          "variant": "periodic-correlation",
+          "split": "train",
+          "gradient_allowed": true,
+          "prompt": "Write Python solve(x, y, spacing). For real same-length periodic vectors, return c[k]=spacing*sum_t x[t]*y[(t-k)%n] for k=0..n-1 using scipy.fft. spacing>0; preserve this lag sign and physical scaling. Inputs satisfy the stated conditions. Return a float64 ndarray; do not mutate inputs. Include required imports and complete function, no prose.",
+          "correct": "import numpy as np\nfrom scipy.fft import fft, ifft\n\ndef solve(x, y, spacing):\n    spectrum = fft(x)*np.conj(fft(y))\n    return (spacing*ifft(spectrum).real).astype(np.float64)\n",
+          "foil": "import numpy as np\nfrom scipy.fft import fft, ifft\n\ndef solve(x, y, spacing):\n    spectrum = fft(x)*fft(y)\n    return (spacing*ifft(spectrum).real).astype(np.float64)\n"
+        }
+      ]
+    ],
+    "science_contracts": [
+      [
+        {
+          "id": "science-library-symbolic-numeric-variable-order",
+          "family": "library-symbolic-numeric",
+          "variant": "variable-order",
+          "split": "train",
+          "gradient_allowed": true,
+          "prompt": "Write Python solve(x, y, a). For same-length vectors x,y, symbolically differentiate f=a*x**2*y+sin(y) using SymPy, then lambdify with variable order(x,y). Return rows[df/dx,df/dy], shape(len(x),2). Inputs satisfy the stated conditions. Return a float64 ndarray; do not mutate inputs. Include required imports and complete function, no prose.",
+          "correct": "import numpy as np\nimport sympy as sp\n\ndef solve(x, y, a):\n    sx, sy = sp.symbols('x y')\n    expr = a*sx**2*sy+sp.sin(sy)\n    gradient = sp.lambdify((sx,sy), (sp.diff(expr,sx),sp.diff(expr,sy)), 'numpy')\n    dx,dy = gradient(x,y)\n    return np.column_stack(np.broadcast_arrays(dx,dy)).astype(np.float64)\n",
+          "foil": "import numpy as np\nimport sympy as sp\n\ndef solve(x, y, a):\n    sx, sy = sp.symbols('x y')\n    expr = a*sx**2*sy+sp.sin(sy)\n    gradient = sp.lambdify((sy,sx), (sp.diff(expr,sx),sp.diff(expr,sy)), 'numpy')\n    dx,dy = gradient(x,y)\n    return np.column_stack(np.broadcast_arrays(dx,dy)).astype(np.float64)\n"
+        },
+        {
+          "id": "science-library-optimizer-feasibility-simplex-equality",
+          "family": "library-optimizer-feasibility",
+          "variant": "simplex-equality",
+          "split": "train",
+          "gradient_allowed": true,
+          "prompt": "Write Python solve(b, mass). Project real vector b onto x>=0 and sum(x)=mass, with mass>0. Use scipy.optimize SLSQP with analytic objective gradient and exact equality constraint. Return the projection, shape b.shape. Inputs satisfy the stated conditions. Return a float64 ndarray; do not mutate inputs. Include required imports and complete function, no prose.",
+          "correct": "import numpy as np\nfrom scipy.optimize import minimize, LinearConstraint\n\ndef solve(b, mass):\n    n = len(b)\n    constraint = LinearConstraint(np.ones(n), mass, mass)\n    fit = minimize(lambda x: 0.5*np.sum((x-b)**2), np.full(n,mass/n), jac=lambda x: x-b, bounds=[(0,None)]*n, constraints=constraint, method='SLSQP', options={'ftol':1e-12,'maxiter':200})\n    return fit.x.astype(np.float64)\n",
+          "foil": "import numpy as np\nfrom scipy.optimize import minimize, LinearConstraint\n\ndef solve(b, mass):\n    n = len(b)\n    constraint = LinearConstraint(np.ones(n), -np.inf, mass)\n    fit = minimize(lambda x: 0.5*np.sum((x-b)**2), np.full(n,mass/n), jac=lambda x: x-b, bounds=[(0,None)]*n, constraints=constraint, method='SLSQP', options={'ftol':1e-12,'maxiter':200})\n    return fit.x.astype(np.float64)\n"
+        }
+      ],
+      [
+        {
+          "id": "science-library-symbolic-numeric-chain-coordinates",
+          "family": "library-symbolic-numeric",
+          "variant": "chain-coordinates",
+          "split": "train",
+          "gradient_allowed": true,
+          "prompt": "Write Python solve(u, v). Physical x=exp(u), y=u+v; f=x*y**2+sin(x). For same-length vectors u,v, use SymPy substitution and differentiation to return rows[df/du,df/dv], shape(len(u),2). Inputs satisfy the stated conditions. Return a float64 ndarray; do not mutate inputs. Include required imports and complete function, no prose.",
+          "correct": "import numpy as np\nimport sympy as sp\n\ndef solve(u, v):\n    x,y,su,sv = sp.symbols('x y u v')\n    expr = (x*y**2+sp.sin(x)).subs({x:sp.exp(su), y:su+sv})\n    gradient = sp.lambdify((su,sv), (sp.diff(expr,su),sp.diff(expr,sv)), 'numpy')\n    return np.column_stack(gradient(u,v)).astype(np.float64)\n",
+          "foil": "import numpy as np\nimport sympy as sp\n\ndef solve(u, v):\n    x,y,su,sv = sp.symbols('x y u v')\n    expr = (x*y**2+sp.sin(x)).subs({x:su, y:su+sv})\n    gradient = sp.lambdify((su,sv), (sp.diff(expr,su),sp.diff(expr,sv)), 'numpy')\n    return np.column_stack(gradient(u,v)).astype(np.float64)\n"
+        },
+        {
+          "id": "science-library-optimizer-feasibility-weighted-hyperplane",
+          "family": "library-optimizer-feasibility",
+          "variant": "weighted-hyperplane",
+          "split": "train",
+          "gradient_allowed": true,
+          "prompt": "Write Python solve(b, normal, target). For nonzero normal, minimize 0.5*||x-b||**2 subject to normal@x=target. Use SLSQP with the analytic objective gradient and LinearConstraint, without sign bounds. Return shape b.shape. Inputs satisfy the stated conditions. Return a float64 ndarray; do not mutate inputs. Include required imports and complete function, no prose.",
+          "correct": "import numpy as np\nfrom scipy.optimize import minimize, LinearConstraint\n\ndef solve(b, normal, target):\n    constraint = LinearConstraint(normal, target, target)\n    fit = minimize(lambda x: 0.5*np.sum((x-b)**2), b.copy(), jac=lambda x: x-b, constraints=constraint, method='SLSQP', options={'ftol':1e-12,'maxiter':200})\n    return fit.x.astype(np.float64)\n",
+          "foil": "import numpy as np\nfrom scipy.optimize import minimize, LinearConstraint\n\ndef solve(b, normal, target):\n    constraint = LinearConstraint(np.ones_like(normal), target, target)\n    fit = minimize(lambda x: 0.5*np.sum((x-b)**2), b.copy(), jac=lambda x: x-b, constraints=constraint, method='SLSQP', options={'ftol':1e-12,'maxiter':200})\n    return fit.x.astype(np.float64)\n"
+        }
+      ]
+    ],
+    "science_advanced_state": [
+      [
+        {
+          "id": "science-library-residual-jacobian-decay-fit",
+          "family": "library-residual-jacobian",
+          "variant": "decay-fit",
+          "split": "train",
+          "gradient_allowed": true,
+          "prompt": "Write Python solve(t, y, initial). Noiseless y=a*exp(-k*t)+b at at least three distinct nonnegative t, with a,k positive. initial is a length3 feasible guess with initial[0:2]>=1e-8. Use SciPy least_squares with the analytic Jacobian and positive a,k bounds. Return fitted [a,k,b]. Inputs satisfy the stated conditions. Return a float64 ndarray; do not mutate inputs. Include required imports and complete function, no prose.",
+          "correct": "import numpy as np\nfrom scipy.optimize import least_squares\n\ndef solve(t, y, initial):\n    def residual(p): return p[0]*np.exp(-p[1]*t)+p[2]-y\n    def jac(p):\n        e = np.exp(-p[1]*t)\n        return np.column_stack((e, -p[0]*t*e, np.ones_like(t)))\n    fit = least_squares(residual, initial, jac=jac, bounds=([1e-8,1e-8,-np.inf],np.inf), xtol=1e-12, ftol=1e-12, gtol=1e-12)\n    return fit.x.astype(np.float64)\n",
+          "foil": "import numpy as np\nfrom scipy.optimize import least_squares\n\ndef solve(t, y, initial):\n    def residual(p): return p[0]*np.exp(p[1]*t)+p[2]-y\n    def jac(p):\n        e = np.exp(-p[1]*t)\n        return np.column_stack((e, -p[0]*t*e, np.ones_like(t)))\n    fit = least_squares(residual, initial, jac=jac, bounds=([1e-8,1e-8,-np.inf],np.inf), xtol=1e-12, ftol=1e-12, gtol=1e-12)\n    return fit.x.astype(np.float64)\n"
+        },
+        {
+          "id": "science-library-root-contract-implicit-sensitivity",
+          "family": "library-root-contract",
+          "variant": "implicit-sensitivity",
+          "split": "train",
+          "gradient_allowed": true,
+          "prompt": "Write Python solve(a, y, left, right). abs(a)<0.5 and [left,right] brackets the unique root of x+a*sin(x)=y. Use a bracketed SciPy solver; return [x,dx/dy] using implicit differentiation, shape(2,). Inputs satisfy the stated conditions. Return a float64 ndarray; do not mutate inputs. Include required imports and complete function, no prose.",
+          "correct": "import numpy as np\nfrom scipy.optimize import brentq\n\ndef solve(a, y, left, right):\n    x = brentq(lambda z: z+a*np.sin(z)-y, left, right, xtol=1e-13)\n    return np.array([x, 1/(1+a*np.cos(x))], dtype=np.float64)\n",
+          "foil": "import numpy as np\nfrom scipy.optimize import brentq\n\ndef solve(a, y, left, right):\n    x = brentq(lambda z: z+a*np.sin(z)-y, left, right, xtol=1e-13)\n    return np.array([x, 1+a*np.cos(x)], dtype=np.float64)\n"
+        }
+      ],
+      [
+        {
+          "id": "science-library-residual-jacobian-weighted-affine",
+          "family": "library-residual-jacobian",
+          "variant": "weighted-affine",
+          "split": "train",
+          "gradient_allowed": true,
+          "prompt": "Write Python solve(t, y, weight). Fit y approximately slope*t+intercept minimizing sum(weight*residual**2), with positive per-observation weight. Compose weighted residual and analytic Jacobian for SciPy least_squares. Return [slope,intercept]. Inputs satisfy the stated conditions. Return a float64 ndarray; do not mutate inputs. Include required imports and complete function, no prose.",
+          "correct": "import numpy as np\nfrom scipy.optimize import least_squares\n\ndef solve(t, y, weight):\n    root = np.sqrt(weight)\n    def residual(p): return root*(p[0]*t+p[1]-y)\n    def jac(p): return np.column_stack((root*t, root))\n    fit = least_squares(residual, np.zeros(2), jac=jac, gtol=1e-12, ftol=1e-12, xtol=1e-12)\n    return fit.x.astype(np.float64)\n",
+          "foil": "import numpy as np\nfrom scipy.optimize import least_squares\n\ndef solve(t, y, weight):\n    root = weight\n    def residual(p): return root*(p[0]*t+p[1]-y)\n    def jac(p): return np.column_stack((root*t, root))\n    fit = least_squares(residual, np.zeros(2), jac=jac, gtol=1e-12, ftol=1e-12, xtol=1e-12)\n    return fit.x.astype(np.float64)\n"
+        },
+        {
+          "id": "science-library-root-contract-log-coordinate",
+          "family": "library-root-contract",
+          "variant": "log-coordinate",
+          "split": "train",
+          "gradient_allowed": true,
+          "prompt": "Write Python solve(y, low, high). 0<low<high bracket the solution of x+log(x)=y. Solve for u=log(x) using SciPy brentq, then return physical x, shape(1,), not the transformed coordinate. Inputs satisfy the stated conditions. Return a float64 ndarray; do not mutate inputs. Include required imports and complete function, no prose.",
+          "correct": "import numpy as np\nfrom scipy.optimize import brentq\n\ndef solve(y, low, high):\n    u = brentq(lambda u: np.exp(u)+u-y, np.log(low), np.log(high), xtol=1e-13)\n    return np.array([np.exp(u)], dtype=np.float64)\n",
+          "foil": "import numpy as np\nfrom scipy.optimize import brentq\n\ndef solve(y, low, high):\n    u = brentq(lambda u: np.exp(u)+u-y, np.log(low), np.log(high), xtol=1e-13)\n    return np.array([u], dtype=np.float64)\n"
+        }
+      ]
+    ],
+    "science_advanced_simulation": [
+      [
+        {
+          "id": "science-library-quadrature-callback-piecewise-moments",
+          "family": "library-quadrature-callback",
+          "variant": "piecewise-moments",
+          "split": "train",
+          "gradient_allowed": true,
+          "prompt": "Write Python solve(edges, slope, intercept). On bin i, positive density is slope[i]*x+intercept[i]; edges strictly increase. Integrate each bin with SciPy quad and combine. Return [total mass, normalized first moment], shape(2,). Inputs satisfy the stated conditions. Return a float64 ndarray; do not mutate inputs. Include required imports and complete function, no prose.",
+          "correct": "import numpy as np\nfrom scipy.integrate import quad\n\ndef solve(edges, slope, intercept):\n    mass = 0.0; first = 0.0\n    for lo,hi,a,b in zip(edges[:-1],edges[1:],slope,intercept):\n        mass += quad(lambda x: a*x+b, lo, hi)[0]\n        first += quad(lambda x: x*(a*x+b), lo, hi)[0]\n    return np.array([mass, first/mass], dtype=np.float64)\n",
+          "foil": "import numpy as np\nfrom scipy.integrate import quad\n\ndef solve(edges, slope, intercept):\n    mass = 0.0; first = 0.0\n    for lo,hi,a,b in zip(edges[:-1],edges[1:],slope,intercept):\n        mass += quad(lambda x: a*x+b, lo, hi)[0]\n        first += quad(lambda x: a*x+b, lo, hi)[0]\n    return np.array([mass, first/mass], dtype=np.float64)\n"
+        }
+      ],
+      [
+        {
+          "id": "science-library-quadrature-callback-domain-transform",
+          "family": "library-quadrature-callback",
+          "variant": "domain-transform",
+          "split": "train",
+          "gradient_allowed": true,
+          "prompt": "Write Python solve(rate, low, high). rate>0 and 0<=low<high. Map x=low+(high-low)*u and integrate on u in[0,1] using SciPy quad. Return [integral(exp(-rate*x)), conditional mean x] over[low,high]. Inputs satisfy the stated conditions. Return a float64 ndarray; do not mutate inputs. Include required imports and complete function, no prose.",
+          "correct": "import numpy as np\nfrom scipy.integrate import quad\n\ndef solve(rate, low, high):\n    width = high-low\n    def density(u): return np.exp(-rate*(low+width*u))*width\n    mass = quad(density, 0, 1)[0]\n    first = quad(lambda u: (low+width*u)*density(u), 0, 1)[0]\n    return np.array([mass, first/mass], dtype=np.float64)\n",
+          "foil": "import numpy as np\nfrom scipy.integrate import quad\n\ndef solve(rate, low, high):\n    width = high-low\n    def density(u): return np.exp(-rate*(low+width*u))\n    mass = quad(density, 0, 1)[0]\n    first = quad(lambda u: (low+width*u)*density(u), 0, 1)[0]\n    return np.array([mass, first/mass], dtype=np.float64)\n"
+        }
+      ]
+    ],
+    "science_advanced_probability": [
+      [
+        {
+          "id": "science-library-distribution-interface-batched-logdensity",
+          "family": "library-distribution-interface",
+          "variant": "batched-logdensity",
+          "split": "train",
+          "gradient_allowed": true,
+          "prompt": "Write Python solve(x, location, scale). For sample vector x and parameter vectors location,positive scale of length m, return normal log densities shape(len(x),m) using scipy.stats. scale denotes standard deviation, not variance. Inputs satisfy the stated conditions. Return a float64 ndarray; do not mutate inputs. Include required imports and complete function, no prose.",
+          "correct": "import numpy as np\nfrom scipy.stats import norm\n\ndef solve(x, location, scale):\n    return norm.logpdf(x[:,None], loc=location[None,:], scale=scale[None,:]).astype(np.float64)\n",
+          "foil": "import numpy as np\nfrom scipy.stats import norm\n\ndef solve(x, location, scale):\n    return norm.logpdf(x[:,None], loc=location[None,:], scale=scale[None,:]**2).astype(np.float64)\n"
+        }
+      ],
+      [
+        {
+          "id": "science-library-distribution-interface-lognormal-moments",
+          "family": "library-distribution-interface",
+          "variant": "lognormal-moments",
+          "split": "train",
+          "gradient_allowed": true,
+          "prompt": "Write Python solve(probability, mean, standard_deviation). For probabilities strictly between 0 and 1 and positive arithmetic mean/std, return lognormal quantiles via scipy.stats.lognorm, converting arithmetic moments to its log-space shape/scale. Inputs satisfy the stated conditions. Return a float64 ndarray; do not mutate inputs. Include required imports and complete function, no prose.",
+          "correct": "import numpy as np\nfrom scipy.stats import lognorm\n\ndef solve(probability, mean, standard_deviation):\n    variance_log = np.log1p((standard_deviation/mean)**2)\n    sigma = np.sqrt(variance_log)\n    mu = np.log(mean)-variance_log/2\n    return lognorm.ppf(probability, s=sigma, scale=np.exp(mu)).astype(np.float64)\n",
+          "foil": "import numpy as np\nfrom scipy.stats import lognorm\n\ndef solve(probability, mean, standard_deviation):\n    variance_log = np.log1p((standard_deviation/mean)**2)\n    sigma = np.sqrt(variance_log)\n    mu = np.log(mean)-variance_log/2\n    return lognorm.ppf(probability, s=sigma, scale=mean).astype(np.float64)\n"
+        }
+      ]
+    ]
+  }
+}

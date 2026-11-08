@@ -1,0 +1,120 @@
+from pathlib import Path
+import gzip,hashlib,json,time,os
+R=Path('/mnt/nvme/kairyu/wsp/gemma4-coding-20261104')
+B=R/'worktrees/kairyu-bench-weight-tools'
+P=R/'analysis/fresh-purpose-20261107-f05-native-contract-v1'
+D=B/'docs/experiments/records/2026-11-07-f05-proposal-save-opus-v1'
+MD=B/'docs/experiments/2026-11-07-f05-proposal-save-opus.md'
+started=time.time()
+assert not D.exists() and not MD.exists()
+report=json.loads((P/'proposal/report.json').read_text())
+method=report['methods'][0]
+review=json.loads((P/'opus55-review-v2/receipt.json').read_text())
+old=json.loads((P/'opus55-review-v1/receipt.json').read_text())
+material=json.loads((P/'materialization-v1/completion.json').read_text())
+verify=json.loads((P/'materialization-v1/verify.stdout').read_text())
+sha=lambda raw:hashlib.sha256(raw).hexdigest()
+assert review['verified_requested_model'] and review['review_usable'] and review['review_format']=='json_reviews'
+assert review['assistant_models']==['claude-opus-5-5'] and set(review['model_usage'])=={'claude-opus-5-5'}
+assert review['model_usage']['claude-opus-5-5']['canonicalModel']=='claude-opus-5-5'
+assert review['labels_match'] and review['returncode']==0 and review['tool_uses']==0 and review['is_error'] is False
+assert not review['allow_text_review'] and review['fallback_model'] is None
+answer=review['response']
+assert set(answer)=={'reviews','sequence','evidence_limits','fresh_reserve'}
+assert len(answer['reviews'])==1 and answer['reviews'][0]['label']=='A'
+for field in ('decision','minimum_useful_next_action'):assert isinstance(answer['reviews'][0][field],str) and answer['reviews'][0][field]
+for field in ('sequence','evidence_limits','fresh_reserve'):
+ assert isinstance(answer[field],list) and answer[field] and all(isinstance(x,str) for x in answer[field])
+assert isinstance(answer['reviews'][0]['concerns'],list) and all(isinstance(x,str) for x in answer['reviews'][0]['concerns'])
+prompt=(P/'anonymous-opus55-prompt-v1.txt').read_bytes()
+assert sha(prompt)==review['prompt_sha256']==old['prompt_sha256']
+for version in ('v1','v2'):assert (P/('opus55-review-'+version)/'prompt.txt').read_bytes()==prompt
+assert old['error_class']=='FileNotFoundError' and not old['verified_requested_model']
+assert len(method['history'])==16 and len(method['prediction'])==38
+assert sum(a>=b for a,b in zip(method['prediction'],method['minimum_delta']))==36
+assert verify['verified'] and verify['changed_elements']==26417 and verify['changed_tensors']==361
+manifest=Path(material['manifest_path']);assert sha(manifest.read_bytes())==material['manifest_sha256']
+assert sha((P/'materialization-v1/verify.stdout').read_bytes())=='1e9150f21a53af2e96d82c65297a9ce0dffb71d21ea59ea03d3d02a45ca4c427'
+source_rows=[]
+for name,digest in report['source_sha256'].items():
+ path=Path(name)
+ if path.suffix=='.npz':
+  source_rows.append({'path':name,'sha256':digest,'copied':False,'fresh_hash':False,'reason':'existing collector/solver evidence; no redundant gradient scan'})
+ else:
+  assert sha(path.read_bytes())==digest,(name,'changed')
+  source_rows.append({'path':name,'sha256':digest,'copied':True,'fresh_hash':True})
+D.mkdir()
+inventory=[]
+def store(source,relative,force_gzip=False):
+ raw=source.read_bytes();target=D/relative
+ if source.suffix=='.py':target=target.with_name(target.name+'.txt')
+ zipped=force_gzip or len(raw)>65536
+ if zipped:target=target.with_name(target.name+'.gz')
+ target.parent.mkdir(parents=True,exist_ok=True)
+ payload=gzip.compress(raw,mtime=0) if zipped else raw
+ with target.open('xb') as f:f.write(payload)
+ assert (gzip.decompress(target.read_bytes()) if zipped else target.read_bytes())==raw
+ inventory.append({'source':str(source),'stored':str(target.relative_to(D)),'raw_bytes':len(raw),'raw_sha256':sha(raw),'stored_bytes':len(payload),'stored_sha256':sha(payload),'gzip_roundtrip':True if zipped else None})
+def put(name,data):
+ raw=(json.dumps(data,ensure_ascii=False,indent=2)+'\n').encode()
+ with (D/name).open('xb') as f:f.write(raw)
+fixed=['pre-observation-policy.json','proposal-plan.json','parent-state.json','prepare-and-propose.py','proposal-root-launch.json','proposal-owner-start.json','proposal-owner.log','preview-execution.json','preview.stdout','preview.stderr','solve-execution.json','solve.stdout','solve.stderr','completion.json','materialize.py','materialize.stdout','materialize.stderr','anonymous-opus55-prompt-v1.txt','opus55-preparation-v1.json','opus55-preview-v1.stdout','opus55-preview-v1.stderr','opus55-preview-v2.stdout','opus55-preview-v2.stderr','opus55-root-launch.json','opus55-root-launch-v2.json','opus55-owner.log','opus55-owner-v2.log','review-launch-v2.py','candidate-native-screen-decision.json']
+for name in fixed:store(P/name,name)
+for path in sorted((P/'proposal').iterdir()):
+ if path.is_file():store(path,'proposal/'+path.name)
+for path in sorted((P/'materialization-v1').iterdir()):
+ if path.is_file():store(path,'materialization/'+path.name)
+for version in ('v1','v2'):
+ for name in ('prompt.txt','dispatch.json','receipt.json'):store(P/('opus55-review-'+version)/name,'review-'+version+'/'+name)
+store(manifest,'materialization/faststore-manifest.json',True)
+for row in source_rows:
+ if row['copied']:
+  path=Path(row['path'])
+  relative=path.relative_to(B) if path.is_relative_to(B) else path.relative_to(R)
+  store(path,'pinned-inputs/'+str(relative))
+store(B/'scripts/claude-method-review.py','sources/claude-method-review.py')
+store(B/'src/kairyu_bench/wsp/weights/native_faststore.py','sources/native_faststore.py')
+store(Path(__file__),'packaging-source.py.txt')
+put('review-public-response.json',answer)
+put('all-rounds.json',method['history'])
+put('source-identity.json',source_rows)
+put('receipt-validation.json',{'validated_epoch':time.time(),'strict_json_fields_checked':True,'actual_model':'claude-opus-5-5','label':'A','fallback':False,'tools':0,'v1_cli_not_launched':True,'successful_model_reviews':1,'review_receipt_sha256':sha((P/'opus55-review-v2/receipt.json').read_bytes()),'prompt_sha256':sha(prompt),'review_adoption_authority':'root; decision copied separately','no_model_service_or_source_operations_in_packaging':True})
+put('packaging.json',{'started_epoch':started,'elapsed_seconds':time.time()-started,'files':inventory,'source_identities':source_rows,'no_checkpoint_payload_read':True,'gradient_arrays_copied':0,'snapshot_excludes_live_deployment_and_future_native_screen':True,'secret_environment_or_thinking_blocks_copied':False})
+rows=['| Round | Changed cells | Actual delta L2 | Maximum predicted shortfall |','|---:|---:|---:|---:|']
+for h in method['history']:rows.append('| '+str(h['round'])+' | '+str(h['changed_elements'])+' | '+format(h['actual_delta_l2'],'.9g')+' | '+format(h['maximum_prediction_shortfall'],'.9g')+' |')
+text="""# F05 proposal, saved weights and actual Opus 5.5 review
+
+This record closes the F05 proposal/save/review phase. The parent is the completed F04 dev30 result: code 72.9365079365, overall 76.9910864328, all 2338 items. F05 has no official capability result in this snapshot. Code above 90, final60/test, final DeepSWE 113 at 32 workers, wiki and conditional publication remain unfulfilled. Deployment and subsequent candidate screening are separate records.
+
+The [fixed pre-observation policy](records/2026-11-07-f05-proposal-save-opus-v1/pre-observation-policy.json) uses all 19 authored rows from F04 (16 numerical passes, A1/F2/J1 failures), two teacher-forced objectives and 38 simultaneous constraints. All 361 norm vectors are eligible; 60 layer scalars are frozen. Failure LL targets require +0.1; previously successful LL rows allow -0.01. A1/J1 margin targets require at least +0.2 and a final margin of 0.1; all other margins allow -0.02. Relative metric floor is 0.0001; the continuous box is 1% relative plus 0.000001 absolute; all 16 BF16 rounds are retained. F2/J1 share their prompt/correct answer and are not independent behaviors. The original F2 foil is preserved. Nine transfer cases remain unused.
+
+The CPU solver ran once: preview 0.297543 s, solve process 26.341675 s (internal calculation 26.018707 s), owner 206.664382 s including waiting. It selected round 15: 26,417 saved BF16 cells across 361 tensors, delta L2 52.2944053830, relative metric norm 0.9366422579. It meets 36 of 38 linear predictions; A1/J1 margin shortfalls are 0.000111579799 and 0.000051834118. These are proxy predictions, not execution gains. The [independent static audit](2026-11-07-f05-static-native-audit.md) gives complete denominators, all 38 predictions, 653 continuous-box overruns and the rounding discrepancy; that evidence is not duplicated here.
+
+"""+'\n'.join(rows)+"""
+
+The [materialization completion](records/2026-11-07-f05-proposal-save-opus-v1/materialization/completion.json) records one preview/create/verify sequence: 3.551943 / 3.900203 / 4.326436 s, total 13.938368 s including checks. Faststore preserves logical F04 ancestry and its unchanged shared payload. Eight private files received fresh hashes; the shared file uses its prior full hash plus exact inode/stat/link proof. Shared payload bytes read were zero; this is explicitly not a fresh whole-model hash. Verification confirms 26,417 changed cells / 361 tensors and original-byte restoration.
+
+| Saved evidence | SHA256 |
+|---|---|
+| Original proposal plan | f0ca2df4c3a73bd1f032e9602aed42733afc2b9fa919324fc81feef648569ffa |
+| Original specification | 48e095d3de304767410ac0956e390ad6db4d211457683dabdc779a4f6bb48df3 |
+| Complete solver report | 4d2e57e4c92dff749e0da7b052cbadd435bc4486145ebda5d476c12cefdad793 |
+| Saved manifest | 09ea569a08f138efd438055d7149f0697dc1d6edd08332f2b6c7c09b1da7c24c |
+| Verify output | 1e9150f21a53af2e96d82c65297a9ce0dffb71d21ea59ea03d3d02a45ca4c427 |
+| Candidate checkpoint tree | fcc4681343c1a0c338157bee767df2024f37290469e55dbc417723717f4ac176 |
+
+The [anonymous prompt](records/2026-11-07-f05-proposal-save-opus-v1/anonymous-opus55-prompt-v1.txt), SHA 57c6e4de0b23e1dc69aa01398a4ab16feed4d13f70acb46ec272059a3d61dcfc, was previewed before each launch. Attempt v1 failed before starting the CLI with FileNotFoundError (noninteractive PATH), 0.000764 s and zero model calls. Its prompt, launch, receipt and logs remain. Attempt v2 used the absolute CLI in the existing authenticated environment; no environment or credentials were recorded. Actual response model and canonical usage are both claude-opus-5-5, no fallback/tool use, strict JSON with label A, exit 0: 52.396717 s and $0.120192. Receipt SHA c19a3f3ae455c537c0764ce9348615ae918671e98a5c8bf1e0287f647076b19e. The prompt used a rounded save time; the actual completion above is authoritative.
+
+[The complete public review](records/2026-11-07-f05-proposal-save-opus-v1/review-public-response.json) conditionally supports a full canonical trial, but estimates weak evidence for native coding benefit. It recommends one candidate-only native 19-row generation/execution screen first, given prior proxy/native mismatch, the larger all-layer change, BF16 box overruns, and duplicate/padding sensitivity. It treats tiny missed bounds as disclosed limitations rather than a reason to re-solve. Its proposed screen is advice, not a benchmark result or an adoption decision.
+
+Root recorded the [screen decision before any candidate forward](records/2026-11-07-f05-proposal-save-opus-v1/candidate-native-screen-decision.json). It accepts the candidate-only screen and avoids any repeated parent measurement/replay. Go requires at least one of A1/F2/J1 fully passing, at most one loss among the previously passing 16, at least 16/19 fully passing and 264/304 fixtures, all 19 complete with zero unknown/API error/truncation. Allowing one loss instead of Opus's zero-regression preference implements the user's measured tradeoff instruction. On failure, F05 stays officially unscored and F04 remains parent; on success, the unchanged full 2338-item canonical dev30 is next. No candidate has been adopted by this packaging work.
+
+[Records and checksums](records/2026-11-07-f05-proposal-save-opus-v1/SHA256SUMS) preserve every solver round, exact full specification/report/manifest (lossless gzip where large), all original source/input hashes, source snapshots, both review attempts, public response, operator decision, and one-off launch/packaging sources. Large gradient arrays remain at their existing locations with their original source hashes; they were neither copied nor rehashed. No checkpoint payload, model request, service, solver or live source was changed during packaging. This snapshot excludes ongoing deployment and future screen results.
+"""
+with MD.open('x') as f:f.write(text)
+files=sorted(x for x in D.rglob('*') if x.is_file())
+sums=''.join(sha(x.read_bytes())+'  '+str(x.relative_to(D))+'\n' for x in files)
+(D/'SHA256SUMS').write_text(sums)
+for line in sums.splitlines():
+ digest,name=line.split('  ',1);assert sha((D/name).read_bytes())==digest
+print(json.dumps({'markdown':str(MD),'markdown_sha256':sha(MD.read_bytes()),'record_files_including_manifest':len(files)+1,'records_bytes':sum(x.stat().st_size for x in D.rglob('*') if x.is_file()),'manifest_sha256':sha((D/'SHA256SUMS').read_bytes()),'elapsed_seconds':time.time()-started,'review':'actual_claude-opus-5-5_verified','source_no_changes':True}))

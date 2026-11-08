@@ -1,0 +1,86 @@
+{
+  "source_unchanged": true,
+  "checks": {
+    "unittest": {
+      "command": [
+        "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/infra/weight-tools-ci/bin/python",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests",
+        "-v"
+      ],
+      "returncode": 0,
+      "seconds": 48.9888927990105,
+      "log_sha256": "1b18985a6b0e28b0574eab34b50c5f6de6349a3dd304ff953495fde46aeddb23"
+    },
+    "ruff": {
+      "command": [
+        "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/infra/weight-tools-ci/bin/ruff",
+        "check",
+        "."
+      ],
+      "returncode": 0,
+      "seconds": 0.035268396022729576,
+      "log_sha256": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18"
+    },
+    "mypy": {
+      "command": [
+        "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/infra/weight-tools-ci/bin/mypy",
+        "--ignore-missing-imports",
+        "src"
+      ],
+      "returncode": 0,
+      "seconds": 0.24829764000605792,
+      "log_sha256": "4ef32b02733c640ba275e5de2c0f630d3ea2a6293bb124ad0dc2173d46e40541"
+    },
+    "data": {
+      "command": [
+        "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/infra/weight-tools-ci/bin/python",
+        "scripts/update_model_comparison.py",
+        "--check"
+      ],
+      "returncode": 0,
+      "seconds": 0.04190846404526383,
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  },
+  "shell_total": 31,
+  "shell_failures": [],
+  "total_seconds": 49.40329612698406,
+  "test_parse_succeeded": true,
+  "tests_collected": 564,
+  "unittest_reported_seconds": 48.484,
+  "unittest_status": "OK",
+  "skips": 57,
+  "failures": 0,
+  "errors": 0,
+  "passed": 507,
+  "raw_counters": {
+    "skipped": 57
+  },
+  "skip_reasons": {
+    "requires the locked DeepSWE runtime": 18,
+    "requires the locked dsh runtime venv": 2,
+    "optional Torch CPU fixture": 3,
+    "optional SciPy authored reference environment": 1,
+    "optional scientific CPU environment": 1,
+    "optional SciPy/SymPy CPU reference environment": 1,
+    "optional SciPy/SymPy authored execution environment": 1,
+    "optional CPU Torch byte-view contract": 1,
+    "optional Torch CPU joint restoration contract": 2,
+    "optional Torch and C++ CPU RAM contract": 1,
+    "optional Torch CPU metric contract": 1,
+    "optional saved-tensor CPU fixture": 1,
+    "optional CPU Torch fixture; no model download": 4,
+    "optional Torch CPU contract": 1,
+    "the pinned Harbor runtime is not installed": 5,
+    "optional pinned vLLM/Torch CPU runtime": 1,
+    "optional Torch RAM-replay boundary": 1,
+    "optional finite-response solver requires scipy": 7,
+    "explicit coordinated CUDA smoke only": 2,
+    "optional serving PyTorch unavailable": 3
+  },
+  "source_file_count": 319
+}

@@ -1,0 +1,62 @@
+--- a/scripts/experiments/gemma4-purpose/derive_matrix_radius.py
++++ b/scripts/experiments/gemma4-purpose/derive_matrix_radius.py
+@@ -60,8 +60,8 @@
+     if not np.array_equal(active, reference_active):
+         raise ValueError("reference matrix mask differs")
+     if any(adapter.matrix_recipe.PATTERN.fullmatch(row["tensor"])[3]
+-           not in {"o", "gate", "up", "down"} for row in selected):
+-        raise ValueError("analytic scope permits only O/MLP matrices")
++           not in {"q", "k", "o", "gate", "up", "down"} for row in selected):
++        raise ValueError("analytic scope permits only Q/K/O/MLP matrices")
+     for filename, old in plan["completed_collection_stat"].items():
+         if adapter.stamp(Path(filename)) != tuple(old[k] for k in ("device", "inode", "size", "mtime_ns", "ctime_ns")):
+             raise ValueError("completed observation stat changed")
+@@ -102,7 +102,7 @@
+         raise ValueError("matrix objective coordinates/source bytes differ")
+     active = left[4]
+     if not len(active):
+-        raise ValueError("nonempty sampled O/MLP scope required")
++        raise ValueError("nonempty sampled Q/K/O/MLP scope required")
+     return left[0][active], np.vstack([row[1][:, active] for row in loaded]), left[5]
+ 
+ def calibration(checkpoint, plan, collections, labels, pins, destination):
+@@ -257,7 +257,7 @@
+                 spec = json.loads((proposal_dir / (measured["id"] + ".json")).read_bytes())
+                 for edit in spec["edits"]:
+                     match = adapter.matrix_recipe.PATTERN.fullmatch(edit["tensor"])
+-                    if ("indices" in edit or not match or match[3] not in {"o", "gate", "up", "down"}
++                    if ("indices" in edit or not match or match[3] not in {"q", "k", "o", "gate", "up", "down"}
+                             or edit["tensor"] not in selected_names):
+                         raise ValueError("candidate edit outside analytic matrix mask")
+                     for rc, value in zip(edit["coordinates"], edit["set_values"], strict=True):
+--- a/tests/test_gemma4_derived_radius.py
++++ b/tests/test_gemma4_derived_radius.py
+@@ -123,8 +123,8 @@
+             renamed = scoped.root / ("native-" + objective)
+             Path(directory).rename(renamed)
+             scoped.plan["collections"]["native"][objective] = str(renamed)
+-        onames = sorted(e["tensor"] for e in scoped_entries if e["family"] == "o")
+-        selected, excluded = onames
++        selected = next(e["tensor"] for e in scoped_entries if e["family"] == "q")
++        excluded = next(e["tensor"] for e in scoped_entries if e["family"] == "o")
+         tensor = scoped.checkpoint.tensors[selected]
+         tensors = {name: (item.dtype, item.shape, scoped.checkpoint.read_raw(name))
+                    for name, item in scoped.checkpoint.tensors.items()}
+@@ -139,7 +139,7 @@
+                                attestation={"path": str(attestation), "sha256": scoped.sha(attestation)})
+         p["eligible_blocks"] = ["matrix"]
+         p["matrix_tensors"] = [selected]
+-        p["matrix_families"] = ["o", "gate", "up", "down"]
++        p["matrix_families"] = ["q", "k", "o", "gate", "up", "down"]
+         p["candidates"][0]["id"] = "euclidean-selected"
+         p["candidates"][0]["cost_metric"] = {
+             "type": "euclidean", "block_scales": {"native": 1., "matrix": 1.}}
+@@ -159,7 +159,7 @@
+                     if entry["tensor"] == selected:
+                         source[entry["start"]:entry["start"] + entry["count"]] = 2.
+                         gradient[entry["start"]] = 1.
+-                    elif entry["tensor"] == excluded or entry["family"] == "q":
++                    elif entry["tensor"] == excluded or entry["family"] == "v":
+                         gradient[entry["start"]] = 1e6
+                 np.savez(folder / "sample-plan.npz", coordinates=coordinates, source_values=source)
+                 np.save(folder / "gradient.npy", gradient)

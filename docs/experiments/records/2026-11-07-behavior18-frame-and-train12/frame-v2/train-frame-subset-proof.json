@@ -1,0 +1,49 @@
+{
+  "all18_evidence_sha256": "7e6b18abc78a79e09899838ee047da715696baf6d8dc0e5597ee5c3a2ab5239a",
+  "train_evidence_sha256": "21ae203f395c51f7d973436b42cfeab19f9d72b1c2db18e8c0faa4613fa26f2d",
+  "train_cases_sha256": "b42990b0caac24ccc7843e40718c0c5e7ad61dd5baa131ed6852c126bf37f66d",
+  "ids": [
+    "behavior-A1",
+    "behavior-A2",
+    "behavior-B1",
+    "behavior-B2",
+    "behavior-C1",
+    "behavior-C2",
+    "behavior-D1",
+    "behavior-D2",
+    "behavior-E1",
+    "behavior-E2",
+    "behavior-F1",
+    "behavior-F2"
+  ],
+  "fold_sizes": {
+    "A": [
+      1,
+      1
+    ],
+    "B": [
+      1,
+      1
+    ],
+    "C": [
+      1,
+      1
+    ],
+    "D": [
+      1,
+      1
+    ],
+    "E": [
+      1,
+      1
+    ],
+    "F": [
+      1,
+      1
+    ]
+  },
+  "shared_frame_rows_equal": true,
+  "original_train_rows_sha256": "16559c453266f6fa1b10f0bd9689a0d493152834e820d83857bd3b95ab115794",
+  "transfer_removed_only_from_derived_train_view": true,
+  "source_envelopes_unchanged": true
+}

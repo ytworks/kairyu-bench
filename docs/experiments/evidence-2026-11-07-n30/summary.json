@@ -1,0 +1,1920 @@
+{
+  "status": "completed_independent_canonical_audit",
+  "verified_complete": true,
+  "full_score_ranking_permitted": true,
+  "data_anomalies": {
+    "item_issues": [],
+    "unexpected_items": [],
+    "unexpected_responses": [],
+    "actual_item_record_count": 2338,
+    "actual_response_record_count": 2338,
+    "run_status": "completed",
+    "run_unscored": [],
+    "report_unscored": [],
+    "missing_areas": [],
+    "strict_complete_audit_error": null,
+    "report_exact_rebuild_equal": true,
+    "verified_complete": true,
+    "full_score_ranking_permitted": true
+  },
+  "created_at": "2026-11-07T07:24:32.694702+00:00",
+  "run": {
+    "run_id": "gemma4-fresh-av-dev30-dp4-20261107-v1",
+    "tier": 30,
+    "split": "dev",
+    "label": "5d056eb03f954db80313a85167153c875fe5e436e4f97c281a3f55202d9b3eaf",
+    "status": "completed",
+    "items": 2338,
+    "scored": 2338,
+    "unscored": 0,
+    "canonical_selection_and_budgets_verified": true,
+    "code_source_mean": 0.7293650793650793,
+    "overall": 0.7672005929150432,
+    "areas": {
+      "knowledge": 0.8555555555555555,
+      "expert": 0.8333333333333334,
+      "facts": 0.7166666666666667,
+      "math": 0.9125801282051282,
+      "code": 0.7293650793650793,
+      "instructions": 0.8991666666666667,
+      "tools": 0.7916666666666666,
+      "agents": 0.5416666666666667,
+      "long-context": 0.8483752437308083,
+      "reasoning": 0.841304347826087,
+      "commonsense": 0.6166666666666667,
+      "multilingual": 0.7887205387205386,
+      "vision": 0.7916666666666666,
+      "safety": 0.5740740740740741
+    },
+    "sources": {
+      "aime-2026": {
+        "items": 12,
+        "scored": 12,
+        "score": 0.9375,
+        "area": "math"
+      },
+      "arc-challenge": {
+        "items": 300,
+        "scored": 300,
+        "score": 0.5666666666666667,
+        "area": "commonsense"
+      },
+      "bbeh": {
+        "items": 46,
+        "scored": 46,
+        "score": 0.782608695652174,
+        "area": "reasoning"
+      },
+      "bfcl": {
+        "items": 120,
+        "scored": 120,
+        "score": 0.7916666666666666,
+        "area": "tools"
+      },
+      "gpqa-diamond": {
+        "items": 48,
+        "scored": 48,
+        "score": 0.8333333333333334,
+        "area": "expert"
+      },
+      "gsm8k-platinum": {
+        "items": 50,
+        "scored": 50,
+        "score": 1.0,
+        "area": "math"
+      },
+      "hellaswag": {
+        "items": 300,
+        "scored": 300,
+        "score": 0.61,
+        "area": "commonsense"
+      },
+      "hmmt-feb-2026": {
+        "items": 13,
+        "scored": 13,
+        "score": 0.8461538461538461,
+        "area": "math"
+      },
+      "humaneval-plus": {
+        "items": 30,
+        "scored": 30,
+        "score": 0.9666666666666667,
+        "area": "code"
+      },
+      "ifbench": {
+        "items": 50,
+        "scored": 50,
+        "score": 0.84,
+        "area": "instructions"
+      },
+      "ifeval": {
+        "items": 120,
+        "scored": 120,
+        "score": 0.9583333333333334,
+        "area": "instructions"
+      },
+      "jamc-qa": {
+        "items": 72,
+        "scored": 72,
+        "score": 0.6388888888888888,
+        "area": "multilingual"
+      },
+      "livecodebench": {
+        "items": 20,
+        "scored": 20,
+        "score": 0.75,
+        "area": "code"
+      },
+      "longbench-v2": {
+        "items": 10,
+        "scored": 10,
+        "score": 1.0,
+        "area": "long-context"
+      },
+      "math-500": {
+        "items": 60,
+        "scored": 60,
+        "score": 0.8666666666666667,
+        "area": "math"
+      },
+      "mbpp-plus": {
+        "items": 30,
+        "scored": 30,
+        "score": 0.7666666666666667,
+        "area": "code"
+      },
+      "mgsm": {
+        "items": 55,
+        "scored": 55,
+        "score": 0.9272727272727272,
+        "area": "multilingual"
+      },
+      "mmlu-pro": {
+        "items": 180,
+        "scored": 180,
+        "score": 0.8555555555555555,
+        "area": "knowledge"
+      },
+      "mmlu-prox-ja": {
+        "items": 60,
+        "scored": 60,
+        "score": 0.8,
+        "area": "multilingual"
+      },
+      "mmmu-pro": {
+        "items": 48,
+        "scored": 48,
+        "score": 0.7916666666666666,
+        "area": "vision"
+      },
+      "mrcr-v2": {
+        "items": 16,
+        "scored": 16,
+        "score": 0.6701257311924249,
+        "area": "long-context"
+      },
+      "musr": {
+        "items": 30,
+        "scored": 30,
+        "score": 0.9,
+        "area": "reasoning"
+      },
+      "probe-code": {
+        "items": 40,
+        "scored": 40,
+        "score": 4.022500118458066,
+        "area": null
+      },
+      "probe-wikipedia-ja": {
+        "items": 40,
+        "scored": 40,
+        "score": 6.628099445956357,
+        "area": null
+      },
+      "probe-wikitext": {
+        "items": 16,
+        "scored": 16,
+        "score": 7.638729488031108,
+        "area": null
+      },
+      "ruler": {
+        "items": 24,
+        "scored": 24,
+        "score": 0.875,
+        "area": "long-context"
+      },
+      "scicode": {
+        "items": 10,
+        "scored": 10,
+        "score": 0.4341269841269841,
+        "area": "code"
+      },
+      "swe-bench-pro": {
+        "items": 4,
+        "scored": 4,
+        "score": 0.25,
+        "area": "agents"
+      },
+      "terminal-bench": {
+        "items": 6,
+        "scored": 6,
+        "score": 0.8333333333333334,
+        "area": "agents"
+      },
+      "triviaqa": {
+        "items": 120,
+        "scored": 120,
+        "score": 0.7166666666666667,
+        "area": "facts"
+      },
+      "winogrande": {
+        "items": 300,
+        "scored": 300,
+        "score": 0.6733333333333333,
+        "area": "commonsense"
+      },
+      "xstest": {
+        "items": 108,
+        "scored": 108,
+        "score": 0.5740740740740741,
+        "area": "safety"
+      }
+    },
+    "timing": {
+      "load_seconds": 111.2,
+      "generation_seconds": 2018.9,
+      "wall_seconds": 2018.9,
+      "source_finished_seconds": {
+        "aime-2026": 1277.5,
+        "arc-challenge": 958.7,
+        "bbeh": 1255.2,
+        "bfcl": 1340.0,
+        "gpqa-diamond": 1245.4,
+        "gsm8k-platinum": 1220.6,
+        "hellaswag": 1242.8,
+        "hmmt-feb-2026": 1064.8,
+        "humaneval-plus": 1216.7,
+        "ifbench": 1261.9,
+        "ifeval": 1305.9,
+        "jamc-qa": 1300.3,
+        "livecodebench": 1302.8,
+        "longbench-v2": 1262.3,
+        "math-500": 1099.0,
+        "mbpp-plus": 1193.0,
+        "mgsm": 1299.7,
+        "mmlu-pro": 1269.1,
+        "mmlu-prox-ja": 1289.7,
+        "mmmu-pro": 1274.4,
+        "mrcr-v2": 1231.1,
+        "musr": 1204.7,
+        "probe-code": 1240.6,
+        "probe-wikipedia-ja": 1244.1,
+        "probe-wikitext": 1244.6,
+        "ruler": 1861.0,
+        "scicode": 1377.8,
+        "swe-bench-pro": 1461.5,
+        "terminal-bench": 2018.8,
+        "triviaqa": 1433.7,
+        "winogrande": 1251.7,
+        "xstest": 1289.7
+      },
+      "target_minutes": 30,
+      "chat_api_calls": 1754,
+      "logprob_api_calls": 9193
+    },
+    "started_at": "2026-11-07T06:47:46.734698Z",
+    "finished_at": "2026-11-07T07:21:26.592484Z",
+    "endpoint": {
+      "fingerprint": "sha256:6342f06c730514dc"
+    },
+    "code_items": [
+      {
+        "id": "humaneval-plus:HumanEval/57",
+        "source": "humaneval-plus",
+        "score": 1.0,
+        "sample_scores": [
+          1.0
+        ],
+        "max_tokens": 16384,
+        "samples": 1
+      },
+      {
+        "id": "humaneval-plus:HumanEval/144",
+        "source": "humaneval-plus",
+        "score": 1.0,
+        "sample_scores": [
+          1.0
+        ],
+        "max_tokens": 16384,
+        "samples": 1
+      },
+      {
+        "id": "humaneval-plus:HumanEval/148",
+        "source": "humaneval-plus",
+        "score": 1.0,
+        "sample_scores": [
+          1.0
+        ],
+        "max_tokens": 16384,
+        "samples": 1
+      },
+      {
+        "id": "humaneval-plus:HumanEval/49",
+        "source": "humaneval-plus",
+        "score": 1.0,
+        "sample_scores": [
+          1.0
+        ],
+        "max_tokens": 16384,
+        "samples": 1
+      },
+      {
+        "id": "humaneval-plus:HumanEval/155",
+        "source": "humaneval-plus",
+        "score": 1.0,
+        "sample_scores": [
+          1.0
+        ],
+        "max_tokens": 16384,
+        "samples": 1
+      },
+      {
+        "id": "humaneval-plus:HumanEval/90",
+        "source": "humaneval-plus",
+        "score": 1.0,
+        "sample_scores": [
+          1.0
+        ],
+        "max_tokens": 16384,
+        "samples": 1
+      },
+      {
+        "id": "humaneval-plus:HumanEval/22",
+        "source": "humaneval-plus",
+        "score": 1.0,
+        "sample_scores": [
+          1.0
+        ],
+        "max_tokens": 16384,
+        "samples": 1
+      },
+      {
+        "id": "humaneval-plus:HumanEval/21",
+        "source": "humaneval-plus",
+        "score": 1.0,
+        "sample_scores": [
+          1.0
+        ],
+        "max_tokens": 16384,
+        "samples": 1
+      },
+      {
+        "id": "humaneval-plus:HumanEval/30",
+        "source": "humaneval-plus",
+        "score": 1.0,
+        "sample_scores": [
+          1.0
+        ],
+        "max_tokens": 16384,
+        "samples": 1
+      },
+      {
+        "id": "humaneval-plus:HumanEval/116",
+        "source": "humaneval-plus",
+        "score": 1.0,
+        "sample_scores": [
+          1.0
+        ],
+        "max_tokens": 16384,
+        "samples": 1
+      },
+      {
+        "id": "humaneval-plus:HumanEval/135",
+        "source": "humaneval-plus",
+        "score": 1.0,
+        "sample_scores": [
+          1.0
+        ],
+        "max_tokens": 32768,
+        "samples": 1
+      },
+      {
+        "id": "humaneval-plus:HumanEval/79",
+        "source": "humaneval-plus",
+        "score": 1.0,
+        "sample_scores": [
+          1.0
+        ],
+        "max_tokens": 32768,
+        "samples": 1
+      },
+      {
+        "id": "humaneval-plus:HumanEval/156",
+        "source": "humaneval-plus",
+        "score": 1.0,
+        "sample_scores": [
+          1.0
+        ],
+        "max_tokens": 32768,
+        "samples": 1
+      },
+      {
+        "id": "humaneval-plus:HumanEval/138",
+        "source": "humaneval-plus",
+        "score": 1.0,
+        "sample_scores": [
+          1.0
+        ],
+        "max_tokens": 32768,
+        "samples": 1
+      },
+      {
+        "id": "humaneval-plus:HumanEval/103",
+        "source": "humaneval-plus",
+        "score": 1.0,
+        "sample_scores": [
+          1.0
+        ],
+        "max_tokens": 32768,
+        "samples": 1
+      },
+      {
+        "id": "humaneval-plus:HumanEval/47",
+        "source": "humaneval-plus",
+        "score": 1.0,
+        "sample_scores": [
+          1.0
+        ],
+        "max_tokens": 32768,
+        "samples": 1
+      },
+      {
+        "id": "humaneval-plus:HumanEval/19",
+        "source": "humaneval-plus",
+        "score": 1.0,
+        "sample_scores": [
+          1.0
+        ],
+        "max_tokens": 32768,
+        "samples": 1
+      },
+      {
+        "id": "humaneval-plus:HumanEval/112",
+        "source": "humaneval-plus",
+        "score": 1.0,
+        "sample_scores": [
+          1.0
+        ],
+        "max_tokens": 32768,
+        "samples": 1
+      },
+      {
+        "id": "humaneval-plus:HumanEval/152",
+        "source": "humaneval-plus",
+        "score": 0.0,
+        "sample_scores": [
+          0.0
+        ],
+        "max_tokens": 32768,
+        "samples": 1
+      },
+      {
+        "id": "humaneval-plus:HumanEval/66",
+        "source": "humaneval-plus",
+        "score": 1.0,
+        "sample_scores": [
+          1.0
+        ],
+        "max_tokens": 32768,
+        "samples": 1
+      },
+      {
+        "id": "humaneval-plus:HumanEval/85",
+        "source": "humaneval-plus",
+        "score": 1.0,
+        "sample_scores": [
+          1.0
+        ],
+        "max_tokens": 32768,
+        "samples": 1
+      },
+      {
+        "id": "humaneval-plus:HumanEval/146",
+        "source": "humaneval-plus",
+        "score": 1.0,
+        "sample_scores": [
+          1.0
+        ],
+        "max_tokens": 32768,
+        "samples": 1
+      },
+      {
+        "id": "humaneval-plus:HumanEval/95",
+        "source": "humaneval-plus",
+        "score": 1.0,
+        "sample_scores": [
+          1.0
+        ],
+        "max_tokens": 32768,
+        "samples": 1
+      },
+      {
+        "id": "humaneval-plus:HumanEval/139",
+        "source": "humaneval-plus",
+        "score": 1.0,
+        "sample_scores": [
+          1.0
+        ],
+        "max_tokens": 32768,
+        "samples": 1
+      },
+      {
+        "id": "humaneval-plus:HumanEval/151",
+        "source": "humaneval-plus",
+        "score": 1.0,
+        "sample_scores": [
+          1.0
+        ],
+        "max_tokens": 32768,
+        "samples": 1
+      },
+      {
+        "id": "humaneval-plus:HumanEval/96",
+        "source": "humaneval-plus",
+        "score": 1.0,
+        "sample_scores": [
+          1.0
+        ],
+        "max_tokens": 32768,
+        "samples": 1
+      },
+      {
+        "id": "humaneval-plus:HumanEval/52",
+        "source": "humaneval-plus",
+        "score": 1.0,
+        "sample_scores": [
+          1.0
+        ],
+        "max_tokens": 32768,
+        "samples": 1
+      },
+      {
+        "id": "humaneval-plus:HumanEval/44",
+        "source": "humaneval-plus",
+        "score": 1.0,
+        "sample_scores": [
+          1.0
+        ],
+        "max_tokens": 32768,
+        "samples": 1
+      },
+      {
+        "id": "humaneval-plus:HumanEval/54",
+        "source": "humaneval-plus",
+        "score": 1.0,
+        "sample_scores": [
+          1.0
+        ],
+        "max_tokens": 32768,
+        "samples": 1
+      },
+      {
+        "id": "humaneval-plus:HumanEval/34",
+        "source": "humaneval-plus",
+        "score": 1.0,
+        "sample_scores": [
+          1.0
+        ],
+        "max_tokens": 32768,
+        "samples": 1
+      },
+      {
+        "id": "livecodebench:arc191_c",
+        "source": "livecodebench",
+        "score": 0.0,
+        "sample_scores": [
+          0.0
+        ],
+        "max_tokens": 16384,
+        "samples": 1
+      },
+      {
+        "id": "livecodebench:abc397_b",
+        "source": "livecodebench",
+        "score": 1.0,
+        "sample_scores": [
+          1.0
+        ],
+        "max_tokens": 16384,
+        "samples": 1
+      },
+      {
+        "id": "livecodebench:abc394_b",
+        "source": "livecodebench",
+        "score": 1.0,
+        "sample_scores": [
+          1.0
+        ],
+        "max_tokens": 16384,
+        "samples": 1
+      },
+      {
+        "id": "livecodebench:abc393_d",
+        "source": "livecodebench",
+        "score": 1.0,
+        "sample_scores": [
+          1.0
+        ],
+        "max_tokens": 16384,
+        "samples": 1
+      },
+      {
+        "id": "livecodebench:abc399_c",
+        "source": "livecodebench",
+        "score": 1.0,
+        "sample_scores": [
+          1.0
+        ],
+        "max_tokens": 16384,
+        "samples": 1
+      },
+      {
+        "id": "livecodebench:abc395_f",
+        "source": "livecodebench",
+        "score": 1.0,
+        "sample_scores": [
+          1.0
+        ],
+        "max_tokens": 16384,
+        "samples": 1
+      },
+      {
+        "id": "livecodebench:abc391_a",
+        "source": "livecodebench",
+        "score": 1.0,
+        "sample_scores": [
+          1.0
+        ],
+        "max_tokens": 32768,
+        "samples": 1
+      },
+      {
+        "id": "livecodebench:abc390_g",
+        "source": "livecodebench",
+        "score": 1.0,
+        "sample_scores": [
+          1.0
+        ],
+        "max_tokens": 32768,
+        "samples": 1
+      },
+      {
+        "id": "livecodebench:3721",
+        "source": "livecodebench",
+        "score": 1.0,
+        "sample_scores": [
+          1.0
+        ],
+        "max_tokens": 32768,
+        "samples": 1
+      },
+      {
+        "id": "livecodebench:3788",
+        "source": "livecodebench",
+        "score": 1.0,
+        "sample_scores": [
+          1.0
+        ],
+        "max_tokens": 32768,
+        "samples": 1
+      },
+      {
+        "id": "livecodebench:3789",
+        "source": "livecodebench",
+        "score": 1.0,
+        "sample_scores": [
+          1.0
+        ],
+        "max_tokens": 32768,
+        "samples": 1
+      },
+      {
+        "id": "livecodebench:3805",
+        "source": "livecodebench",
+        "score": 1.0,
+        "sample_scores": [
+          1.0
+        ],
+        "max_tokens": 32768,
+        "samples": 1
+      },
+      {
+        "id": "livecodebench:arc196_a",
+        "source": "livecodebench",
+        "score": 0.0,
+        "sample_scores": [
+          0.0
+        ],
+        "max_tokens": 32768,
+        "samples": 1
+      },
+      {
+        "id": "livecodebench:3778",
+        "source": "livecodebench",
+        "score": 1.0,
+        "sample_scores": [
+          1.0
+        ],
+        "max_tokens": 32768,
+        "samples": 1
+      },
+      {
+        "id": "livecodebench:arc190_c",
+        "source": "livecodebench",
+        "score": 0.0,
+        "sample_scores": [
+          0.0
+        ],
+        "max_tokens": 32768,
+        "samples": 1
+      },
+      {
+        "id": "livecodebench:abc392_d",
+        "source": "livecodebench",
+        "score": 0.0,
+        "sample_scores": [
+          0.0
+        ],
+        "max_tokens": 32768,
+        "samples": 1
+      },
+      {
+        "id": "livecodebench:arc195_b",
+        "source": "livecodebench",
+        "score": 1.0,
+        "sample_scores": [
+          1.0
+        ],
+        "max_tokens": 32768,
+        "samples": 1
+      },
+      {
+        "id": "livecodebench:abc394_a",
+        "source": "livecodebench",
+        "score": 1.0,
+        "sample_scores": [
+          1.0
+        ],
+        "max_tokens": 32768,
+        "samples": 1
+      },
+      {
+        "id": "livecodebench:abc395_c",
+        "source": "livecodebench",
+        "score": 1.0,
+        "sample_scores": [
+          1.0
+        ],
+        "max_tokens": 32768,
+        "samples": 1
+      },
+      {
+        "id": "livecodebench:3777",
+        "source": "livecodebench",
+        "score": 0.0,
+        "sample_scores": [
+          0.0
+        ],
+        "max_tokens": 32768,
+        "samples": 1
+      },
+      {
+        "id": "mbpp-plus:Mbpp/271",
+        "source": "mbpp-plus",
+        "score": 1.0,
+        "sample_scores": [
+          1.0
+        ],
+        "max_tokens": 16384,
+        "samples": 1
+      },
+      {
+        "id": "mbpp-plus:Mbpp/801",
+        "source": "mbpp-plus",
+        "score": 1.0,
+        "sample_scores": [
+          1.0
+        ],
+        "max_tokens": 16384,
+        "samples": 1
+      },
+      {
+        "id": "mbpp-plus:Mbpp/410",
+        "source": "mbpp-plus",
+        "score": 0.0,
+        "sample_scores": [
+          0.0
+        ],
+        "max_tokens": 16384,
+        "samples": 1
+      },
+      {
+        "id": "mbpp-plus:Mbpp/567",
+        "source": "mbpp-plus",
+        "score": 1.0,
+        "sample_scores": [
+          1.0
+        ],
+        "max_tokens": 16384,
+        "samples": 1
+      },
+      {
+        "id": "mbpp-plus:Mbpp/256",
+        "source": "mbpp-plus",
+        "score": 1.0,
+        "sample_scores": [
+          1.0
+        ],
+        "max_tokens": 16384,
+        "samples": 1
+      },
+      {
+        "id": "mbpp-plus:Mbpp/63",
+        "source": "mbpp-plus",
+        "score": 1.0,
+        "sample_scores": [
+          1.0
+        ],
+        "max_tokens": 16384,
+        "samples": 1
+      },
+      {
+        "id": "mbpp-plus:Mbpp/792",
+        "source": "mbpp-plus",
+        "score": 1.0,
+        "sample_scores": [
+          1.0
+        ],
+        "max_tokens": 16384,
+        "samples": 1
+      },
+      {
+        "id": "mbpp-plus:Mbpp/612",
+        "source": "mbpp-plus",
+        "score": 1.0,
+        "sample_scores": [
+          1.0
+        ],
+        "max_tokens": 16384,
+        "samples": 1
+      },
+      {
+        "id": "mbpp-plus:Mbpp/791",
+        "source": "mbpp-plus",
+        "score": 1.0,
+        "sample_scores": [
+          1.0
+        ],
+        "max_tokens": 16384,
+        "samples": 1
+      },
+      {
+        "id": "mbpp-plus:Mbpp/576",
+        "source": "mbpp-plus",
+        "score": 0.0,
+        "sample_scores": [
+          0.0
+        ],
+        "max_tokens": 16384,
+        "samples": 1
+      },
+      {
+        "id": "mbpp-plus:Mbpp/641",
+        "source": "mbpp-plus",
+        "score": 0.0,
+        "sample_scores": [
+          0.0
+        ],
+        "max_tokens": 32768,
+        "samples": 1
+      },
+      {
+        "id": "mbpp-plus:Mbpp/736",
+        "source": "mbpp-plus",
+        "score": 1.0,
+        "sample_scores": [
+          1.0
+        ],
+        "max_tokens": 32768,
+        "samples": 1
+      },
+      {
+        "id": "mbpp-plus:Mbpp/578",
+        "source": "mbpp-plus",
+        "score": 1.0,
+        "sample_scores": [
+          1.0
+        ],
+        "max_tokens": 32768,
+        "samples": 1
+      },
+      {
+        "id": "mbpp-plus:Mbpp/232",
+        "source": "mbpp-plus",
+        "score": 1.0,
+        "sample_scores": [
+          1.0
+        ],
+        "max_tokens": 32768,
+        "samples": 1
+      },
+      {
+        "id": "mbpp-plus:Mbpp/129",
+        "source": "mbpp-plus",
+        "score": 0.0,
+        "sample_scores": [
+          0.0
+        ],
+        "max_tokens": 32768,
+        "samples": 1
+      },
+      {
+        "id": "mbpp-plus:Mbpp/426",
+        "source": "mbpp-plus",
+        "score": 1.0,
+        "sample_scores": [
+          1.0
+        ],
+        "max_tokens": 32768,
+        "samples": 1
+      },
+      {
+        "id": "mbpp-plus:Mbpp/75",
+        "source": "mbpp-plus",
+        "score": 1.0,
+        "sample_scores": [
+          1.0
+        ],
+        "max_tokens": 32768,
+        "samples": 1
+      },
+      {
+        "id": "mbpp-plus:Mbpp/77",
+        "source": "mbpp-plus",
+        "score": 1.0,
+        "sample_scores": [
+          1.0
+        ],
+        "max_tokens": 32768,
+        "samples": 1
+      },
+      {
+        "id": "mbpp-plus:Mbpp/67",
+        "source": "mbpp-plus",
+        "score": 1.0,
+        "sample_scores": [
+          1.0
+        ],
+        "max_tokens": 32768,
+        "samples": 1
+      },
+      {
+        "id": "mbpp-plus:Mbpp/240",
+        "source": "mbpp-plus",
+        "score": 1.0,
+        "sample_scores": [
+          1.0
+        ],
+        "max_tokens": 32768,
+        "samples": 1
+      },
+      {
+        "id": "mbpp-plus:Mbpp/458",
+        "source": "mbpp-plus",
+        "score": 1.0,
+        "sample_scores": [
+          1.0
+        ],
+        "max_tokens": 32768,
+        "samples": 1
+      },
+      {
+        "id": "mbpp-plus:Mbpp/103",
+        "source": "mbpp-plus",
+        "score": 0.0,
+        "sample_scores": [
+          0.0
+        ],
+        "max_tokens": 32768,
+        "samples": 1
+      },
+      {
+        "id": "mbpp-plus:Mbpp/309",
+        "source": "mbpp-plus",
+        "score": 1.0,
+        "sample_scores": [
+          1.0
+        ],
+        "max_tokens": 32768,
+        "samples": 1
+      },
+      {
+        "id": "mbpp-plus:Mbpp/299",
+        "source": "mbpp-plus",
+        "score": 1.0,
+        "sample_scores": [
+          1.0
+        ],
+        "max_tokens": 32768,
+        "samples": 1
+      },
+      {
+        "id": "mbpp-plus:Mbpp/775",
+        "source": "mbpp-plus",
+        "score": 1.0,
+        "sample_scores": [
+          1.0
+        ],
+        "max_tokens": 32768,
+        "samples": 1
+      },
+      {
+        "id": "mbpp-plus:Mbpp/607",
+        "source": "mbpp-plus",
+        "score": 1.0,
+        "sample_scores": [
+          1.0
+        ],
+        "max_tokens": 32768,
+        "samples": 1
+      },
+      {
+        "id": "mbpp-plus:Mbpp/96",
+        "source": "mbpp-plus",
+        "score": 1.0,
+        "sample_scores": [
+          1.0
+        ],
+        "max_tokens": 32768,
+        "samples": 1
+      },
+      {
+        "id": "mbpp-plus:Mbpp/639",
+        "source": "mbpp-plus",
+        "score": 0.0,
+        "sample_scores": [
+          0.0
+        ],
+        "max_tokens": 32768,
+        "samples": 1
+      },
+      {
+        "id": "mbpp-plus:Mbpp/133",
+        "source": "mbpp-plus",
+        "score": 1.0,
+        "sample_scores": [
+          1.0
+        ],
+        "max_tokens": 32768,
+        "samples": 1
+      },
+      {
+        "id": "mbpp-plus:Mbpp/126",
+        "source": "mbpp-plus",
+        "score": 0.0,
+        "sample_scores": [
+          0.0
+        ],
+        "max_tokens": 32768,
+        "samples": 1
+      },
+      {
+        "id": "scicode:14",
+        "source": "scicode",
+        "score": 1.0,
+        "sample_scores": [
+          1.0
+        ],
+        "max_tokens": 32768,
+        "samples": 1
+      },
+      {
+        "id": "scicode:58",
+        "source": "scicode",
+        "score": 1.0,
+        "sample_scores": [
+          1.0
+        ],
+        "max_tokens": 32768,
+        "samples": 1
+      },
+      {
+        "id": "scicode:18",
+        "source": "scicode",
+        "score": 0.0,
+        "sample_scores": [
+          0.0
+        ],
+        "max_tokens": 32768,
+        "samples": 1
+      },
+      {
+        "id": "scicode:45",
+        "source": "scicode",
+        "score": 0.0,
+        "sample_scores": [
+          0.0
+        ],
+        "max_tokens": 32768,
+        "samples": 1
+      },
+      {
+        "id": "scicode:72",
+        "source": "scicode",
+        "score": 0.8888888888888888,
+        "sample_scores": [
+          0.8888888888888888
+        ],
+        "max_tokens": 32768,
+        "samples": 1
+      },
+      {
+        "id": "scicode:80",
+        "source": "scicode",
+        "score": 0.2857142857142857,
+        "sample_scores": [
+          0.2857142857142857
+        ],
+        "max_tokens": 32768,
+        "samples": 1
+      },
+      {
+        "id": "scicode:9",
+        "source": "scicode",
+        "score": 0.0,
+        "sample_scores": [
+          0.0
+        ],
+        "max_tokens": 32768,
+        "samples": 1
+      },
+      {
+        "id": "scicode:17",
+        "source": "scicode",
+        "score": 0.0,
+        "sample_scores": [
+          0.0
+        ],
+        "max_tokens": 32768,
+        "samples": 1
+      },
+      {
+        "id": "scicode:46",
+        "source": "scicode",
+        "score": 0.5,
+        "sample_scores": [
+          0.5
+        ],
+        "max_tokens": 32768,
+        "samples": 1
+      },
+      {
+        "id": "scicode:35",
+        "source": "scicode",
+        "score": 0.6666666666666666,
+        "sample_scores": [
+          0.6666666666666666
+        ],
+        "max_tokens": 32768,
+        "samples": 1
+      }
+    ],
+    "inputs": {
+      "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/results/gemma4-fresh-av-dev30-dp4-20261107-v1/run.json": "7322b73db891e258def61eecc689519f743d251d1f391fa457819207ac733229",
+      "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/results/gemma4-fresh-av-dev30-dp4-20261107-v1/report.json": "dc27183c906f4c67d5a5b4c5c54372f992c7bc13f80c03ff0c0b1ce1b5a7b3f4",
+      "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/results/gemma4-fresh-av-dev30-dp4-20261107-v1/items.jsonl": "8ff7c30b00c1d31a03aa30c81fe2cca4d3a1b4c3bb0726445cf7ed6a418d42b5"
+    }
+  },
+  "source_report": {
+    "aime-2026": {
+      "area": "math",
+      "items": 12,
+      "scored": 12,
+      "score": 0.9375,
+      "truncated_rate": 0.0,
+      "empty_rate": 0.0,
+      "completion_tokens_mean": 7925.145833333333,
+      "completion_tokens": 380407,
+      "prompt_tokens": 8028
+    },
+    "arc-challenge": {
+      "area": "commonsense",
+      "items": 300,
+      "scored": 300,
+      "score": 0.5666666666666667,
+      "truncated_rate": null,
+      "empty_rate": null,
+      "completion_tokens_mean": null,
+      "completion_tokens": 0,
+      "prompt_tokens": 0
+    },
+    "bbeh": {
+      "area": "reasoning",
+      "items": 46,
+      "scored": 46,
+      "score": 0.782608695652174,
+      "truncated_rate": 0.0,
+      "empty_rate": 0.0,
+      "completion_tokens_mean": 8808.108695652174,
+      "completion_tokens": 405173,
+      "prompt_tokens": 56104
+    },
+    "bfcl": {
+      "area": "tools",
+      "items": 120,
+      "scored": 120,
+      "score": 0.7916666666666666,
+      "truncated_rate": 0.0,
+      "empty_rate": 0.0,
+      "completion_tokens_mean": 1245.4,
+      "completion_tokens": 149448,
+      "prompt_tokens": 1521377
+    },
+    "gpqa-diamond": {
+      "area": "expert",
+      "items": 48,
+      "scored": 48,
+      "score": 0.8333333333333334,
+      "truncated_rate": 0.0,
+      "empty_rate": 0.0,
+      "completion_tokens_mean": 5566.625,
+      "completion_tokens": 267198,
+      "prompt_tokens": 11950
+    },
+    "gsm8k-platinum": {
+      "area": "math",
+      "items": 50,
+      "scored": 50,
+      "score": 1.0,
+      "truncated_rate": 0.0,
+      "empty_rate": 0.0,
+      "completion_tokens_mean": 760.44,
+      "completion_tokens": 38022,
+      "prompt_tokens": 5349
+    },
+    "hellaswag": {
+      "area": "commonsense",
+      "items": 300,
+      "scored": 300,
+      "score": 0.61,
+      "truncated_rate": null,
+      "empty_rate": null,
+      "completion_tokens_mean": null,
+      "completion_tokens": 0,
+      "prompt_tokens": 0
+    },
+    "hmmt-feb-2026": {
+      "area": "math",
+      "items": 13,
+      "scored": 13,
+      "score": 0.8461538461538461,
+      "truncated_rate": 0.0,
+      "empty_rate": 0.0,
+      "completion_tokens_mean": 8261.134615384615,
+      "completion_tokens": 429579,
+      "prompt_tokens": 6092
+    },
+    "humaneval-plus": {
+      "area": "code",
+      "items": 30,
+      "scored": 30,
+      "score": 0.9666666666666667,
+      "truncated_rate": 0.0,
+      "empty_rate": 0.0,
+      "completion_tokens_mean": 1410.9333333333334,
+      "completion_tokens": 42328,
+      "prompt_tokens": 5374
+    },
+    "ifbench": {
+      "area": "instructions",
+      "items": 50,
+      "scored": 50,
+      "score": 0.84,
+      "truncated_rate": 0.0,
+      "empty_rate": 0.0,
+      "completion_tokens_mean": 2687.16,
+      "completion_tokens": 134358,
+      "prompt_tokens": 4058
+    },
+    "ifeval": {
+      "area": "instructions",
+      "items": 120,
+      "scored": 120,
+      "score": 0.9583333333333334,
+      "truncated_rate": 0.0,
+      "empty_rate": 0.0,
+      "completion_tokens_mean": 1568.025,
+      "completion_tokens": 188163,
+      "prompt_tokens": 7566
+    },
+    "jamc-qa": {
+      "area": "multilingual",
+      "items": 72,
+      "scored": 72,
+      "score": 0.6388888888888888,
+      "truncated_rate": 0.0,
+      "empty_rate": 0.0,
+      "completion_tokens_mean": 1528.6666666666667,
+      "completion_tokens": 110064,
+      "prompt_tokens": 7605
+    },
+    "livecodebench": {
+      "area": "code",
+      "items": 20,
+      "scored": 20,
+      "score": 0.75,
+      "truncated_rate": 0.0,
+      "empty_rate": 0.0,
+      "completion_tokens_mean": 6767.4,
+      "completion_tokens": 135348,
+      "prompt_tokens": 12686
+    },
+    "longbench-v2": {
+      "area": "long-context",
+      "items": 10,
+      "scored": 10,
+      "score": 1.0,
+      "truncated_rate": 0.0,
+      "empty_rate": 0.0,
+      "completion_tokens_mean": 2124.3,
+      "completion_tokens": 21243,
+      "prompt_tokens": 887398
+    },
+    "math-500": {
+      "area": "math",
+      "items": 60,
+      "scored": 60,
+      "score": 0.8666666666666667,
+      "truncated_rate": 0.0,
+      "empty_rate": 0.0,
+      "completion_tokens_mean": 2599.15,
+      "completion_tokens": 155949,
+      "prompt_tokens": 7942
+    },
+    "mbpp-plus": {
+      "area": "code",
+      "items": 30,
+      "scored": 30,
+      "score": 0.7666666666666667,
+      "truncated_rate": 0.0,
+      "empty_rate": 0.0,
+      "completion_tokens_mean": 1002.3,
+      "completion_tokens": 30069,
+      "prompt_tokens": 3236
+    },
+    "mgsm": {
+      "area": "multilingual",
+      "items": 55,
+      "scored": 55,
+      "score": 0.9272727272727272,
+      "truncated_rate": 0.0,
+      "empty_rate": 0.0,
+      "completion_tokens_mean": 951.6,
+      "completion_tokens": 52338,
+      "prompt_tokens": 7819
+    },
+    "mmlu-pro": {
+      "area": "knowledge",
+      "items": 180,
+      "scored": 180,
+      "score": 0.8555555555555555,
+      "truncated_rate": 0.0,
+      "empty_rate": 0.0,
+      "completion_tokens_mean": 3350.3722222222223,
+      "completion_tokens": 603067,
+      "prompt_tokens": 44731
+    },
+    "mmlu-prox-ja": {
+      "area": "multilingual",
+      "items": 60,
+      "scored": 60,
+      "score": 0.8,
+      "truncated_rate": 0.0,
+      "empty_rate": 0.0,
+      "completion_tokens_mean": 3165.266666666667,
+      "completion_tokens": 189916,
+      "prompt_tokens": 16932
+    },
+    "mmmu-pro": {
+      "area": "vision",
+      "items": 48,
+      "scored": 48,
+      "score": 0.7916666666666666,
+      "truncated_rate": 0.0,
+      "empty_rate": 0.0,
+      "completion_tokens_mean": 4070.3541666666665,
+      "completion_tokens": 195377,
+      "prompt_tokens": 20344
+    },
+    "mrcr-v2": {
+      "area": "long-context",
+      "items": 16,
+      "scored": 16,
+      "score": 0.6701257311924249,
+      "truncated_rate": 0.0,
+      "empty_rate": 0.0,
+      "completion_tokens_mean": 2139.4375,
+      "completion_tokens": 34231,
+      "prompt_tokens": 636245
+    },
+    "musr": {
+      "area": "reasoning",
+      "items": 30,
+      "scored": 30,
+      "score": 0.9,
+      "truncated_rate": 0.0,
+      "empty_rate": 0.0,
+      "completion_tokens_mean": 2479.4,
+      "completion_tokens": 74382,
+      "prompt_tokens": 34610
+    },
+    "probe-code": {
+      "area": null,
+      "items": 40,
+      "scored": 40,
+      "score": 4.022500118458066,
+      "truncated_rate": null,
+      "empty_rate": null,
+      "completion_tokens_mean": null,
+      "completion_tokens": 0,
+      "prompt_tokens": 0
+    },
+    "probe-wikipedia-ja": {
+      "area": null,
+      "items": 40,
+      "scored": 40,
+      "score": 6.628099445956357,
+      "truncated_rate": null,
+      "empty_rate": null,
+      "completion_tokens_mean": null,
+      "completion_tokens": 0,
+      "prompt_tokens": 0
+    },
+    "probe-wikitext": {
+      "area": null,
+      "items": 16,
+      "scored": 16,
+      "score": 7.638729488031108,
+      "truncated_rate": null,
+      "empty_rate": null,
+      "completion_tokens_mean": null,
+      "completion_tokens": 0,
+      "prompt_tokens": 0
+    },
+    "ruler": {
+      "area": "long-context",
+      "items": 24,
+      "scored": 24,
+      "score": 0.875,
+      "truncated_rate": 0.125,
+      "empty_rate": 0.125,
+      "completion_tokens_mean": 4160.583333333333,
+      "completion_tokens": 99854,
+      "prompt_tokens": 1945664
+    },
+    "scicode": {
+      "area": "code",
+      "items": 10,
+      "scored": 10,
+      "score": 0.4341269841269841,
+      "truncated_rate": 0.0,
+      "empty_rate": 0.0,
+      "completion_tokens_mean": 13537.4,
+      "completion_tokens": 135374,
+      "prompt_tokens": 74123
+    },
+    "swe-bench-pro": {
+      "area": "agents",
+      "items": 4,
+      "scored": 4,
+      "score": 0.25,
+      "truncated_rate": null,
+      "empty_rate": null,
+      "completion_tokens_mean": null,
+      "completion_tokens": 0,
+      "prompt_tokens": 0
+    },
+    "terminal-bench": {
+      "area": "agents",
+      "items": 6,
+      "scored": 6,
+      "score": 0.8333333333333334,
+      "truncated_rate": null,
+      "empty_rate": null,
+      "completion_tokens_mean": null,
+      "completion_tokens": 0,
+      "prompt_tokens": 0
+    },
+    "triviaqa": {
+      "area": "facts",
+      "items": 120,
+      "scored": 120,
+      "score": 0.7166666666666667,
+      "truncated_rate": 0.008333333333333333,
+      "empty_rate": 0.008333333333333333,
+      "completion_tokens_mean": 844.1666666666666,
+      "completion_tokens": 101300,
+      "prompt_tokens": 7542
+    },
+    "winogrande": {
+      "area": "commonsense",
+      "items": 300,
+      "scored": 300,
+      "score": 0.6733333333333333,
+      "truncated_rate": null,
+      "empty_rate": null,
+      "completion_tokens_mean": null,
+      "completion_tokens": 0,
+      "prompt_tokens": 0
+    },
+    "xstest": {
+      "area": "safety",
+      "items": 108,
+      "scored": 108,
+      "score": 0.5740740740740741,
+      "truncated_rate": 0.0,
+      "empty_rate": 0.0,
+      "completion_tokens_mean": 1119.2592592592594,
+      "completion_tokens": 120880,
+      "prompt_tokens": 2839
+    }
+  },
+  "http_trace": {
+    "all_records": 4860,
+    "request_records": 4850,
+    "operations": {
+      "completions": 4850
+    },
+    "errors": 0,
+    "retry_attempts": 0,
+    "same_run_non_request_records": 10,
+    "other_run_records": 0,
+    "scope": "HTTP client traces only; no activation capture or server trace completeness claim"
+  },
+  "agents": [
+    {
+      "id": "terminal-bench:bn-fit-modify",
+      "episodes": 10,
+      "trajectory_steps": 11,
+      "tool_calls": 18,
+      "input_tokens": 73676,
+      "output_tokens": 11150,
+      "exception_type": null,
+      "seconds": 172.238265,
+      "score": 1.0,
+      "outcome_numeric": {},
+      "score_detail": {},
+      "official_samples": [
+        {
+          "reward": 1.0,
+          "seconds": 172.238265,
+          "setup_seconds": 16.894961,
+          "exception": null,
+          "trial": "bn-fit-modify__g83f6Yg"
+        }
+      ]
+    },
+    {
+      "id": "terminal-bench:cobol-modernization",
+      "episodes": 6,
+      "trajectory_steps": 7,
+      "tool_calls": 35,
+      "input_tokens": 35362,
+      "output_tokens": 9217,
+      "exception_type": null,
+      "seconds": 430.891082,
+      "score": 1.0,
+      "outcome_numeric": {},
+      "score_detail": {},
+      "official_samples": [
+        {
+          "reward": 1.0,
+          "seconds": 430.891082,
+          "setup_seconds": 10.656649000000002,
+          "exception": null,
+          "trial": "cobol-modernization__MVBydwW"
+        }
+      ]
+    },
+    {
+      "id": "terminal-bench:install-windows-3.11",
+      "episodes": 13,
+      "trajectory_steps": 14,
+      "tool_calls": 38,
+      "input_tokens": 67781,
+      "output_tokens": 9634,
+      "exception_type": null,
+      "seconds": 851.842509,
+      "score": 0.0,
+      "outcome_numeric": {},
+      "score_detail": {},
+      "official_samples": [
+        {
+          "reward": 0.0,
+          "seconds": 851.842509,
+          "setup_seconds": 17.725674,
+          "exception": null,
+          "trial": "install-windows-3.11__WvEDpWq"
+        }
+      ]
+    },
+    {
+      "id": "terminal-bench:polyglot-c-py",
+      "episodes": 7,
+      "trajectory_steps": 8,
+      "tool_calls": 18,
+      "input_tokens": 30791,
+      "output_tokens": 43630,
+      "exception_type": null,
+      "seconds": 413.007932,
+      "score": 1.0,
+      "outcome_numeric": {},
+      "score_detail": {},
+      "official_samples": [
+        {
+          "reward": 1.0,
+          "seconds": 413.007932,
+          "setup_seconds": 20.341517,
+          "exception": null,
+          "trial": "polyglot-c-py__nYXPN99"
+        }
+      ]
+    },
+    {
+      "id": "terminal-bench:portfolio-optimization",
+      "episodes": 7,
+      "trajectory_steps": 8,
+      "tool_calls": 13,
+      "input_tokens": 38827,
+      "output_tokens": 6969,
+      "exception_type": null,
+      "seconds": 309.333799,
+      "score": 1.0,
+      "outcome_numeric": {},
+      "score_detail": {},
+      "official_samples": [
+        {
+          "reward": 1.0,
+          "seconds": 309.333799,
+          "setup_seconds": 10.465146,
+          "exception": null,
+          "trial": "portfolio-optimization__XAVDBcS"
+        }
+      ]
+    },
+    {
+      "id": "terminal-bench:reshard-c4-data",
+      "episodes": 14,
+      "trajectory_steps": 15,
+      "tool_calls": 44,
+      "input_tokens": 179996,
+      "output_tokens": 29319,
+      "exception_type": null,
+      "seconds": 1416.781522,
+      "score": 1.0,
+      "outcome_numeric": {},
+      "score_detail": {},
+      "official_samples": [
+        {
+          "reward": 1.0,
+          "seconds": 1416.781522,
+          "setup_seconds": 11.008433,
+          "exception": null,
+          "trial": "reshard-c4-data__Z65RFgR"
+        }
+      ]
+    },
+    {
+      "id": "swe-bench-pro:instance_ansible__ansible-11c1777d56664b1acb56b387a1ad6aeadef1391d-v0f01c69f1e2528b935359cfe578530722bca2c59",
+      "api_calls": 42,
+      "assistant_messages": 41,
+      "tool_messages": 40,
+      "announced_tool_calls": 41,
+      "recorded_actions": 41,
+      "exit_status": "Submitted",
+      "usage_records": 41,
+      "usage_scope": "Persisted assistant responses only; missing model-stat calls are not zero-filled.",
+      "usage_complete_relative_api_calls": false,
+      "input_tokens": 996159,
+      "output_tokens": 12651,
+      "score": 0.0,
+      "outcome_numeric": {},
+      "score_detail": {},
+      "official_samples": [
+        {
+          "reward": 0.0,
+          "seconds": 1222.4405856132507,
+          "setup_seconds": null,
+          "exception": null,
+          "trial": null
+        }
+      ]
+    },
+    {
+      "id": "swe-bench-pro:instance_qutebrowser__qutebrowser-ed19d7f58b2664bb310c7cb6b52c5b9a06ea60b2-v059c6fdc75567943479b23ebca7c07b5e9a7f34c",
+      "api_calls": 42,
+      "assistant_messages": 42,
+      "tool_messages": 41,
+      "announced_tool_calls": 42,
+      "recorded_actions": 42,
+      "exit_status": "Submitted",
+      "usage_records": 42,
+      "usage_scope": "Persisted assistant responses only; missing model-stat calls are not zero-filled.",
+      "usage_complete_relative_api_calls": true,
+      "input_tokens": 500195,
+      "output_tokens": 8364,
+      "score": 0.0,
+      "outcome_numeric": {},
+      "score_detail": {},
+      "official_samples": [
+        {
+          "reward": 0.0,
+          "seconds": 1144.5427594184875,
+          "setup_seconds": null,
+          "exception": null,
+          "trial": null
+        }
+      ]
+    },
+    {
+      "id": "swe-bench-pro:instance_NodeBB__NodeBB-da0211b1a001d45d73b4c84c6417a4f1b0312575-vf2cf3cbd463b7ad942381f1c6d077626485a1e9e",
+      "api_calls": 24,
+      "assistant_messages": 24,
+      "tool_messages": 23,
+      "announced_tool_calls": 24,
+      "recorded_actions": 24,
+      "exit_status": "Submitted",
+      "usage_records": 24,
+      "usage_scope": "Persisted assistant responses only; missing model-stat calls are not zero-filled.",
+      "usage_complete_relative_api_calls": true,
+      "input_tokens": 244085,
+      "output_tokens": 6655,
+      "score": 0.0,
+      "outcome_numeric": {},
+      "score_detail": {},
+      "official_samples": [
+        {
+          "reward": 0.0,
+          "seconds": 100.20319294929504,
+          "setup_seconds": null,
+          "exception": null,
+          "trial": null
+        }
+      ]
+    },
+    {
+      "id": "swe-bench-pro:instance_internetarchive__openlibrary-431442c92887a3aece3f8aa771dd029738a80eb1-v76304ecdb3a5954fcf13feb710e8c40fcf24b73c",
+      "api_calls": 17,
+      "assistant_messages": 16,
+      "tool_messages": 15,
+      "announced_tool_calls": 16,
+      "recorded_actions": 16,
+      "exit_status": "Submitted",
+      "usage_records": 16,
+      "usage_scope": "Persisted assistant responses only; missing model-stat calls are not zero-filled.",
+      "usage_complete_relative_api_calls": false,
+      "input_tokens": 161739,
+      "output_tokens": 4119,
+      "score": 1.0,
+      "outcome_numeric": {},
+      "score_detail": {},
+      "official_samples": [
+        {
+          "reward": 1.0,
+          "seconds": 120.3825376033783,
+          "setup_seconds": null,
+          "exception": null,
+          "trial": null
+        }
+      ]
+    }
+  ],
+  "agent_trajectory_issues": {},
+  "all_2338_unique_ids_and_metadata_verified": true,
+  "report_exact_rebuild_equal": true,
+  "code_unknown_or_anomalous": [],
+  "code_failed_or_partial": [
+    "humaneval-plus:HumanEval/152",
+    "livecodebench:arc191_c",
+    "livecodebench:arc196_a",
+    "livecodebench:arc190_c",
+    "livecodebench:abc392_d",
+    "livecodebench:3777",
+    "mbpp-plus:Mbpp/410",
+    "mbpp-plus:Mbpp/576",
+    "mbpp-plus:Mbpp/641",
+    "mbpp-plus:Mbpp/129",
+    "mbpp-plus:Mbpp/103",
+    "mbpp-plus:Mbpp/639",
+    "mbpp-plus:Mbpp/126",
+    "scicode:18",
+    "scicode:45",
+    "scicode:72",
+    "scicode:80",
+    "scicode:9",
+    "scicode:17",
+    "scicode:46",
+    "scicode:35"
+  ],
+  "code_counts_by_source": {
+    "humaneval-plus": {
+      "full": 29,
+      "partial": 0,
+      "unknown": 0,
+      "zero": 1
+    },
+    "livecodebench": {
+      "full": 15,
+      "partial": 0,
+      "unknown": 0,
+      "zero": 5
+    },
+    "mbpp-plus": {
+      "full": 23,
+      "partial": 0,
+      "unknown": 0,
+      "zero": 7
+    },
+    "scicode": {
+      "full": 2,
+      "partial": 4,
+      "unknown": 0,
+      "zero": 4
+    }
+  },
+  "runtime": {
+    "image": "sha256:f91bdcf997af6d7b194bec229812fd018277158f6795de7d91e58448936e7ad8",
+    "checkpoint_tree": "5d056eb03f954db80313a85167153c875fe5e436e4f97c281a3f55202d9b3eaf",
+    "topology": {
+      "tp": 2,
+      "replicas": 4,
+      "mtp_tokens": 4
+    },
+    "concurrency": {
+      "chat": 256,
+      "logprob": 32,
+      "agent": 4
+    },
+    "actual_runner_cid": "d62b640afc61b49683868590d09a6f0cc45b1d48e2f18c6947478d0224410ff6",
+    "http_client_trace_only": true,
+    "comparison_limit": "New dev30 baseline; no same-condition candidate pair; tier10 and historical original results are different conditions."
+  },
+  "timing_note": "wall_seconds and generation_seconds both start before dataset loading; do not call either pure generation time.",
+  "source_sha256": {
+    "wsp/report.py": "f708cab18226874ac26d2b9fce642db811fcdbe985f2420eeda40920e2575784",
+    "wsp/catalog.py": "8f250f3180bc0e16876980d681836cd74f4c275b978fa23721e3ee5b0c50a0a7",
+    "wsp/manifest.py": "d41c24bec59f7e84bd0065fae400d2c1209bdc7384d277ab82eff3c91debbfe3",
+    "wsp/sources/code.py": "523ab727598a80f06f49d7118ad6cfb4206fdae9c1135a63d64b87b3ed5a31c6",
+    "wsp/scorers/scicode_score.py": "623c459292e33fb406cbeef5aae446657644faef9913af4bb149addbacd0641c"
+  },
+  "analysis_seconds": 3.7024200960295275,
+  "inputs_sha256": {
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-av-dev30-deployment-plan-v1/gemma-0-closure-v1.json": "cfc339e7beceb357c07a125df0a043560a20cef2294cfdd876a1cffd7172bcd7",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-av-dev30-deployment-plan-v1/gemma-1-closure-v1.json": "e9dfc418cc404194730db14eec021f3a61b22c06f4f0416e268c36267424f7aa",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-av-dev30-deployment-plan-v1/gemma-2-closure-v1.json": "b8842587448a8c692f80f422c48135795579829c62062980fda730f0b62f1f1d",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-av-dev30-deployment-plan-v1/gemma-3-closure-v1.json": "14dcfc57f6041cd3649991e32ab83f1a039d9465fb401cc49d5a889e1db5665d",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-av-dev30-deployment-plan-v1/four-apply-closure.json": "671fc7f0b4f7853631e7dff05e5cb9d76c4d9b95b66927d32fa0393ed2ed82ee",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/runtime/fresh-purpose-20261107-av-live10-v1/runner-app/src/kairyu_bench/wsp/cli.py": "406b07cb9bed06bd3b814292329cd67d0acf89fcaf5fddca8858cc865bbed090",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/runtime/fresh-purpose-20261107-av-live10-v1/runner-app/src/kairyu_bench/wsp/run.py": "9272730f132a72002cc38f7c3c47690893f8288652364c1b644e0cf27bf04ce2",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/runtime/fresh-purpose-20261107-av-live10-v1/runner-app/src/kairyu_bench/wsp/manifest.py": "d41c24bec59f7e84bd0065fae400d2c1209bdc7384d277ab82eff3c91debbfe3",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/runtime/fresh-purpose-20261107-av-live10-v1/runner-app/src/kairyu_bench/data/wsp/manifest.json": "a3a0b60e0872a38c6b1abf7e97d7fe729fabf9e25cd3f09a3da9544b9ca39b5b",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/runtime/fresh-purpose-20261107-av-live10-v1/runner-app/src/kairyu_bench/wsp/observe/tracing.py": "02b21d991f2d3be7a4f5bd648857e9a887bf1fd7dd7984245b5244ed96ee27b4",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/results/gemma4-fresh-av-dev30-dp4-20261107-v1/agents/terminal-bench/raw/terminal-bench/jobs/terminal-bench-terminal-bench/bn-fit-modify__g83f6Yg/result.json": "8d29acb345db4d0608f9b3569c998811be4d24805446fdbd28e222e0bdb50fb5",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/results/gemma4-fresh-av-dev30-dp4-20261107-v1/agents/terminal-bench/raw/terminal-bench/jobs/terminal-bench-terminal-bench/bn-fit-modify__g83f6Yg/agent/trajectory.json": "716f78304a7edee5ea243758e9258cfd6734883cf3a6ca358e76364c6bb5dbde",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/results/gemma4-fresh-av-dev30-dp4-20261107-v1/agents/terminal-bench/raw/terminal-bench/jobs/terminal-bench-terminal-bench/cobol-modernization__MVBydwW/result.json": "669ac69cac3c689b1d00c2614b4f655e0869024a8e14138411d277c390f93899",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/results/gemma4-fresh-av-dev30-dp4-20261107-v1/agents/terminal-bench/raw/terminal-bench/jobs/terminal-bench-terminal-bench/cobol-modernization__MVBydwW/agent/trajectory.json": "3ac6f8bb2124cdedb24cf2641ecfc6b28bd41d6010a00e4e200b7f52da6b02fe",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/results/gemma4-fresh-av-dev30-dp4-20261107-v1/agents/terminal-bench/raw/terminal-bench/jobs/terminal-bench-terminal-bench/install-windows-3.11__WvEDpWq/result.json": "e8eb82f2de02e82ea78a12be1cba5f24e863ec408dc6ec10cea8a436230b9a38",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/results/gemma4-fresh-av-dev30-dp4-20261107-v1/agents/terminal-bench/raw/terminal-bench/jobs/terminal-bench-terminal-bench/install-windows-3.11__WvEDpWq/agent/trajectory.json": "d5e08d94354504c9ec15ef03acff2700be8f8470d51b92601c8f3728ec72855b",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/results/gemma4-fresh-av-dev30-dp4-20261107-v1/agents/terminal-bench/raw/terminal-bench/jobs/terminal-bench-terminal-bench/polyglot-c-py__nYXPN99/result.json": "3364c70fe78b618b012bfd89c500311a27c659a36280bee1fa6739426b579fd7",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/results/gemma4-fresh-av-dev30-dp4-20261107-v1/agents/terminal-bench/raw/terminal-bench/jobs/terminal-bench-terminal-bench/polyglot-c-py__nYXPN99/agent/trajectory.json": "9ebffcaffa436d5db419b22926dd18549e135511d1915e1fd0ff58f8b446724b",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/results/gemma4-fresh-av-dev30-dp4-20261107-v1/agents/terminal-bench/raw/terminal-bench/jobs/terminal-bench-terminal-bench/portfolio-optimization__XAVDBcS/result.json": "7d3a13f1f2806aa98183225e36530fb0a814a33e66927de7784680ade728a2e6",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/results/gemma4-fresh-av-dev30-dp4-20261107-v1/agents/terminal-bench/raw/terminal-bench/jobs/terminal-bench-terminal-bench/portfolio-optimization__XAVDBcS/agent/trajectory.json": "633f48bbc5aee3d684c3341d6e011be5d45e04dcaab83d36205f204cb5ea1050",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/results/gemma4-fresh-av-dev30-dp4-20261107-v1/agents/terminal-bench/raw/terminal-bench/jobs/terminal-bench-terminal-bench/reshard-c4-data__Z65RFgR/result.json": "c32093bc2a423384b12617d6e78cf0ed323e37ca4e233bb31e09e0d583f051f2",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/results/gemma4-fresh-av-dev30-dp4-20261107-v1/agents/terminal-bench/raw/terminal-bench/jobs/terminal-bench-terminal-bench/reshard-c4-data__Z65RFgR/agent/trajectory.json": "a8a391907879cd3ac20109e7d792679ff6c24821b7ca136f6df45ba6d64fd0a3",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/results/gemma4-fresh-av-dev30-dp4-20261107-v1/agents/swe-bench-pro/raw/swe-bench-pro/items/0001/generation/instance_ansible__ansible-11c1777d56664b1acb56b387a1ad6aeadef1391d-v0f01c69f1e2528b935359cfe578530722bca2c59/instance_ansible__ansible-11c1777d56664b1acb56b387a1ad6aeadef1391d-v0f01c69f1e2528b935359cfe578530722bca2c59.traj.json": "38a4f35cc39119bc51111da7863a5cefdfcd088bf413f1223da9bb38c18f8f94",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/results/gemma4-fresh-av-dev30-dp4-20261107-v1/agents/swe-bench-pro/raw/swe-bench-pro/items/0002/generation/instance_qutebrowser__qutebrowser-ed19d7f58b2664bb310c7cb6b52c5b9a06ea60b2-v059c6fdc75567943479b23ebca7c07b5e9a7f34c/instance_qutebrowser__qutebrowser-ed19d7f58b2664bb310c7cb6b52c5b9a06ea60b2-v059c6fdc75567943479b23ebca7c07b5e9a7f34c.traj.json": "cc094537e392f1d69d4d62e801ff57fc86e23799190e71863966f491b3e6110b",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/results/gemma4-fresh-av-dev30-dp4-20261107-v1/agents/swe-bench-pro/raw/swe-bench-pro/items/0003/generation/instance_NodeBB__NodeBB-da0211b1a001d45d73b4c84c6417a4f1b0312575-vf2cf3cbd463b7ad942381f1c6d077626485a1e9e/instance_NodeBB__NodeBB-da0211b1a001d45d73b4c84c6417a4f1b0312575-vf2cf3cbd463b7ad942381f1c6d077626485a1e9e.traj.json": "54b0aeab53590ad84dad760b68f2a0621ceb02a2a3372dfe2dac4e83e166a9fe",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/results/gemma4-fresh-av-dev30-dp4-20261107-v1/agents/swe-bench-pro/raw/swe-bench-pro/items/0004/generation/instance_internetarchive__openlibrary-431442c92887a3aece3f8aa771dd029738a80eb1-v76304ecdb3a5954fcf13feb710e8c40fcf24b73c/instance_internetarchive__openlibrary-431442c92887a3aece3f8aa771dd029738a80eb1-v76304ecdb3a5954fcf13feb710e8c40fcf24b73c.traj.json": "e362b9b63986421a7ad0306d56223de7227dff4d757fb2dec0a2b976d01b3502",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/results/gemma4-fresh-av-dev30-dp4-20261107-v1/run.json": "7322b73db891e258def61eecc689519f743d251d1f391fa457819207ac733229",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/results/gemma4-fresh-av-dev30-dp4-20261107-v1/report.json": "dc27183c906f4c67d5a5b4c5c54372f992c7bc13f80c03ff0c0b1ce1b5a7b3f4",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/results/gemma4-fresh-av-dev30-dp4-20261107-v1/items.jsonl": "8ff7c30b00c1d31a03aa30c81fe2cca4d3a1b4c3bb0726445cf7ed6a418d42b5",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/results/gemma4-fresh-av-dev30-dp4-20261107-v1/responses.jsonl": "8a9e6462a043eadab4e051466f1dbaa46a1975de3210ffcc3995de699b5180da",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-av-dev30-dp4-v1/http-trace/requests-client.jsonl": "dd91a6428d21f557fc1b097c07079e008c0d7564351eeefefb8d9003b4c36ef2",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/worktrees/kairyu-bench-weight-tools/docs/experiments/scripts/fresh-n30-complete-audit.py": "7d2552640aef8a40474dfaaac41aeecce6dcce34238cef9a1314b25c1ae7b961",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/worktrees/kairyu-bench-weight-tools/docs/experiments/scripts/fresh-wsp-large-tier-audit.py": "c08ae268ae2e5ec55f690d7e4f935566995f881a183f86ce3bb38d3230cf1462",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-av-dev30-dp4-v1/launch-plan-approved.json": "bdd8d4ab62d7a2b31aa697e8cf0554858fb931a216a6612a971f824e1532a5e7",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-av-dev30-dp4-v1/actual-runner.json": "5c7b43ee3ad4f1528dd74160f706014d5f90355b79f2e96792902d02dcc5a403",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-av-dev30-dp4-v1/launch-preflight.json": "8e13f08d94f21319f7183b536cbdc966148b77f6ee0c38fbb1b1c58f38646ab0",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-av-dev30-dp4-v1/run-start-verified.json": "eed53e85ec8f3e1e929a45cbab389a03c3d13a68e8cfa1432e7788386e17e9db"
+  }
+}

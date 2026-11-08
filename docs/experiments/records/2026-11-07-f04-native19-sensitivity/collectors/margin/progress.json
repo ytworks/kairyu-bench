@@ -1,0 +1,22 @@
+{
+  "completed_folds": 19,
+  "last": {
+    "purpose": "F",
+    "fold": 0,
+    "examples": 1,
+    "margins": [
+      {
+        "id": "behavior-F1",
+        "margin": 0.5641462802886963
+      }
+    ],
+    "mean_margin": 0.5641462802886963,
+    "microbatches": 1,
+    "answer_batching": "serial",
+    "model_forward_count": 2,
+    "unused_tensors": [],
+    "file": "gradient-F-0.npz",
+    "reference_cases": 0,
+    "max_reference_error": null
+  }
+}

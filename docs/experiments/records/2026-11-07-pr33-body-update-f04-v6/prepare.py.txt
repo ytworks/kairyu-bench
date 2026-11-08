@@ -1,0 +1,42 @@
+import hashlib,json
+from pathlib import Path
+P=Path("/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-pr33-body-update-f04-v6")
+before=(P/"previous-body.md").read_text()
+expected="82988eab429a83622e21bf41a1d920c061f07a78266c8a26b4682968790bb0e9"
+assert hashlib.sha256(before.encode()).hexdigest()==expected
+body=before
+changes=[
+("| AV, canonical dev30 | 72.9365 | 2,338/2,338 scored, overall 76.7201; latest completed comparable parent |",
+ "| AV, canonical dev30 | 72.9365 | 2,338/2,338 scored, overall 76.7201; existing comparison baseline and previous parent |"),
+("| F04, canonical dev30 | Pending | Full 2,338-item run started; no capability claim yet |",
+ "| F04, canonical dev30 | 72.9365079365 | 2,338/2,338 scored, zero unscored; overall 76.9910864328; selected next parent on the code tie |"),
+]
+for old,new in changes:
+ assert body.count(old)==1
+ body=body.replace(old,new)
+anchor="\nF03 changes five coding outcomes:"
+assert body.count(anchor)==1
+addition="""
+F04's full matched result **exactly ties AV on the primary coding mean** and improves the overall mean by **0.2710271413 points**. Root selected **F04 as the next editing parent** using that overall tie-breaker; this is **not a coding improvement**, and the >90 goal remains unmet. All 90 coding items are scored: three improve (HumanEval/152, LiveCodeBench/3777, MBPP/641), three worsen (HumanEval/151, LiveCodeBench/abc390_g, MBPP/801), and 84 are equal. All ten SciCode problem scores and 39 step pass/fail outcomes are unchanged.
+
+All 2,338 item identities, budgets and official report reconstruction match, with **zero unscored/API errors**. Across 2,242 capability items, 51 improve, 50 worsen and 2,141 are equal; the 96 diagnostic items remain separate. Long-context improves +5.7684 and expert +4.1667 points, while reasoning loses -6.0145 and vision -2.0833. Code-probe NLL improves but does not establish a code capability gain. The full 14-area/source/item records preserve these tradeoffs.
+
+F04 completed normally in **1,940.2 seconds including 109.6 seconds loading**, versus existing AV's 2,018.9 seconds; no AV rerun or extra finite model sweep was performed. Terminal-Bench is 5/6 (56 reported episodes, 140 tool calls); SWE-bench Pro is 1/4 (127 saved assistant messages/tools, 129 reported API calls). The SWE aggregate ties AV with qutebrowser improving and Openlibrary regressing. WSP-client errors/retries are zero; these counters do not prove zero nested agent retries. A separately recorded 10.988-second CPU authored-case validation overlapped loading without any GPU/model call.
+"""
+body=body.replace(anchor,"\n"+addition+anchor)
+anchor="- [F04 proposal](docs/experiments/2026-11-07-f04-relative-proposal.md), [actual Opus 5.5 review](docs/experiments/2026-11-07-f04-opus55-review.md)"
+assert body.count(anchor)==1
+body=body.replace(anchor,"- [F04 complete official results, all-item deltas and implementation differences](docs/experiments/2026-11-07-f04-complete-official-result.md), [explicit next-parent selection](docs/experiments/records/2026-11-07-f04-official-comparison/parent-selection.json)\n"+anchor)
+anchor="\nRemaining work:"
+assert body.count(anchor)==1
+addition="""
+Next calibration is **being prepared, with no model measurements claimed**: all 12 existing train contracts are retained, six new train contracts cover intermediate constraints, explicit difference stencils and frequency sentinels, and a separate index-offset contrast brings the train set to 19. The original case/foil records remain intact. The six earlier transfer cases and three new transfer cases remain held out from generation/gradients and direction selection. The nine new authored reference/foil pairs have CPU fixture evidence; that is not a 19-case model capability result.
+"""
+body=body.replace(anchor,"\n"+addition+anchor)
+assert "Full 2,338-item run started; no capability claim yet" not in body
+assert "2,337/2,338 scored, polyglot unscored" in body
+assert "1,200-second client disconnect" in body
+(P/"body.md").write_text(body)
+(P/"update.json").write_text(json.dumps({"body":body},ensure_ascii=False))
+(P/"preparation.json").write_text(json.dumps({"previous_body_sha256":expected,"new_body_sha256":hashlib.sha256(body.encode()).hexdigest(),"previous_body_bytes":len(before.encode()),"new_body_bytes":len(body.encode()),"scope":"Update current F04 completion/parent and next calibration preparation only; retain prior F03 partial and tool/validation/remaining-work evidence.","new_model_calls":0,"git_commit_or_push":False},indent=2)+"\n")
+print((P/"preparation.json").read_text())

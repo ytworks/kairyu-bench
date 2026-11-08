@@ -254,6 +254,102 @@ class AgentTest(unittest.TestCase):
         self.assertEqual({name: entry["reward"] for name, entry in outcomes.items()}, {"task-a": 1.0})
 
 
+class RunSelectionTest(unittest.TestCase):
+    def _manifest(self, root: Path) -> Path:
+        items = [
+            {"id": f"{source}:{name}-{split}", "source": source, "split": split,
+             "tier": tier, "max_tokens": 16384}
+            for source, name, tier in (
+                ("mmlu-pro", "keep", 10), ("mmlu-pro", "omit-a", 10),
+                ("mmlu-pro", "omit-b", 10), ("mmlu-pro", "later", 30),
+                ("ifeval", "outside", 10),
+            )
+            for split in ("dev", "test")
+        ]
+        path = root / "manifest.json"
+        path.write_text(json.dumps({
+            "schema_version": 1,
+            "tiers": {str(t): {"minutes": t, "max_output_tokens": 16384} for t in (10, 30, 60)},
+            "items": items,
+        }))
+        return path
+
+    def _arguments(self, root: Path, manifest: Path) -> list[str]:
+        return [
+            "run", "http://api.test/v1", "--tier", "10", "--split", "dev",
+            "--manifest", str(manifest), "--incomplete-manifest", "--only", "mmlu-pro",
+            "--results-dir", str(root), "--run-id", "selected",
+        ]
+
+    def test_excluded_items_are_not_executed_and_keep_manifest_identity(self) -> None:
+        import hashlib
+        import io
+        from contextlib import redirect_stdout
+        from dataclasses import replace
+        from unittest import mock
+
+        from kairyu_bench.wsp.cli import main
+
+        executed: list[str] = []
+
+        def run_one(context: Context, item: Item, row: dict[str, Any]) -> dict[str, Any]:
+            executed.append(item.id)
+            return {"samples": [_reply("Answer: A")]}
+
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            manifest = self._manifest(root)
+            original = manifest.read_bytes()
+            rows = {entry["id"]: {"expected": "A"} for entry in json.loads(original)["items"]}
+            adapter = replace(adapters()["mmlu-pro"], load=lambda loader: rows, execute=run_one)
+            with (
+                mock.patch("kairyu_bench.target.TargetClient.discover_chat_model", return_value="fixture"),
+                mock.patch("kairyu_bench.wsp.run.adapters", return_value={"mmlu-pro": adapter}),
+                mock.patch("kairyu_bench.wsp.client._post", side_effect=AssertionError("unexpected API call")),
+                redirect_stdout(io.StringIO()),
+            ):
+                result = main([
+                    *self._arguments(root, manifest),
+                    "--exclude-item", "mmlu-pro:omit-b-dev",
+                    "--exclude-item", "mmlu-pro:omit-a-dev",
+                ])
+            meta = json.loads((root / "selected/run.json").read_text())
+            records = [json.loads(line) for line in (root / "selected/items.jsonl").read_text().splitlines()]
+            self.assertEqual(manifest.read_bytes(), original)
+        self.assertEqual(result, 0)
+        self.assertEqual(executed, ["mmlu-pro:keep-dev"])
+        self.assertEqual([(record["id"], record["score"]) for record in records], [("mmlu-pro:keep-dev", 1.0)])
+        self.assertEqual(meta["excluded_item_ids"], ["mmlu-pro:omit-a-dev", "mmlu-pro:omit-b-dev"])
+        self.assertEqual(meta["manifest_sha256"], hashlib.sha256(original).hexdigest())
+        self.assertEqual((meta["items"], meta["status"]), (1, "completed"))
+
+    def test_outside_selection_and_all_item_exclusions_fail_before_discovery(self) -> None:
+        import io
+        from contextlib import redirect_stderr
+        from unittest import mock
+
+        from kairyu_bench.wsp.cli import main
+
+        cases = [
+            ["mmlu-pro:missing"], ["mmlu-pro:keep-test"], ["mmlu-pro:later-dev"],
+            ["ifeval:outside-dev"],
+            ["mmlu-pro:keep-dev", "mmlu-pro:omit-a-dev", "mmlu-pro:omit-b-dev"],
+        ]
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            manifest = self._manifest(root)
+            for excluded in cases:
+                with (
+                    self.subTest(excluded=excluded),
+                    mock.patch("kairyu_bench.target.TargetClient.discover_chat_model") as discovery,
+                    redirect_stderr(io.StringIO()),
+                ):
+                    flags = [flag for item_id in excluded for flag in ("--exclude-item", item_id)]
+                    self.assertEqual(main([*self._arguments(root, manifest), *flags]), 2)
+                    discovery.assert_not_called()
+                    self.assertFalse((root / "selected").exists())
+
+
 class ScoringTest(unittest.TestCase):
     """Official extraction rules: a right reply scores 1, a wrong one 0, and a
     reply cut at the token cap 0 whatever it says."""
@@ -289,6 +385,82 @@ class ScoringTest(unittest.TestCase):
         scored = adapters()["scicode"].score([(_item("scicode"), row, outcome)], Loader())
 
         self.assertEqual((scored[0].score, scored[0].detail), (0.0, {"samples": [{"truncated": True}]}))
+
+    def test_scicode_step_diagnostics_preserve_success_failure_timeout_and_redact_streams(self) -> None:
+        import hashlib
+        import subprocess
+        from unittest import mock
+
+        from kairyu_bench.wsp.scorers import scicode_score as scorer
+
+        marker = "PRIVATE_STREAM_SENTINEL"
+        cases = [
+            (subprocess.CompletedProcess(["python"], 0, marker, ""), True, 0, False, None),
+            (subprocess.CalledProcessError(1, ["python"], output=marker,
+                                          stderr="ValueError: " + marker), False, 1, False, "ValueError"),
+            (subprocess.TimeoutExpired(["python"], 300, output=marker.encode(), stderr=None),
+             False, None, True, None),
+        ]
+        job = {"key": "0:0:1.1", "step": "1.1", "code": "value = 1", "tests": []}
+        with tempfile.TemporaryDirectory() as directory:
+            for effect, expected, returncode, timeout, exception in cases:
+                patch_args = {"side_effect": effect} if isinstance(effect, Exception) else {"return_value": effect}
+                with (
+                    self.subTest(expected=expected, timeout=timeout),
+                    mock.patch.object(scorer.subprocess, "run", **patch_args) as run,
+                    mock.patch.object(scorer.time, "perf_counter", side_effect=[5.0, 5.25]),
+                ):
+                    passed, detail = scorer._run("python", "data.h5", job, Path(directory))
+                self.assertEqual((passed, detail["returncode"], detail["timed_out"], detail["exception_class"]),
+                                 (expected, returncode, timeout, exception))
+                self.assertEqual(detail["elapsed_seconds"], .25)
+                self.assertEqual(detail["stdout"]["bytes"], len(marker.encode()))
+                self.assertEqual(detail["stdout"]["sha256"], hashlib.sha256(marker.encode()).hexdigest())
+                self.assertNotIn(marker, json.dumps(detail))
+                self.assertNotIn("code", detail)
+                self.assertNotIn("tests", detail)
+                self.assertEqual(run.call_args.kwargs,
+                                 {"check": True, "capture_output": True, "text": True,
+                                  "timeout": 300, "cwd": Path(directory)})
+                if timeout:
+                    self.assertIsNone(detail["stderr"]["bytes"])
+                    self.assertIsNone(detail["stderr"]["sha256"])
+        self.assertEqual(scorer._exception_class("AssertionError"), "AssertionError")
+        self.assertEqual(scorer._exception_class("numpy.linalg.LinAlgError: " + marker), "LinAlgError")
+        self.assertIsNone(scorer._exception_class("CustomSecretError: " + marker))
+
+    def test_scicode_sanitized_step_metadata_does_not_change_fractional_score(self) -> None:
+        from unittest import mock
+
+        row = {"problem": {"problem_id": "1", "sub_steps": [
+            {"step_number": f"1.{i}", "test_cases": []} for i in range(1, 4)
+        ]}}
+        outcome = {"samples": [{"finish_reason": "stop", "files": {
+            f"1.{i}": "value = 1" for i in range(1, 4)
+        }}]}
+        verdicts = {"0:0:1.1": True, "0:0:1.2": False, "0:0:1.3": False}
+        diagnostics = {
+            key: {"returncode": 0 if passed else (None if key.endswith("3") else 1),
+                  "timed_out": key.endswith("3"), "elapsed_seconds": .1,
+                  "exception_class": "AssertionError" if key.endswith("2") else None,
+                  "stdout": {"bytes": 0, "sha256": "hash", "representation": "utf8_of_captured_text"},
+                  "stderr": {"bytes": 0, "sha256": "hash", "representation": "utf8_of_captured_text"}}
+            for key, passed in verdicts.items()
+        }
+        loader = mock.Mock()
+        loader.python.return_value = Path("python")
+        loader.source.return_value = Path("source")
+        loader.file.return_value = Path("data.h5")
+        with mock.patch("kairyu_bench.wsp.sources.code.run_scorer", return_value={
+            "schema_version": 1, "verdicts": verdicts, "diagnostics": diagnostics,
+        }):
+            scored = adapters()["scicode"].score([(_item("scicode"), row, outcome)], loader)
+        self.assertEqual((scored[0].score, scored[0].samples), (1 / 3, (1 / 3,)))
+        detail = scored[0].detail["samples"][0]
+        self.assertEqual((detail["steps_passed"], detail["steps_tested"], detail["problem_solved"]), (1, 3, False))
+        self.assertEqual([x["step"] for x in detail["step_diagnostics"]], ["1.1", "1.2", "1.3"])
+        self.assertEqual([x["passed"] for x in detail["step_diagnostics"]], [True, False, False])
+        self.assertEqual([x["timed_out"] for x in detail["step_diagnostics"]], [False, False, True])
 
     def test_choice_log_likelihood_divides_by_choice_characters_as_lm_eval(self) -> None:
         # Review case: ARC choices "a" and "bbb" with log-likelihoods -1 and

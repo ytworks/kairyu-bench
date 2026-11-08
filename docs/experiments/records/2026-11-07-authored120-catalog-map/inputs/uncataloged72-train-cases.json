@@ -1,0 +1,760 @@
+{
+  "schema_version": 1,
+  "split": "train",
+  "scope": "known authored calibration; transport partition only; not WSP or unseen evaluation",
+  "source_cases_sha256": "bd6fcba70e93b1870ee882f6e92893b93490ad4099af7a9a290ba3d324d68951",
+  "partition": "uncataloged72",
+  "source_purpose_fold_layout_preserved": true,
+  "cases": {
+    "code": [
+      [
+        {
+          "id": "guard_code_0_0",
+          "prompt": "Python: print(len(range(4, 4)))\nOutput:\n",
+          "correct": "0",
+          "foil": "1",
+          "split": "train"
+        },
+        {
+          "id": "guard_code_0_1",
+          "prompt": "Python: print([3, 5, 7][-1])\nOutput:\n",
+          "correct": "7",
+          "foil": "3",
+          "split": "train"
+        },
+        {
+          "id": "guard_code_0_2",
+          "prompt": "Python: print(isinstance(True, int))\nOutput:\n",
+          "correct": "True",
+          "foil": "False",
+          "split": "train"
+        },
+        {
+          "id": "guard_code_0_3",
+          "prompt": "Python: print(4 % 3)\nOutput:\n",
+          "correct": "1",
+          "foil": "3",
+          "split": "train"
+        },
+        {
+          "id": "guard_code_0_4",
+          "prompt": "Python: print(len({1,1}))\nOutput:\n",
+          "correct": "1",
+          "foil": "2",
+          "split": "train"
+        }
+      ],
+      [
+        {
+          "id": "guard_code_1_0",
+          "prompt": "Python: print(len([]))\nOutput:\n",
+          "correct": "0",
+          "foil": "1",
+          "split": "train"
+        },
+        {
+          "id": "guard_code_1_1",
+          "prompt": "Python: print([2, 4, 6][0])\nOutput:\n",
+          "correct": "2",
+          "foil": "6",
+          "split": "train"
+        },
+        {
+          "id": "guard_code_1_2",
+          "prompt": "Python: print(isinstance([], tuple))\nOutput:\n",
+          "correct": "False",
+          "foil": "True",
+          "split": "train"
+        },
+        {
+          "id": "guard_code_1_3",
+          "prompt": "Python: print([8, 3][1])\nOutput:\n",
+          "correct": "3",
+          "foil": "8",
+          "split": "train"
+        },
+        {
+          "id": "guard_code_1_4",
+          "prompt": "Python: print(9 % 5)\nOutput:\n",
+          "correct": "4",
+          "foil": "5",
+          "split": "train"
+        }
+      ]
+    ],
+    "implementation": [
+      [
+        {
+          "id": "painted_bins",
+          "prompt": "Implement painted_bins(low, high, width) in Python. Return ascending bin numbers in [0,width) that also belong to the half-open interval [low,high).\n\n",
+          "correct": "def painted_bins(low, high, width):\n    return [i for i in range(width) if low <= i < high]\n",
+          "foil": "def painted_bins(low, high, width):\n    return [i for i in range(width) if low < i <= high]\n",
+          "split": "train"
+        },
+        {
+          "id": "advance_ticket",
+          "prompt": "Implement advance_ticket(state,event). A hold moves open to held, use moves held to used, cancel returns held to open. Every other transition raises ValueError.\n\n",
+          "correct": "def advance_ticket(state, event):\n    transitions = {(\"open\", \"hold\"): \"held\", (\"held\", \"use\"): \"used\", (\"held\", \"cancel\"): \"open\"}\n    try:\n        return transitions[state, event]\n    except KeyError:\n        raise ValueError(\"invalid transition\")\n",
+          "foil": "def advance_ticket(state, event):\n    transitions = {(\"open\", \"hold\"): \"held\", (\"held\", \"use\"): \"used\", (\"held\", \"cancel\"): \"used\"}\n    try:\n        return transitions[state, event]\n    except KeyError:\n        raise ValueError(\"invalid transition\")\n",
+          "split": "train"
+        },
+        {
+          "id": "whole_units",
+          "prompt": "Implement whole_units(value). Accept a nonnegative Python int of exact built-in type. Reject booleans, floats and int subclasses with TypeError. Negative ints raise ValueError.\n\n",
+          "correct": "def whole_units(value):\n    if type(value) is not int:\n        raise TypeError(\"integer required\")\n    if value < 0:\n        raise ValueError(\"negative units\")\n    return value\n",
+          "foil": "def whole_units(value):\n    if not isinstance(value, int):\n        raise TypeError(\"integer required\")\n    if value < 0:\n        raise ValueError(\"negative units\")\n    return value\n",
+          "split": "train"
+        },
+        {
+          "id": "call_and_close",
+          "prompt": "Implement call_and_close(handle,action). Return action(handle), preserve any exception and close handle exactly once on every exit.\n\n",
+          "correct": "def call_and_close(handle, action):\n    try:\n        return action(handle)\n    finally:\n        handle.close()\n",
+          "foil": "def call_and_close(handle, action):\n    result = action(handle)\n    handle.close()\n    return result\n",
+          "split": "train"
+        }
+      ],
+      [
+        {
+          "id": "segment_count",
+          "prompt": "Implement segment_count(total,capacity). Split a nonnegative integer total into the fewest segments of positive capacity. Zero total needs zero segments. Nonpositive capacity raises ValueError.\n\n",
+          "correct": "def segment_count(total, capacity):\n    if capacity <= 0:\n        raise ValueError(\"invalid capacity\")\n    return (total + capacity - 1) // capacity\n",
+          "foil": "def segment_count(total, capacity):\n    if capacity <= 0:\n        raise ValueError(\"invalid capacity\")\n    return (total + capacity) // capacity\n",
+          "split": "train"
+        },
+        {
+          "id": "fetch_job",
+          "prompt": "Implement fetch_job(jobs,paused). Paused or empty queues return None and preserve the list. Otherwise remove and return the first waiting job.\n\n",
+          "correct": "def fetch_job(jobs, paused):\n    if paused or not jobs:\n        return None\n    return jobs.pop(0)\n",
+          "foil": "def fetch_job(jobs, paused):\n    if paused and not jobs:\n        return None\n    return jobs.pop(0)\n",
+          "split": "train"
+        },
+        {
+          "id": "read_level",
+          "prompt": "Implement read_level(settings,key,fallback). Convert a present value using int. Use fallback only for an absent key, and preserve conversion errors for a present invalid value.\n\n",
+          "correct": "def read_level(settings, key, fallback):\n    try:\n        raw = settings[key]\n    except KeyError:\n        return fallback\n    return int(raw)\n",
+          "foil": "def read_level(settings, key, fallback):\n    try:\n        return int(settings[key])\n    except (KeyError, ValueError):\n        return fallback\n",
+          "split": "train"
+        },
+        {
+          "id": "write_if_acquired",
+          "prompt": "Implement write_if_acquired(lease,writer). Return False if acquiring fails. If acquired, call writer, release exactly once even on failure, and return True on success. Never release a lease that was not acquired.\n\n",
+          "correct": "def write_if_acquired(lease, writer):\n    if not lease.acquire():\n        return False\n    try:\n        writer()\n        return True\n    finally:\n        lease.release()\n",
+          "foil": "def write_if_acquired(lease, writer):\n    try:\n        if not lease.acquire():\n            return False\n        writer()\n        return True\n    finally:\n        lease.release()\n",
+          "split": "train"
+        }
+      ]
+    ],
+    "workflow": [
+      [
+        {
+          "id": "commit_only_fix",
+          "prompt": "In a disposable Git repo, app.py contains the intended fix and notes.txt has an unrelated user edit. Give one shell command that runs unittest, commits only app.py if tests pass, then shows status.\n\n",
+          "correct": "python3 -m unittest -q && git add app.py && git commit -m fix && git status --short",
+          "foil": "python3 -m unittest -q && git add . && git commit -m fix && git status --short",
+          "split": "train"
+        },
+        {
+          "id": "validate_before_publish",
+          "prompt": "make.py emits a candidate report. Compare it with expected.txt and replace live.txt only if validation succeeds. Preserve the existing live.txt when validation fails. Give the complete shell command.\n\n",
+          "correct": "python3 make.py > next.txt && cmp next.txt expected.txt && mv next.txt live.txt",
+          "foil": "python3 make.py > next.txt && mv next.txt live.txt && cmp live.txt expected.txt",
+          "split": "train"
+        },
+        {
+          "id": "archive_only_revision",
+          "prompt": "Create bundle.tar from committed revision HEAD and list archive entries. Working-tree edits and untracked cache.dat must be excluded.\n\n",
+          "correct": "git archive --format=tar HEAD -o bundle.tar && tar -tf bundle.tar",
+          "foil": "tar -cf bundle.tar pkg.txt cache.dat && tar -tf bundle.tar",
+          "split": "train"
+        }
+      ],
+      [
+        {
+          "id": "record_verified_rename",
+          "prompt": "Rename tracked legacy.py to current.py, verify it compiles, and record the rename in one local commit while leaving unrelated working changes out.\n\n",
+          "correct": "git mv legacy.py current.py && python3 -m py_compile current.py && git commit -m rename",
+          "foil": "mv legacy.py current.py && python3 -m py_compile current.py && git commit -m rename",
+          "split": "train"
+        },
+        {
+          "id": "discard_only_unstaged",
+          "prompt": "module.py has a staged fix and a later unwanted unstaged edit. Restore only its working copy from the index, keep the staged fix, validate that staged diff and display status.\n\n",
+          "correct": "git restore --worktree module.py && git diff --cached --check && git status --short",
+          "foil": "git restore --staged module.py && git diff --cached --check && git status --short",
+          "split": "train"
+        },
+        {
+          "id": "cleanup_and_preserve_status",
+          "prompt": "Run worker.py, remove scratch.tmp whether it succeeds or fails, and return the original worker exit status. Give a complete POSIX shell command.\n\n",
+          "correct": "python3 worker.py; code=$?; rm -f scratch.tmp; exit \"$code\"",
+          "foil": "python3 worker.py && rm -f scratch.tmp; exit $?",
+          "split": "train"
+        }
+      ]
+    ],
+    "tool_call": [
+      [
+        {
+          "id": "requested_temperature_conversion",
+          "prompt": "The user explicitly asks you to use the supplied converter to convert 18 degrees Celsius to Fahrenheit. Available tools: c_to_f(celsius), f_to_c(fahrenheit), city_forecast(city). Return one JSON action.\n\n",
+          "correct": "{\"action\":\"call\",\"tool\":\"c_to_f\",\"arguments\":{\"celsius\":18}}",
+          "foil": "{\"action\":\"call\",\"tool\":\"f_to_c\",\"arguments\":{\"fahrenheit\":18}}",
+          "split": "train"
+        },
+        {
+          "id": "inventory_lookup_required",
+          "prompt": "The user asks how many blue bulbs are in bin R7; inventory is live. Available tools: stock_read(bin,item), stock_write(bin,item,count), color_name(hex). Return one JSON action.\n\n",
+          "correct": "{\"action\":\"call\",\"tool\":\"stock_read\",\"arguments\":{\"bin\":\"R7\",\"item\":\"blue bulb\"}}",
+          "foil": "{\"action\":\"answer\",\"text\":\"There are 12 blue bulbs.\"}",
+          "split": "train"
+        }
+      ],
+      [
+        {
+          "id": "inspect_account_quota",
+          "prompt": "Read the current remaining quota for account maple without changing it. Available tools: quota_read(account), quota_raise(account,limit), account_close(account). Return one JSON action.\n\n",
+          "correct": "{\"action\":\"call\",\"tool\":\"quota_read\",\"arguments\":{\"account\":\"maple\"}}",
+          "foil": "{\"action\":\"call\",\"tool\":\"quota_raise\",\"arguments\":{\"account\":\"maple\",\"limit\":50}}",
+          "split": "train"
+        },
+        {
+          "id": "parcel_tracking_required",
+          "prompt": "Find the live shipping status of parcel Q9. The identifier is already known. Available tools: track(parcel), cancel(parcel), rate(weight). Return one JSON action.\n\n",
+          "correct": "{\"action\":\"call\",\"tool\":\"track\",\"arguments\":{\"parcel\":\"Q9\"}}",
+          "foil": "{\"action\":\"ask\",\"question\":\"What is the parcel identifier?\"}",
+          "split": "train"
+        }
+      ]
+    ],
+    "tool_no_call": [
+      [
+        {
+          "id": "missing_timer_duration",
+          "prompt": "The user asks to start a countdown but gives no duration. Available tools: start_timer(seconds), timer_status(timer_id), cancel_timer(timer_id). Do not invent a duration. Return one JSON action.\n\n",
+          "correct": "{\"action\":\"ask\",\"question\":\"How many seconds should the countdown run?\"}",
+          "foil": "{\"action\":\"call\",\"tool\":\"start_timer\",\"arguments\":{\"seconds\":60}}",
+          "split": "train"
+        },
+        {
+          "id": "answer_from_supplied_poster",
+          "prompt": "The supplied poster says the garden opens at nine. The user asks when the garden opens. Available tools create_event(hour), delete_file(path), weather(city) are optional. Return one JSON action.\n\n",
+          "correct": "{\"action\":\"answer\",\"text\":\"The garden opens at nine.\"}",
+          "foil": "{\"action\":\"call\",\"tool\":\"create_event\",\"arguments\":{\"hour\":9}}",
+          "split": "train"
+        }
+      ],
+      [
+        {
+          "id": "missing_meeting_time",
+          "prompt": "The user requests moving meeting M2, but has not supplied its new time. Available tools: move_meeting(meeting,time), cancel_meeting(meeting). Ask for the missing information before making a change. Return one JSON action.\n\n",
+          "correct": "{\"action\":\"ask\",\"question\":\"What new time should I use for meeting M2?\"}",
+          "foil": "{\"action\":\"call\",\"tool\":\"move_meeting\",\"arguments\":{\"meeting\":\"M2\",\"time\":\"15:00\"}}",
+          "split": "train"
+        },
+        {
+          "id": "answer_arithmetic_without_tool",
+          "prompt": "A note says two crates arrived and one broke. The user asks how many arrived intact. Available tools: notify_team(text), weather(city), create_invoice(amount). None calculates inventory. Return one JSON action.\n\n",
+          "correct": "{\"action\":\"answer\",\"text\":\"One crate arrived intact.\"}",
+          "foil": "{\"action\":\"call\",\"tool\":\"notify_team\",\"arguments\":{\"text\":\"One crate arrived intact.\"}}",
+          "split": "train"
+        }
+      ]
+    ],
+    "tool_arguments": [
+      [
+        {
+          "id": "preserve_false_smoothing",
+          "prompt": "Call preview_series(series, bins=8, smooth=True) for series ripple using twelve bins and explicitly no smoothing. Other available tool: delete_series(series). Return one JSON action.\n\n",
+          "correct": "{\"action\":\"call\",\"tool\":\"preview_series\",\"arguments\":{\"series\":\"ripple\",\"bins\":12,\"smooth\":false}}",
+          "foil": "{\"action\":\"call\",\"tool\":\"preview_series\",\"arguments\":{\"series\":\"ripple\",\"bins\":12}}",
+          "split": "train"
+        },
+        {
+          "id": "preserve_sample_period",
+          "prompt": "Call sample_device(device, repeats=1, period_ms=100) for device reed with three samples spaced 25 milliseconds apart. Other available tool: reset_device(device). Return one JSON action.\n\n",
+          "correct": "{\"action\":\"call\",\"tool\":\"sample_device\",\"arguments\":{\"device\":\"reed\",\"repeats\":3,\"period_ms\":25}}",
+          "foil": "{\"action\":\"call\",\"tool\":\"sample_device\",\"arguments\":{\"device\":\"reed\",\"repeats\":3}}",
+          "split": "train"
+        }
+      ],
+      [
+        {
+          "id": "preserve_label_prefix",
+          "prompt": "Use print_labels(batch,copies=1,prefix='') for batch juniper, four copies, each with the requested prefix QA-. Other available tool: discard_batch(batch). Return one JSON action.\n\n",
+          "correct": "{\"action\":\"call\",\"tool\":\"print_labels\",\"arguments\":{\"batch\":\"juniper\",\"copies\":4,\"prefix\":\"QA-\"}}",
+          "foil": "{\"action\":\"call\",\"tool\":\"print_labels\",\"arguments\":{\"batch\":\"juniper\",\"copies\":4}}",
+          "split": "train"
+        },
+        {
+          "id": "preserve_reserved_window_filter",
+          "prompt": "Use list_windows(room,day,include_reserved=True) for room loft on Friday. The user explicitly wants only windows that are not reserved. Other available tool: reserve_window(id). Return one JSON action.\n\n",
+          "correct": "{\"action\":\"call\",\"tool\":\"list_windows\",\"arguments\":{\"room\":\"loft\",\"day\":\"Friday\",\"include_reserved\":false}}",
+          "foil": "{\"action\":\"call\",\"tool\":\"list_windows\",\"arguments\":{\"room\":\"loft\",\"day\":\"Friday\"}}",
+          "split": "train"
+        }
+      ]
+    ],
+    "algorithm": [
+      [
+        {
+          "id": "gate_hops",
+          "prompt": "Implement gate_hops(edges,source,goal). Edges map each vertex to (next,gate) pairs with gate 0 or 1. Find the fewest edges from source to goal while using at most one gate, or -1. The visited state must make the run O(V+E).\n\n",
+          "correct": "from collections import deque\n\ndef gate_hops(edges, source, goal):\n    queue = deque([(source, 0, 0)])\n    seen = {(source, 0)}\n    while queue:\n        node, used, distance = queue.popleft()\n        if node == goal:\n            return distance\n        for nxt, gate in edges.get(node, ()):\n            spent = used + gate\n            if spent > 1 or (nxt, spent) in seen:\n                continue\n            seen.add((nxt, spent))\n            queue.append((nxt, spent, distance + 1))\n    return -1\n",
+          "foil": "from collections import deque\n\ndef gate_hops(edges, source, goal):\n    queue = deque([(source, 0, 0)])\n    seen = {source}\n    while queue:\n        node, used, distance = queue.popleft()\n        if node == goal:\n            return distance\n        for nxt, gate in edges.get(node, ()):\n            spent = used + gate\n            if spent > 1 or nxt in seen:\n                continue\n            seen.add(nxt)\n            queue.append((nxt, spent, distance + 1))\n    return -1\n",
+          "split": "train"
+        },
+        {
+          "id": "cover_span",
+          "prompt": "Implement cover_span(items,required). In O(len(items)+len(required)), return the leftmost shortest half-open window containing required symbols with multiplicity, (0,0) for no requirements or None when impossible.\n\n",
+          "correct": "from collections import Counter\n\ndef cover_span(items, required):\n    need = Counter(required)\n    missing = sum(need.values())\n    if missing == 0:\n        return (0, 0)\n    have, left, best = Counter(), 0, None\n    for right, item in enumerate(items):\n        if have[item] < need[item]:\n            missing -= 1\n        have[item] += 1\n        while missing == 0:\n            if best is None or right + 1 - left < best[1] - best[0]:\n                best = (left, right + 1)\n            first = items[left]\n            have[first] -= 1\n            if have[first] < need[first]:\n                missing += 1\n            left += 1\n    return best\n",
+          "foil": "from collections import Counter\n\ndef cover_span(items, required):\n    need = Counter(set(required))\n    missing = sum(need.values())\n    if missing == 0:\n        return (0, 0)\n    have, left, best = Counter(), 0, None\n    for right, item in enumerate(items):\n        if have[item] < need[item]:\n            missing -= 1\n        have[item] += 1\n        while missing == 0:\n            if best is None or right + 1 - left < best[1] - best[0]:\n                best = (left, right + 1)\n            first = items[left]\n            have[first] -= 1\n            if have[first] < need[first]:\n                missing += 1\n            left += 1\n    return best\n",
+          "split": "train"
+        },
+        {
+          "id": "best_schedule",
+          "prompt": "Implement best_schedule(jobs) in O(n log n). Choose disjoint half-open jobs (start,stop,value) for maximum total value. Touching endpoints are compatible and choosing none is allowed.\n\n",
+          "correct": "from bisect import bisect_right\n\ndef best_schedule(jobs):\n    ordered = sorted(jobs, key=lambda job: job[1])\n    ends = [job[1] for job in ordered]\n    best = [0]\n    for i, (start, stop, value) in enumerate(ordered):\n        compatible = bisect_right(ends, start, 0, i)\n        best.append(max(best[-1], best[compatible] + value))\n    return best[-1]\n",
+          "foil": "from bisect import bisect_left\n\ndef best_schedule(jobs):\n    ordered = sorted(jobs, key=lambda job: job[1])\n    ends = [job[1] for job in ordered]\n    best = [0]\n    for i, (start, stop, value) in enumerate(ordered):\n        compatible = bisect_left(ends, start, 0, i)\n        best.append(max(best[-1], best[compatible] + value))\n    return best[-1]\n",
+          "split": "train"
+        },
+        {
+          "id": "best_indices",
+          "prompt": "Implement best_indices(scores,k) with O(k) auxiliary storage and O(n log k) selection. Return the top k input indices by descending score, resolving ties in favor of the lower input index. Nonpositive k returns [].\n\n",
+          "correct": "from heapq import heappush, heappop\n\ndef best_indices(scores, k):\n    if k <= 0:\n        return []\n    kept = []\n    for i, score in enumerate(scores):\n        heappush(kept, (score, -i))\n        if len(kept) > k:\n            heappop(kept)\n    return [-neg_i for score, neg_i in sorted(kept, reverse=True)]\n",
+          "foil": "from heapq import heappush, heappop\n\ndef best_indices(scores, k):\n    if k <= 0:\n        return []\n    kept = []\n    for i, score in enumerate(scores):\n        heappush(kept, (score, i))\n        if len(kept) > k:\n            heappop(kept)\n    return [i for score, i in sorted(kept, reverse=True)]\n",
+          "split": "train"
+        }
+      ],
+      [
+        {
+          "id": "min_toll",
+          "prompt": "Implement min_toll(edges,start,goal) for a directed graph with nonnegative integer tolls. Return minimum total toll or None, processing the least pending cost first without expanding stale entries.\n\n",
+          "correct": "from heapq import heappop, heappush\n\ndef min_toll(edges, start, goal):\n    queue, best = [(0, start)], {start: 0}\n    while queue:\n        cost, node = heappop(queue)\n        if cost != best[node]:\n            continue\n        if node == goal:\n            return cost\n        for nxt, toll in edges.get(node, ()):\n            extra = cost + toll\n            if extra < best.get(nxt, float(\"inf\")):\n                best[nxt] = extra\n                heappush(queue, (extra, nxt))\n    return None\n",
+          "foil": "from heapq import heappop, heappush\n\ndef min_toll(edges, start, goal):\n    queue, best = [(0, start)], {start: 0}\n    while queue:\n        cost, node = heappop(queue)\n        if cost != best[node]:\n            continue\n        if node == goal:\n            return cost\n        for nxt, toll in edges.get(node, ()):\n            extra = cost + toll\n            if nxt == goal:\n                return extra\n            if extra < best.get(nxt, float(\"inf\")):\n                best[nxt] = extra\n                heappush(queue, (extra, nxt))\n    return None\n",
+          "split": "train"
+        },
+        {
+          "id": "near_pairs",
+          "prompt": "Implement near_pairs(values,gap) in O(n). Count pairs of equal values at positions i<j whose distance is at most gap, including exactly gap.\n\n",
+          "correct": "from collections import Counter\n\ndef near_pairs(values, gap):\n    if gap <= 0:\n        return 0\n    recent, total = Counter(), 0\n    for j, value in enumerate(values):\n        expired = j - gap - 1\n        if expired >= 0:\n            recent[values[expired]] -= 1\n        total += recent[value]\n        recent[value] += 1\n    return total\n",
+          "foil": "from collections import Counter\n\ndef near_pairs(values, gap):\n    if gap <= 0:\n        return 0\n    recent, total = Counter(), 0\n    for j, value in enumerate(values):\n        expired = j - gap\n        if expired >= 0:\n            recent[values[expired]] -= 1\n        total += recent[value]\n        recent[value] += 1\n    return total\n",
+          "split": "train"
+        },
+        {
+          "id": "voucher_count",
+          "prompt": "Implement voucher_count(vouchers,total). Each positive voucher is usable once. Return the fewest vouchers that sum exactly to nonnegative total, or None. Use O(total) memory.\n\n",
+          "correct": "def voucher_count(vouchers, total):\n    unreachable = total + 1\n    best = [0] + [unreachable] * total\n    for value in vouchers:\n        for amount in range(total, value - 1, -1):\n            best[amount] = min(best[amount], best[amount-value] + 1)\n    return None if best[total] == unreachable else best[total]\n",
+          "foil": "def voucher_count(vouchers, total):\n    unreachable = total + 1\n    best = [0] + [unreachable] * total\n    for value in vouchers:\n        for amount in range(value, total + 1):\n            best[amount] = min(best[amount], best[amount-value] + 1)\n    return None if best[total] == unreachable else best[total]\n",
+          "split": "train"
+        },
+        {
+          "id": "solve_ledger",
+          "prompt": "Implement solve_ledger(text). Input line1 is n q, line2 has n integers, followed by q lines. A i delta adds delta at one-based i. Q a b outputs the inclusive range sum, one line per answer without trailing newline. Use logarithmic update/query time.\n\n",
+          "correct": "def solve_ledger(text):\n    lines = iter(text.splitlines())\n    n, q = map(int, next(lines).split())\n    tree = [0] * (n + 1)\n    def add(i, delta):\n        while i <= n:\n            tree[i] += delta\n            i += i & -i\n    def prefix(i):\n        answer = 0\n        while i > 0:\n            answer += tree[i]\n            i -= i & -i\n        return answer\n    for i, value in enumerate(map(int, next(lines).split()), 1):\n        add(i, value)\n    output = []\n    for _ in range(q):\n        command, a, b = next(lines).split()\n        a, b = int(a), int(b)\n        if command == \"A\":\n            add(a, b)\n        else:\n            output.append(str(prefix(b) - prefix(a-1)))\n    return \"\\n\".join(output)\n",
+          "foil": "def solve_ledger(text):\n    lines = iter(text.splitlines())\n    n, q = map(int, next(lines).split())\n    tree = [0] * (n + 1)\n    def add(i, delta):\n        while i <= n:\n            tree[i] += delta\n            i += i & -i\n    def prefix(i):\n        answer = 0\n        while i > 0:\n            answer += tree[i]\n            i -= i & -i\n        return answer\n    for i, value in enumerate(map(int, next(lines).split()), 1):\n        add(i, value)\n    output = []\n    for _ in range(q):\n        command, a, b = next(lines).split()\n        a, b = int(a), int(b)\n        if command == \"A\":\n            add(a, b)\n        else:\n            output.append(str(prefix(b) - prefix(a)))\n    return \"\\n\".join(output)\n",
+          "split": "train"
+        }
+      ]
+    ],
+    "referent": [
+      [
+        {
+          "id": "too_wide_hoop",
+          "prompt": "A folded hoop is eleven centimetres across and a grate opening is seven centimetres across. The hoop would not pass through because it was too wide. Identify the referent and explain briefly.\n\n",
+          "correct": "The referent is the folded hoop. Its width exceeded the opening.",
+          "foil": "The referent is the grate opening. Its width exceeded the hoop.",
+          "split": "train"
+        },
+        {
+          "id": "rollable_cover",
+          "prompt": "A rigid painted sign was hidden behind a flexible canvas cover. Rowan rolled it up, exposing the sign. Identify the referent and explain briefly.\n\n",
+          "correct": "The referent is the canvas cover. Rolling the flexible cover exposed the rigid sign.",
+          "foil": "The referent is the painted sign. Rolling the rigid sign exposed the cover.",
+          "split": "train"
+        },
+        {
+          "id": "heat_protection",
+          "prompt": "Lea put on a thick insulating mitt before gripping a hot metal cup. It protected her hand from the heat. Identify the referent and explain briefly.\n\n",
+          "correct": "The referent is the insulating mitt. The insulating layer separated her hand from the hot surface.",
+          "foil": "The referent is the metal cup. The hot surface separated her hand from the mitt.",
+          "split": "train"
+        }
+      ],
+      [
+        {
+          "id": "too_narrow_passage",
+          "prompt": "A trolley is nine centimetres wide and a doorway is six centimetres wide. The trolley could not roll through because it was too narrow. Identify the referent and explain briefly.\n\n",
+          "correct": "The referent is the doorway. The opening was narrower than the trolley.",
+          "foil": "The referent is the trolley. The trolley was narrower than the opening.",
+          "split": "train"
+        },
+        {
+          "id": "loose_anchor",
+          "prompt": "A raft drifted when its anchor came free of the riverbed. The crew pulled it aboard to reset its grip. Identify the referent and explain briefly.\n\n",
+          "correct": "The referent is the anchor. Resetting the anchor could restore its grip on the riverbed.",
+          "foil": "The referent is the raft. Resetting the raft could restore its grip on the anchor.",
+          "split": "train"
+        },
+        {
+          "id": "brittle_support",
+          "prompt": "A hard marble dropped onto a brittle wafer. It shattered into crumbs while the marble rolled away intact. Identify the referent and explain briefly.\n\n",
+          "correct": "The referent is the wafer. The brittle wafer broke while the marble stayed intact.",
+          "foil": "The referent is the marble. The marble broke while the wafer stayed intact.",
+          "split": "train"
+        }
+      ]
+    ],
+    "fact_retention": [
+      [
+        {
+          "id": "spool_checkpoint",
+          "prompt": "Workshop shelf ledger. Apply updates in their listed order.\nUpdate 1: amber spool is assigned cedar bin.\nUpdate 2: blue reel is assigned reed tray.\nUpdate 3: amber spool is assigned river shelf.\nUpdate 4: blue reel is assigned cedar bin.\nUpdate 5: amber spool is assigned elm box.\nUpdate 6: green bobbin is assigned reed tray.\nWhat assignment did amber spool have immediately after update 4?\n\n",
+          "correct": "Immediately after update 4, amber spool had the assignment river shelf.",
+          "foil": "Immediately after update 4, amber spool had the assignment elm box.",
+          "split": "train"
+        },
+        {
+          "id": "courier_checkpoint",
+          "prompt": "Parcel custody ledger. Apply updates in their listed order.\nUpdate 1: packet L is assigned Neri.\nUpdate 2: packet V is assigned Soma.\nUpdate 3: packet L is assigned Ilya.\nUpdate 4: packet V is assigned Neri.\nUpdate 5: packet L is assigned Soma.\nUpdate 6: packet W is assigned Ilya.\nWhat assignment did packet V have immediately after update 5?\n\n",
+          "correct": "Immediately after update 5, packet V had the assignment Neri.",
+          "foil": "Immediately after update 5, packet V had the assignment Soma.",
+          "split": "train"
+        },
+        {
+          "id": "room_checkpoint",
+          "prompt": "Practice room allocation ledger. Apply updates in their listed order.\nUpdate 1: choir A is assigned east room.\nUpdate 2: duet B is assigned west room.\nUpdate 3: solo C is assigned blue room.\nUpdate 4: choir A is assigned blue room.\nUpdate 5: duet B is assigned east room.\nUpdate 6: solo C is assigned west room.\nWhat assignment did duet B have immediately after update 4?\n\n",
+          "correct": "Immediately after update 4, duet B had the assignment west room.",
+          "foil": "Immediately after update 4, duet B had the assignment east room.",
+          "split": "train"
+        }
+      ],
+      [
+        {
+          "id": "tool_checkpoint",
+          "prompt": "Instrument cabinet ledger. Apply updates in their listed order.\nUpdate 1: gauge P is assigned drawer four.\nUpdate 2: level Q is assigned drawer two.\nUpdate 3: gauge P is assigned drawer one.\nUpdate 4: level Q is assigned drawer four.\nUpdate 5: gauge P is assigned drawer three.\nUpdate 6: meter R is assigned drawer one.\nWhat assignment did gauge P have immediately after update 3?\n\n",
+          "correct": "Immediately after update 3, gauge P had the assignment drawer one.",
+          "foil": "Immediately after update 3, gauge P had the assignment drawer four.",
+          "split": "train"
+        },
+        {
+          "id": "permit_checkpoint",
+          "prompt": "Permit ownership ledger. Apply updates in their listed order.\nUpdate 1: permit J is assigned Eda.\nUpdate 2: permit K is assigned Pavo.\nUpdate 3: permit J is assigned Rune.\nUpdate 4: permit K is assigned Rune.\nUpdate 5: permit J is assigned Pavo.\nUpdate 6: permit K is assigned Eda.\nWhat assignment did permit K have immediately after update 5?\n\n",
+          "correct": "Immediately after update 5, permit K had the assignment Rune.",
+          "foil": "Immediately after update 5, permit K had the assignment Eda.",
+          "split": "train"
+        },
+        {
+          "id": "stage_checkpoint",
+          "prompt": "Manufacturing stage ledger. Apply updates in their listed order.\nUpdate 1: lot C is assigned queued.\nUpdate 2: lot D is assigned cut.\nUpdate 3: lot C is assigned cut.\nUpdate 4: lot D is assigned packed.\nUpdate 5: lot C is assigned polished.\nUpdate 6: lot E is assigned queued.\nWhat assignment did lot C have immediately after update 4?\n\n",
+          "correct": "Immediately after update 4, lot C had the assignment cut.",
+          "foil": "Immediately after update 4, lot C had the assignment polished.",
+          "split": "train"
+        }
+      ]
+    ],
+    "science_helper_stage": [
+      [
+        {
+          "id": "chain-whitened-fit-1",
+          "family": "whitened-fit",
+          "stage": 1,
+          "split": "train",
+          "gradient_allowed": true,
+          "fold": 0,
+          "depends_on": [],
+          "answer_unit": "complete stage solve function and imports; helper context excluded",
+          "stage_weight": 0.5,
+          "family_weight": 1.0,
+          "foil_id": "squared-weight",
+          "prompt": "Write solve(a, b, weight). a is full-column-rank (n,p), b is (n,), positive weight is (n,). Return (n,p+1) containing sqrt(weight) times each row of [a,b]. Return a float64 ndarray; do not mutate inputs. Include imports and the complete solve function, no prose. The helper stage is nonrecursive.",
+          "correct": "import numpy as np\n\n\ndef solve(a, b, weight):\n    return np.column_stack((a,b))*np.sqrt(weight)[:,None]\n",
+          "foil": "import numpy as np\n\n\ndef solve(a, b, weight):\n    return np.column_stack((a,b))*weight[:,None]\n"
+        },
+        {
+          "id": "chain-quadrature-mixture-1",
+          "family": "quadrature-mixture",
+          "stage": 1,
+          "split": "train",
+          "gradient_allowed": true,
+          "fold": 0,
+          "depends_on": [],
+          "answer_unit": "complete stage solve function and imports; helper context excluded",
+          "stage_weight": 0.5,
+          "family_weight": 1.0,
+          "foil_id": "omit-density",
+          "prompt": "Write solve(nodes, weights, density). Distinct nodes, positive quadrature weights and nonnegative density are equal-length vectors; at least one density is positive. Return normalized weights*density. Return a float64 ndarray; do not mutate inputs. Include imports and the complete solve function, no prose. The helper stage is nonrecursive.",
+          "correct": "import numpy as np\n\n\ndef solve(nodes, weights, density):\n    mass = weights*density\n    return mass/mass.sum()\n",
+          "foil": "import numpy as np\n\n\ndef solve(nodes, weights, density):\n    mass = weights.copy()\n    return mass/mass.sum()\n"
+        }
+      ],
+      [
+        {
+          "id": "chain-boundary-response-1",
+          "family": "boundary-response",
+          "stage": 1,
+          "split": "train",
+          "gradient_allowed": true,
+          "fold": 1,
+          "depends_on": [],
+          "answer_unit": "complete stage solve function and imports; helper context excluded",
+          "stage_weight": 0.5,
+          "family_weight": 1.0,
+          "foil_id": "missing-boundary",
+          "prompt": "Write solve(a, b, fixed, values). a is SPD (n,n), b is (n,). fixed are unique valid indices, a nonempty proper subset; values correspond to fixed. In ascending free-index order, return the reduced matrix a[free,free] with RHS b[free]-a[free,fixed]@values appended as its final column. Return a float64 ndarray; do not mutate inputs. Include imports and the complete solve function, no prose. The helper stage is nonrecursive.",
+          "correct": "import numpy as np\n\n\ndef solve(a, b, fixed, values):\n    free = np.setdiff1d(np.arange(len(b)),fixed)\n    rhs = b[free]-a[np.ix_(free,fixed)]@values\n    return np.column_stack((a[np.ix_(free,free)],rhs))\n",
+          "foil": "import numpy as np\n\n\ndef solve(a, b, fixed, values):\n    free = np.setdiff1d(np.arange(len(b)),fixed)\n    rhs = b[free]\n    return np.column_stack((a[np.ix_(free,free)],rhs))\n"
+        },
+        {
+          "id": "chain-log-mixture-score-1",
+          "family": "log-mixture-score",
+          "stage": 1,
+          "split": "train",
+          "gradient_allowed": true,
+          "fold": 1,
+          "depends_on": [],
+          "answer_unit": "complete stage solve function and imports; helper context excluded",
+          "stage_weight": 0.5,
+          "family_weight": 1.0,
+          "foil_id": "prior-only",
+          "prompt": "Write solve(log_prior, log_likelihood). Finite equal-length vectors describe positive prior weights in log form and per-component log likelihood. Return normalized posterior probabilities, stably even with a common large log offset. Return a float64 ndarray; do not mutate inputs. Include imports and the complete solve function, no prose. The helper stage is nonrecursive.",
+          "correct": "import numpy as np\nfrom scipy.special import logsumexp\n\ndef solve(log_prior, log_likelihood):\n    z = log_prior+log_likelihood\n    return np.exp(z-logsumexp(z))\n",
+          "foil": "import numpy as np\nfrom scipy.special import logsumexp\n\ndef solve(log_prior, log_likelihood):\n    z = log_prior.copy()\n    return np.exp(z-logsumexp(z))\n"
+        }
+      ]
+    ],
+    "science_composition_stage": [
+      [
+        {
+          "id": "chain-whitened-fit-2",
+          "family": "whitened-fit",
+          "stage": 2,
+          "split": "train",
+          "gradient_allowed": true,
+          "fold": 0,
+          "depends_on": [
+            "chain-whitened-fit-1"
+          ],
+          "answer_unit": "complete stage solve function and imports; helper context excluded",
+          "stage_weight": 0.5,
+          "family_weight": 1.0,
+          "foil_id": "wrong-target-column",
+          "prompt": "Available helper (do not redefine):\nimport numpy as np\n\ndef helper(a, b, weight):\n    return np.column_stack((a, b)) * np.sqrt(weight)[:, None]\n\nWrite solve(a, b, weight, query). Using helper(a,b,weight), minimize sum(weight*(a@x-b)**2) and return query@x. query has shape(m,p). Return a float64 ndarray; do not mutate inputs. Include imports and the complete solve function, no prose. The helper stage is nonrecursive.",
+          "correct": "import numpy as np\nfrom scipy.linalg import lstsq\n\ndef solve(a, b, weight, query):\n    z = helper(a,b,weight)\n    x = lstsq(z[:,:-1],z[:,-1])[0]\n    return np.asarray(query@x,dtype=np.float64)\n",
+          "foil": "import numpy as np\nfrom scipy.linalg import lstsq\n\ndef solve(a, b, weight, query):\n    z = helper(a,b,weight)\n    x = lstsq(z[:,:-1],z[:,0])[0]\n    return np.asarray(query@x,dtype=np.float64)\n"
+        },
+        {
+          "id": "chain-quadrature-mixture-2",
+          "family": "quadrature-mixture",
+          "stage": 2,
+          "split": "train",
+          "gradient_allowed": true,
+          "fold": 0,
+          "depends_on": [
+            "chain-quadrature-mixture-1"
+          ],
+          "answer_unit": "complete stage solve function and imports; helper context excluded",
+          "stage_weight": 0.5,
+          "family_weight": 1.0,
+          "foil_id": "raw-second-moment",
+          "prompt": "Available helper (do not redefine):\nimport numpy as np\n\ndef helper(nodes, weights, density):\n    mass = weights * density\n    return mass / mass.sum()\n\nWrite solve(nodes, weights, density). Use helper(nodes,weights,density) to return [weighted mean of nodes, weighted CENTRAL variance]. Return a float64 ndarray; do not mutate inputs. Include imports and the complete solve function, no prose. The helper stage is nonrecursive.",
+          "correct": "import numpy as np\n\n\ndef solve(nodes, weights, density):\n    p = helper(nodes,weights,density)\n    mu = p@nodes\n    return np.array([mu,p@((nodes-mu)**2)],dtype=np.float64)\n",
+          "foil": "import numpy as np\n\n\ndef solve(nodes, weights, density):\n    p = helper(nodes,weights,density)\n    mu = p@nodes\n    return np.array([mu,p@(nodes**2)],dtype=np.float64)\n"
+        }
+      ],
+      [
+        {
+          "id": "chain-boundary-response-2",
+          "family": "boundary-response",
+          "stage": 2,
+          "split": "train",
+          "gradient_allowed": true,
+          "fold": 1,
+          "depends_on": [
+            "chain-boundary-response-1"
+          ],
+          "answer_unit": "complete stage solve function and imports; helper context excluded",
+          "stage_weight": 0.5,
+          "family_weight": 1.0,
+          "foil_id": "lost-prescribed-values",
+          "prompt": "Available helper (do not redefine):\nimport numpy as np\n\ndef helper(a, b, fixed, values):\n    free = np.setdiff1d(np.arange(len(b)), fixed)\n    rhs = b[free] - a[np.ix_(free, fixed)] @ values\n    return np.column_stack((a[np.ix_(free, free)], rhs))\n\nWrite solve(a, b, fixed, values). Use helper(a,b,fixed,values) to return full x: x[fixed]=values and (a@x)[free]=b[free]. Return a float64 ndarray; do not mutate inputs. Include imports and the complete solve function, no prose. The helper stage is nonrecursive.",
+          "correct": "import numpy as np\nfrom scipy.sparse import csc_matrix\nfrom scipy.sparse.linalg import spsolve\n\ndef solve(a, b, fixed, values):\n    free = np.setdiff1d(np.arange(len(b)),fixed)\n    z = helper(a,b,fixed,values)\n    x = np.zeros(len(b)); x[fixed] = values\n    x[free] = spsolve(csc_matrix(z[:,:-1]),z[:,-1])\n    return x\n",
+          "foil": "import numpy as np\nfrom scipy.sparse import csc_matrix\nfrom scipy.sparse.linalg import spsolve\n\ndef solve(a, b, fixed, values):\n    free = np.setdiff1d(np.arange(len(b)),fixed)\n    z = helper(a,b,fixed,values)\n    x = np.zeros(len(b)); x[fixed] = 0\n    x[free] = spsolve(csc_matrix(z[:,:-1]),z[:,-1])\n    return x\n"
+        },
+        {
+          "id": "chain-log-mixture-score-2",
+          "family": "log-mixture-score",
+          "stage": 2,
+          "split": "train",
+          "gradient_allowed": true,
+          "fold": 1,
+          "depends_on": [
+            "chain-log-mixture-score-1"
+          ],
+          "answer_unit": "complete stage solve function and imports; helper context excluded",
+          "stage_weight": 0.5,
+          "family_weight": 1.0,
+          "foil_id": "uniform-mixture",
+          "prompt": "Available helper (do not redefine):\nimport numpy as np\nfrom scipy.special import logsumexp\n\ndef helper(log_prior, log_likelihood):\n    z = log_prior + log_likelihood\n    return np.exp(z - logsumexp(z))\n\nWrite solve(log_prior, log_likelihood, score). score is (components,features). Use helper(log_prior,log_likelihood) to return the posterior expected score vector. Return a float64 ndarray; do not mutate inputs. Include imports and the complete solve function, no prose. The helper stage is nonrecursive.",
+          "correct": "import numpy as np\n\n\ndef solve(log_prior, log_likelihood, score):\n    p = helper(log_prior,log_likelihood)\n    return np.asarray(p@score,dtype=np.float64)\n",
+          "foil": "import numpy as np\n\n\ndef solve(log_prior, log_likelihood, score):\n    p = helper(log_prior,log_likelihood)\n    return np.asarray(score.mean(axis=0),dtype=np.float64)\n"
+        }
+      ]
+    ],
+    "science_long_helper": [
+      [
+        {
+          "id": "long-weighted-constraint-1",
+          "family": "weighted-constraint",
+          "stage": 1,
+          "split": "train",
+          "gradient_allowed": true,
+          "fold": 0,
+          "depends_on": [],
+          "answer_unit": "complete solve function and imports; provided context and stage helper excluded",
+          "stage_weight": 0.5,
+          "family_weight": 1.0,
+          "foil_id": "precision-as-root",
+          "prompt": "You are implementing one numerical stage inside an existing scientific pipeline.\nThe functions in the supplied context are already available, with the exact definitions\nshown below. Reuse them where the stage contract requests them; their conventions are\npart of the interface, not suggestions. The returned program must contain imports and\none complete solve function. Do not copy or redefine the supplied context functions or\nreturn a partially evaluated expression. There is no interactive input, file access,\nrandom sampling, plotting, training or hidden state in this task.\n\nAll real input arrays are finite float64 NumPy arrays; integer index arrays are explicitly\nidentified. Dimensions may vary between calls, so infer them from the inputs. Vectors\nhave shape (n,), not (n,1). Matrix products use conventional column-vector mathematics,\nwhile batches are stored as rows only when explicitly stated. Return a new float64\nndarray of exactly the specified shape even when one dimension equals one. Never\nsqueeze dimensions, return a tuple, or mutate any input or supplied helper result in\nplace. A scalar mathematical quantity must still occupy its specified array position.\nThe inputs satisfy the stated positivity, rank and index conditions; you do not need\nvalidation code or numerical regularization beyond that explicitly requested.\n\nThe stage is deterministic. Preserve cross terms and the ordering specified by the\ncontract. Do not replace a covariance by its diagonal, normalize an already normalized\nquantity again, round intermediate values, clip signs, or add a stabilizing identity\nunless the mathematics below calls for it. Use ordinary double precision. The checks\ncompare numerical values with a tolerance, not expression spelling or implementation\nstyle. Valid output shape alone is insufficient: the result must implement the whole\nstated transformation. For the downstream stage, use the available helper's returned\nmathematical quantity rather than silently substituting a simpler approximation.\n\nScientific context and conventions:\nA sensor model b=offset+a@x+noise has n observations and p unknown coefficients. The\nknown offset is length n. variance contains strictly positive noise VARIANCES, not standard\ndeviations or precisions. a has full column rank and shape (n,p), with n>=p; penalty is\n(q,p), strength is a positive dimensionless multiplier, and all quantities use a consistent\nfixed unit system. The quadratic objective is sum((a@x+offset-b)**2/variance) plus\nstrength*||penalty@x||**2. No intercept is implicit and neither observations nor columns\nare to be centered. The normal matrix is SPD. In the downstream call, constraint is a\nnonzero vector (p,), target is a scalar with the units of constraint@x, and query is (m,p).\nThe constrained covariance is the inverse normal matrix restricted to the equality plane;\nit is not an unbiased residual variance estimate and has no division by n-p. A query\nparallel to the constraint has zero constrained variance up to rounding. The supplied SPD\nsolver accepts vector or matrix right-hand sides and does not modify them. The whitening\nfunction divides rows by standard deviations; applying variance again would change the\nobjective. The prior helper returns a precision contribution in coefficient coordinates.\nThe packed matrix convention always puts the RHS in the final column, including p=1.\nThe downstream result contains uncertainty in the coefficient solution, not random future\nsensor noise. This distinction matters even if query reuses rows from the design matrix.\nProvided context functions:\nimport numpy as np\nfrom scipy.linalg import solve as scipy_solve\n\ndef whiten_observations(a,b,variance,offset):\n    root = np.sqrt(variance)\n    return a/root[:,None], (b-offset)/root\n\ndef prior_terms(penalty,strength):\n    return strength*(penalty.T@penalty)\n\ndef solve_spd(matrix,rhs):\n    return scipy_solve(matrix,rhs,assume_a='pos')\n\nImplement solve(a, b, variance, offset, penalty, strength).\nUse whiten_observations and prior_terms. Return shape (p,p+1): the first p columns are N=a.T@diag(1/variance)@a + strength*penalty.T@penalty; final column is r=a.T@diag(1/variance)@(b-offset). The offset is subtracted before whitening. The penalty is applied once with strength, not its square. This stage assembles the unconstrained system only; do not solve it or append any diagnostic values.",
+          "correct": "import numpy as np\n\n\ndef solve(a, b, variance, offset, penalty, strength):\n    wa, wb = whiten_observations(a,b,variance,offset)\n    n = wa.T@wa + prior_terms(penalty,strength)\n    r = wa.T@wb\n    return np.column_stack((n,r))\n",
+          "foil": "import numpy as np\n\n\ndef solve(a, b, variance, offset, penalty, strength):\n    wa, wb = whiten_observations(a,b,variance,offset)\n    n = a.T@(a/np.sqrt(variance)[:,None]) + prior_terms(penalty,strength)\n    r = wa.T@wb\n    return np.column_stack((n,r))\n",
+          "provided_context_sha256": "d148701083c6d479ef4ad4b753528a34de2d14b8484bae95018f8479fcd0e778"
+        },
+        {
+          "id": "long-affine-state-history-1",
+          "family": "affine-state-history",
+          "stage": 1,
+          "split": "train",
+          "gradient_allowed": true,
+          "fold": 0,
+          "depends_on": [],
+          "answer_unit": "complete solve function and imports; provided context and stage helper excluded",
+          "stage_weight": 0.5,
+          "family_weight": 1.0,
+          "foil_id": "double-time-noise",
+          "prompt": "You are implementing one numerical stage inside an existing scientific pipeline.\nThe functions in the supplied context are already available, with the exact definitions\nshown below. Reuse them where the stage contract requests them; their conventions are\npart of the interface, not suggestions. The returned program must contain imports and\none complete solve function. Do not copy or redefine the supplied context functions or\nreturn a partially evaluated expression. There is no interactive input, file access,\nrandom sampling, plotting, training or hidden state in this task.\n\nAll real input arrays are finite float64 NumPy arrays; integer index arrays are explicitly\nidentified. Dimensions may vary between calls, so infer them from the inputs. Vectors\nhave shape (n,), not (n,1). Matrix products use conventional column-vector mathematics,\nwhile batches are stored as rows only when explicitly stated. Return a new float64\nndarray of exactly the specified shape even when one dimension equals one. Never\nsqueeze dimensions, return a tuple, or mutate any input or supplied helper result in\nplace. A scalar mathematical quantity must still occupy its specified array position.\nThe inputs satisfy the stated positivity, rank and index conditions; you do not need\nvalidation code or numerical regularization beyond that explicitly requested.\n\nThe stage is deterministic. Preserve cross terms and the ordering specified by the\ncontract. Do not replace a covariance by its diagonal, normalize an already normalized\nquantity again, round intermediate values, clip signs, or add a stabilizing identity\nunless the mathematics below calls for it. Use ordinary double precision. The checks\ncompare numerical values with a tolerance, not expression spelling or implementation\nstyle. Valid output shape alone is insufficient: the result must implement the whole\nstated transformation. For the downstream stage, use the available helper's returned\nmathematical quantity rather than silently substituting a simpler approximation.\n\nScientific context and conventions:\nThe state vector is ordered [positions_0..positions_(d-1), velocities_0..velocities_(d-1)].\nA discrete interval of duration dt seconds is defined exactly by p_next=p+dt*v and\nv_next=decay*v+dt*drive, with elementwise multiplication in the latter expression.\ndecay is a dimensionless vector (d,) whose entries lie strictly between zero and one;\nit is already the interval multiplier, not a per-second rate to exponentiate. drive is\n(d,) in velocity units per second. This is the stipulated discrete update, not an ODE\nintegrator or a constant-acceleration position formula: do not add dt**2*drive/2 to\nposition. mean is (2d,), covariance is SPD (2d,2d), and noise_rate is SPD in full state\ncoordinates per second. The additive process covariance is dt*noise_rate, including\nits position-velocity cross terms. Process noise is independent between intervals and\nindependent of the entering state. A deterministic drive does not add covariance.\nThe downstream durations array has length L>=2, decays and drives are (L,d), and\nnoise_rates is (L,2d,2d). Each row/block describes its own interval, and the order cannot\nbe changed because affine transitions generally do not commute. observation is (m,2d),\nbias is (m,), and measurement_covariance is SPD (m,m), independent of process noise.\nThe observation helper projects the full final state distribution and adds this final\nmeasurement covariance. It packs covariance in the first m columns and mean in the\nlast; no time axis is retained in the output. All supplied helpers allocate new results,\nso retaining views of returned packed moments is permitted without mutating inputs.\nDimensions and L vary; no fixed two-dimensional state or fixed interval count is assumed.\nProvided context functions:\nimport numpy as np\n\ndef transition_parts(dt,decay,drive,noise_rate):\n    d = len(decay)\n    f = np.block([[np.eye(d),dt*np.eye(d)],[np.zeros((d,d)),np.diag(decay)]])\n    u = np.concatenate((np.zeros(d),dt*drive))\n    return f,u,dt*noise_rate\n\ndef pack_moments(covariance,mean):\n    return np.column_stack((covariance,mean))\n\ndef project_observation(covariance,mean,observation,bias,measurement_covariance):\n    return pack_moments(observation@covariance@observation.T+measurement_covariance,\n                        observation@mean+bias)\n\nImplement solve(mean, covariance, dt, decay, drive, noise_rate).\nUse transition_parts and pack_moments for ONE step. Return (2d,2d+1), covariance F@covariance@F.T+Q followed by mean F@mean+u. Q is already scaled by dt. Position uses the previous velocity; drive affects the new velocity only.",
+          "correct": "import numpy as np\n\n\ndef solve(mean, covariance, dt, decay, drive, noise_rate):\n    f, u, q = transition_parts(dt,decay,drive,noise_rate)\n    return pack_moments(f@covariance@f.T+q,f@mean+u)\n",
+          "foil": "import numpy as np\n\n\ndef solve(mean, covariance, dt, decay, drive, noise_rate):\n    f, u, q = transition_parts(dt,decay,drive,noise_rate)\n    return pack_moments(f@covariance@f.T+dt*q,f@mean+u)\n",
+          "provided_context_sha256": "daa6f27828d1a54fdcca4ab0b9256742e15abcae741af195863c261044eea70e"
+        }
+      ],
+      [
+        {
+          "id": "long-conditional-covariance-1",
+          "family": "conditional-covariance",
+          "stage": 1,
+          "split": "train",
+          "gradient_allowed": true,
+          "fold": 1,
+          "depends_on": [],
+          "answer_unit": "complete solve function and imports; provided context and stage helper excluded",
+          "stage_weight": 0.5,
+          "family_weight": 1.0,
+          "foil_id": "wrong-schur-sign",
+          "prompt": "You are implementing one numerical stage inside an existing scientific pipeline.\nThe functions in the supplied context are already available, with the exact definitions\nshown below. Reuse them where the stage contract requests them; their conventions are\npart of the interface, not suggestions. The returned program must contain imports and\none complete solve function. Do not copy or redefine the supplied context functions or\nreturn a partially evaluated expression. There is no interactive input, file access,\nrandom sampling, plotting, training or hidden state in this task.\n\nAll real input arrays are finite float64 NumPy arrays; integer index arrays are explicitly\nidentified. Dimensions may vary between calls, so infer them from the inputs. Vectors\nhave shape (n,), not (n,1). Matrix products use conventional column-vector mathematics,\nwhile batches are stored as rows only when explicitly stated. Return a new float64\nndarray of exactly the specified shape even when one dimension equals one. Never\nsqueeze dimensions, return a tuple, or mutate any input or supplied helper result in\nplace. A scalar mathematical quantity must still occupy its specified array position.\nThe inputs satisfy the stated positivity, rank and index conditions; you do not need\nvalidation code or numerical regularization beyond that explicitly requested.\n\nThe stage is deterministic. Preserve cross terms and the ordering specified by the\ncontract. Do not replace a covariance by its diagonal, normalize an already normalized\nquantity again, round intermediate values, clip signs, or add a stabilizing identity\nunless the mathematics below calls for it. Use ordinary double precision. The checks\ncompare numerical values with a tolerance, not expression spelling or implementation\nstyle. Valid output shape alone is insufficient: the result must implement the whole\nstated transformation. For the downstream stage, use the available helper's returned\nmathematical quantity rather than silently substituting a simpler approximation.\n\nScientific context and conventions:\nA jointly Gaussian real vector has mean (n,) and SPD covariance (n,n). observed and\ntarget are disjoint, nonempty arrays of unique valid integer indices. They need not cover\nall n coordinates, need not be sorted, and their order is meaningful: value[j] belongs to\nobserved[j], and output target coordinate j belongs to target[j]. The model is conditioned\non exact observed values, without measurement noise in that conditioning operation. Any\ncoordinates in neither set are marginalized, not conditioned to zero. All covariance\nentries use squared units of the corresponding variables, and off-diagonal entries can\nbe negative. The Schur complement is SPD for these nonempty disjoint subsets. Do not\nsort indices, take absolute values, square covariance entries, or replace the observed\nblock by its diagonal. The partition helper returns copies in the requested orders and\nuses NumPy outer indexing to select whole matrix blocks, never pairwise indexing.\nFor the downstream affine observation, query has shape (m,r), bias and noise_variance\nhave shape (m,), and all noise variances are strictly positive. New noise coordinates are\nmutually independent and independent of the original Gaussian vector. query rows can\nshare target variables, so output coordinates generally remain correlated. Return the\nentire covariance and mean, even if m=1; an (m,m+1) array has no separate scalar return.\nChanging observed values changes the conditional mean but not its covariance. Adding a\nconstant to all original means and the corresponding observed values is not generally\nan invariant unless the target shift and downstream bias are accounted for explicitly.\nThe supplied packing helper appends mean as one column without changing covariance.\nProvided context functions:\nimport numpy as np\nfrom scipy.linalg import solve as scipy_solve\n\ndef partition_gaussian(mean,covariance,observed,target):\n    return (mean[target],mean[observed],covariance[np.ix_(target,target)],\n            covariance[np.ix_(target,observed)],covariance[np.ix_(observed,observed)])\n\ndef solve_spd(matrix,rhs):\n    return scipy_solve(matrix,rhs,assume_a='pos')\n\ndef pack_moments(covariance,mean):\n    return np.column_stack((covariance,mean))\n\nImplement solve(mean, covariance, observed, value, target).\nUse partition_gaussian and solve_spd. Return (r,r+1), first r columns the conditional target covariance T-B@O^{-1}@B.T, final column the conditional target mean mt+B@O^{-1}@(value-mo). target and observed order must be preserved exactly. Condition on all observed values jointly; no independent-coordinate approximation.",
+          "correct": "import numpy as np\n\n\ndef solve(mean, covariance, observed, value, target):\n    mt, mo, t, b, o = partition_gaussian(mean,covariance,observed,target)\n    m = mt+b@solve_spd(o,value-mo)\n    c = t-b@solve_spd(o,b.T)\n    return pack_moments(c,m)\n",
+          "foil": "import numpy as np\n\n\ndef solve(mean, covariance, observed, value, target):\n    mt, mo, t, b, o = partition_gaussian(mean,covariance,observed,target)\n    m = mt+b@solve_spd(o,value-mo)\n    c = t+b@solve_spd(o,b.T)\n    return pack_moments(c,m)\n",
+          "provided_context_sha256": "a9361a6017a07a30da865e2db2fe5df5f091569ef4aff8a013da14b8c819febf"
+        },
+        {
+          "id": "long-affine-mixture-moments-1",
+          "family": "affine-mixture-moments",
+          "stage": 1,
+          "split": "train",
+          "gradient_allowed": true,
+          "fold": 1,
+          "depends_on": [],
+          "answer_unit": "complete solve function and imports; provided context and stage helper excluded",
+          "stage_weight": 0.5,
+          "family_weight": 1.0,
+          "foil_id": "omit-prior",
+          "prompt": "You are implementing one numerical stage inside an existing scientific pipeline.\nThe functions in the supplied context are already available, with the exact definitions\nshown below. Reuse them where the stage contract requests them; their conventions are\npart of the interface, not suggestions. The returned program must contain imports and\none complete solve function. Do not copy or redefine the supplied context functions or\nreturn a partially evaluated expression. There is no interactive input, file access,\nrandom sampling, plotting, training or hidden state in this task.\n\nAll real input arrays are finite float64 NumPy arrays; integer index arrays are explicitly\nidentified. Dimensions may vary between calls, so infer them from the inputs. Vectors\nhave shape (n,), not (n,1). Matrix products use conventional column-vector mathematics,\nwhile batches are stored as rows only when explicitly stated. Return a new float64\nndarray of exactly the specified shape even when one dimension equals one. Never\nsqueeze dimensions, return a tuple, or mutate any input or supplied helper result in\nplace. A scalar mathematical quantity must still occupy its specified array position.\nThe inputs satisfy the stated positivity, rank and index conditions; you do not need\nvalidation code or numerical regularization beyond that explicitly requested.\n\nThe stage is deterministic. Preserve cross terms and the ordering specified by the\ncontract. Do not replace a covariance by its diagonal, normalize an already normalized\nquantity again, round intermediate values, clip signs, or add a stabilizing identity\nunless the mathematics below calls for it. Use ordinary double precision. The checks\ncompare numerical values with a tolerance, not expression spelling or implementation\nstyle. Valid output shape alone is insufficient: the result must implement the whole\nstated transformation. For the downstream stage, use the available helper's returned\nmathematical quantity rather than silently substituting a simpler approximation.\n\nScientific context and conventions:\nA mixture model has k>=2 latent components and n independent observations. log_prior\nhas shape (k,) and contains finite logarithms of unnormalized positive prior weights;\nlog_evidence has shape (n,k) and contains finite log likelihoods. Common additive log\noffsets may be large, so normalize through logsumexp rather than exponentiating raw\nvalues. The same prior applies to every observation. The posterior for one observation\nmust not depend on another row. This stage does not estimate the prior or average\nposteriors over observations. The provided row normalizer handles its final axis.\nComponent means have shape (k,d), covariances (k,d,d), and each covariance is SPD.\nThe affine transform maps column vectors x to transform@x+shift, with transform (m,d)\nand shift (m,). The same transform acts on all components. The transformed mean is\nstored as a row in the helper output, while its covariance is a full (m,m) matrix.\nThe shift changes means but not within-component covariance. Across components,\nthe law of total covariance adds the weighted covariance of their transformed means;\na weighted average of within-component covariances alone is incomplete. Conversely,\nthe raw second moment is not a central covariance. Output order is mean coordinates,\nthen covariance row0, row1, and so on; do not pack only its diagonal or triangle.\nThe output always has n rows even for n=1 and m+m*m columns even for m=1. Every\ninput observation gets its own mixture moments, although component parameters are\nshared. No observation noise, sample-covariance correction, posterior resampling or\nMAP-component selection is part of this deterministic calculation. Use the full soft\nposterior probabilities rather than rounding them to a single selected component.\nProvided context functions:\nimport numpy as np\nfrom scipy.special import logsumexp\n\ndef combine_log_weights(log_prior,log_evidence):\n    return log_evidence+log_prior[None,:]\n\ndef normalize_log_rows(z):\n    return np.exp(z-logsumexp(z,axis=1,keepdims=True))\n\ndef affine_components(means,covariances,transform,shift):\n    mu = means@transform.T+shift\n    cov = np.einsum('ai,kij,bj->kab',transform,covariances,transform)\n    return mu,cov\n\nImplement solve(log_prior, log_evidence).\nUse combine_log_weights and normalize_log_rows. Return (n,k) posterior component probabilities. log_prior is shared over observations; each log_evidence row has its own normalization. Preserve zeros implied by underflow; do not normalize columns.",
+          "correct": "import numpy as np\n\n\ndef solve(log_prior, log_evidence):\n    z = combine_log_weights(log_prior,log_evidence)\n    return normalize_log_rows(z)\n",
+          "foil": "import numpy as np\n\n\ndef solve(log_prior, log_evidence):\n    z = log_evidence.copy()\n    return normalize_log_rows(z)\n",
+          "provided_context_sha256": "c6e036b06770629d9064a9bfeb1b7dbc4829906040b73124068051d3e0d335a3"
+        }
+      ]
+    ],
+    "science_long_composition": [
+      [
+        {
+          "id": "long-weighted-constraint-2",
+          "family": "weighted-constraint",
+          "stage": 2,
+          "split": "train",
+          "gradient_allowed": true,
+          "fold": 0,
+          "depends_on": [
+            "long-weighted-constraint-1"
+          ],
+          "answer_unit": "complete solve function and imports; provided context and stage helper excluded",
+          "stage_weight": 0.5,
+          "family_weight": 1.0,
+          "foil_id": "unconstrained-covariance",
+          "prompt": "You are implementing one numerical stage inside an existing scientific pipeline.\nThe functions in the supplied context are already available, with the exact definitions\nshown below. Reuse them where the stage contract requests them; their conventions are\npart of the interface, not suggestions. The returned program must contain imports and\none complete solve function. Do not copy or redefine the supplied context functions or\nreturn a partially evaluated expression. There is no interactive input, file access,\nrandom sampling, plotting, training or hidden state in this task.\n\nAll real input arrays are finite float64 NumPy arrays; integer index arrays are explicitly\nidentified. Dimensions may vary between calls, so infer them from the inputs. Vectors\nhave shape (n,), not (n,1). Matrix products use conventional column-vector mathematics,\nwhile batches are stored as rows only when explicitly stated. Return a new float64\nndarray of exactly the specified shape even when one dimension equals one. Never\nsqueeze dimensions, return a tuple, or mutate any input or supplied helper result in\nplace. A scalar mathematical quantity must still occupy its specified array position.\nThe inputs satisfy the stated positivity, rank and index conditions; you do not need\nvalidation code or numerical regularization beyond that explicitly requested.\n\nThe stage is deterministic. Preserve cross terms and the ordering specified by the\ncontract. Do not replace a covariance by its diagonal, normalize an already normalized\nquantity again, round intermediate values, clip signs, or add a stabilizing identity\nunless the mathematics below calls for it. Use ordinary double precision. The checks\ncompare numerical values with a tolerance, not expression spelling or implementation\nstyle. Valid output shape alone is insufficient: the result must implement the whole\nstated transformation. For the downstream stage, use the available helper's returned\nmathematical quantity rather than silently substituting a simpler approximation.\n\nScientific context and conventions:\nA sensor model b=offset+a@x+noise has n observations and p unknown coefficients. The\nknown offset is length n. variance contains strictly positive noise VARIANCES, not standard\ndeviations or precisions. a has full column rank and shape (n,p), with n>=p; penalty is\n(q,p), strength is a positive dimensionless multiplier, and all quantities use a consistent\nfixed unit system. The quadratic objective is sum((a@x+offset-b)**2/variance) plus\nstrength*||penalty@x||**2. No intercept is implicit and neither observations nor columns\nare to be centered. The normal matrix is SPD. In the downstream call, constraint is a\nnonzero vector (p,), target is a scalar with the units of constraint@x, and query is (m,p).\nThe constrained covariance is the inverse normal matrix restricted to the equality plane;\nit is not an unbiased residual variance estimate and has no division by n-p. A query\nparallel to the constraint has zero constrained variance up to rounding. The supplied SPD\nsolver accepts vector or matrix right-hand sides and does not modify them. The whitening\nfunction divides rows by standard deviations; applying variance again would change the\nobjective. The prior helper returns a precision contribution in coefficient coordinates.\nThe packed matrix convention always puts the RHS in the final column, including p=1.\nThe downstream result contains uncertainty in the coefficient solution, not random future\nsensor noise. This distinction matters even if query reuses rows from the design matrix.\nProvided context functions:\nimport numpy as np\nfrom scipy.linalg import solve as scipy_solve\n\ndef whiten_observations(a,b,variance,offset):\n    root = np.sqrt(variance)\n    return a/root[:,None], (b-offset)/root\n\ndef prior_terms(penalty,strength):\n    return strength*(penalty.T@penalty)\n\ndef solve_spd(matrix,rhs):\n    return scipy_solve(matrix,rhs,assume_a='pos')\n\nAvailable stage helper (do not redefine):\nimport numpy as np\n\ndef helper(a, b, variance, offset, penalty, strength):\n    wa, wb = whiten_observations(a, b, variance, offset)\n    n = wa.T @ wa + prior_terms(penalty, strength)\n    r = wa.T @ wb\n    return np.column_stack((n, r))\n\nImplement solve(a, b, variance, offset, penalty, strength, constraint, target, query).\nCall helper(a,b,variance,offset,penalty,strength), then solve_spd. Let C=N^{-1}, x0=C@r, u=C@constraint, d=constraint@u. Enforce the exact equality constraint@x=target using x=x0+u*(target-constraint@x0)/d. Its constrained covariance is C-u[:,None]*u[None,:]/d. Return (m,2): column0=query@x; column1 is each query row's quadratic form in that constrained covariance. Do not add observation noise, offset or target to predictions. The equality is exact, not another ridge penalty.",
+          "correct": "import numpy as np\n\n\ndef solve(a, b, variance, offset, penalty, strength, constraint, target, query):\n    z = helper(a,b,variance,offset,penalty,strength)\n    n, r = z[:,:-1], z[:,-1]\n    c = solve_spd(n,np.eye(n.shape[0]))\n    x = solve_spd(n,r)\n    u = c@constraint\n    d = constraint@u\n    x = x+u*(target-constraint@x)/d\n    c = c-np.outer(u,u)/d\n    return np.column_stack((query@x,np.einsum('ij,jk,ik->i',query,c,query)))\n",
+          "foil": "import numpy as np\n\n\ndef solve(a, b, variance, offset, penalty, strength, constraint, target, query):\n    z = helper(a,b,variance,offset,penalty,strength)\n    n, r = z[:,:-1], z[:,-1]\n    c = solve_spd(n,np.eye(n.shape[0]))\n    x = solve_spd(n,r)\n    u = c@constraint\n    d = constraint@u\n    x = x+u*(target-constraint@x)/d\n    c = c.copy()\n    return np.column_stack((query@x,np.einsum('ij,jk,ik->i',query,c,query)))\n",
+          "provided_context_sha256": "d148701083c6d479ef4ad4b753528a34de2d14b8484bae95018f8479fcd0e778"
+        },
+        {
+          "id": "long-affine-state-history-2",
+          "family": "affine-state-history",
+          "stage": 2,
+          "split": "train",
+          "gradient_allowed": true,
+          "fold": 0,
+          "depends_on": [
+            "long-affine-state-history-1"
+          ],
+          "answer_unit": "complete solve function and imports; provided context and stage helper excluded",
+          "stage_weight": 0.5,
+          "family_weight": 1.0,
+          "foil_id": "reset-covariance",
+          "prompt": "You are implementing one numerical stage inside an existing scientific pipeline.\nThe functions in the supplied context are already available, with the exact definitions\nshown below. Reuse them where the stage contract requests them; their conventions are\npart of the interface, not suggestions. The returned program must contain imports and\none complete solve function. Do not copy or redefine the supplied context functions or\nreturn a partially evaluated expression. There is no interactive input, file access,\nrandom sampling, plotting, training or hidden state in this task.\n\nAll real input arrays are finite float64 NumPy arrays; integer index arrays are explicitly\nidentified. Dimensions may vary between calls, so infer them from the inputs. Vectors\nhave shape (n,), not (n,1). Matrix products use conventional column-vector mathematics,\nwhile batches are stored as rows only when explicitly stated. Return a new float64\nndarray of exactly the specified shape even when one dimension equals one. Never\nsqueeze dimensions, return a tuple, or mutate any input or supplied helper result in\nplace. A scalar mathematical quantity must still occupy its specified array position.\nThe inputs satisfy the stated positivity, rank and index conditions; you do not need\nvalidation code or numerical regularization beyond that explicitly requested.\n\nThe stage is deterministic. Preserve cross terms and the ordering specified by the\ncontract. Do not replace a covariance by its diagonal, normalize an already normalized\nquantity again, round intermediate values, clip signs, or add a stabilizing identity\nunless the mathematics below calls for it. Use ordinary double precision. The checks\ncompare numerical values with a tolerance, not expression spelling or implementation\nstyle. Valid output shape alone is insufficient: the result must implement the whole\nstated transformation. For the downstream stage, use the available helper's returned\nmathematical quantity rather than silently substituting a simpler approximation.\n\nScientific context and conventions:\nThe state vector is ordered [positions_0..positions_(d-1), velocities_0..velocities_(d-1)].\nA discrete interval of duration dt seconds is defined exactly by p_next=p+dt*v and\nv_next=decay*v+dt*drive, with elementwise multiplication in the latter expression.\ndecay is a dimensionless vector (d,) whose entries lie strictly between zero and one;\nit is already the interval multiplier, not a per-second rate to exponentiate. drive is\n(d,) in velocity units per second. This is the stipulated discrete update, not an ODE\nintegrator or a constant-acceleration position formula: do not add dt**2*drive/2 to\nposition. mean is (2d,), covariance is SPD (2d,2d), and noise_rate is SPD in full state\ncoordinates per second. The additive process covariance is dt*noise_rate, including\nits position-velocity cross terms. Process noise is independent between intervals and\nindependent of the entering state. A deterministic drive does not add covariance.\nThe downstream durations array has length L>=2, decays and drives are (L,d), and\nnoise_rates is (L,2d,2d). Each row/block describes its own interval, and the order cannot\nbe changed because affine transitions generally do not commute. observation is (m,2d),\nbias is (m,), and measurement_covariance is SPD (m,m), independent of process noise.\nThe observation helper projects the full final state distribution and adds this final\nmeasurement covariance. It packs covariance in the first m columns and mean in the\nlast; no time axis is retained in the output. All supplied helpers allocate new results,\nso retaining views of returned packed moments is permitted without mutating inputs.\nDimensions and L vary; no fixed two-dimensional state or fixed interval count is assumed.\nProvided context functions:\nimport numpy as np\n\ndef transition_parts(dt,decay,drive,noise_rate):\n    d = len(decay)\n    f = np.block([[np.eye(d),dt*np.eye(d)],[np.zeros((d,d)),np.diag(decay)]])\n    u = np.concatenate((np.zeros(d),dt*drive))\n    return f,u,dt*noise_rate\n\ndef pack_moments(covariance,mean):\n    return np.column_stack((covariance,mean))\n\ndef project_observation(covariance,mean,observation,bias,measurement_covariance):\n    return pack_moments(observation@covariance@observation.T+measurement_covariance,\n                        observation@mean+bias)\n\nAvailable stage helper (do not redefine):\nimport numpy as np\n\ndef helper(mean, covariance, dt, decay, drive, noise_rate):\n    f, u, q = transition_parts(dt, decay, drive, noise_rate)\n    return pack_moments(f @ covariance @ f.T + q, f @ mean + u)\n\nImplement solve(mean, covariance, durations, decays, drives, noise_rates, observation, bias, measurement_covariance).\nApply helper once per interval in chronological order, carrying BOTH returned mean and covariance. Then call project_observation on the final moments. Return its (m,m+1) covariance-plus-mean array. Add measurement_covariance only at the final observation, not at each dynamics step; do not return the initial state or a history.",
+          "correct": "import numpy as np\n\n\ndef solve(mean, covariance, durations, decays, drives, noise_rates, observation, bias, measurement_covariance):\n    mu, c = mean.copy(), covariance.copy()\n    for dt, decay, drive, noise in zip(durations,decays,drives,noise_rates):\n        z = helper(mu,c,float(dt),decay,drive,noise)\n        c, mu = z[:,:-1], z[:,-1]\n    return project_observation(c,mu,observation,bias,measurement_covariance)\n",
+          "foil": "import numpy as np\n\n\ndef solve(mean, covariance, durations, decays, drives, noise_rates, observation, bias, measurement_covariance):\n    mu, c = mean.copy(), covariance.copy()\n    for dt, decay, drive, noise in zip(durations,decays,drives,noise_rates):\n        z = helper(mu,covariance,float(dt),decay,drive,noise)\n        c, mu = z[:,:-1], z[:,-1]\n    return project_observation(c,mu,observation,bias,measurement_covariance)\n",
+          "provided_context_sha256": "daa6f27828d1a54fdcca4ab0b9256742e15abcae741af195863c261044eea70e"
+        }
+      ],
+      [
+        {
+          "id": "long-conditional-covariance-2",
+          "family": "conditional-covariance",
+          "stage": 2,
+          "split": "train",
+          "gradient_allowed": true,
+          "fold": 1,
+          "depends_on": [
+            "long-conditional-covariance-1"
+          ],
+          "answer_unit": "complete solve function and imports; provided context and stage helper excluded",
+          "stage_weight": 0.5,
+          "family_weight": 1.0,
+          "foil_id": "drop-cross-covariance",
+          "prompt": "You are implementing one numerical stage inside an existing scientific pipeline.\nThe functions in the supplied context are already available, with the exact definitions\nshown below. Reuse them where the stage contract requests them; their conventions are\npart of the interface, not suggestions. The returned program must contain imports and\none complete solve function. Do not copy or redefine the supplied context functions or\nreturn a partially evaluated expression. There is no interactive input, file access,\nrandom sampling, plotting, training or hidden state in this task.\n\nAll real input arrays are finite float64 NumPy arrays; integer index arrays are explicitly\nidentified. Dimensions may vary between calls, so infer them from the inputs. Vectors\nhave shape (n,), not (n,1). Matrix products use conventional column-vector mathematics,\nwhile batches are stored as rows only when explicitly stated. Return a new float64\nndarray of exactly the specified shape even when one dimension equals one. Never\nsqueeze dimensions, return a tuple, or mutate any input or supplied helper result in\nplace. A scalar mathematical quantity must still occupy its specified array position.\nThe inputs satisfy the stated positivity, rank and index conditions; you do not need\nvalidation code or numerical regularization beyond that explicitly requested.\n\nThe stage is deterministic. Preserve cross terms and the ordering specified by the\ncontract. Do not replace a covariance by its diagonal, normalize an already normalized\nquantity again, round intermediate values, clip signs, or add a stabilizing identity\nunless the mathematics below calls for it. Use ordinary double precision. The checks\ncompare numerical values with a tolerance, not expression spelling or implementation\nstyle. Valid output shape alone is insufficient: the result must implement the whole\nstated transformation. For the downstream stage, use the available helper's returned\nmathematical quantity rather than silently substituting a simpler approximation.\n\nScientific context and conventions:\nA jointly Gaussian real vector has mean (n,) and SPD covariance (n,n). observed and\ntarget are disjoint, nonempty arrays of unique valid integer indices. They need not cover\nall n coordinates, need not be sorted, and their order is meaningful: value[j] belongs to\nobserved[j], and output target coordinate j belongs to target[j]. The model is conditioned\non exact observed values, without measurement noise in that conditioning operation. Any\ncoordinates in neither set are marginalized, not conditioned to zero. All covariance\nentries use squared units of the corresponding variables, and off-diagonal entries can\nbe negative. The Schur complement is SPD for these nonempty disjoint subsets. Do not\nsort indices, take absolute values, square covariance entries, or replace the observed\nblock by its diagonal. The partition helper returns copies in the requested orders and\nuses NumPy outer indexing to select whole matrix blocks, never pairwise indexing.\nFor the downstream affine observation, query has shape (m,r), bias and noise_variance\nhave shape (m,), and all noise variances are strictly positive. New noise coordinates are\nmutually independent and independent of the original Gaussian vector. query rows can\nshare target variables, so output coordinates generally remain correlated. Return the\nentire covariance and mean, even if m=1; an (m,m+1) array has no separate scalar return.\nChanging observed values changes the conditional mean but not its covariance. Adding a\nconstant to all original means and the corresponding observed values is not generally\nan invariant unless the target shift and downstream bias are accounted for explicitly.\nThe supplied packing helper appends mean as one column without changing covariance.\nProvided context functions:\nimport numpy as np\nfrom scipy.linalg import solve as scipy_solve\n\ndef partition_gaussian(mean,covariance,observed,target):\n    return (mean[target],mean[observed],covariance[np.ix_(target,target)],\n            covariance[np.ix_(target,observed)],covariance[np.ix_(observed,observed)])\n\ndef solve_spd(matrix,rhs):\n    return scipy_solve(matrix,rhs,assume_a='pos')\n\ndef pack_moments(covariance,mean):\n    return np.column_stack((covariance,mean))\n\nAvailable stage helper (do not redefine):\nimport numpy as np\n\ndef helper(mean, covariance, observed, value, target):\n    mt, mo, t, b, o = partition_gaussian(mean, covariance, observed, target)\n    m = mt + b @ solve_spd(o, value - mo)\n    c = t - b @ solve_spd(o, b.T)\n    return pack_moments(c, m)\n\nImplement solve(mean, covariance, observed, value, target, query, bias, noise_variance).\nCall helper and use pack_moments. Define z=query@X_target+bias+independent noise, after conditioning. Return (m,m+1): full covariance query@C@query.T + diag(noise_variance) in the first m columns and query@conditional_mean+bias in the final column. bias has no contribution to covariance; noise is added after projection, exactly once.",
+          "correct": "import numpy as np\n\n\ndef solve(mean, covariance, observed, value, target, query, bias, noise_variance):\n    z = helper(mean,covariance,observed,value,target)\n    c, mu = z[:,:-1], z[:,-1]\n    return pack_moments(query@c@query.T+np.diag(noise_variance),query@mu+bias)\n",
+          "foil": "import numpy as np\n\n\ndef solve(mean, covariance, observed, value, target, query, bias, noise_variance):\n    z = helper(mean,covariance,observed,value,target)\n    c, mu = z[:,:-1], z[:,-1]\n    return pack_moments(query@np.diag(np.diag(c))@query.T+np.diag(noise_variance),query@mu+bias)\n",
+          "provided_context_sha256": "a9361a6017a07a30da865e2db2fe5df5f091569ef4aff8a013da14b8c819febf"
+        },
+        {
+          "id": "long-affine-mixture-moments-2",
+          "family": "affine-mixture-moments",
+          "stage": 2,
+          "split": "train",
+          "gradient_allowed": true,
+          "fold": 1,
+          "depends_on": [
+            "long-affine-mixture-moments-1"
+          ],
+          "answer_unit": "complete solve function and imports; provided context and stage helper excluded",
+          "stage_weight": 0.5,
+          "family_weight": 1.0,
+          "foil_id": "omit-between-component",
+          "prompt": "You are implementing one numerical stage inside an existing scientific pipeline.\nThe functions in the supplied context are already available, with the exact definitions\nshown below. Reuse them where the stage contract requests them; their conventions are\npart of the interface, not suggestions. The returned program must contain imports and\none complete solve function. Do not copy or redefine the supplied context functions or\nreturn a partially evaluated expression. There is no interactive input, file access,\nrandom sampling, plotting, training or hidden state in this task.\n\nAll real input arrays are finite float64 NumPy arrays; integer index arrays are explicitly\nidentified. Dimensions may vary between calls, so infer them from the inputs. Vectors\nhave shape (n,), not (n,1). Matrix products use conventional column-vector mathematics,\nwhile batches are stored as rows only when explicitly stated. Return a new float64\nndarray of exactly the specified shape even when one dimension equals one. Never\nsqueeze dimensions, return a tuple, or mutate any input or supplied helper result in\nplace. A scalar mathematical quantity must still occupy its specified array position.\nThe inputs satisfy the stated positivity, rank and index conditions; you do not need\nvalidation code or numerical regularization beyond that explicitly requested.\n\nThe stage is deterministic. Preserve cross terms and the ordering specified by the\ncontract. Do not replace a covariance by its diagonal, normalize an already normalized\nquantity again, round intermediate values, clip signs, or add a stabilizing identity\nunless the mathematics below calls for it. Use ordinary double precision. The checks\ncompare numerical values with a tolerance, not expression spelling or implementation\nstyle. Valid output shape alone is insufficient: the result must implement the whole\nstated transformation. For the downstream stage, use the available helper's returned\nmathematical quantity rather than silently substituting a simpler approximation.\n\nScientific context and conventions:\nA mixture model has k>=2 latent components and n independent observations. log_prior\nhas shape (k,) and contains finite logarithms of unnormalized positive prior weights;\nlog_evidence has shape (n,k) and contains finite log likelihoods. Common additive log\noffsets may be large, so normalize through logsumexp rather than exponentiating raw\nvalues. The same prior applies to every observation. The posterior for one observation\nmust not depend on another row. This stage does not estimate the prior or average\nposteriors over observations. The provided row normalizer handles its final axis.\nComponent means have shape (k,d), covariances (k,d,d), and each covariance is SPD.\nThe affine transform maps column vectors x to transform@x+shift, with transform (m,d)\nand shift (m,). The same transform acts on all components. The transformed mean is\nstored as a row in the helper output, while its covariance is a full (m,m) matrix.\nThe shift changes means but not within-component covariance. Across components,\nthe law of total covariance adds the weighted covariance of their transformed means;\na weighted average of within-component covariances alone is incomplete. Conversely,\nthe raw second moment is not a central covariance. Output order is mean coordinates,\nthen covariance row0, row1, and so on; do not pack only its diagonal or triangle.\nThe output always has n rows even for n=1 and m+m*m columns even for m=1. Every\ninput observation gets its own mixture moments, although component parameters are\nshared. No observation noise, sample-covariance correction, posterior resampling or\nMAP-component selection is part of this deterministic calculation. Use the full soft\nposterior probabilities rather than rounding them to a single selected component.\nProvided context functions:\nimport numpy as np\nfrom scipy.special import logsumexp\n\ndef combine_log_weights(log_prior,log_evidence):\n    return log_evidence+log_prior[None,:]\n\ndef normalize_log_rows(z):\n    return np.exp(z-logsumexp(z,axis=1,keepdims=True))\n\ndef affine_components(means,covariances,transform,shift):\n    mu = means@transform.T+shift\n    cov = np.einsum('ai,kij,bj->kab',transform,covariances,transform)\n    return mu,cov\n\nAvailable stage helper (do not redefine):\nimport numpy as np\n\ndef helper(log_prior, log_evidence):\n    z = combine_log_weights(log_prior, log_evidence)\n    return normalize_log_rows(z)\n\nImplement solve(log_prior, log_evidence, means, covariances, transform, shift).\nCall helper and affine_components. For each observation, combine transformed component means and covariances using the law of total covariance, including between-component mean variation. Return (n,m+m*m): first m entries of each row are the mixture mean; remaining m*m entries are the full covariance flattened in C (row-major) order.",
+          "correct": "import numpy as np\n\n\ndef solve(log_prior, log_evidence, means, covariances, transform, shift):\n    p = helper(log_prior,log_evidence)\n    mu, cov = affine_components(means,covariances,transform,shift)\n    answer = []\n    for weights in p:\n        center = weights@mu\n        delta = mu-center\n        c = np.einsum('k,kij->ij',weights,cov)+np.einsum('k,ki,kj->ij',weights,delta,delta)\n        answer.append(np.concatenate((center,c.reshape(-1))))\n    return np.asarray(answer,dtype=np.float64)\n",
+          "foil": "import numpy as np\n\n\ndef solve(log_prior, log_evidence, means, covariances, transform, shift):\n    p = helper(log_prior,log_evidence)\n    mu, cov = affine_components(means,covariances,transform,shift)\n    answer = []\n    for weights in p:\n        center = weights@mu\n        delta = mu-center\n        c = np.einsum('k,kij->ij',weights,cov)\n        answer.append(np.concatenate((center,c.reshape(-1))))\n    return np.asarray(answer,dtype=np.float64)\n",
+          "provided_context_sha256": "c6e036b06770629d9064a9bfeb1b7dbc4829906040b73124068051d3e0d335a3"
+        }
+      ]
+    ]
+  }
+}

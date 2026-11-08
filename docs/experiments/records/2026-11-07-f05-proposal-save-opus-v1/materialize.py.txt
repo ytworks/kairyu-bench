@@ -1,0 +1,28 @@
+import fcntl,hashlib,importlib.util,json,os,subprocess,time
+from pathlib import Path
+R=Path('/mnt/nvme/kairyu/wsp/gemma4-coding-20261104');B=R/'worktrees/kairyu-bench-weight-tools';P=R/'analysis/fresh-purpose-20261107-f05-native-contract-v1';N=P/'materialization-v1';N.mkdir();started=time.time()
+def sha(p):return hashlib.sha256(Path(p).read_bytes()).hexdigest()
+def save(p,d):
+ with Path(p).open('x') as f:json.dump(d,f,indent=2,allow_nan=False);f.write('\n')
+completion=json.loads((P/'completion.json').read_text());spec=P/'proposal/fresh-native-contract-f05.json';assert completion['status']=='completed' and sha(spec)=='48e095d3de304767410ac0956e390ad6db4d211457683dabdc779a4f6bb48df3'
+parent=R/'checkpoints/fresh-native-relative-f04-faststore-v1';receipt=R/'checkpoints/native-faststore-av-v1/receipt.json';target=R/'checkpoints/fresh-native-contract-f05-faststore-v1'
+assert sha(parent/'manifest.json')=='fd189cf276a1219ad627186d2dfb4a895c79768821f247a0b33d9abd8953d8c1'
+assert sha(receipt)=='dbcc501f1f42ca32d9c05fbced2b40d0e0dd49a9446df2fbd0bdd3abd23606f9'
+owner=B/'docs/experiments/scripts/fresh-av-behavior12-native-20261107.py';s=importlib.util.spec_from_file_location('gen',owner);mod=importlib.util.module_from_spec(s);s.loader.exec_module(mod)
+plan=json.loads((R/'analysis/fresh-purpose-20261107-f04-behavior19-native-v1/launch-plan-approved.json').read_text())
+base=[str(R/'infra/weight-tools-ci/bin/python'),'-m','kairyu_bench.wsp.weights.native_faststore']
+create=base+['create',str(receipt),'--receipt-sha256',sha(receipt),'--parent',str(parent/'checkpoint'),'--parent-proof',str(parent/'manifest.json'),'--parent-proof-sha256',sha(parent/'manifest.json'),'--spec',str(spec),'--output',str(target),'--reserve-bytes',str(5*1024**3)]
+env=os.environ.copy();env.update(PYTHONPATH=str(B/'src'),OMP_NUM_THREADS='1',OPENBLAS_NUM_THREADS='1',MKL_NUM_THREADS='1');runs=[]
+with (R/'candidate-evaluation.lock').open('a+') as lock:
+ fcntl.flock(lock.fileno(),fcntl.LOCK_EX|fcntl.LOCK_NB);mod.check_pins(plan);save(N/'preflight.json',mod.preflight(plan))
+ for label,cmd in [('preview',create),('create',create+['--apply']),('verify',base+['verify',str(target/'manifest.json'),'--manifest-sha256','BIND_AFTER_CREATE'])]:
+  if label=='verify':cmd[-1]=sha(target/'manifest.json')
+  t=time.monotonic()
+  with (N/(label+'.stdout')).open('x') as out,(N/(label+'.stderr')).open('x') as err:rc=subprocess.run(cmd,cwd=B,env=env,stdout=out,stderr=err).returncode
+  entry={'phase':label,'command':cmd,'returncode':rc,'elapsed_seconds':time.monotonic()-t};save(N/(label+'-execution.json'),entry);runs.append(entry)
+  if rc:raise RuntimeError(label+' failed; retained without retry')
+ verified=json.loads((N/'verify.stdout').read_text());assert verified['verified'] and verified['changed_elements']==26417 and verified['changed_tensors']==361
+ mod.check_pins(plan);save(N/'postflight.json',mod.preflight(plan))
+ save(N/'completion.json',{'status':'completed','elapsed_seconds':time.time()-started,'runs':runs,'manifest_path':str(target/'manifest.json'),'manifest_sha256':sha(target/'manifest.json'),'checkpoint':str(target/'checkpoint'),'verification':verified,'parent':'F04','model_calls':0,'source_sha256':sha(__file__)})
+save(N/'lock-released.json',{'epoch':time.time(),'released':True})
+print(json.dumps({'status':'completed','seconds':time.time()-started,'checkpoint':str(target/'checkpoint'),'manifest_sha256':sha(target/'manifest.json'),'verification':verified}))

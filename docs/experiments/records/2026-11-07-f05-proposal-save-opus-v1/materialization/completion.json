@@ -1,0 +1,103 @@
+{
+  "status": "completed",
+  "elapsed_seconds": 13.938368082046509,
+  "runs": [
+    {
+      "phase": "preview",
+      "command": [
+        "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/infra/weight-tools-ci/bin/python",
+        "-m",
+        "kairyu_bench.wsp.weights.native_faststore",
+        "create",
+        "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/checkpoints/native-faststore-av-v1/receipt.json",
+        "--receipt-sha256",
+        "dbcc501f1f42ca32d9c05fbced2b40d0e0dd49a9446df2fbd0bdd3abd23606f9",
+        "--parent",
+        "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/checkpoints/fresh-native-relative-f04-faststore-v1/checkpoint",
+        "--parent-proof",
+        "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/checkpoints/fresh-native-relative-f04-faststore-v1/manifest.json",
+        "--parent-proof-sha256",
+        "fd189cf276a1219ad627186d2dfb4a895c79768821f247a0b33d9abd8953d8c1",
+        "--spec",
+        "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f05-native-contract-v1/proposal/fresh-native-contract-f05.json",
+        "--output",
+        "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/checkpoints/fresh-native-contract-f05-faststore-v1",
+        "--reserve-bytes",
+        "5368709120"
+      ],
+      "returncode": 0,
+      "elapsed_seconds": 3.5519433149602264
+    },
+    {
+      "phase": "create",
+      "command": [
+        "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/infra/weight-tools-ci/bin/python",
+        "-m",
+        "kairyu_bench.wsp.weights.native_faststore",
+        "create",
+        "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/checkpoints/native-faststore-av-v1/receipt.json",
+        "--receipt-sha256",
+        "dbcc501f1f42ca32d9c05fbced2b40d0e0dd49a9446df2fbd0bdd3abd23606f9",
+        "--parent",
+        "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/checkpoints/fresh-native-relative-f04-faststore-v1/checkpoint",
+        "--parent-proof",
+        "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/checkpoints/fresh-native-relative-f04-faststore-v1/manifest.json",
+        "--parent-proof-sha256",
+        "fd189cf276a1219ad627186d2dfb4a895c79768821f247a0b33d9abd8953d8c1",
+        "--spec",
+        "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f05-native-contract-v1/proposal/fresh-native-contract-f05.json",
+        "--output",
+        "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/checkpoints/fresh-native-contract-f05-faststore-v1",
+        "--reserve-bytes",
+        "5368709120",
+        "--apply"
+      ],
+      "returncode": 0,
+      "elapsed_seconds": 3.900202505989
+    },
+    {
+      "phase": "verify",
+      "command": [
+        "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/infra/weight-tools-ci/bin/python",
+        "-m",
+        "kairyu_bench.wsp.weights.native_faststore",
+        "verify",
+        "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/checkpoints/fresh-native-contract-f05-faststore-v1/manifest.json",
+        "--manifest-sha256",
+        "09ea569a08f138efd438055d7149f0697dc1d6edd08332f2b6c7c09b1da7c24c"
+      ],
+      "returncode": 0,
+      "elapsed_seconds": 4.326436006929725
+    }
+  ],
+  "manifest_path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/checkpoints/fresh-native-contract-f05-faststore-v1/manifest.json",
+  "manifest_sha256": "09ea569a08f138efd438055d7149f0697dc1d6edd08332f2b6c7c09b1da7c24c",
+  "checkpoint": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/checkpoints/fresh-native-contract-f05-faststore-v1/checkpoint",
+  "verification": {
+    "verified": true,
+    "changed_elements": 26417,
+    "changed_tensors": 361,
+    "delta_l2": 52.29440538303777,
+    "tree_sha256": "fcc4681343c1a0c338157bee767df2024f37290469e55dbc417723717f4ac176",
+    "fresh_full_model_hash": false,
+    "fresh_private_files_sha256": [
+      "chat_template.jinja",
+      "config.json",
+      "generation_config.json",
+      "model.safetensors.index.json",
+      "native.safetensors",
+      "processor_config.json",
+      "tokenizer.json",
+      "tokenizer_config.json"
+    ],
+    "shared_files_prior_full_hash_exact_inode_stat": [
+      "shared.safetensors"
+    ],
+    "private_original_byte_restoration": true,
+    "shared_payload_bytes_read": 0,
+    "no_shared_link_mutation": true
+  },
+  "parent": "F04",
+  "model_calls": 0,
+  "source_sha256": "0b3c63ebe2e922db774add3bd29d42571672db717669f87484f657e977765ad0"
+}

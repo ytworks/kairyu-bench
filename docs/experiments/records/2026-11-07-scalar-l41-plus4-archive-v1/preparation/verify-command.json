@@ -1,0 +1,17 @@
+{
+  "argv": [
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/infra/weight-tools-ci/bin/python",
+    "-B",
+    "-m",
+    "kairyu_bench.wsp.weights.editor",
+    "verify",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/manifests/scalar-l41-plus4.json"
+  ],
+  "environment": {
+    "PYTHONPATH": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-scalar-l41-plus4-lossless-v1/source",
+    "PYTHONDONTWRITEBYTECODE": "1",
+    "OMP_NUM_THREADS": "1",
+    "OPENBLAS_NUM_THREADS": "1",
+    "MKL_NUM_THREADS": "1"
+  }
+}

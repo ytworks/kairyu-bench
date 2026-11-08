@@ -1,0 +1,14 @@
+{
+  "source_sha256": "2224246b23db053f29da12d2c6a21eb5aeb601b33565d7660967ebe8b0c8fdc3",
+  "solver_sha256": "9633698b9eab5d1e9c5e49d399f897d9147ab37f32c3ecd4b61232e3dc5e2d83",
+  "plan_sha256": "8e06264ec98ac6adf4a847603886e4377d61f0c4f1a7c96831fc5ceecd0dfacb",
+  "observed_tensors": 421,
+  "eligible_tensors": 361,
+  "excluded_scalar_tensors": 60,
+  "original_F03_eligible_tensors": 180,
+  "all24constraints_unchanged": true,
+  "rounding_unchanged": true,
+  "checkpoint_cases_collections_unchanged": true,
+  "model_calls": 0,
+  "solver_calls_planned": 1
+}

@@ -1,0 +1,34 @@
+{
+  "status": "passed",
+  "source_sha256": "72e5bdb4566652d5baeae5fb4d9ef71a02f3b5920951891a3f5167f63a39881c",
+  "tests_sha256": "da5b3a82c7db278dc7e25799a004b327775eb8761bdc6534bdf8af6bf3da8b0a",
+  "unittest": {
+    "command": [
+      "python",
+      "-m",
+      "unittest",
+      "discover",
+      "-s",
+      "tests",
+      "-p",
+      "test_f02_payload_release_recipe.py",
+      "-v"
+    ],
+    "tests": 4,
+    "seconds": 0.037,
+    "returncode": 0,
+    "log_sha256": "f09bf59cccfc6b73c763f4563b5633b61cfcca2d2f8863e7e5c061cf9d0e8a4a",
+    "tmpdir": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f03-native-v1/lossless-release-plan-v1/tmp"
+  },
+  "ruff": {
+    "paths": [
+      "docs/experiments/scripts/fresh-f03-payload-release-20261107.py",
+      "tests/test_f02_payload_release_recipe.py"
+    ],
+    "returncode": 0,
+    "stdout": "All checks passed!"
+  },
+  "actual_preview_run": false,
+  "model_gpu_service_lock_calls": 0,
+  "payload_mutations": 0
+}

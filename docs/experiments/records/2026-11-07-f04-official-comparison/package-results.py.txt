@@ -1,0 +1,103 @@
+"""Package completed numerical evidence; no inference or scoring."""
+import gzip
+import hashlib
+import json
+from pathlib import Path
+
+R=Path("/mnt/nvme/kairyu/wsp/gemma4-coding-20261104")
+B=R/"worktrees/kairyu-bench-weight-tools"
+N=R/"analysis/fresh-purpose-20261107-f04-dev30-dp4-v1"
+O=N/"official-comparison-v1"
+D=B/"docs/experiments/records/2026-11-07-f04-official-comparison"
+RUN=R/"results/gemma4-fresh-f04-dev30-dp4-20261107-v1"
+def read(p): return json.loads(p.read_text())
+def sha(data): return hashlib.sha256(data).hexdigest()
+def save(p,d):
+    with p.open("x") as f:f.write(json.dumps(d,indent=2,ensure_ascii=False,allow_nan=False)+"\n")
+s=read(O/"summary.json")
+a=read(R/"analysis/fresh-purpose-20261107-av-dev30-dp4-v1/independent-audit-v2/summary.json")
+c=read(O/"candidate-audit/summary.json")
+assert a["verified_complete"] and c["verified_complete"]
+files=[(p,p.name) for p in O.iterdir() if p.is_file()]
+files += [(p,"candidate-audit-"+p.name) for p in (O/"candidate-audit").iterdir() if p.is_file()]
+files += [(N/name,name) for name in ["actual-runner.json","run-start-verified.json","owner-complete.json"]]
+files += [(RUN/name,"official-"+name) for name in ["run.json","report.json"]]
+records=[]
+for source,name in files:
+    data=source.read_bytes()
+    compressed=len(data)>100000
+    target=D/(name+".gz" if compressed else name)
+    with target.open("xb") as f:f.write(gzip.compress(data,mtime=0) if compressed else data)
+    if compressed:assert gzip.decompress(target.read_bytes())==data
+    records.append({"source":str(source),"file":target.name,"source_bytes":len(data),"source_sha256":sha(data),"stored_sha256":sha(target.read_bytes()),"lossless_gzip":compressed})
+save(D/"copy-receipt.json",records)
+rows=read(O/"code-90-paired-items.json")
+step_rows=[]
+for row in rows:
+    if row["source"]=="scicode":
+        aa={x["step"]:x for x in row["base_detail"]["samples"][0]["step_diagnostics"]}
+        bb={x["step"]:x for x in row["candidate_detail"]["samples"][0]["step_diagnostics"]}
+        assert aa.keys()==bb.keys()
+        step_rows += [{"step":k,"base":aa[k],"candidate":bb[k],"changed_pass_status":aa[k]["passed"]!=bb[k]["passed"]} for k in aa]
+assert len(step_rows)==39
+save(D/"scicode-all-39-step-pairs.json",step_rows)
+usage={}
+for label in ("base","candidate"):
+    source=s["source_report"][label]
+    agents=[x[label] for x in s["agents"]]
+    tb=[x for x in agents if x["id"].startswith("terminal")]
+    swe=[x for x in agents if x["id"].startswith("swe")]
+    usage[label]={
+        "report_source_prompt_tokens":sum(x["prompt_tokens"] for x in source.values()),
+        "report_source_completion_tokens":sum(x["completion_tokens"] for x in source.values()),
+        "report_source_usage_scope":"Report has zero placeholders for agent/logprob sources; these are not complete total run token counts.",
+        "terminal_reported_episodes":sum(x["episodes"] for x in tb),
+        "terminal_tool_calls":sum(x["tool_calls"] for x in tb),
+        "terminal_input_tokens":sum(x["input_tokens"] for x in tb),
+        "terminal_output_tokens":sum(x["output_tokens"] for x in tb),
+        "swe_assistant_messages":sum(x["assistant_messages"] for x in swe),
+        "swe_announced_tool_calls":sum(x["announced_tool_calls"] for x in swe),
+        "swe_api_calls":sum(x["api_calls"] for x in swe),
+        "swe_persisted_input_tokens":sum(x["input_tokens"] for x in swe),
+        "swe_persisted_output_tokens":sum(x["output_tokens"] for x in swe),
+        "swe_usage_incomplete_cases":[x["id"] for x in swe if not x["usage_complete_relative_api_calls"]],
+        "swe_usage_scope":"Persisted assistant responses only; unrecorded model-stat calls not zero-filled.",
+    }
+save(D/"usage-summary.json",usage)
+text="""# F04: complete canonical dev30 comparison — 2026-11-07
+
+**All2,338 selected items were scored, with0 unscored/API errors; all90 code items and all14 named areas are complete.** F04's official four-source code mean is **72.9365079365**, exactly equal to existing AV. Overall is **76.9910864328**, versus AV **76.7200592915** (+0.2710271413 points). The >90 code objective is not achieved. This comparison assigns no adoption decision; the parent retains that decision with all-domain tradeoffs visible. **No AV inference was repeated.**
+
+## Code: equal source means, six item changes
+
+| Source | Selected | AV | F04 | Delta points |
+|---|---:|---:|---:|---:|
+"""
+for name in ("humaneval-plus","livecodebench","mbpp-plus","scicode"):
+    x=s["sources"][name]
+    text+=f"| {name} | {x['items']} | {100*x['base']:.9f} | {100*x['candidate']:.9f} | {100*x['delta']:+.9f} |\n"
+text+="\nHE29/30, LCB15/20 and MBPP23/30 are unchanged in aggregate. SciCode averages10 per-problem partial-credit scores; all10 scores **and all39 step pass/fail statuses** are unchanged. All90 paired rows, including84 equal cases and every existing failure, are retained.\n\n| Changed item | AV | F04 | Saved official diagnostic |\n|---|---:|---:|---|\n"
+diagnostics={"humaneval-plus:HumanEval/151":"base remains pass; plus pass → fail","humaneval-plus:HumanEval/152":"base/plus fail → pass","livecodebench:3777":"fail → pass","livecodebench:abc390_g":"pass → fail","mbpp-plus:Mbpp/641":"base/plus fail → pass","mbpp-plus:Mbpp/801":"base/plus pass → fail"}
+for x in s["code_changed_items"]:
+    text+=f"| {x['id']} | {x['base_score']:g} | {x['candidate_score']:g} | {diagnostics[x['id']]} |\n"
+text+="\n## All14 areas\n\nAll2,242 capability items pair exactly:51 improve,50 worsen,2,141 are equal. The96 diagnostic items are separate. Each area uses an equal-weight mean over its official sources; overall is the equal mean over14 areas. The code difference bootstrap interval is −4.5833 to +5.0000 points and overall interval −2.4031 to +3.0310: a single paired run does not establish a repeatable gain.\n\n| Area | AV | F04 | Delta points |\n|---|---:|---:|---:|\n"
+for name,x in s["areas"].items():
+    text+=f"| {name} | {100*x['base']:.9f} | {100*x['candidate']:.9f} | {100*x['delta']:+.9f} |\n"
+text+="\nNotable measured tradeoffs: long-context +5.7684, expert +4.1667, reasoning −6.0145 and vision −2.0833 points. Code and agents have unchanged source means despite item changes. These are descriptive results, not a localized weight-to-ability attribution.\n\n## Every source, without exclusions\n\nCapability source means below are0–1 (higher is better). Probe source values are per-item NLL (lower is better); their positive raw deltas are losses. All32 sources retain their full canonical selected counts.\n\n| Source | Items/scored | AV mean | F04 mean | Raw + / − / = |\n|---|---:|---:|---:|---|\n"
+for name,x in s["sources"].items():
+    text+=f"| {name} | {x['items']}/{x['items']} | {x['base']:.9f} | {x['candidate']:.9f} | {x['positive_raw_deltas']} / {x['negative_raw_deltas']} / {x['equal']} |\n"
+text+="\nProbe-code mean NLL4.0225001185 →3.9599488475 (25 lower,15 higher across40 items), while code90 remains tied. The comparison's probe-position-weighted results are separately retained with their own denominators; they are not substituted for capability points.\n\n## Work, time and closure\n\n| Measure | AV | F04 |\n|---|---:|---:|\n"
+for key in ("wall_seconds","load_seconds","chat_api_calls","logprob_api_calls"):
+    text+=f"| {key} | {s['timing']['base'][key]} | {s['timing']['candidate'][key]} |\n"
+for key in ("report_source_prompt_tokens","report_source_completion_tokens","terminal_reported_episodes","terminal_tool_calls","swe_assistant_messages","swe_announced_tool_calls","swe_api_calls"):
+    text+=f"| {key} | {usage['base'][key]} | {usage['candidate'][key]} |\n"
+text+="\nWall and the report's generation_seconds both start **before data loading**. F04 uses1940.2s (32.34min),78.7s below AV2018.9s. This is observed elapsed time, not an isolated throughput estimate. Source-report token totals exclude agent/logprob usage (reported placeholders are zero); separate persisted agent token counts and missing-usage cases are in usage-summary.json. Do not interpret them as a complete billing total.\n\nTerminal-Bench:5/6 pass (Windows fails), same six item outcomes as AV;56 reported episodes/140 tools. SWE:1/4 pass in both arms, with qutebrowser0→1 and Openlibrary1→0; other two remain0. F04 SWE uses127 saved assistant messages/tools and129 reported API calls. Terminal reported episodes and SWE saved assistant messages are different definitions.\n\n| Agent item | AV score | F04 score | AV/F04 steps | AV/F04 tools |\n|---|---:|---:|---:|---:|\n"
+for row in s["agents"]:
+    x,y=row["base"],row["candidate"]
+    text+=f"| {row['id']} | {x['score']} | {y['score']} | {x.get('episodes',x.get('assistant_messages'))}/{y.get('episodes',y.get('assistant_messages'))} | {x.get('tool_calls',x.get('announced_tool_calls'))}/{y.get('tool_calls',y.get('announced_tool_calls'))} |\n"
+text+="\nF04 finished normally: owner returncode0, owner elapsed1946.714824s, services_changed_by_owner=false; all four inference queues were0 at completion. No stopping signal or timeout change was used. Polyglot completed/pass in250.205762s, so the F03 interrupted timeout outcome is not repeated here. HTTP-client traces record4846 requests plus10 non-request trial records, errors0/retry_attempts0. These counters do **not** establish zero nested agent retries.\n\nThe separately authorized nine-case authored validation overlapped loading for10.988155s (epoch1794051738.7987063–1794051749.7868617), using CPU1/shares128 and no GPU/model call. This overlap is recorded rather than assumed to have zero timing impact; see the linked authored validation record.\n\n## Exact comparison and validation boundary\n\nSame f91 immutable runner, af9 serving image, TP2×4/MTP4, concurrency256/32/4, thinking/token settings, manifest a3a0b60e…, selected IDs and item budgets were verified. Actual runner CIDd991fa638c9d7446e39500879dbca381b2d3835dd24ba7a2a9a0181474eab469 and four exact serving CIDs were observed43.006s after owner start; the actual observation timestamp is retained, not represented as the launch instant. F04 tree7b9e9488e3cd4e0b6c5f61ae341e5eeccdf5bd31c46d1c8354950dbc29d0f924 is bound to runtime evidence.\n\nExisting fresh-n30-complete-audit.py SHA51898bdb849a632a1837b6c4b6166ff8456854c11fdce6077c15d6106ffe73b5 ran once with --expected-tree and **without --allow-partial** (3.823s). Existing CPU package compare ran once without --partial (4.437s), bypassing wrapper/image builds. All2338 IDs/metadata, source/area means, raw numeric score/error state and exact official report reconstruction pass. Existing AV run/report/items hashes and its prior audit were reused. No new test suite or benchmark was run for packaging.\n\n[Exact commands and all numerical records](records/2026-11-07-f04-official-comparison/README.md) retain full2338 paired rows, all90 code rows, all39 SciCode steps, failures/equal results,32 source means,14 areas, runtime proofs, usage/timing, commands and SHA/gzip identities. No live progress log, credential, reasoning text, benchmark gold or generated public answer is included in this compact package. No DeepSWE result or Hugging Face publication is claimed.\n"
+doc=B/"docs/experiments/2026-11-07-f04-complete-official-result.md"
+with doc.open("x") as f:f.write(text)
+(D/"README.md").write_text("# F04 complete official comparison\n\nAll2338 selected/scored rows, all90 code pairs, all39 SciCode steps,32 source means and14 areas are preserved. Code ties existing AV; no baseline inference repeated. collect-completed.py.txt and the existing audit/CPU compare ran once successfully after completion, without partial flags. copy-receipt.json records exact source paths and lossless gzip/file hashes. source/report tokens and agent usage retain distinct scopes. Existing runtime proof was captured43.006s after start. Live progress and raw model text are not copied.\n\nAdditional authored-case CPU validation overlapped loading; its independent complete report is ../2026-11-07-behavior-followup9/validation-report.json.gz. No adoption decision is assigned by this record.\n")
+(D/"SHA256SUMS").write_text("".join(f"{sha(p.read_bytes())}  {p.name}\n" for p in sorted(D.iterdir()) if p.is_file() and p.name!="SHA256SUMS"))
+print(json.dumps({"document":str(doc),"document_sha256":sha(doc.read_bytes()),"files":len(list(D.iterdir())),"bytes":sum(p.stat().st_size for p in D.iterdir()),"usage":usage}))

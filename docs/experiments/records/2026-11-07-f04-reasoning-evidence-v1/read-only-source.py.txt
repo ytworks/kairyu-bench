@@ -1,0 +1,44 @@
+from pathlib import Path
+import collections,json,hashlib,time
+R=Path("/mnt/nvme/kairyu/wsp/gemma4-coding-20261104");run=R/"results/gemma4-fresh-f04-dev30-dp4-20261107-v1"
+items=[json.loads(l) for l in (run/"items.jsonl").read_text().splitlines()]
+code={x["id"]:x for x in items if x["area"]=="code"}
+responses=[json.loads(l) for l in (run/"responses.jsonl").read_text().splitlines()]
+rows=[]
+def walk(value,path,out):
+ if isinstance(value,dict):
+  if "reasoning" in value or "reasoning_content" in value:
+   reason=value.get("reasoning",value.get("reasoning_content"))
+   out.append(dict(path=path,reasoning_type=type(reason).__name__,reasoning_characters=len(reason) if isinstance(reason,str) else None,reasoning_utf8_bytes=len(reason.encode()) if isinstance(reason,str) else None,content_characters=len(value["content"]) if isinstance(value.get("content"),str) else None,finish_reason=value.get("finish_reason"),prompt_tokens=value.get("prompt_tokens"),completion_tokens=value.get("completion_tokens"),seconds=value.get("seconds")))
+  for k,v in value.items():walk(v,path+"."+k,out)
+ elif isinstance(value,list):
+  for i,v in enumerate(value):walk(v,path+"["+str(i)+"]",out)
+for r in responses:
+ if r["id"] in code:
+  calls=[];walk(r.get("outcome"),"outcome",calls)
+  item=code[r["id"]];rows.append(dict(id=r["id"],source=item["source"],kind=item["kind"],score=item["score"],error=r["error"],recorded_reasoning_nodes=calls))
+trace=R/"analysis/fresh-purpose-20261107-f04-dev30-dp4-v1/http-trace/requests-client.jsonl"
+tr=[json.loads(l) for l in trace.read_text().splitlines()]
+code_tr=[r for r in tr if r.get("item_id") in code]
+D=R/"analysis/fresh-purpose-20261107-f04-reasoning-evidence-v1";D.mkdir()
+sha=lambda p:hashlib.sha256(p.read_bytes()).hexdigest()
+summary=dict(status="read_only_existing_WSP",run_id=run.name,code_items=len(rows),
+ code_items_with_reasoning_nodes=sum(bool(r["recorded_reasoning_nodes"]) for r in rows),
+ nodes_total=sum(len(r["recorded_reasoning_nodes"]) for r in rows),
+ nodes_nonempty=sum(c["reasoning_characters"]>0 for r in rows for c in r["recorded_reasoning_nodes"] if c["reasoning_characters"] is not None),
+ code_http_trace_rows=len(code_tr),code_http_trace_ids=len({r["item_id"] for r in code_tr}),
+ http_trace_rows=len(tr),usage_completion_details_null=sum(r.get("usage",{}).get("completion_tokens_details") is None for r in tr),
+ explicit_reasoning_token_count_observed=False,
+ limitations=["reasoning text is returned output, not a proof of internal reasoning",
+ "character and byte lengths are measurable; no per-reasoning token count is saved",
+ "completion_tokens includes combined generated output and cannot isolate reasoning",
+ "nested model_responses may include per-call text; aggregated top-level text is not an extra independent call",
+ "compare exact item/sample/path and call structure; different tool/substep trajectories are not aligned calls"],
+ input_pins={str(p):sha(p) for p in (run/"items.jsonl",run/"responses.jsonl",trace)},model_calls=0)
+(D/"all90-code-reasoning-fields.json").write_text(json.dumps(rows,indent=2)+"\n");(D/"summary.json").write_text(json.dumps(summary,indent=2)+"\n")
+print(json.dumps(summary));print("PER_SOURCE",dict(collections.Counter((r["source"],len(r["recorded_reasoning_nodes"])) for r in rows)))
+N=R/"analysis/fresh-purpose-20261107-f04-mbpp-lora-training-v1"
+p=N/"completion.json"
+if p.exists():
+ c=json.loads(p.read_text());print("CLOSURE",json.dumps({k:c.get(k) for k in ("status","elapsed_seconds","restored","protected_exact","error_type","after_queues")}));print("closure_sha",sha(p))
+else:print("OWNER_RESTORING")

@@ -1,0 +1,15 @@
+{
+  "pid": 1665207,
+  "plan_sha256": "2869688390879d6f669b80cfb33fb84126c8178ea77b527bce9e8d12cb204e23",
+  "started_epoch": 1794057588.1514275,
+  "argv": [
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/infra/weight-tools-ci/bin/python",
+    "-B",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/worktrees/kairyu-bench-weight-tools/docs/experiments/scripts/fresh-av-native-gpu4-20261107.py",
+    "--plan",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f04-mbpp-lora-training-v1/owner-plan-root-approved.json",
+    "--run",
+    "--approved-plan-sha256",
+    "2869688390879d6f669b80cfb33fb84126c8178ea77b527bce9e8d12cb204e23"
+  ]
+}

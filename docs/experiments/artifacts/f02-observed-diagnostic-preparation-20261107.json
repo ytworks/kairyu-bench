@@ -1,0 +1,202 @@
+{
+  "status": "prepared_not_executed",
+  "plan_sha256": "01d248e835718ca18bcf980518f179a0dbf4b38100554c60d608dcf719c55b18",
+  "plan": {
+    "schema_version": 1,
+    "status": "prepared_waiting_root_apply_healthy_cid_and_lock_release",
+    "created_at": 1794028725.0719278,
+    "root": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-av-live10-v1",
+    "original_container": {
+      "name": "gemma-4-31b-8gpu-gemma-0-1",
+      "id": "PENDING_F02_SERVED_CONTAINER_ID",
+      "image": "sha256:af9e746b913088cbf6c4464a31d6904a6b7e1d3ba62f0895362ddf13595f7abe",
+      "created": null,
+      "checkpoint": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/checkpoints/fresh-code-joint-f02",
+      "checkpoint_readonly": true,
+      "physical_gpus": [
+        "0",
+        "1"
+      ]
+    },
+    "topology": {
+      "tp": 2,
+      "replicas": 1,
+      "mtp_tokens": 4
+    },
+    "capture": {
+      "output": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f02-live10-v1/capture",
+      "storage_bytes": 2147483648,
+      "prefill_positions": 8,
+      "decode_offsets": [
+        0,
+        1,
+        2,
+        4,
+        8,
+        16,
+        32,
+        64,
+        128,
+        256,
+        512,
+        1024,
+        2048,
+        4096,
+        8192,
+        16384
+      ],
+      "sites": "all 60 layers x residual/attention/mlp",
+      "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/runtime/fresh-purpose-20261107-f02-live10-v1/observer-src",
+      "runtime_cache": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f02-live10-v1/compile-cache",
+      "backup": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f02-live10-v1/deployment",
+      "source_template": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/runtime/fresh-purpose-20261107-av-live10-v1/observer-src"
+    },
+    "wsp": {
+      "endpoint": "http://gemma-0:8000/v1",
+      "logprob_endpoints": [
+        "http://gemma-0:8000/v1"
+      ],
+      "tier": 10,
+      "split": "dev",
+      "chat_concurrency": 32,
+      "logprob_concurrency": 8,
+      "agent_concurrency": 1,
+      "run_id": "gemma4-fresh-f02-observed-dev10-20261107-v1",
+      "results_dir": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/results",
+      "only": null,
+      "excluded_items": [],
+      "expected_items": 778,
+      "expected_areas": 14,
+      "runner_tag": "kairyu-bench:fresh-f02-live10-20261107-v1"
+    },
+    "environment": {
+      "KAIRYU_BENCH_CACHE_DIR": "/mnt/nvme/kairyu/bench-cache/wsp",
+      "KAIRYU_BENCH_DOCKER_SOCKET": "/mnt/nvme/kairyu/docker/wsp/run/docker.sock",
+      "KAIRYU_BENCH_DOCKER_NETWORK": "gemma-4-31b-8gpu_default",
+      "KAIRYU_BENCH_CLEAN_TASK_IMAGES": "0",
+      "KAIRYU_BENCH_RUNNER_IMAGE_ID": "sha256:f91bdcf997af6d7b194bec229812fd018277158f6795de7d91e58448936e7ad8"
+    },
+    "preflight": {
+      "status": "pending candidate save/deploy and renewed live checks",
+      "requires": "root authorizes after finite probe and review; resolve saved checkpoint and exact served CID; set approved_for_execution only then"
+    },
+    "close_policy": "After WSP completion and idle/drained workers restore exact original CID; preserve incomplete closed acknowledgement; merge raw capture after restoration. Never infer missing tokens, steps or unknown scores as zero.",
+    "prohibited": "No service except named gemma-0 may be stopped/recreated; no checkpoint writes; no inherited candidate decisions; no source/question exclusions.",
+    "source_pins": {
+      "baseline_reference": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-av-live10-v1/source-dependencies.json"
+    },
+    "incident": {
+      "historical_baseline_incident_record": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-av-live10-v1/plan.json",
+      "new_execution_started": false
+    },
+    "baseline_evidence_dir": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-av-live10-v1",
+    "expected_checkpoint_sha256": "46680f4066f57c1596a1f4c66b67d23929c96b325943d981c6d74260cdbb3f5c",
+    "diagnostic_protocol": {
+      "amendment_path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/worktrees/kairyu-bench-weight-tools/docs/experiments/2026-11-07-f02-transfer-amendment.md",
+      "amendment_sha256": "1b6df2b79abb7d4db023651df632509a49d0b35e816c40c6d342d3884691a1ae",
+      "one_complete_canonical_dev10_run": true,
+      "failed_proxy_gate_retained": true,
+      "repeat_or_rescue_not_authorized_by_this_plan": true,
+      "baseline_run": "gemma4-fresh-av-observed-dev10-20261107-v1"
+    },
+    "checkpoint_verification": {
+      "freeze_input_path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f02/materialization/full-verification-freeze-input.json",
+      "freeze_input_sha256": "f897d77bf5e4bf219f6c8391cbcb738c780912d1a666ff6ac5cb4ae150fa8715",
+      "candidate_tree_sha256": "46680f4066f57c1596a1f4c66b67d23929c96b325943d981c6d74260cdbb3f5c",
+      "manifest_sha256": "1cb562c4d9fbd1fe3bc6a2f2c489b5b482406a5d31ff086ca0f2b48a49d47880",
+      "verify_sha256": "3d5b609ef17bc3a1ba1ad064af55e1beac36174e722a3e72339179f7a734a8c5",
+      "initialization_hash_policy": "Existing observe init performs a fresh full identity hash; no receipt reuse capability or bypass is used."
+    }
+  },
+  "preview": {
+    "mode": "preview",
+    "status": "prepared_waiting_root_apply_healthy_cid_and_lock_release",
+    "run_id": "gemma4-fresh-f02-observed-dev10-20261107-v1",
+    "checkpoint_planned": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/checkpoints/fresh-code-joint-f02",
+    "runner_image_id": "sha256:f91bdcf997af6d7b194bec229812fd018277158f6795de7d91e58448936e7ad8",
+    "observer_files_verified": 89,
+    "checkpoint_payload_hashed": false,
+    "serving_mutated": false,
+    "benchmark_started": false
+  },
+  "cache_parity": {
+    "kind": "CPU-only read-only network-isolated cache metadata parity",
+    "baseline_receipt_sha256": "4db36f7d2cbea025543858d0aa91cbacafd10888e782ba8a9947210cc869396d",
+    "runner_image_id": "sha256:f91bdcf997af6d7b194bec229812fd018277158f6795de7d91e58448936e7ad8",
+    "program": "import json,sys,hashlib,re\nfrom pathlib import Path\nfrom email.parser import Parser\nbaseline=json.load(sys.stdin)\ndef norm(s):return re.sub(r\"[-_.]+\",\"-\",s).lower()\nresult={\"venvs\":{},\"official_sources\":{}}\nfor name,record in baseline[\"venvs\"].items():\n if name.startswith(\".\"):continue\n versions={}\n for p in (Path(\"/venvs\")/name).glob(\"lib/python*/site-packages/*.dist-info/METADATA\"):\n  meta=Parser().parsestr(p.read_text())\n  versions[norm(meta[\"Name\"])]=meta[\"Version\"]\n wanted={norm(k):v for k,v in record[\"versions\"].items()}\n result[\"venvs\"][name]={\"equal\":versions==wanted,\"count\":len(versions),\"differences\":{k:{\"expected\":wanted.get(k),\"actual\":versions.get(k)} for k in sorted(set(versions)|set(wanted)) if versions.get(k)!=wanted.get(k)}}\nfor name,record in baseline[\"official_sources\"].items():\n data=(Path(\"/sources\")/name/\".kairyu-bench-revision\").read_bytes()\n sha=hashlib.sha256(data).hexdigest()\n result[\"official_sources\"][name]={\"equal\":sha==record[\"revision_file_sha256\"],\"revision_file_sha256\":sha}\nresult[\"all_equal\"]=all(x[\"equal\"] for group in result.values() for x in group.values())\nprint(json.dumps(result))\n",
+    "program_sha256": "65a383e16ec69e44a38dc15a3ca9906dab333269de7f0a65a1a1f9d052fc0cd4",
+    "result": {
+      "venvs": {
+        "v2-wsp-bfa41681630c30a9": {
+          "equal": true,
+          "count": 142,
+          "differences": {}
+        },
+        "v2-wsp-evalplus-0491c36f4ce75057": {
+          "equal": true,
+          "count": 88,
+          "differences": {}
+        },
+        "v2-wsp-scicode-1270160aa561a511": {
+          "equal": true,
+          "count": 47,
+          "differences": {}
+        }
+      },
+      "official_sources": {
+        "bbeh-80d12ca916b7158f22293fcf3144f4d3d854d4be": {
+          "equal": true,
+          "revision_file_sha256": "7073ddb1be79552586245917ea2fd9f72838fe00d894adb88c5a42f6727d19a7"
+        },
+        "harbor-ea2fee78517f2e591bad69fcf1e6731f9c23ec99": {
+          "equal": true,
+          "revision_file_sha256": "f69cdf9782227e77fdf80ba569c6dc363d3dd37954ef99349caa6bf5d781fc57"
+        },
+        "ifbench-cd189a9c2889526d8af901d2103fd3e1ffcea6df": {
+          "equal": true,
+          "revision_file_sha256": "83423adae4130d8fce815f566c635c7704492e525b641590da84becb78faf650"
+        },
+        "ifeval-e6890f85757dd84e27ca6df2dd30651dafad28e0": {
+          "equal": true,
+          "revision_file_sha256": "0de9e431d73a7b37bdeace532d67a3dc5fdd61dc6da814e1d30cb1a476e4bafc"
+        },
+        "livecodebench-28fef95ea8c9f7a547c8329f2cd3d32b92c1fa24": {
+          "equal": true,
+          "revision_file_sha256": "32f9a486cb84349a9428cb633ef3ed025ba5fbe89b819c1754b97959d369c8ad"
+        },
+        "mini-swe-agent-a83fcae82d2a08f0ee0c688f9d137b3566c097f8": {
+          "equal": true,
+          "revision_file_sha256": "df5a264a5c45dba57ce8e673fbe2517cf47b57105d00f115c12bb490cee90b76"
+        },
+        "musr-b1f4d4168a9cfc6760e8b74d728e4516023dfaa5": {
+          "equal": true,
+          "revision_file_sha256": "5007bfad9fa05dcbe28e659d5ab661760daf902d9549de683515c4e5c5e55af6"
+        },
+        "ruler-db43f92ff634bbce1c33d1fb15858aec4bba509a": {
+          "equal": true,
+          "revision_file_sha256": "5ce2ce3ed5a37d585d565797e098dfdf63bbc38bbf24859ae274eb93668cba2f"
+        },
+        "scicode-e3158ea011d4235245a547460d3688d7ccbf9900": {
+          "equal": true,
+          "revision_file_sha256": "9c79d35e388d75c21369e0ef870f1e1847d63ed9c1e15026931d3a18f50eb6ac"
+        },
+        "swe-bench-pro-ca10a60a5fcae51e6948ffe1485d4153d421e6c5": {
+          "equal": true,
+          "revision_file_sha256": "3f7c8856e5e0a01ad7e94a8ca47efa2c5d44004308e45ed1980fd9757b8f819c"
+        },
+        "xstest-d7bb5bd738c1fcbc36edd83d5e7d1b71a3e2d84d": {
+          "equal": true,
+          "revision_file_sha256": "fa7f317de9ec15e7b96acbf9a2f4eddaf1ed455814e0ccad3f8eb754a68f9af3"
+        }
+      },
+      "all_equal": true
+    },
+    "elapsed_seconds": 0.8163619041442871,
+    "host_uid": 1003,
+    "gpu_requested": false,
+    "serving_changed": false,
+    "limits": "Package version and source revision-marker parity, not a full package payload attestation."
+  },
+  "owner_script_sha256": "ed51d091c05924a09ae3a3fa27c549d50286f0d9ed9fbc3912d1b31c0ac0a3a9",
+  "cpu_observation_dispatch": "Existing python -m kairyu_bench CLI with frozen PYTHONPATH; host wrapper prepends mutable repo source, so only official WSP uses that wrapper."
+}

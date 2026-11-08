@@ -7,6 +7,7 @@ import itertools
 import json
 import threading
 import time
+import uuid
 from dataclasses import dataclass, field
 from typing import Any
 from urllib.error import HTTPError, URLError
@@ -27,19 +28,34 @@ def _post(url: str, payload: dict[str, Any], *, api_key: str | None, timeout: fl
         headers["Authorization"] = f"Bearer {api_key}"
     body = json.dumps(payload).encode("utf-8")
     last: Exception | None = None
-    for delay in (*RETRY_DELAYS_S, None):
+    from kairyu_bench.wsp.observe.tracing import begin_request
+
+    call_id = uuid.uuid4().hex
+    for attempt_index, delay in enumerate((*RETRY_DELAYS_S, None)):
+        observation = begin_request(url, payload, call_id=call_id, attempt_index=attempt_index)
+        request_headers = {**headers, **(observation.headers if observation else {})}
         try:
-            with urlopen(Request(url, data=body, headers=headers, method="POST"), timeout=timeout) as response:
+            with urlopen(Request(url, data=body, headers=request_headers, method="POST"), timeout=timeout) as response:
                 decoded = json.load(response)
             if not isinstance(decoded, dict):
                 raise ApiError(f"{url}: non-object response")
+            if observation:
+                observation.finish(response=decoded)
             return decoded
+        except ApiError as error:
+            if observation:
+                observation.finish(error=type(error).__name__)
+            raise
         except HTTPError as error:
+            if observation:
+                observation.finish(error=f"HTTP {error.code}")
             detail = error.read().decode("utf-8", "replace")[:500]
             if error.code < 500:
                 raise ApiError(f"{url}: HTTP {error.code}: {detail}") from error
             last = ApiError(f"{url}: HTTP {error.code}: {detail}")
         except (URLError, TimeoutError, ConnectionError, json.JSONDecodeError) as error:
+            if observation:
+                observation.finish(error=type(error).__name__)
             last = error
         if delay is None:
             break

@@ -1,0 +1,40 @@
+"""Finalize F06 records after successful full verify; no model/payload mutations."""
+from pathlib import Path
+import gzip,hashlib,json,shutil,time
+R=Path("/mnt/nvme/kairyu/wsp/gemma4-coding-20261104")
+N=R/"analysis/fresh-purpose-20261107-f04-mbpp-lora-training-v1"
+B=R/"worktrees/kairyu-bench-weight-tools"
+D=B/"docs/experiments/records/2026-11-07-f06-materialization"
+def sha(p):return hashlib.sha256(p.read_bytes()).hexdigest()
+def copy_new(p,t):
+ t.parent.mkdir(parents=True,exist_ok=True)
+ if t.exists():
+  assert p.read_bytes()==t.read_bytes(),str(t)
+ else:shutil.copyfile(p,t)
+completion=json.loads((N/"materialization-f06-v2/completion.json").read_text())
+assert completion["status"]=="completed"
+for dirname in ["merge-preparation-v1","merge-preparation-v2","materialization-f06-v1","materialization-f06-v2","merge-readonly-fix-v1","saved-retention-v1"]:
+ for p in sorted((N/dirname).rglob("*")):
+  if p.is_file():copy_new(p,D/dirname/p.relative_to(N/dirname))
+identity=json.loads((N/"materialization-f06-v2/fullcandidateidentity.json").read_text())
+report=json.loads((N/"saved-retention-v1/report.json").read_text())
+manifest=Path(identity["manifest"]["path"])
+assert sha(manifest)==identity["manifest"]["sha256"]==completion["manifest_sha256"]
+assert gzip.decompress((D/"manifest.json.gz").read_bytes())==manifest.read_bytes()
+result={"status":"completed_materialization_and_full_verify","candidate":"F06","parent":"F04","v1_failed_create_seconds":120.14311219099909,"v2":completion,"final_identity_sha256":sha(N/"materialization-f06-v2/fullcandidateidentity.json"),"record_only_retention_sha256":sha(N/"saved-retention-v1/report.json"),"retention":report["aggregate"],"scientific_caveats":["Saved norm ratio is not direction cosine or a capability metric.","Whole-checkpoint denominator not measured; 410 projection norm denominator is complete for that scope.","Post-verify full stat is fresh metadata; full hashes are from existing completed verifier, not another hash pass.","Original candidate internal verify snapshot was compared but not separately saved."],"cosine_extra_audit_performed":False,"holdout_NLL_performed":False,"model_calls":0,"root_requested_scope_completed":True,"source_sha256":sha(Path(__file__)),"closed_epoch":time.time()}
+out=D/"final-closure.json"
+assert not out.exists()
+out.write_text(json.dumps(result,indent=2,allow_nan=False)+"\n")
+doc=B/"docs/experiments/2026-11-07-f06-materialization.md"
+text=doc.read_text()
+text=text.replace("The second explicitly authorized create completed; independent saved-model verification is running. No capability gain is claimed.","The second explicitly authorized create and independent saved-model verify both completed. No capability gain is claimed.")
+text=text.replace("| v2 verify | In progress | Pending |","| v2 verify | Pass; exact BF16 regeneration and all source/candidate hashes match | 297.805 s |")
+text+="\n\nThe complete second operation took 742.881 s, including preview and metadata guards; all stage stderr was empty and the owner exited 0. Parent file stat continuity passed, candidate full tree is 0fc0ef29346c4d8a06bea8570dee96d8e0ba7038fee0d5aded8db57852474ec5, and the external manifest SHA is 22b0603cc2dc9a2060c76f8baf99c28eceac08b56116727173bc61a719b5c0d4. The verifier confirms every touched BF16 block by regeneration, every nonrecipe span by comparison, and all 9 source plus 9 candidate file hashes. Its internal before/after metadata snapshots matched. The separate deployment identity stores fresh post-verify POSIX stat with every file mtime/ctime no later than verify output; it does not claim that the internal snapshot had been separately persisted. Candidate files are all independent nlink-1 files.\n\nThe current complete record is [final closure](records/2026-11-07-f06-materialization/final-closure.json), with [full candidate identity](records/2026-11-07-f06-materialization/materialization-f06-v2/fullcandidateidentity.json), [verify receipt](records/2026-11-07-f06-materialization/materialization-f06-v2/verify-execution.json), and the [archive index](records/2026-11-07-f06-materialization/SHA256SUMS). No additional cosine scan, holdout NLL, parent repeat, or model call was performed. Root prioritized the authorized complete canonical WSP evaluation after this byte verification and norm audit; deployment and capability evaluation are separate from this record.\n"
+doc.write_text(text)
+index=D/"SHA256SUMS"
+index.write_text("".join(sha(p)+"  "+str(p.relative_to(D))+"\n" for p in sorted(D.rglob("*")) if p.is_file() and p!=index))
+for line in index.read_text().splitlines():
+ digest,name=line.split("  ",1)
+ assert sha(D/name)==digest
+print(json.dumps({"files":len(index.read_text().splitlines()),"total_bytes":sum(p.stat().st_size for p in D.rglob("*") if p.is_file()),"index_sha256":sha(index),"doc":str(doc),"doc_sha256":sha(doc),"closure_sha256":sha(out)}))
+

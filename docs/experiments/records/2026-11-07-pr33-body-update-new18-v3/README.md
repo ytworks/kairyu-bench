@@ -1,0 +1,5 @@
+# PR33 new18 v3 body preparation
+
+Prepared only; no PATCH, commit or push. The current PR body was freshly read at SHA 696f6188ccfe324e6645c521112ea1a0073f616db1c6f82be58ef0a5af1e9d3b and head 816d67e5fb45e1e5dc0b6a6ed4044a32be777cd4. This v3 derives from preserved v2, updates F02 archive completion, adds F03 proposal/audits/materialization and r8, and incorporates the latest user instruction: candidate-only train12 with existing AV comparisons, no redundant baseline/restored forwards, KL unknown. Historical review/results remain intact. Re-fetch before PATCH; concurrent commit/push is not a body-update authorization.
+
+The body and structured update match byte-for-byte after JSON decoding. source_pins in preparation.json bind all factual inputs. Raw unified diffs remain in the new NVMe analysis directory; the two PR gzip artifacts round-trip exactly, avoiding whitespace-only diff context issues. Earlier v1/v2 are unchanged. This preparation makes no claim about a later head CI or a completed F03 behavior measurement.

@@ -1,0 +1,256 @@
+{
+  "source": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/checkpoints/code90-current-ad-helper-av-v1",
+  "candidate": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/checkpoints/fresh-native-contract-f03",
+  "manifest": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f03-native-v1/materialization/edit-manifest.json",
+  "spec": {
+    "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f03-native-v1/proposal/fresh-native-contract-f03.json",
+    "sha256": "e10018748de2795a8af03b98abb6e18362393a152c74f46b7a7892fe4975e878"
+  },
+  "source_checkpoint_attestation": {
+    "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-av-dev30-dp4-v1/http-trace/capture.json",
+    "sha256": "8e4b57eacaeca88260281c4d39a0f347b55ed0a7f1cabcac3ff0507d1e6d9e74",
+    "tree_sha256": "5d056eb03f954db80313a85167153c875fe5e436e4f97c281a3f55202d9b3eaf"
+  },
+  "source_checkpoint_current_stat": {
+    "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/checkpoints/code90-current-ad-helper-av-v1",
+    "files": [
+      {
+        "path": "chat_template.jinja",
+        "size": 18683,
+        "sha256": null,
+        "stat": {
+          "device": 2306,
+          "inode": 181678464,
+          "mtime_ns": 1794014158733915132,
+          "ctime_ns": 1794014158733915132
+        }
+      },
+      {
+        "path": "config.json",
+        "size": 4621,
+        "sha256": null,
+        "stat": {
+          "device": 2306,
+          "inode": 181678465,
+          "mtime_ns": 1794014158734915095,
+          "ctime_ns": 1794014158734915095
+        }
+      },
+      {
+        "path": "generation_config.json",
+        "size": 208,
+        "sha256": null,
+        "stat": {
+          "device": 2306,
+          "inode": 181678466,
+          "mtime_ns": 1794014158734915095,
+          "ctime_ns": 1794014158734915095
+        }
+      },
+      {
+        "path": "model-00001-of-00002.safetensors",
+        "size": 49923154850,
+        "sha256": null,
+        "stat": {
+          "device": 2306,
+          "inode": 181678467,
+          "mtime_ns": 1794014260450139654,
+          "ctime_ns": 1794014260450139654
+        }
+      },
+      {
+        "path": "model-00002-of-00002.safetensors",
+        "size": 12623183414,
+        "sha256": null,
+        "stat": {
+          "device": 2306,
+          "inode": 181678468,
+          "mtime_ns": 1794014261005119199,
+          "ctime_ns": 1794014261005119199
+        }
+      },
+      {
+        "path": "model.safetensors.index.json",
+        "size": 120246,
+        "sha256": null,
+        "stat": {
+          "device": 2306,
+          "inode": 181678469,
+          "mtime_ns": 1794014259954157935,
+          "ctime_ns": 1794014259954157935
+        }
+      },
+      {
+        "path": "processor_config.json",
+        "size": 1689,
+        "sha256": null,
+        "stat": {
+          "device": 2306,
+          "inode": 181678470,
+          "mtime_ns": 1794014259954157935,
+          "ctime_ns": 1794014259954157935
+        }
+      },
+      {
+        "path": "tokenizer.json",
+        "size": 32169626,
+        "sha256": null,
+        "stat": {
+          "device": 2306,
+          "inode": 181678471,
+          "mtime_ns": 1794014259991156571,
+          "ctime_ns": 1794014259991156571
+        }
+      },
+      {
+        "path": "tokenizer_config.json",
+        "size": 3082,
+        "sha256": null,
+        "stat": {
+          "device": 2306,
+          "inode": 181678472,
+          "mtime_ns": 1794014260013155760,
+          "ctime_ns": 1794014260013155760
+        }
+      }
+    ],
+    "sha256": null,
+    "hash_files": false,
+    "identity_level": "stat_only",
+    "input_scope": "indexed_checkpoint",
+    "complete_model_claimed": false,
+    "configuration_names_considered": [
+      "config.json",
+      "generation_config.json",
+      "tokenizer_config.json",
+      "tokenizer.json",
+      "special_tokens_map.json",
+      "chat_template.jinja",
+      "processor_config.json",
+      "preprocessor_config.json",
+      "tokenizer.model",
+      "spiece.model",
+      "vocab.json",
+      "merges.txt",
+      "added_tokens.json"
+    ],
+    "scope": "all referenced shards, index, and recognized configuration/tokenizer files",
+    "source_stable": true
+  },
+  "source_full_stat": {
+    "chat_template.jinja": {
+      "dev": 2306,
+      "inode": 181678464,
+      "size": 18683,
+      "mtime_ns": 1794014158733915132,
+      "ctime_ns": 1794014158733915132,
+      "mode": 33152,
+      "uid": 1003,
+      "gid": 1003,
+      "nlink": 1
+    },
+    "config.json": {
+      "dev": 2306,
+      "inode": 181678465,
+      "size": 4621,
+      "mtime_ns": 1794014158734915095,
+      "ctime_ns": 1794014158734915095,
+      "mode": 33152,
+      "uid": 1003,
+      "gid": 1003,
+      "nlink": 1
+    },
+    "generation_config.json": {
+      "dev": 2306,
+      "inode": 181678466,
+      "size": 208,
+      "mtime_ns": 1794014158734915095,
+      "ctime_ns": 1794014158734915095,
+      "mode": 33152,
+      "uid": 1003,
+      "gid": 1003,
+      "nlink": 1
+    },
+    "model-00001-of-00002.safetensors": {
+      "dev": 2306,
+      "inode": 181678467,
+      "size": 49923154850,
+      "mtime_ns": 1794014260450139654,
+      "ctime_ns": 1794014260450139654,
+      "mode": 33152,
+      "uid": 1003,
+      "gid": 1003,
+      "nlink": 1
+    },
+    "model-00002-of-00002.safetensors": {
+      "dev": 2306,
+      "inode": 181678468,
+      "size": 12623183414,
+      "mtime_ns": 1794014261005119199,
+      "ctime_ns": 1794014261005119199,
+      "mode": 33152,
+      "uid": 1003,
+      "gid": 1003,
+      "nlink": 1
+    },
+    "model.safetensors.index.json": {
+      "dev": 2306,
+      "inode": 181678469,
+      "size": 120246,
+      "mtime_ns": 1794014259954157935,
+      "ctime_ns": 1794014259954157935,
+      "mode": 33152,
+      "uid": 1003,
+      "gid": 1003,
+      "nlink": 1
+    },
+    "processor_config.json": {
+      "dev": 2306,
+      "inode": 181678470,
+      "size": 1689,
+      "mtime_ns": 1794014259954157935,
+      "ctime_ns": 1794014259954157935,
+      "mode": 33152,
+      "uid": 1003,
+      "gid": 1003,
+      "nlink": 1
+    },
+    "tokenizer.json": {
+      "dev": 2306,
+      "inode": 181678471,
+      "size": 32169626,
+      "mtime_ns": 1794014259991156571,
+      "ctime_ns": 1794014259991156571,
+      "mode": 33152,
+      "uid": 1003,
+      "gid": 1003,
+      "nlink": 1
+    },
+    "tokenizer_config.json": {
+      "dev": 2306,
+      "inode": 181678472,
+      "size": 3082,
+      "mtime_ns": 1794014260013155760,
+      "ctime_ns": 1794014260013155760,
+      "mode": 33152,
+      "uid": 1003,
+      "gid": 1003,
+      "nlink": 1
+    }
+  },
+  "reserve_bytes": 53687091200,
+  "free_bytes_before": 133567627264,
+  "source_sha256": {
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f03-native-v1/materialization/source/src/kairyu_bench/__init__.py": "adb3e3c453270cc36bdfe5b78fb4b3543eeb8b1bc8de356847e8580086be0709",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f03-native-v1/materialization/source/src/kairyu_bench/wsp/__init__.py": "066441d666206cec6fe79218c4b94f84b75481769261f88d8092a28bfc2f1927",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f03-native-v1/materialization/source/src/kairyu_bench/wsp/weights/__init__.py": "84407e8a57e31b915d5ba936a309457422b3b6c347fde2056f1dd492ad511cca",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f03-native-v1/materialization/source/src/kairyu_bench/wsp/weights/checkpoint.py": "898297c05e7179cdc4568d6f290b978073bcebafea804ac043b54030e8205bf9",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f03-native-v1/materialization/source/src/kairyu_bench/wsp/weights/editor.py": "0983580f41989c26e84c16c26924f2850dd4e5d3d12917bb9553d7feb92333d2",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f03-native-v1/materialization/source/fresh-f03-materialize-20261107.py": "0b5ff541dabfbdc5e7fbd591b0f4389eb923cc33ba22b69fb4a33ec5b27e9f69"
+  },
+  "cpu_python": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/infra/weight-tools-ci/bin/python",
+  "authorized_action": "one preview, one apply, one fresh full editor verify",
+  "gpu_calls": 0,
+  "model_calls": 0,
+  "service_operations": 0
+}

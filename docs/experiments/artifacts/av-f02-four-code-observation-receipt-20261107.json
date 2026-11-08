@@ -1,0 +1,608 @@
+{
+  "extraction": {
+    "purpose": "Four declared diagnostic tasks, not a reduced WSP evaluation",
+    "selection": [
+      "humaneval-plus:HumanEval/30",
+      "livecodebench:arc191_c",
+      "mbpp-plus:Mbpp/410",
+      "mbpp-plus:Mbpp/576"
+    ],
+    "expected_full_item_count": 778,
+    "source": "existing canonical merged files; no raw capture rescan",
+    "inputs": {
+      "av": {
+        "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-av-live10-v1/merged.json",
+        "bytes": 2890586309,
+        "sha256": "e9510108836aad9d3e3dbeca07959dca4f5464b1e95c2bf08fd28609d0840e3e",
+        "stat_unchanged": true,
+        "full_merged_task_count": 780,
+        "official_item_count": 778,
+        "nonofficial_task_ids": [
+          "unattributed/chatcmpl-observe-unattributed-6ad9ad5219bc4634922f294ab1e6cd25-abf37dbb",
+          "unattributed/chatcmpl-observe-unattributed-776f72a94ce2475c8741f7fb795da349-b1e9c4eb"
+        ],
+        "official_items_path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/results/gemma4-fresh-av-observed-dev10-20261107-v1/items.jsonl",
+        "official_items_sha256": "758db2ca303d83234eed4c225ee6559f2c98ee3ddae21a8adae13fb1e7e00804",
+        "selected_path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f02-live10-v1/selected-code-view-v2/av-selected.json",
+        "selected_bytes": 17663301,
+        "selected_sha256": "ca97d6f8b75020ed0d19c109236aa7d2975caf7dc602017fffae79ecb66ce291",
+        "run_id": "f7e79a9fca5f4c09ad3b2944c3b450a9/gemma4-fresh-av-observed-dev10-20261107-v1",
+        "checkpoint": {
+          "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/checkpoints/code90-current-ad-helper-av-v1",
+          "files": [
+            {
+              "path": "chat_template.jinja",
+              "size": 18683,
+              "sha256": "ae53464bf3be25802b3a5b37def7fd89667067d7577049b3b2d74c4d8de4c6d4",
+              "stat": {
+                "device": 2306,
+                "inode": 181678464,
+                "mtime_ns": 1794014158733915132,
+                "ctime_ns": 1794014158733915132
+              }
+            },
+            {
+              "path": "config.json",
+              "size": 4621,
+              "sha256": "e967dd38bc5cfd38bd09a995a7bf4a754075df2b46aba68f7fbb5a791e6d8dd1",
+              "stat": {
+                "device": 2306,
+                "inode": 181678465,
+                "mtime_ns": 1794014158734915095,
+                "ctime_ns": 1794014158734915095
+              }
+            },
+            {
+              "path": "generation_config.json",
+              "size": 208,
+              "sha256": "d4226bbe3117d2d253ba4609720ba82c6c4ce4627a9a6ae05387c78983ac03de",
+              "stat": {
+                "device": 2306,
+                "inode": 181678466,
+                "mtime_ns": 1794014158734915095,
+                "ctime_ns": 1794014158734915095
+              }
+            },
+            {
+              "path": "model-00001-of-00002.safetensors",
+              "size": 49923154850,
+              "sha256": "0589dc8a7a3afba79fe2d8444221dae410db57ce1be33eb72d9be637d70fcf10",
+              "stat": {
+                "device": 2306,
+                "inode": 181678467,
+                "mtime_ns": 1794014260450139654,
+                "ctime_ns": 1794014260450139654
+              }
+            },
+            {
+              "path": "model-00002-of-00002.safetensors",
+              "size": 12623183414,
+              "sha256": "9be24bc9910dbbe54f3f46154189c729071fd56dc41331f4a97a6ad3e02b3b56",
+              "stat": {
+                "device": 2306,
+                "inode": 181678468,
+                "mtime_ns": 1794014261005119199,
+                "ctime_ns": 1794014261005119199
+              }
+            },
+            {
+              "path": "model.safetensors.index.json",
+              "size": 120246,
+              "sha256": "390b7f9a0a502e4526cf20862d22954c911cc318d8aba2cdb745c6fbd98264f6",
+              "stat": {
+                "device": 2306,
+                "inode": 181678469,
+                "mtime_ns": 1794014259954157935,
+                "ctime_ns": 1794014259954157935
+              }
+            },
+            {
+              "path": "processor_config.json",
+              "size": 1689,
+              "sha256": "32bdf45d2ad4cc29a0822ddd157a182de76644f0419a6228d151495256e9813c",
+              "stat": {
+                "device": 2306,
+                "inode": 181678470,
+                "mtime_ns": 1794014259954157935,
+                "ctime_ns": 1794014259954157935
+              }
+            },
+            {
+              "path": "tokenizer.json",
+              "size": 32169626,
+              "sha256": "cc8d3a0ce36466ccc1278bf987df5f71db1719b9ca6b4118264f45cb627bfe0f",
+              "stat": {
+                "device": 2306,
+                "inode": 181678471,
+                "mtime_ns": 1794014259991156571,
+                "ctime_ns": 1794014259991156571
+              }
+            },
+            {
+              "path": "tokenizer_config.json",
+              "size": 3082,
+              "sha256": "9f4fec4b1dc6ecddf8f4a92e9caea5971c0e67d81309f3f9066a2bee8c362633",
+              "stat": {
+                "device": 2306,
+                "inode": 181678472,
+                "mtime_ns": 1794014260013155760,
+                "ctime_ns": 1794014260013155760
+              }
+            }
+          ],
+          "sha256": "5d056eb03f954db80313a85167153c875fe5e436e4f97c281a3f55202d9b3eaf",
+          "hash_files": true,
+          "identity_level": "content_sha256",
+          "input_scope": "indexed_checkpoint",
+          "complete_model_claimed": false,
+          "configuration_names_considered": [
+            "config.json",
+            "generation_config.json",
+            "tokenizer_config.json",
+            "tokenizer.json",
+            "special_tokens_map.json",
+            "chat_template.jinja",
+            "processor_config.json",
+            "preprocessor_config.json",
+            "tokenizer.model",
+            "spiece.model",
+            "vocab.json",
+            "merges.txt",
+            "added_tokens.json"
+          ],
+          "scope": "all referenced shards, index, and recognized configuration/tokenizer files",
+          "source_stable": true
+        },
+        "runtime": {
+          "adapter": "vllm-0.33",
+          "model": "gemma-4-31b",
+          "tp_size": 2,
+          "replicas": 1,
+          "mtp_tokens": 4
+        },
+        "capture_status": "partial_or_running",
+        "workers_closed": [
+          true,
+          true
+        ],
+        "sites": 180,
+        "tasks": [
+          {
+            "id": "humaneval-plus:HumanEval/30",
+            "source": "humaneval-plus",
+            "area": "code",
+            "score": 1.0,
+            "status": "scored",
+            "observation_cells": 1800,
+            "pair_key_present": 0,
+            "accepted_true": 1440,
+            "accepted_false": 360,
+            "accepted_unknown": 0,
+            "ranks": [
+              0,
+              1
+            ],
+            "call_ids": [
+              "0d95b03c00cd43179f86db14f2458d79"
+            ]
+          },
+          {
+            "id": "livecodebench:arc191_c",
+            "source": "livecodebench",
+            "area": "code",
+            "score": 0.0,
+            "status": "scored",
+            "observation_cells": 3960,
+            "pair_key_present": 0,
+            "accepted_true": 3240,
+            "accepted_false": 720,
+            "accepted_unknown": 0,
+            "ranks": [
+              0,
+              1
+            ],
+            "call_ids": [
+              "8e64591acb7249a5909f320c49bf2dc7"
+            ]
+          },
+          {
+            "id": "mbpp-plus:Mbpp/410",
+            "source": "mbpp-plus",
+            "area": "code",
+            "score": 0.0,
+            "status": "scored",
+            "observation_cells": 2520,
+            "pair_key_present": 0,
+            "accepted_true": 2160,
+            "accepted_false": 360,
+            "accepted_unknown": 0,
+            "ranks": [
+              0,
+              1
+            ],
+            "call_ids": [
+              "d2b8fb8f04b644ed8567dc53c792ac34"
+            ]
+          },
+          {
+            "id": "mbpp-plus:Mbpp/576",
+            "source": "mbpp-plus",
+            "area": "code",
+            "score": 0.0,
+            "status": "scored",
+            "observation_cells": 2880,
+            "pair_key_present": 0,
+            "accepted_true": 2520,
+            "accepted_false": 360,
+            "accepted_unknown": 0,
+            "ranks": [
+              0,
+              1
+            ],
+            "call_ids": [
+              "95a27f82f6774271afdac67d4575912e"
+            ]
+          }
+        ]
+      },
+      "f02": {
+        "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f02-live10-v1/merged.json",
+        "bytes": 2862310628,
+        "sha256": "a56a03136c7da8b1bcd0b25720885a82ac030802397477c4637c8ae2e83ebdf4",
+        "stat_unchanged": true,
+        "full_merged_task_count": 780,
+        "official_item_count": 778,
+        "nonofficial_task_ids": [
+          "unattributed/chatcmpl-observe-unattributed-292e38605b024938abba14aefa3ad16e-aea02502",
+          "unattributed/chatcmpl-observe-unattributed-87204cf460614f478f428ff2feeb515e-bc052b12"
+        ],
+        "official_items_path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/results/gemma4-fresh-f02-observed-dev10-20261107-v1/items.jsonl",
+        "official_items_sha256": "07f14f7c16aa371da17a87610cde2eb9d150fb77df0f30b89eae58f886a69e42",
+        "selected_path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f02-live10-v1/selected-code-view-v2/f02-selected.json",
+        "selected_bytes": 17662655,
+        "selected_sha256": "0a7bd170260aa498831b306dd87716ebae36254311b5e0603b9262f81457a85f",
+        "run_id": "11228e268bd24e31b8bc3b2b82098c35/gemma4-fresh-f02-observed-dev10-20261107-v1",
+        "checkpoint": {
+          "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/checkpoints/fresh-code-joint-f02",
+          "files": [
+            {
+              "path": "chat_template.jinja",
+              "size": 18683,
+              "sha256": "ae53464bf3be25802b3a5b37def7fd89667067d7577049b3b2d74c4d8de4c6d4",
+              "stat": {
+                "device": 2306,
+                "inode": 182098075,
+                "mtime_ns": 1794028072644794301,
+                "ctime_ns": 1794028072644794301
+              }
+            },
+            {
+              "path": "config.json",
+              "size": 4621,
+              "sha256": "e967dd38bc5cfd38bd09a995a7bf4a754075df2b46aba68f7fbb5a791e6d8dd1",
+              "stat": {
+                "device": 2306,
+                "inode": 182098076,
+                "mtime_ns": 1794028072645794268,
+                "ctime_ns": 1794028072645794268
+              }
+            },
+            {
+              "path": "generation_config.json",
+              "size": 208,
+              "sha256": "d4226bbe3117d2d253ba4609720ba82c6c4ce4627a9a6ae05387c78983ac03de",
+              "stat": {
+                "device": 2306,
+                "inode": 182098077,
+                "mtime_ns": 1794028072645794268,
+                "ctime_ns": 1794028072645794268
+              }
+            },
+            {
+              "path": "model-00001-of-00002.safetensors",
+              "size": 49923154850,
+              "sha256": "e6144c1c2322cd2a05ced629c754c229ec530747470b3ba423a3c905b8d6e97c",
+              "stat": {
+                "device": 2306,
+                "inode": 182098078,
+                "mtime_ns": 1794028171554622206,
+                "ctime_ns": 1794028171554622206
+              }
+            },
+            {
+              "path": "model-00002-of-00002.safetensors",
+              "size": 12623183414,
+              "sha256": "f472653dfcfe3218f33111b44e936e097a8ba01014b9b5376f33c3196980181b",
+              "stat": {
+                "device": 2306,
+                "inode": 182098081,
+                "mtime_ns": 1794028170772647248,
+                "ctime_ns": 1794028170772647248
+              }
+            },
+            {
+              "path": "model.safetensors.index.json",
+              "size": 120246,
+              "sha256": "390b7f9a0a502e4526cf20862d22954c911cc318d8aba2cdb745c6fbd98264f6",
+              "stat": {
+                "device": 2306,
+                "inode": 182098083,
+                "mtime_ns": 1794028170521655286,
+                "ctime_ns": 1794028170521655286
+              }
+            },
+            {
+              "path": "processor_config.json",
+              "size": 1689,
+              "sha256": "32bdf45d2ad4cc29a0822ddd157a182de76644f0419a6228d151495256e9813c",
+              "stat": {
+                "device": 2306,
+                "inode": 182098084,
+                "mtime_ns": 1794028170521655286,
+                "ctime_ns": 1794028170521655286
+              }
+            },
+            {
+              "path": "tokenizer.json",
+              "size": 32169626,
+              "sha256": "cc8d3a0ce36466ccc1278bf987df5f71db1719b9ca6b4118264f45cb627bfe0f",
+              "stat": {
+                "device": 2306,
+                "inode": 182098085,
+                "mtime_ns": 1794028170560654037,
+                "ctime_ns": 1794028170560654037
+              }
+            },
+            {
+              "path": "tokenizer_config.json",
+              "size": 3082,
+              "sha256": "9f4fec4b1dc6ecddf8f4a92e9caea5971c0e67d81309f3f9066a2bee8c362633",
+              "stat": {
+                "device": 2306,
+                "inode": 182098086,
+                "mtime_ns": 1794028170582653333,
+                "ctime_ns": 1794028170582653333
+              }
+            }
+          ],
+          "sha256": "46680f4066f57c1596a1f4c66b67d23929c96b325943d981c6d74260cdbb3f5c",
+          "hash_files": true,
+          "identity_level": "content_sha256",
+          "input_scope": "indexed_checkpoint",
+          "complete_model_claimed": false,
+          "configuration_names_considered": [
+            "config.json",
+            "generation_config.json",
+            "tokenizer_config.json",
+            "tokenizer.json",
+            "special_tokens_map.json",
+            "chat_template.jinja",
+            "processor_config.json",
+            "preprocessor_config.json",
+            "tokenizer.model",
+            "spiece.model",
+            "vocab.json",
+            "merges.txt",
+            "added_tokens.json"
+          ],
+          "scope": "all referenced shards, index, and recognized configuration/tokenizer files",
+          "source_stable": true
+        },
+        "runtime": {
+          "adapter": "vllm-0.33",
+          "model": "gemma-4-31b",
+          "tp_size": 2,
+          "replicas": 1,
+          "mtp_tokens": 4
+        },
+        "capture_status": "partial_or_running",
+        "workers_closed": [
+          false,
+          false
+        ],
+        "sites": 180,
+        "tasks": [
+          {
+            "id": "humaneval-plus:HumanEval/30",
+            "source": "humaneval-plus",
+            "area": "code",
+            "score": 1.0,
+            "status": "scored",
+            "observation_cells": 1800,
+            "pair_key_present": 0,
+            "accepted_true": 1440,
+            "accepted_false": 360,
+            "accepted_unknown": 0,
+            "ranks": [
+              0,
+              1
+            ],
+            "call_ids": [
+              "1b9e1dbad1d740c58b65f30a2ae8b3fb"
+            ]
+          },
+          {
+            "id": "livecodebench:arc191_c",
+            "source": "livecodebench",
+            "area": "code",
+            "score": 0.0,
+            "status": "scored",
+            "observation_cells": 3960,
+            "pair_key_present": 0,
+            "accepted_true": 3240,
+            "accepted_false": 720,
+            "accepted_unknown": 0,
+            "ranks": [
+              0,
+              1
+            ],
+            "call_ids": [
+              "259cc923d7444280a9e3366f29359464"
+            ]
+          },
+          {
+            "id": "mbpp-plus:Mbpp/410",
+            "source": "mbpp-plus",
+            "area": "code",
+            "score": 0.0,
+            "status": "scored",
+            "observation_cells": 2520,
+            "pair_key_present": 0,
+            "accepted_true": 2160,
+            "accepted_false": 360,
+            "accepted_unknown": 0,
+            "ranks": [
+              0,
+              1
+            ],
+            "call_ids": [
+              "dfe479f7e03e47b98d3b7db9d0830475"
+            ]
+          },
+          {
+            "id": "mbpp-plus:Mbpp/576",
+            "source": "mbpp-plus",
+            "area": "code",
+            "score": 0.0,
+            "status": "scored",
+            "observation_cells": 2880,
+            "pair_key_present": 0,
+            "accepted_true": 2520,
+            "accepted_false": 360,
+            "accepted_unknown": 0,
+            "ranks": [
+              0,
+              1
+            ],
+            "call_ids": [
+              "2f0e189d06ea4de9803b3186c839af45"
+            ]
+          }
+        ]
+      }
+    },
+    "strict_activation_delta_supported": false,
+    "limitations": [
+      "pair_key and runtime.vllm_version are absent and remain absent",
+      "F02 worker closed=false remains unchanged; no close acknowledgement",
+      "same decode ordinal need not have same generated prefix",
+      "existing viewer hides accepted=false records from its heatmap",
+      "all 26 code numeric audits and all 778 official outcomes remain intact"
+    ],
+    "elapsed_seconds": 56.381916522979736
+  },
+  "viewer": {
+    "commands": [
+      [
+        "compare",
+        "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f02-live10-v1/selected-code-view-v2/av-selected.json",
+        "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f02-live10-v1/selected-code-view-v2/f02-selected.json",
+        "--output",
+        "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f02-live10-v1/selected-code-view-v2/comparison.json"
+      ],
+      [
+        "view",
+        "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f02-live10-v1/selected-code-view-v2/comparison.json",
+        "--output",
+        "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f02-live10-v1/selected-code-view-v2/comparison.html"
+      ]
+    ],
+    "weights_attached": false,
+    "weight_reason": "full diff still running; selected edit norm is not a full-checkpoint denominator",
+    "source_files": [
+      {
+        "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/worktrees/kairyu-bench-weight-tools/src/kairyu_bench/wsp/observe/cli.py",
+        "bytes": 4434,
+        "sha256": "3bfbb7e6dd2fe0e89fbd2b2211e1688a9e56daa704bde6575f8e229e51042b9f"
+      },
+      {
+        "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/worktrees/kairyu-bench-weight-tools/src/kairyu_bench/wsp/observe/core.py",
+        "bytes": 19312,
+        "sha256": "363fc7e33bcb22b20d846171892366fa067bdb7f3062cd35e4b8e616dba2849d"
+      },
+      {
+        "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/worktrees/kairyu-bench-weight-tools/src/kairyu_bench/wsp/observe/report.py",
+        "bytes": 41001,
+        "sha256": "eb3f44c74034a2087d78a8941823ef5e7f3a82ec1be5d8f566dc01d462258258"
+      },
+      {
+        "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/worktrees/kairyu-bench-weight-tools/tests/test_wsp_observe_report.py",
+        "bytes": 17823,
+        "sha256": "96ff370052a124d21889afb81d9c9c15f9562ccddbf50a735963b93746d8feb1"
+      }
+    ],
+    "outputs": [
+      {
+        "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f02-live10-v1/selected-code-view-v2/av-selected.json",
+        "bytes": 17663301,
+        "sha256": "ca97d6f8b75020ed0d19c109236aa7d2975caf7dc602017fffae79ecb66ce291"
+      },
+      {
+        "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f02-live10-v1/selected-code-view-v2/f02-selected.json",
+        "bytes": 17662655,
+        "sha256": "0a7bd170260aa498831b306dd87716ebae36254311b5e0603b9262f81457a85f"
+      },
+      {
+        "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f02-live10-v1/selected-code-view-v2/comparison.json",
+        "bytes": 35325860,
+        "sha256": "ade91302639396227dba41864a0fb429a8d07bb16700e298f94499ba6106cae8"
+      },
+      {
+        "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f02-live10-v1/selected-code-view-v2/comparison.html",
+        "bytes": 2718906,
+        "sha256": "95b2908f52b5f640edb5518248ce5f9afb48cb93d581d842e8bd1be76f708559"
+      },
+      {
+        "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f02-live10-v1/selected-code-view-v2/extraction-receipt.json",
+        "bytes": 16625,
+        "sha256": "d853a12fe07f62439e2b653b29a07d0af716886295a37f5c6b1d47b398d3b0fa"
+      },
+      {
+        "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f02-live10-v1/selected-code-view-v2/viewer-dom-validation.json",
+        "bytes": 341,
+        "sha256": "3c98b40884bb01c3c87af9dde4a281b499059fb33d40ed78d71611808a264913"
+      },
+      {
+        "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f02-live10-v1/selected-code-view-v2/four-task-readout.json",
+        "bytes": 113967,
+        "sha256": "c63d956755138bd302a23ce48e7587496571a474df9f1aa433b397685ceb38b8"
+      }
+    ],
+    "validation": "8 task gzip payloads exact-equal source rows, no external resources, actual-data offline DOM interactions passed",
+    "elapsed_seconds": 3.8775806427001953
+  },
+  "retained_failure": {
+    "status": "failed_before_output",
+    "phase": "first AV merged count guard",
+    "assertion": "state == footer and total == 778 and selected count == 4 and requested IDs present",
+    "cause": "merged also retains unmatched requests as unattributed task objects; 778 only describes official items",
+    "outputs_written": 0,
+    "benchmark_or_model_calls": 0,
+    "recipe_sha256": "a649fc8164b5c475b76626267079babe05ce0ba6ef0a023101f431916ff9cd86",
+    "recorded_epoch": 1794032939.3117049
+  },
+  "recorded_python_blocks": [
+    {
+      "index": 0,
+      "sha256": "a649fc8164b5c475b76626267079babe05ce0ba6ef0a023101f431916ff9cd86"
+    },
+    {
+      "index": 1,
+      "sha256": "6ebe59c4e0a9ea02fea3976c8979e41969cde5de6807d8d048e22b5437266af4"
+    },
+    {
+      "index": 2,
+      "sha256": "8fe811c34feb82b13e6661007a2ceef51e2b82f4ef2812b8a0cc1fb9629089bc"
+    }
+  ],
+  "portable_html": {
+    "path": "docs/experiments/artifacts/av-f02-four-code-observation-20261107.html",
+    "bytes": 2718906,
+    "sha256": "95b2908f52b5f640edb5518248ce5f9afb48cb93d581d842e8bd1be76f708559"
+  },
+  "portable_readout": {
+    "path": "docs/experiments/artifacts/av-f02-four-code-readout-20261107.json",
+    "bytes": 113967,
+    "sha256": "c63d956755138bd302a23ce48e7587496571a474df9f1aa433b397685ceb38b8"
+  }
+}

@@ -1,0 +1,65 @@
+{
+  "pid": 1528640,
+  "epoch": 1794055031.8356755,
+  "global_lock_held": true,
+  "input_pins": {
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/checkpoints/fresh-native-contract-f05-faststore-v1/manifest.json": "09ea569a08f138efd438055d7149f0697dc1d6edd08332f2b6c7c09b1da7c24c",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f05-native-contract-v1/proposal/fresh-native-contract-f05.json": "48e095d3de304767410ac0956e390ad6db4d211457683dabdc779a4f6bb48df3",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f05-native-contract-v1/materialization-v1/verify.stdout": "1e9150f21a53af2e96d82c65297a9ce0dffb71d21ea59ea03d3d02a45ca4c427",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/worktrees/kairyu-bench-weight-tools/docs/experiments/scripts/redeploy-replica.py": "2e9da820fe30ba9b2436fb600cf14a533b1c496b2fed48ac3649fffb9d2bc9ae",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/worktrees/kairyu-bench-weight-tools/docs/experiments/scripts/fresh-four-parallel-redeploy-20261107.py": "19ae025add4f2f08705f33f0146f48cc9fa8e92bdb14a8383f46fb7d531e53bc",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/checkpoints/fresh-native-relative-f04-faststore-v1/manifest.json": "fd189cf276a1219ad627186d2dfb4a895c79768821f247a0b33d9abd8953d8c1",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/worktrees/kairyu-bench-weight-tools/docs/experiments/records/2026-11-07-f04-official-comparison/parent-selection.json": "50a48edce45c69e7f06e35566dcdbbaa93ed18d2c27368d2f14c3c52d759157b",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f04-relative-v1/deployment-dp4-v1/plan-bound-approved.json": "ea8742fea2e187ab29cddc86d1f9dbbec9d0f4003c84c82bcc539d08988b5b60",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-av-dev30-deployment-plan-v1/remove-completed-observer-v2.py": "99a9cc25006a988d1d7cfe11b8f579ea0bbb857c4de34c39f21bf0769b5a12ce",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f05-native-contract-v1/deployment-dp4-v1/prepare-source.py": "3a898414020dc83a8602255cd2c8573299aa4d5524aa144ddf6477e1da0a6416"
+  },
+  "argv": [
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f05-native-contract-v1/deployment-dp4-v1/prepare-source.py",
+    "--manifest",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/checkpoints/fresh-native-contract-f05-faststore-v1/manifest.json",
+    "--spec",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f05-native-contract-v1/proposal/fresh-native-contract-f05.json",
+    "--verify",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f05-native-contract-v1/materialization-v1/verify.stdout"
+  ],
+  "source_pins": {
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/worktrees/kairyu-bench-weight-tools/docs/experiments/scripts/redeploy-replica.py": "2e9da820fe30ba9b2436fb600cf14a533b1c496b2fed48ac3649fffb9d2bc9ae",
+    "/home/y-takagi/kairyu/examples/gemma-4-31b-8gpu/control.py": "fc9a78bc232f9cc331926a0737e64f4b4fe14946574f4a02bc1aacb9a800b851",
+    "/home/y-takagi/kairyu/examples/gemma-4-31b-8gpu/compose.yaml": "fe49b81c153f68335ef46e07dc9f9910ee49ee066902e703d11d152c8809c5cb",
+    "/home/y-takagi/kairyu/examples/gemma-4-31b-8gpu/example.json": "99b1863206205abc92f5bde917c607cced03a220bd77323cf264eb781f4aedb7",
+    "/home/y-takagi/kairyu/examples/gemma-4-31b-8gpu/kairyu.yaml": "a28e232f27b89d1acc35e3f5871ccffafd8145211e4ffcb33cc0c6b514fa640d"
+  },
+  "logical_parent": {
+    "checkpoint_path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/checkpoints/fresh-native-relative-f04-faststore-v1/checkpoint",
+    "tree_sha256": "7b9e9488e3cd4e0b6c5f61ae341e5eeccdf5bd31c46d1c8354950dbc29d0f924",
+    "proof": {
+      "path": "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/checkpoints/fresh-native-relative-f04-faststore-v1/manifest.json",
+      "sha256": "fd189cf276a1219ad627186d2dfb4a895c79768821f247a0b33d9abd8953d8c1",
+      "stat": {
+        "device": 2306,
+        "inode": 182193244,
+        "size": 3488563,
+        "mtime_ns": 1794050350833830380,
+        "ctime_ns": 1794050350837830241,
+        "nlink": 1,
+        "uid": 1003,
+        "gid": 1003,
+        "mode": 33152
+      }
+    }
+  },
+  "parent_shared_stat": {
+    "device": 2306,
+    "inode": 182192842,
+    "size": 62543620336,
+    "mtime_ns": 1794050230365028683,
+    "ctime_ns": 1794050243644565979,
+    "nlink": 17,
+    "uid": 1003,
+    "gid": 1003,
+    "mode": 33060
+  },
+  "model_calls": 0,
+  "serving_mutations": 0
+}

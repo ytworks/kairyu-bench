@@ -1,0 +1,14 @@
+{
+  "epoch": 1794049393.936588,
+  "task_toml": "/mnt/nvme/kairyu/bench-cache/wsp/harbor/tasks/packages/terminal-bench/polyglot-c-py/25570ccacf63f573a252eaa2a9c62ee8b55f5aa228cc803b5beb39dd6d8afeb7/task.toml",
+  "sha256": "d31b9f60c47eed0d79e10d3be8fd56a23e50b3986606e3f2546863d44ac9a9ea",
+  "agent": {
+    "timeout_sec": 900.0
+  },
+  "verifier": {
+    "timeout_sec": 900.0,
+    "env": {}
+  },
+  "agent_timeout_multiplier": 48,
+  "llm_call_timeout_seconds": 1200
+}

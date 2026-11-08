@@ -1,0 +1,24 @@
+# TRAIN204 body-target frame verification: v1 rejected, v2 passed
+
+The fixed helper `ca06473d…` was tested once on **all204 original training rows** with the actual F04 tokenizer/template. Exact full token IDs and prompt boundaries match the earlier independent proof for **204/204**, totaling **22,922 tokens**, maximum **336 <= 1024**, truncation0. No holdout was tokenized in this trial.
+
+The new body-target helper rejects **71/204** rows: all raise `reference text changed by the official template`. The source raw code has trailing whitespace that the unchanged official chat template strips; its `full.startswith(prefix + raw_code)` assertion therefore rejects otherwise identical official frames. The other133 have nonempty targets. Every71 unsupported ID, empty target list, and ineligible state is preserved. No row was removed, repaired in place or treated as a zero-scoring capability example. The source inputs and prior frame proof are unchanged.
+
+Mask scope is the first top-level function's first non-docstring statement through the assistant-code end, **not** a union of AST function-body spans. Nine rows have later function definitions: **671,702,717,896,905,926,940,949,962**. Their later headers remain in the declared target region when the row is eligible. All204 have a top-level function; first-function docstrings0. This limitation was sent to the implementation owner before any gradient/model call.
+
+The single isolated CPU container used existing af9 image, networknone, UID1003, read-only root and checkpoint/input/source mounts, capdropALL, no GPU, CPU2/shares128, 4GiB. It returned1 after saving all204 boundary facts and proof. Container wall **9.783s**, owned remaining0, all pre-existing host members and Gemma service states exactly unchanged. WSP overlapped at epochs1794062175.2261367–1794062185.0095053; no zero timing-impact claim. Model/teacher/gradient/code execution0.
+
+Exact source `982f36de…`, frozen helper/default AST, launch argv and source pins, all stdout/stderr, closure, all204 facts and failed71 are retained in [records](records/2026-11-07-mbpp204-body-frame-v1/copy-receipt.json). Ruff passed for the one-off tokenizer source. The validator completed all204 and rejected the failed gate as designed. A separate v2 may follow the implementation owner's template-boundary fix; v1 is never relabeled successful.
+
+
+## V2: exact official-template trim mapping, all204 passed
+
+The implementation owner froze helper **290365237443e0138079e106452c88dcf64779e0dc6834447f29e92666c90ef8**. It permits only the outer strip performed by the actual official template, rejects channel markers, verifies exact prefix + rendered reference + official terminator, and derives AST offsets from that rendered reference. Raw input rows remain unchanged; leading/trailing trim offsets are explicit proof fields. Default full-frame helper AST stays **66e51697…**; the tokenizer audit script stays **982f36de…**.
+
+V2 processed **204/204**, unsupported0/ineligible0/failed0. All full token IDs and prompt lengths match the earlier independent proof exactly: **22,922 full tokens, maximum336**, truncation0. All204 target lists are nonempty (**12,621 targets total, minimum3, maximum281**) and every target lies wholly inside the declared body-to-code-end character interval, outside prompt and official turn terminator. No manual EOS was added. These are tokenizer/mask facts, not teacher forward, KL behavior, learning quality or benchmark results.
+
+The nine later-definition cases remain explicit. Target tokens at/after their first later definition are: 671:94, 702:99, 717:74, 896:21, 905:36, 926:130, 940:180, 949:36, 962:42. These **712 tokens include later headers and bodies**; they are not 712 header tokens. All204 original code strings have no leading outer whitespace, verified before this run, so independent subsequent-definition offsets need no leading-trim adjustment. No row or later function was removed.
+
+Single v2 CPU container wall **9.543s**, tokenizer analysis **2.762s**, return0; epochs1794062621.6383154–1794062631.1814065 overlapped the ongoing F06 WSP. Existing CPU2/shares128/4GiB, networknone, read-only mounts and noGPU conditions were retained. All original host members/Gemma service states match, owned containers remaining0. Model/teacher/gradient/generated-code/reference-code executions are all0; holdout tokenizations0.
+
+Exact [v2 records](records/2026-11-07-mbpp204-body-frame-v2/copy-receipt.json) retain all204 proof and boundary rows, frozen helper/default snapshots, commands/pins, stderr warnings, and closure. Proof SHA **8ba8242f00d839ffa17250ba8eb091190c01e726cfed302c88a5382dc60b3d25**; boundary rows **8dc5f061e81d5b3d439b78647848099d48572e9bb1f7767e48ef003fedb30157**; summary **18e24bccd5df9921a91894198e6ea97276775d04a3441c3148862bf4000e9dae**. V1 remains a failed attempted validation, never relabeled passed.

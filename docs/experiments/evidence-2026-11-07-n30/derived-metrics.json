@@ -1,0 +1,25 @@
+{
+  "scicode_steps": 39,
+  "passed_steps": 21,
+  "failed_exception_hints": {
+    "TypeError": 1,
+    "IndexError": 1,
+    "ValueError": 2,
+    "AttributeError": 2,
+    "AssertionError": 12
+  },
+  "step_timeouts": 0,
+  "code_finish_reasons": {
+    "stop": 90
+  },
+  "source_report_input_tokens": 5335614,
+  "source_report_output_tokens": 4094068,
+  "terminal_agent_input_tokens": 426433,
+  "terminal_agent_output_tokens": 109919,
+  "swe_persisted_input_tokens": 1902178,
+  "swe_persisted_output_tokens": 31789,
+  "swe_model_api_calls": 125,
+  "swe_persisted_assistant_messages": 123,
+  "only_scicode_perfect_ceiling": 0.8708333333333333,
+  "only_other_three_perfect_ceiling": 0.858531746031746
+}

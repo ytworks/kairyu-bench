@@ -1,0 +1,102 @@
+"""One-off driver using the unchanged authored scorer and Docker worker."""
+import argparse
+import datetime
+import hashlib
+import importlib.util
+import json
+import subprocess
+import sys
+import time
+from pathlib import Path
+
+R = Path("/mnt/nvme/kairyu/wsp/gemma4-coding-20261104")
+B = R / "worktrees/kairyu-bench-weight-tools"
+RECIPE = B / "scripts/experiments/gemma4-purpose"
+sys.path.insert(0, str(RECIPE))
+import behavior_cases
+import behavior_followup_cases as cases
+import behavior_offline as offline
+import science_sandbox as sandbox
+
+P = R / "analysis/fresh-purpose-20261107-behavior-followup9-v1"
+IMAGE = "sha256:c4ab50223f03fca17bf871e4d05f77001e76525a1c574b6c6ee7024db06cfdc2"
+DAEMON = "3e518d2b-6972-43f8-b325-f7f33697a2d2"
+
+
+def dump(path, document):
+    path.write_text(json.dumps(document, indent=2, ensure_ascii=False, allow_nan=False)+"\n")
+
+
+def running():
+    result = subprocess.run(["docker", "ps", "--no-trunc", "--format", "{{.ID}}"], check=True, capture_output=True, text=True)
+    return sorted(result.stdout.split())
+
+
+class LowPriorityDocker(sandbox.Docker):
+    def arguments(self, name, nonce):
+        arguments = super().arguments(name, nonce)
+        arguments[1:1] = ["--cpu-shares", "128"]
+        return arguments
+
+
+args_parser = argparse.ArgumentParser()
+args_parser.add_argument("--run", action="store_true")
+args_parser.add_argument("--wsp-run", type=Path)
+args = args_parser.parse_args()
+if not args.run:
+    P.mkdir(parents=True, exist_ok=False)
+    for split in ("train", "transfer"):
+        dump(P / (split+"-cases.json"), cases.payload(split))
+    sources = [Path(__file__).resolve(), Path(cases.__file__), Path(behavior_cases.__file__), Path(offline.__file__), Path(sandbox.__file__), Path(sandbox.science_cases.__file__)]
+    inputs = [sandbox.capture(path, 2*1024*1024)[1] for path in sources]
+    inputs += [sandbox.capture(P/(split+"-cases.json"), 2*1024*1024)[1] for split in ("train","transfer")]
+    rows = []
+    for case in cases.catalog():
+        for foil in (False, True):
+            payload, expected = sandbox.prepare(case, case.code(foil), case.seed, cases.TRIALS, sample_fn=cases.sample)
+            rows.append({"id": "behavior-"+case.name, "split": case.split, "foil": foil, "seed": case.seed, "trials": len(expected), "payload_sha256": sandbox.sha(json.dumps(payload, sort_keys=True, allow_nan=False).encode()), "expected_sha256": sandbox.sha(json.dumps([sandbox.pack(x) for x in expected], sort_keys=True, allow_nan=False).encode())})
+    dump(P/"preview.json", {"status":"preview", "inputs": inputs, "rows":rows, "docker_calls":0, "model_calls":0, "cases":9, "train":6, "transfer":3, "transfer_generation_or_gradient_used":False, "sandbox":{"image":IMAGE,"daemon_id":DAEMON,"socket":"/var/run/docker.sock","cpu_shares":128,"cpus":1,"memory_mib":512,"seconds":15,"network":"none","user":"1003:1003","host_mounts":[],"gpus":False}, "token_count_measured":False})
+    print(json.dumps({"status":"preview", "cases":9, "planned_docker_calls":18,"path":str(P)}))
+else:
+    if args.wsp_run is None:
+        raise ValueError("actual running WSP path required to establish authorized launch")
+    state = json.loads((args.wsp_run/"run.json").read_text())
+    if state["status"] != "running":
+        raise ValueError("WSP launch not observed as running; do not launch worker")
+    plan = json.loads((P/"preview.json").read_text())
+    sandbox.continuity(plan["inputs"])
+    output = P/"validation"
+    output.mkdir(exist_ok=False)
+    offline.cases = cases
+    docker = LowPriorityDocker(Path("/var/run/docker.sock"), DAEMON, IMAGE, seconds=15, memory_mib=512, cpus=1)
+    docker.check_image()
+    started=time.time()
+    report={"status":"running","preview_sha256":sandbox.sha((P/"preview.json").read_bytes()),"started_epoch":started,"wsp_run":str(args.wsp_run),"wsp_state_at_start":state["status"],"protected_running_before":running(),"results":[],"raw_worker_outputs":[],"docker_calls":0,"model_calls":0,"trials_per_code":16,"transfer_generation_or_gradient_used":False}
+    def run(payload):
+        result=docker.run(payload)
+        report["raw_worker_outputs"].append({"call_index":report["docker_calls"],"payload_sha256":sandbox.sha(json.dumps(payload,sort_keys=True,allow_nan=False).encode()),"result":result})
+        report["docker_calls"]+=1
+        return result
+    try:
+        for case in cases.catalog():
+            sandbox.continuity(plan["inputs"])
+            correct=offline.score(case,{"public_answer":case.code()},run)
+            foil=offline.score(case,{"public_answer":case.code(True)},run)
+            witness=any(not t["passed"] for t in foil.get("trial_results",[])[:8])
+            report["results"].append({"id":"behavior-"+case.name,"split":case.split,"correct":correct,"foil":foil,"fixed_foil_witness":witness,"validation_passed":correct["passed"] is True and foil["passed"] is False and witness})
+            dump(output/"report.json",report)
+        sandbox.continuity(plan["inputs"])
+        report["status"]="completed"
+        report["validation_passed"]=len(report["results"])==9 and all(r["validation_passed"] for r in report["results"])
+    except BaseException as error:
+        report["status"]="interrupted_or_error"
+        report["error_type"]=type(error).__name__
+        raise
+    finally:
+        report["ended_epoch"]=time.time()
+        report["elapsed_seconds"]=report["ended_epoch"]-started
+        report["protected_running_after"]=running()
+        report["protected_missing_after"]=sorted(set(report["protected_running_before"])-set(report["protected_running_after"]))
+        report["wsp_state_at_end"]=json.loads((args.wsp_run/"run.json").read_text())["status"]
+        dump(output/"report.json",report)
+    print(json.dumps({k:report[k] for k in ["status","validation_passed","docker_calls","model_calls","elapsed_seconds","protected_missing_after"]}))

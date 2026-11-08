@@ -1,0 +1,82 @@
+"""Preserve all 2338 selected rows and use existing explicit partial comparison."""
+import hashlib,json,os,subprocess,time
+from pathlib import Path
+R=Path("/mnt/nvme/kairyu/wsp/gemma4-coding-20261104");B=R/"worktrees/kairyu-bench-weight-tools"
+N=R/"analysis/fresh-purpose-20261107-f03-dev30-dp4-v1"
+BASE=R/"results/gemma4-fresh-av-dev30-dp4-20261107-v1";CAND=R/"results/gemma4-fresh-f03-dev30-dp4-20261107-v1"
+OLD=R/"analysis/fresh-purpose-20261107-av-dev30-dp4-v1/independent-audit-v2"
+OUT=N/"official-partial-comparison-v1";PY=R/"infra/weight-tools-ci/bin/python"
+TREE="504d0914e8f7d2a4e51a0888e5692e2d1a158b82d3a77b600810a14bf7e33b63"
+def read(p):return json.loads(p.read_text())
+def sha(p):return hashlib.sha256(p.read_bytes()).hexdigest()
+def save(p,d):
+ with p.open("x") as f:f.write(json.dumps(d,ensure_ascii=False,indent=2,allow_nan=False)+"\n")
+assert read(BASE/"run.json")["status"]=="completed" and read(CAND/"run.json")["status"]=="partial"
+OUT.mkdir();env=os.environ.copy();env["PYTHONPATH"]=str(B/"src")
+def command(label,args):
+ start=time.time()
+ with (OUT/(label+".stdout.txt")).open("x") as out,(OUT/(label+".stderr.txt")).open("x") as err:
+  p=subprocess.run([str(x) for x in args],cwd=B,env=env,stdout=out,stderr=err)
+ receipt={"command":[str(x) for x in args],"start_epoch":start,"elapsed_seconds":time.time()-start,"returncode":p.returncode}
+ save(OUT/(label+"-receipt.json"),receipt);assert p.returncode==0,receipt
+command("candidate-audit",[PY,B/"docs/experiments/scripts/fresh-n30-complete-audit.py","--project",R,"--repository",B,"--study",N,"--run",CAND,"--output",OUT/"candidate-audit","--expected-tree",TREE,"--allow-partial"])
+a,b=read(OLD/"summary.json"),read(OUT/"candidate-audit/summary.json")
+assert a["verified_complete"] and not b["verified_complete"]
+for key in ("image","topology","concurrency","http_client_trace_only"):assert a["runtime"][key]==b["runtime"][key],key
+assert a["source_sha256"]==b["source_sha256"]
+for name in ("run.json","report.json","items.jsonl"):assert sha(BASE/name)==a["run"]["inputs"][str(BASE/name)]
+command("partial-compare",[PY,"-m","kairyu_bench.wsp.cli","compare",BASE,CAND,"--partial","--output",OUT/"comparison.json"])
+comparison=read(OUT/"comparison.json")
+assert comparison["partial"] and comparison["unpaired_items"]=={"agents":1}
+rows=[read(OLD/"all-2338-numeric-items.json"),read(OUT/"candidate-audit/all-2338-numeric-items.json")]
+maps=[{x["id"]:x for x in rs} for rs in rows]
+assert len(rows[0])==len(rows[1])==len(maps[0])==len(maps[1])==2338 and maps[0].keys()==maps[1].keys()
+paired=[]
+for key in sorted(maps[0]):
+ x,y=maps[0][key],maps[1][key]
+ for field in ("id","source","area","kind","tier","max_tokens","samples"):assert x[field]==y[field]
+ entry={field:x[field] for field in ("id","source","area","kind","tier","max_tokens","samples")}
+ known=x["score"] is not None and y["score"] is not None
+ entry.update(base_score=x["score"],candidate_score=y["score"],delta=y["score"]-x["score"] if known else None,
+  base_sample_scores=x["sample_scores"],candidate_sample_scores=y["sample_scores"],base_error=x["error"],candidate_error=y["error"],
+  paired_numeric=known,base_issues=x["audit_issues"],candidate_issues=y["audit_issues"],
+  metric="capability_score_higher_is_better" if x["area"] else "diagnostic_NLL_lower_is_better")
+ if x["area"]=="code":entry.update(base_detail=x.get("detail"),candidate_detail=y.get("detail"),base_generation=x.get("generation"),candidate_generation=y.get("generation"))
+ paired.append(entry)
+save(OUT/"all-2338-paired-items.json",paired)
+code=[x for x in paired if x["area"]=="code"];assert len(code)==90 and all(x["paired_numeric"] for x in code)
+save(OUT/"code-90-paired-items.json",code)
+for area,v in comparison["areas"].items():
+ if area=="agents":continue
+ assert abs(v["base"]-a["run"]["areas"][area])<1e-12 and abs(v["candidate"]-b["run"]["areas"][area])<1e-12
+sources={}
+for name,x in a["run"]["sources"].items():
+ y=b["run"]["sources"][name];assert x["items"]==y["items"]
+ selected=[p for p in paired if p["source"]==name]
+ sources[name]={"items":x["items"],"base_scored":x["scored"],"candidate_scored":y["scored"],"area":x["area"],
+  "base_reported":x["score"],"candidate_reported":y["score"],"paired_comparison":comparison["sources"].get(name),
+  "positive_raw_deltas":sum(p["delta"]>0 for p in selected if p["paired_numeric"]),
+  "negative_raw_deltas":sum(p["delta"]<0 for p in selected if p["paired_numeric"]),
+  "equal":sum(p["delta"]==0 for p in selected if p["paired_numeric"]),"unpaired":sum(not p["paired_numeric"] for p in selected),
+  "metric":"capability_score_higher_is_better" if x["area"] else "diagnostic_NLL_lower_is_better"}
+amaps=[{x["id"]:x for x in s["agents"]} for s in [a,b]]
+assert amaps[0].keys()==amaps[1].keys() and len(amaps[0])==10
+summary={"status":"partial_run_all_selected_rows_preserved","full_score_ranking_permitted":False,"base_remeasured":False,
+ "base_run":BASE.name,"candidate_run":CAND.name,"all_selected_items":2338,"paired_numeric_items":sum(x["paired_numeric"] for x in paired),
+ "unscored":[x["id"] for x in paired if not x["paired_numeric"]],"code_items":90,"code_complete":True,
+ "code":comparison["areas"]["code"],"areas_paired_only":comparison["areas"],
+ "overall_paired_subset_only_not_complete":comparison["overall"],
+ "candidate_reported_overall_not_complete":b["run"]["overall"],
+ "sources":sources,"probes":comparison["probes"],"code_changed_items":[x for x in code if x["delta"]!=0],
+ "capability_gained":sum(x["delta"]>0 for x in paired if x["area"] and x["paired_numeric"]),
+ "capability_lost":sum(x["delta"]<0 for x in paired if x["area"] and x["paired_numeric"]),
+ "timing":{"base":a["run"]["timing"],"candidate":b["run"]["timing"],"note":"Both wall_seconds and generation_seconds start before loading. Candidate was interrupted."},
+ "http_trace":{"base":a["http_trace"],"candidate":b["http_trace"],"nested_agent_retry_note":"WSP client counters do not cover every nested agent retry; see polyglot disconnect."},
+ "agents":[{"id":key,"base":amaps[0][key],"candidate":amaps[1][key]} for key in sorted(amaps[0])],
+ "source_report":{"base":a["source_report"],"candidate":b["source_report"]},
+ "runtime":{"base":a["runtime"],"candidate":b["runtime"]},"errors":{"base":a["data_anomalies"],"candidate":b["data_anomalies"]},
+ "input_sha256":{str(p):sha(p) for p in [OLD/"summary.json",OLD/"all-2338-numeric-items.json",OUT/"candidate-audit/summary.json",OUT/"comparison.json",Path(__file__)]},
+ "adoption":"Not eligible: partial run. Existing AV remains highest complete parent."}
+save(OUT/"summary.json",summary)
+print(json.dumps({k:summary[k] for k in ["status","unscored","code","capability_gained","capability_lost","timing"]}))
+print(json.dumps({"code_changes":[{k:x[k] for k in ["id","base_score","candidate_score","delta"]} for x in summary["code_changed_items"]]}))

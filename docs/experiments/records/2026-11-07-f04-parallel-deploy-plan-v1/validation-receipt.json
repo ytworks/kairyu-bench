@@ -1,0 +1,25 @@
+{
+  "status": "focused_cpu_validation_passed",
+  "checks": [
+    {
+      "name": "focused-unittest-v2",
+      "returncode": 0,
+      "seconds": 0.23134398460388184
+    },
+    {
+      "name": "targeted-ruff-v2",
+      "returncode": 0,
+      "seconds": 0.030757427215576172
+    }
+  ],
+  "preview_returncode": 0,
+  "source_sha256": "19ae025add4f2f08705f33f0146f48cc9fa8e92bdb14a8383f46fb7d531e53bc",
+  "test_sha256": "6584caa2d2da93d4b47c9c38c8d5578ef8213ef7801f18ade8c58e13271f7ff9",
+  "plan_sha256": "454c62c38ddba1db9fae9cd67706b8c7e3efe21dd5e6c624689d356adf854946",
+  "initial_failure": "The new fake inspect fixture omitted Docker raw Id; added Id without owner changes. Initial failed test log retained.",
+  "formatting": "AST equivalent to reviewed source after splitting imports and explicit static binding of the already exec-defined inventory function.",
+  "model_calls": 0,
+  "docker_calls": 0,
+  "gpu_calls": 0,
+  "full_suite_rerun": false
+}

@@ -1,0 +1,25 @@
+{
+  "argv": [
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/infra/weight-tools-ci/bin/python",
+    "-B",
+    "-m",
+    "kairyu_bench.wsp.weights.native_faststore",
+    "create",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/checkpoints/native-faststore-av-v1/receipt.json",
+    "--receipt-sha256",
+    "dbcc501f1f42ca32d9c05fbced2b40d0e0dd49a9446df2fbd0bdd3abd23606f9",
+    "--parent",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/checkpoints/code90-current-ad-helper-av-v1",
+    "--parent-proof",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f04-relative-v1/faststore-plan-v1/av-freeze.json",
+    "--parent-proof-sha256",
+    "4204ef65bab9ee765a1085870d6a7fa8d88b124a0941de6f4a71e5afc7d9c548",
+    "--spec",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/analysis/fresh-purpose-20261107-f04-relative-v1/proposal/fresh-native-relative-f04.json",
+    "--output",
+    "/mnt/nvme/kairyu/wsp/gemma4-coding-20261104/checkpoints/fresh-native-relative-f04-faststore-v1",
+    "--reserve-bytes",
+    "5368709120"
+  ],
+  "epoch": 1794050348.0033774
+}
