@@ -161,3 +161,83 @@ T002の唯一の証拠rootはSSH先 `restart-direct-20261108/trial-002-final-bra
 | `partial-response-observation-002.py` | 固定prefixのcontent文字数等を訂正観測（001の原記録は保持） | `555111cf806a48b97961e5714303ca4f5c05f74d034fdef5404627cd46b24ef8` |
 
 `run-replica-operation.py` のmodeは `preview/apply/restore_preview/restore_apply`、`run-diagnostic.py` は `1/2/3`。`audit-live-load.py` は初回を引数なし、再起動後を `candidate-live-load-after-restart.json` 指定で別保存する。full replica launcherは `gemma-N` とmodeを指定する。全4候補への今回の切替はrootが登録argvをinlineで順番に実行し、このlauncherは未実行である。今回は全問終了前に固定sourceのPR収録を行った。元pathとrecords側は同一inodeなので、以後いずれもin-placeで編集しない。修正が必要なら別inodeの新version fileを新規作成し、旧新hash・理由・適用対象をrevision記録へ残す。実行中sourceと固定snapshotは維持する。結果・レビュー・manifest・raw評価は複製せず、上記SSH保持先とhashを参照する。全問終了、正式比較、採否、必要な復元・cleanupはPENDING、候補未採用、採用判断済みbaselineの未解決数は169のままである。今回の収録段階ではstage・commit・pushは行っていない。
+
+
+## T003：最終attention枝だけを元の保存値へ戻す（棄却・復元／整理中）
+
+この節は前節の固定snapshot以後の記録である。T002は元の正規10分版を全778項目で実行し、2026-11-08 03:31:06 UTCに `partial` で終了した。能力746問は正解192、不正解322、通信失敗230、その他未採点2。比較は改善30、退行220、比較不能232であり、全問クリアではない。ARC100問は元モデル63正解からT002の66正解へ変わり、改善12・退行9だった。T002は累積作業baseとして保持し、この全問確認の未完と退行を残した。証拠はT002の `canonical-full-comparison.json` と `arc-official-saved-reuse.json` にあり、採点結果を再生成していない。
+
+T003はT002から開始し、`model.language_model.layers.59.post_attention_layernorm.weight` だけを指定元モデルの保存BF16 bytesへ戻した。最終post-feedforward normはT002の正のゼロのままである。既存editorの `set_values` に渡す値は指定元モデルの当該保存tensorだけから得ており、正解データに合わせた値・係数の探索や学習、勾配、optimizer更新は使っていない。保存dtypeへ戻したbytesと元tensorの完全一致を独立照合した。大きさや相関から能力の担当を断定する操作でもない。
+
+対象は5376要素、span10752 bytes、実際に変わった保存bytesは10746、ΔL2は87.59597497324575。事前見積り・容量release後、既存editorの独立copy経路で別checkpointを生成した。生成・全file検証は210.113秒、指定元→T002→T003の2段階streaming chain検証は192.663秒で、双方exit0。保持12 filesのhash、段階ごとの保存dtype丸め、再構成器 `native-edit-chain-v1` の実装識別を検証し、追加の完全再構成コピーは作っていない。freezeは完了したchain hashとstat連続性を使用し、対象norm bytesも照合した。GPU内bytesの読戻しを実施したとは主張しない。候補treeは `60c2e41c39382d867dd03977171e6a76345c5a28f54df1ff6b90dcb3af702ced`。
+
+生成後に実際のClaude Opus 5.5へレビューを依頼し、requested model、assistant model、model usageの `claude-opus-5-5` 一致と利用可能な応答を確認した。レビューとroot判断は、登録済み固定編集の同条件診断への進行を記録している。禁止手法を取り入れておらず、レビューを全問完了や採用の証明とは扱わない。
+
+### 同条件ARC100診断
+
+T002の既存canonical ARC出力は4個のLP endpointを使用していた。一方、今回の候補は `gemma-0` だけへ切り替えるため、既存結果を単一endpoint候補との同条件比較に流用しなかった。切替前に親T002を `gemma-0` 単独で100問1周だけ測り、その後同じendpointのT003を100問1周だけ測った。新しい経路条件に対応する測定であり、確定済み同条件の無理由な再測定ではない。3回反復を新たな採否条件にはしていない。
+
+両runは固定runner `f91bdcf…`、正規manifestのdev/tier10 ARC100問、公式scorer、TP2・MTP4、LP並列32、chat並列256、agent並列4、observer OFFを維持した。model discoveryもLP endpointも `http://gemma-0:8000/v1` を指定し、候補とT002が混在するgatewayへ送っていない。公式CLI引数の親子差分はrun IDとlabelだけで、候補labelは実treeへ事前bindingした。全100問により今回の対象10問、親の正解66問、既存退行を一度に確認した。これは診断subsetであり、全778問評価の代わりではない。
+
+| 同条件run | 正解 | 不正解 | 未採点／通信失敗 | 公式generation | outer |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| `restart-direct-t003-parent-t002-arc100-dev10-r1-20261108` | 66 | 34 | 0／0 | 4.9秒 | 6.331秒 |
+| `restart-direct-t003-candidate-arc100-dev10-r1-20261108` | 62 | 38 | 0／0 | 5.6秒 | 6.948秒 |
+
+親の100個の公式scoreは、参考値である既存4endpointのT002 canonical ARCと全件一致した。各runのlogprob API callsは1198、chat API callsは0。候補の全loglikは有限、lengthsは正で、非有限値・欠損・公式errorは0だった。元応答、公式採点、全100問の得失はそれぞれの唯一のresultsと比較JSONへ保持し、再採点していない。
+
+候補は親に対して改善8・退行12、純減4。親の正解66問のうち54問を維持した。対象10問は次の4問が新正解となり、6問が未解決だった。
+
+| 対象ID | T002 | T003 | 結果 |
+| --- | ---: | ---: | --- |
+| `arc-challenge:Mercury_7263183` | 0 | 0 | 未解決 |
+| `arc-challenge:MCAS_2004_5_7` | 0 | 1 | 新正解 |
+| `arc-challenge:LEAP_2007_8_10417` | 0 | 0 | 未解決 |
+| `arc-challenge:Mercury_SC_400401` | 0 | 0 | 未解決 |
+| `arc-challenge:Mercury_7234360` | 0 | 1 | 新正解 |
+| `arc-challenge:MDSA_2007_8_17` | 0 | 1 | 新正解 |
+| `arc-challenge:Mercury_SC_413624` | 0 | 1 | 新正解 |
+| `arc-challenge:NCEOGA_2013_8_28` | 0 | 0 | 未解決 |
+| `arc-challenge:Mercury_SC_407400` | 0 | 0 | 未解決 |
+| `arc-challenge:Mercury_7217298` | 0 | 0 | 未解決 |
+
+退行12問（全て `arc-challenge:`）は `Mercury_7163818`、`Mercury_SC_400708`、`Mercury_7206938`、`MEA_2013_8_18`、`LEAP_2001_8_10379`、`TIMSS_2003_8_pg47`、`Mercury_401014`、`TIMSS_1995_8_J1`、`Mercury_SC_413549`、`Mercury_7094290`、`Mercury_7174738`、`Mercury_SC_414156`。全12問を含む候補の不正解38問を `rejected-candidate-unresolved-queue.json` にmanifest順で保持した。これは棄却候補の派生記録であり、T002のactive queueを置換しない。棄却候補の改善8問をT002で解けた問題として扱わない。
+
+採否の「1問でも正解が増えたら」は、追加の指定がない時点では**退行を含めた同条件の正解総数が1以上増えること**として扱った。対象の新正解だけでは総数増加とは扱わず、T003は66→62のため棄却した。対象10問すべての正解を採用条件にしたわけではない。T002の66正解を累積baseとして保持する。`gemma-0`のT002への復元とT003の証拠確認後削除は進行中であり、この記録は削除完了を主張しない。別の解釈をユーザーが明示した場合は、その後の判断へ反映する。
+
+生成診断として選んだ `triviaqa:bb_6707` と `xstest:232` は未実行。両者の元公式max_tokens16384／samples1を変更せず、親のgateway結果と候補のdirect結果を同条件として比較しないため保留した。T003の正規全778問、test、30／60分版、DeepSWE、Hugging Face登録は実施しておらず、全tier完了や一般的改善を主張しない。
+
+### 既存toolの使用と証拠
+
+新しいeditor・scorer・推論wrapperは開発していない。既存の [保存重み編集CLI](../wsp-weight-editing.md)、`kairyu_bench.wsp.weights.chain`、`docs/experiments/scripts/redeploy-replica.py`、変更なしの `kairyu_bench.wsp.cli` を使用した。以下の登録JSONのargvが実行仕様であり、完了済みT003の保存先・run IDへ再実行しない。再現には新試行、新しい出力先、容量予約、候補freezeと提供先の確認を先に登録する。specの保存値、raw評価、重みはPRへ複製せず、SSH上の唯一の証拠を参照する。
+
+| 工程 | 使用方法と固定argvの保持先 |
+| --- | --- |
+| 保存編集 | `python -B -m kairyu_bench.wsp.weights.editor create`。親T002、登録済み `edit-spec.json` の `set_values`、別候補path、`--manifest`、`--reserve-bytes 214748364800 --apply`。実argvは `creation-execution.json`。 |
+| 元からの復元検証 | `python -B -m kairyu_bench.wsp.weights.chain`。指定元とT003にT002・T003の `edit-manifest.json` を順に渡す。実argvは `chain-execution.json`。 |
+| replica切替 | 既存helperのpreview→apply。exact argvは `single-replica-switch-plan.json`、実行／検証は `deployment-apply-execution.json` と `deployment-apply/receipt.json`。 |
+| ARC診断 | `python -B -m kairyu_bench.wsp.cli run` に `--only arc-challenge --tier 10 --split dev` と上記並列数・単一endpointを指定。exact container/CLI argvは `diagnostic-evaluation-plan.json` の `runs`、候補tree binding後のargvは `candidate-arc100-input-binding.json`。 |
+
+現行 `./kairyu-bench wsp run --help` と旧token診断wrapperの `--help` を確認し、固定runner内のCLI／run／client／registry／logprob／text／manifestの8source hash一致を記録した。通常wrapperは `--only` をサポートするが全scorer準備でNLTK約73.7MBを展開するため、この2runでは既存のbounded Docker形から同じ公式CLIを起動した。旧token wrapperは旧対象10問が固定されているため今回使用も変更もしていない。初回preflightのhost Python import失敗（推論0）を保存し、既存非学習venvと `PYTHONPATH=<worktree>/src` でv2確認後に親を1回実行した。各run前にfreeze stat、RO mount、tree、runtime、health、idle、容量を確認し、候補は切替helper終了とservice lock解放後に開始した。固定13 scriptsとhardlink元は変更していない。
+
+作成後容量照合（03:50:09 UTC）では、指定元＋採用中T002 1個＋候補T003 1個。T003の生成regular実割当は62,578,733,056 bytes、directoryは8192 bytes、重み削除は0だった。追加weight全量の厳密値は未確定で、保守上界159,705,311,536 bytesは150GiB以内、cache予約上界104,280,008,831 bytesは100GiB以内だった。両診断と計画・help・終了記録の証拠は218,115 logical bytes（inode一度計上の実割当286,720 bytes）、activation dump0。終了した診断containerの消滅を確認し、空の各tmp/xdgをその試行内で削除した。診断終了時NVMe空きは2548.672GiB。これらはT003 checkpoint削除完了の証拠とは別であり、採否後の重み整理は引き続き容量台帳で確認する。
+
+唯一の証拠rootはSSH先 `restart-direct-20261108/trial-003-restore-final-attention/`。各評価runの唯一の出力は作業rootの `results/<run-id>/` にある。
+
+| T003内の保持先 | SHA256 |
+| --- | --- |
+| `registration.json` | `3e77484400c6de5135e84610b4f6bda4baf54fb0b2a83b2a6650ff20fdaf01b2` |
+| `saved-byte-preview.json` | `4486ed2dda4b3e70b1888594b0e2a6c6f369a6bf47c179a595054f86b9f7cc5b` |
+| `creation-execution.json` | `7e503e39a3377f38803871664f37fce8836a33a89df2e37cb43f29f92849d214` |
+| `edit-manifest.json` | `61da330daed65071044d5926525035901dd47ff8999924763f425ec1f60bc394` |
+| `chain-execution.json` | `249f33c480fb640e911e0db3d29a14fc5c5023a5fd4d34a1a50121aa4f7337db` |
+| `chain-verification.json` | `b71cd62bc320a46bf7dcf657fc450508ebcefa62344a1f146473072565ebf4fb` |
+| `candidate-freeze.json` | `144567f73f0733f7807980fc575ee038c96552a7ab5aa5be6ebd4edb82bb74ce` |
+| `candidate-freeze-proof.json` | `01199634354e7451f90edb6009f204524ec82bddc96b8066ece0a609f7edbbb5` |
+| `opus55-review/receipt.json` | `ae0b4cc6e4bc9fd94f4c36934b1e241a7429bd68ddc7e6d7d970302fcd211759` |
+| `diagnostic-evaluation-plan.json` | `00d54d43fb6afafd5beadf17ef456b575946e15e26fc14661d29a7b42f2551fe` |
+| `candidate-arc100-input-binding.json` | `29acaf8f23548545403f75f4491a7b8b9fcd60536163cf15bbc3266822993fb4` |
+| `parent-arc100-summary.json` | `9d3290c72351e545414e9b3b9e9393bef5b29c1e6f45e1f46d8db37748188678` |
+| `candidate-arc100-summary.json` | `735b2edf6538efe02face64c7a451b158830804cf65743c3f98ca013055e6599` |
+| `rejected-candidate-unresolved-queue.json` | `6d6dbbae0766d0adead0c10a8a2e95178ba311a5250a99d731c44cf7a2221385` |
+| `storage-postcreation-reconciliation.json` | `b0ca60ec71b2fb9df2c0cf740a334ea7fc01a74ec3ce9f846711af8a670462ad` |
