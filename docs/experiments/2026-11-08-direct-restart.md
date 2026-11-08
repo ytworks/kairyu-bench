@@ -79,3 +79,85 @@ observerの要約と必要raw証拠を確保した後、不要な派生merge/cac
 評価量は40 continuation requests／回×3＝120 completion requests、tokenizeは81／回×3＝243、合計363 logprob client API calls。候補3回のrun timestamp経過合計は7.095010秒、runner process経過合計は11.362986秒であり、生成／起動時間と混同しない。終了照合時はNVMe空き2665.30983GiB、追加重み保守上限32.14117GiB、cache予約91.97288GiB。確定要約の唯一の保持先はSSH先 `restart-direct-20261108/trial-001-final-branches/final-scientific-summary.json`（SHA256 `b1fc903bb4fd5ca3d282374208bc07ce8255f4156c88f036337ec5ed9f336bac`）。
 
 事前登録した元モデルOFFの2回token診断は完了し、各40 completion＋81 tokenize、capture complete、公式0/10だった。40対のtoken列・hash・継続境界は一致し、欠損／非finiteは0、全80 sumと全20 itemのargmax／scoreは公式結果と完全一致した。220位置中64位置（11 choice／8問）で返却token logprobが変動し、最大絶対差5.0473985672、正解option marginの実行間差は最大0.2389380485。入力や集計の不一致は本2観測で検出されなかったが、runtime原因や決定性は特定できない。新しい改善候補・解決数の増加を示す結果ではない。詳細・唯一の証拠保持先／hash・失敗経路の制限は [response記録手順](2026-11-08-token-logprob-diagnostic.md) を参照。診断を重み改善や全問評価の代わりにしない。
+
+## T002：最終block残差枝の固定ゼロ化（全問評価 IN PROGRESS）
+
+この節は進行中のドラフト。`wsp-direct-t002-candidate-dev10-full-20261108-r1` は全778問・dev・tier10の正規評価を実行中で、`full-evaluation-execution.json` は `running`、PID 2599158。全問結果、問題別退行、採否、復元・cleanupは未確定。採用モデルはまだなく、確定済み元baselineの577正解／168不正解／1部分点（能力746問）＋NLL診断32問、未解決169を更新しない。対象診断を全問クリアや一般的改善とは扱わない。
+
+指定元モデルから、layer59の `post_attention_layernorm.weight` と `post_feedforward_layernorm.weight` を保存BF16の正のゼロへ直接変更した。今回の推論構造観測に基づく、最後の2残差枝を共同除去する固定1介入である。係数は探索・学習していない。同じtensor対で棄却したT001の127/128も試行履歴へ含め、0をこの対・最終blockについての最終値とし、結果に合わせた中間係数・片枝・層scanへ進まない。
+
+保存差分は2 tensor、10752要素、実際に変化した21476 bytes（対象span21504 bytes）、ΔL2=268.1548464079132。両5376要素は全て `0x0000`、元は正の有限BF16だった。独立literal-zero proof、生成時の全file検証、元モデルからのstreaming chainで全12 filesを照合し、変更範囲外の一致を確認した。第3の完全コピーは作らず、freeze時の再読込は対象21504 bytesだけ。候補treeは `80c94f003d180959e6d8f0ff3a622520de0a7ff5cfd466e64f26c056467b59d0`。
+
+現imageの対象は通常のRMSNormで、`normalized(x) * weight`、+1 offsetなし。2残差加算後のPLEはconfigで無効であり、最後にscalarを乗算する。保存scalarは149/4096=0.036376953125、eps=1e-6、eps/c²=0.0007556964100716184。既存tail観測のlayer58 residual RMSに対する実数式上の振幅差は最大約0.0957%だが、BF16丸め・未観測位置・score不変性を保証しない。MTP4、共有KV、prefix/chunked-prefill条件を維持したため、測るのはこの保存編集の**固定target+MTP4 runtimeにおける総効果**である。純target-only、logit-lens、能力担当、compiled kernel内部の同一性を主張しない。
+
+実際のClaude Opus 5.5へ事前・補足・実生成候補のレビューを依頼した。実生成候補の初回応答は形式上unusableとして保存し、再依頼receiptで応答モデル `claude-opus-5-5` と本人一致・利用可能性を確認した。最終レビューは登録済み正規全問確認への条件付き進行のみを認め、採用を認めていない。禁止手法は実行していない。
+
+対象10問のObserver OFF診断は[7,7,7]/10、3回目の前に同候補processを再起動した。下表の元canonical scoreは全て0。7問は全3回の公式score1かつ各回marginが元OFF5回の最大marginを超え、事前登録した全問確認の起動条件を満たした。この条件は公式合格定義や統計的noise上限ではない。token別対照は記録のある元2回だけを使い、5回分のtoken証拠があるとは扱わない。
+
+| 対象ID | r1 | r2 | r3 | 診断条件 |
+| --- | ---: | ---: | ---: | --- |
+| arc-challenge:Mercury_7163818 | 1 | 1 | 1 | 満足 |
+| arc-challenge:Mercury_SC_401278 | 1 | 1 | 1 | 満足 |
+| arc-challenge:LEAP_2007_8_10417 | 0 | 0 | 0 | 未達 |
+| arc-challenge:Mercury_SC_400401 | 0 | 0 | 0 | 未達 |
+| arc-challenge:MDSA_2010_4_20 | 1 | 1 | 1 | 満足 |
+| arc-challenge:Mercury_7218400 | 1 | 1 | 1 | 満足 |
+| arc-challenge:Mercury_7206938 | 1 | 1 | 1 | 満足 |
+| arc-challenge:Mercury_7074848 | 1 | 1 | 1 | 満足 |
+| arc-challenge:Mercury_402348 | 1 | 1 | 1 | 満足 |
+| arc-challenge:Mercury_SC_413624 | 0 | 0 | 0 | 未達 |
+
+未採点・通信失敗・capture validation errorは診断3回で0。記録は各40 continuation、2MiB上限（計6MiB）、tokenizeは各81。計120 completion＋243 tokenize＝363 client callsで、transport retry数は推定しない。診断のrun timestamp経過合計は6.972428秒、outer process経過合計は11.531419秒。正規全問評価は同じf91 runner、256/32/4、4 replicas、全領域・全778問を維持し、token wrapperやactivation hookを追加していない。
+
+T002候補regular本体の実割当・累積生成は62578728960 bytes（58.280983GiB）、directory8192 bytesを含む候補全体は62578737152 bytes（58.280991GiB）、累積削除は0。保持は指定元＋評価中候補1、採用中0である。全追加weightの厳密な総実量は未確定で、whole-root保守上界90.424038GiBに進行中の非weight予約5GiBも重ねて計上した上界は95.424038GiB。cacheの予約込み上界96.974764GiBも実使用量ではない。全問開始release時のNVMe空き2607.027218GiBと合わせ、150GiB／100GiB／空き200GiBの各制約を守る予約を維持し、新checkpoint生成は禁止している。区分訂正は `storage-accounting-clarification.json` に記録し、総量・評価releaseは変更していない。最終使用量・cleanupはPENDING。`storage-full-monitor.jsonl` は2026-11-07 22:08:15 UTC以降 `storage-probe-delta-v1` と従来の完全行が混在する。147行目の基準行番号/hash・set/delete/null/継承規則に従って復元し、差分行を独立した全状態と扱わない。
+
+preflight初回は、checkerがhelper receiptのディレクトリ末尾 `-` を落としていたため失敗した。失敗JSON・stdout/stderr・sourceを保持し、v2で登録argvの `--output` から実パスを読むよう修正した。v2は全4候補のRO mount・runtime・readiness・対象保存bytesと、元gateway image／4接続先の一致を確認した。未実行のfull replica launcherにも同じ前service-path誤りがあり、1箇所を修正して旧新hashとexact diffを保存した。どちらもモデルの失敗として数えたり、失敗記録を上書きしたりしていない。
+
+途中観測の訂正も保持した。2026-11-07 19:40:58 UTCに固定した `responses.jsonl` の先頭6,162,113 bytes・77行だけを対象とする `partial-response-observation-001.json` は、実際の `sample.content` を未存在の `sample.text` と取り違えたため、文字数・反復指標が無効だった。件数・finish reason・token数は影響を受けていない。`partial-response-observation-002.json` は同じprefixを `content` で読み直した訂正版で、後続追加行を含めない。001のsource・結果を変更せず保持し、002に誤りと旧hashを記録した。
+
+別の固定prefix（2026-11-07 20:52:49 UTC取込、先頭16,231,734 bytes・436行）では、130件の失敗を `canonical-partial-failures-001.json` が例外allowlistの `ApiError` 欠落により `other_unscored_error` と記録した。同じprefixの `canonical-partial-failures-001-classification.json` で、外側 `ApiError`、HTTP 502、内側 `ReadTimeout` を各130件確認し、通信失敗へ分類を訂正した。元記録は不正解へ分類しておらず、上書きせず保持した。これらは固定部分の観測・分類であり、正式採点、全体結論、失敗原因の推定には使わない。生出力の複製、新規推論、再試行、評価条件の変更は行っていない。
+
+実行中の限定監査では、現gatewayの `httpx.post(timeout=self._timeout_s)` から例外をHTTP502へ変換する静的な可能経路を確認した。当該失敗との一意な対応、実timeout override、実retry回数・経過は未確定であり、constructor既定60秒とbenchmark clientの7200秒を混同しない。source読取のUID1003 `PermissionError` も保持し、続くcontainer UID0での読取は指定sourceだけに限定した（host root・sudoは未使用）。別のagent-tail監査時点では、残るTerminal-Bench 2 taskのcontainerとrunner子processが生存し、result/trajectoryは未生成だった。元baselineと `max_turns=250`、`agent_timeout_multiplier=48`、LLM timeout1200秒、task定義timeout3600秒が一致するが、実token上限・手数・待機phase・実retry・timer適用は未確認で、48×3600秒を終了deadlineとは扱わない。限定 `docker top` のexit1も記録した。両監査とも新規推論・runtime変更・正式比較は0である。
+
+T002の唯一の証拠rootはSSH先 `restart-direct-20261108/trial-002-final-branch-ablation/`。下記は参照であり、結果・レビュー・raw captureの追加コピーではない。
+
+| 唯一の保持先（T002内） | SHA256 |
+| --- | --- |
+| `edit-spec.json` | `86a0facdfff4c556ec1c01ec832cbda0a4418c45fb2a15107d225dc3022e1abd` |
+| `literal-zero-proof.json` | `f7d81dec3ccb38e83c920d82e66ee461ef4f0395119f4809b367f29045b4f305` |
+| `chain-verification.json` | `e1b7ddbc86337063b5c5a0e6029113ac26a3b9ae26d9f21d1079aa643fb56cda` |
+| `candidate-freeze.json` | `154808704472c7321fcabeedf496b5da4d22b874c8f49b0a9bd52b52e8b65bda` |
+| `candidate-token-comparison.json` | `c89fc92210fa9b37baf3f196fdd59a60b5ca2a6ed94b74e63bb15b7f87d00186` |
+| `runtime-zero-ablation-audit.json` | `2555eeccec4157bf5bbda4954fa2a3ffd3b1c01d2e971b215806189f57c886bb` |
+| `mtp-kv-prefix-chunked-addon.json` | `23b8f279a803e9b48228c768b8e3b36f11127a849d9fbe6c5bef8a7c83f304c1` |
+| `opus55-realized-candidate-review-retry/receipt.json` | `a52b40f2f7b4b5ccc38bc07c9c783e03bcd3bb66e3235deae1f28b0551c79e6d` |
+| `full-serving-preflight-v2.json` | `1b25b543378c44194990e1fe8922314bd482cf9a67a7b686f5d00b6b51fe40a4` |
+| `canonical-full-evaluation-plan.json` | `93cbe42e03b0bd6a03b067b95ccc63cdb4d76c1a764a87b526e08363482a3679` |
+| `storage-full-evaluation-release.json` | `244c970a2c0c33af904dde48c1d6f21b02b3b949bf6e912a2f7f0ecda0af32e7` |
+| `partial-response-observation-001.json`（誤参照を含む原記録） | `b3561744995ab288381dab15181b91e339e13bf9c650a1f306463b23b3c36565` |
+| `partial-response-observation-002.json`（同prefixの訂正） | `011d9b8dc2fd3cc7d59943badf0615a516f36bc6bdd97f54a2a92c45ca28ae8d` |
+| `canonical-partial-failures-001.json`（初期分類） | `a092b3f2e34389fa4ce89f4b1e061cfeb141a78170f744717681dc773be2d8d0` |
+| `canonical-partial-failures-001-classification.json`（同prefixの分類訂正） | `115281b4002e654a0b0c13ea386f6fb76f990e6d327018672d8eea428b88e599` |
+| `storage-accounting-clarification.json` | `8fba18906394635c3e37dfdf267d85d686e8a7dd9053b594b8bfb05bba03daa7` |
+| `gateway-timeout-readonly-audit.json` | `eb5070975061ffac69ca30ddabf752f22ac5af1ac617fe107dd9fbcacd015945` |
+| `agent-tail-readonly-audit.json` | `ec0fff8d7d4104969f1a91ca0f1e1dd248b20d608e713f5eeba7430e0d4817e1` |
+
+非学習の再現・運用script12本と訂正版の部分観測script1本を、[PR用records](records/2026-11-08-direct-restart-t002/README.md) へ元SSH trialと同一inodeのhardlinkで収録した。[script-snapshot.json](records/2026-11-08-direct-restart-t002/script-snapshot.json) に元/収録path、hash、device/inodeと検査結果を記録した。下表はこの固定13本であり、実行中のsource bytesは変更していない。`PYTHONDONTWRITEBYTECODE=1` とNVMe TMPDIRを使い、必要なものは既存 `infra/weight-tools-ci/bin/python` と `PYTHONPATH=<worktree>/src` で実行する。過去の完了trialを再実行しない。再現には新trial・fresh候補/manifest/outputと容量予約を先に登録し、hardcoded pathを変更した版のhashを新しく記録する。deployment/evaluationの具体的argvは登録JSONに従う。
+
+| SSH上の固定script | 用途・使用順 | SHA256 |
+| --- | --- | --- |
+| `verify-literal-zero.py` | 生成前：固定+0 bytesとeditor予定bytesを独立照合 | `1e767e82256d5c4b0cdd97915c2a6d227dcb666480572cc7ffdfffdbe2d5aefe` |
+| `create-and-verify.py` | 容量・科学guard後：候補生成→全file chain検証 | `f295cddd946412f0b74d272137548313ffcb944c419cbf725ddf32fca7d29887` |
+| `verify-and-freeze.py` | chain exit0後：対象span確認→元/候補freeze | `8edc01a41f29cbb137dd8a3d895f54405633878cc1c6cf8d03a6a975dc408526` |
+| `run-replica-operation.py` | 初回単一replica preview/applyと復元用argv実行 | `52197b84e9f6f8cd6cb7a27bb7236740cfd8597ef5fbf7363454058f3fe9075f` |
+| `audit-live-load.py` | 初回、または candidate-live-load-after-restart.json 指定でr3前確認 | `cc26cb6a8ccf54fd34c0fec40bcd189e74b4ad546c05503837b6c4d3c78cc33b` |
+| `run-diagnostic.py` | 引数1/2/3：登録済み対象診断を各1回 | `5798a2abb6cb04213101dfa07489ce017913d4f02ed30b5a04bf956f6823d942` |
+| `restart-before-r3.py` | r1/r2完了後：同候補・同containerを再起動 | `13e94163d90e808634e52d93f4b80d5559380ab22fd7b0618914baec5e3dba13` |
+| `compare-fixed-three-token-runs.py` | 3回完了後：公式sum/scoreとtoken対照を検証 | `af4378412dcd3315db916ff559c7f54d5a1fd95dede15b9c709bb4655d60ea89` |
+| `check-full-serving-preflight-v2.py` | 全4候補切替後：identity/readiness/gatewayを確認 | `e3d641715376daaf046b28d952f656927ec12ab690765c56e843ebfcd258df17` |
+| `run-canonical-full.py` | guard後：正規778問を1周（現在実行中） | `a5f44210105dabf7aa82047721d80c268fe6eb520359f5c58254c458fddf52c6` |
+| `compare-canonical-full.py` | 全問終了後：全ID・問題別得失・退行を比較（待機） | `152ff0f7d67abc16d757a0a782c015fc3c326c195e39e65b904cd7f9dd7e3a52` |
+| `run-full-replica-operation.py` | serviceとpreview/apply/restore_preview/restore_applyを指定（未実行の復元用launcher） | `bc51be2e3dae34cebe465bc28404df7ab8b50442e87b8120f251d5c2e5d821fb` |
+| `partial-response-observation-002.py` | 固定prefixのcontent文字数等を訂正観測（001の原記録は保持） | `555111cf806a48b97961e5714303ca4f5c05f74d034fdef5404627cd46b24ef8` |
+
+`run-replica-operation.py` のmodeは `preview/apply/restore_preview/restore_apply`、`run-diagnostic.py` は `1/2/3`。`audit-live-load.py` は初回を引数なし、再起動後を `candidate-live-load-after-restart.json` 指定で別保存する。full replica launcherは `gemma-N` とmodeを指定する。全4候補への今回の切替はrootが登録argvをinlineで順番に実行し、このlauncherは未実行である。今回は全問終了前に固定sourceのPR収録を行った。元pathとrecords側は同一inodeなので、以後いずれもin-placeで編集しない。修正が必要なら別inodeの新version fileを新規作成し、旧新hash・理由・適用対象をrevision記録へ残す。実行中sourceと固定snapshotは維持する。結果・レビュー・manifest・raw評価は複製せず、上記SSH保持先とhashを参照する。全問終了、正式比較、採否、必要な復元・cleanupはPENDING、候補未採用、採用判断済みbaselineの未解決数は169のままである。今回の収録段階ではstage・commit・pushは行っていない。
